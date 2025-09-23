@@ -1,0 +1,17 @@
+.flex-doboz {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #f1f1f1;
+    padding: 5px;
+}
+
+.flex-doboz > label,select,button { margin: 5px;}
+
+/* Alapértelmezett betűméret */ 
+.fejléc { font-size: 24px; font-weight: bold;} 
+
+/* = bootstrap small - Kisebb képernyőn kisebb betűméret */
+@media (max-width: 600px) { .fejléc { font-size: 18px; font-weight: normal; } }
+
+
