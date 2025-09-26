@@ -12,6 +12,8 @@ app.use(express.static('public'));       // public/index.html a def.
 app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninitialized:true }));   /* https://www.js-tutorials.com/nodejs-tutorial/nodejs-session-example-using-express-session */
 var session_data;
 
+// masik edit
+
 const mysql_connection =  {
   host: '193.227.198.214',     /* 10.2.0.11:3306 - fsw */
   user: 'itbolt_user',         /* CREATE USER 'itbolt_user'@'%' IDENTIFIED BY '123456'; GRANT all privileges ON ITBOLT.* TO 'itbolt_user'@'%' */ 
