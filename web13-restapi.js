@@ -20,7 +20,7 @@ const mysql_connection =  {
   port: "9406",
   password: '123456',
   database: 'ITBOLT'           /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
-};
+}; // meleg vagyok
 
 function strE(s) { 
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
