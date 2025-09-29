@@ -208,11 +208,19 @@ function Edit_rekord( idx ) {
 
 
 $(document).ready(function() {
+        // balazs.aron@csany-zeg.hu 123456
+    
+
     update_gombok(0);           // insert, update, delete nem kell! (csak login után)
     $('#login_modal').modal('show');                           
     $("#kategoria1").empty(); 
     var listItems  = "";
-    var k_json = ajax_post("kategoria", 1 );               // post kategoria, json formátum
+
+    Kezdolap();
+
+    var k_json = ajax_post("kategoria", 1 );     
+    
+    
     for (var i = 0; i < k_json.rows.length; ++i)
     {
         listItems +=`<option value='${k_json.rows[i].ID_KATEGORIA}'>${k_json.rows[i].KATEGORIA}</option>`;
@@ -238,20 +246,22 @@ $(document).ready(function() {
             update_gombok(0); 
             $("#user").html("");
             $("#user-email").html("");
+            Kezdolap();
         }  
     });
 
     $("#login_oksi_button").click(function() { 
         var l_json = ajax_post("login?"+$("#form_login").serialize(), 1) ;  
         if (l_json.message == "ok" && l_json.maxcount == 1) {  
-            $("#user").html(`<h5><i class="bi bi-person"></i> ${l_json.rows[0].NEV}</h5>`);
+            $("#user").html(`<h5><i class="bi bi-person"></i> ${l_json.rows[0].NEV}</h5> (${l_json.rows[0].CSOPORT})`);
             $("#user-email").html(`${l_json.rows[0].EMAIL}`);
             $('#login_modal').modal('hide');
-            üzen(`Sikeres login: ${l_json.rows[0].NEV}!`,"success");
+            üzen(`Vásárolj sokat ${l_json.rows[0].NEV}!`,"success");
             update_gombok(1); 
             $("#loginspan").html(' Kijelentkezés');
             $("#loginout").removeClass("bi bi-box-arrow-in-right");
             $("#loginout").addClass("bi bi-box-arrow-in-left");
+            Kezdolap();
 
         } else {    
             üzen(`Hibás felhasználónév, vagy jelszó!`,"danger");
@@ -293,13 +303,50 @@ $(document).ready(function() {
     });
 
 
+    $("#home_button").click(function() {
+        Kezdolap();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+
 });
 
 
+function Kezdolap() {
+    var ks = "";
+    if ($("#loginspan").html() == " Bejelentkezés") {
+        ks = "";
+    }
+    else ks = `<button class="btn btn-success bi bi-cart2"> Kosárba bele</button>`;
 
+
+    var cuccos = ajax_post("keres", 1 );
+    
+    var s = "<div class='row'>"
+
+    for (const element of cuccos.rows) {
+         s += `
+         <div class="col-12 col-md-4">
+            <div class="card m-2 text-center">
+                <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
+                <div class="card-body">
+                    <h5 class="card-title">${element.NEV}</h5>
+                    <p class="card-text "><h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3></p>
+                    ${ks}
+                </div>
+            </div>
+         </div>
+         `
+         
+    }
+
+    s += "</div>";
+    
+    $("#Termek_hely").html(s);
+}
 
 
 function update_gombok (x) {
-if (x == 0) { $("#insert_button").hide(); $("#modify_button").hide(); $("#delete_button").hide(); $("#admin_button").hide(); } 
-else        { $("#insert_button").show(); $("#modify_button").show(); $("#delete_button").show(); $("#admin_button").show(); }
+if (x == 0) { $("#insert_button").hide(); $("#cart_button").hide(); $("#delete_button").hide(); $("#admin_button").hide(); } 
+else        { $("#insert_button").show(); $("#cart_button").show(); $("#delete_button").show(); $("#admin_button").show(); }
 }
