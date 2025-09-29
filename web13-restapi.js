@@ -15,20 +15,20 @@ var session_data;
 // masik edit
 
 const mysql_connection =  {
-  host: '193.227.198.214',     /* 10.2.0.11:3306 - fsw */
-  user: 'itbolt_user',         /* CREATE USER 'itbolt_user'@'%' IDENTIFIED BY '123456'; GRANT all privileges ON ITBOLT.* TO 'itbolt_user'@'%' */ 
+  host: 'sexard3-214.tolna.net',     /* 10.2.0.11:3306 - fsw */
+  user: 'szaloky.adam',         /* CREATE USER 'itbolt_user'@'%' IDENTIFIED BY '123456'; GRANT all privileges ON ITBOLT.* TO 'itbolt_user'@'%' */ 
   port: "9406",
-  password: '123456',
-  database: 'ITBOLT'           /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
-}; // meleg vagyok
+  password: 'Csany7922',
+  database: 'studio13_csany_zeg'           /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
+};
 
 function strE(s) { 
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
 function gen_SQL(req) {
-  const mezők = [ "ID_TERMEK", "NEV", "AR", "MENNYISEG", "MEEGYS"];
+  const mezők = [ "ID_TERMEK", "NEV", "AR"];
   // ---------------- sql tokenizer ... ---------------
-  var where = "";
+  var where = `t.AKTIV = "Y" AND t.MENNYISEG > 0 AND `;   // mindig legyen aktív és készleten
   var order  = (req.query.order? parseInt(req.query.order)         :   1);
   var limit  = (req.query.limit? parseInt(req.query.limit)         : 100);
   var offset = (req.query.offset? parseInt(req.query.offset)       :   0);
@@ -42,32 +42,32 @@ function gen_SQL(req) {
   if (where.length >0) { where = " where "+where.substring(0, where.length-4);; }
 
   var sql = 
-    `SELECT ID_TERMEK, NEV, k.KATEGORIA AS KATEGORIA, AR, MENNYISEG, MEEGYS
-     FROM IT_termekek t INNER JOIN IT_kategoriak k 
+    `SELECT ID_TERMEK, NEV, k.KATEGORIA AS KATEGORIA, AR, MENNYISEG, MEEGYS, FOTOLINK
+     FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ORDER BY ${mezők[order-1]} ${desc}
      limit ${limit} offset ${limit*offset} `;
   return (sql);
 }
 
 app.post('/kategoria',(req, res) => {
-  var sql = "SELECT ID_KATEGORIA, KATEGORIA from IT_kategoriak order by KATEGORIA";
+  var sql = "SELECT ID_KATEGORIA, KATEGORIA from webbolt_kategoriak order by KATEGORIA";
   sendJson_toFrontend (res, sql);           // async await ... 
 });
 
-app.post('/tabla', (req, res) => {  
+app.post('/keres', (req, res) => {  
   var sql = gen_SQL(req);                   // sql select generátor (tokenizer)
   sendJson_toFrontend (res, sql); 
 });
 
 app.post('/rekord/:id',(req, res) => {
-  var sql = `SELECT * from IT_termekek where ID_TERMEK=${req.params.id} limit 1`;
+  var sql = `SELECT * from webbolt_termekek where ID_TERMEK=${req.params.id} limit 1`;
   sendJson_toFrontend (res, sql);         
 });
 
 app.post('/delete/:id',(req, res) => { delete_toFrontend (req, res) });
 
 async function delete_toFrontend (req, res) {
-  var sql  = `DELETE from IT_termekek where ID_TERMEK=${req.params.id} limit 1`;
+  var sql  = `DELETE from webbolt_termekek where ID_TERMEK=${req.params.id} limit 1`;
   var data = JSON.stringify({ "message":"Login required ám!", "rows":-1 });  // rest-api
   session_data = req.session; 
   if (session_data.ID_USER) { data = await runExecute(sql, req); } 
@@ -102,12 +102,12 @@ async function update_toFrontend (req, res) {
   if (msg == "")                      // nincs hiba  
   {
     if (req.params.id > 0) {          // módosítás
-        sql = `UPDATE IT_termekek 
+        sql = `UPDATE webbolt_termekek 
                 set NEV="${NEV}", ID_KATEGORIA=${ID_KAT}, AZON="${AZON}", MEEGYS="${MEEGYS}", 
                 LEIRAS="${LEIRAS}", MENNYISEG=${MENNYISEG}, AR=${AR} 
                 where ID_TERMEK=${req.params.id} limit 1`;
     } else {                         // bevitel
-        sql = `INSERT into IT_termekek (NEV, ID_KATEGORIA, AZON, MEEGYS, LEIRAS, MENNYISEG, AR) 
+        sql = `INSERT into webbolt_termekek (NEV, ID_KATEGORIA, AZON, MEEGYS, LEIRAS, MENNYISEG, AR) 
                 values ("${NEV}",${ID_KAT},"${AZON}","${MEEGYS}","${LEIRAS}",${MENNYISEG},${AR})`;
     }
     data = await runExecute(sql, req); 
@@ -126,16 +126,18 @@ app.post('/login', (req, res) => { login_toFrontend (req, res); });
 async function login_toFrontend (req, res) {
   var user= (req.query.login_nev? req.query.login_nev: "");
   var psw = (req.query.login_passwd? req.query.login_passwd  : "");
-  var sql = `select ID_USER, NEV, EMAIL from userek where EMAIL="${user}" and PASSWORD=md5("${psw}") limit 1`;
+  var sql = `select ID_USER, NEV, EMAIL, ADMIN, WEBBOLT_ADMIN, CSOPORT from users where EMAIL="${user}" and PASSWORD=md5("${psw}") limit 1`;
   var data = await runQueries(sql);
   var json_data = JSON.parse(data);
   if (json_data.message == "ok" && json_data.maxcount == 1)  {    /* rövidzár kiértékelés : sikeres bejelentkezés, megvan a juzer... */                    
-    session_data         = req.session;
-    session_data.ID_USER = json_data.rows[0].ID_USER;
-    session_data.EMAIL   = json_data.rows[0].EMAIL;
-    session_data.NEV     = json_data.rows[0].NEV;
-    session_data.MOST    = Date.now();
-    console.log("Session data:username=%s id_user=%s", session_data.NEV, session_data.ID_USER);
+    session_data                  = req.session;
+    session_data.ID_USER          = json_data.rows[0].ID_USER;
+    session_data.EMAIL            = json_data.rows[0].EMAIL;
+    session_data.NEV              = json_data.rows[0].NEV;
+    session_data.ADMIN            = json_data.rows[0].ADMIN;
+    session_data.WEBBOLT_ADMIN    = json_data.rows[0].WEBBOLT_ADMIN;
+    session_data.CSOPORT          = json_data.rows[0].CSOPORT;
+    console.log("Session data:username=%s id_user=%s admin=%s webbolt_admin=%s csoport=%s", session_data.NEV, session_data.ID_USER, session_data.ADMIN, session_data.WEBBOLT_ADMIN, session_data.CSOPORT);
   }
   res.set(header1, header2);
   res.send(data);
@@ -186,7 +188,7 @@ async function runQueries(sql) {                         // SELECT sql (+ count)
 
   try {
       conn = await mysql.createConnection(mysql_connection);
-      [res1] = await conn.execute(`select count(*) as db from (${sql.substring(0, poz)}) as tabla;`);  // tömb 0. eleme
+      [res1] = await conn.execute(`select count(*) as db from (${sql.substring(0, poz)}) as tabla;`);  // tömb 0. eleme 
       maxcount = res1[0].db | 0;                         // :-) 
       if (maxcount > 0) {  
         [res2] = await conn.execute(sql);   

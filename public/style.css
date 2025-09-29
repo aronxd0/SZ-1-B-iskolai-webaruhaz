@@ -1,3 +1,11 @@
+.anton-regular {
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
 .flex-doboz {
     display: flex;
     flex-direction: row;
@@ -14,4 +22,10 @@
 /* = bootstrap small - Kisebb képernyőn kisebb betűméret */
 @media (max-width: 600px) { .fejléc { font-size: 18px; font-weight: normal; } }
 
+
+.kepp {
+    width: 290px;
+    height: 250px;
+    object-fit: cover;
+}
 
