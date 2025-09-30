@@ -65,13 +65,13 @@
   <div class="row bg-black sticky-top">
 
     <div class="col-lg-6 mb-2">
-      <div class="col-12 fejléc p-3 bg-black text-light d-flex justify-content-end"> 
+      <div class="col-12 fejléc p-3 bg-black text-light d-flex justify-content-center justify-content-lg-start "> 
         
         <img class="img-fluid m-1" style="width: 50px; height: 55px;"  src="img/logoz.png"> &nbsp;
-        <h3 class="align-self-center">SZ-1-B Iskolai Webáruház</h3>
+        <h4 class="align-self-center flex-nowrap">Iskolai Webáruház</h4>
       </div>
     </div>
-    <div class="col-lg-6 d-flex align-self-center mb-2">
+    <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-end">
 
       <button id="home_button"  type="button" class="btn btn-outline-light me-3 " data-bs-dismiss="offcanvas"> 
         <i class="bi bi-house" id="loginout"></i>
@@ -80,7 +80,7 @@
 
       </button>
 
-      <button id="cart_button" type="button" class="btn btn-outline-light me-3 "> 
+      <button id="cart_button" type="button" class="btn btn-outline-success me-3 "> 
         <i class="bi bi-cart2"></i>
         <span class="d-none d-lg-inline" > Kosár</span>
       </button>
@@ -96,10 +96,13 @@
         <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
           <i class="bi bi-person"></i>
         </button>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu p-3">
           
           <span class="dropdown-item" id="user">Jelentkezz be a fiókodba</span>
+          <span class="dropdown-item badge bg-warning text-dark w-75 m-2" id="csoport"></span>
+          <span class="dropdown-item badge bg-danger w-75 m-2" id="admin"></span>
           <span class="dropdown-item" id="user-email"></span>
+          
           <button id="login_button"  type="button" class="btn me-3 text-light align-self-center" style="background-color: #125308;"> 
             <i class="bi bi-box-arrow-in-right" id="loginout"></i>
             <span  id="loginspan"> Bejelentkezés</span>
@@ -108,11 +111,11 @@
       </div>
 
       
-
+      <!--
       <button id="menu"  type="button" class="btn btn-outline-light me-3"  data-bs-toggle="offcanvas" data-bs-target="#demo"> 
           <i class="bi bi-list"></i>
       </button>
-
+      -->
     </div>
 
     
@@ -120,37 +123,31 @@
 
   <div class="row bg-black">
   
-        <div class="col-lg-4 mt-2">
-         
-
-            
-              
-              
-            
-
-            
-            
-          
-          
-        </div>
         
-        <div class="col-lg-4">
+        
+        <div class="col-lg-6">
+          &nbsp;
+        </div>
+          
+        
+          
+        <div class="col-lg-6 mb-2">
           <div class="row">
-            <div class="col-12">
+            <div class="col-12 mt-2">
               <div class="d-flex flex-nowrap w-100"> <!-- flex-nowrap: ne tordelje szet  -->
                 <div class="form-floating flex-grow-1 me-2">
                   <input class="form-control" id="nev1" name="nev" type="text" placeholder="Termékek keresése...">
                   <label for="nev1">Termékek keresése...</label>
                 </div>
-                <button class="btn btn-success bi bi-search p-3" id="kereses_gomb"></button>
+                <button class="btn btn-outline-light bi bi-search p-3" id="kereses_gomb" onclick="KERESOBAR()"></button>
+                <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#szurok">
+                  <i class="bi bi-funnel"></i>
+                  <!--<span class="d-none d-lg-inline" > Szűrők</span>-->
+                </button>
               </div>
               
           </div>
         </div>
-          
-        
-          
-        <div class="col-lg-4">&nbsp;</div>
         
 
           
@@ -231,10 +228,13 @@
 
   <div class="container-fluid mt-2" id="content"> <!-- ide jon a tartalom -->
      <div class="row ">
-        <div class="col-lg-2">xd</div>
+        <div class="col-lg-2">
+          
+
+        </div>
         <div class="col-lg-8" id="Termek_hely"> </div>
 
-          <div class="col-lg-2">xd</div>
+          <div class="col-lg-2"></div>
       </div>
   </div>
   
@@ -253,6 +253,59 @@
   
 
 </div>
+
+
+
+
+<div class="offcanvas offcanvas-end" id="szurok">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title"><i class="bi bi-gear"></i> &nbsp; Szűrési beállítások</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div id="szurok" class="row mx-auto" style="width: 90%;">
+      <label for="kategoriak"><h6>Termékkategóriák</h6></label> 
+      <div class="p-3 border rounded" style="overflow-y: scroll; overflow-x: hidden; height: 35vh;" id="kategoria_section"></div>
+
+      <div class="row border rounded p-1 mt-3 mx-auto d-flex align-items-center">  
+        <div class="col-lg-4 text-center"> Minimum ár: </div> 
+        <div class="col-lg-4 text-center"> 
+          <input type="number" class="form-control w-100" id="min_ar_input" value="0"> 
+        </div> 
+        <div class="col-lg-4 text-center"> Ft </div> 
+        <input type="range" class="slider form-range w-100" id="min_ar" > 
+      </div>       
+
+      <div class="row border rounded p-1 mt-2 mx-auto d-flex align-items-center"> 
+        <div class="col-lg-4 text-center"> Maximum ár </div> 
+        <div class="col-lg-4"> 
+          <input type="number" class="form-control w-100" id="max_ar_input" value="0">
+        </div> 
+        <div class="col-lg-4 text-center">Ft</div>  
+        <input type="range" class="slider form-range w-100" id="max_ar"> 
+      </div> 
+      <br><br>
+      
+      <select id="rend" class="form-select w-50 mt-3"> 
+        <option value="" selected disabled>Rendezés...</op  tion> 
+        <option value="ar_csok">Ár ↓</option> 
+        <option value="ar_nov">Ár ↑</option> 
+        <option value="abc">Név (A-Z)</option> 
+        <option value="abc_desc">Név (Z-A)</option> 
+      </select>
+
+
+
+    
+      <div id="Elfogyott_gomb"></div>
+      <div id="NEM_AKTIV"></div>
+
+
+    </div>
+  </div>
+</div>
+
+
 
 
 
@@ -303,8 +356,73 @@
   </div>
 </div>
 
+
+
+
+<!-- logout modal -->
+<div class="modal fade" id="logout_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Kijelentkezés</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Biztosan ki szeretnél jelentkezni?
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
+        <button type="button" class="btn btn-success bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="termekview">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="termeknev_title">Modal Heading</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="termek_content">
+        
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
     <!----------------- modal adatbevitel ablak ----------------------->
-    <div class="modal" id="myModal0">
+    <div class="modal fade" id="myModal0">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header bg-secondary text-white">

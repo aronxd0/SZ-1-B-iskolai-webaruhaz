@@ -1,6 +1,11 @@
 var ORDER = 1;
 var ID = 0;    
 const alerts = ["success", "info", "warning", "danger"];
+var bepipaltID ="";
+var webbolt_admin = false;
+var admin = false;
+var elfogyott = false;
+var Nemaktivak = false;
 
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
@@ -24,10 +29,14 @@ function makeid(length) {
 
 function ajax_get( urlsor, hova, tipus, aszinkron ) {         // html oldalak beszúrására használjuk
     $.ajax({url: urlsor, type:"get", async:aszinkron, cache:false, dataType:tipus===0?'html':'json',
-        beforeSend:function(xhr)   {  },
+        beforeSend:function(xhr)   { 
+            var spinner = '<div id="spinner" class="spinner-border text-primary" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;"></div>';
+            // Spinner hozzáadása a body-hoz
+            $('body').append(spinner);
+         },
         success:   function(data)  { $(hova).html(data); },
         error:     function(jqXHR, textStatus, errorThrown) {üzen(jqXHR.responseText, "danger");},
-        complete:  function()      {  }  
+        complete:  function()      { $('#spinner').remove(); }  
     });
     return true;
 };
@@ -35,10 +44,14 @@ function ajax_get( urlsor, hova, tipus, aszinkron ) {         // html oldalak be
 function ajax_post( urlsor, tipus  ) {                         // json restapi-hoz használjuk
     var s = "";
     $.ajax({url: urlsor, type:"post", async:false, cache:false, dataType:tipus===0?'html':'json',
-        beforeSend:function(xhr)   {  },
+        beforeSend:function(xhr)   { 
+            var spinner = '<div id="spinner" class="spinner-border text-primary" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;"></div>';
+            // Spinner hozzáadása a body-hoz
+            $('body').append(spinner);
+         },
         success:   function(data)  { s = data; },
         error:     function(jqXHR, textStatus, errorThrown) {üzen(jqXHR.responseText, "danger");},
-        complete:  function()      {  }
+        complete:  function()      { $('#spinner').remove(); }
     });
     return s;
 };  
@@ -107,103 +120,110 @@ function Search_rekord() {
     üzen(s, tip);  
 }
 
-function Delete_rekord( idx ) {                        // törlés
-    $("#myModal1 .modal-body").html(`Törlöd a ${idx} azonosítójú terméket?`); 
-    $('#myModal1').off('click');                         // unbind, különben N.szer futna le az N. hívásra !!
-    $("#myModal1").on("click",".btn-success", function(){
-    var s = "";
-    var tip = "success"; 
-    var d_json = ajax_post("delete/"+ID, 1);
-    console.log(d_json);
-    if (d_json.message == "ok")                        // minden oksi ...
-    {
-    if (d_json.rows[0].affectedRows == 1) 
-    {
-        s= "Törlés OK..."; 
-        Search_rekord();                               // refresh táblázat
-    }     
-    else                                    
-    {
-        tip = "warning";
-        s= `Hiba: nincs meg az ID:[${idx}] azonosítójú rekord!<br>${d_json.message}`;}
-    }
-    else
-    {
-    tip = "danger";
-    s = d_json.message;
-    }  
-    üzen(s, tip); 
-});
 
-$("#myModal1").modal('show');
+
+function Termek_Mutat(adatok) {
+    $("#termekview").modal('show');
+    $("#termek_content").html(adatok);
 }
 
-function Save_rekord() {                              // bevitel, vagy módosítás
-    var s = "";
-    var tip = "success"; 
-    var m_json = ajax_post("save/"+ID+"?"+$("#mod1").serialize(), 1);
-    console.log(m_json);
-    if (m_json.message == "ok")                       // minden oksi ...
-    {
-    if (m_json.rows[0].affectedRows == 1) 
-    {
-        s= "Módosítás OK..."; 
-        Search_rekord();                              // refresh táblázat
-    }     
-    else                                    
-    {
-        tip = "warning";
-        s= `Hiba: ID:[${idx}]!<br>${m_json.message}`;}
+
+
+
+
+
+function CARD_BETOLT(adatok){
+    console.log(adatok);
+    var ks = "";
+    if ($("#loginspan").html() == " Bejelentkezés") {
+        ks = "";
     }
-    else
-    {
-    tip = "danger";
-    s = m_json.message;
-    }  
-    üzen(s, tip); 
+    else ks = `<button class="btn btn-success bi bi-cart2"> Kosárba bele</button>`; 
+  
+    var s = "<div class='row'>"
+  
+    for (const element of adatok.rows) {
+         s += `
+         <div class="col-12 col-md-4">
+            <div class="card m-3 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat("${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}")'>
+                <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
+                <div class="card-body">
+                    <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
+                    <p class="card-text "><h3 class="text-success anton-regular">${(element.AKTIV == "N" || element.MENNYISEG == 0) ? "Nem elérhető" : element.AR.toLocaleString() +" Ft"}</h3></p>
+                    ${ks}
+                    
+                </div>
+            </div>
+         </div>
+         `
+         
+    }
+  
+    s += "</div>";
+    
+    $("#Termek_hely").html(s);
 }
 
-function Edit_rekord( idx ) {   
-    $("#idx1").html("Termék " + (idx|0 > 0? "módosítás [ ID: "+idx+" ]" : "bevitel") ) ;   
+function KERESOBAR(){
+    const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
+    bepipaltID = "";//reset
+    for(var elem of inputok){
+        if(elem.checked) {
+            bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem az "s" be
+        }
+    }
+    var nemaktiv = "";
+    if(Nemaktivak)
+    {
+     nemaktiv = "&inaktiv=1"
+    }
+    var elfogy =""
+    if(elfogyott){
+        elfogy = "&elfogyott=1"
+    }
 
-    $("#mod_kat").empty();                              // listbox ürítése
-    var k_json = ajax_post("kategoria", 1);             // JSON!
+    console.log("fronted log ID-K: "+ bepipaltID );
+
+    var adatok = ajax_post("keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv , 1 ); // elküldöm lekérdezni
+    console.log(`${"keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv }`)
+    CARD_BETOLT(adatok);
+    KategoriaFeltolt("kategoria_section");
+}
+
+
+function KategoriaFeltolt(hova) {
+    $(`#${hova}`).html("");                              
+    var k_json = ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);            
     var listItems  = "";
-    for (var i = 0; i < k_json.rows.length; ++i)
-    {
-        listItems += `<option value='${k_json.rows[i].ID_KATEGORIA}'>${k_json.rows[i].KATEGORIA}</option>`;
+    for (var i = 0; i < k_json.rows.length; ++i) {
+        var pipa = ""
+        if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
+            pipa = "checked";
+        }
+        listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <Label class="form-check-label" id="lbl" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </Label> </p>`;
     }
 
-    $("#mod_kat").append(listItems);
+    $(`#${hova}`).html(listItems);
+    console.log($("#nev1").val());
+}
+function Elfogyott(alma){
+    if(alma.value == "Csakelfogyott"){
 
-    if (idx == 0)              // bevitel
-    {
-        $("#mod_nev").val("");
-        $("#mod_azon").val(makeid(10));   // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-        $("#mod_ar").val(0);
-        $("#mod_db").val(1);
-        $("#mod_meegys").val("darab");
-        $("#mod_leiras").val("");
-
-    } else                     // módosítás
-    {
-        var r_json = ajax_post("rekord/"+ID, 1 );
-        $("#mod_kat").val(r_json.rows[0].ID_KATEGORIA).change();  // selected beállítása! https://stackoverflow.com/questions/13343566/set-select-option-selected-by-value
-        $("#mod_nev").val(r_json.rows[0].NEV);
-        $("#mod_azon").val(r_json.rows[0].AZON);
-        $("#mod_ar").val(r_json.rows[0].AR);
-        $("#mod_db").val(r_json.rows[0].MENNYISEG);
-        $("#mod_meegys").val(r_json.rows[0].MEEGYS);
-        $("#mod_leiras").val(r_json.rows[0].LEIRAS);
-        var datum = new Date();                                 // now - de felesleges a dátum, mivel mysql auto....
-        $("#mod_datum").val(datum.toISOString().split('T')[0]); // 2021-12-10T18:19:48.000Z'
+        elfogyott = !elfogyott;
     }
+    else{
 
-    $('#myModal0').modal('show');
+        Nemaktivak = !Nemaktivak;
+
+    }
 }
 
-
-
+function ADMINVAGYE(){
+    if(admin){
+        document.getElementById("Elfogyott_gomb").innerHTML = `<span> Elfogyott áruk mutatása: <input type="checkbox" value="Csakelfogyott" onchange="Elfogyott(this)"> </span>`;
+        document.getElementById("NEM_AKTIV").innerHTML = `<span>Inaktiv áruk mutatása: <input type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)"> </span>`;
+    } 
+}
 
 
 
@@ -217,7 +237,27 @@ $(document).ready(function() {
     var listItems  = "";
 
     Kezdolap();
+    KategoriaFeltolt("kategoria_section");
 
+    var input = document.getElementById("nev1");
+
+    // enterrel keresés
+    input.addEventListener("keypress", function(event) {
+    // ha enterrel kattint
+    if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("kereses_gomb").click();
+  }
+
+  
+});
+
+
+
+
+    /*
     var k_json = ajax_post("kategoria", 1 );     
     
     
@@ -226,6 +266,7 @@ $(document).ready(function() {
         listItems +=`<option value='${k_json.rows[i].ID_KATEGORIA}'>${k_json.rows[i].KATEGORIA}</option>`;
     }
     $("#kategoria1").append(listItems);
+    */
 
     $("#search_button").click(function() {               Search_rekord();       } );
     $("#insert_button").click(function() {               Edit_rekord( 0 );      } );
@@ -237,31 +278,54 @@ $(document).ready(function() {
         if ($("#loginspan").html() == " Bejelentkezés") {
             $('#login_modal').modal('show'); 
         } else {   // logout
-            var logout_json = ajax_post("logout", 1);  
-            console.log(logout_json);
-            $("#loginspan").html(' Bejelentkezés');
-            $("#loginout").removeClass("bi bi-box-arrow-in-left");
-            $("#loginout").addClass("bi bi-box-arrow-in-right");
-            üzen("Sikeres logout", "success");
-            update_gombok(0); 
-            $("#user").html("");
-            $("#user-email").html("");
-            Kezdolap();
+            $("#logout_modal").modal("show");
+            
         }  
     });
+
+
+    $("#kijelentkezik").click(function() {
+        var logout_json = ajax_post("logout", 1);  
+        console.log(logout_json);
+        $("#loginspan").html(' Bejelentkezés');
+        $("#loginout").removeClass("bi bi-box-arrow-in-left");
+        $("#loginout").addClass("bi bi-box-arrow-in-right");
+        üzen("Sikeres logout", "success");
+        update_gombok(0); 
+        $("#user").html("Jelentkezz be a fiókodba");
+        $("#user-email").html("");
+        $("#csoport").html(``);
+        $("#admin").html("");
+        
+        webbolt_admin = false;
+        admin = false;
+        Kezdolap();
+    });
+
 
     $("#login_oksi_button").click(function() { 
         var l_json = ajax_post("login?"+$("#form_login").serialize(), 1) ;  
         if (l_json.message == "ok" && l_json.maxcount == 1) {  
-            $("#user").html(`<h5><i class="bi bi-person"></i> ${l_json.rows[0].NEV}</h5> (${l_json.rows[0].CSOPORT})`);
+            $("#user").html(`<h5><i class="bi bi-person"></i> ${l_json.rows[0].NEV}</h5>`);
             $("#user-email").html(`${l_json.rows[0].EMAIL}`);
+            
+            $("#csoport").html(`${l_json.rows[0].CSOPORT}`);
+
+            if (l_json.rows[0].ADMIN == "Y") $("#admin").html("<b>ADMIN</b>");
+            else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") $("#admin").html("<b>WEBBOLT ADMIN</b>");
+
+            
             $('#login_modal').modal('hide');
             üzen(`Vásárolj sokat ${l_json.rows[0].NEV}!`,"success");
             update_gombok(1); 
             $("#loginspan").html(' Kijelentkezés');
             $("#loginout").removeClass("bi bi-box-arrow-in-right");
             $("#loginout").addClass("bi bi-box-arrow-in-left");
+            if (l_json.rows[0].WEBBOLT_ADMIN == 'Y') webbolt_admin = true;
+            if (l_json.rows[0].ADMIN == 'Y') admin = true;
+            console.log("webbolt_admin: "+ admin);
             Kezdolap();
+            ADMINVAGYE();
 
         } else {    
             üzen(`Hibás felhasználónév, vagy jelszó!`,"danger");
@@ -297,10 +361,7 @@ $(document).ready(function() {
     });
 
 
-    $("#kereses_gomb").click(function() {
-        var usernev = $("#user-email").html();
-        alert(usernev);
-    });
+    
 
 
     $("#home_button").click(function() {
@@ -313,36 +374,10 @@ $(document).ready(function() {
 
 
 function Kezdolap() {
-    var ks = "";
-    if ($("#loginspan").html() == " Bejelentkezés") {
-        ks = "";
-    }
-    else ks = `<button class="btn btn-success bi bi-cart2"> Kosárba bele</button>`;
-
-
     var cuccos = ajax_post("keres", 1 );
-    
-    var s = "<div class='row'>"
-
-    for (const element of cuccos.rows) {
-         s += `
-         <div class="col-12 col-md-4">
-            <div class="card m-2 text-center">
-                <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
-                <div class="card-body">
-                    <h5 class="card-title">${element.NEV}</h5>
-                    <p class="card-text "><h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3></p>
-                    ${ks}
-                </div>
-            </div>
-         </div>
-         `
-         
-    }
-
-    s += "</div>";
-    
-    $("#Termek_hely").html(s);
+    CARD_BETOLT(cuccos);
+    nev1.value = "";
+    KategoriaFeltolt("kategoria_section");
 }
 
 
@@ -350,3 +385,6 @@ function update_gombok (x) {
 if (x == 0) { $("#insert_button").hide(); $("#cart_button").hide(); $("#delete_button").hide(); $("#admin_button").hide(); } 
 else        { $("#insert_button").show(); $("#cart_button").show(); $("#delete_button").show(); $("#admin_button").show(); }
 }
+
+
+
