@@ -10,7 +10,7 @@ const header2 = 'application/json; charset=UTF-8';
 
 app.use(express.static('public'));       // public/index.html a def.
 app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninitialized:true }));   /* https://www.js-tutorials.com/nodejs-tutorial/nodejs-session-example-using-express-session */
-var session_data;
+
 
 // masik edit
 
@@ -26,6 +26,7 @@ function strE(s) {
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
 function gen_SQL(req) {
+  var session_data = req.session;
   const mezők = [ "ID_TERMEK", "NEV", "AR"];
   // ---------------- sql tokenizer ... ---------------
 
@@ -62,7 +63,7 @@ function gen_SQL(req) {
       where += "(";
       for (var i=0; i < strE(req.query.kategoria).split("-").length - 1; ++i) 
         {
-          where += `k.ID_KATEGORIA=${strE(req.query.kategoria).split("-")[i]} or`;
+          where += `k.ID_KATEGORIA=${strE(req.query.kategoria).split("-")[i]} or `;
         }
       where = `${where.substring(0, where.length - 3)}) and `; 
     }
@@ -99,6 +100,8 @@ app.post('/keres', (req, res) => {
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
+  var session_data = req.session;
+
   var user= (req.query.login_nev? req.query.login_nev: "");
   var psw = (req.query.login_passwd? req.query.login_passwd  : "");
   var sql = `select ID_USER, NEV, EMAIL, ADMIN, WEBBOLT_ADMIN, CSOPORT from users where EMAIL="${user}" and PASSWORD=md5("${psw}") limit 1`;
@@ -120,7 +123,7 @@ async function login_toFrontend (req, res) {
 }
 
 app.post('/logout', (req, res) => {  
-  session_data = req.session;
+  var session_data = req.session;
   const uid = session_data.ID_USER; // annak a usernek az ID-ja aki kijelentkezett -> kosár törléshez
   console.log(uid);
   session_data.destroy(function(err) {
