@@ -121,6 +121,8 @@ function Search_rekord() {
 }
 
 
+// teszt komment megint xd
+
 
 function Termek_Mutat(cuccok) {
 
