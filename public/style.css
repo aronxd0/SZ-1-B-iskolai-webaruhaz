@@ -29,3 +29,13 @@
     object-fit: cover;
 }
 
+.card:hover {
+  cursor: pointer;
+}
+
+
+
+
+.offcanvas {
+  font-size: 15px;
+}
