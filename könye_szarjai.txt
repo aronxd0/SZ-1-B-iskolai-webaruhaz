@@ -1,0 +1,159 @@
+app.post('/rekord/:id',(req, res) => {
+  var sql = `SELECT * from webbolt_termekek where ID_TERMEK=${req.params.id} limit 1`;
+  sendJson_toFrontend (res, sql);         
+});
+
+app.post('/delete/:id',(req, res) => { delete_toFrontend (req, res) });
+
+async function delete_toFrontend (req, res) {
+  var sql  = `DELETE from webbolt_termekek where ID_TERMEK=${req.params.id} limit 1`;
+  var data = JSON.stringify({ "message":"Login required ám!", "rows":-1 });  // rest-api
+  session_data = req.session; 
+  if (session_data.ID_USER) { data = await runExecute(sql, req); } 
+  res.set(header1, header2);
+  res.send(data);
+  res.end();
+}
+
+app.post('/save/:id',(req, res) => { update_toFrontend (req, res) });
+
+async function update_toFrontend (req, res) {
+  var NEV       = (req.query.mod_nev? strE(req.query.mod_nev) : "");    //  escape seq! 
+  var AZON      = (req.query.mod_azon? strE(req.query.mod_azon) : "");     
+  var MENNYISEG = (req.query.mod_db? parseInt(req.query.mod_db) : 0); 
+  var AR        = (req.query.mod_ar? parseInt(req.query.mod_ar) : 0);
+  var ID_KAT    = (req.query.mod_kat? parseInt(req.query.mod_kat) : 0);
+  var MEEGYS    = (req.query.mod_meegys? strE(req.query.mod_meegys): "");
+  var LEIRAS    = (req.query.mod_leiras? strE(req.query.mod_leiras) : "");
+  var sql = "", msg = "", data = "";
+  
+  /*  login teszt! */
+  session_data = req.session; 
+  if (!session_data.ID_USER) {  msg = "Login required ám!"; }
+  if (msg == "")                      // nincs hiba  
+  {
+    /*  mezőellenőrzések! */
+    if (NEV == "")  msg += "A NÉV mezőt kötelező kitölteni!<br>";
+
+    // ide jön a többi ellenőrzés ... !!!
+  }
+
+  if (msg == "")                      // nincs hiba  
+  {
+    if (req.params.id > 0) {          // módosítás
+        sql = `UPDATE webbolt_termekek 
+                set NEV="${NEV}", ID_KATEGORIA=${ID_KAT}, AZON="${AZON}", MEEGYS="${MEEGYS}", 
+                LEIRAS="${LEIRAS}", MENNYISEG=${MENNYISEG}, AR=${AR} 
+                where ID_TERMEK=${req.params.id} limit 1`;
+    } else {                         // bevitel
+        sql = `INSERT into webbolt_termekek (NEV, ID_KATEGORIA, AZON, MEEGYS, LEIRAS, MENNYISEG, AR) 
+                values ("${NEV}",${ID_KAT},"${AZON}","${MEEGYS}","${LEIRAS}",${MENNYISEG},${AR})`;
+    }
+    data = await runExecute(sql, req); 
+    
+  }  else {                        // ... van hiba ...                    
+     data = JSON.stringify({ "message":msg, "rows":"-1" });  
+  }
+  res.set(header1, header2);
+  res.send(data);
+  res.end();
+
+}
+
+
+
+
+function Delete_rekord( idx ) {                        // törlés
+    $("#myModal1 .modal-body").html(`Törlöd a ${idx} azonosítójú terméket?`); 
+    $('#myModal1').off('click');                         // unbind, különben N.szer futna le az N. hívásra !!
+    $("#myModal1").on("click",".btn-success", function(){
+    var s = "";
+    var tip = "success"; 
+    var d_json = ajax_post("delete/"+ID, 1);
+    console.log(d_json);
+    if (d_json.message == "ok")                        // minden oksi ...
+    {
+    if (d_json.rows[0].affectedRows == 1) 
+    {
+        s= "Törlés OK..."; 
+        Search_rekord();                               // refresh táblázat
+    }     
+    else                                    
+    {
+        tip = "warning";
+        s= `Hiba: nincs meg az ID:[${idx}] azonosítójú rekord!<br>${d_json.message}`;}
+    }
+    else
+    {
+    tip = "danger";
+    s = d_json.message;
+    }  
+    üzen(s, tip); 
+});
+
+$("#myModal1").modal('show');
+}
+
+function Save_rekord() {                              // bevitel, vagy módosítás
+    var s = "";
+    var tip = "success"; 
+    var m_json = ajax_post("save/"+ID+"?"+$("#mod1").serialize(), 1);
+    console.log(m_json);
+    if (m_json.message == "ok")                       // minden oksi ...
+    {
+    if (m_json.rows[0].affectedRows == 1) 
+    {
+        s= "Módosítás OK..."; 
+        Search_rekord();                              // refresh táblázat
+    }     
+    else                                    
+    {
+        tip = "warning";
+        s= `Hiba: ID:[${idx}]!<br>${m_json.message}`;}
+    }
+    else
+    {
+    tip = "danger";
+    s = m_json.message;
+    }  
+    üzen(s, tip); 
+}
+
+function Edit_rekord( idx ) {   
+    $("#idx1").html("Termék " + (idx|0 > 0? "módosítás [ ID: "+idx+" ]" : "bevitel") ) ;   
+
+    $("#mod_kat").empty();                              // listbox ürítése
+    var k_json = ajax_post("kategoria", 1);             // JSON!
+    var listItems  = "";
+    for (var i = 0; i < k_json.rows.length; ++i)
+    {
+        listItems += `<option value='${k_json.rows[i].ID_KATEGORIA}'>${k_json.rows[i].KATEGORIA}</option>`;
+    }
+
+    $("#mod_kat").append(listItems);
+
+    if (idx == 0)              // bevitel
+    {
+        $("#mod_nev").val("");
+        $("#mod_azon").val(makeid(10));   // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+        $("#mod_ar").val(0);
+        $("#mod_db").val(1);
+        $("#mod_meegys").val("darab");
+        $("#mod_leiras").val("");
+
+    } else                     // módosítás
+    {
+        var r_json = ajax_post("rekord/"+ID, 1 );
+        $("#mod_kat").val(r_json.rows[0].ID_KATEGORIA).change();  // selected beállítása! https://stackoverflow.com/questions/13343566/set-select-option-selected-by-value
+        $("#mod_nev").val(r_json.rows[0].NEV);
+        $("#mod_azon").val(r_json.rows[0].AZON);
+        $("#mod_ar").val(r_json.rows[0].AR);
+        $("#mod_db").val(r_json.rows[0].MENNYISEG);
+        $("#mod_meegys").val(r_json.rows[0].MEEGYS);
+        $("#mod_leiras").val(r_json.rows[0].LEIRAS);
+        var datum = new Date();                                 // now - de felesleges a dátum, mivel mysql auto....
+        $("#mod_datum").val(datum.toISOString().split('T')[0]); // 2021-12-10T18:19:48.000Z'
+    }
+
+    $('#myModal0').modal('show');
+}
