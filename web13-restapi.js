@@ -4,7 +4,7 @@ const express = require('express');
 const session = require('express-session');
 const { stringify } = require('querystring');
 const app     = express();
-const port    = 3000;
+const port    = 9012;
 const header1 = 'Content-Type';
 const header2 = 'application/json; charset=UTF-8';
 
@@ -196,4 +196,4 @@ async function sendJson_toFrontend (res, sql) {
   res.end();
 }
 
-app.listen(port, function () { console.log(`progi app listening at http://localhost:${port}`); });
+app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });
