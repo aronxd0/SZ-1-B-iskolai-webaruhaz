@@ -28,21 +28,50 @@ function strE(s) {
 function gen_SQL(req) {
   const mezők = [ "ID_TERMEK", "NEV", "AR"];
   // ---------------- sql tokenizer ... ---------------
-  var where = `t.AKTIV = "Y" AND t.MENNYISEG > 0 AND `;   // mindig legyen aktív és készleten
-  var order  = (req.query.order? parseInt(req.query.order)         :   1);
-  var limit  = (req.query.limit? parseInt(req.query.limit)         : 100);
-  var offset = (req.query.offset? parseInt(req.query.offset)       :   0);
-  var id_kat = (req.query.kategoria? parseInt(req.query.kategoria) :  -1);
+
+  var order  = (req.query.order? parseInt(req.query.order)                :   1);
+  var limit  = (req.query.limit? parseInt(req.query.limit)                : 100);
+  var offset = (req.query.offset? parseInt(req.query.offset)              :   0);
+  var elfogyott = (req.query.elfogyott? parseInt(req.query.offset)        :   -1);
+  var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1);
+  var id_kat = (req.query.kategoria ?  strE(req.query.kategoria).length   : -1);
   var név    = (req.query.nev? req.query.nev :  "");
   var desc   = order < 0? "desc" : "";
+
+  var where = `(t.AKTIV = "Y" AND t.MENNYISEG >= 0) AND `;   // mindig legyen aktív és készleten
+  
+  if(session_data != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
+    where = "";
+  }
+
+  if(elfogyott != -1){
+    where = `(t.MENNYISEG = 0) AND `;   // adminnak mutassa csak az elfogyott termékeket
+  }
+  if(inaktiv != -1){
+    where = `(t.AKTIV = "N") AND `;   // adminnak mutassa csak az inaktív termékeket
+  }
+  if(elfogyott != -1 && inaktiv != -1){
+    where = `(t.AKTIV = "N" OR t.MENNYISEG = 0) AND `;   // adminnak mutassa csak az inaktív és elfogyott termékeket
+  }
+
+
   if (order < 0) { order *= -1; }
 
-  if (id_kat > 0)      { where += `k.ID_KATEGORIA=${id_kat} and `;   }
-  if (név.length > 0)  { where += `NEV like "${név}%" and `;   }
-  if (where.length >0) { where = " where "+where.substring(0, where.length-4);; }
+  if (id_kat != -1)      
+    {
+      where += "(";
+      for (var i=0; i < strE(req.query.kategoria).split("-").length - 1; ++i) 
+        {
+          where += `k.ID_KATEGORIA=${strE(req.query.kategoria).split("-")[i]} or`;
+        }
+      where = `${where.substring(0, where.length - 3)}) and `; 
+    }
+  
+  if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
+  if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
   var sql = 
-    `SELECT ID_TERMEK, NEV, k.KATEGORIA AS KATEGORIA, AR, MENNYISEG, MEEGYS, FOTOLINK
+    `SELECT ID_TERMEK, NEV, k.KATEGORIA AS KATEGORIA, AR, MENNYISEG, MEEGYS, FOTOLINK, AKTIV, LEIRAS
      FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ORDER BY ${mezők[order-1]} ${desc}
      limit ${limit} offset ${limit*offset} `;
@@ -50,7 +79,14 @@ function gen_SQL(req) {
 }
 
 app.post('/kategoria',(req, res) => {
-  var sql = "SELECT ID_KATEGORIA, KATEGORIA from webbolt_kategoriak order by KATEGORIA";
+  var where = `${req.query.nev != "" ? `where (NEV like "%${req.query.nev}%" or LEIRAS like "%${req.query.nev}%") ` : ""}`;
+  var sql = `
+    SELECT DISTINCT k.ID_KATEGORIA, k.KATEGORIA
+    FROM webbolt_kategoriak k 
+    inner JOIN webbolt_termekek t ON t.ID_KATEGORIA = k.ID_KATEGORIA
+    ${where}
+    ORDER BY k.KATEGORIA
+  `;
   sendJson_toFrontend (res, sql);           // async await ... 
 });
 
@@ -59,67 +95,6 @@ app.post('/keres', (req, res) => {
   sendJson_toFrontend (res, sql); 
 });
 
-app.post('/rekord/:id',(req, res) => {
-  var sql = `SELECT * from webbolt_termekek where ID_TERMEK=${req.params.id} limit 1`;
-  sendJson_toFrontend (res, sql);         
-});
-
-app.post('/delete/:id',(req, res) => { delete_toFrontend (req, res) });
-
-async function delete_toFrontend (req, res) {
-  var sql  = `DELETE from webbolt_termekek where ID_TERMEK=${req.params.id} limit 1`;
-  var data = JSON.stringify({ "message":"Login required ám!", "rows":-1 });  // rest-api
-  session_data = req.session; 
-  if (session_data.ID_USER) { data = await runExecute(sql, req); } 
-  res.set(header1, header2);
-  res.send(data);
-  res.end();
-}
-
-app.post('/save/:id',(req, res) => { update_toFrontend (req, res) });
-
-async function update_toFrontend (req, res) {
-  var NEV       = (req.query.mod_nev? strE(req.query.mod_nev) : "");    //  escape seq! 
-  var AZON      = (req.query.mod_azon? strE(req.query.mod_azon) : "");     
-  var MENNYISEG = (req.query.mod_db? parseInt(req.query.mod_db) : 0); 
-  var AR        = (req.query.mod_ar? parseInt(req.query.mod_ar) : 0);
-  var ID_KAT    = (req.query.mod_kat? parseInt(req.query.mod_kat) : 0);
-  var MEEGYS    = (req.query.mod_meegys? strE(req.query.mod_meegys): "");
-  var LEIRAS    = (req.query.mod_leiras? strE(req.query.mod_leiras) : "");
-  var sql = "", msg = "", data = "";
-  
-  /*  login teszt! */
-  session_data = req.session; 
-  if (!session_data.ID_USER) {  msg = "Login required ám!"; }
-  if (msg == "")                      // nincs hiba  
-  {
-    /*  mezőellenőrzések! */
-    if (NEV == "")  msg += "A NÉV mezőt kötelező kitölteni!<br>";
-
-    // ide jön a többi ellenőrzés ... !!!
-  }
-
-  if (msg == "")                      // nincs hiba  
-  {
-    if (req.params.id > 0) {          // módosítás
-        sql = `UPDATE webbolt_termekek 
-                set NEV="${NEV}", ID_KATEGORIA=${ID_KAT}, AZON="${AZON}", MEEGYS="${MEEGYS}", 
-                LEIRAS="${LEIRAS}", MENNYISEG=${MENNYISEG}, AR=${AR} 
-                where ID_TERMEK=${req.params.id} limit 1`;
-    } else {                         // bevitel
-        sql = `INSERT into webbolt_termekek (NEV, ID_KATEGORIA, AZON, MEEGYS, LEIRAS, MENNYISEG, AR) 
-                values ("${NEV}",${ID_KAT},"${AZON}","${MEEGYS}","${LEIRAS}",${MENNYISEG},${AR})`;
-    }
-    data = await runExecute(sql, req); 
-    
-  }  else {                        // ... van hiba ...                    
-     data = JSON.stringify({ "message":msg, "rows":"-1" });  
-  }
-  res.set(header1, header2);
-  res.send(data);
-  res.end();
-
-}
 
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
@@ -149,11 +124,20 @@ app.post('/logout', (req, res) => {
   const uid = session_data.ID_USER; // annak a usernek az ID-ja aki kijelentkezett -> kosár törléshez
   console.log(uid);
   session_data.destroy(function(err) {
+    if (err) {
+      console.error('Session destroy failed', err);
+      res.status(500).json({ message: 'Session destroy failed' });
+      return;
+    }
+    
+    // Send successful response after session is destroyed
     res.set(header1, header2);
-    res.json('Session destroy successfully');
+    res.json('Session destroyed successfully');
     res.end();
-  }); 
+  });
+  console.log(session_data)
 });
+
 
 async function runExecute(sql, req) {                     // insert, update, delete sql
   var msg = "ok";
