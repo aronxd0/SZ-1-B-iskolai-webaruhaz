@@ -33,9 +33,30 @@
   cursor: pointer;
 }
 
+.kk {
+  border-radius: 0.375rem;
+}
 
+.modal-open .modal-backdrop {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1 !important;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+/* Footer felső vonal eltüntetése */
+.modal-footer {
+  border-top: none;
+}
 
 
 .offcanvas {
   font-size: 15px;
+}
+
+.nagyobb {
+  font-size: 18px;
 }
