@@ -130,7 +130,7 @@ function Termek_Mutat(adatok) {
 
 
 
-// teszt anyád
+// teszt anyád cigány
 
 function CARD_BETOLT(adatok){
     console.log(adatok);
