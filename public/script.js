@@ -148,7 +148,7 @@ function Termek_Mutat(cuccok) {
     }*/
    var ks = "";
 
-    if ($("#loginspan").html() == " Bejelentkezés" || element.AKTIV == "N" || element.MENNYISEG == 0) {
+    if ($("#loginspan").html() == " Bejelentkezés" || aktiv == "N" || mennyiseg == 0) {
             ks = "";
     }
     else ks = `<button class="btn btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
