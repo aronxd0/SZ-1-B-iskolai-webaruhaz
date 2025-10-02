@@ -3,14 +3,14 @@ const mysql   = require('mysql2/promise');
 const express = require('express');
 const session = require('express-session');
 const { stringify } = require('querystring');
+const { BADHINTS } = require('dns');
 const app     = express();
-const port    = 9012;
+const port    = 3000;
 const header1 = 'Content-Type';
 const header2 = 'application/json; charset=UTF-8';
 
 app.use(express.static('public'));       // public/index.html a def.
 app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninitialized:true }));   /* https://www.js-tutorials.com/nodejs-tutorial/nodejs-session-example-using-express-session */
-
 
 // masik edit
 
@@ -26,20 +26,19 @@ function strE(s) {
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
 function gen_SQL(req) {
-  var session_data = req.session;
-  const mezők = [ "ID_TERMEK", "NEV", "AR"];
+  session_data = req.session;
   // ---------------- sql tokenizer ... ---------------
 
-  var order  = (req.query.order? parseInt(req.query.order)                :   1);
+  var order  = (req.query.order? parseInt(req.query.order)                :   0);
   var limit  = (req.query.limit? parseInt(req.query.limit)                : 100);
   var offset = (req.query.offset? parseInt(req.query.offset)              :   0);
   var elfogyott = (req.query.elfogyott? parseInt(req.query.offset)        :   -1);
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1);
   var id_kat = (req.query.kategoria ?  strE(req.query.kategoria).length   : -1);
   var név    = (req.query.nev? req.query.nev :  "");
-  var desc   = order < 0? "desc" : "";
 
-  var where = `(t.AKTIV = "Y" AND t.MENNYISEG >= 0) AND `;   // mindig legyen aktív és készleten
+  var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // mindig legyen aktív és készleten
+  
   
   if(session_data != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
     where = "";
@@ -55,8 +54,14 @@ function gen_SQL(req) {
     where = `(t.AKTIV = "N" OR t.MENNYISEG = 0) AND `;   // adminnak mutassa csak az inaktív és elfogyott termékeket
   }
 
+  var order_van = "";
+  switch (Math.abs(order)) {
+    case 1: order_van = "ORDER BY AR";  break;   // név alapján rendezés, asc/desc később
+    case 2: order_van = "ORDER BY NEV"; break;   // ár alapján rendezés, asc/desc később
+    case 3: order_van = "ORDER BY MENNYISEG"; break;   // ár alapján rendezés, asc/desc később
+    default: order_van = "" ; break;  // nincs rendezés
+  }
 
-  if (order < 0) { order *= -1; }
 
   if (id_kat != -1)      
     {
@@ -71,11 +76,14 @@ function gen_SQL(req) {
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
   if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
+  console.log("sdawdaw: ", where )
+
   var sql = 
-    `SELECT ID_TERMEK, NEV, k.KATEGORIA AS KATEGORIA, AR, MENNYISEG, MEEGYS, FOTOLINK, AKTIV, LEIRAS
+    `SELECT t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA
      FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
-     ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ORDER BY ${mezők[order-1]} ${desc}
+     ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${order_van} ${order<0? "DESC": ""}
      limit ${limit} offset ${limit*offset} `;
+     //console.log(sql);
   return (sql);
 }
 
@@ -100,8 +108,6 @@ app.post('/keres', (req, res) => {
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
-  var session_data = req.session;
-
   var user= (req.query.login_nev? req.query.login_nev: "");
   var psw = (req.query.login_passwd? req.query.login_passwd  : "");
   var sql = `select ID_USER, NEV, EMAIL, ADMIN, WEBBOLT_ADMIN, CSOPORT from users where EMAIL="${user}" and PASSWORD=md5("${psw}") limit 1`;
@@ -123,7 +129,7 @@ async function login_toFrontend (req, res) {
 }
 
 app.post('/logout', (req, res) => {  
-  var session_data = req.session;
+  session_data = req.session;
   const uid = session_data.ID_USER; // annak a usernek az ID-ja aki kijelentkezett -> kosár törléshez
   console.log(uid);
   session_data.destroy(function(err) {
@@ -138,11 +144,11 @@ app.post('/logout', (req, res) => {
     res.json('Session destroyed successfully');
     res.end();
   });
-  console.log(session_data)
 });
 
 
 async function runExecute(sql, req) {                     // insert, update, delete sql
+  session_data = req.session;
   var msg = "ok";
   var json_data, conn, res1, jrn1, jrn;
   var userx = "- no login -";
@@ -196,4 +202,4 @@ async function sendJson_toFrontend (res, sql) {
   res.end();
 }
 
-app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });
+app.listen(port, function () { console.log(`progi app listening at http://localhost:${port}`); });
