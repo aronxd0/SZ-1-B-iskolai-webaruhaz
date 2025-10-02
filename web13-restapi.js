@@ -108,6 +108,8 @@ app.post('/max_min', (req, res) => {
   sendJson_toFrontend (res, sql.substring(0, sql.indexOf("limit"))); 
 });
 
+// ez rossz
+
 
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
