@@ -401,8 +401,8 @@ function Elfogyott(alma){
 
 function ADMINVAGYE(){
     if(admin){
-        document.getElementById("Elfogyott_gomb").innerHTML = `<h6>Csak az elfogyott áruk mutatása: <input type="checkbox" value="Csakelfogyott" onchange="Elfogyott(this)"> </h6>`;
-        document.getElementById("NEM_AKTIV").innerHTML = `<h6>Csak az inaktiv áruk mutatása: <input type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)"> </h6>`;
+        document.getElementById("Elfogyott_gomb").innerHTML = `<h6>Csak az elfogyott áruk mutatása: <input class="form-check-input" type="checkbox" value="Csakelfogyott" onchange="Elfogyott(this)"> </h6>`;
+        document.getElementById("NEM_AKTIV").innerHTML = `<h6>Csak az inaktiv áruk mutatása: <input class="form-check-input" type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)"> </h6>`;
     } 
 }
 
