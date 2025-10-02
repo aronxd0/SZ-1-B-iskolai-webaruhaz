@@ -181,8 +181,8 @@ function Termek_Mutat(cuccok) {
     
     `;
 
-    $("#egy").html(bal);
-    $("#ketto").html(kozep);
+    $("#bal").html(bal);
+    $("#jobb").html(kozep);
 
     $("#termeknev").html(nev);
 
