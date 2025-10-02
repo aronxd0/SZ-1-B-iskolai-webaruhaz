@@ -28,7 +28,7 @@ function gen_SQL(req) {
   // ---------------- sql tokenizer ... ---------------
 
   var order  = (req.query.order? parseInt(req.query.order)                :   0);
-  var limit  = (req.query.limit? parseInt(req.query.limit)                : 100);
+  var limit  = (req.query.limit? parseInt(req.query.limit)                : 50);
   var offset = (req.query.offset? parseInt(req.query.offset)              :   0);
   var elfogyott = (req.query.elfogyott? parseInt(req.query.offset)        :   -1);
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1);
@@ -208,4 +208,4 @@ async function sendJson_toFrontend (res, sql) {
   res.end();
 }
 
-app.listen(port, function () { console.log(`progi app listening at http://localhost:${port}`); });
+app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });

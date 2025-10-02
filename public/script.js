@@ -41,19 +41,28 @@ function ajax_get( urlsor, hova, tipus, aszinkron ) {         // html oldalak be
     return true;
 };
 
-function ajax_post( urlsor, tipus  ) {                         // json restapi-hoz használjuk
-    var s = "";
-    $.ajax({url: urlsor, type:"post", async:false, cache:false, dataType:tipus===0?'html':'json',
+function ajax_post( urlsor, tipus, callback ) {                         // json restapi-hoz használjuk
+    //var s = "";
+    $.ajax({url: urlsor, type:"post", async:true, cache:false, dataType:tipus===0?'html':'json',
         beforeSend:function(xhr)   { 
-            var spinner = '<div id="spinner" class="spinner-border text-primary" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;"></div>';
-            // Spinner hozzáadása a body-hoz
+            var spinner = `<div id="spinner-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;
+                                        background:rgba(0,0,0,0.6);z-index:9999;
+                                        display:flex;align-items:center;justify-content:center;">
+                                <div class="spinner-border text-primary"  >
+                                <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+  
+  `;
             $('body').append(spinner);
          },
-        success:   function(data)  { s = data; },
+        success:   function(data)  { 
+            //s = data;
+            callback(data); 
+        },
         error:     function(jqXHR, textStatus, errorThrown) {üzen(jqXHR.responseText, "danger");},
-        complete:  function()      { $('#spinner').remove(); }
+        complete:  function()      { $('#spinner-overlay').remove(); }
     });
-    return s;
 };  
 
 function orderby( num )   {
@@ -259,19 +268,21 @@ function CARD_BETOLT(adatok){
   
     s += "</div>";
 
-    var maxmin = ajax_post("max_min",1)
+    ajax_post("max_min",1, function(maxmin) {
+        document.getElementById("min_ar").min = maxmin.rows[0].MINAR;
+        document.getElementById("max_ar").max = maxmin.rows[0].MAXAR;
 
-    document.getElementById("min_ar").min = maxmin.rows[0].MINAR;
-    document.getElementById("max_ar").max = maxmin.rows[0].MAXAR;
+        document.getElementById("max_ar").value = maxmin.rows[0].MAXAR;
+        document.getElementById("min_ar").value = maxmin.rows[0].MINAR;
 
-    document.getElementById("max_ar").value = maxmin.rows[0].MAXAR;
-    document.getElementById("min_ar").value = maxmin.rows[0].MINAR;
+        document.getElementById("min_ar_input").value = maxmin.rows[0].MINAR;
+        document.getElementById("max_ar_input").value = maxmin.rows[0].MAXAR;
 
-    document.getElementById("min_ar_input").value = maxmin.rows[0].MINAR;
-    document.getElementById("max_ar_input").value = maxmin.rows[0].MAXAR;
+        console.log("maxar: " + maxmin.rows[0].MAXAR);
+        console.log("minar: " + maxmin.rows[0].MINAR);
+    });
 
-    console.log("maxar: " + maxmin.rows[0].MAXAR);
-    console.log("minar: " + maxmin.rows[0].MINAR);
+    
     
     $("#Termek_hely").html(s);
 }
@@ -307,26 +318,31 @@ function KERESOBAR(){
 
     console.log("fronted log ID-K: "+ bepipaltID );
 
-    var adatok = ajax_post("keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order , 1 ); // elküldöm lekérdezni
-    CARD_BETOLT(adatok);
+    ajax_post("keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order , 1, function(adatok){ 
+        CARD_BETOLT(adatok);
+    } ); // elküldöm lekérdezni
+    
     KategoriaFeltolt("kategoria_section");
 }
 
 
 function KategoriaFeltolt(hova) {
     $(`#${hova}`).html("");                              
-    var k_json = ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);            
-    var listItems  = "";
-    for (var i = 0; i < k_json.rows.length; ++i) {
-        var pipa = ""
-        if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
-            pipa = "checked";
+    ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1, function(k_json) {
+        var listItems  = "";
+        for (var i = 0; i < k_json.rows.length; ++i) {
+            var pipa = ""
+            if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
+                pipa = "checked";
+            }
+            listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <Label class="form-check-label" id="lbl" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </Label> </p>`;
         }
-        listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <Label class="form-check-label" id="lbl" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </Label> </p>`;
-    }
 
-    $(`#${hova}`).html(listItems);
-    console.log($("#nev1").val());
+        $(`#${hova}`).html(listItems);
+        console.log($("#nev1").val());
+
+    });            
+    
 }
 function Elfogyott(alma){
     if(alma.value == "Csakelfogyott"){
@@ -420,63 +436,67 @@ $(document).ready(function() {
 
     $('#login_modal').on('hidden.bs.modal', function () {
         console.log('A modal bezárult és eltűnt!');
-        ajax_post("logout", 1);
+        //ajax_post("logout", 1);
     });
 
 
     $("#kijelentkezik").click(function() {
-        var logout_json = ajax_post("logout", 1);  
-        console.log(logout_json);
-        $("#loginspan").html(' Bejelentkezés');
-        $("#loginout").removeClass("bi bi-box-arrow-in-left");
-        $("#loginout").addClass("bi bi-box-arrow-in-right");
-        üzen("Sikeres logout", "success");
-        update_gombok(0); 
-        $("#user").html("Jelentkezz be a fiókodba");
-        $("#user-email").html("");
-        $("#csoport").html(``);
-        $("#admin").html("");
-        
-        webbolt_admin = false;
-        admin = false;
-        elfogyott = false;
-        Nemaktivak = false;
-        
-        document.getElementById("rendalap").selected = true;
+        ajax_post("logout", 1, function(logout_json) {
+            console.log(logout_json);
+            $("#loginspan").html(' Bejelentkezés');
+            $("#loginout").removeClass("bi bi-box-arrow-in-left");
+            $("#loginout").addClass("bi bi-box-arrow-in-right");
+            üzen("Sikeres logout", "success");
+            update_gombok(0); 
+            $("#user").html("Jelentkezz be a fiókodba");
+            $("#user-email").html("");
+            $("#csoport").html(``);
+            $("#admin").html("");
+            
+            webbolt_admin = false;
+            admin = false;
+            elfogyott = false;
+            Nemaktivak = false;
+            
+            document.getElementById("rendalap").selected = true;
 
-        document.getElementById("Elfogyott_gomb").innerHTML = ``;
-        document.getElementById("NEM_AKTIV").innerHTML = ``;
-        Kezdolap();
+            document.getElementById("Elfogyott_gomb").innerHTML = ``;
+            document.getElementById("NEM_AKTIV").innerHTML = ``;
+            Kezdolap();
+        });  
+        
     });
 
 
     $("#login_oksi_button").click(function() { 
-        var l_json = ajax_post("login?"+$("#form_login").serialize(), 1) ;  
-        if (l_json.message == "ok" && l_json.maxcount == 1) {  
-            $("#user").html(`<h5><i class="bi bi-person"></i> ${l_json.rows[0].NEV}</h5>`);
-            $("#user-email").html(`${l_json.rows[0].EMAIL}`);
-            
-            $("#csoport").html(`${l_json.rows[0].CSOPORT}`);
+        ajax_post("login?"+$("#form_login").serialize(), 1, function(l_json) {
+            if (l_json.message == "ok" && l_json.maxcount == 1) {  
+                $("#user").html(`<h5><i class="bi bi-person"></i> ${l_json.rows[0].NEV}</h5>`);
+                $("#user-email").html(`${l_json.rows[0].EMAIL}`);
+                
+                $("#csoport").html(`${l_json.rows[0].CSOPORT}`);
 
-            if (l_json.rows[0].ADMIN == "Y") $("#admin").html("<b>ADMIN</b>");
-            else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") $("#admin").html("<b>WEBBOLT ADMIN</b>");
+                if (l_json.rows[0].ADMIN == "Y") $("#admin").html("<b>ADMIN</b>");
+                else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") $("#admin").html("<b>WEBBOLT ADMIN</b>");
 
-            
-            $('#login_modal').modal('hide');
-            üzen(`Vásárolj sokat ${l_json.rows[0].NEV}!`,"success");
-            update_gombok(1); 
-            $("#loginspan").html(' Kijelentkezés');
-            $("#loginout").removeClass("bi bi-box-arrow-in-right");
-            $("#loginout").addClass("bi bi-box-arrow-in-left");
-            if (l_json.rows[0].WEBBOLT_ADMIN == 'Y') webbolt_admin = true;
-            if (l_json.rows[0].ADMIN == 'Y') admin = true;
-            console.log("webbolt_admin: "+ admin);
-            Kezdolap();
-            ADMINVAGYE();
+                
+                $('#login_modal').modal('hide');
+                üzen(`Vásárolj sokat ${l_json.rows[0].NEV}!`,"success");
+                update_gombok(1); 
+                $("#loginspan").html(' Kijelentkezés');
+                $("#loginout").removeClass("bi bi-box-arrow-in-right");
+                $("#loginout").addClass("bi bi-box-arrow-in-left");
+                if (l_json.rows[0].WEBBOLT_ADMIN == 'Y') webbolt_admin = true;
+                if (l_json.rows[0].ADMIN == 'Y') admin = true;
+                console.log("webbolt_admin: "+ admin);
+                Kezdolap();
+                ADMINVAGYE();
 
-        } else {    
-            üzen(`Hibás felhasználónév, vagy jelszó!`,"danger");
-        }
+            } else {    
+                üzen(`Hibás felhasználónév, vagy jelszó!`,"danger");
+            }
+        });  
+        
     });
 
 
@@ -521,10 +541,12 @@ $(document).ready(function() {
 
 
 function Kezdolap() {
-    var cuccos = ajax_post("keres", 1 );  // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
-    CARD_BETOLT(cuccos);
-    nev1.value = "";
-    KategoriaFeltolt("kategoria_section");
+    ajax_post("keres", 1, function(cuccos) {
+        CARD_BETOLT(cuccos);
+        nev1.value = "";
+        KategoriaFeltolt("kategoria_section");
+    });  // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
+    
 }
 
 
