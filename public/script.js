@@ -319,7 +319,7 @@ function KERESOBAR(){
 }
 function ArFeltolt(sql){
     var arak = ajax_post(sql+"&maximum_ar=1",1);
-    console.log(arak.MAXAR + ": ez az ar ");
+    console.log(arak.rows[0].MAXAR + ": ez az ar ");
     document.getElementById("min_ar").min = arak.rows[0].MINAR;
     document.getElementById("max_ar").max = arak.rows[0].MAXAR;
 
