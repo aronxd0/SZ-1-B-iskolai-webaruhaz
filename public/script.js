@@ -146,6 +146,13 @@ function Termek_Mutat(cuccok) {
         $("#termek_content").append(cuccok + "<br>");
         
     }*/
+   var ks = "";
+
+    if ($("#loginspan").html() == " Bejelentkezés" || element.AKTIV == "N" || element.MENNYISEG == 0) {
+            ks = "";
+    }
+    else ks = `<button class="btn btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
+
 
     var bal = ` <div class="row">
                     <img class="img img-fluid mx-auto rounded m-1 d-block kk" src="${fotolink}" alt="${nev}">
@@ -177,6 +184,10 @@ function Termek_Mutat(cuccok) {
                     </div>
                     <div class="row">
                         <h1 class="text-success anton-regular">${parseInt(ar).toLocaleString()} Ft</h1>
+                    </div>
+
+                    <div class="row">
+                        ${ks}
                     </div>
     
     `;
@@ -271,7 +282,7 @@ function CARD_BETOLT(adatok){
         if ($("#loginspan").html() == " Bejelentkezés" || element.AKTIV == "N" || element.MENNYISEG == 0) {
             ks = "";
         }
-        else ks = `<button class="btn btn-success bi bi-cart2"> Kosárba bele</button>`;
+        else ks = `<button class="btn btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
 
         var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
         
