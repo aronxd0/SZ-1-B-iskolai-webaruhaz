@@ -85,7 +85,6 @@ function gen_SQL(req) {
      ${maxmin_arkell == 1 ? "" : `limit ${limit} offset ${limit*offset}`}
      `;
   console.log(sql);
-  
   return (sql);
 }
 
