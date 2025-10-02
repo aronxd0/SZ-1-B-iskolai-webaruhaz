@@ -148,7 +148,7 @@ function Termek_Mutat(cuccok) {
     }*/
    var ks = "";
 
-    if ($("#loginspan").html() == " Bejelentkezés" || element.AKTIV == "N" || element.MENNYISEG == 0) {
+    if ($("#loginspan").html() == " Bejelentkezés" || aktiv == "N" || mennyiseg == 0) {
             ks = "";
     }
     else ks = `<button class="btn btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
@@ -186,7 +186,7 @@ function Termek_Mutat(cuccok) {
                         <h1 class="text-success anton-regular">${parseInt(ar).toLocaleString()} Ft</h1>
                     </div>
 
-                    <div class="row">
+                    <div class="row p-2">
                         ${ks}
                     </div>
     
@@ -354,8 +354,8 @@ function Elfogyott(alma){
 
 function ADMINVAGYE(){
     if(admin){
-        document.getElementById("Elfogyott_gomb").innerHTML = `<h6>Csak az elfogyott áruk mutatása: <input type="checkbox" value="Csakelfogyott" onchange="Elfogyott(this)"> </h6>`;
-        document.getElementById("NEM_AKTIV").innerHTML = `<h6>Csak az inaktiv áruk mutatása: <input type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)"> </h6>`;
+        document.getElementById("Elfogyott_gomb").innerHTML = `<h6>Csak az elfogyott áruk mutatása: <input class="form-check-input" type="checkbox" value="Csakelfogyott" onchange="Elfogyott(this)"> </h6>`;
+        document.getElementById("NEM_AKTIV").innerHTML = `<h6>Csak az inaktiv áruk mutatása: <input class="form-check-input" type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)"> </h6>`;
     } 
 }
 
