@@ -187,13 +187,14 @@ function Termek_Mutat(cuccok) {
                     </div>
 
                     <div class="row p-2">
-                        ${ks}
+                        
                     </div>
     
     `;
 
     $("#bal").html(bal);
     $("#jobb").html(kozep);
+    $("#alul").html(ks);
 
     $("#termeknev").html(nev);
 
