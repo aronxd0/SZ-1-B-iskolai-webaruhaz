@@ -295,6 +295,11 @@ function CARD_BETOLT(adatok){
     }
   
     s += "</div>";
+
+    document.getElementById("min_ar").min = adatok.rows[0].MINAR;
+    document.getElementById("max_ar").max = adatok.rows[0].MAXAR;
+    document.getElementById("min_ar_input").value = adatok.rows[0].MINAR;
+    document.getElementById("max_ar_input").value = adatok.rows[0].MINAR;
     
     $("#Termek_hely").html(s);
 }
