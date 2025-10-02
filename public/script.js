@@ -62,8 +62,6 @@ function orderby( num )   {
     Search_rekord();    
 }
 
-// fasz asd
-//asdsd
 
 function Search_rekord() {
     $("tr.xsor").off('click');                          // unbind,
