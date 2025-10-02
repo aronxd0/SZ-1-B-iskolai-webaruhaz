@@ -126,26 +126,67 @@ function Search_rekord() {
 function Termek_Mutat(cuccok) {
     
 
-    var termek_id = cuccok.split(";")[0];
-    var id_kategoria = cuccok.split(";")[1];
-    var nev = cuccok.split(";")[2];
-    var azon = cuccok.split(";")[3];
-    var ar = cuccok.split(";")[4];
-    var mennyiseg = cuccok.split(";")[5];
-    var meegys = cuccok.split(";")[6];
-    var aktiv = cuccok.split(";")[7];
-    var termeklink = cuccok.split(";")[8];
-    var fotolink = cuccok.split(";")[9];
-    var leiras = cuccok.split(";")[10];
-    var datumido = cuccok.split(";")[11];
-    
-    $("#termeknev_title").html(nev);
-    
-    
-    
-    $("#termek_content").html(cuccok + "<br>" + termek_id);
+    console.log(`cuccok: ${cuccok}`);
 
-    if (aktiv == "N" || mennyiseg == 0) alert("ez a termek jelenleg nem elerheto");
+    var termek_id = cuccok[0];
+    var kategoria = cuccok[1];
+    var nev = cuccok[2];
+    var azon = cuccok[3];
+    var ar = cuccok[4];
+    var mennyiseg = cuccok[5];
+    var meegys = cuccok[6];
+    var aktiv = cuccok[7];
+    var termeklink = cuccok[8];
+    var fotolink = cuccok[9];
+    var leiras = cuccok[10];
+    var datumido = cuccok[11];
+
+    /*
+    for (let index = 0; index < 100; index++) {
+        $("#termek_content").append(cuccok + "<br>");
+        
+    }*/
+
+    var bal = ` <div class="row">
+                    <img class="img img-fluid mx-auto rounded m-1 d-block kk" src="${fotolink}" alt="${nev}">
+                </div>
+                
+    `;
+
+    var kozep = `   <div class="row mt-2">
+                        <b>Termékleírás:</b>
+                        <br>
+                        <p>${leiras}</p>
+                    </div>
+    
+                    <div class"row">
+                        <p>
+                            <b>Kategória: </b> ${kategoria}
+                        </p>
+                    </div>
+    
+                    <div class"row">
+                        <p>
+                            <b>Termékazonosító: </b> ${azon}
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p> 
+                            <b> Raktáron: </b> ${mennyiseg} ${meegys}
+                        </p>
+                    </div>
+                    <div class="row">
+                        <h1 class="text-success anton-regular">${parseInt(ar).toLocaleString()} Ft</h1>
+                    </div>
+    
+    `;
+
+    $("#egy").html(bal);
+    $("#ketto").html(kozep);
+
+    $("#termeknev").html(nev);
+
+    if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
     else $("#termekview").modal('show');
 
     
@@ -161,7 +202,7 @@ function Termek_Mutat(cuccok) {
 
 
 
-
+ // cigény
 
 
 
