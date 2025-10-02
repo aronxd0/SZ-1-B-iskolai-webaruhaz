@@ -206,57 +206,10 @@ function Termek_Mutat(cuccok) {
 
 
 
-//almas
-
-
-
-
-
-
- // cigény
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function CARD_BETOLT(adatok){
-    console.log(adatok);
     var ks = "";
-     
-  
     var s = "<div class='row'>"
-  
     var el = "";
-
     let cuccli = [];
 
     for (const element of adatok.rows) {
@@ -266,13 +219,11 @@ function CARD_BETOLT(adatok){
                         Nem elérhető
                     </div>
             `;
-
-            
+           
         }
         else el = `
                 <h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3>
         `;
-
 
         cuccli = [];
 
@@ -307,17 +258,19 @@ function CARD_BETOLT(adatok){
   
     s += "</div>";
 
-    document.getElementById("min_ar").min = adatok.rows[0].MINAR;
-    document.getElementById("max_ar").max = adatok.rows[0].MAXAR;
+    var maxmin = ajax_post("max_min",1)
 
-    document.getElementById("max_ar").value = adatok.rows[0].MAXAR;
-    document.getElementById("min_ar").value = adatok.rows[0].MINAR;
+    document.getElementById("min_ar").min = maxmin.rows[0].MINAR;
+    document.getElementById("max_ar").max = maxmin.rows[0].MAXAR;
 
-    document.getElementById("min_ar_input").value = adatok.rows[0].MINAR;
-    document.getElementById("max_ar_input").value = adatok.rows[0].MAXAR;
+    document.getElementById("max_ar").value = maxmin.rows[0].MAXAR;
+    document.getElementById("min_ar").value = maxmin.rows[0].MINAR;
 
-    console.log("maxar: " + adatok.rows[0].MAXAR);
-    console.log("minar: " + adatok.rows[0].MINAR);
+    document.getElementById("min_ar_input").value = maxmin.rows[0].MINAR;
+    document.getElementById("max_ar_input").value = maxmin.rows[0].MAXAR;
+
+    console.log("maxar: " + maxmin.rows[0].MAXAR);
+    console.log("minar: " + maxmin.rows[0].MINAR);
     
     $("#Termek_hely").html(s);
 }
