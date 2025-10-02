@@ -147,7 +147,7 @@ function Termek_Mutat(cuccok) {
 
     if (aktiv == "N" || mennyiseg == 0) alert("ez a termek jelenleg nem elerheto");
     else $("#termekview").modal('show');
-
+    
     
     
 }
