@@ -271,19 +271,6 @@ function CARD_BETOLT(adatok){
   
     s += "</div>";
 
-    ajax_post(`keres?nev="+ ${nev1.value}+"&kategoria="+${bepipaltID}+ ${elfogy} + ${nemaktiv}+${order}`,1, function(maxmin) {
-        document.getElementById("min_ar").min = maxmin.rows[0].MINAR;
-        document.getElementById("max_ar").max = maxmin.rows[0].MAXAR;
-
-        document.getElementById("max_ar").value = maxmin.rows[0].MAXAR;
-        document.getElementById("min_ar").value = maxmin.rows[0].MINAR;
-
-        document.getElementById("min_ar_input").value = maxmin.rows[0].MINAR;
-        document.getElementById("max_ar_input").value = maxmin.rows[0].MAXAR;
-
-        console.log("maxar: " + maxmin.rows[0].MAXAR);
-        console.log("minar: " + maxmin.rows[0].MINAR);
-    });
 
     if ($("#nev1").val() != "") $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
     else $("#keresett_kifejezes").html();
