@@ -311,16 +311,15 @@ function KERESOBAR(){
     var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order ;
     ajax_post(elküld , 1, function(adatok){ 
         CARD_BETOLT(adatok);
-
     } ); // elküldöm lekérdezni
     
     KategoriaFeltolt("kategoria_section");
     ArFeltolt(elküld);
-
+    console.log("elküldve: "+ elküld);
 }
 function ArFeltolt(sql){
     var arak = ajax_post(sql+"&maximum_ar=1",1);
-    console.log(arak.rows[0].MAXAR);
+    console.log(arak.rows[0].MAXAR + ": ez az ar ");
     document.getElementById("min_ar").min = arak.rows[0].MINAR;
     document.getElementById("max_ar").max = arak.rows[0].MAXAR;
 
