@@ -36,7 +36,7 @@ function gen_SQL(req) {
   var név    = (req.query.nev? req.query.nev :  "");
   var minimum_ar = (req.query.minimum_ar? parseInt(req.query.minimum_ar) : 0);
   var maxmin_arkell = (req.query.maximum_ar? parseInt(req.query.maximum_ar) : 0); // 1 ha igen, 0 ha nem
-  console.log("maxmin_arkell: "+ maxmin_arkell);
+  
 
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // mindig legyen aktív és készleten
   
@@ -84,6 +84,8 @@ function gen_SQL(req) {
      ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${order_van} ${order<0? "DESC": ""}
      ${maxmin_arkell == 1 ? "" : `limit ${limit} offset ${limit*offset}`}
      `;
+  console.log(sql);
+  
   return (sql);
 }
 

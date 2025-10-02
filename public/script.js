@@ -321,17 +321,18 @@ function ArFeltolt(sql){
     var arak = ajax_post(sql+"&maxmin_arkell=1",1);
     console.log(sql+"&maxmin_arkell=1");
     console.log(arak);
-    document.getElementById("min_ar").min = arak.rows[0].MINAR;
-    document.getElementById("max_ar").max = arak.rows[0].MAXAR;
 
-    document.getElementById("max_ar").value = arak.rows[0].MAXAR;
-    document.getElementById("min_ar").value = arak.rows[0].MINAR;
+   // document.getElementById("min_ar").min = arak.rows[0].MINAR;
+    //document.getElementById("max_ar").max = arak.rows[0].MAXAR;
 
-    document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
-    document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
+    //document.getElementById("max_ar").value = arak.rows[0].MAXAR;
+   // document.getElementById("min_ar").value = arak.rows[0].MINAR;
 
-    console.log("maxar: " + arak.rows[0].MAXAR);
-    console.log("minar: " + arak.rows[0].MINAR);
+    //document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
+    //document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
+
+    //console.log("maxar: " + arak.rows[0].MAXAR);
+   // console.log("minar: " + arak.rows[0].MINAR);
 }
 
 
