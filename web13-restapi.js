@@ -9,6 +9,8 @@ const port    = 9012;
 const header1 = 'Content-Type';
 const header2 = 'application/json; charset=UTF-8';
 
+//awbdauzdvagvdga
+
 app.use(express.static('public'));       // public/index.html a def.
 app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninitialized:true }));   /* https://www.js-tutorials.com/nodejs-tutorial/nodejs-session-example-using-express-session */
 
