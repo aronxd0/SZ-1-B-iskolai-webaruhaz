@@ -12,7 +12,6 @@ const header2 = 'application/json; charset=UTF-8';
 app.use(express.static('public'));       // public/index.html a def.
 app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninitialized:true }));   /* https://www.js-tutorials.com/nodejs-tutorial/nodejs-session-example-using-express-session */
 
-
 const mysql_connection =  {
   host: 'sexard3-214.tolna.net',     /* 10.2.0.11:3306 - fsw */
   user: 'szaloky.adam',         /* CREATE USER 'itbolt_user'@'%' IDENTIFIED BY '123456'; GRANT all privileges ON ITBOLT.* TO 'itbolt_user'@'%' */ 
@@ -78,13 +77,11 @@ function gen_SQL(req) {
   if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
 
-
   var sql = 
     `SELECT t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA,  MAX(t.AR) OVER (PARTITION BY t.ID_KATEGORIA) AS MAXAR, MIN(t.AR) OVER (PARTITION BY t.ID_KATEGORIA) AS MINAR
      FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${order_van} ${order<0? "DESC": ""}
      limit ${limit} offset ${limit*offset} `;
-     console.log(sql);
   return (sql);
 }
 
@@ -102,6 +99,12 @@ app.post('/kategoria',(req, res) => {
 
 app.post('/keres', (req, res) => {  
   var sql = gen_SQL(req);                   // sql select generátor (tokenizer)
+  sendJson_toFrontend (res, sql); 
+});
+
+app.post('/max_min', (req, res) => {
+  var sql = gen_SQL(req).substring(0, sql.indexOf("limit"));  // sql select generátor használatával offset és limit nélkül max és min
+  console.log(sql);                   
   sendJson_toFrontend (res, sql); 
 });
 
