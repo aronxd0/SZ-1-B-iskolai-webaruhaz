@@ -103,9 +103,9 @@ app.post('/keres', (req, res) => {
 });
 
 app.post('/max_min', (req, res) => {
-  var sql = gen_SQL(req).substring(0, sql.indexOf("limit"));  // sql select generátor használatával offset és limit nélkül max és min
+  var sql = gen_SQL(req);  // sql select generátor használatával offset és limit nélkül max és min
   console.log(sql);                   
-  sendJson_toFrontend (res, sql); 
+  sendJson_toFrontend (res, sql.substring(0, sql.indexOf("limit"))); 
 });
 
 
