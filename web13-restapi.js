@@ -78,7 +78,7 @@ function gen_SQL(req) {
   console.log("sdawdaw: ", where )
 
   var sql = 
-    `SELECT t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA
+    `SELECT t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA, MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR
      FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${order_van} ${order<0? "DESC": ""}
      limit ${limit} offset ${limit*offset} `;
