@@ -309,9 +309,13 @@ function CARD_BETOLT(adatok){
 
     document.getElementById("min_ar").min = adatok.rows[0].MINAR;
     document.getElementById("max_ar").max = adatok.rows[0].MAXAR;
+
+    document.getElementById("max_ar").value = adatok.rows[0].MAXAR;
+    document.getElementById("min_ar").value = adatok.rows[0].MINAR;
+
     document.getElementById("min_ar_input").value = adatok.rows[0].MINAR;
-    document.getElementById("max_ar_input").value = adatok.rows[0].MINAR;
-    
+    document.getElementById("max_ar_input").value = adatok.rows[0].MAXAR;
+
     console.log("maxar: " + adatok.rows[0].MAXAR);
     console.log("minar: " + adatok.rows[0].MINAR);
     
