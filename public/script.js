@@ -154,6 +154,45 @@ function Termek_Mutat(cuccok) {
 
 
 
+//almas
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
