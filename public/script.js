@@ -318,7 +318,7 @@ function KERESOBAR(){
     console.log("elküldve: "+ elküld);
 }
 function ArFeltolt(sql){
-    var arak = ajax_post(sql+"&maximum_ar=1",1);
+    var arak = ajax_post(sql+"&maxmin_arkell=1",1);
     console.log(sql+"&maximum_ar=1");
     console.log(arak);
     document.getElementById("min_ar").min = arak.rows[0].MINAR;
