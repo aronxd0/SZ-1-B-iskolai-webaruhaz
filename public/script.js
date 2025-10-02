@@ -319,7 +319,7 @@ function KERESOBAR(){
 }
 function ArFeltolt(sql){
     ajax_post(sql+"&maxmin_arkell=1", 1, function(arak) {
-        console.log(arak.rows[0].MAXAR);
+        console.log(arak.rows[0].MAXAR + "asdasdas  " + arak.rows[0].MINAR);
 
     }); 
 
