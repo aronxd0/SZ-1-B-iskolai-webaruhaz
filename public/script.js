@@ -157,6 +157,41 @@ function Termek_Mutat(cuccok) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function CARD_BETOLT(adatok){
     console.log(adatok);
     var ks = "";
