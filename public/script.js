@@ -246,7 +246,7 @@ function CARD_BETOLT(adatok){
   
     var el = "";
 
-    
+    let cuccli = [];
 
     for (const element of adatok.rows) {
 
@@ -262,7 +262,10 @@ function CARD_BETOLT(adatok){
                 <h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3>
         `;
 
-        
+
+        cuccli = [];
+
+        cuccli.push(`${element.ID_TERMEK}`, `${element.KATEGORIA}`, `${element.NEV}`, `${element.AZON}`, `${element.AR}`, `${element.MENNYISEG}`, `${element.MEEGYS}`, `${element.AKTIV}`, `${element.TERMEKLINK}`, `${element.FOTOLINK}`, `${element.LEIRAS}`, `${element.DATUMIDO}`);
 
 
         if ($("#loginspan").html() == " Bejelentkezés" || element.AKTIV == "N" || element.MENNYISEG == 0) {
@@ -275,7 +278,7 @@ function CARD_BETOLT(adatok){
 
          s += `
          <div class="col-12 col-md-4">
-            <div class="card m-3 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat("${cuccok}")'>
+            <div class="card m-3 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
