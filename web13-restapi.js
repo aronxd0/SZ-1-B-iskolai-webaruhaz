@@ -81,7 +81,7 @@ function gen_SQL(req) {
   console.log("maxazcuccos: "+ maxmin_arkell);
 
   var sql = 
-    `SELECT t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA,  MAX(t.AR) OVER (PARTITION BY t.ID_KATEGORIA) AS MAXAR, MIN(t.AR) OVER (PARTITION BY t.ID_KATEGORIA) AS MINAR
+    `SELECT t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA,  MAX(t.AR) OVER (PARTITION BY t.ID_TERMEK) AS MAXAR, MIN(t.AR) OVER (PARTITION BY t.ID_TERMEK) AS MINAR
      FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${order_van} ${order<0? "DESC": ""}
      ${maxmin_arkell == 1 ? "" : `limit ${limit} offset ${limit*offset}`}
