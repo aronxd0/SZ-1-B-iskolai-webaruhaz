@@ -33,9 +33,21 @@
   cursor: pointer;
 }
 
-
-
-
 .offcanvas {
   font-size: 15px;
+}
+
+.modal-open .modal-backdrop {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1 !important;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+
+.modal-footer {
+  border-top: none;
 }
