@@ -47,7 +47,7 @@ function ajax_post( urlsor, tipus, callback ) {                         // json 
         beforeSend:function(xhr)   { 
             var spinner = `<div id="spinner-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;
                                         background:rgba(0,0,0,0.6);z-index:9999;
-                                        display:flex;align-items:center;justify-content:center;">
+                                        display:flex;align-items:center;justify-content:center;backdrop-filter: blur(10px);opacity: 1;">
                                 <div class="spinner-border text-primary"  >
                                 <span class="visually-hidden">Loading...</span>
                                 </div>
@@ -58,10 +58,11 @@ function ajax_post( urlsor, tipus, callback ) {                         // json 
          },
         success:   function(data)  { 
             //s = data;
+            
             callback(data); 
         },
         error:     function(jqXHR, textStatus, errorThrown) {üzen(jqXHR.responseText, "danger");},
-        complete:  function()      { $('#spinner-overlay').remove(); }
+        complete:  function()      { $('#spinner-overlay').remove();  }
     });
 };  
 
@@ -221,6 +222,8 @@ function CARD_BETOLT(adatok){
     var s = "<div class='row'>"
     var el = "";
     let cuccli = [];
+    $("#keresett_kifejezes").html();
+    
 
     for (const element of adatok.rows) {
 
@@ -282,7 +285,8 @@ function CARD_BETOLT(adatok){
         console.log("minar: " + maxmin.rows[0].MINAR);
     });
 
-    
+    if ($("#nev1").val() != "") $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
+    else $("#keresett_kifejezes").html();
     
     $("#Termek_hely").html(s);
 }
@@ -541,10 +545,11 @@ $(document).ready(function() {
 
 
 function Kezdolap() {
+    nev1.value = "";
     ajax_post("keres", 1, function(cuccos) {
         CARD_BETOLT(cuccos);
-        nev1.value = "";
         KategoriaFeltolt("kategoria_section");
+    
     });  // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
     
 }
