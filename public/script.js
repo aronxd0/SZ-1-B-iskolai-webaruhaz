@@ -157,7 +157,7 @@ function Termek_Mutat(cuccok) {
 
 
 
-
+ // cigény
 
 
 
