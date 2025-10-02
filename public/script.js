@@ -186,7 +186,7 @@ function Termek_Mutat(cuccok) {
                         <h1 class="text-success anton-regular">${parseInt(ar).toLocaleString()} Ft</h1>
                     </div>
 
-                    <div class="row">
+                    <div class="row p-2">
                         ${ks}
                     </div>
     
