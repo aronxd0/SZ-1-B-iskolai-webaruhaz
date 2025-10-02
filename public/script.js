@@ -122,75 +122,29 @@ function Search_rekord() {
 
 
 
-
-
 function Termek_Mutat(cuccok) {
-
-    console.log(`cuccok: ${cuccok}`);
-
-    var termek_id = cuccok[0];
-    var kategoria = cuccok[1];
-    var nev = cuccok[2];
-    var azon = cuccok[3];
-    var ar = cuccok[4];
-    var mennyiseg = cuccok[5];
-    var meegys = cuccok[6];
-    var aktiv = cuccok[7];
-    var termeklink = cuccok[8];
-    var fotolink = cuccok[9];
-    var leiras = cuccok[10];
-    var datumido = cuccok[11];
-
-    /*
-    for (let index = 0; index < 100; index++) {
-        $("#termek_content").append(cuccok + "<br>");
-        
-    }*/
-
-    var bal = ` <div class="row">
-                    <img class="img img-fluid mx-auto rounded m-1 d-block kk" src="${fotolink}" alt="${nev}">
-                </div>
-
-                
-    `;
-
-    var kozep = `   <div class="row mt-2">
-                        <b>Termékleírás:</b>
-                        <br>
-                        <p>${leiras}</p>
-                    </div>
     
-                    <div class"row">
-                        <p>
-                            <b>Kategória: </b> ${kategoria}
-                        </p>
-                    </div>
+
+    var termek_id = cuccok.split(";")[0];
+    var id_kategoria = cuccok.split(";")[1];
+    var nev = cuccok.split(";")[2];
+    var azon = cuccok.split(";")[3];
+    var ar = cuccok.split(";")[4];
+    var mennyiseg = cuccok.split(";")[5];
+    var meegys = cuccok.split(";")[6];
+    var aktiv = cuccok.split(";")[7];
+    var termeklink = cuccok.split(";")[8];
+    var fotolink = cuccok.split(";")[9];
+    var leiras = cuccok.split(";")[10];
+    var datumido = cuccok.split(";")[11];
     
-                    <div class"row">
-                        <p>
-                            <b>Termékazonosító: </b> ${azon}
-                        </p>
-                    </div>
-
-                    <div class="row">
-                        <p> 
-                            <b> Raktáron: </b> ${mennyiseg} ${meegys}
-                        </p>
-                    </div>
-
-                    <div class="row">
-                        <h1 class="text-success anton-regular">${parseInt(ar).toLocaleString()} Ft</h1>
-                    </div>
-
+    $("#termeknev_title").html(nev);
     
-    `;
-
-    $("#egy").html(bal);
-    $("#ketto").html(kozep);
     
-    $("#termeknev").html(nev);
+    
+    $("#termek_content").html(cuccok + "<br>" + termek_id);
 
-    if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
+    if (aktiv == "N" || mennyiseg == 0) alert("ez a termek jelenleg nem elerheto");
     else $("#termekview").modal('show');
 
     
@@ -205,40 +159,48 @@ function Termek_Mutat(cuccok) {
 function CARD_BETOLT(adatok){
     console.log(adatok);
     var ks = "";
-    if ($("#loginspan").html() == " Bejelentkezés") {
-        ks = "";
-    }
-    else ks = `<button class="btn btn-success bi bi-cart2"> Kosárba bele</button>`; 
+     
   
     var s = "<div class='row'>"
-
-    var alrt = "";
-    var hsz = "";
-
-    let cuccli = [];
   
+    var el = "";
+
+    
+
     for (const element of adatok.rows) {
 
-        cuccli = [];
+        if (element.AKTIV == "N" || element.MENNYISEG == 0) {
+            el = ` <div class="alert alert-danger">
+                        Nem elérhető
+                    </div>
+            `;
 
-        cuccli.push(`${element.ID_TERMEK}`, `${element.KATEGORIA}`, `${element.NEV}`, `${element.AZON}`, `${element.AR}`, `${element.MENNYISEG}`, `${element.MEEGYS}`, `${element.AKTIV}`, `${element.TERMEKLINK}`, `${element.FOTOLINK}`, `${element.LEIRAS}`, `${element.DATUMIDO}`);
+            
+        }
+        else el = `
+                <h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3>
+        `;
 
         
 
-        if (element.AKTIV == "N" || element.MENNYISEG == 0) {
-            alrt += "alert alert-danger";
-            hsz = "<h4>Nem elérhető</h4>";
+
+        if ($("#loginspan").html() == " Bejelentkezés" || element.AKTIV == "N" || element.MENNYISEG == 0) {
             ks = "";
         }
-        else hsz = `<h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3>`; alrt = "";
+        else ks = `<button class="btn btn-success bi bi-cart2"> Kosárba bele</button>`;
+
+        var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
+        
 
          s += `
          <div class="col-12 col-md-4">
-            <div class="card ${alrt} m-3 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
+            <div class="card m-3 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat("${cuccok}")'>
                 <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
-                    <p class="card-text ">${hsz}</p>
+                    <p class="card-text">
+                        ${el}
+                    </p>
                     ${ks}
                     
                 </div>
@@ -249,12 +211,6 @@ function CARD_BETOLT(adatok){
     }
   
     s += "</div>";
-
-    /*
-    for (let index = 0; index < cuccli.length; index++) {
-        alert(cuccli[index]);
-        
-    }*/
     
     $("#Termek_hely").html(s);
 }
@@ -276,11 +232,21 @@ function KERESOBAR(){
     if(elfogyott){
         elfogy = "&elfogyott=1"
     }
+    var order = "";
+    console.log(document.getElementById("rend").value);
+    switch($("#rend").val()){
+        case("ar_nov"): order = "&order=1"; break;
+        case("ar_csok"): order = "&order=-1"; break;
+        case("abc"): order = "&order=2"; break;
+        case("abc_desc"): order = "&order=-2"; break;
+        case("db_no"): order = "&order=3"; break;
+        case("db_csok"): order = "&order=-3"; break;
+        default: order = "";
+    }
 
     console.log("fronted log ID-K: "+ bepipaltID );
 
-    var adatok = ajax_post("keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv , 1 ); // elküldöm lekérdezni
-    console.log(`${"keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv }`)
+    var adatok = ajax_post("keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order , 1 ); // elküldöm lekérdezni
     CARD_BETOLT(adatok);
     KategoriaFeltolt("kategoria_section");
 }
@@ -305,18 +271,31 @@ function Elfogyott(alma){
     if(alma.value == "Csakelfogyott"){
 
         elfogyott = !elfogyott;
+        if(elfogyott){
+            document.getElementById("darable").disabled = true;
+            document.getElementById("darabfel").disabled = true;
+            if(document.getElementById("darable").selected == true || document.getElementById("darabfel").selected == true){
+                document.getElementById("rendalap").selected = true;
+            }
+           
+        }
+        else{
+            document.getElementById("darable").disabled = false;
+            document.getElementById("darabfel").disabled = false;
+        }
     }
     else{
 
         Nemaktivak = !Nemaktivak;
-
+        
+       
     }
 }
 
 function ADMINVAGYE(){
     if(admin){
-        document.getElementById("Elfogyott_gomb").innerHTML = `<span> Elfogyott áruk mutatása: <input type="checkbox" value="Csakelfogyott" onchange="Elfogyott(this)"> </span>`;
-        document.getElementById("NEM_AKTIV").innerHTML = `<span>Inaktiv áruk mutatása: <input type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)"> </span>`;
+        document.getElementById("Elfogyott_gomb").innerHTML = `<h6>Csak az elfogyott áruk mutatása: <input type="checkbox" value="Csakelfogyott" onchange="Elfogyott(this)"> </h6>`;
+        document.getElementById("NEM_AKTIV").innerHTML = `<h6>Csak az inaktiv áruk mutatása: <input type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)"> </h6>`;
     } 
 }
 
@@ -378,8 +357,8 @@ $(document).ready(function() {
         }  
     });
 
-    $('#logout_modal').on('hidden.bs.modal', function () {
-        console.log('A modal bezárult');
+    $('#login_modal').on('hidden.bs.modal', function () {
+        console.log('A modal bezárult és eltűnt!');
         ajax_post("logout", 1);
     });
 
@@ -399,6 +378,13 @@ $(document).ready(function() {
         
         webbolt_admin = false;
         admin = false;
+        elfogyott = false;
+        Nemaktivak = false;
+        
+        document.getElementById("rendalap").selected = true;
+
+        document.getElementById("Elfogyott_gomb").innerHTML = ``;
+        document.getElementById("NEM_AKTIV").innerHTML = ``;
         Kezdolap();
     });
 
@@ -474,7 +460,7 @@ $(document).ready(function() {
 
 
 function Kezdolap() {
-    var cuccos = ajax_post("keres", 1 );
+    var cuccos = ajax_post("keres", 1 );  // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
     CARD_BETOLT(cuccos);
     nev1.value = "";
     KategoriaFeltolt("kategoria_section");
@@ -485,6 +471,3 @@ function update_gombok (x) {
 if (x == 0) { $("#insert_button").hide(); $("#cart_button").hide(); $("#delete_button").hide(); $("#admin_button").hide(); } 
 else        { $("#insert_button").show(); $("#cart_button").show(); $("#delete_button").show(); $("#admin_button").show(); }
 }
-
-
-
