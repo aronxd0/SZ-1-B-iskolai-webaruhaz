@@ -35,6 +35,8 @@ function gen_SQL(req) {
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1);
   var id_kat = (req.query.kategoria ?  strE(req.query.kategoria).length   : -1);
   var név    = (req.query.nev? req.query.nev :  "");
+  var minimum_ar = (req.query.minimum_ar? parseInt(req.query.minimum_ar) : 0);
+  var maximum_ar = (req.query.maximum_ar? parseInt(req.query.maximum_ar) : 0);
 
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // mindig legyen aktív és készleten
   
