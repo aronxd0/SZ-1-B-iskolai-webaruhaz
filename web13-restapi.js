@@ -36,7 +36,7 @@ function gen_SQL(req) {
   var név    = (req.query.nev? req.query.nev :  "");
   var minimum_ar = (req.query.minimum_ar? parseInt(req.query.minimum_ar) : 0);
   var maximum_ar = (req.query.maximum_ar? parseInt(req.query.maximum_ar) : 0);
-  var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0); // 1 ha igen, 0 ha nem
+  //var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0); // 1 ha igen, 0 ha nem
   
 
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // mindig legyen aktív és készleten
@@ -81,10 +81,10 @@ function gen_SQL(req) {
   console.log("maxazcuccos: "+ maxmin_arkell);
 
   var sql = 
-    `SELECT t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA,  MAX(t.AR) OVER (PARTITION BY t.ID_TERMEK) AS MAXAR, MIN(t.AR) OVER (PARTITION BY t.ID_TERMEK) AS MINAR
+    `SELECT t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA
      FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${order_van} ${order<0? "DESC": ""}
-     ${maxmin_arkell == 1 ? "" : `limit ${limit} offset ${limit*offset}`}
+     limit ${limit} offset ${limit*offset}}
      `;
   console.log(sql);
   return (sql);
