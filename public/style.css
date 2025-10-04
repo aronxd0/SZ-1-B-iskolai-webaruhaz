@@ -51,6 +51,12 @@
   border-top: none;
 }
 
+label::after {
+  content: none !important;
+}
+
+
+
 /* 
 .card {
   background-color: var(--bs-light) !important;

@@ -68,7 +68,7 @@
       <div class="col-12 fejléc p-3 bg-black text-light d-flex justify-content-center justify-content-lg-start "> 
         
         <img class="img-fluid m-1" style="width: 10%;"  src="img/logo2.png"> &nbsp;
-        <h3 class="align-self-center flex-nowrap">Iskolai Webáruház</h3>
+        <h2 class="align-self-center flex-nowrap">Iskolai Webáruház</h2>
       </div>
     </div>
     <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-end">
@@ -93,43 +93,43 @@
         <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-start">
           
 
-          <div class="dropdown">
-            <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
+          <div class="dropdown me-3">
+            <button type="button" class="btn btn-lg btn-outline-light dropdown-toggle rounded-4" data-bs-toggle="dropdown">
               <i class="bi bi-person"></i>
             </button>
-            <ul class="dropdown-menu p-3">
+            <div class="dropdown-menu p-3" style="min-width: 250px;">
               
-              <span class="dropdown-item" id="user">Jelentkezz be a fiókodba</span>
-              <span class="dropdown-item badge bg-warning text-dark w-75 m-2" id="csoport"></span>
-              <span class="dropdown-item badge bg-danger w-75 m-2" id="admin"></span>
-              <span class="dropdown-item" id="user-email"></span>
+              <span class="" id="user">Jelentkezz be a fiókodba</span>
+              <span class=" badge bg-warning text-dark w-75 m-2" id="csoport"></span>
+              <span class=" badge bg-danger w-75 m-2" id="admin"></span>
+              <span class="" id="user-email"></span>
               
-              <button id="login_button"  type="button" class="btn me-3 text-light align-self-center" style="background-color: #125308;"> 
+              <button id="login_button"  type="button" class="btn btn-lg mt-3 text-light align-self-center" style="background-color: #125308;"> 
                 <i class="bi bi-box-arrow-in-right" id="loginout"></i>
                 <span  id="loginspan"> Bejelentkezés</span>
-            </button>
-            </ul>
+              </button>
           </div>
-          &nbsp;&nbsp;
+          </div>
+          
 
-          <button id="home_button"  type="button" class="btn btn-outline-light me-3 " data-bs-dismiss="offcanvas"> 
+          <button id="home_button"  type="button" class="btn btn-lg btn-outline-light me-3 rounded-4" data-bs-dismiss="offcanvas"> 
             <i class="bi bi-house" id="loginout"></i>
-            <span  class="d-none d-xl-inline" > Kezdőlap</span>
+            <span  class="d-none d-xxl-inline" > Kezdőlap</span>
           
 
           </button>
 
-          <button id="cart_button" type="button" class="btn btn-outline-success me-3 "> 
+          <button id="cart_button" type="button" class="btn btn-lg btn-outline-success me-3 rounded-4"> 
             <i class="bi bi-cart2"></i>
-            <span class="d-none d-xl-inline" > Kosár</span>
+            <span class="d-none d-xxl-inline" > Kosár <span class="badge bg-success" id="kosar_content_count">0</span></span>
           </button>
 
-          <button id="admin_button" type="button" class="btn btn-outline-danger  me-3 "> 
+          <button id="admin_button" type="button" class="btn btn-lg btn-outline-danger  me-3 rounded-4"> 
             <i class="bi bi-gear"></i>
-            <span class="d-none d-xl-inline" > Admin felület</span>
+            <span class="d-none d-xxl-inline" > Admin felület</span>
           </button>
 
-          <button class="btn btn-outline-light me-3" id="switch"><i class="bi bi-moon-fill" ></i></button>
+          <button class="btn btn-lg btn-outline-light me-3 rounded-5" id="switch"><i class="bi bi-moon-fill" ></i></button>
 
           
 
@@ -144,7 +144,7 @@
             <div class="col-12 mt-2">
               <div class="d-flex flex-nowrap w-100"> <!-- flex-nowrap: ne tordelje szet  -->
                 <div class="form-floating flex-grow-1 me-2">
-                  <input class="form-control" id="nev1" name="nev" type="text" placeholder="Termékek keresése...">
+                  <input class="form-control rounded-4" id="nev1" name="nev" type="text" placeholder="Termékek keresése...">
                   <label for="nev1">Termékek keresése...</label>
                 </div>
                 <button class="btn btn-outline-light bi bi-search p-3" id="kereses_gomb" onclick="KERESOBAR()"></button>
@@ -333,16 +333,16 @@
       </div>
 
       <div id="idx0" class="modal-body">     
-        <form id="form_login" class="row"> 
+        <form id="form_login" class="row d-column"> 
 
-          <div class="form-floating my-1">
-            <input type="text" class="form-control" id="login_nev" name="login_nev"  value="balazs.aron@csany-zeg.hu">
-            <label for="login_nev">E-mail cím</label>
+          <div class="form-floating flex-grow-1 ny-1 mb-2">
+            <input type="email" class="form-control rounded-4" id="login_nev" name="login_nev"  value="balazs.aron@csany-zeg.hu" placeholder="E-mail cím">
+            <label for="login_nev" class="ps-4">E-mail cím</label>
           </div>
 
-          <div class="form-floating my-1">
-            <input type="password" class="form-control" id="login_passwd" name="login_passwd" value="123456">
-            <label for="login_passwd">Jelszó</label>
+          <div class="form-floating flex-grow-1 ny-1 mt-2 ">
+            <input type="password" class="form-control rounded-4" id="login_passwd" name="login_passwd" value="123456" placeholder="Jelszó">
+            <label for="login_passwd" class="ps-4">Jelszó</label>
             <span id="jelszo_mutatasa" class="position-absolute top-50 end-0 translate-middle-y pe-4" style="cursor:pointer;"> <!-- position absolute: pozicionalhato legyen jobbra
                                                                                                                                top-50 translate-middle-y: fuggolegesen kozepre  
                                                                                                                                end-0: jobb oldalra 
