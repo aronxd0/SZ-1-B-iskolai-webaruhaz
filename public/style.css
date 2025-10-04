@@ -47,7 +47,19 @@
   border-bottom: none;
 }
 
-
 .modal-footer {
   border-top: none;
 }
+
+/* 
+.card {
+  background-color: var(--bs-light) !important;
+  color: var(--bs-body-color);
+}
+
+
+html[data-bs-theme="dark"] .card {
+  background-color: #000 !important; 
+  color: var(--bs-body-color);
+}
+*/

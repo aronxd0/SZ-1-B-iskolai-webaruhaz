@@ -515,12 +515,12 @@ $(document).ready(function() {
     // sotet mod - vilagos mod valto
     $("#switch").click(function() {
         if ($("html").attr("data-bs-theme") === "dark") {
-        $("html").removeAttr("data-bs-theme");
-        $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
+            $("html").removeAttr("data-bs-theme");
+            $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
         }
         else {
-        $("html").attr("data-bs-theme", "dark");
-        $("#switch").html(`<i class="bi bi-sun-fill"></i>`);
+            $("html").attr("data-bs-theme", "dark");
+            $("#switch").html(`<i class="bi bi-sun-fill"></i>`);
         }
     });
 
