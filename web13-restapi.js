@@ -78,7 +78,7 @@ function gen_SQL(req) {
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
   if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
-  console.log("maxazcuccos: "+ maxmin_arkell);
+  //console.log("maxazcuccos: "+ maxmin_arkell);
 
   var sql = 
     `SELECT t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA
@@ -89,6 +89,8 @@ function gen_SQL(req) {
   console.log(sql);
   return (sql);
 }
+
+
 
 app.post('/kategoria',(req, res) => {
   var where = `${req.query.nev != "" ? `where (NEV like "%${req.query.nev}%" or LEIRAS like "%${req.query.nev}%") ` : ""}`;
