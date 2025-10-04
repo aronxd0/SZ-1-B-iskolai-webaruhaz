@@ -1,528 +1,522 @@
-<html>
+<!DOCTYPE html>
+<html lang="hu">
 <head>
-<title>Iskolai Webáruház</title>
+  <title>Iskolai Webáruház</title>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/img/logoz.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
 
-<meta   charset="utf-8">
-<link rel="icon" type="image/x-icon" href="/img/logoz.png">
-<meta   name="viewport" content="width=device-width, initial-scale=1">
-<link   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link   rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-<link   href="style.css" rel="stylesheet">
+  <script type="text/javascript" src="script.js"></script>
 
-<script type="text/javascript" src="script.js">
-  
-  
-  
-</script>
-
-
+</head>
 <body>
 
-<div class="container-fluid"> <!-- fő div -->
+  <div class="container-fluid"> <!-- fő div -->
 
-  <!-- teszt komment xd -->
+    <!-- teszt komment xd -->
 
-   <!-- a bal oldali vezerlopult/menu -->
-  <div class="offcanvas offcanvas-end" id="demo">  
-    <div class="offcanvas-header text-center">
-      <h5 class="offcanvas-title"><i class="bi bi-grid"></i>&nbsp;Vezérlőpult</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body d-flex flex-column"> <!-- d-flex: display flex
-                                                         flex-column: oszlopkent mukodjon a div, a benne levo cuccok egymas alatt --> 
-
-      
-                                                         <!--  
-      <button id="login_button"  type="button" class="btn me-3 text-light" style="background-color: #125308;" data-bs-dismiss="offcanvas"> 
-        <i class="bi bi-box-arrow-in-right" id="loginout"></i>
-        <span  id="loginspan"> Bejelentkezés</span>
-      </button>-->
-
-      >CsUKJ BE MOST
-    
-
-      <div class="row mt-auto p-2">
-        
+    <!-- a bal oldali vezerlopult/menu -->
+    <div class="offcanvas offcanvas-end" id="demo">  
+      <div class="offcanvas-header text-center">
+        <h5 class="offcanvas-title"><i class="bi bi-grid"></i>&nbsp;Vezérlőpult</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
       </div>
+      <div class="offcanvas-body d-flex flex-column"> <!-- d-flex: display flex
+                                                          flex-column: oszlopkent mukodjon a div, a benne levo cuccok egymas alatt --> 
 
-      
-      
-      
-      
-
-      
-      
-    </div>
-  </div>
-
-
-
-  <div class="row bg-black sticky-top">
-
-    <div class="col-lg-6 mb-2">
-      <div class="col-12 p-3 bg-black text-light d-flex justify-content-center justify-content-lg-start "> 
         
-        <img class="img-fluid m-2" style="width: 10%;"  src="img/logo2.png"> &nbsp;
-        <h2 class="align-self-center flex-nowrap">Iskolai Webáruház</h2>
-      </div>
-    </div>
-    <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-end">
+                                                          <!--  
+        <button id="login_button"  type="button" class="btn me-3 text-light" style="background-color: #125308;" data-bs-dismiss="offcanvas"> 
+          <i class="bi bi-box-arrow-in-right" id="loginout"></i>
+          <span  id="loginspan"> Bejelentkezés</span>
+        </button>-->
 
+        >CsUKJ BE MOST
       
 
-      
-      <!--
-      <button id="menu"  type="button" class="btn btn-outline-light me-3"  data-bs-toggle="offcanvas" data-bs-target="#demo"> 
-          <i class="bi bi-list"></i>
-      </button>
-      -->
-    </div>
-
-    
-  </div>
-
-  <div class="row bg-black">
-  
-        
-        
-        <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-start">
+        <div class="row mt-auto p-2">
           
+        </div>
 
-          <div class="dropdown me-3">
-            <button type="button" class="btn btn-lg btn-outline-light dropdown-toggle rounded-4" data-bs-toggle="dropdown">
-              <i class="bi bi-person"></i>
+        
+        
+        
+        
+
+        
+        
+      </div>
+    </div>
+
+
+
+    <div class="row bg-black sticky-top">
+
+      <div class="col-lg-6 mb-2">
+        <div class="col-12 p-3 bg-black text-light d-flex justify-content-center justify-content-lg-start "> 
+          
+          <img class="img-fluid m-2" style="width: 10%;"  src="img/logo2.png"> &nbsp;
+          <h2 class="align-self-center flex-nowrap">Iskolai Webáruház</h2>
+        </div>
+      </div>
+      <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-end">
+
+        
+
+        
+        <!--
+        <button id="menu"  type="button" class="btn btn-outline-light me-3"  data-bs-toggle="offcanvas" data-bs-target="#demo"> 
+            <i class="bi bi-list"></i>
+        </button>
+        -->
+      </div>
+
+      
+    </div>
+
+    <div class="row bg-black">
+
+      <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-start">
+        
+
+        <div class="dropdown me-3">
+          <button type="button" class="btn btn-lg btn-outline-light dropdown-toggle rounded-4" data-bs-toggle="dropdown">
+            <i class="bi bi-person"></i>
+          </button>
+          <div class="dropdown-menu p-3" style="min-width: 250px;">
+            
+            <span class="" id="user">Jelentkezz be a fiókodba</span>
+            <span class=" badge bg-warning text-dark w-75 m-2" id="csoport"></span>
+            <span class=" badge bg-danger w-75 m-2" id="admin"></span>
+            <span class="" id="user-email"></span>
+            
+            <button id="login_button"  type="button" class="btn btn-lg mt-3 text-light align-self-center" style="background-color: #125308;"> 
+              <i class="bi bi-box-arrow-in-right" id="loginout"></i>
+              <span  id="loginspan"> Bejelentkezés</span>
             </button>
-            <div class="dropdown-menu p-3" style="min-width: 250px;">
-              
-              <span class="" id="user">Jelentkezz be a fiókodba</span>
-              <span class=" badge bg-warning text-dark w-75 m-2" id="csoport"></span>
-              <span class=" badge bg-danger w-75 m-2" id="admin"></span>
-              <span class="" id="user-email"></span>
-              
-              <button id="login_button"  type="button" class="btn btn-lg mt-3 text-light align-self-center" style="background-color: #125308;"> 
-                <i class="bi bi-box-arrow-in-right" id="loginout"></i>
-                <span  id="loginspan"> Bejelentkezés</span>
-              </button>
-          </div>
-          </div>
-          
-
-          <button id="home_button"  type="button" class="btn btn-lg btn-outline-light me-3 rounded-4" data-bs-dismiss="offcanvas"> 
-            <i class="bi bi-house" id="loginout"></i>
-            <span  class="d-none d-xxl-inline" > Kezdőlap</span>
-          
-
-          </button>
-
-          <button id="cart_button" type="button" class="btn btn-lg btn-outline-success me-3 rounded-4"> 
-            <i class="bi bi-cart2"></i>
-            <span class="d-none d-xxl-inline" > Kosár <span class="badge bg-success" id="kosar_content_count">0</span></span>
-          </button>
-
-          <button id="admin_button" type="button" class="btn btn-lg btn-outline-danger  me-3 rounded-4"> 
-            <i class="bi bi-gear"></i>
-            <span class="d-none d-xxl-inline" > Admin felület</span>
-          </button>
-
-          <button class="btn btn-lg btn-outline-light me-3 rounded-5" id="switch"><i class="bi bi-moon-fill" ></i></button>
-
-          
-
-
-
         </div>
-          
+        </div>
         
-          
-        <div class="col-lg-6 mb-2">
-          <div class="row">
-            <div class="col-12 mt-2">
-              <div class="d-flex flex-nowrap w-100"> <!-- flex-nowrap: ne tordelje szet  -->
-                <div class="form-floating flex-grow-1 me-2">
-                  <input class="form-control rounded-4" id="nev1" name="nev" type="text" placeholder="Termékek keresése...">
-                  <label for="nev1">Termékek keresése...</label>
-                </div>
-                <button class="btn btn-outline-light bi bi-search p-3" id="kereses_gomb" onclick="KERESOBAR()"></button>
-                <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#szurok">
-                  <i class="bi bi-funnel"></i>
-                  <!--<span class="d-none d-lg-inline" > Szűrők</span>-->
-                </button>
+
+        <button id="home_button"  type="button" class="btn btn-lg btn-outline-light me-3 rounded-4" data-bs-dismiss="offcanvas"> 
+          <i class="bi bi-house" id="loginout"></i>
+          <span  class="d-none d-xxl-inline" > Kezdőlap</span>
+        
+
+        </button>
+
+        <button id="cart_button" type="button" class="btn btn-lg btn-outline-success me-3 rounded-4"> 
+          <i class="bi bi-cart2"></i>
+          <span class="d-none d-xxl-inline" > Kosár <span class="badge bg-success" id="kosar_content_count">0</span></span>
+        </button>
+
+        <button id="admin_button" type="button" class="btn btn-lg btn-outline-danger  me-3 rounded-4"> 
+          <i class="bi bi-gear"></i>
+          <span class="d-none d-xxl-inline" > Admin felület</span>
+        </button>
+
+        <button class="btn btn-lg btn-outline-light me-3 rounded-5" id="switch"><i class="bi bi-moon-fill" ></i></button>
+
+        
+
+
+
+      </div>
+        
+      
+        
+      <div class="col-lg-6 mb-2">
+        <div class="row">
+          <div class="col-12 mt-2">
+            <div class="d-flex flex-nowrap w-100 align-self-center"> <!-- flex-nowrap: ne tordelje szet  -->
+              <div class="form-floating flex-grow-1 me-2 align-self-center">
+                <input class="form-control rounded-4" id="nev1" name="nev" type="text" placeholder="Termékek keresése...">
+                <label for="nev1">Termékek keresése...</label>
               </div>
-              
-          </div>
+              <button class="btn btn-lg btn-outline-light bi bi-search rounded-4" id="kereses_gomb" onclick="KERESOBAR()"></button>
+              <button class="btn btn-lg btn-outline-light rounded-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#szurok">
+                <i class="bi bi-funnel"></i>
+                <!--<span class="d-none d-lg-inline" > Szűrők</span>-->
+              </button>
+            </div>
+            
         </div>
-        
-
+      </div>
           
+
+            
+              
+            
+
             
           
-
           
-         
-        
 
 
-    
+      
+    </div>
+
+
+
+  
+
+
+      
   </div>
 
 
-
- 
-
-
-    
-</div>
-
-
-
-<!--
-
-  
-  <div class="badge text-wrap text-light" id="user" style="position:fixed; right:10px; top:10px;"></div>
-  <div class="flex-doboz" style="background-color: #1d293d; color: #a1a4ae">  
-      <form class="d-flex m-auto" id="form1">
-        <select class="form-select"  id="kategoria1" name="kategoria"  style="width:400px;"></select> 
-        <input  class="form-control" id="nev1"       name="nev"   type="text" placeholder="termék neve" style="width:300px;">
-        <select class="form-select"  id="limit1"     name="limit" title="max. rekodszám" style="width:100px;">
-            <option value="25" selected>25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="200">200</option>
-        </select> 
-        <select class="form-select me-3" id="offset1" name="offset" title="offset" style="width:100px;"></select> 
-      </form>
-      <button id="search_button" type="button" class="btn btn-primary me-3 bi bi-search"> Keres</button>
-      <button id="modify_button" type="button" class="btn btn-success me-3 bi bi-pencil-fill"> Módosít</button>
-      <button id="delete_button" type="button" class="btn btn-danger  me-3 bi bi-trash"> Töröl</button>
-      <button id="insert_button" type="button" class="btn btn-warning me-3 bi bi-plus-circle"> Új </button>
-      <button id="login_button"  type="button" class="btn btn-secondary me-3 bi bi-person">Login</button>
-  </div>
-  
-  -->
 
   <!--
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-4 col-lg-6"> 
-          <div id="rekord1" class="mt-4 alert alert-info">
-              
-              <b>Telepítés:</b> (vs code mappa nyitás, ctrl_ö):  npm install util mysql2 express express-session<br />
-              <b>Start:</b> npm start<br />
-              <b>Elérés:</b> http://localhost:3000<br/>
-          </div>
-      </div>
-      <div class="col-sm-8 col-lg-6"> 
-        <table id="tabla1" class="table table-hover" style="cursor: pointer;">
-          <thead>
-            <tr>
-              <th style="width:70%;" onclick="orderby(2);">NÉV</th>
-              <th style="width:10%;" onclick="orderby(3);">ÁR</th>
-              <th style="width:10%;" onclick="orderby(4);">Mennyiség</th>
-              <th style="width:10%;" onclick="orderby(5);">meegys.</th>
-            </tr>  
-          </thead>
-          <tbody>  </tbody>
-        </table>
-      </div>  
-    </div>
-  </div>-->
 
-
-
-  <div class="container-fluid mt-2" id="content"> <!-- ide jon a tartalom -->
-    <div class="row">
-      <div class="col-12 text-center p-2" id="keresett_kifejezes"></div>
-    </div> 
     
-    <div class="row ">
-        <div class="col-lg-2">
-          
-
-        </div>
-        <div class="col-lg-8" id="Termek_hely"> </div>
-
-        <div class="col-lg-2"></div>
-      </div>
-  </div>
-  
-
-
-  <div class="row p-3 bg-success text-light">
-    <div class="col-lg-12 text-center">
-      <a class="text-white" href="https://www.csany-zeg.hu/" target="_blank">Csány László Technikum</a> - (2025)
-    </div>
-  </div>
-
-
-
-
-
-  
-
-</div>
-
-
-
-
-<div class="offcanvas offcanvas-end" id="szurok">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title"><i class="bi bi-gear"></i> &nbsp; Szűrési beállítások</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-  </div>
-  <div class="offcanvas-body">
-    <div id="szurok" class="row mx-auto" style="width: 90%;">
-      <label for="kategoriak"><h6>Termékkategóriák</h6></label> 
-      <div class="p-3 border rounded" style="overflow-y: scroll; overflow-x: hidden; height: 35vh;" id="kategoria_section"></div>
-
-      <div class="row border rounded p-1 mt-3 mx-auto d-flex align-items-center">  
-        <div class="col-lg-4 text-center"> Minimum ár: </div> 
-        <div class="col-lg-4 text-center"> 
-          <input type="number" class="form-control w-100" id="min_ar_input" value="0"> 
-        </div> 
-        <div class="col-lg-4 text-center"> Ft </div> 
-        <input type="range" class="slider form-range w-100" id="min_ar" > 
-      </div>       
-
-      <div class="row border rounded p-1 mt-2 mx-auto d-flex align-items-center"> 
-        <div class="col-lg-4 text-center"> Maximum ár </div> 
-        <div class="col-lg-4"> 
-          <input type="number" class="form-control w-100" id="max_ar_input" value="0">
-        </div> 
-        <div class="col-lg-4 text-center">Ft</div>  
-        <input type="range" class="slider form-range w-100" id="max_ar"> 
-      </div> 
-      <br><br>
-      
-      <select id="rend" class="form-select w-50 mt-3"> 
-        <option value="" disabled>Rendezés...</op  tion> 
-        <option id="rendalap"  value="ar_csok">Ár ↓</option> 
-        <option value="ar_nov">Ár ↑</option> 
-        <option value="abc">Név (A-Z)</option> 
-        <option value="abc_desc">Név (Z-A)</option> 
-        <option id="darable" value="db_csok">Darab ↓</option> 
-        <option id="darabfel" value="db_nov">Darab ↑</option> 
-      </select>
-      <br><br>
-   
-      <div id="Elfogyott_gomb"></div>
-      <div id="NEM_AKTIV"></div>
-
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-<!-- login ablak -->
-<div class="modal fade" id="login_modal">
-  <div class="modal-dialog modal-md" >
-    <div class="modal-content" >
-      <div class="modal-header bg-success text-light">
-        <h4 id="idx_login" class="modal-title text-center w-100"><i class="bi bi-person-fill"></i> Bejelentkezés</h4>
-      </div>
-
-      <div id="idx0" class="modal-body">     
-        <form id="form_login" class="row d-column"> 
-
-          <div class="form-floating flex-grow-1 ny-1 mb-2">
-            <input type="email" class="form-control rounded-4" id="login_nev" name="login_nev"  value="balazs.aron@csany-zeg.hu" placeholder="E-mail cím">
-            <label for="login_nev" class="ps-4">E-mail cím</label>
-          </div>
-
-          <div class="form-floating flex-grow-1 ny-1 mt-2 ">
-            <input type="password" class="form-control rounded-4" id="login_passwd" name="login_passwd" value="123456" placeholder="Jelszó">
-            <label for="login_passwd" class="ps-4">Jelszó</label>
-            <span id="jelszo_mutatasa" class="position-absolute top-50 end-0 translate-middle-y pe-4" style="cursor:pointer;"> <!-- position absolute: pozicionalhato legyen jobbra
-                                                                                                                               top-50 translate-middle-y: fuggolegesen kozepre  
-                                                                                                                               end-0: jobb oldalra 
-                                                                                                                               pe: padding end -->
-              <i class="bi bi-eye" id="sz"></i>
-            </span>
-          </div>
-
+    <div class="badge text-wrap text-light" id="user" style="position:fixed; right:10px; top:10px;"></div>
+    <div class="flex-doboz" style="background-color: #1d293d; color: #a1a4ae">  
+        <form class="d-flex m-auto" id="form1">
+          <select class="form-select"  id="kategoria1" name="kategoria"  style="width:400px;"></select> 
+          <input  class="form-control" id="nev1"       name="nev"   type="text" placeholder="termék neve" style="width:300px;">
+          <select class="form-select"  id="limit1"     name="limit" title="max. rekodszám" style="width:100px;">
+              <option value="25" selected>25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+          </select> 
+          <select class="form-select me-3" id="offset1" name="offset" title="offset" style="width:100px;"></select> 
         </form>
-      </div>
-
-      <div class="modal-footer  justify-content-center">
-        
-        
-        <button id="bezar" type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Böngészés vendégként</button>
-        <button id="login_oksi_button" type="button" class="btn btn-success" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
-        
-        
-        
-      </div>
-
+        <button id="search_button" type="button" class="btn btn-primary me-3 bi bi-search"> Keres</button>
+        <button id="modify_button" type="button" class="btn btn-success me-3 bi bi-pencil-fill"> Módosít</button>
+        <button id="delete_button" type="button" class="btn btn-danger  me-3 bi bi-trash"> Töröl</button>
+        <button id="insert_button" type="button" class="btn btn-warning me-3 bi bi-plus-circle"> Új </button>
+        <button id="login_button"  type="button" class="btn btn-secondary me-3 bi bi-person">Login</button>
     </div>
-  </div>
-</div>
+    
+    -->
 
-
-
-
-<!-- logout modal -->
-<div class="modal fade" id="logout_modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-     
-      <div class="modal-header">
-        <h4 class="modal-title">Kijelentkezés</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <!--
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4 col-lg-6"> 
+            <div id="rekord1" class="mt-4 alert alert-info">
+                
+                <b>Telepítés:</b> (vs code mappa nyitás, ctrl_ö):  npm install util mysql2 express express-session<br />
+                <b>Start:</b> npm start<br />
+                <b>Elérés:</b> http://localhost:3000<br/>
+            </div>
+        </div>
+        <div class="col-sm-8 col-lg-6"> 
+          <table id="tabla1" class="table table-hover" style="cursor: pointer;">
+            <thead>
+              <tr>
+                <th style="width:70%;" onclick="orderby(2);">NÉV</th>
+                <th style="width:10%;" onclick="orderby(3);">ÁR</th>
+                <th style="width:10%;" onclick="orderby(4);">Mennyiség</th>
+                <th style="width:10%;" onclick="orderby(5);">meegys.</th>
+              </tr>  
+            </thead>
+            <tbody>  </tbody>
+          </table>
+        </div>  
       </div>
+    </div>-->
 
+
+
+    <div class="container-fluid mt-2" id="content"> <!-- ide jon a tartalom -->
+      <div class="row">
+        <div class="col-12 text-center p-2" id="keresett_kifejezes"></div>
+      </div> 
       
-      <div class="modal-body">
-        Biztosan ki szeretnél jelentkezni?
-      </div>
+      <div class="row ">
+          <div class="col-lg-2">
+            
 
-      
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-danger bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
-        <button type="button" class="btn btn-primary bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-
-<!-- termék nagyban -->
-<div class="modal fade" id="termekview">
-  <div class="modal-dialog modal-xl modal-dialog-scrollable">
-    <div class="modal-content">
-
-      
-      <div class="modal-header">
-        <h5 class="modal-title" id="termeknev"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      
-      <div class="modal-body" id="termek_content">
-        <div class="row">
-          <div class="col-lg-1"></div>
-          <div class="row col-lg-10">
-            <div class="col-lg-6" id="bal"></div>
-            <div class="col-lg-6" id="jobb"></div>
           </div>
-          <div class="col-lg-1"></div>
+          <div class="col-lg-8" id="Termek_hely"> </div>
+
+          <div class="col-lg-2"></div>
+        </div>
+    </div>
+    
+
+
+    <div class="row p-3 bg-success text-light">
+      <div class="col-lg-12 text-center">
+        <a class="text-white" href="https://www.csany-zeg.hu/" target="_blank">Csány László Technikum</a> - (2025)
+      </div>
+    </div>
+
+
+
+
+
+    
+
+  </div>
+
+
+
+
+  <div class="offcanvas offcanvas-end" id="szurok">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title"><i class="bi bi-gear"></i> &nbsp; Szűrési beállítások</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div id="szurok" class="row mx-auto" style="width: 90%;">
+        <label for="kategoriak"><h6>Termékkategóriák</h6></label> 
+        <div class="p-3 border rounded" style="overflow-y: scroll; overflow-x: hidden; height: 35vh;" id="kategoria_section"></div>
+
+        <div class="row border rounded p-1 mt-3 mx-auto d-flex align-items-center">  
+          <div class="col-lg-4 text-center"> Minimum ár: </div> 
+          <div class="col-lg-4 text-center"> 
+            <input type="number" class="form-control w-100" id="min_ar_input" value="0"> 
+          </div> 
+          <div class="col-lg-4 text-center"> Ft </div> 
+          <input type="range" class="slider form-range w-100" id="min_ar" > 
+        </div>       
+
+        <div class="row border rounded p-1 mt-2 mx-auto d-flex align-items-center"> 
+          <div class="col-lg-4 text-center"> Maximum ár </div> 
+          <div class="col-lg-4"> 
+            <input type="number" class="form-control w-100" id="max_ar_input" value="0">
+          </div> 
+          <div class="col-lg-4 text-center">Ft</div>  
+          <input type="range" class="slider form-range w-100" id="max_ar"> 
+        </div> 
+        <br><br>
+        
+        <select id="rend" class="form-select w-50 mt-3"> 
+          <option value="" disabled>Rendezés...</op  tion> 
+          <option id="rendalap"  value="ar_csok">Ár ↓</option> 
+          <option value="ar_nov">Ár ↑</option> 
+          <option value="abc">Név (A-Z)</option> 
+          <option value="abc_desc">Név (Z-A)</option> 
+          <option id="darable" value="db_csok">Darab ↓</option> 
+          <option id="darabfel" value="db_nov">Darab ↑</option> 
+        </select>
+        <br><br>
+    
+        <div id="Elfogyott_gomb"></div>
+        <div id="NEM_AKTIV"></div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <!-- login ablak -->
+  <div class="modal fade" id="login_modal">
+    <div class="modal-dialog modal-md" >
+      <div class="modal-content" >
+        <div class="modal-header bg-success text-light">
+          <h4 id="idx_login" class="modal-title text-center w-100"><i class="bi bi-person-fill"></i> Bejelentkezés</h4>
+        </div>
+
+        <div id="idx0" class="modal-body">     
+          <form id="form_login" class="row d-column"> 
+
+            <div class="form-floating flex-grow-1 ny-1 mb-2">
+              <input type="email" class="form-control rounded-4" id="login_nev" name="login_nev"  value="balazs.aron@csany-zeg.hu" placeholder="E-mail cím">
+              <label for="login_nev" class="ps-4">E-mail cím</label>
+            </div>
+
+            <div class="form-floating flex-grow-1 ny-1 mt-2 ">
+              <input type="password" class="form-control rounded-4" id="login_passwd" name="login_passwd" value="123456" placeholder="Jelszó">
+              <label for="login_passwd" class="ps-4">Jelszó</label>
+              <span id="jelszo_mutatasa" class="position-absolute top-50 end-0 translate-middle-y pe-4" style="cursor:pointer;"> <!-- position absolute: pozicionalhato legyen jobbra
+                                                                                                                                top-50 translate-middle-y: fuggolegesen kozepre  
+                                                                                                                                end-0: jobb oldalra 
+                                                                                                                                pe: padding end -->
+                <i class="bi bi-eye" id="sz"></i>
+              </span>
+            </div>
+
+          </form>
+        </div>
+
+        <div class="modal-footer  justify-content-center">
+          
+          
+          <button id="bezar" type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Böngészés vendégként</button>
+          <button id="login_oksi_button" type="button" class="btn btn-success" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
+          
+          
+          
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- logout modal -->
+  <div class="modal fade" id="logout_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      
+        <div class="modal-header">
+          <h4 class="modal-title">Kijelentkezés</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        
+        <div class="modal-body">
+          Biztosan ki szeretnél jelentkezni?
+        </div>
+
+        
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-danger bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
+          <button type="button" class="btn btn-primary bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- termék nagyban -->
+  <div class="modal fade" id="termekview">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="termeknev"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        
+        <div class="modal-body" id="termek_content">
+          <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="row col-lg-10">
+              <div class="col-lg-6" id="bal"></div>
+              <div class="col-lg-6" id="jobb"></div>
+            </div>
+            <div class="col-lg-1"></div>
+          </div>
+        </div>
+
+        
+        <div class="modal-footer" id="alul">
+          
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+      <!----------------- modal adatbevitel ablak ----------------------->
+      <div class="modal fade" id="myModal0">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-secondary text-white">
+              <h4 id="idx1" class="modal-title">Modal Heading</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div id="idx0" class="modal-body bg-light">     
+              <form id="mod1" class="row"> 
+                <div class="form-floating my-1">
+                  <select class="form-select" id="mod_kat" name="mod_kat"></select>     
+                  <label for="mod_kat">Kategória</label>
+                </div>
+
+                <div class="form-floating my-1">
+                  <input type="text" class="form-control" id="mod_nev" name="mod_nev">
+                  <label for="mod_nev">Termék neve</label>
+                </div>
+
+                <div class="form-floating my-1">
+                  <input type="text" class="form-control" id="mod_azon" name="mod_azon">
+                  <label for="mod_azon">Azonosító</label>
+                </div>
+          
+                <div class="form-floating my-1 mr-1" style="width:190px;">
+                    <input type="number" class="form-control" id="mod_ar" name="mod_ar">
+                    <label for="mod_ar">Ár</label>
+                </div>
+                <div class="form-floating my-1 mr-1" style="width:190px;">
+                    <input type="number" class="form-control" id="mod_db" name="mod_db">
+                    <label for="mod_db">Mennyiség</label>
+                </div>
+                <div class="form-floating my-1 mr-1" style="width:190px;">
+                    <input type="text" class="form-control" id="mod_meegys" name="mod_meegys">
+                    <label for="mod_meegys">Egység</label>
+                </div>
+
+                <div class="form-floating my-1 mr-1" style="width:200px;">
+                  <input type="date" class="form-control" id="mod_datum" name="mod_datum">
+                  <label for="mod_datum">Dátum</label>
+                </div>
+
+                <div class="form-floating my-1">
+                  <textarea class="form-control "rows="4" id="mod_leiras" name="mod_leiras"></textarea>
+                  <label for="mod_leiras">Leírás</label>
+                </div>
+
+              </form>
+            </div>
+
+            <div class="modal-footer bg-light">
+              <button id="save_button" type="button" class="btn btn-success" data-bs-dismiss="modal"> <i class="bi bi-save2"></i> Ment</button>
+            </div>
+
+          </div>
         </div>
       </div>
 
-      
-      <div class="modal-footer" id="alul">
-        
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <!----------------- modal adatbevitel ablak ----------------------->
-    <div class="modal fade" id="myModal0">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header bg-secondary text-white">
-            <h4 id="idx1" class="modal-title">Modal Heading</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-
-          <div id="idx0" class="modal-body bg-light">     
-            <form id="mod1" class="row"> 
-              <div class="form-floating my-1">
-                <select class="form-select" id="mod_kat" name="mod_kat"></select>     
-                <label for="mod_kat">Kategória</label>
-              </div>
-
-              <div class="form-floating my-1">
-                <input type="text" class="form-control" id="mod_nev" name="mod_nev">
-                <label for="mod_nev">Termék neve</label>
-              </div>
-
-              <div class="form-floating my-1">
-                <input type="text" class="form-control" id="mod_azon" name="mod_azon">
-                <label for="mod_azon">Azonosító</label>
-              </div>
-        
-              <div class="form-floating my-1 mr-1" style="width:190px;">
-                  <input type="number" class="form-control" id="mod_ar" name="mod_ar">
-                  <label for="mod_ar">Ár</label>
-              </div>
-              <div class="form-floating my-1 mr-1" style="width:190px;">
-                  <input type="number" class="form-control" id="mod_db" name="mod_db">
-                  <label for="mod_db">Mennyiség</label>
-              </div>
-              <div class="form-floating my-1 mr-1" style="width:190px;">
-                  <input type="text" class="form-control" id="mod_meegys" name="mod_meegys">
-                  <label for="mod_meegys">Egység</label>
-              </div>
-
-              <div class="form-floating my-1 mr-1" style="width:200px;">
-                <input type="date" class="form-control" id="mod_datum" name="mod_datum">
-                <label for="mod_datum">Dátum</label>
-              </div>
-
-              <div class="form-floating my-1">
-                <textarea class="form-control "rows="4" id="mod_leiras" name="mod_leiras"></textarea>
-                <label for="mod_leiras">Leírás</label>
-              </div>
-
-            </form>
-          </div>
-
-          <div class="modal-footer bg-light">
-            <button id="save_button" type="button" class="btn btn-success" data-bs-dismiss="modal"> <i class="bi bi-save2"></i> Ment</button>
-          </div>
-
+      <!-- toast mysend -->
+      <div id= "toast1" class="toast bg-success text-white hide" style="position:fixed; right:10px; bottom:10px;">
+        <div class="toast-header">
+            <strong class="me-auto"><i class="bi-gift-fill"></i> Infó...</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
         </div>
+        <div class="toast-body"></div>
       </div>
-    </div>
 
-    <!-- toast mysend -->
-    <div id= "toast1" class="toast bg-success text-white hide" style="position:fixed; right:10px; bottom:10px;">
-      <div class="toast-header">
-          <strong class="me-auto"><i class="bi-gift-fill"></i> Infó...</strong>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
-      </div>
-      <div class="toast-body"></div>
-    </div>
-
-    <!-- modal popup ablak -->
-    <div class="modal" id="myModal1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header"><h4 class="modal-title">Megerősítés</h4></div>
-          <div class="modal-body"></div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+      <!-- modal popup ablak -->
+      <div class="modal" id="myModal1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header"><h4 class="modal-title">Megerősítés</h4></div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
 </body>
 </html>
