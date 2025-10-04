@@ -58,9 +58,9 @@ function gen_SQL(req) {
 
   var order_van = "";
   switch (Math.abs(order)) {
-    case 1: order_van = "ORDER BY AR";  break;   // név alapján rendezés, asc/desc később
-    case 2: order_van = "ORDER BY NEV"; break;   // ár alapján rendezés, asc/desc később
-    case 3: order_van = "ORDER BY MENNYISEG"; break;   // ár alapján rendezés, asc/desc később
+    case 1: order_van = "ORDER BY AR";  break;   // ár alapján rendezés, asc/desc később
+    case 2: order_van = "ORDER BY NEV"; break;    // név alapján rendezés, asc/desc később
+    case 3: order_van = "ORDER BY MENNYISEG"; break;   // mennyiség alapján rendezés, asc/desc később
     default: order_van = "" ; break;  // nincs rendezés
   }
 
