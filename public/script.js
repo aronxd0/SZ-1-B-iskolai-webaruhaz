@@ -402,7 +402,7 @@ function ADMINVAGYE(){
 
 
 $(document).ready(function() {
-        // balazs.aron@csany-zeg.hu 123456
+    // balazs.aron@csany-zeg.hu 123456
     
 
     update_gombok(0);           // insert, update, delete nem kell! (csak login után)
@@ -439,6 +439,7 @@ $(document).ready(function() {
         console.log(email);
 
         if (email == "" || jelsz == "") {
+            
             if (oldal == "bal") {
                 $("#login_gomb_div").removeClass("bal kozep").addClass("jobb");
                 oldal = "jobb";
@@ -455,7 +456,8 @@ $(document).ready(function() {
         let jelsz = $("#login_passwd").val().trim();
 
         if (email != "" && jelsz != "") {
-            $("#login_gomb_div").removeClass("bal jobb").addClass("kozep");
+            
+            $("#login_gomb_div").removeClass("bal jobb disabled").addClass("kozep");
             oldal = "kozep";
         }
     });
