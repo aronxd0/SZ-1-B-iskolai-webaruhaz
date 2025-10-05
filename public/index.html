@@ -97,9 +97,9 @@
               <span class="" id="user-email"></span>
             </div>
             
-            <div class="row d-flex align-self-center justify-content-center mt-5 p-2 border-top border-secondary">
+            <div class="row d-flex align-self-center justify-content-center mt-5 pt-3 border-top border-secondary">
               <button class="btn btn-outline-light w-auto rounded-5" id="switch"><i class="bi bi-moon-fill" ></i></button>
-              <button id="login_button"  type="button" class="btn text-light w-auto" style="background-color: #125308;"> 
+              <button id="login_button"  type="button" class="btn btn-outline-light w-auto"> 
                 <i class="bi bi-box-arrow-in-right" id="loginout"></i>
                 <span  id="loginspan"> Bejelentkezés</span>
               </button>
@@ -356,11 +356,16 @@
           </form>
         </div>
 
-        <div class="modal-footer  justify-content-center">
+        <div class="row modal-footer">
+          <div class="row col-12 d-flex w-100 kozep" id="login_gomb_div">
+            <button id="login_oksi_button" type="button" class="btn btn-success w-auto" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
+          </div>
+
+          <div class="row col-12 d-flex justify-content-center">
+            <button id="bezar" type="button" class="btn btn-secondary w-auto" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>  
+          </div>
           
           
-          <button id="bezar" type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Böngészés vendégként</button>
-          <button id="login_oksi_button" type="button" class="btn btn-success" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
           
           
           
@@ -392,7 +397,7 @@
         
         <div class="modal-footer justify-content-center">
           <button type="button" class="btn btn-danger bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
-          <button type="button" class="btn btn-primary bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
+          <button type="button" class="btn btn-secondary bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
         </div>
 
       </div>

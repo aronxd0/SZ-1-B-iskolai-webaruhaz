@@ -406,7 +406,7 @@ $(document).ready(function() {
     
 
     update_gombok(0);           // insert, update, delete nem kell! (csak login után)
-    $('#login_modal').modal('show');                           
+    $('#login_modal').modal('show'); $("#login_gomb_div").removeClass("bal jobb").addClass("kozep");                       
     $("#kategoria1").empty(); 
     
 
@@ -430,18 +430,39 @@ $(document).ready(function() {
     });
 
     
+    let oldal = "kozep";
+
+    $("#login_oksi_button").on("mouseenter", function() {
+        
+        let email = $("#login_nev").val().trim();
+        let jelsz = $("#login_passwd").val().trim();
+        console.log(email);
+
+        if (email == "" || jelsz == "") {
+            if (oldal == "bal") {
+                $("#login_gomb_div").removeClass("bal kozep").addClass("jobb");
+                oldal = "jobb";
+            }
+            else {
+                $("#login_gomb_div").removeClass("kozep jobb").addClass("bal");
+                oldal = "bal";
+            }
+        }
+    });
+
+    $("#login_nev, #login_passwd").on("input", function() {
+        let email = $("#login_nev").val().trim();
+        let jelsz = $("#login_passwd").val().trim();
+
+        if (email != "" && jelsz != "") {
+            $("#login_gomb_div").removeClass("bal jobb").addClass("kozep");
+            oldal = "kozep";
+        }
+    });
 
 
-    /*
-    var k_json = ajax_post("kategoria", 1 );     
+
     
-    
-    for (var i = 0; i < k_json.rows.length; ++i)
-    {
-        listItems +=`<option value='${k_json.rows[i].ID_KATEGORIA}'>${k_json.rows[i].KATEGORIA}</option>`;
-    }
-    $("#kategoria1").append(listItems);
-    */
 
     $("#search_button").click(function() {               Search_rekord();       } );
     $("#insert_button").click(function() {               Edit_rekord( 0 );      } );
@@ -451,7 +472,7 @@ $(document).ready(function() {
 
     $("#login_button").click(function() {   
         if ($("#loginspan").html() == " Bejelentkezés") {
-            $('#login_modal').modal('show'); 
+            $('#login_modal').modal('show'); $("#login_gomb_div").removeClass("bal jobb").addClass("kozep");
         } else {   // logout
             $("#logout_modal").modal("show");
             
@@ -584,6 +605,6 @@ function Kezdolap() {
 
 
 function update_gombok (x) {
-if (x == 0) { $("#insert_button").hide(); $("#cart_button").hide(); $("#delete_button").hide(); $("#admin_button").hide(); } 
-else        { $("#insert_button").show(); $("#cart_button").show(); $("#delete_button").show(); $("#admin_button").show(); }
+    if (x == 0) { $("#insert_button").hide(); $("#cart_button").hide(); $("#delete_button").hide(); $("#admin_button").hide(); } 
+    else        { $("#insert_button").show(); $("#cart_button").show(); $("#delete_button").show(); $("#admin_button").show(); }
 }

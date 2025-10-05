@@ -81,6 +81,25 @@ label::after {
   font-style: italic;
 }
 
+#login_gomb_div {
+  transition: all 0.3s ease;
+}
+
+#login_gomb_div.bal {
+  justify-content: flex-start;
+  transition: 0.5s ease;
+}
+
+#login_gomb_div.kozep {
+  justify-content: center;
+  transition: 0.5s ease;
+}
+
+#login_gomb_div.jobb {
+  justify-content: flex-end;
+  transition: 0.5s ease;
+}
+
 
 
 /* 
