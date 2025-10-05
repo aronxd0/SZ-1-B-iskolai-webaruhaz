@@ -55,6 +55,22 @@ label::after {
   content: none !important;
 }
 
+.gomb {
+  border: none;
+}
+
+
+.gombdiv {
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.gombdiv.aktiv {
+  border-bottom: 1px solid #fff;
+}
+
+
+
 
 
 /* 

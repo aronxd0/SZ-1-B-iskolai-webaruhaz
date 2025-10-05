@@ -397,27 +397,28 @@ $(document).ready(function() {
     update_gombok(0);           // insert, update, delete nem kell! (csak login után)
     $('#login_modal').modal('show');                           
     $("#kategoria1").empty(); 
-    var listItems  = "";
+    
 
-    Kezdolap();
+    
+    
     KategoriaFeltolt("kategoria_section");
 
     var input = document.getElementById("nev1");
 
     // enterrel keresés
     input.addEventListener("keypress", function(event) {
-    // ha enterrel kattint
-    if (event.key === "Enter") {
-    // Cancel the default action, if needed
-    event.preventDefault();
-    // Trigger the button element with a click
-    document.getElementById("kereses_gomb").click();
-  }
+        // ha enterrel kattint
+        if (event.key === "Enter") {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.getElementById("kereses_gomb").click();
+        }
 
   
-});
+    });
 
-
+    
 
 
     /*
@@ -539,20 +540,27 @@ $(document).ready(function() {
         }
     });
 
+    $(".gombdiv button").click(function() {
+        $(".gombdiv").removeClass("aktiv");
+        $(this).closest(".gombdiv").addClass("aktiv");
+    });
 
     
-
 
     $("#home_button").click(function() {
         Kezdolap();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
+    $("#home_button").trigger("click");
+    
+
 
 });
 
 
 function Kezdolap() {
+    
     nev1.value = "";
     ajax_post("keres", 1, function(cuccos) {
         CARD_BETOLT(cuccos);
