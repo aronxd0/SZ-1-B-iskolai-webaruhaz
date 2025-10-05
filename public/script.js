@@ -383,8 +383,19 @@ function Elfogyott(alma){
 
 function ADMINVAGYE(){
     if(admin){
-        document.getElementById("Elfogyott_gomb").innerHTML = `<h6>Csak az elfogyott áruk mutatása: <input class="form-check-input" type="checkbox" value="Csakelfogyott" onchange="Elfogyott(this)"> </h6>`;
-        document.getElementById("NEM_AKTIV").innerHTML = `<h6>Csak az inaktiv áruk mutatása: <input class="form-check-input" type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)"> </h6>`;
+        document.getElementById("Elfogyott_gomb").innerHTML = `
+            <p>
+                <input class="form-check-input" type="checkbox" id="elf" value="Csakelfogyott" onchange="Elfogyott(this)">
+                <label for="elf" class="form-check-label"> Csak az elfogyott áruk mutatása</label>
+            </p>
+            `;
+
+        document.getElementById("NEM_AKTIV").innerHTML = `
+            <p>
+                <input class="form-check-input" type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)">
+                <label for="innaktiv" class="form-check-label"> Csak az inaktiv áruk mutatása</label>
+            </p>
+            `;
     } 
 }
 
@@ -475,7 +486,8 @@ $(document).ready(function() {
 
             document.getElementById("Elfogyott_gomb").innerHTML = ``;
             document.getElementById("NEM_AKTIV").innerHTML = ``;
-            Kezdolap();
+            //Kezdolap();
+            $("#home_button").trigger("click");
         });  
         
     });
