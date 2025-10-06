@@ -327,12 +327,13 @@ function KERESOBAR(){
 
     var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
     console.log("elküld: "+ elküld);
+    ArFeltolt(elküld);
     ajax_post(elküld , 1, function(adatok){ 
         CARD_BETOLT(adatok);
     } ); // elküldöm lekérdezni
     
     KategoriaFeltolt("kategoria_section");
-    ArFeltolt(elküld);
+    
     console.log("elküldve: "+ elküld);
 }
 function ArFeltolt(sql){
