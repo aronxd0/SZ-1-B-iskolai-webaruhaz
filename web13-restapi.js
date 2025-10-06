@@ -79,7 +79,7 @@ function gen_SQL(req) {
 
 
   var arkeres = "";
-  if (maxarkeres != 0) { arkeres += `(t.AR <= ${parseInt(req.query.maxar)})${minar != 0 ? ` and` : ``} `;  }
+  if (maxarkeres != 0) { arkeres += `${where.length > 0 ? ` and` : ` where`} (t.AR <= ${parseInt(req.query.maxar)})${minarkeres != 0 ? ` and` : ``} `;  }
   if (minarkeres != 0) { arkeres += `(t.AR >= ${parseInt(req.query.minar)}) `;  }
 
 
@@ -89,11 +89,19 @@ function gen_SQL(req) {
 
   var sql = 
     `SELECT ${maxmin_arkell == 1 ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR` : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
-     FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
-     ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${maxmin_arkell == 1 ? `` : ` and ${arkeres}` } ${order_van} ${order<0? "DESC": ""}
+     FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
+     ON t.ID_KATEGORIA = k.ID_KATEGORIA
+     ${where} 
+     ${maxmin_arkell == 1 ? `` : `${arkeres}` } 
+     ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
      ${maxmin_arkell == 1 ? `` : ` limit ${limit} offset ${limit*offset}`}
      `;
   console.log("arminmax: "+maxmin_arkell);
+  console.log("where: "+where);
+  console.log("arkeres: "+arkeres);
+  console.log("order: "+order);
+  console.log("limit: "+limit);
+  console.log("offset: "+offset);
   console.log(sql);
   return (sql);
 }
