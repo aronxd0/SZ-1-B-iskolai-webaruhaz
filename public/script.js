@@ -276,7 +276,7 @@ function CARD_BETOLT(adatok){
 
          s += `
          <div class="col-12 col-sm-6 col-xxl-4">
-            <div class="card m-3 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
+            <div class="card m-3 p-3 rounded-4 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
@@ -342,7 +342,7 @@ function  KERESOBAR(){
 
     ArFeltolt(elküld);
 
-    var  min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
+    var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
     console.log("MINAR_KERES: " + min);
     console.log("MAXAR_KERES: " + max);
@@ -660,7 +660,7 @@ $(document).ready(function() {
     
 
     $("#min_ar").on("input", function() {
-        $("#min_ar_input").val();
+        $("#min_ar_input").val($("#min_ar").val());
     });
 
 

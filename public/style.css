@@ -24,8 +24,8 @@
 
 
 .kepp {
-    width: 290px;
-    height: 250px;
+    width: 30% !important;
+    height: 3%;
     object-fit: cover;
 }
 
@@ -102,7 +102,7 @@ label::after {
 
 
 
-/* 
+
 .card {
   background-color: var(--bs-light) !important;
   color: var(--bs-body-color);
@@ -113,4 +113,3 @@ html[data-bs-theme="dark"] .card {
   background-color: #000 !important; 
   color: var(--bs-body-color);
 }
-*/
