@@ -77,17 +77,20 @@ function gen_SQL(req) {
       where = `${where.substring(0, where.length - 3)}) and `; 
     }
 
-  if (maxarkeres != 0) { where += `(t.AR <= ${parseInt(req.query.maxar)}) and `;  }
-  if (minarkeres != 0) { where += `(t.AR >= ${parseInt(req.query.minar)}) and `;  }
+
+  var arkeres = "";
+  if (maxarkeres != 0) { arkeres += `(t.AR <= ${parseInt(req.query.maxar)})${minar != 0 ? ` and` : ``} `;  }
+  if (minarkeres != 0) { arkeres += `(t.AR >= ${parseInt(req.query.minar)}) `;  }
 
 
+  
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
   if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
   var sql = 
     `SELECT ${maxmin_arkell == 1 ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR` : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
      FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
-     ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${order_van} ${order<0? "DESC": ""}
+     ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${maxmin_arkell == 1 ? `` : ` and ${arkeres}` } ${order_van} ${order<0? "DESC": ""}
      ${maxmin_arkell == 1 ? `` : ` limit ${limit} offset ${limit*offset}`}
      `;
   console.log("arminmax: "+maxmin_arkell);
