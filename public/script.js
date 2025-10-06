@@ -659,6 +659,10 @@ $(document).ready(function() {
     $("#home_button").trigger("click");
     
 
+    $("#min_ar").on("input", function() {
+        $("#min_ar_input").val();
+    });
+
 
 });
 
