@@ -491,7 +491,7 @@ $(document).ready(function() {
     });
 
     $('#login_modal').on('hidden.bs.modal', function () {
-        console.log('A modal bezárult és eltűnt!');
+        console.log('anyád');
         //ajax_post("logout", 1);
     });
 
