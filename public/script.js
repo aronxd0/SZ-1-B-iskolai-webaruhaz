@@ -321,8 +321,8 @@ function KERESOBAR(){
 
     console.log("fronted log ID-K: "+ bepipaltID );
     console.log (document.getElementById("min_ar").value +  "amire szor ")
-    var min = document.getElementById("min_ar").value == 0? "" : document.getElementById("min_ar").value; 
-    var max = document.getElementById("max_ar").value == 0? "" : document.getElementById("max_ar").value; 
+    var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
+    var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
 
 
     var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
