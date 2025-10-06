@@ -330,12 +330,14 @@ function ArFeltolt(sql){
     
         document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
         document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
+
+        
+        console.log("maxar: " + arak.rows[0].MAXAR);
+        console.log("minar: " + arak.rows[0].MINAR);
     }); 
 
   
 
-    //console.log("maxar: " + arak.rows[0].MAXAR);
-   // console.log("minar: " + arak.rows[0].MINAR);
 }
 
 
