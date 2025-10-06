@@ -252,7 +252,7 @@ function CARD_BETOLT(adatok){
         
 
          s += `
-         <div class="col-12 col-sm-6 col-lg-4">
+         <div class="col-12 col-sm-6 col-xl-4">
             <div class="card m-3 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
@@ -308,7 +308,10 @@ function KERESOBAR(){
     }
 
     console.log("fronted log ID-K: "+ bepipaltID );
-    var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order ;
+    min_ar
+
+
+    var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&maxar="+ document.getElementById("max_ar").value + "&minar=" + document.getElementById("min_ar").value ;
     ajax_post(elküld , 1, function(adatok){ 
         CARD_BETOLT(adatok);
     } ); // elküldöm lekérdezni
@@ -602,6 +605,7 @@ function Kezdolap() {
     nev1.value = "";
     ajax_post("keres", 1, function(cuccos) {
         CARD_BETOLT(cuccos);
+        ArFeltolt("keres");
         KategoriaFeltolt("kategoria_section");
     
     });  // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
