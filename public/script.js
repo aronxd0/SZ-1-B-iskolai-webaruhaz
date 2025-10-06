@@ -602,6 +602,7 @@ function Kezdolap() {
     nev1.value = "";
     ajax_post("keres", 1, function(cuccos) {
         CARD_BETOLT(cuccos);
+        ArFeltolt("keres");
         KategoriaFeltolt("kategoria_section");
     
     });  // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
