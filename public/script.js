@@ -604,7 +604,7 @@ $(document).ready(function() {
 
 
 function Kezdolap() {
-    
+    $("#keresett_kifejezes").html();
     nev1.value = "";
     ajax_post("keres", 1, function(cuccos) {
         CARD_BETOLT(cuccos);
