@@ -357,6 +357,12 @@ function ArFeltolt(sql){
   
 
 }
+function Sliderhuz(ettöl){
+    if(ettöl.id == "min_ar"){
+        document.getElementById("min_ar_input").value = ettöl.value;
+    }
+
+}
 
 
 function KategoriaFeltolt(hova) {
@@ -419,6 +425,7 @@ function ADMINVAGYE(){
             `;
     } 
 }
+
 
 
 
