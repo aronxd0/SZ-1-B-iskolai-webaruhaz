@@ -308,10 +308,10 @@ function KERESOBAR(){
     }
 
     console.log("fronted log ID-K: "+ bepipaltID );
-    min_ar
+    console.log (document.getElementById("min_ar").value +  "amire szor ")
 
 
-    var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&maxar="+ document.getElementById("max_ar").value + "&minar=" + document.getElementById("min_ar").value ;
+    var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order ;
     ajax_post(elküld , 1, function(adatok){ 
         CARD_BETOLT(adatok);
     } ); // elküldöm lekérdezni
