@@ -314,7 +314,7 @@ function KERESOBAR(){
     } ); // elküldöm lekérdezni
     
     KategoriaFeltolt("kategoria_section");
-    //ArFeltolt(elküld);
+    ArFeltolt(elküld);
     console.log("elküldve: "+ elküld);
 }
 function ArFeltolt(sql){
