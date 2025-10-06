@@ -34,6 +34,10 @@ function gen_SQL(req) {
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1);
   var id_kat = (req.query.kategoria ?  strE(req.query.kategoria).length   : -1);
   var név    = (req.query.nev? req.query.nev :  "");
+
+  var maxarkeres = (req.query.maxar? parseInt(req.query.maxar) : 0); //   ár szerinti kereséshez
+  var minarkeres = (req.query.minar? parseInt(req.query.minar) : 0); //   ár szerinti kereséshez
+
   var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0); // 1 ha igen, 0 ha nem, keresőnek adja vissza a max és min árat
   
 
@@ -72,7 +76,11 @@ function gen_SQL(req) {
         }
       where = `${where.substring(0, where.length - 3)}) and `; 
     }
-  
+
+  if (maxarkeres != 0) { where += `(t.AR <= ${parseInt(req.query.maxar)}) and `;  }
+  if (minarkeres != 0) { where += `(t.AR >= ${parseInt(req.query.minar)}) and `;  }
+
+
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
   if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
