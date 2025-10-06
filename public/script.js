@@ -548,7 +548,7 @@ $(document).ready(function() {
 
     $('#login_modal').on('hidden.bs.modal', function () {
         console.log('anyád');
-        //ajax_post("logout", 1);
+        ajax_post("logout", 1, function(logout) {});
     });
 
 
