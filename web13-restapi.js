@@ -34,13 +34,9 @@ function gen_SQL(req) {
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1);
   var id_kat = (req.query.kategoria ?  strE(req.query.kategoria).length   : -1);
   var név    = (req.query.nev? req.query.nev :  "");
-
   var maxarkeres = (req.query.maxar? parseInt(req.query.maxar) : 0); //   ár szerinti kereséshez
   var minarkeres = (req.query.minar? parseInt(req.query.minar) : 0); //   ár szerinti kereséshez
-
   var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0); // 1 ha igen, 0 ha nem, keresőnek adja vissza a max és min árat
-  
-
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // mindig legyen aktív és készleten
   
   
@@ -67,28 +63,26 @@ function gen_SQL(req) {
   }
 
 
-  if (id_kat != -1)      
-    {
-      where += "(";
-      for (var i=0; i < strE(req.query.kategoria).split("-").length - 1; ++i) 
-        {
-          where += `k.ID_KATEGORIA=${strE(req.query.kategoria).split("-")[i]} or `;
-        }
-      where = `${where.substring(0, where.length - 3)}) and `; 
-    }
+  if (id_kat != -1)
+  {
+    where += "(";
+    for (var i=0; i < strE(req.query.kategoria).split("-").length - 1; ++i) 
+      {
+        where += `k.ID_KATEGORIA=${strE(req.query.kategoria).split("-")[i]} or `;
+      }
+    where = `${where.substring(0, where.length - 3)}) and `; 
+  }
 
+  if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
+  if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
   var arkeres = "";
   if (maxarkeres != 0) { arkeres += `${where.length > 0 ? ` and` : ` where`} (t.AR <= ${parseInt(req.query.maxar)})${minarkeres != 0 ? ` and` : ``} `;  }
   if (minarkeres != 0) { arkeres += `(t.AR >= ${parseInt(req.query.minar)}) `;  }
 
-
-  
-  if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
-  if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
-
   var sql = 
-    `SELECT ${maxmin_arkell == 1 ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR` : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
+    `SELECT 
+    ${maxmin_arkell == 1 ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR` : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
      FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA
      ${where} 
@@ -96,12 +90,6 @@ function gen_SQL(req) {
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
      ${maxmin_arkell == 1 ? `` : ` limit ${limit} offset ${limit*offset}`}
      `;
-  console.log("arminmax: "+maxmin_arkell);
-  console.log("where: "+where);
-  console.log("arkeres: "+arkeres);
-  console.log("order: "+order);
-  console.log("limit: "+limit);
-  console.log("offset: "+offset);
   console.log(sql);
   return (sql);
 }
