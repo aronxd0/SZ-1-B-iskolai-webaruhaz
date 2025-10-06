@@ -299,9 +299,10 @@ function CARD_BETOLT(adatok){
     else $("#keresett_kifejezes").html();
     
     $("#Termek_hely").html(s);
+    console.log("\nMOST TOLTOTTE BE A TERMEKEKET");
 }
 
-function KERESOBAR(){
+function KERESOBAR() {
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = "";//reset
     for(var elem of inputok){
