@@ -252,7 +252,7 @@ function CARD_BETOLT(adatok){
         
 
          s += `
-         <div class="col-12 col-sm-6 col-md-4">
+         <div class="col-12 col-sm-6 col-lg-4">
             <div class="card m-3 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
