@@ -303,7 +303,7 @@ function CARD_BETOLT(adatok){
 }
 
 
-async function  KERESOBAR(){
+function  KERESOBAR(){
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = "";//reset
     for(var elem of inputok){
@@ -340,26 +340,7 @@ async function  KERESOBAR(){
     var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
     console.log("elküld: "+ elküld);
 
-    await ajax_post(sql+"&maxmin_arkell=1", 1, function(arak) {
-        console.log("elküldve: "+ sql+"&maxmin_arkell=1");
-        console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
-
-        document.getElementById("min_ar").min = arak.rows[0].MINAR;
-        document.getElementById("min_ar").max = arak.rows[0].MAXAR-1;
-
-        document.getElementById("max_ar").max = arak.rows[0].MAXAR;
-        document.getElementById("max_ar").min = arak.rows[0].MINAR+1;
-    
-        document.getElementById("max_ar").value = arak.rows[0].MAXAR;
-        document.getElementById("min_ar").value = arak.rows[0].MINAR;
-    
-        document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
-        document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
-
-
-        console.log("maxar_ARFELTOLT: " + arak.rows[0].MAXAR);
-        console.log("minar_ARFELTOLT: " + arak.rows[0].MINAR);
-    }); 
+    ArFeltolt(elküld);
 
     var  min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
@@ -402,7 +383,7 @@ function ArFeltolt(sql){
 
 }
 function Sliderhuz(ettöl){
-    if(ettöl.id == "min_ar"){
+    if(ettöl.id == "min_ar"){s
         document.getElementById("min_ar_input").value = ettöl.value;
         if(ettöl.value > document.getElementById("max_ar").value){
             document.getElementById("max_ar").value = ettöl.value+1;
