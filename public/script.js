@@ -163,7 +163,7 @@ function Termek_Mutat(cuccok) {
     if ($("#loginspan").html() == " Bejelentkezés" || aktiv == "N" || mennyiseg == 0) {
             ks = "";
     }
-    else ks = `<button class="btn btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
+    else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
 
 
     var bal = ` <div class="row">
@@ -211,19 +211,21 @@ function Termek_Mutat(cuccok) {
     $("#termeknev").html(nev);
 
     var tesztgeci = `
-        <div class="row col-12 p-2 m-2 border rounded">
+        <div class="row col-12 p-2 m-2 border rounded fhr">
             <p> teszt velemeny </p>
         </div>
     `;
 
     $("#velemenyek_helye").html("");
     $("#vlmg").html("");
+    $("#ussr").html(``)
 
     if ($("#loginspan").html() == " Bejelentkezés") {
         $("#vlmg").html("Vélemény írásához jelentkezzen be");
     }
     else {
-        $("#vlmg").html(`<button class="btn btn-primary bi bi-pencil-fill w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`);
+        $("#vlmg").html(`<button class="btn btn-primary bi bi-chat-dots w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`);
+        $("#ussr").html(`${$("#user").html()}`);
     }
 
     // ide kell a velemenyek lekerdezese
@@ -269,14 +271,14 @@ function CARD_BETOLT(adatok){
         if ($("#loginspan").html() == " Bejelentkezés" || element.AKTIV == "N" || element.MENNYISEG == 0) {
             ks = "";
         }
-        else ks = `<button class="btn btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
+        else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
 
         var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
         
 
          s += `
          <div class="col-12 col-sm-6 col-xxl-4">
-            <div class="card m-3 p-3 rounded-4 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
+            <div class="card feka m-3 p-3 rounded-4 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
@@ -468,6 +470,11 @@ function ADMINVAGYE(){
 
 $(document).ready(function() {
     // balazs.aron@csany-zeg.hu 123456
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
     
 
     update_gombok(0);           // insert, update, delete nem kell! (csak login után)

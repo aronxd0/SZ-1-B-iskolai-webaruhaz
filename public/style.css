@@ -100,16 +100,30 @@ label::after {
   transition: 0.5s ease;
 }
 
+#velemeny_input {
+  height: 100px;
+}
 
 
-
-.card {
+.feka {
   background-color: var(--bs-light) !important;
   color: var(--bs-body-color);
 }
 
+.fhr {
+  background-color: var(--bs-white) !important;
+  color: var(--bs-body-color);
+}
 
-html[data-bs-theme="dark"] .card {
+html[data-bs-theme="dark"] .fhr {
+  background-color: var(--bs-dark) !important; 
+  color: var(--bs-light);
+  border: none !important;
+}
+
+
+html[data-bs-theme="dark"] .feka {
   background-color: #000 !important; 
   color: var(--bs-body-color);
+  border: none !important;
 }
