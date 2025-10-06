@@ -224,6 +224,7 @@ function Termek_Mutat(cuccok) {
         $("#vlmg").html(`<button class="btn btn-primary bi bi-pencil-fill w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`);
     }
 
+    // ide kell a velemenyek lekerdezese
     for (let index = 0; index < 20; index++) {
         $("#velemenyek_helye").append(tesztgeci);
     }
