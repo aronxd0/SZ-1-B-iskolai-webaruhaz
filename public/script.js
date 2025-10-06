@@ -215,9 +215,17 @@ function Termek_Mutat(cuccok) {
     `;
 
     $("#velemenyek_helye").html("");
+    $("#vlmg").html("");
+
+    if ($("#loginspan").html() == " Bejelentkezés") {
+        $("#vlmg").html("Vélemény írásához jelentkezzen be");
+    }
+    else {
+        $("#vlmg").html(`<button class="btn btn-primary bi bi-pencil-fill w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`);
+    }
+
     for (let index = 0; index < 20; index++) {
         $("#velemenyek_helye").append(tesztgeci);
-        
     }
 
     if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
