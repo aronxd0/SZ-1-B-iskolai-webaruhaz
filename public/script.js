@@ -301,7 +301,7 @@ function CARD_BETOLT(adatok){
     $("#Termek_hely").html(s);
 }
 
-function KERESOBAR(){
+async function  KERESOBAR(){
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = "";//reset
     for(var elem of inputok){
@@ -338,7 +338,7 @@ function KERESOBAR(){
     var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
     console.log("elküld: "+ elküld);
 
-    ArFeltolt(elküld);
+    await ArFeltolt(elküld);
 
     var  min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
