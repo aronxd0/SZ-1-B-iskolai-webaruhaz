@@ -43,7 +43,46 @@ function ajax_get( urlsor, hova, tipus, aszinkron ) {         // html oldalak be
     return true;
 };
 
-function ajax_post( urlsor, tipus, callback ) {                         // json restapi-hoz használjuk
+
+
+
+function ajax_post(urlsor, tipus) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: urlsor,
+      type: "post",
+      async: true,
+      cache: false,
+      dataType: tipus === 0 ? "html" : "json",
+      beforeSend: function() {
+        var spinner = `<div id="spinner-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;
+                                        background:rgba(0,0,0,0.6);z-index:9999;
+                                        display:flex;align-items:center;justify-content:center;backdrop-filter: blur(10px);opacity: 1;">
+                                <div class="spinner-border text-primary"></div>
+                            </div>`;
+        $("body").append(spinner);
+      },
+      success: function(data) {
+        resolve(data); // ✅ Promise megoldva
+      },
+      error: function(jqXHR) {
+        üzen(jqXHR.responseText, "danger");
+        reject(jqXHR.responseText); // ❌ Promise elutasítva
+      },
+      complete: function() {
+        $('#spinner-overlay').remove();
+      }
+    });
+  });
+}
+
+
+
+
+
+
+/*
+function ajax_post( urlsor, tipus, callback ) {                         
     //var s = "";
     $.ajax({url: urlsor, type:"post", async:true, cache:false, dataType:tipus===0?'html':'json',
         beforeSend:function(xhr)   { 
@@ -66,7 +105,8 @@ function ajax_post( urlsor, tipus, callback ) {                         // json 
         error:     function(jqXHR, textStatus, errorThrown) {üzen(jqXHR.responseText, "danger");},
         complete:  function()      { $('#spinner-overlay').remove();  }
     });
-};  
+}; 
+*/ 
 
 function orderby( num )   {
     ID = 0; // reset... nincs kijelölve egyetlen sor sem...
@@ -166,9 +206,9 @@ function Termek_Mutat(cuccok) {
     else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
 
 
-    var bal = ` <div class="row">
-                    <img class="img img-fluid mx-auto rounded m-1 d-block kk" src="${fotolink}" alt="${nev}">
-                </div>
+    var bal = ` 
+                    <img class="img-fluid rounded mx-auto  m-1 d-block" src="${fotolink}" alt="${nev}">
+                
                 
     `;
 
@@ -246,6 +286,7 @@ function CARD_BETOLT(adatok){
     var ks = "";
     var s = "<div class='row'>"
     var el = "";
+    var ee = "";
     let cuccli = [];
     $("#keresett_kifejezes").html();
     
@@ -254,14 +295,15 @@ function CARD_BETOLT(adatok){
 
         if (element.AKTIV == "N" || element.MENNYISEG == 0) {
             el = ` <div class="alert alert-danger">
-                        Nem elérhető
+                        A termék jelenleg nem elérhető
                     </div>
             `;
+
+            ee = "nem-elerheto";
            
         }
-        else el = `
-                <h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3>
-        `;
+        else {el = `<h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3>`; ee = "";}
+        
 
         cuccli = [];
 
@@ -278,7 +320,7 @@ function CARD_BETOLT(adatok){
 
          s += `
          <div class="col-12 col-sm-6 col-xxl-4">
-            <div class="card feka m-3 p-3 rounded-4 text-center" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
+            <div class="card feka m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
@@ -305,7 +347,7 @@ function CARD_BETOLT(adatok){
 }
 
 
-function  KERESOBAR(){
+async function KERESOBAR(){
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = "";//reset
     for(var elem of inputok){
@@ -314,13 +356,12 @@ function  KERESOBAR(){
         }
     }
     var nemaktiv = "";
-    if(Nemaktivak)
-    {
-     nemaktiv = "&inaktiv=1"
+    if (Nemaktivak) {
+     nemaktiv = "&inaktiv=1";
     }
-    var elfogy =""
-    if(elfogyott){
-        elfogy = "&elfogyott=1"
+    var elfogy = ""
+    if (elfogyott){
+        elfogy = "&elfogyott=1";
     }
     var order = "";
     console.log(document.getElementById("rend").value);
@@ -342,7 +383,7 @@ function  KERESOBAR(){
     var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
     console.log("elküld: "+ elküld);
 
-    ArFeltolt(elküld);
+    await ArFeltolt(elküld);
 
     var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
@@ -350,40 +391,47 @@ function  KERESOBAR(){
     console.log("MAXAR_KERES: " + max);
 
     elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
+
+    var adatok = await ajax_post(elküld , 1);
+    CARD_BETOLT(adatok);
+    
+
+    /*
     ajax_post(elküld , 1, function(adatok){ 
         CARD_BETOLT(adatok);
-    } ); // elküldöm lekérdezni
+    } ); 
+     */
     
     KategoriaFeltolt("kategoria_section");
     
     console.log("elküldve: "+ elküld);
 }
 
-function ArFeltolt(sql){
-    ajax_post(sql+"&maxmin_arkell=1", 1, function(arak) {
-        console.log("elküldve: "+ sql+"&maxmin_arkell=1");
-        console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
-
-        document.getElementById("min_ar").min = arak.rows[0].MINAR;
-        document.getElementById("min_ar").max = arak.rows[0].MAXAR-1;
-
-        document.getElementById("max_ar").max = arak.rows[0].MAXAR;
-        document.getElementById("max_ar").min = arak.rows[0].MINAR+1;
+async function ArFeltolt(sql){
+    var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);
     
-        document.getElementById("max_ar").value = arak.rows[0].MAXAR;
-        document.getElementById("min_ar").value = arak.rows[0].MINAR;
-    
-        document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
-        document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
+    console.log("elküldve: "+ sql+"&maxmin_arkell=1");
+    console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
+
+    document.getElementById("min_ar").min = arak.rows[0].MINAR;
+    document.getElementById("min_ar").max = arak.rows[0].MAXAR-1;
+
+    document.getElementById("max_ar").max = arak.rows[0].MAXAR;
+    document.getElementById("max_ar").min = arak.rows[0].MINAR+1;
+
+    document.getElementById("max_ar").value = arak.rows[0].MAXAR;
+    document.getElementById("min_ar").value = arak.rows[0].MINAR;
+
+    document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
+    document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
 
 
-        console.log("maxar_ARFELTOLT: " + arak.rows[0].MAXAR);
-        console.log("minar_ARFELTOLT: " + arak.rows[0].MINAR);
-    }); 
-
-  
-
+    console.log("maxar_ARFELTOLT: " + arak.rows[0].MAXAR);
+    console.log("minar_ARFELTOLT: " + arak.rows[0].MINAR);
+     
 }
+
+
 function Sliderhuz(ettöl){
     if(ettöl.id == "min_ar"){s
         document.getElementById("min_ar_input").value = ettöl.value;
@@ -404,22 +452,22 @@ function Sliderhuz(ettöl){
 }
 
 
-function KategoriaFeltolt(hova) {
+async function KategoriaFeltolt(hova) {
     $(`#${hova}`).html("");                              
-    ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1, function(k_json) {
-        var listItems  = "";
-        for (var i = 0; i < k_json.rows.length; ++i) {
-            var pipa = ""
-            if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
-                pipa = "checked";
-            }
-            listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <Label class="form-check-label" id="lbl" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </Label> </p>`;
+    var k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);
+    var listItems  = "";
+    for (var i = 0; i < k_json.rows.length; ++i) {
+        var pipa = ""
+        if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
+            pipa = "checked";
         }
+        listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <Label class="form-check-label" id="lbl" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </Label> </p>`;
+    }
 
-        $(`#${hova}`).html(listItems);
-        console.log($("#nev1").val());
+    $(`#${hova}`).html(listItems);
+    console.log($("#nev1").val());
 
-    });            
+               
     
 }
 function Elfogyott(alma){
@@ -556,7 +604,7 @@ $(document).ready(function() {
     $('#login_modal').on('hidden.bs.modal', function () {
         console.log('anyád');
 
-        ajax_post("logout", 1, function(logout) {});
+        ajax_post("logout", 1,).then(logoutt => {});
 
         
 
@@ -564,7 +612,7 @@ $(document).ready(function() {
 
 
     $("#kijelentkezik").click(function() {
-        ajax_post("logout", 1, function(logout_json) {
+        ajax_post("logout", 1).then(logout_json => {
             console.log(logout_json);
             $("#loginspan").html(' Bejelentkezés');
             $("#loginout").removeClass("bi bi-box-arrow-in-left");
@@ -593,7 +641,7 @@ $(document).ready(function() {
 
 
     $("#login_oksi_button").click(function() { 
-        ajax_post("login?"+$("#form_login").serialize(), 1, function(l_json) {
+        ajax_post("login?"+$("#form_login").serialize(), 1).then(l_json => {
             if (l_json.message == "ok" && l_json.maxcount == 1) {  
                 $("#user").html(`<h5><i class="bi bi-person"></i> ${l_json.rows[0].NEV}</h5>`);
                 $("#user-email").html(`${l_json.rows[0].EMAIL}`);
@@ -677,7 +725,7 @@ $(document).ready(function() {
 function Kezdolap() {
     $("#keresett_kifejezes").html();
     nev1.value = "";
-    ajax_post("keres", 1, function(cuccos) {
+    ajax_post("keres", 1).then(cuccos => {
         CARD_BETOLT(cuccos);
         ArFeltolt("keres?");
         KategoriaFeltolt("kategoria_section");
