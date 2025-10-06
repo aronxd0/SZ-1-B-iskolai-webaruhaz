@@ -308,7 +308,10 @@ function KERESOBAR(){
     }
 
     console.log("fronted log ID-K: "+ bepipaltID );
-    var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order ;
+    min_ar
+
+
+    var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&maxar="+ document.getElementById("max_ar").value + "&minar=" + document.getElementById("min_ar").value ;
     ajax_post(elküld , 1, function(adatok){ 
         CARD_BETOLT(adatok);
     } ); // elküldöm lekérdezni
