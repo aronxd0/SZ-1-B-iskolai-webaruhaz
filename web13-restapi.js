@@ -77,7 +77,7 @@ function gen_SQL(req) {
   if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
   var sql = 
-    `SELECT ${maxmin_arkell == 1 ?  `MAX(t.AR) as maxar, MIN(t.AR) as minar` : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
+    `SELECT ${maxmin_arkell == 1 ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR` : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
      FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${order_van} ${order<0? "DESC": ""}
      ${maxmin_arkell == 1 ? `` : ` limit ${limit} offset ${limit*offset}`}
