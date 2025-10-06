@@ -40,7 +40,7 @@ function gen_SQL(req) {
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // mindig legyen aktív és készleten
   
   
-  if(session_data.ID_USER != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
+  if(session_data != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
     where = "";
   }
 
