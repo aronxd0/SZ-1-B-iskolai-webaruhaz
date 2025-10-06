@@ -63,7 +63,7 @@ function ajax_post(urlsor, tipus) {
         $("body").append(spinner);
       },
       success: function(data) {
-        resolve(data); // ✅ Promise megoldva
+        resolve(data); // promise megoldva, a “return” a sikeres aszinkron hívásnál.
       },
       error: function(jqXHR) {
         üzen(jqXHR.responseText, "danger");
@@ -392,8 +392,11 @@ async function KERESOBAR(){
 
     elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
 
-    var adatok = await ajax_post(elküld , 1);
-    CARD_BETOLT(adatok);
+    try {
+        var adatok = await ajax_post(elküld , 1);
+        CARD_BETOLT(adatok);
+    } catch (err) { console.error("hiba:", err); }
+    
     
 
     /*
@@ -408,26 +411,30 @@ async function KERESOBAR(){
 }
 
 async function ArFeltolt(sql){
-    var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);
+    try {
+        var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);
     
-    console.log("elküldve: "+ sql+"&maxmin_arkell=1");
-    console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
+        console.log("elküldve: "+ sql+"&maxmin_arkell=1");
+        console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
 
-    document.getElementById("min_ar").min = arak.rows[0].MINAR;
-    document.getElementById("min_ar").max = arak.rows[0].MAXAR-1;
+        document.getElementById("min_ar").min = arak.rows[0].MINAR;
+        document.getElementById("min_ar").max = arak.rows[0].MAXAR-1;
 
-    document.getElementById("max_ar").max = arak.rows[0].MAXAR;
-    document.getElementById("max_ar").min = arak.rows[0].MINAR+1;
+        document.getElementById("max_ar").max = arak.rows[0].MAXAR;
+        document.getElementById("max_ar").min = arak.rows[0].MINAR+1;
 
-    document.getElementById("max_ar").value = arak.rows[0].MAXAR;
-    document.getElementById("min_ar").value = arak.rows[0].MINAR;
+        document.getElementById("max_ar").value = arak.rows[0].MAXAR;
+        document.getElementById("min_ar").value = arak.rows[0].MINAR;
 
-    document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
-    document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
+        document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
+        document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
 
 
-    console.log("maxar_ARFELTOLT: " + arak.rows[0].MAXAR);
-    console.log("minar_ARFELTOLT: " + arak.rows[0].MINAR);
+        console.log("maxar_ARFELTOLT: " + arak.rows[0].MAXAR);
+        console.log("minar_ARFELTOLT: " + arak.rows[0].MINAR);
+
+    } catch (err) { console.error("hiba:", err); }
+    
      
 }
 
@@ -453,19 +460,23 @@ function Sliderhuz(ettöl){
 
 
 async function KategoriaFeltolt(hova) {
-    $(`#${hova}`).html("");                              
-    var k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);
-    var listItems  = "";
-    for (var i = 0; i < k_json.rows.length; ++i) {
-        var pipa = ""
-        if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
-            pipa = "checked";
+    $(`#${hova}`).html("");
+    try {
+        var k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);
+        var listItems  = "";
+        for (var i = 0; i < k_json.rows.length; ++i) {
+            var pipa = ""
+            if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
+                pipa = "checked";
+            }
+            listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <Label class="form-check-label" id="lbl" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </Label> </p>`;
         }
-        listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <Label class="form-check-label" id="lbl" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </Label> </p>`;
-    }
 
-    $(`#${hova}`).html(listItems);
-    console.log($("#nev1").val());
+        $(`#${hova}`).html(listItems);
+        console.log($("#nev1").val());
+        
+    } catch (err) { console.error("hiba:", err); }                     
+    
 
                
     
