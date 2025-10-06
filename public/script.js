@@ -329,7 +329,10 @@ function ArFeltolt(sql){
         console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
 
         document.getElementById("min_ar").min = arak.rows[0].MINAR;
+        document.getElementById("min_ar").max = arak.rows[0].MAXAR-1;
+
         document.getElementById("max_ar").max = arak.rows[0].MAXAR;
+        document.getElementById("max_ar").min = arak.rows[0].MINAR+1;
     
         document.getElementById("max_ar").value = arak.rows[0].MAXAR;
         document.getElementById("min_ar").value = arak.rows[0].MINAR;
@@ -337,7 +340,6 @@ function ArFeltolt(sql){
         document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
         document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
 
-        
         console.log("maxar: " + arak.rows[0].MAXAR);
         console.log("minar: " + arak.rows[0].MINAR);
     }); 
@@ -348,6 +350,18 @@ function ArFeltolt(sql){
 function Sliderhuz(ettöl){
     if(ettöl.id == "min_ar"){
         document.getElementById("min_ar_input").value = ettöl.value;
+        if(ettöl.value > document.getElementById("max_ar").value){
+            document.getElementById("max_ar").value = ettöl.value+1;
+            document.getElementById("max_ar_input").value = ettöl.value+1;
+
+        }
+    }
+    else{
+        document.getElementById("max_ar_input").value = ettöl.value;
+        if(ettöl.value < document.getElementById("min_ar").value){
+            document.getElementById("min_ar").value = ettöl.value-1;
+            document.getElementById("min_ar_input").value = ettöl.value-1;
+        }
     }
 
 }
