@@ -6,6 +6,8 @@ var webbolt_admin = false;
 var admin = false;
 var elfogyott = false;
 var Nemaktivak = false;
+var maxarr = 0;
+var minarr = 0;
 
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
@@ -329,13 +331,18 @@ function KERESOBAR(){
 
     console.log("fronted log ID-K: "+ bepipaltID );
     console.log (document.getElementById("min_ar").value +  "amire szor ")
-    var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
+   
+
+
+    var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
+    console.log("elküld: "+ elküld);
+
+    ArFeltolt(elküld);
+
+    var  min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
 
-
-    var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
-    console.log("elküld: "+ elküld);
-    ArFeltolt(elküld);
+     elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
     ajax_post(elküld , 1, function(adatok){ 
         CARD_BETOLT(adatok);
     } ); // elküldöm lekérdezni
@@ -344,6 +351,7 @@ function KERESOBAR(){
     
     console.log("elküldve: "+ elküld);
 }
+
 function ArFeltolt(sql){
     ajax_post(sql+"&maxmin_arkell=1", 1, function(arak) {
         console.log("elküldve: "+ sql+"&maxmin_arkell=1");
@@ -360,6 +368,7 @@ function ArFeltolt(sql){
     
         document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
         document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
+
 
         console.log("maxar: " + arak.rows[0].MAXAR);
         console.log("minar: " + arak.rows[0].MINAR);
