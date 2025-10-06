@@ -342,8 +342,10 @@ function KERESOBAR(){
 
     var  min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
+    console.log("MINAR_KERES: " + min);
+    console.log("MAXAR_KERES: " + max);
 
-     elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
+    elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
     ajax_post(elküld , 1, function(adatok){ 
         CARD_BETOLT(adatok);
     } ); // elküldöm lekérdezni
@@ -371,8 +373,8 @@ function ArFeltolt(sql){
         document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
 
 
-        console.log("maxar: " + arak.rows[0].MAXAR);
-        console.log("minar: " + arak.rows[0].MINAR);
+        console.log("maxar_ARFELTOLT: " + arak.rows[0].MAXAR);
+        console.log("minar_ARFELTOLT: " + arak.rows[0].MINAR);
     }); 
 
   
