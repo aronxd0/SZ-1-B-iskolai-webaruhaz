@@ -34,9 +34,7 @@ function gen_SQL(req) {
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1);
   var id_kat = (req.query.kategoria ?  strE(req.query.kategoria).length   : -1);
   var név    = (req.query.nev? req.query.nev :  "");
-  var minimum_ar = (req.query.minimum_ar? parseInt(req.query.minimum_ar) : 0);
-  var maximum_ar = (req.query.maximum_ar? parseInt(req.query.maximum_ar) : 0);
-  //var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0); // 1 ha igen, 0 ha nem
+  var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0); // 1 ha igen, 0 ha nem, keresőnek adja vissza a max és min árat
   
 
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // mindig legyen aktív és készleten
@@ -78,14 +76,13 @@ function gen_SQL(req) {
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
   if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
-  //console.log("maxazcuccos: "+ maxmin_arkell);
-
   var sql = 
-    `SELECT t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA
+    `SELECT ${maxmin_arkell == 1 ?  `MAX(t.AR) as maxar, MIN(t.AR) as minar` : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
      FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ${order_van} ${order<0? "DESC": ""}
-     limit ${limit} offset ${limit*offset}}
+     ${maxmin_arkell == 1 ? `` : ` limit ${limit} offset ${limit*offset}`}
      `;
+  console.log("arminmax: "+maxmin_arkell);
   console.log(sql);
   return (sql);
 }
