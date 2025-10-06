@@ -40,7 +40,7 @@ function gen_SQL(req) {
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // mindig legyen aktív és készleten
   
   
-  if(session_data != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
+  if(session_data.ID_USER != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
     where = "";
   }
 
@@ -58,7 +58,7 @@ function gen_SQL(req) {
   switch (Math.abs(order)) {
     case 1: order_van = "ORDER BY AR";  break;   // ár alapján rendezés, asc/desc később
     case 2: order_van = "ORDER BY NEV"; break;    // név alapján rendezés, asc/desc később
-    case 3: order_van = "ORDER BY MENNYISEG"; break;   // mennyiség alapján rendezés, asc/desc később
+    case 3: order_van = "ORDER BY MENNYISEG"; break;   // mennyiség alapján rendezés, asc/desc később 
     default: order_van = "" ; break;  // nincs rendezés
   }
 
@@ -90,7 +90,8 @@ function gen_SQL(req) {
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
      ${maxmin_arkell == 1 ? `` : ` limit ${limit} offset ${limit*offset}`}
      `;
-  console.log(sql);
+  //console.log(sql);
+  console.log("felhasznalo: " + session_data.ID_USER)
   return (sql);
 }
 
