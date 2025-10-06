@@ -340,7 +340,7 @@ async function  KERESOBAR(){
     var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
     console.log("elküld: "+ elküld);
 
-    await ajax_post(sql+"&maxmin_arkell=1", 1, function(arak) {
+    await ajax_post(elküld+"&maxmin_arkell=1", 1, function(arak) {
         console.log("elküldve: "+ sql+"&maxmin_arkell=1");
         console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
 
