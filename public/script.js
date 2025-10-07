@@ -346,7 +346,7 @@ function CARD_BETOLT(adatok){
     else $("#keresett_kifejezes").html();
     
     $("#Termek_hely").html(s);
-    console.log("\nMOST TOLTOTTE BE A TERMEKEKET");
+    console.log("\nMOST TOLTOTTE BE A TERMEKEKET" + $("#nev1").val());
 }
 
 
