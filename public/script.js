@@ -288,6 +288,7 @@ function Termek_Mutat(cuccok) {
 
 
 function CARD_BETOLT(adatok){
+    $("#Termek_hely").html();
     var ks = "";
     var s = "<div class='row'>"
     var el = "";
@@ -763,8 +764,8 @@ $(document).ready(function() {
 
     // kosár menüpont
     $("#cart_button").click(function () {
-        $("#content").html("");
-        $("#content").html("ide jon a kosar xd");
+        $("#Termek_hely").html("");
+        $("#Termek_hely").html("ide jon a kosar xd");
     });
 
 
