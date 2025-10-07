@@ -827,12 +827,10 @@ $(document).ready(function() {
 function Kezdolap() {
     $("#keresett_kifejezes").html();
     nev1.value = "";
-    ajax_post("keres", 1).then(cuccos => {
-        CARD_BETOLT(cuccos);
-        ArFeltolt("keres?");
-        KategoriaFeltolt("kategoria_section");
+    KERESOBAR();
     
-    });  // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
+    
+      // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
     
 }
 
