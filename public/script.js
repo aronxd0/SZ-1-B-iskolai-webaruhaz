@@ -675,6 +675,11 @@ $(document).ready(function() {
     });
 
 
+    $("#bezar").click(function () {
+        Kezdolap();
+    });
+
+
     $("#kijelentkezik").click(function() {
         ajax_post("logout", 1).then(logout_json => {
             console.log(logout_json);
