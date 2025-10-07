@@ -727,6 +727,16 @@ $(document).ready(function() {
 
     $("#min_ar").on("input", function() {
         $("#min_ar_input").val($("#min_ar").val());
+
+        if(parseInt ($("#min_ar").val()) > parseInt( $("#max_ar").val())){
+            $("#max_ar").val($("#min_ar").val() +1 );  
+            $("#max_ar_input").val($("#max_ar").val());
+        }
+        console.log($("#min_ar").val() > $("#min_ar").val())
+
+    });
+     $("#max_ar").on("input", function() {
+        $("#max_ar_input").val($("#max_ar").val());
     });
 
 
