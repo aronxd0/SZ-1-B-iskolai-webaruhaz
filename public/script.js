@@ -667,6 +667,7 @@ $(document).ready(function() {
 
         if(user.innerHTML == "Jelentkezz be a fiókodba"){
             ajax_post("logout", 1,).then(logoutt => {});
+            Kezdolap();
         }
         
 
