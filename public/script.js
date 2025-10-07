@@ -270,11 +270,12 @@ function Termek_Mutat(cuccok) {
 
     // ide kell a velemenyek lekerdezese
 
-    /*
+    
     for (let index = 0; index < 20; index++) {
-        $("#velemenyek_helye").append(tesztgeci);
+        $("#velemenyek").append(tesztgeci);
+        $("#sajatok").append(`${tesztgeci} - sajat`);
     }
-        */
+        
 
     if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
     else $("#termekview").modal('show');
