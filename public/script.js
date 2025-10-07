@@ -387,10 +387,13 @@ async function KERESOBAR(){
     var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
     console.log("elküld: "+ elküld);
 
-    await ArFeltolt(elküld);
-
     var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
+
+    await ArFeltolt(elküld, min , max);
+
+     min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
+     max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
     console.log("MINAR_KERES: " + min);
     console.log("MAXAR_KERES: " + max);
 
@@ -414,7 +417,7 @@ async function KERESOBAR(){
     console.log("elküldve: "+ elküld);
 }
 
-async function ArFeltolt(sql){
+async function ArFeltolt(sql, min ,max){
     try {
         var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);
     
@@ -422,13 +425,21 @@ async function ArFeltolt(sql){
         console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
 
         document.getElementById("min_ar").min = arak.rows[0].MINAR;
-        document.getElementById("min_ar").max = arak.rows[0].MAXAR-1;
+        document.getElementById("min_ar").max = arak.rows[0].MAXAR;
 
         document.getElementById("max_ar").max = arak.rows[0].MAXAR;
-        document.getElementById("max_ar").min = arak.rows[0].MINAR+1;
+        document.getElementById("max_ar").min = arak.rows[0].MINAR; 
 
+        if(parseInt(min) < parseInt( arak.rows[0].MINAR )){
+           document.getElementById("min_ar").value = arak.rows[0].MINAR;
+        }
+        else{
+            
+            document.getElementById("min_ar").value = min;
+        }
+        if(max != arak.rows[0].MAXAR) 
         document.getElementById("max_ar").value = arak.rows[0].MAXAR;
-        document.getElementById("min_ar").value = arak.rows[0].MINAR;
+        
 
         document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
         document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;

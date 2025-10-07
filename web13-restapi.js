@@ -91,6 +91,7 @@ function gen_SQL(req) {
      ${maxmin_arkell == 1 ? `` : ` limit ${limit} offset ${limit*offset}`}
      `;
   //console.log(sql);
+  console.log(arkeres)
   console.log("felhasznalo: " + session_data.ID_USER)
   return (sql);
 }
