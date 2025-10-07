@@ -300,7 +300,10 @@ function CARD_BETOLT(adatok){
     for (const element of adatok.rows) {
 
         if (element.AKTIV == "N" || element.MENNYISEG == 0) {
-            el = ` <div class="alert alert-danger">A termék jelenleg nem elérhető</div>`;
+            el = ` <div class="alert alert-danger">
+                        A termék jelenleg nem elérhető
+                    </div>
+            `;
 
             ee = "nem-elerheto";
            
@@ -402,6 +405,7 @@ async function KERESOBAR() {
         var adatok = await ajax_post(elküld2 , 1);
         if(adatok.rows.length == 0){
             ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER)
+
         } 
         CARD_BETOLT(adatok);
     } catch (err) { console.error("hiba:", err); }
@@ -422,7 +426,19 @@ async function KERESOBAR() {
 async function ArFeltolt(sql, min ,max){
     try {
         var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);
-    
+        
+        if(arak.rows[0].MINAR == null){
+            document.getElementById("min_ar").min = 0;
+            document.getElementById("min_ar").max = 0;
+            document.getElementById("max_ar").max = 1;
+            document.getElementById("max_ar").min = 1;
+            document.getElementById("max_ar").value = 1;
+            document.getElementById("min_ar").value = 0;
+            document.getElementById("min_ar_input").value = 0;
+            document.getElementById("max_ar_input").value = 1;
+            return;
+        }
+
         console.log("elküldve: "+ sql+"&maxmin_arkell=1");
         console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
 
@@ -443,28 +459,25 @@ async function ArFeltolt(sql, min ,max){
         document.getElementById("max_ar").min = arak.rows[0].MINAR; 
 
 
-        console.log(parseInt(min) +"<=min WWWWWWWWWWWWWWWW max=> "+ parseInt( arak.rows[0].MINAR ))
         if(parseInt(min) < parseInt( arak.rows[0].MINAR )){
            document.getElementById("min_ar").value = arak.rows[0].MINAR;
-           document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
+           min = arak.rows[0].MINAR
         }
         else{
             
             document.getElementById("min_ar").value = min;
-            document.getElementById("min_ar_input").value = min;
         }
         if(parseInt(max) > parseInt( arak.rows[0].MAXAR )){
            document.getElementById("max_ar").value = arak.rows[0].MAXAR;
-           document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
+           max = arak.rows[0].MAXAR
         }
         else{
             
             document.getElementById("max_ar").value = max;
-            document.getElementById("min_ar_input").value = max;
         }     
-
-        //document.getElementById("min_ar_input").value = min;
-        //document.getElementById("max_ar_input").value =max;
+        console.log("minar"+  arak.rows[0].MINAR)
+        document.getElementById("min_ar_input").value = min;
+        document.getElementById("max_ar_input").value =max;
 
 
         console.log("maxar_ARFELTOLT: " +min);
