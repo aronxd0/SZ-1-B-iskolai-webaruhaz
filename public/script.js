@@ -290,7 +290,7 @@ function Termek_Mutat(cuccok) {
 function CARD_BETOLT(adatok){
     $("#Termek_hely").html();
     var ks = "";
-    var s = "<div class='row'>"
+    var s = ""
     var el = "";
     var ee = "";
     let cuccli = [];
@@ -342,7 +342,7 @@ function CARD_BETOLT(adatok){
          
     }
   
-    s += "</div>";
+    
 
 
     if ($("#nev1").val() != "") $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
@@ -810,10 +810,18 @@ $(document).ready(function() {
         }
     });
 
+
     // kosár menüpont
     $("#cart_button").click(function () {
         $("#Termek_hely").html("");
         $("#Termek_hely").html("ide jon a kosar xd");
+    });
+
+
+    // admin oldal
+    $("#admin_button").click(function() {
+        $("#Termek_hely").html("");
+        $("#Termek_hely").html("ide jon az admin resz");
     });
 
     $("#szurogomb").click(function () {
