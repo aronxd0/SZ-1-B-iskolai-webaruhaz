@@ -256,7 +256,8 @@ function Termek_Mutat(cuccok) {
         </div>
     `;
 
-    $("#velemenyek_helye").html("");
+    $("#velemenyek").html("");
+    $("#sajatok").html("");
     $("#vlmg").html("");
     $("#ussr").html(``)
 
