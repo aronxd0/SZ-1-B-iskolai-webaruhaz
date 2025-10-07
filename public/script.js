@@ -351,7 +351,7 @@ function CARD_BETOLT(adatok){
     
     
     $("#Termek_hely").html(s);
-    console.log("\nMOST TOLTOTTE BE A TERMEKEKET");
+    console.log("\nMOST TOLTOTTE BE A TERMEKEKET" + $("#nev1").val());
 }
 
 
