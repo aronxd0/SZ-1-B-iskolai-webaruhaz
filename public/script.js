@@ -251,7 +251,7 @@ function Termek_Mutat(cuccok) {
     $("#termeknev").html(nev);
 
     var tesztgeci = `
-        <div class="row col-12 p-2 m-2 border rounded fhr">
+        <div class="row col-12 p-2 border rounded fhr">
             <p> teszt velemeny </p>
         </div>
     `;
@@ -661,6 +661,8 @@ $(document).ready(function() {
         }  
     });
 
+
+
     $('#login_modal').on('hidden.bs.modal', function () {
 
         if(user.innerHTML == "Jelentkezz be a fiókodba"){
@@ -676,6 +678,11 @@ $(document).ready(function() {
 
         
 
+    });
+
+
+    $("#bezar").click(function () {
+        Kezdolap();
     });
 
 
