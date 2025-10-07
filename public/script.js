@@ -432,23 +432,31 @@ async function ArFeltolt(sql, min ,max){
         document.getElementById("max_ar").max = arak.rows[0].MAXAR;
         document.getElementById("max_ar").min = arak.rows[0].MINAR; 
 
+
+        console.log(parseInt(min) +"<=min WWWWWWWWWWWWWWWW max=> "+ parseInt( arak.rows[0].MINAR ))
         if(parseInt(min) < parseInt( arak.rows[0].MINAR )){
            document.getElementById("min_ar").value = arak.rows[0].MINAR;
+           min = arak.rows[0].MINAR
         }
         else{
             
             document.getElementById("min_ar").value = min;
         }
-        if(max != arak.rows[0].MAXAR) 
-        document.getElementById("max_ar").value = arak.rows[0].MAXAR;
-        
+        if(parseInt(max) > parseInt( arak.rows[0].MAXAR )){
+           document.getElementById("max_ar").value = arak.rows[0].MAXAR;
+           max = arak.rows[0].MAXAR
+        }
+        else{
+            
+            document.getElementById("max_ar").value = max;
+        }     
 
-        document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
-        document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
+        document.getElementById("min_ar_input").value = min;
+        document.getElementById("max_ar_input").value =max;
 
 
-        console.log("maxar_ARFELTOLT: " + arak.rows[0].MAXAR);
-        console.log("minar_ARFELTOLT: " + arak.rows[0].MINAR);
+        console.log("maxar_ARFELTOLT: " +min);
+        console.log("minar_ARFELTOLT: " + max);
 
     } catch (err) { console.error("hiba:", err); }
     
