@@ -300,10 +300,7 @@ function CARD_BETOLT(adatok){
     for (const element of adatok.rows) {
 
         if (element.AKTIV == "N" || element.MENNYISEG == 0) {
-            el = ` <div class="alert alert-danger">
-                        A termék jelenleg nem elérhető
-                    </div>
-            `;
+            el = ` <div class="alert alert-danger">A termék jelenleg nem elérhető</div>`;
 
             ee = "nem-elerheto";
            
