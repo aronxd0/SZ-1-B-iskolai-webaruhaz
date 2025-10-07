@@ -82,7 +82,7 @@ function gen_SQL(req) {
 
   var sql = 
     `SELECT 
-    ${maxmin_arkell == 1 ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR` : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
+    ${maxmin_arkell == 1 ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR, count(*) as DB` : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
      FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA
      ${where} 

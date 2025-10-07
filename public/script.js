@@ -351,8 +351,6 @@ function CARD_BETOLT(adatok){
     
     
     $("#Termek_hely").html(s);
-    console.log("\nMOST TOLTOTTE BE A TERMEKEKET" + $("#nev1").val());
-    console.log(adatok.rows.length)
 }
 
 
@@ -430,7 +428,7 @@ async function KERESOBAR() {
 async function ArFeltolt(sql, min ,max){
     try {
         var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);
-        
+        débé.innerHTML = arak.rows[0].DB;
         if(arak.rows[0].MINAR == null){
             document.getElementById("min_ar").min = 0;
             document.getElementById("min_ar").max = 0;
