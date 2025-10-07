@@ -362,6 +362,16 @@ function CARD_BETOLT(adatok){
             <li class="page-item"><a class="page-link" href="#">hol vagyok jelenleg</a></li>
             
             <li class="page-item"><a class="page-link" href="#">Következő</a></li>
+        </ul>
+        
+        <ul class="pagination pagination-lg justify-content-center">
+            <li class="page-item"><a class="page-link" href="#">Első</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+            <li class="page-item"><a class="page-link" href="#">Utolsó</a></li>
         </ul>`;
     
     
