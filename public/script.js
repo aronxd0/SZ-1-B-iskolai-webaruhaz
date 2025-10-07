@@ -348,6 +348,13 @@ function CARD_BETOLT(adatok){
     if ($("#nev1").val() != "") $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
     else {$("#keresett_kifejezes").html("")};
 
+    if(nev1.value != "" ){
+        débé.innerHTML = ` (${adatok.maxcount} db)`;
+    }
+    else{
+        débé.innerHTML ="";
+    }
+
     
     
     $("#Termek_hely").html(s);
@@ -426,12 +433,7 @@ async function KERESOBAR() {
 async function ArFeltolt(sql, min ,max){
     try {
         var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);
-        if(nev1.value != ""){
-            débé.innerHTML = `(${arak.rows[0].DB} db)`;
-        }
-        else{
-            débé.innerHTML ="";
-        }
+        
         
         if(arak.rows[0].MINAR == null){
             document.getElementById("min_ar").min = 0;
