@@ -346,7 +346,9 @@ function CARD_BETOLT(adatok){
 
 
     if ($("#nev1").val() != "") $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
-    else $("#keresett_kifejezes").html();
+    else {$("#keresett_kifejezes").html("")};
+
+    
     
     $("#Termek_hely").html(s);
     console.log("\nMOST TOLTOTTE BE A TERMEKEKET");
@@ -385,8 +387,9 @@ async function KERESOBAR() {
     console.log (document.getElementById("min_ar").value +  "amire szor ")
    
 
-
+    
     var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
+
     console.log("elküld: "+ elküld);
 
     var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
