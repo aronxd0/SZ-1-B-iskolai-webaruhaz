@@ -426,6 +426,16 @@ async function ArFeltolt(sql, min ,max){
         console.log("elküldve: "+ sql+"&maxmin_arkell=1");
         console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
 
+        var elozomin = parseInt( document.getElementById("min_ar").min)
+        if(elozomin == min || min > arak.rows[0].MAXAR){
+            min = arak.rows[0].MINAR
+        }
+        var elozomax = parseInt( document.getElementById("max_ar").max)
+        if(elozomax == max){
+            max = arak.rows[0].MAXAR
+        }
+
+
         document.getElementById("min_ar").min = arak.rows[0].MINAR;
         document.getElementById("min_ar").max = arak.rows[0].MAXAR;
 
