@@ -40,7 +40,7 @@ function gen_SQL(req) {
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // mindig legyen aktív és készleten
   
   
-  if(session_data != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
+  if(session_data.ID_USER != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
     where = "";
   }
 
@@ -90,9 +90,7 @@ function gen_SQL(req) {
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
      ${maxmin_arkell == 1 ? `` : ` limit ${limit} offset ${limit*offset}`}
      `;
-  //console.log(sql);
-  console.log(arkeres)
-  console.log("felhasznalo: " + session_data.ID_USER)
+  console.log(sql);
   return (sql);
 }
 
@@ -143,7 +141,7 @@ async function login_toFrontend (req, res) {
 app.post('/logout', (req, res) => {  
   session_data = req.session;
   const uid = session_data.ID_USER; // annak a usernek az ID-ja aki kijelentkezett -> kosár törléshez
-  console.log(uid);
+  console.log("kilogolt felhasznalo: " + uid);
   session_data.destroy(function(err) {
     if (err) {
       console.error('Session destroy failed', err);

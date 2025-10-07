@@ -371,7 +371,7 @@ async function KERESOBAR() {
         elfogy = "&elfogyott=1";
     }
     var order = "";
-    console.log(document.getElementById("rend").value);
+    //console.log(document.getElementById("rend").value);
     switch($("#rend").val()){
         case("ar_nov"): order = "&order=1"; break;
         case("ar_csok"): order = "&order=-1"; break;
@@ -383,7 +383,7 @@ async function KERESOBAR() {
     }
 
     console.log("fronted log ID-K: "+ bepipaltID );
-    console.log (document.getElementById("min_ar").value +  "amire szor ")
+    //console.log (document.getElementById("min_ar").value +  "amire szor ")
    
 
     
@@ -398,8 +398,6 @@ async function KERESOBAR() {
 
      min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
      max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
-    console.log("MINAR_KERES: " + min);
-    console.log("MAXAR_KERES: " + max);
 
     var elküld2 = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
 
@@ -428,7 +426,13 @@ async function KERESOBAR() {
 async function ArFeltolt(sql, min ,max){
     try {
         var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);
-        débé.innerHTML = arak.rows[0].DB;
+        if(nev1.value != ""){
+            débé.innerHTML = `(${arak.rows[0].DB} db)`;
+        }
+        else{
+            débé.innerHTML ="";
+        }
+        
         if(arak.rows[0].MINAR == null){
             document.getElementById("min_ar").min = 0;
             document.getElementById("min_ar").max = 0;
@@ -441,8 +445,7 @@ async function ArFeltolt(sql, min ,max){
             return;
         }
 
-        console.log("elküldve: "+ sql+"&maxmin_arkell=1");
-        console.log(arak.rows[0].MAXAR + " asdasdas  " + arak.rows[0].MINAR);
+        //console.log("elküldve: "+ sql+"&maxmin_arkell=1");
 
         var elozomin = parseInt( document.getElementById("min_ar").min)
         if(elozomin == min || min > arak.rows[0].MAXAR){
@@ -477,13 +480,9 @@ async function ArFeltolt(sql, min ,max){
             
             document.getElementById("max_ar").value = max;
         }     
-        console.log("minar"+  arak.rows[0].MINAR)
         document.getElementById("min_ar_input").value = min;
         document.getElementById("max_ar_input").value =max;
 
-
-        console.log("maxar_ARFELTOLT: " +min);
-        console.log("minar_ARFELTOLT: " + max);
 
     } catch (err) { console.error("hiba:", err); }
     
@@ -525,7 +524,6 @@ async function KategoriaFeltolt(hova) {
         }
 
         $(`#${hova}`).html(listItems);
-        console.log($("#nev1").val());
         
     } catch (err) { console.error("hiba:", err); }                     
       
@@ -664,8 +662,16 @@ $(document).ready(function() {
     });
 
     $('#login_modal').on('hidden.bs.modal', function () {
-        console.log('anyád');
 
+        if(user.innerHTML == "Jelentkezz be a fiókodba"){
+            ajax_post("logout", 1,).then(logoutt => {});
+        }
+        
+
+        
+
+    });
+     $('#bezar').on('click', function () {
         ajax_post("logout", 1,).then(logoutt => {});
 
         
@@ -722,7 +728,7 @@ $(document).ready(function() {
                 $("#loginout").addClass("bi bi-box-arrow-in-left");
                 if (l_json.rows[0].WEBBOLT_ADMIN == 'Y') webbolt_admin = true;
                 if (l_json.rows[0].ADMIN == 'Y') admin = true;
-                console.log("webbolt_admin: "+ admin);
+                //console.log("webbolt_admin: "+ admin);
                 Kezdolap();
                 ADMINVAGYE();
 
