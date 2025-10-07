@@ -256,7 +256,8 @@ function Termek_Mutat(cuccok) {
         </div>
     `;
 
-    $("#velemenyek_helye").html("");
+    $("#velemenyek").html("");
+    $("#sajatok").html("");
     $("#vlmg").html("");
     $("#ussr").html(``)
 
@@ -750,13 +751,20 @@ $(document).ready(function() {
 
 
     });
-     $("#max_ar").on("input", function() {
+    
+    $("#max_ar").on("input", function() {
         $("#max_ar_input").val($("#max_ar").val());
 
          if(parseInt ($("#max_ar").val()) < parseInt( $("#min_ar").val())){
             $("#min_ar").val(parseInt( $("#max_ar").val()) -1 );  
             $("#min_ar_input").val($("#min_ar").val());
         }
+    });
+
+    // kosár menüpont
+    $("#cart_button").click(function () {
+        $("#content").html("");
+        $("#content").html("ide jon a kosar xd");
     });
 
 
