@@ -504,18 +504,17 @@ async function KategoriaFeltolt(hova) {
             if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
                 pipa = "checked";
             }
-            listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <Label class="form-check-label" id="lbl" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </Label> </p>`;
+            listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <label class="form-check-label" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </label> </p>`;
         }
 
         $(`#${hova}`).html(listItems);
         console.log($("#nev1").val());
         
     } catch (err) { console.error("hiba:", err); }                     
-    
-
-               
-    
+      
 }
+
+
 function Elfogyott(alma){
     if(alma.value == "Csakelfogyott"){
 
