@@ -663,6 +663,8 @@ $(document).ready(function() {
         }  
     });
 
+    
+
     $('#login_modal').on('hidden.bs.modal', function () {
         console.log('anyád');
 
