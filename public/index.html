@@ -172,7 +172,18 @@
       
       <div class="row">
           <div class="col-lg-2"></div>
-          <div class="col-lg-8" id="Termek_hely"> </div>
+          <div class="col-lg-8">
+            <div class="row" id="Termek_hely"></div>  
+            <div class="row mt-3" id="pagi">
+              <ul class="pagination pagination-lg justify-content-center">
+                <li class="page-item"><a class="page-link" href="#">Előző</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Következő</a></li>
+              </ul>
+            </div>
+          </div>
           <div class="col-lg-2"></div>
         </div>
     </div>
@@ -360,19 +371,19 @@
             <!--<div class="col-0 col-lg-1"></div>-->
             <div class="col-12">
               
-              <div class="row mt-2 d-flex justify-content-center">
-                <div class="row col-12 d-flex justify-content-center align-self-center" id="vlmg">
+              <div class="mt-2 d-flex justify-content-center">
+                <div class="align-self-center" id="vlmg">
                   <button class="btn btn-primary bi bi-chat-dots w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>
                 </div>
 
-                <div id="vlm" class="row collapse pe-0">
-                  <div class="row col-12 mt-3 d-flex justify-content-center justify-content-lg-start" id="ussr"></div>
+                <div id="vlm" class="collapse pe-0">
+                  <div class="mt-3 d-flex justify-content-center justify-content-lg-start" id="ussr"></div>
                  
-                  <div class="row col-12 mt-3">
+                  <div class="mt-3">
                     <textarea class="form-control rounded-3 p-2" id="velemeny_input" name="vlmny" type="text" placeholder="Mondd el, mit gondolsz erről a termékről..."></textarea>
                   </div>
 
-                  <div class="row d-flex p-2 justify-content-center justify-content-xl-end">
+                  <div class="d-flex p-2 justify-content-center justify-content-xl-end">
                     <button type="button" class="btn btn-info bi bi-info-circle w-auto" data-bs-toggle="tooltip" title="A vélemény jóváhagyás esetén lesz majd látható!"></button>
                     <button class="btn btn-danger bi bi-x-lg w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Mégse</button>
                     <button class="btn btn-success bi bi-send w-auto" id="velemeny_kozzetesz"> Közzététel</button>
@@ -381,7 +392,7 @@
 
               </div>
 
-              <div class="row mt-5">
+              <div class="col-12 mt-5">
                 <!--<div class="col-12 text-center"><h4>Vélemények</h4></div>-->
                 <div>
                   <ul class="nav nav-tabs">
@@ -394,7 +405,7 @@
                   
                  </ul>
                 </div>
-                
+
                 <div>
                   <div class="tab-content mt-3 d-flex justify-content-center">
                     <div class="tab-pane container active" id="velemenyek">velemenyek resz</div>
