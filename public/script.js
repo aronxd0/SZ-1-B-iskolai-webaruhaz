@@ -353,7 +353,7 @@ function CARD_BETOLT(adatok){
 }
 
 
-async function KERESOBAR(){
+async function KERESOBAR() {
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = "";//reset
     for(var elem of inputok){
@@ -774,6 +774,10 @@ $(document).ready(function() {
     $("#cart_button").click(function () {
         $("#Termek_hely").html("");
         $("#Termek_hely").html("ide jon a kosar xd");
+    });
+
+    $("#szurogomb").click(function () {
+        KERESOBAR();
     });
 
 
