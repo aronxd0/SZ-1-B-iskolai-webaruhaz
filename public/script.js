@@ -359,7 +359,7 @@ function CARD_BETOLT(adatok){
         <ul class="pagination pagination-lg justify-content-center">
             <li class="page-item"><a class="page-link" href="#">Előző</a></li>
             
-            <li class="page-item"><a class="page-link" href="#">hol vagyok jelenleg</a></li>
+            <li class="page-item"><a class="page-link" href="#"><H1>1</H1>/10</a></li>
             
             <li class="page-item"><a class="page-link" href="#">Következő</a></li>
         </ul>
