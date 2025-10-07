@@ -399,10 +399,13 @@ async function KERESOBAR() {
     console.log("MINAR_KERES: " + min);
     console.log("MAXAR_KERES: " + max);
 
-    elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
+    var elküld2 = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
 
     try {
-        var adatok = await ajax_post(elküld , 1);
+        var adatok = await ajax_post(elküld2 , 1);
+        if(adatok.rows.length == 0){
+            ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER)
+        } 
         CARD_BETOLT(adatok);
     } catch (err) { console.error("hiba:", err); }
     
@@ -446,23 +449,25 @@ async function ArFeltolt(sql, min ,max){
         console.log(parseInt(min) +"<=min WWWWWWWWWWWWWWWW max=> "+ parseInt( arak.rows[0].MINAR ))
         if(parseInt(min) < parseInt( arak.rows[0].MINAR )){
            document.getElementById("min_ar").value = arak.rows[0].MINAR;
-           min = arak.rows[0].MINAR
+           document.getElementById("min_ar_input").value = arak.rows[0].MINAR;
         }
         else{
             
             document.getElementById("min_ar").value = min;
+            document.getElementById("min_ar_input").value = min;
         }
         if(parseInt(max) > parseInt( arak.rows[0].MAXAR )){
            document.getElementById("max_ar").value = arak.rows[0].MAXAR;
-           max = arak.rows[0].MAXAR
+           document.getElementById("max_ar_input").value = arak.rows[0].MAXAR;
         }
         else{
             
             document.getElementById("max_ar").value = max;
+            document.getElementById("min_ar_input").value = max;
         }     
 
-        document.getElementById("min_ar_input").value = min;
-        document.getElementById("max_ar_input").value =max;
+        //document.getElementById("min_ar_input").value = min;
+        //document.getElementById("max_ar_input").value =max;
 
 
         console.log("maxar_ARFELTOLT: " +min);
