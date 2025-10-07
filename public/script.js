@@ -345,7 +345,7 @@ function CARD_BETOLT(adatok){
     s += "</div>";
 
 
-    if ($("#nev1").val() != "") $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre (<span id="débé"></span>)`);
+    if ($("#nev1").val() != "") $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
     else {$("#keresett_kifejezes").html("")};
 
     
