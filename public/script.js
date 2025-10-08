@@ -445,6 +445,12 @@ async function ArFeltolt(sql, min ,max){
         var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);
         
         console.log(min+ "minarr");
+        if(min == ""){
+            min = arak.rows[0].MINAR;
+        }
+        if(max == ""){
+            max = arak.rows[0].MAXAR;
+        }
         
         if(arak.rows[0].MINAR == null){
             document.getElementById("min_ar").min = 0;
