@@ -254,9 +254,11 @@ function Termek_Mutat(cuccok) {
 
     var tesztgeci = `
         <div class="w-100 p-2 border rounded fhr mt-3 comment">
-            <p> teszt velemeny </p>
+            <p> teszt velemeny | !!  commentekeit idd nézd meg 257 sor !!</p>
         </div>
     `;
+    // Saját vélemény megnézése akkor amikor nincs beloginolva ne legyen
+    // beloginolsz => vélemény irása => mellékattintás => kijelentkezés => utánna tud véleményt irni nem beloginolva    
 
     $("#velemenyek").html("");
     $("#sajatok").html("");
@@ -894,7 +896,7 @@ $(document).ready(function() {
             <div class="col-12">
                 <div class="text-center p-2" id="kosarmenutitle">ha a kosar ures akkor kosar ures ha nem akkor kosar tartalma</div>
                 <div class="feka p-2" id="kosar_tetelek">
-                    ide jonnek a tetelek
+                    ide jonnek a tetelek  | Nagyon sok backend ÁDI készülj, alvásnak vége munka lesz
                 </div>
             </div>
         
