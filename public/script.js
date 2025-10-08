@@ -253,7 +253,7 @@ function Termek_Mutat(cuccok) {
     $("#termeknev").html(nev);
 
     var tesztgeci = `
-        <div class="w-100 p-2 border rounded fhr">
+        <div class="w-100 p-2 border rounded fhr mt-3 comment">
             <p> teszt velemeny </p>
         </div>
     `;
@@ -358,7 +358,7 @@ function CARD_BETOLT(adatok){
     }
 
     var pp = `
-        <ul class="pagination pagination-lg justify-content-center">
+        <ul class="pagination justify-content-center">
             <li class="page-item"><a class="page-link" href="#"> << </a></li>
             <li class="page-item"><a class="page-link" onclick="ElozoO()" href="#">Előző</a></li>
             <li class="page-item"><a class="page-link" href="#"><b id="Mostoldal">1</b> /<span id="DBoldal">100</span></a></li>
