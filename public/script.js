@@ -290,7 +290,9 @@ function Termek_Mutat(cuccok) {
 
 
 function CARD_BETOLT(adatok){
-    $("#content_hely").html();
+    $("#content_hely").html();/// adatok is undefined
+
+    
     var ks = "";
     var s = ""
     var el = "";
@@ -381,7 +383,6 @@ async function KERESOBAR() {
             bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem az "s" be
         }
     }
-    Joldal = 1;
     var nemaktiv = "";
     if (Nemaktivak) {
      nemaktiv = "&inaktiv=1";
