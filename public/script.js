@@ -827,6 +827,7 @@ $(document).ready(function() {
     $("#cart_button").click(function () {
         $("#Termek_hely").html("");
         $("#Termek_hely").html("ide jon a kosar xd");
+        $("#pagi").html("");
     });
 
 
@@ -834,6 +835,7 @@ $(document).ready(function() {
     $("#admin_button").click(function() {
         $("#Termek_hely").html("");
         $("#Termek_hely").html("ide jon az admin resz");
+        $("#pagi").html("");
     });
 
     $("#szurogomb").click(function () {
