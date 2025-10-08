@@ -251,7 +251,7 @@ function Termek_Mutat(cuccok) {
     $("#termeknev").html(nev);
 
     var tesztgeci = `
-        <div class="w-100 p-2 border rounded fhr mt-3">
+        <div class="w-100 p-2 border rounded fhr mt-3 comment">
             <p> teszt velemeny </p>
         </div>
     `;
