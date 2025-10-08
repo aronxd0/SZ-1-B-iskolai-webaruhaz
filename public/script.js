@@ -8,8 +8,8 @@ var elfogyott = false;
 var Nemaktivak = false;
 var maxarr = 0;
 var minarr = 0;
-var oldalszam =0;
-var Joldal = 1;
+var oldalszam =0; // összes oldal darabszáma
+var Joldal = 1; // jelenlegi oldal
 
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
@@ -426,7 +426,7 @@ async function KERESOBAR() {
         var adatok = await ajax_post(elküld2 , 1);
         if(adatok.rows.length == 0){
             ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
-            
+            Joldal = 1;
 
 
         } 
