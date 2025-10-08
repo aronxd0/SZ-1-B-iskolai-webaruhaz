@@ -418,8 +418,8 @@ async function KERESOBAR() {
      min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
      max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
 
-    var elküld2 = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
-
+    var elküld2 = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max +"&offset="+ ( parseInt( Joldal)-1)*51;
+    console.log("elküld2: "+ elküld2);
     try {
         var adatok = await ajax_post(elküld2 , 1);
         if(adatok.rows.length == 0){
