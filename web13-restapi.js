@@ -20,14 +20,19 @@ const mysql_connection =  {
   database: 'studio13_csany_zeg'           /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
 };
 
+// 1. trim(): levágja az elejéről és végéről a szóközöket
+// 2. replaceAll("'", ""): eltávolítja az összes aposztrófot (')
+// 3. replaceAll("\"", ""): eltávolítja az összes idézőjelet (")
+// 4. replaceAll("\t", ""): eltávolítja az összes tabulátort
+// 5. replaceAll("\\", ""): eltávolítja az összes backslash-t (\)
+// 6. replaceAll("`", ""): eltávolítja az összes backtick-et (`)
 function strE(s) { 
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
-function gen_SQL(req) {
-  session_data = req.session; // A session objektumot elérhetővé tesszük a függvényen belül
+function gen_SQL_kereses(req) {
+  session_data = req.session;
 
   // ---------------- sql tokenizer ... ---------------
-  // Lekérdezzük az összes szűrési és rendezési paramétert a kérésből (query stringből)
   var order  = (req.query.order? parseInt(req.query.order)                :   0); // Rendezés típusa (pl. ár, név, mennyiség)
   var limit  = (req.query.limit? parseInt(req.query.limit)                : 50);  // Limit, hány rekordot kérünk vissza (alapértelmezett: 50)
   var offset = (req.query.offset? parseInt(req.query.offset)              :   0); // Oldal eltolás (paginációhoz)
@@ -40,7 +45,7 @@ function gen_SQL(req) {
   var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0); // Csak min/max ár lekérdezéshez (ha 1, csak ezt adja vissza)
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
 
-  // Ha admin vagy webbolt admin a felhasználó, akkor minden terméket láthat (szűrés nélkül)
+  // Ha admin vagy webbolt admin a felhasználó, akkor minden terméket láthat
   if(session_data.ID_USER != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
     where = "";
   }
@@ -49,11 +54,13 @@ function gen_SQL(req) {
   if(elfogyott != -1){
     where = `(t.MENNYISEG = 0) AND `;   // Csak azok, amikből nincs készlet
   }
+
   // Ha csak inaktív termékeket kérünk (admin funkció)
   if(inaktiv != -1){
     where = `(t.AKTIV = "N") AND `;   // Csak azok, amik inaktívak
   }
-  // Ha mindkettő szűrés aktív (elfogyott vagy inaktív)
+
+  // Ha mindkettő szűrés aktív (elfogyott és/vagy inaktív)
   if(elfogyott != -1 && inaktiv != -1){
     where = `(t.AKTIV = "N" OR t.MENNYISEG = 0) AND `;   // Bármelyik feltétel teljesül
   }
@@ -79,11 +86,6 @@ function gen_SQL(req) {
     where = `${where.substring(0, where.length - 3)}) and `; // Az utolsó ' or ' törlése
   }
 
-  // Név vagy leírás szűrés, ha van keresési kifejezés
-  if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
-  // Ha van szűrés, akkor a végéről levágjuk az utolsó ' and '-et, és where kulcsszóval kezdjük
-  if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
-
   // Ár szűrés (min/max)
   var arkeres = "";
   if (maxarkeres != 0) { 
@@ -92,6 +94,13 @@ function gen_SQL(req) {
   if (minarkeres != 0) { 
     arkeres += `(t.AR >= ${parseInt(req.query.minar)}) `;  
   }
+
+  // Név vagy leírás szűrés, ha van keresési kifejezés
+  if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
+
+  // Ha van szűrés, akkor a végéről levágjuk az utolsó ' and '-et, és where kulcsszóval kezdjük
+  if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
+
 
   // Az SQL lekérdezés összeállítása
   var sql = 
@@ -106,7 +115,7 @@ function gen_SQL(req) {
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`} // Rendezés, ha kell (negatív order: DESC)
      ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${51*offset}`} // Limit és offset
      `;
-  console.log(sql); // Az elkészült SQL lekérdezés kiírása a konzolra (debug)
+  console.log(sql); // debug
   return (sql); // Az SQL lekérdezés visszaadása
 }
 
@@ -125,7 +134,7 @@ app.post('/kategoria',(req, res) => {
 });
 
 app.post('/keres', (req, res) => {  
-  var sql = gen_SQL(req);                   // sql select generátor (tokenizer)
+  var sql = gen_SQL_kereses(req);                   // sql select generátor (tokenizer)
   sendJson_toFrontend (res, sql); 
 });
 
