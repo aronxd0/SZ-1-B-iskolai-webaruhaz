@@ -34,7 +34,6 @@ function gen_SQL_kereses(req) {
 
   // ---------------- sql tokenizer ... ---------------
   var order  = (req.query.order? parseInt(req.query.order)                :   0); // Rendezés típusa (pl. ár, név, mennyiség)
-  var limit  = (req.query.limit? parseInt(req.query.limit)                : 50);  // Limit, hány rekordot kérünk vissza (alapértelmezett: 50)
   var offset = (req.query.offset? parseInt(req.query.offset)              :   0); // Oldal eltolás (paginációhoz)
   var elfogyott = (req.query.elfogyott? parseInt(req.query.offset)        :   -1); // Csak elfogyott termékek (admin funkció)
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
@@ -115,7 +114,7 @@ function gen_SQL_kereses(req) {
      ${where} 
      ${maxmin_arkell == 1 ? `` : `${arkeres}` }
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
-     ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${51*offset}`}
+     ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${offset}`}
      `;
   console.log(sql); // debug
   return (sql);
