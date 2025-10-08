@@ -356,7 +356,7 @@ function CARD_BETOLT(adatok){
     }
 
     var pp = `
-        <ul class="pagination pagination-lg justify-content-center">
+        <ul class="pagination justify-content-center">
             <li class="page-item"><a class="page-link" href="#"> << </a></li>
             <li class="page-item"><a class="page-link" href="#">Előző</a></li>
             <li class="page-item"><a class="page-link" href="#"><b>1</b> /100</a></li>
