@@ -359,12 +359,12 @@ function CARD_BETOLT(adatok){
 
     var pp = `
         <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#"> << </a></li>
-            <li class="page-item"><a class="page-link" onclick="ElozoO()" href="#">Előző</a></li>
+            <li class="page-item"><a class="page-link" id="Vissza2" onclick="Kovi(this)" href="#"> << </a></li>
+            <li class="page-item"><a class="page-link" id="vissza1" onclick="Kovi(this)" href="#">Előző</a></li>
             <li class="page-item"><a class="page-link" href="#"><b id="Mostoldal">1</b> /<span id="DBoldal">100</span></a></li>
             
-            <li class="page-item"><a class="page-link" onclick="Kovi()" href="#">Következő</a></li>
-            <li class="page-item"><a class="page-link" href="#"> >> </a></li>
+            <li class="page-item"><a class="page-link" id="Kovi1" onclick="Kovi(this)" href="#">Következő</a></li>
+            <li class="page-item"><a class="page-link" id="Kovi2" onclick="Kovi(this)" href="#"> >> </a></li>
         </ul>`;
     
     
@@ -448,6 +448,7 @@ async function KERESOBAR() {
 
 function OLDALFELTOTL(darab){
     oldalszam = Math.ceil( darab /51);
+    if(oldalszam == 0) oldalszam = 1;
     DBoldal.innerHTML = oldalszam ;
     Mostoldal.innerHTML = Joldal;
     if(Joldal == 1){
@@ -460,18 +461,37 @@ function OLDALFELTOTL(darab){
     }
 }
 
-function Kovi(){
-    if(Joldal < oldalszam){
-        Joldal++;
-        KERESOBAR();
+function Kovi(keri){
+    console.log(keri.id);
+    switch(keri.id){
+        case("Kovi1"):{
+            if(Joldal < oldalszam){
+                Joldal++;
+                KERESOBAR();
+                return;}
+        }
+        case("Kovi2"):{
+                console.log("oldalszam: "+ oldalszam);
+                Joldal = oldalszam;
+                console.log("Joldal: "+ Joldal + " old szam: "+ oldalszam);
+                KERESOBAR();
+                return;
+        }
+        case("vissza1"):{
+            if(Joldal > 1){
+                Joldal--;
+                KERESOBAR();
+                return;
+            }}
+        case("Vissza2"):{
+            Joldal = 1;
+            KERESOBAR();
+            return
+        }
+   
     }
 }
-function ElozoO(){
-    if(Joldal > 1){
-        Joldal--;
-        KERESOBAR();
-    }
-}
+
 
 
 async function ArFeltolt(sql, min ,max){
