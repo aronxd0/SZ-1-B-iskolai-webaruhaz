@@ -448,6 +448,7 @@ async function KERESOBAR() {
 
 function OLDALFELTOTL(darab){
     oldalszam = Math.ceil( darab /51);
+    if(oldalszam == 0) oldalszam = 1;
     DBoldal.innerHTML = oldalszam ;
     Mostoldal.innerHTML = Joldal;
     if(Joldal == 1){
