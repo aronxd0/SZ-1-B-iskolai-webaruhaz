@@ -89,7 +89,7 @@ function gen_SQL_kereses(req) {
   // Ár szűrés (min/max)
   var arkeres = "";
   if (maxarkeres != 0) { 
-    arkeres += `${where.length > 0 ? ` and` : ` where`} (t.AR <= ${parseInt(req.query.maxar)})${minarkeres != 0 ? ` and` : ``} `;  
+    arkeres += `${where.length > 0 ? ` where` : ` and`} (t.AR <= ${parseInt(req.query.maxar)})${minarkeres != 0 ? ` and` : ``} `;  
   }
   if (minarkeres != 0) { 
     arkeres += `(t.AR >= ${parseInt(req.query.minar)}) `;  
