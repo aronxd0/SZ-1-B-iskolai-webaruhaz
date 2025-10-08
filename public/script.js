@@ -8,6 +8,7 @@ var elfogyott = false;
 var Nemaktivak = false;
 var maxarr = 0;
 var minarr = 0;
+var oldalszam =0
 
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
@@ -359,7 +360,7 @@ function CARD_BETOLT(adatok){
         <ul class="pagination pagination-lg justify-content-center">
             <li class="page-item"><a class="page-link" href="#"> << </a></li>
             <li class="page-item"><a class="page-link" href="#">Előző</a></li>
-            <li class="page-item"><a class="page-link" href="#"><b>1</b> /100</a></li>
+            <li class="page-item"><a class="page-link" href="#"><b id="Mostoldal">1</b> /<span id="DBoldal">100</span></a></li>
             
             <li class="page-item"><a class="page-link" href="#">Következő</a></li>
             <li class="page-item"><a class="page-link" href="#"> >> </a></li>
@@ -421,10 +422,14 @@ async function KERESOBAR() {
     try {
         var adatok = await ajax_post(elküld2 , 1);
         if(adatok.rows.length == 0){
-            ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER)
+            ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
+            
+
 
         } 
         CARD_BETOLT(adatok);
+        OLDALFELTOTL(adatok.maxcount);
+        
     } catch (err) { console.error("hiba:", err); }
     
     
@@ -438,6 +443,14 @@ async function KERESOBAR() {
     KategoriaFeltolt("kategoria_section");
     
     console.log("elküldve: "+ elküld);
+}
+
+function OLDALFELTOTL(darab){
+    oldalszam = Math.ceil( darab /51);
+    
+        console.log(oldalszam + "db");
+    DBoldal.innerHTML = oldalszam ;
+
 }
 
 async function ArFeltolt(sql, min ,max){
