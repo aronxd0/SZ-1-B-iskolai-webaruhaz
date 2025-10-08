@@ -86,6 +86,7 @@ function gen_SQL_kereses(req) {
     where = `${where.substring(0, where.length - 3)}) and `; // Az utolsó ' or ' törlése
   }
 
+
   // Ár szűrés (min/max)
   var arkeres = "";
   if (maxarkeres != 0) { 
@@ -102,21 +103,22 @@ function gen_SQL_kereses(req) {
   if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
 
+
   // Az SQL lekérdezés összeállítása
   var sql = 
     `SELECT 
     ${maxmin_arkell == 1 
-      ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR` // Ha csak min/max ár kell, akkor csak ezt kérjük le
+      ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR`
       : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
      FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA
      ${where} 
-     ${maxmin_arkell == 1 ? `` : `${arkeres}` } // Ha nem csak min/max ár kell, akkor ár szűrés is lehet
-     ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`} // Rendezés, ha kell (negatív order: DESC)
-     ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${51*offset}`} // Limit és offset
+     ${maxmin_arkell == 1 ? `` : `${arkeres}` }
+     ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
+     ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${51*offset}`}
      `;
   console.log(sql); // debug
-  return (sql); // Az SQL lekérdezés visszaadása
+  return (sql);
 }
 
 
