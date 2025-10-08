@@ -8,6 +8,8 @@ var elfogyott = false;
 var Nemaktivak = false;
 var maxarr = 0;
 var minarr = 0;
+var oldalszam =0;
+var Joldal = 1;
 
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
@@ -251,7 +253,7 @@ function Termek_Mutat(cuccok) {
     $("#termeknev").html(nev);
 
     var tesztgeci = `
-        <div class="w-100 p-2 border rounded fhr">
+        <div class="w-100 p-2 border rounded fhr mt-3 comment">
             <p> teszt velemeny </p>
         </div>
     `;
@@ -358,10 +360,10 @@ function CARD_BETOLT(adatok){
     var pp = `
         <ul class="pagination justify-content-center">
             <li class="page-item"><a class="page-link" href="#"> << </a></li>
-            <li class="page-item"><a class="page-link" href="#">Előző</a></li>
-            <li class="page-item"><a class="page-link" href="#"><b>1</b> /100</a></li>
+            <li class="page-item"><a class="page-link" onclick="ElozoO()" href="#">Előző</a></li>
+            <li class="page-item"><a class="page-link" href="#"><b id="Mostoldal">1</b> /<span id="DBoldal">100</span></a></li>
             
-            <li class="page-item"><a class="page-link" href="#">Következő</a></li>
+            <li class="page-item"><a class="page-link" onclick="Kovi()" href="#">Következő</a></li>
             <li class="page-item"><a class="page-link" href="#"> >> </a></li>
         </ul>`;
     
@@ -421,10 +423,14 @@ async function KERESOBAR() {
     try {
         var adatok = await ajax_post(elküld2 , 1);
         if(adatok.rows.length == 0){
-            ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER)
+            ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
+            
+
 
         } 
         CARD_BETOLT(adatok);
+        OLDALFELTOTL(adatok.maxcount);
+        
     } catch (err) { console.error("hiba:", err); }
     
     
@@ -439,6 +445,34 @@ async function KERESOBAR() {
     
     console.log("elküldve: "+ elküld);
 }
+
+function OLDALFELTOTL(darab){
+    oldalszam = Math.ceil( darab /51);
+    DBoldal.innerHTML = oldalszam ;
+    Mostoldal.innerHTML = Joldal;
+    if(Joldal == 1){
+        document.querySelector(".page-item:nth-child(2)").classList.add("disabled");
+        document.querySelector(".page-item:nth-child(1)").classList.add("disabled");
+    }
+    if(Joldal == oldalszam){
+        document.querySelector(".page-item:nth-child(4)").classList.add("disabled");
+        document.querySelector(".page-item:nth-child(5)").classList.add("disabled");
+    }
+}
+
+function Kovi(){
+    if(Joldal < oldalszam){
+        Joldal++;
+        KERESOBAR();
+    }
+}
+function ElozoO(){
+    if(Joldal > 1){
+        Joldal--;
+        KERESOBAR();
+    }
+}
+
 
 async function ArFeltolt(sql, min ,max){
     try {
