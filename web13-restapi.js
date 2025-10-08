@@ -88,7 +88,7 @@ function gen_SQL(req) {
      ${where} 
      ${maxmin_arkell == 1 ? `` : `${arkeres}` } 
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
-     ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${51*offset}`}
+     ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${512*offset}`}
      `;
   console.log(sql);
   return (sql);
