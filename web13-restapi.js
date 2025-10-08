@@ -19,7 +19,6 @@ const mysql_connection =  {
   password: 'Csany7922',
   database: 'studio13_csany_zeg'           /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
 };
-//dwiugadbvhavwuzdk6r7
 
 function strE(s) { 
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
