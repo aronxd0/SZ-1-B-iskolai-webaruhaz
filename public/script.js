@@ -110,6 +110,13 @@ function ajax_post( urlsor, tipus, callback ) {
 }; 
 */ 
 
+
+function BevanJelentkezve() {
+    if ($("#loginspan").html() == " Bejelentkezés") { return false; }
+    else { return true; }
+}
+
+
 function orderby( num )   {
     ID = 0; // reset... nincs kijelölve egyetlen sor sem...
     ORDER = (ORDER === num) ? num * -1: num;
@@ -260,17 +267,22 @@ function Termek_Mutat(cuccok) {
     // Saját vélemény megnézése akkor amikor nincs beloginolva ne legyen
     // beloginolsz => vélemény irása => mellékattintás => kijelentkezés => utánna tud véleményt irni nem beloginolva    
 
+    const cls = new bootstrap.Collapse('#vlm', { toggle: false });
+
     $("#velemenyek").html("");
     $("#sajatok").html("");
     $("#vlmg").html("");
-    $("#ussr").html(``)
+    $("#ussr").html("");
 
     if ($("#loginspan").html() == " Bejelentkezés") {
         $("#vlmg").html("Vélemény írásához jelentkezzen be");
+        cls.hide();
+        $("#sajatvlm").addClass("eltunt");
     }
     else {
         $("#vlmg").html(`<button class="btn btn-primary bi bi-chat-dots w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`);
         $("#ussr").html(`${$("#user").html()}`);
+        $("#sajatvlm").removeClass("eltunt");
     }
 
     // ide kell a velemenyek lekerdezese
@@ -283,7 +295,10 @@ function Termek_Mutat(cuccok) {
         
 
     if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
-    else $("#termekview").modal('show');
+    else {
+        $("#termekview").modal('show');
+        cls.hide();
+    }
 
     
     
@@ -302,6 +317,7 @@ function CARD_BETOLT(adatok){
     let cuccli = [];
     $("#keresett_kifejezes").html();
     
+   //if (BevanJelentkezve()) { console.log("card betolt: be van jelentkezve"); }
 
     for (const element of adatok.rows) {
 
@@ -322,8 +338,9 @@ function CARD_BETOLT(adatok){
         cuccli.push(`${element.ID_TERMEK}`, `${element.KATEGORIA}`, `${element.NEV}`, `${element.AZON}`, `${element.AR}`, `${element.MENNYISEG}`, `${element.MEEGYS}`, `${element.AKTIV}`, `${element.TERMEKLINK}`, `${element.FOTOLINK}`, `${element.LEIRAS}`, `${element.DATUMIDO}`);
 
 
-        if ($("#loginspan").html() == " Bejelentkezés" || element.AKTIV == "N" || element.MENNYISEG == 0) {
+        if (!BevanJelentkezve() || element.AKTIV == "N" || element.MENNYISEG == 0) {
             ks = "";
+            console.log("card betolt: be van jelentkezve");
         }
         else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
 
@@ -730,7 +747,7 @@ $(document).ready(function() {
     $("#save_button").click(function()   {               Save_rekord();         } );
 
     $("#login_button").click(function() {   
-        if ($("#loginspan").html() == " Bejelentkezés") {
+        if (!BevanJelentkezve()) {
             $('#login_modal').modal('show'); $("#login_gomb_div").removeClass("bal jobb").addClass("kozep");
         } else {   // logout
             $("#logout_modal").modal("show");
@@ -742,15 +759,20 @@ $(document).ready(function() {
 
     $('#login_modal').on('hidden.bs.modal', function () {
 
-        if(user.innerHTML == "Jelentkezz be a fiókodba"){
+        if(!BevanJelentkezve()){
             ajax_post("logout", 1,).then(logoutt => {});
             Kezdolap();
         }
-        
-
-        
-
+   
     });
+
+
+    $("#termekview").on("hidden.bs.modal", function() {
+        console.log("bezarva");
+    });
+    
+    
+
      $('#bezar').on('click', function () {
         ajax_post("logout", 1,).then(logoutt => {});
 
