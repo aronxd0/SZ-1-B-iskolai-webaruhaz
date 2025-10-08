@@ -381,6 +381,7 @@ async function KERESOBAR() {
             bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem az "s" be
         }
     }
+    Joldal = 1;
     var nemaktiv = "";
     if (Nemaktivak) {
      nemaktiv = "&inaktiv=1";
