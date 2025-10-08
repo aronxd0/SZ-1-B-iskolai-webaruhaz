@@ -887,7 +887,19 @@ $(document).ready(function() {
     // kosár menüpont
     $("#cart_button").click(function () {
         $("#content_hely").html("");
-        $("#content_hely").html("ide jon a kosar xd");
+
+        var kd = `
+            <div class="col-12">
+                <div class="text-center p-2" id="kosarmenutitle">ha a kosar ures akkor kosar ures ha nem akkor kosar tartalma</div>
+                <div class="feka p-2" id="kosar_tetelek">
+                    ide jonnek a tetelek
+                </div>
+            </div>
+        
+        `;
+
+
+        $("#content_hely").html(kd);
         $("#pagi").html("");
     });
 
