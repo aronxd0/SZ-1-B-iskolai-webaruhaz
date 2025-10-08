@@ -86,21 +86,20 @@ function gen_SQL_kereses(req) {
   }
 
 
-  // Ár szűrés (min/max)
-  var arkeres = "";
-  if (maxarkeres != 0) { 
-    arkeres += `${where.length > 0 ? ` where` : ` and`} (t.AR <= ${parseInt(req.query.maxar)})${minarkeres != 0 ? ` and` : ``} `;  
-  }
-  if (minarkeres != 0) { 
-    arkeres += `(t.AR >= ${parseInt(req.query.minar)}) `;  
-  }
-
   // Név vagy leírás szűrés, ha van keresési kifejezés
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
 
   // Ha van szűrés, akkor a végéről levágjuk az utolsó ' and '-et, és where kulcsszóval kezdjük
   if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
+    // Ár szűrés (min/max)
+  var arkeres = "";
+  if (maxarkeres != 0) { 
+    arkeres += `${where.length > 0 ? ` and` : ` where`} (t.AR <= ${parseInt(req.query.maxar)})${minarkeres != 0 ? ` and` : ``} `;  
+  }
+  if (minarkeres != 0) { 
+    arkeres += `(t.AR >= ${parseInt(req.query.minar)}) `;  
+  }
 
 
   // Az SQL lekérdezés összeállítása
