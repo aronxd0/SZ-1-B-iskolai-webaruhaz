@@ -254,7 +254,7 @@ function Termek_Mutat(cuccok) {
 
     var tesztgeci = `
         <div class="w-100 p-2 border rounded fhr mt-3 comment">
-            <p> teszt velemeny | !!  commentekeit idd nézd meg 257 sor !!</p>
+            <p> teszt velemeny | !!  commentekeit idd nézd meg 260 sor !!</p>
         </div>
     `;
     // Saját vélemény megnézése akkor amikor nincs beloginolva ne legyen
