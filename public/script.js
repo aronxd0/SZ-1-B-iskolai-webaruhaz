@@ -11,11 +11,11 @@ var minarr = 0;
 
 var oldalszam =0;
 var Joldal = 1;
-var sqleddig = "";
 
+var sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
 var oldalszam =0; // összes oldal darabszáma
 var Joldal = 1; // jelenlegi oldal
-var elozonev= "";
+
 
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
