@@ -203,6 +203,18 @@ function Kosarba_Bele(event, id_termek) {
 
 
 
+function Velemeny_Kozzetesz(id_termek) {
+    const cls = new bootstrap.Collapse('#vlm', { toggle: false });
+    if ($("#velemeny_input").val() != "") {
+        ajax_post(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, 1).then(velemenyiras => {
+            cls.hide();
+            üzen(`Vélemény elküldve <br> ${velemenyiras.msg}!`,"success");
+        });
+    }
+}
+
+
+
 async function Termek_Mutat(event, cuccok) {
     
 
@@ -221,6 +233,7 @@ async function Termek_Mutat(event, cuccok) {
     var leiras = cuccok[10];
     var datumido = cuccok[11];
 
+    $("#ga").html("");
     /*
     for (let index = 0; index < 100; index++) {
         $("#termek_content").append(cuccok + "<br>");
@@ -307,7 +320,7 @@ async function Termek_Mutat(event, cuccok) {
 
     try {
         $("#velemenyek").html("");
-        var velemeny_lista = await ajax_post("velemenyek", 1);
+        var velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${termek_id}`, 1);
         for (const element of velemeny_lista) {
             vv += `
             <div class="w-100 p-2 border rounded fhr mt-3 comment">
@@ -326,9 +339,17 @@ async function Termek_Mutat(event, cuccok) {
     }
         */
 
+    var gombs = `
+        <button type="button" class="btn btn-info bi bi-info-circle w-auto" data-bs-toggle="tooltip" title="A vélemény jóváhagyás esetén lesz majd látható!"></button>
+        <button class="btn btn-danger bi bi-x-lg w-auto" data-bs-toggle="collapse" data-bs-target="#vlm" id="mgs"> Mégse</button>
+        <button class="btn btn-success bi bi-send w-auto" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${termek_id})'> Közzététel</button>
+    
+    `
+
     if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
     else {
         if (event.target.tagName != "button") { // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
+            $("#ga").html(gombs);
             $("#termekview").modal("show");
             cls.hide();
         }
@@ -991,11 +1012,8 @@ $(document).ready(function() {
     });
 
 
-    $(".kosar").click(function() {
-
-        // 
-
-        $("#kosarba_bele").modal("show");
+    $("#velemeny_kozzetesz").click(function() {
+        
     });
 
 
