@@ -377,11 +377,9 @@ function CARD_BETOLT(adatok){
             ks = "";
             console.log("card betolt: be van jelentkezve");
         }
-<<<<<<< HEAD
-        else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(${element.ID_TERMEK})'> Kosárba bele</button>`;//ha be van jelentkezve és elérhető a termék akkor kosár gomb
-=======
-        else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba bele</button>`;
->>>>>>> 9fbbd005a55b315c23bc709123c7df07dc2b5645
+
+        else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba bele</button>`;  //ha be van jelentkezve és elérhető a termék akkor kosár gomb
+
 
         //var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
         
