@@ -29,7 +29,7 @@ const mysql_connection =  {
 function strE(s) { 
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
-//#kereses
+//#region kereses
 
 function gen_SQL_kereses(req) {
   session_data = req.session;
@@ -139,7 +139,7 @@ app.post('/keres', (req, res) => {
 //#endregion
 
 
-//#vélemények
+//#region vélemények
 
 app.post('/velemenyek',(req, res) => {
   // sima felhasználói
@@ -150,11 +150,11 @@ app.post('/velemenyek',(req, res) => {
   var szelektalas = (req.query.szelektalas? parseInt(req.query.szelektalas) : 0); // 1 ha igen akarom látni az elfogadásra várókat is (admin felület)
 
   var sql = `
-  SELECT u.NEV, w.SZOVEG, w.DATUM, ${sajatvelemeny == 1 ? "w.ALLAPOT" : ""}
-  FROM webbolt_velemenyek w INNER JOIN users u on u.ID_USER = w.ID_USER
-  WHERE w.ID_TERMEK = ${termekid} 
-  ${szelektalas == 1 ? "AND w.ALLAPOT = 'Jóváhagyásra vár'" : "AND w.ALLAPOT = 'Jóváhagyva'"}
-  ${sajatvelemeny == 1 ? `AND w.ID_USER = ${session_data.ID_USER}` : ""}
+  SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.DATUM ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
+  FROM webbolt_velemenyek INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
+  WHERE webbolt_velemenyek.ID_TERMEK = ${termekid} 
+  ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'"}
+  ${sajatvelemeny == 1 ? `AND webbolt_velemenyek.ID_USER = ${session_data.ID_USER}` : ""}
   `;
   sendJson_toFrontend (res, sql);           // async await ... 
 });
@@ -175,7 +175,7 @@ app.post('/velemeny_add',(req, res) => {
 //#endregion
 
 
-//#login/logoff
+//#region login/logoff
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
@@ -220,7 +220,7 @@ app.post('/logout', (req, res) => {
 //#endregion
 
 
-//#függvények
+//#region függvények
 
 async function runExecute(sql, req) {                     // insert, update, delete sql
   session_data = req.session;
