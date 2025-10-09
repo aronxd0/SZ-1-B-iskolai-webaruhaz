@@ -333,7 +333,7 @@ function CARD_BETOLT(adatok){
 
     for (const element of adatok.rows) {
 
-        if (element.AKTIV == "N" || element.MENNYISEG == 0) {
+        if (element.AKTIV == "N" || element.MENNYISEG == 0) {//adminoknak a nem aktiv termekek pirossal látszódjanak
             el = ` <div class="alert alert-danger">
                         A termék jelenleg nem elérhető
                     </div>
@@ -342,7 +342,7 @@ function CARD_BETOLT(adatok){
             ee = "nem-elerheto";
            
         }
-        else {el = `<h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3>`; ee = "";}
+        else {el = `<h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3>`; ee = "";}//Ár kiiras
         
 
         cuccli = [];
@@ -354,9 +354,9 @@ function CARD_BETOLT(adatok){
             ks = "";
             console.log("card betolt: be van jelentkezve");
         }
-        else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(${element.ID_TERMEK})'> Kosárba bele</button>`;
+        else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(${element.ID_TERMEK})'> Kosárba bele</button>`;//ha be van jelentkezve és elérhető a termék akkor kosár gomb
 
-        var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
+        //var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
         
 
          s += `
@@ -373,18 +373,18 @@ function CARD_BETOLT(adatok){
                 </div>
             </div>
          </div>
-         `
+         `// card feltőltése "s" sztingbe ami kébbőb be lesz szurva a html-be
          
     }
   
     
 
 
-    if ($("#nev1").val() != "") $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
+    if ($("#nev1").val() != "") $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);// ha van találat kifejezésre akkor kiirja a keresett kifejezést
     else {$("#keresett_kifejezes").html("")};
 
     if(nev1.value != "" ){
-        débé.innerHTML = ` (${adatok.maxcount} db)`;
+        débé.innerHTML = ` (${adatok.maxcount} db)`;//darabol kiirasa
     }
     else{
         débé.innerHTML ="";
@@ -399,7 +399,7 @@ function CARD_BETOLT(adatok){
             <li class="page-item"><a class="page-link" id="Kovi1" onclick="Kovi(this)" href="#">Következő</a></li>
             <li class="page-item"><a class="page-link" id="Kovi2" onclick="Kovi(this)" href="#"> >> </a></li>
         </ul>`;
-    
+    // alul a lapválastó feltöltése
     
     $("#content_hely").html(s);
     $("#pagi").html(pp);
@@ -408,13 +408,13 @@ function CARD_BETOLT(adatok){
 
 async function KERESOBAR() {
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
-    bepipaltID = "";//reset
+    bepipaltID = ""; //reset bepipalt kategória
     for(var elem of inputok){
         if(elem.checked) {
-            bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem az "s" be
+            bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
         }
     }
-    var nemaktiv = "";
+    var nemaktiv = "";//reset
     if (Nemaktivak) {
      nemaktiv = "&inaktiv=1";
     }
@@ -422,6 +422,8 @@ async function KERESOBAR() {
     if (elfogyott){
         elfogy = "&elfogyott=1";
     }
+    // elfogyot + nemaktive chechbox bepipálásának megnézése
+
     var order = "";
     //console.log(document.getElementById("rend").value);
     switch($("#rend").val()){
@@ -441,31 +443,32 @@ async function KERESOBAR() {
     
     var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
 
-    console.log("elküld: "+ elküld);
+    //console.log("elküld: "+ elküld);
 
     var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
 
+    //elküldöm az sql-t offset, limit nélkül és az eddig beállított min max árakat
     await ArFeltolt(elküld, min , max);
 
      min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
      max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
-
+    //lekérdezes az új max és min árat
     
     var elküld2 = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
     if(sqleddig != elküld2){
         Joldal = 1;
     }
-    elküld2 += `&offset=${(Joldal-1)*51}`
+    sqleddig = elküld2;
+    // ha megváltozott a lekérdezés akkor az oldal újra 1-re állitása
 
+    elküld2 += `&offset=${(Joldal-1)*51}`
     console.log("elküld2: "+ elküld2);
     try {
         var adatok = await ajax_post(elküld2 , 1);
-        if(adatok.rows.length == 0){
+        if(adatok.rows.length == 0){// ha nincs találat akkor az árakat újra lekérdezem limit nélkül
             ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
             Joldal = 1;
-
-
         } 
         CARD_BETOLT(adatok);
         OLDALFELTOTL(adatok.maxcount);
@@ -486,43 +489,44 @@ async function KERESOBAR() {
 }
 
 function OLDALFELTOTL(darab){
-    oldalszam = Math.ceil( darab /51);
-    if(oldalszam == 0) oldalszam = 1;
+    oldalszam = Math.ceil( darab /51); // oldalszám kiszámolása
+    if(oldalszam == 0) oldalszam = 1; // ha 0 akkor 1-re állitom
     DBoldal.innerHTML = oldalszam ;
     Mostoldal.innerHTML = Joldal;
-    if(Joldal == 1){
+
+    if(Joldal == 1){ // ha az 1. oldalon van akkor a vissza gombok inaktívak
         document.querySelector(".page-item:nth-child(2)").classList.add("disabled");
         document.querySelector(".page-item:nth-child(1)").classList.add("disabled");
     }
-    if(Joldal == oldalszam){
+
+    if(Joldal == oldalszam){ // ha az utolsó oldalon van akkor a következő gombok inaktívak
         document.querySelector(".page-item:nth-child(4)").classList.add("disabled");
         document.querySelector(".page-item:nth-child(5)").classList.add("disabled");
     }
 }
 
 function Kovi(keri){
-    console.log(keri.id);
     switch(keri.id){
-        case("Kovi1"):{
+        case("Kovi1"):{ // következő oldal
             if(Joldal < oldalszam){
                 Joldal++;
                 KERESOBAR();
                 return;}
         }
-        case("Kovi2"):{
+        case("Kovi2"):{ // utolsó oldal
                 console.log("oldalszam: "+ oldalszam);
                 Joldal = oldalszam;
                 console.log("Joldal: "+ Joldal + " old szam: "+ oldalszam);
                 KERESOBAR();
                 return;
         }
-        case("vissza1"):{
+        case("vissza1"):{// előző oldal
             if(Joldal > 1){
                 Joldal--;
                 KERESOBAR();
                 return;
             }}
-        case("Vissza2"):{
+        case("Vissza2"):{// első oldal
             Joldal = 1;
             KERESOBAR();
             return
@@ -535,17 +539,17 @@ function Kovi(keri){
 
 async function ArFeltolt(sql, min ,max){
     try {
-        var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);
+        var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);//arak lekérdezése limit offset nélkül
         
         console.log(min+ "minarr");
-        if(min == ""){
+        if(min == ""){// ha még nem volt minar akkor a minar = legkisebb ár
             min = arak.rows[0].MINAR;
         }
-        if(max == ""){
+        if(max == ""){// ha még nem volt maxar akkor a maxar = legnagyobb ár
             max = arak.rows[0].MAXAR;
         }
         
-        if(arak.rows[0].MINAR == null){
+        if(arak.rows[0].MINAR == null){// ha nincs találat akkor a max és min ár 0 legyen
             document.getElementById("min_ar").min = 0;
             document.getElementById("min_ar").max = 0;
             document.getElementById("max_ar").max = 0;
@@ -559,12 +563,12 @@ async function ArFeltolt(sql, min ,max){
 
         //console.log("elküldve: "+ sql+"&maxmin_arkell=1");
 
-        var elozomin = parseInt( document.getElementById("min_ar").min)
-        if(elozomin == min || min > arak.rows[0].MAXAR){
+        var elozomin = parseInt( document.getElementById("min_ar").min)// lekérdezes a csuszak minimum értékét mielött megváltoztatom
+        if(elozomin == min || min > arak.rows[0].MAXAR){// ha az előző minimum érték = a mostani minimum érték vagy a mostani minimum nagyobb mint a lekérdezett utáni maximum akkor a minimum legyen a lekérdezett minimuma
             min = arak.rows[0].MINAR
         }
-        var elozomax = parseInt( document.getElementById("max_ar").max)
-        if(elozomax == max){
+        var elozomax = parseInt( document.getElementById("max_ar").max)// lekérdezes a csuszak maximum értékét mielött megváltoztatom
+        if(elozomax == max){// ha az előző maximum érték = a mostani maximum érték akkor a maximum legyen a lekérdezett maximuma
             max = arak.rows[0].MAXAR
         }
 
@@ -576,19 +580,19 @@ async function ArFeltolt(sql, min ,max){
         document.getElementById("max_ar").min = arak.rows[0].MINAR; 
 
 
-        if(parseInt(min) < parseInt( arak.rows[0].MINAR )){
+        if(parseInt(min) < parseInt( arak.rows[0].MINAR )){// ha a mostani minimum kisebb mint a lekérdezett minimum akkor a minimum legyen a lekérdezett minimuma
            document.getElementById("min_ar").value = arak.rows[0].MINAR;
            min = arak.rows[0].MINAR
         }
-        else{
+        else{// ha a aktiv/mostani minimum nagyobb mint a lekérdezett minimum akkor a minimum legyen a mostani minimum
             
             document.getElementById("min_ar").value = min;
         }
-        if(parseInt(max) > parseInt( arak.rows[0].MAXAR )){
+        if(parseInt(max) > parseInt( arak.rows[0].MAXAR )){// ha a mostani maximum nagyobb mint a lekérdezett maximum akkor a maximum legyen a lekérdezett maximuma
            document.getElementById("max_ar").value = arak.rows[0].MAXAR;
            max = arak.rows[0].MAXAR
         }
-        else{
+        else{// ha a aktiv/mostani maximum kisebb mint a lekérdezett maximum akkor a maximum legyen a mostani maximum
             
             document.getElementById("max_ar").value = max;
         }     
@@ -603,17 +607,17 @@ async function ArFeltolt(sql, min ,max){
 
 
 function Sliderhuz(ettöl){
-    if(ettöl.id == "min_ar"){s
-        document.getElementById("min_ar_input").value = ettöl.value;
-        if(ettöl.value > document.getElementById("max_ar").value){
+    if(ettöl.id == "min_ar"){// ha a minárt huzom
+        document.getElementById("min_ar_input").value = ettöl.value;// új  ár kiirása 
+        if(ettöl.value > document.getElementById("max_ar").value){ // ha a minár nagyobb mint a maxár akkor a maxár legyen a minár + 1
             document.getElementById("max_ar").value = ettöl.value+1;
             document.getElementById("max_ar_input").value = ettöl.value+1;
 
         }
     }
-    else{
+    else{// ha a maxárt huzom
         document.getElementById("max_ar_input").value = ettöl.value;
-        if(ettöl.value < document.getElementById("min_ar").value){
+        if(ettöl.value < document.getElementById("min_ar").value){// ha a maxár kisebb mint a minár akkor a minár legyen a maxár - 1
             document.getElementById("min_ar").value = ettöl.value-1;
             document.getElementById("min_ar_input").value = ettöl.value-1;
         }
@@ -643,23 +647,22 @@ async function KategoriaFeltolt(hova) {
 
 
 function Elfogyott(alma){
-    if(alma.value == "Csakelfogyott"){
-
-        elfogyott = !elfogyott;
+    if(alma.value == "Csakelfogyott"){// csakelfogyotttakat szeretné látni
+        elfogyott = !elfogyott; 
         if(elfogyott){
-            document.getElementById("darable").disabled = true;
+            document.getElementById("darable").disabled = true; // ne lehessen darabra szűrni
             document.getElementById("darabfel").disabled = true;
-            if(document.getElementById("darable").selected == true || document.getElementById("darabfel").selected == true){
+            if(document.getElementById("darable").selected == true || document.getElementById("darabfel").selected == true){// ha darabra volt szűrve akkor állítsa vissza a rendezettséget
                 document.getElementById("rendalap").selected = true;
             }
            
         }
-        else{
+        else{// már nem csak elfogyottakat szeretné látni akkor újra engedélyezem a darabra szűrést
             document.getElementById("darable").disabled = false;
             document.getElementById("darabfel").disabled = false;
         }
     }
-    else{
+    else{// csak inaktivakat szeretné látni
 
         Nemaktivak = !Nemaktivak;
         
@@ -668,14 +671,13 @@ function Elfogyott(alma){
 }
 
 function ADMINVAGYE(){
-    if(admin){
+    if(admin){// ha admin akkor a "csakelfogyott " és a "Csak inaktiv" gomb is látszódjon
         document.getElementById("Elfogyott_gomb").innerHTML = `
             <p>
                 <input class="form-check-input" type="checkbox" id="elf" value="Csakelfogyott" onchange="Elfogyott(this)">
                 <label for="elf" class="form-check-label"> Csak az elfogyott áruk mutatása</label>
             </p>
-            `;
-
+            `;      
         document.getElementById("NEM_AKTIV").innerHTML = `
             <p>
                 <input class="form-check-input" type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)">
