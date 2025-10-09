@@ -29,6 +29,8 @@ const mysql_connection =  {
 function strE(s) { 
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
+//#region keresés
+
 function gen_SQL_kereses(req) {
   session_data = req.session;
 
@@ -117,8 +119,6 @@ function gen_SQL_kereses(req) {
   return (sql);
 }
 
-
-
 app.post('/kategoria',(req, res) => {
   var where = `${req.query.nev != "" ? `where (NEV like "%${req.query.nev}%" or LEIRAS like "%${req.query.nev}%") ` : ""}`;
   var sql = `
@@ -136,8 +136,44 @@ app.post('/keres', (req, res) => {
   sendJson_toFrontend (res, sql); 
 });
 
+//#endregion
 
 
+//#region vélemények
+
+app.post('/velemenyek',(req, res) => {
+  // sima felhasználói
+  var termekid = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK) : 0);
+
+  //adminonak az elfogadás érdekében
+  var szelektalas = (req.query.szelektalas? parseInt(req.query.szelektalas) : 0); // 1 ha igen akarom látni az elfogadásra várókat is (admin felület)
+
+  var sql = `
+  SELECT u.NEV, w.SZOVEG, w.DATUM
+  FROM webbolt_velemenyek w INNER JOIN users u on u.ID_USER = w.ID_USER
+  WHERE w.ID_TERMEK = ${termekid} 
+  ${szelektalas == 1 ? "" : "AND w.ALLAPOT = 'Jóváhagyásra vár'"}
+  `;
+  sendJson_toFrontend (res, sql);           // async await ... 
+});
+
+app.post('/velemeny_add',(req, res) => {
+  // sima felhasználói
+  var termekid = parseInt(req.query.ID_TERMEK);
+  var szoveg = strE(req.query.SZOVEG);
+  
+  var sql = `
+  insert into webbolt_velemenyek (ID_VELEMENY, ID_TERMEK, ID_USER, SZOVEG, DATUM, ALLAPOT)
+  values ("null", ${termekid}, ${session_data.ID_USER}, "${szoveg}", current_date, ${(req.session.WEBBOLT_ADMIN == "Y" || req.session.ADMIN == "Y") ? '"Elfogadva"' : '"Jóváhagyásra vár"'});
+  `;
+
+  runExecute (res, sql);           // async await ... 
+});
+
+//#endregion
+
+
+//#region login/logoff
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
@@ -179,17 +215,18 @@ app.post('/logout', (req, res) => {
   });
 });
 
+//#endregion
+
+
+//#region függvények
 
 async function runExecute(sql, req) {                     // insert, update, delete sql
   session_data = req.session;
   var msg = "ok";
   var json_data, conn, res1, jrn1, jrn;
-  var userx = "- no login -";
   session_data = req.session;
-  if (session_data.ID_USER) {  userx = session_data.EMAIL; } 
-
   try {
-      jrn  = `insert into naplo (USER, URL, SQLX) values ("${userx}","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}");`;      
+      jrn  = `insert into naplo (ID_NAPLO, ID_USER, COMMENT, URL, SQLX, DATUMIDO)  values ("null",${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}",current_time);`;      
       conn = await mysql.createConnection(mysql_connection); 
       res1 = await conn.execute(sql);  
       jrn1 = await conn.execute(jrn); 
@@ -234,5 +271,8 @@ async function sendJson_toFrontend (res, sql) {
   res.send(json_data);
   res.end();
 }
+
+//#endregion
+
 
 app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });
