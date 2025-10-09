@@ -10,6 +10,7 @@ var maxarr = 0;
 var minarr = 0;
 var oldalszam =0; // összes oldal darabszáma
 var Joldal = 1; // jelenlegi oldal
+var elozonev= "";
 
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
@@ -313,7 +314,7 @@ function CARD_BETOLT(adatok){
     var ks = "";
     var s = ""
     var el = "";
-    var ee = "";
+    var ee = "";    
     let cuccli = [];
     $("#keresett_kifejezes").html();
     
@@ -803,6 +804,7 @@ $(document).ready(function() {
             admin = false;
             elfogyott = false;
             Nemaktivak = false;
+            Joldal =1;
             
             document.getElementById("rendalap").selected = true;
 
@@ -827,6 +829,8 @@ $(document).ready(function() {
                 else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") $("#admin").html("<b>WEBBOLT ADMIN</b>");
 
                 
+                Joldal = 1;
+
                 $('#login_modal').modal('hide');
                 üzen(`Vásárolj sokat ${l_json.rows[0].NEV}!`,"success");
                 update_gombok(1); 
