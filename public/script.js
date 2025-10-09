@@ -8,15 +8,14 @@ var elfogyott = false;
 var Nemaktivak = false;
 var maxarr = 0;
 var minarr = 0;
-<<<<<<< HEAD
+
 var oldalszam =0;
 var Joldal = 1;
 var sqleddig = "";
-=======
+
 var oldalszam =0; // összes oldal darabszáma
 var Joldal = 1; // jelenlegi oldal
 var elozonev= "";
->>>>>>> 4166f9eb15b61ef3570342e2e64efc5c04466dfb
 
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
