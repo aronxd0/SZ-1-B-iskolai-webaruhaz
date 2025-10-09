@@ -203,7 +203,7 @@ function Kosarba_Bele(event, id_termek) {
 
 
 
-function Termek_Mutat(event, cuccok) {
+async function Termek_Mutat(event, cuccok) {
     
 
     console.log(`cuccok: ${cuccok}`);
@@ -279,9 +279,7 @@ function Termek_Mutat(event, cuccok) {
     $("#termeknev").html(nev);
 
     var tesztgeci = `
-        <div class="w-100 p-2 border rounded fhr mt-3 comment">
-            <p> teszt velemeny | !!  commentekeit idd nézd meg 260 sor !!</p>
-        </div>
+        
     `;
     // Saját vélemény megnézése akkor amikor nincs beloginolva ne legyen
     // beloginolsz => vélemény irása => mellékattintás => kijelentkezés => utánna tud véleményt irni nem beloginolva    
@@ -305,17 +303,32 @@ function Termek_Mutat(event, cuccok) {
     }
 
     // ide kell a velemenyek lekerdezese
+    var vv = "";
 
+    try {
+        $("#velemenyek").html("");
+        var velemeny_lista = await ajax_post("velemenyek", 1);
+        for (const element of velemeny_lista) {
+            vv += `
+            <div class="w-100 p-2 border rounded fhr mt-3 comment">
+                <p> ${element.NEV}, ${element.SZOVEG}, ${element.DATUM}</p>
+            </div>`;
+        }
+
+        $("#velemenyek").html(vv);
+
+    } catch (err) { console.error("hiba:", err); }
     
+    /*
     for (let index = 0; index < 20; index++) {
         $("#velemenyek").append(tesztgeci);
         $("#sajatok").append(`${tesztgeci} - sajat`);
     }
-        
+        */
 
     if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
     else {
-        if (event.target.tagName != "button") {
+        if (event.target.tagName != "button") { // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
             $("#termekview").modal("show");
             cls.hide();
         }
@@ -944,6 +957,18 @@ $(document).ready(function() {
     // kosár menüpont
     $("#cart_button").click(function () {
         $("#content_hely").html("");
+
+        var ts = ``;
+
+        try {
+            ajax_post("tetelek", 1).then(tetelek => {
+                for (const element of object) {
+                    ts += `<div class="col-12 d-flex p-2">`;
+                    ts += ``;
+                }
+            });
+
+        } catch (err) { console.error("hiba:", err); }
 
         var kd = `
             <div class="col-12">
