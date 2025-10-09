@@ -8,9 +8,15 @@ var elfogyott = false;
 var Nemaktivak = false;
 var maxarr = 0;
 var minarr = 0;
+<<<<<<< HEAD
 var oldalszam =0;
 var Joldal = 1;
 var sqleddig = "";
+=======
+var oldalszam =0; // összes oldal darabszáma
+var Joldal = 1; // jelenlegi oldal
+var elozonev= "";
+>>>>>>> 4166f9eb15b61ef3570342e2e64efc5c04466dfb
 
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
@@ -110,6 +116,13 @@ function ajax_post( urlsor, tipus, callback ) {
     });
 }; 
 */ 
+
+
+function BevanJelentkezve() {
+    if ($("#loginspan").html() == " Bejelentkezés") { return false; }
+    else { return true; }
+}
+
 
 function orderby( num )   {
     ID = 0; // reset... nincs kijelölve egyetlen sor sem...
@@ -255,21 +268,28 @@ function Termek_Mutat(cuccok) {
 
     var tesztgeci = `
         <div class="w-100 p-2 border rounded fhr mt-3 comment">
-            <p> teszt velemeny </p>
+            <p> teszt velemeny | !!  commentekeit idd nézd meg 260 sor !!</p>
         </div>
     `;
+    // Saját vélemény megnézése akkor amikor nincs beloginolva ne legyen
+    // beloginolsz => vélemény irása => mellékattintás => kijelentkezés => utánna tud véleményt irni nem beloginolva    
+
+    const cls = new bootstrap.Collapse('#vlm', { toggle: false });
 
     $("#velemenyek").html("");
     $("#sajatok").html("");
     $("#vlmg").html("");
-    $("#ussr").html(``)
+    $("#ussr").html("");
 
     if ($("#loginspan").html() == " Bejelentkezés") {
         $("#vlmg").html("Vélemény írásához jelentkezzen be");
+        cls.hide();
+        $("#sajatvlm").addClass("eltunt");
     }
     else {
         $("#vlmg").html(`<button class="btn btn-primary bi bi-chat-dots w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`);
         $("#ussr").html(`${$("#user").html()}`);
+        $("#sajatvlm").removeClass("eltunt");
     }
 
     // ide kell a velemenyek lekerdezese
@@ -282,7 +302,10 @@ function Termek_Mutat(cuccok) {
         
 
     if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
-    else $("#termekview").modal('show');
+    else {
+        $("#termekview").modal('show');
+        cls.hide();
+    }
 
     
     
@@ -297,10 +320,11 @@ function CARD_BETOLT(adatok){
     var ks = "";
     var s = ""
     var el = "";
-    var ee = "";
+    var ee = "";    
     let cuccli = [];
     $("#keresett_kifejezes").html();
     
+   //if (BevanJelentkezve()) { console.log("card betolt: be van jelentkezve"); }
 
     for (const element of adatok.rows) {
 
@@ -321,8 +345,9 @@ function CARD_BETOLT(adatok){
         cuccli.push(`${element.ID_TERMEK}`, `${element.KATEGORIA}`, `${element.NEV}`, `${element.AZON}`, `${element.AR}`, `${element.MENNYISEG}`, `${element.MEEGYS}`, `${element.AKTIV}`, `${element.TERMEKLINK}`, `${element.FOTOLINK}`, `${element.LEIRAS}`, `${element.DATUMIDO}`);
 
 
-        if ($("#loginspan").html() == " Bejelentkezés" || element.AKTIV == "N" || element.MENNYISEG == 0) {
+        if (!BevanJelentkezve() || element.AKTIV == "N" || element.MENNYISEG == 0) {
             ks = "";
+            console.log("card betolt: be van jelentkezve");
         }
         else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
 
@@ -433,7 +458,7 @@ async function KERESOBAR() {
         var adatok = await ajax_post(elküld2 , 1);
         if(adatok.rows.length == 0){
             ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
-            
+            Joldal = 1;
 
 
         } 
@@ -735,7 +760,7 @@ $(document).ready(function() {
     $("#save_button").click(function()   {               Save_rekord();         } );
 
     $("#login_button").click(function() {   
-        if ($("#loginspan").html() == " Bejelentkezés") {
+        if (!BevanJelentkezve()) {
             $('#login_modal').modal('show'); $("#login_gomb_div").removeClass("bal jobb").addClass("kozep");
         } else {   // logout
             $("#logout_modal").modal("show");
@@ -747,15 +772,20 @@ $(document).ready(function() {
 
     $('#login_modal').on('hidden.bs.modal', function () {
 
-        if(user.innerHTML == "Jelentkezz be a fiókodba"){
+        if(!BevanJelentkezve()){
             ajax_post("logout", 1,).then(logoutt => {});
             Kezdolap();
         }
-        
-
-        
-
+   
     });
+
+
+    $("#termekview").on("hidden.bs.modal", function() {
+        console.log("bezarva");
+    });
+    
+    
+
      $('#bezar').on('click', function () {
         ajax_post("logout", 1,).then(logoutt => {});
 
@@ -786,6 +816,7 @@ $(document).ready(function() {
             admin = false;
             elfogyott = false;
             Nemaktivak = false;
+            Joldal =1;
             
             document.getElementById("rendalap").selected = true;
 
@@ -810,6 +841,8 @@ $(document).ready(function() {
                 else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") $("#admin").html("<b>WEBBOLT ADMIN</b>");
 
                 
+                Joldal = 1;
+
                 $('#login_modal').modal('hide');
                 üzen(`Vásárolj sokat ${l_json.rows[0].NEV}!`,"success");
                 update_gombok(1); 
@@ -901,7 +934,7 @@ $(document).ready(function() {
             <div class="col-12">
                 <div class="text-center p-2" id="kosarmenutitle">ha a kosar ures akkor kosar ures ha nem akkor kosar tartalma</div>
                 <div class="feka p-2" id="kosar_tetelek">
-                    ide jonnek a tetelek
+                    ide jonnek a tetelek  | Nagyon sok backend ÁDI készülj, alvásnak vége munka lesz
                 </div>
             </div>
         
