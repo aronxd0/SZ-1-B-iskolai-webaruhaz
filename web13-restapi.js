@@ -29,7 +29,7 @@ const mysql_connection =  {
 function strE(s) { 
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
-//#region keresés
+//#kereses
 
 function gen_SQL_kereses(req) {
   session_data = req.session;
@@ -139,20 +139,22 @@ app.post('/keres', (req, res) => {
 //#endregion
 
 
-//#region vélemények
+//#vélemények
 
 app.post('/velemenyek',(req, res) => {
   // sima felhasználói
   var termekid = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK) : 0);
+  var sajatvelemeny = (req.query.SAJATVELEMENY? parseInt(req.query.SAJATVELEMENY) : 0); // 1 ha csak a saját véleményem kell
 
   //adminonak az elfogadás érdekében
   var szelektalas = (req.query.szelektalas? parseInt(req.query.szelektalas) : 0); // 1 ha igen akarom látni az elfogadásra várókat is (admin felület)
 
   var sql = `
-  SELECT u.NEV, w.SZOVEG, w.DATUM
+  SELECT u.NEV, w.SZOVEG, w.DATUM, ${sajatvelemeny == 1 ? "w.ALLAPOT" : ""}
   FROM webbolt_velemenyek w INNER JOIN users u on u.ID_USER = w.ID_USER
   WHERE w.ID_TERMEK = ${termekid} 
-  ${szelektalas == 1 ? "" : "AND w.ALLAPOT = 'Jóváhagyásra vár'"}
+  ${szelektalas == 1 ? "AND w.ALLAPOT = 'Jóváhagyásra vár'" : "AND w.ALLAPOT = 'Jóváhagyva'"}
+  ${sajatvelemeny == 1 ? `AND w.ID_USER = ${session_data.ID_USER}` : ""}
   `;
   sendJson_toFrontend (res, sql);           // async await ... 
 });
@@ -164,7 +166,7 @@ app.post('/velemeny_add',(req, res) => {
   
   var sql = `
   insert into webbolt_velemenyek (ID_VELEMENY, ID_TERMEK, ID_USER, SZOVEG, DATUM, ALLAPOT)
-  values ("null", ${termekid}, ${session_data.ID_USER}, "${szoveg}", current_date, ${(req.session.WEBBOLT_ADMIN == "Y" || req.session.ADMIN == "Y") ? '"Elfogadva"' : '"Jóváhagyásra vár"'});
+  values ("null", ${termekid}, ${session_data.ID_USER}, "${szoveg}", current_date, ${(req.session.WEBBOLT_ADMIN == "Y" || req.session.ADMIN == "Y") ? '"Jóváhagyva"' : '"Jóváhagyásra vár"'});
   `;
 
   runExecute (res, sql);           // async await ... 
@@ -173,7 +175,7 @@ app.post('/velemeny_add',(req, res) => {
 //#endregion
 
 
-//#region login/logoff
+//#login/logoff
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
@@ -218,7 +220,7 @@ app.post('/logout', (req, res) => {
 //#endregion
 
 
-//#region függvények
+//#függvények
 
 async function runExecute(sql, req) {                     // insert, update, delete sql
   session_data = req.session;
