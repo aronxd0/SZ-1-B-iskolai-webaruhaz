@@ -189,14 +189,15 @@ function Search_rekord() {
 }
 
 
-function Kosarba_Bele(id_termek) {
+function Kosarba_Bele(event, id_termek) {
+    event.stopPropagation();
     $("#idt").html(id_termek);
     $("#kosarba_bele").modal("show");
 }
 
 
 
-function Termek_Mutat(cuccok) {
+function Termek_Mutat(event, cuccok) {
     
 
     console.log(`cuccok: ${cuccok}`);
@@ -308,8 +309,11 @@ function Termek_Mutat(cuccok) {
 
     if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
     else {
-        $("#termekview").modal('show');
-        cls.hide();
+        if (event.target.tagName != "button") {
+            $("#termekview").modal('show');
+            cls.hide();
+        }
+        
     }
 
     
@@ -354,14 +358,14 @@ function CARD_BETOLT(adatok){
             ks = "";
             console.log("card betolt: be van jelentkezve");
         }
-        else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(${element.ID_TERMEK})'> Kosárba bele</button>`;
+        else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba bele</button>`;
 
         var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
         
 
          s += `
          <div class="col-12 col-sm-6 col-xxl-4">
-            <div class="card feka m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(${JSON.stringify(cuccli)})'>
+            <div class="card feka m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
