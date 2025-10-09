@@ -10,6 +10,7 @@ var maxarr = 0;
 var minarr = 0;
 var oldalszam =0;
 var Joldal = 1;
+var sqleddig = "";
 
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
@@ -420,7 +421,13 @@ async function KERESOBAR() {
      min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
      max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
 
-    var elküld2 = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max +"&offset="+ ( parseInt( Joldal)-1)*51;
+    
+    var elküld2 = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
+    if(sqleddig != elküld2){
+        Joldal = 1;
+    }
+    elküld2 += `&offset=${(Joldal-1)*51}`
+
     console.log("elküld2: "+ elküld2);
     try {
         var adatok = await ajax_post(elküld2 , 1);
@@ -924,6 +931,7 @@ $(document).ready(function() {
 function Kezdolap() {
     $("#keresett_kifejezes").html();
     nev1.value = "";
+    bepipaltID = "";
     KERESOBAR();
     
     
