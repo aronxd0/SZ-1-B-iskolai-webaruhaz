@@ -192,6 +192,9 @@ function Search_rekord() {
 function Kosarba_Bele(event, id_termek) {
     event.stopPropagation();
     $("#termekview").modal("hide");
+
+    // kosarba INSERT INTO ide
+
     setTimeout(function() {
         $("#idt").html(id_termek);
         $("#kosarba_bele").modal("show");
