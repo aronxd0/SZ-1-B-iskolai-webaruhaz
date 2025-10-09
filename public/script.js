@@ -189,6 +189,12 @@ function Search_rekord() {
 }
 
 
+function Kosarba_Bele(id_termek) {
+    $("#idt").html(id_termek);
+    $("#kosarba_bele").modal("show");
+}
+
+
 
 function Termek_Mutat(cuccok) {
     
@@ -218,7 +224,7 @@ function Termek_Mutat(cuccok) {
     if ($("#loginspan").html() == " Bejelentkezés" || aktiv == "N" || mennyiseg == 0) {
             ks = "";
     }
-    else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
+    else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(${termek_id})'> Kosárba bele</button>`;
 
 
     var bal = ` 
@@ -348,7 +354,7 @@ function CARD_BETOLT(adatok){
             ks = "";
             console.log("card betolt: be van jelentkezve");
         }
-        else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2"> Kosárba bele</button>`;
+        else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(${element.ID_TERMEK})'> Kosárba bele</button>`;
 
         var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
         
@@ -942,6 +948,14 @@ $(document).ready(function() {
 
         $("#content_hely").html(kd);
         $("#pagi").html("");
+    });
+
+
+    $(".kosar").click(function() {
+
+        // 
+
+        $("#kosarba_bele").modal("show");
     });
 
 
