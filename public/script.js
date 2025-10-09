@@ -203,13 +203,16 @@ function Kosarba_Bele(event, id_termek) {
 
 
 
-function Velemeny_Kozzetesz(id_termek) {
+async function Velemeny_Kozzetesz(id_termek) {
     const cls = new bootstrap.Collapse('#vlm', { toggle: false });
     if ($("#velemeny_input").val() != "") {
-        ajax_post(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, 1).then(velemenyiras => {
+        try {
+            var velemenyiras = await ajax_post(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, 1) 
             cls.hide();
             üzen(`Vélemény elküldve <br> ${velemenyiras.msg}!`,"success");
-        });
+        }  catch (err) { console.error("hiba:", err); }
+        
+        
     }
 }
 
@@ -329,6 +332,21 @@ async function Termek_Mutat(event, cuccok) {
         }
 
         $("#velemenyek").html(vv);
+
+    } catch (err) { console.error("hiba:", err); }
+
+    var sv = "";
+    try {
+        $("#sajatok").html("");
+        var sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${termek_id}&SAJATVELEMENY=1`, 1);
+        for (const element of sajat_velemeny_lista) {
+            sv += `
+            <div class="w-100 p-2 border rounded fhr mt-3 comment">
+                <p> ${element.NEV}, ${element.SZOVEG}, ${element.DATUM}, ${element.ALLAPOT}</p>
+            </div>`;
+        }
+
+        $("#sajatok").html(sv);
 
     } catch (err) { console.error("hiba:", err); }
     
