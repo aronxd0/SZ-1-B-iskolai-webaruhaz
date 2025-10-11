@@ -5,93 +5,61 @@
 }
 
 
-
-.flex-doboz {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    background-color: #f1f1f1;
-    padding: 5px;
-}
-
-.flex-doboz > label,select,button { margin: 5px;}
-
-/* Alapértelmezett betűméret */ 
-.fejléc { font-size: 24px; font-weight: bold;} 
-
-/* = bootstrap small - Kisebb képernyőn kisebb betűméret */
-@media (max-width: 600px) { .fejléc { font-size: 18px; font-weight: normal; } }
-
-
-
-
-
+/* termekeknel a kep lekicsinyitese */
 .kepp {
     width: 30% !important;
     height: 5%;
     object-fit: cover;
 }
 
+/* termekeknel a kartya merete */
 .card {
   min-height: 350px;
   border: none;
 }
 
+/* ha raviszem az egeret */
 .card:hover {
   cursor: pointer;
 }
 
+/* az offcanvas menuben kisebb betumeret */
 .offcanvas {
   font-size: 14px;
 }
 
+/* modal ablakok megnyitasakor blur hatter */
 .modal-open .modal-backdrop {
   backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 1 !important;
 }
 
-.modal-header {
-  border-bottom: none;
-}
+/* modal fejlec-lablec semmi border */
+.modal-header { border-bottom: none; }
+.modal-footer { border-top: none; }
 
-.modal-footer {
-  border-top: none;
-}
+/* velemenyek kisebb betumeret */
+.comment { font-size: 14px; }
 
-.comment {
-  font-size: 14px;
-}
+/* label korul ne legyen semmi ::after elem mert neha nem jeleniti meg jol */
+label::after { content: none !important; }
 
-label::after {
-  content: none !important;
-}
+/* a dropdown-nal ne mutassa azt a kis nyilat */
+.dropdown-toggle::after { display: none !important; }
 
-.dropdown-toggle::after {
-  display: none !important;
-}
+/* felso menusorban a gomboknak semmi border + atmenet ha raviszem az egeret */
+.gomb { border: none; }
+.gomb:hover { transition: 0.5s ease; }
 
-.gomb {
-  border: none;
-}
-
-.gomb:hover {
-  transition: 0.5s ease;
-}
-
-
+/* felso menusor doboz also border (feher csik) */
 .gombdiv {
-  border-bottom: 2px solid transparent;
+  border-bottom: 2px solid transparent; /* alapbol nincs */ 
   transition: border-color 0.5s ease;
 }
 
-.gombdiv.aktiv {
-  border-bottom: 2px solid #fff;
-}
+.gombdiv.aktiv { border-bottom: 2px solid #fff; } /* ha eppen ott vagyok akkor legyen csak */
 
-#nev1::placeholder {
-  font-style: italic;
-}
 
 #login_gomb_div {
   transition: all 0.3s ease;
@@ -112,16 +80,16 @@ label::after {
   transition: 0.5s ease;
 }
 
-#velemeny_input {
-  height: 150px;
-}
+/* velemeny iras mezo merete */
+#velemeny_input { height: 150px; }
 
+/* nem elerheto termekek kartya stilusa */
 .nem-elerheto {
   background-color: var(--bs-secondary-bg);
   border-radius: var(--bs-border-radius);
-  opacity: 0.65;
-  pointer-events: none;
-  user-select: none;
+  opacity: 0.65; /* halvanyabb */
+  pointer-events: none; /* ne lehessen kattintani */
+  user-select: none; /* ne lehessen kijelolni */
 }
 
 
