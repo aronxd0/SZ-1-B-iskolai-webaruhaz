@@ -234,7 +234,7 @@ async function SajatVelemenyekMutat(id_termek) {
         var sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
         for (const element of sajat_velemeny_lista.rows) {
             sv += `
-            <div class="w-100 p-2 border rounded fhr mt-3 comment">
+            <div class="w-100 p-2 border rounded fhr mt-3 mb-3 comment">
                 <p> ${element.NEV}, ${element.SZOVEG}, ${element.DATUM}, ${element.ALLAPOT}</p>
             </div>`;
         }
@@ -256,7 +256,7 @@ async function VelemenyekMutat(id_termek) {
         
         for (const element of velemeny_lista.rows) {
             vv += `
-            <div class="w-100 p-2 border rounded fhr mt-3 comment">
+            <div class="w-100 p-2 border rounded fhr mt-3 mb-3 comment">
                 <p> ${element.NEV}, ${element.SZOVEG}, ${element.DATUM}</p>
             </div>`;
         }
@@ -390,9 +390,9 @@ async function Termek_Mutat(event, cuccok) {
         */
 
     var gombs = `
-        <button type="button" class="btn btn-info bi bi-info-circle w-auto" data-bs-toggle="tooltip" title="A vélemény jóváhagyás esetén lesz majd látható!"></button>
-        <button class="btn btn-danger bi bi-x-lg w-auto" data-bs-toggle="collapse" data-bs-target="#vlm" id="mgs"> Mégse</button>
-        <button class="btn btn-success bi bi-send w-auto" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${termek_id})'> Közzététel</button>
+        <button type="button" class="btn btn-info bi bi-info-circle w-auto ms-2" data-bs-toggle="tooltip" title="A vélemény jóváhagyás esetén lesz majd látható!"></button>
+        <button type="button" class="btn btn-danger bi bi-x-lg w-auto ms-2" data-bs-toggle="collapse" data-bs-target="#vlm" id="mgs"> Mégse</button>
+        <button type="button" class="btn btn-success bi bi-send w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${termek_id})'> Közzététel</button>
     
     `
 
@@ -436,7 +436,7 @@ function CARD_BETOLT(adatok){
             ee = "nem-elerheto";
            
         }
-        else {el = `<h3 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h3>`; ee = "";}//Ár kiiras
+        else { el = `<h2 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h2>`; ee = ""; } //Ár kiiras
         
 
         cuccli = [];
