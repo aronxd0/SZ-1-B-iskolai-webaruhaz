@@ -22,155 +22,103 @@
   <!-- fő div -->
   <div class="container-fluid"> 
 
-    <!-- a bal oldali vezerlopult/menu -->
-    <div class="offcanvas offcanvas-end" id="demo">  
-      <div class="offcanvas-header text-center">
-        <h5 class="offcanvas-title"><i class="bi bi-grid"></i>&nbsp;Vezérlőpult</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-      </div>
-      <div class="offcanvas-body d-flex flex-column"> <!-- d-flex: display flex
-                                                          flex-column: oszlopkent mukodjon a div, a benne levo cuccok egymas alatt --> 
-
-        
-                                                          <!--  
-          <button id="login_button"  type="button" class="btn me-3 text-light" style="background-color: #125308;" data-bs-dismiss="offcanvas"> 
-            <i class="bi bi-box-arrow-in-right" id="loginout"></i>
-            <span  id="loginspan"> Bejelentkezés</span>
-          </button>-->
-
-          
-        
-
-        <div class="row mt-auto p-2"></div>
-
-        
-        
-        
-        
-
-        
-        
-      </div>
-    </div>
-
-
-
-    <div class="row bg-black">
-
-      <div class="col-lg-6 mb-2">
-        <div class="col-12 p-3 bg-black text-light d-flex flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-start"> 
-          
-          <img class="img-fluid m-2" style="width: 10%;"  src="img/logo2.png"> &nbsp;
-          <h2 class="text-center text-lg-start align-self-center flex-nowrap">Iskolai Webáruház 🏫🛒💻</h2>
-        </div>
-      </div>
-      <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-end">
-
-        
-
-        
-        <!--
-        <button id="menu"  type="button" class="btn btn-outline-light me-3"  data-bs-toggle="offcanvas" data-bs-target="#demo"> 
-            <i class="bi bi-list"></i>
-        </button>
-        -->
-      </div>
-
-      
-    </div>
-
-    <div class="row bg-black sticky-top p-3">
-
-      <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-start">
-        
-
-        <div class="dropdown me-3">
-          <button type="button" class="btn btn-lg btn-outline-light gomb dropdown-toggle rounded-4" data-bs-toggle="dropdown" >
-            <i class="bi bi-person"></i>
-          </button>
-          <div class="dropdown-menu rounded-4 p-3 bg-black text-white" style="min-width: 250px;">
-            
-            <span class="" id="user">Jelentkezz be a fiókodba</span>
-            <span class=" badge bg-warning text-dark w-50 m-2" id="csoport"></span>
-            <span class=" badge bg-danger w-50 m-2" id="admin"></span>
-            <div class="row text-center">
-              <span class="" id="user-email"></span>
+    <!-- #region fejlec -->
+    <header>
+      <section id="fejlec-elso-sor">
+        <div class="row bg-black">
+          <div class="col-lg-6 mb-2">
+            <div class="col-12 p-3 bg-black text-light d-flex flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-start"> 
+              <img class="img-fluid m-2" style="width: 10%;"  src="img/logo2.png"> &nbsp;
+              <h2 class="text-center text-lg-start align-self-center flex-nowrap">Iskolai Webáruház 🏫🛒💻</h2>
             </div>
-            
-            <div class="row d-flex align-self-center justify-content-center mt-5 pt-3 border-top border-secondary">
-              <button class="btn btn-outline-light w-auto rounded-5" id="switch"><i class="bi bi-moon-fill" ></i></button>
-              <button id="login_button"  type="button" class="btn btn-outline-light w-auto"> 
-                <i class="bi bi-box-arrow-in-right" id="loginout"></i>
-                <span  id="loginspan"> Bejelentkezés</span>
+          </div>
+          <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-end"></div>
+        </div>
+      </section>
+
+      <section id="fejlec-masodik-sor">
+        <div class="row bg-black sticky-top p-3">
+          <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-center justify-content-lg-start">
+            <div class="dropdown me-3">
+              <button type="button" class="btn btn-lg btn-outline-light gomb dropdown-toggle rounded-4" data-bs-toggle="dropdown" >
+                <i class="bi bi-person"></i>
               </button>
-            </div>
-            
-        </div>
-        </div>
-        
-
-        <div class="gombdiv me-3">
-          <button id="home_button"  type="button" class="btn btn-lg btn-outline-light gomb rounded-3" data-bs-toggle="tooltip" title="Kezdőlap"> 
-            <i class="bi bi-house" id="loginout"></i>
-            <span  class="d-none d-xxl-inline" > Kezdőlap</span>
-          </button>
-        </div>
-        
-        <div class="gombdiv me-3">
-          <button id="cart_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3" data-bs-toggle="tooltip" title="Kosaram megtekintése"> 
-            <i class="bi bi-cart2"></i>
-            <span class="d-none d-xxl-inline" > Kosár <span class="badge bg-black text-white" id="kosar_content_count">0</span></span>
-          </button>
-        </div>
-        
-        <div class="gombdiv me-3">
-          <button id="admin_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3" data-bs-toggle="tooltip" title="Adminisztráció"> 
-            <i class="bi bi-gear"></i>
-            <span class="d-none d-xxl-inline" > Admin felület</span>
-          </button>
-        </div>
-
-
-    </div>
-        
-      
-        
-      <div class="col-lg-6 mb-2">
-        <div class="row">
-          <div class="col-12 mt-2">
-            <div class="d-flex flex-nowrap w-100 align-self-center"> <!-- flex-nowrap: ne tordelje szet  -->
-              <div class="form-floating flex-grow-1 me-2 align-self-center">
-                <input class="form-control rounded-4" id="nev1" name="nev" value="" type="text" placeholder="Termékek keresése...">
-                <label for="nev1"><i class="bi bi-search"></i> Keresés...</label>
+              <div class="dropdown-menu rounded-4 p-3 bg-black text-white" style="min-width: 250px;">
+                
+                <span class="" id="user">Jelentkezz be a fiókodba</span>
+                <span class=" badge bg-warning text-dark w-50 m-2" id="csoport"></span>
+                <span class=" badge bg-danger w-50 m-2" id="admin"></span>
+                <div class="row text-center">
+                  <span class="" id="user-email"></span>
+                </div>
+                
+                <div class="row d-flex align-self-center justify-content-center mt-5 pt-3 border-top border-secondary">
+                  <button class="btn btn-outline-light w-auto rounded-5" id="switch"><i class="bi bi-moon-fill" ></i></button>
+                  <button id="login_button"  type="button" class="btn btn-outline-light w-auto"> 
+                    <i class="bi bi-box-arrow-in-right" id="loginout"></i>
+                    <span  id="loginspan"> Bejelentkezés</span>
+                  </button>
+                </div>
+                
               </div>
-              <button class="btn btn-lg btn-outline-light bi bi-search rounded-4" id="kereses_gomb" onclick="KERESOBAR()"></button>
-              <button class="btn btn-lg btn-outline-light rounded-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#szurok">
-                <i class="bi bi-funnel"></i>
-                <!--<span class="d-none d-lg-inline" > Szűrők</span>-->
+            </div>
+            
+            <div class="gombdiv me-3">
+              <button id="home_button"  type="button" class="btn btn-lg btn-outline-light gomb rounded-3" data-bs-toggle="tooltip" title="Kezdőlap"> 
+                <i class="bi bi-house" id="loginout"></i>
+                <span  class="d-none d-xxl-inline" > Kezdőlap</span>
               </button>
             </div>
             
+            <div class="gombdiv me-3">
+              <button id="cart_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3" data-bs-toggle="tooltip" title="Kosaram megtekintése"> 
+                <i class="bi bi-cart2"></i>
+                <span class="d-none d-xxl-inline" > Kosár <span class="badge bg-black text-white" id="kosar_content_count">0</span></span>
+              </button>
+            </div>
+            
+            <div class="gombdiv me-3">
+              <button id="admin_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3" data-bs-toggle="tooltip" title="Adminisztráció"> 
+                <i class="bi bi-gear"></i>
+                <span class="d-none d-xxl-inline" > Admin felület</span>
+              </button>
+            </div>
+          </div>
+            
+          <div class="col-lg-6 mb-2">
+            <div class="row">
+              <div class="col-12 mt-2">
+                <div class="d-flex flex-nowrap w-100 align-self-center"> <!-- flex-nowrap: ne tordelje szet  -->
+                  <div class="form-floating flex-grow-1 me-2 align-self-center">
+                    <input class="form-control rounded-4" id="nev1" name="nev" value="" type="text" placeholder="Termékek keresése...">
+                    <label for="nev1"><i class="bi bi-search"></i> Keresés...</label>
+                  </div>
+                  <button class="btn btn-lg btn-outline-light bi bi-search rounded-4" id="kereses_gomb" onclick="KERESOBAR()"></button>
+                  <button class="btn btn-lg btn-outline-light rounded-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#szurok">
+                    <i class="bi bi-funnel"></i>
+                    <!--<span class="d-none d-lg-inline" > Szűrők</span>-->
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-          
-      
-      </div>
-
-    </div>
-
+      </section>
+    </header>
+    <!-- #endregion -->
 
 
     <!-- fő tartalom div -->
-    <div class="container-fluid mt-2" id="content"> 
-      <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-          <div class="w-auto p-2" id="keresett_kifejezes"></div>
-          <div class="w-auto align-self-center" id="débé"></div>
-        </div>
+    <main>
+      <div class="container-fluid mt-2" id="content"> 
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center">
+            <div class="w-auto p-2" id="keresett_kifejezes"></div>
+            <div class="w-auto align-self-center" id="débé"></div>
+          </div>
+        </div> 
         
-      </div> 
-      
-      <div class="row">
+        <div class="row">
           <div class="col-0 col-lg-2"></div>
           <div class="col-12 col-lg-8">
             <div class="row" id="content_hely"></div>  
@@ -178,7 +126,8 @@
           </div>
           <div class="col-0 col-lg-2"></div>
         </div>
-    </div>
+      </div>
+    </main>
     
 
 
@@ -188,17 +137,11 @@
       </div>
     </div>
 
-
-
-
-
-    
-
   </div>
 
 
-
-
+  
+  <!-- szures menu -->
   <div class="offcanvas offcanvas-end" id="szurok">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title"><i class="bi bi-gear"></i> &nbsp; Szűrési beállítások</h5>
