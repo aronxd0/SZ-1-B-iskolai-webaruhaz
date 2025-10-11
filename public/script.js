@@ -204,13 +204,23 @@ function Kosarba_Bele(event, id_termek) {
 
 
 async function Velemeny_Kozzetesz(id_termek) {
+    
     const cls = new bootstrap.Collapse('#vlm', { toggle: false });
     if ($("#velemeny_input").val() != "") {
         try {
             var velemenyiras = await ajax_post(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, 1) 
             cls.hide();
-            üzen(`Vélemény elküldve <br> ${velemenyiras.msg}!`,"success");
-        }  catch (err) { console.error("hiba:", err); }
+            console.log(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`);
+
+            if (velemenyiras.message == "ok") {
+                üzen(`Vélemény elküldve`,"success");
+            }
+            else {
+                üzen(`Hiba: <br> ${velemenyiras.message}`,"danger");
+            }
+
+            
+        }  catch (err) { üzen(err, "danger"); }
         
         
     }
@@ -232,7 +242,7 @@ async function SajatVelemenyekMutat(id_termek) {
         $("#sajatok").html(sv);
         console.log(`sajat velemenyek betoltve`);
 
-    } catch (err) { console.error("hiba:", err); }
+    } catch (err) { console.log("hiba:", err); }
 }
 
 
@@ -242,6 +252,7 @@ async function VelemenyekMutat(id_termek) {
     try {
         $("#velemenyek").html("");
         var velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}`, 1);
+        console.log(`velemenyek?ID_TERMEK=${id_termek}`);
         
         for (const element of velemeny_lista.rows) {
             vv += `
@@ -253,7 +264,7 @@ async function VelemenyekMutat(id_termek) {
         $("#velemenyek").html(vv);
         console.log(`velemenyek betoltve`);
 
-    } catch (err) { console.error("hiba:", err); }
+    } catch (err) { console.log("hiba:", err); }
 }
 
 
@@ -367,9 +378,8 @@ async function Termek_Mutat(event, cuccok) {
 
 
 
-    // ide kell a velemenyek lekerdezese
     
-    VelemenyekMutat();
+    VelemenyekMutat(termek_id);
     
     
     /*
@@ -560,7 +570,7 @@ async function KERESOBAR() {
         CARD_BETOLT(adatok);
         OLDALFELTOTL(adatok.maxcount);
         
-    } catch (err) { console.error("hiba:", err); }
+    } catch (err) { console.log("hiba:", err); }
     
     
 
@@ -687,7 +697,7 @@ async function ArFeltolt(sql, min ,max){
         document.getElementById("max_ar_input").value =max;
 
 
-    } catch (err) { console.error("hiba:", err); }
+    } catch (err) { console.log("hiba:", err); }
     
      
 }
@@ -728,7 +738,7 @@ async function KategoriaFeltolt(hova) {
 
         $(`#${hova}`).html(listItems);
         
-    } catch (err) { console.error("hiba:", err); }                     
+    } catch (err) { console.log("hiba:", err); }                     
       
 }
 
@@ -1034,7 +1044,7 @@ $(document).ready(function() {
                 }
             });
 
-        } catch (err) { console.error("hiba:", err); }
+        } catch (err) { console.log("hiba:", err); }
 
         var kd = `
             <div class="col-12">

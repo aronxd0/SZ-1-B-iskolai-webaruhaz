@@ -144,8 +144,8 @@ app.post('/keres', (req, res) => {
 app.post('/velemenyek',(req, res) => {
   session_data = req.session;
   // sima felhasználói
-  var termekid = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK) : 0);
-  var sajatvelemeny = (req.query.SAJATVELEMENY? parseInt(req.query.SAJATVELEMENY) : 0); // 1 ha csak a saját véleményem kell
+  var termekid = (req.query.ID_TERMEK ? parseInt(req.query.ID_TERMEK) : 0);
+  var sajatvelemeny = (req.query.SAJATVELEMENY ? parseInt(req.query.SAJATVELEMENY) : 0); // 1 ha csak a saját véleményem kell
 
   //adminonak az elfogadás érdekében
   var szelektalas = (req.query.szelektalas? parseInt(req.query.szelektalas) : 0); // 1 ha igen akarom látni az elfogadásra várókat is (admin felület)
@@ -160,17 +160,23 @@ app.post('/velemenyek',(req, res) => {
   sendJson_toFrontend (res, sql);           // async await ... 
 });
 
-app.post('/velemeny_add',(req, res) => {
-  // sima felhasználói
-  var termekid = parseInt(req.query.ID_TERMEK);
-  var szoveg = strE(req.query.SZOVEG);
-  
-  var sql = `
-  insert into webbolt_velemenyek (ID_VELEMENY, ID_TERMEK, ID_USER, SZOVEG, DATUM, ALLAPOT)
-  values ("null", ${termekid}, ${session_data.ID_USER}, "${szoveg}", current_date, ${(req.session.WEBBOLT_ADMIN == "Y" || req.session.ADMIN == "Y") ? '"Jóváhagyva"' : '"Jóváhagyásra vár"'});
-  `;
+app.post('/velemeny_add', async (req, res) => {
+  try {
+    // sima felhasználói
+    var termekid = parseInt(req.query.ID_TERMEK);
+    var szoveg = strE(req.query.SZOVEG);
+    
+    var sql = `
+    insert into webbolt_velemenyek (ID_TERMEK, ID_USER, SZOVEG, ALLAPOT)
+    values (${termekid}, ${session_data.ID_USER}, "${szoveg}", ${(req.session.WEBBOLT_ADMIN == "Y" || req.session.ADMIN == "Y") ? '"Jóváhagyva"' : '"Jóváhagyásra vár"'});
+    `;
 
-  runExecute (res, sql);           // async await ... 
+    console.log(sql);
+    const eredmeny = await runExecute(sql, req);
+    res.send(eredmeny);
+
+  } catch (err) { console.log(err) }
+             
 });
 
 //#endregion
@@ -229,7 +235,7 @@ async function runExecute(sql, req) {                     // insert, update, del
   var json_data, conn, res1, jrn1, jrn;
   session_data = req.session;
   try {
-      jrn  = `insert into naplo (ID_NAPLO, ID_USER, COMMENT, URL, SQLX, DATUMIDO)  values ("null",${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}",current_time);`;      
+      jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}");`;      
       conn = await mysql.createConnection(mysql_connection); 
       res1 = await conn.execute(sql);  
       jrn1 = await conn.execute(jrn); 
