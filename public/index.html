@@ -85,7 +85,7 @@
         
 
         <div class="dropdown me-3">
-          <button type="button" class="btn btn-lg btn-outline-light gomb dropdown-toggle rounded-4" data-bs-toggle="dropdown">
+          <button type="button" class="btn btn-lg btn-outline-light gomb dropdown-toggle rounded-4" data-bs-toggle="dropdown" >
             <i class="bi bi-person"></i>
           </button>
           <div class="dropdown-menu rounded-4 p-3 bg-black text-white" style="min-width: 250px;">
@@ -110,21 +110,21 @@
         
 
         <div class="gombdiv me-3">
-          <button id="home_button"  type="button" class="btn btn-lg btn-outline-light gomb rounded-3" data-bs-dismiss="offcanvas"> 
+          <button id="home_button"  type="button" class="btn btn-lg btn-outline-light gomb rounded-3" data-bs-toggle="tooltip" title="Kezdőlap"> 
             <i class="bi bi-house" id="loginout"></i>
             <span  class="d-none d-xxl-inline" > Kezdőlap</span>
           </button>
         </div>
         
         <div class="gombdiv me-3">
-          <button id="cart_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3"> 
+          <button id="cart_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3" data-bs-toggle="tooltip" title="Kosaram megtekintése"> 
             <i class="bi bi-cart2"></i>
             <span class="d-none d-xxl-inline" > Kosár <span class="badge bg-black text-white" id="kosar_content_count">0</span></span>
           </button>
         </div>
         
         <div class="gombdiv me-3">
-          <button id="admin_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3"> 
+          <button id="admin_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3" data-bs-toggle="tooltip" title="Adminisztráció"> 
             <i class="bi bi-gear"></i>
             <span class="d-none d-xxl-inline" > Admin felület</span>
           </button>
@@ -388,12 +388,12 @@
                 <!--<div class="col-12 text-center"><h4>Vélemények</h4></div>-->
                 <div>
                   <ul class="nav nav-tabs d-flex">
-                    <li class="nav-item">
+                    <li class="nav-item" id="vvl">
                       <a class="nav-link active" data-bs-toggle="tab" href="#velemenyek">Vélemények</a>
                     </li>
 
                     <li class="nav-item" id="sajatvlm">
-                      <a class="nav-link" data-bs-toggle="tab" href="#sajatok">Saját véleményeim</a>
+                      <a class="nav-link" data-bs-toggle="tab" href="#sajatok" >Saját véleményeim</a>
                     </li>
                   
                  </ul>

@@ -142,6 +142,7 @@ app.post('/keres', (req, res) => {
 //#region vélemények
 
 app.post('/velemenyek',(req, res) => {
+  session_data = req.session;
   // sima felhasználói
   var termekid = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK) : 0);
   var sajatvelemeny = (req.query.SAJATVELEMENY? parseInt(req.query.SAJATVELEMENY) : 0); // 1 ha csak a saját véleményem kell

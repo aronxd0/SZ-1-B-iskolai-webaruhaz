@@ -195,10 +195,10 @@ function Kosarba_Bele(event, id_termek) {
 
     // kosarba INSERT INTO ide
 
-    setTimeout(function() {
-        $("#idt").html(id_termek);
-        $("#kosarba_bele").modal("show");
-    }, 300);
+    
+    $("#idt").html(id_termek);
+    $("#kosarba_bele").modal("show");
+    
 }
 
 
@@ -214,6 +214,46 @@ async function Velemeny_Kozzetesz(id_termek) {
         
         
     }
+}
+
+async function SajatVelemenyekMutat(id_termek) {
+    var sv = "";
+
+    try {
+        $("#sajatok").html("");
+        var sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
+        for (const element of sajat_velemeny_lista.rows) {
+            sv += `
+            <div class="w-100 p-2 border rounded fhr mt-3 comment">
+                <p> ${element.NEV}, ${element.SZOVEG}, ${element.DATUM}, ${element.ALLAPOT}</p>
+            </div>`;
+        }
+
+        $("#sajatok").html(sv);
+        console.log(`sajat velemenyek betoltve`);
+
+    } catch (err) { console.error("hiba:", err); }
+}
+
+
+async function VelemenyekMutat(id_termek) {
+    var vv = "";
+
+    try {
+        $("#velemenyek").html("");
+        var velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}`, 1);
+        
+        for (const element of velemeny_lista.rows) {
+            vv += `
+            <div class="w-100 p-2 border rounded fhr mt-3 comment">
+                <p> ${element.NEV}, ${element.SZOVEG}, ${element.DATUM}</p>
+            </div>`;
+        }
+
+        $("#velemenyek").html(vv);
+        console.log(`velemenyek betoltve`);
+
+    } catch (err) { console.error("hiba:", err); }
 }
 
 
@@ -307,48 +347,30 @@ async function Termek_Mutat(event, cuccok) {
     $("#vlmg").html("");
     $("#ussr").html("");
 
-    if ($("#loginspan").html() == " Bejelentkezés") {
+    $("#vvl").html("");
+    $("#vvl").html(`<a class="nav-link active" data-bs-toggle="tab" href="#velemenyek" onclick='VelemenyekMutat(${termek_id})'>Vélemények</a>`);
+
+    if (!BevanJelentkezve()) {
         $("#vlmg").html("Vélemény írásához jelentkezzen be");
         cls.hide();
+        $("#sajatvlm").html("");
         $("#sajatvlm").addClass("eltunt");
+        
     }
     else {
         $("#vlmg").html(`<button class="btn btn-primary bi bi-chat-dots w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`);
         $("#ussr").html(`${$("#user").html()}`);
+
+        $("#sajatvlm").html(`<a class="nav-link" data-bs-toggle="tab" href="#sajatok" onclick='SajatVelemenyekMutat(${termek_id})'>Saját véleményeim</a>`);
         $("#sajatvlm").removeClass("eltunt");
     }
 
+
+
     // ide kell a velemenyek lekerdezese
-    var vv = "";
-
-    try {
-        $("#velemenyek").html("");
-        var velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${termek_id}`, 1);
-        for (const element of velemeny_lista) {
-            vv += `
-            <div class="w-100 p-2 border rounded fhr mt-3 comment">
-                <p> ${element.NEV}, ${element.SZOVEG}, ${element.DATUM}</p>
-            </div>`;
-        }
-
-        $("#velemenyek").html(vv);
-
-    } catch (err) { console.error("hiba:", err); }
-
-    var sv = "";
-    try {
-        $("#sajatok").html("");
-        var sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${termek_id}&SAJATVELEMENY=1`, 1);
-        for (const element of sajat_velemeny_lista) {
-            sv += `
-            <div class="w-100 p-2 border rounded fhr mt-3 comment">
-                <p> ${element.NEV}, ${element.SZOVEG}, ${element.DATUM}, ${element.ALLAPOT}</p>
-            </div>`;
-        }
-
-        $("#sajatok").html(sv);
-
-    } catch (err) { console.error("hiba:", err); }
+    
+    VelemenyekMutat();
+    
     
     /*
     for (let index = 0; index < 20; index++) {
@@ -426,7 +448,7 @@ function CARD_BETOLT(adatok){
 
          s += `
          <div class="col-12 col-sm-6 col-xxl-4">
-            <div class="card feka m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(cuccli)})'>
+            <div class="card shadow-lg feka hover-shadow m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
@@ -760,7 +782,7 @@ $(document).ready(function() {
 
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
+        return new bootstrap.Tooltip(tooltipTriggerEl);
     })
     
 

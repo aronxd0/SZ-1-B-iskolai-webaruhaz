@@ -23,6 +23,9 @@
 @media (max-width: 600px) { .fejléc { font-size: 18px; font-weight: normal; } }
 
 
+
+
+
 .kepp {
     width: 30% !important;
     height: 5%;
@@ -31,6 +34,7 @@
 
 .card {
   min-height: 350px;
+  border: none;
 }
 
 .card:hover {
@@ -139,11 +143,22 @@ html[data-bs-theme="dark"] .fhr {
 
 
 html[data-bs-theme="dark"] .feka {
-  background-color: #181c1f !important; 
+  background-color: #16181b !important; 
   color: var(--bs-body-color);
   border: none !important;
 }
 
 .eltunt {
   display: none;
+}
+
+.hover-shadow {
+  transition: all 0.4s ease; 
+  
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  transform: translateY(-15px);
+  
 }
