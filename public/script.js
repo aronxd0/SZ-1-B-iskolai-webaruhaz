@@ -1,20 +1,18 @@
-var ORDER = 1;
-var ID = 0;    
+let ORDER = 1;
+let ID = 0;    
 const alerts = ["success", "info", "warning", "danger"];
-var bepipaltID ="";
-var webbolt_admin = false;
-var admin = false;
-var elfogyott = false;
-var Nemaktivak = false;
-var maxarr = 0;
-var minarr = 0;
+let bepipaltID ="";
+let webbolt_admin = false;
+let admin = false;
+let elfogyott = false;
+let Nemaktivak = false;
+let maxarr = 0;
+let minarr = 0;
 
-var oldalszam =0;
-var Joldal = 1;
 
-var sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
-var oldalszam =0; // összes oldal darabszáma
-var Joldal = 1; // jelenlegi oldal
+let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
+let oldalszam = 0; // összes oldal darabszáma
+let Joldal = 1; // jelenlegi oldal
 
 
 function üzen(mit, tip)  {
@@ -40,7 +38,7 @@ function makeid(length) {
 function ajax_get( urlsor, hova, tipus, aszinkron ) {         // html oldalak beszúrására használjuk
     $.ajax({url: urlsor, type:"get", async:aszinkron, cache:false, dataType:tipus===0?'html':'json',
         beforeSend:function(xhr)   { 
-            var spinner = '<div id="spinner" class="spinner-border text-primary" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;"></div>';
+            const spinner = '<div id="spinner" class="spinner-border text-primary" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;"></div>';
             // Spinner hozzáadása a body-hoz
             $('body').append(spinner);
          },
@@ -63,7 +61,7 @@ function ajax_post(urlsor, tipus) {
       cache: false,
       dataType: tipus === 0 ? "html" : "json",
       beforeSend: function() {
-        var spinner = `<div id="spinner-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;
+        const spinner = `<div id="spinner-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;
                                         background:rgba(0,0,0,0.6);z-index:9999;
                                         display:flex;align-items:center;justify-content:center;backdrop-filter: blur(10px);opacity: 1;">
                                 <div class="spinner-border text-primary"></div>
@@ -208,7 +206,7 @@ async function Velemeny_Kozzetesz(id_termek) {
     const cls = new bootstrap.Collapse('#vlm', { toggle: false });
     if ($("#velemeny_input").val() != "") {
         try {
-            var velemenyiras = await ajax_post(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, 1) 
+            let velemenyiras = await ajax_post(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, 1) 
             cls.hide();
             console.log(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`);
 
@@ -726,9 +724,9 @@ function Sliderhuz(ettöl){
 async function KategoriaFeltolt(hova) {
     $(`#${hova}`).html("");
     try {
-        var k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);
-        var listItems  = "";
-        for (var i = 0; i < k_json.rows.length; ++i) {
+        let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);
+        let listItems  = "";
+        for (let i = 0; i < k_json.rows.length; ++i) {
             var pipa = ""
             if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
                 pipa = "checked";
@@ -792,7 +790,7 @@ $(document).ready(function() {
 
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
+        return new bootstrap.Tooltip(tooltipTriggerEl)
     })
     
 
