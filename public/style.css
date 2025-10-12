@@ -91,6 +91,10 @@ label::after { content: none !important; }
   user-select: none; /* ne lehessen kijelolni */
 }
 
+li:hover {
+  cursor: pointer;
+}
+
 
 .feka {
   background-color: var(--bs-light) !important;

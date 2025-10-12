@@ -120,6 +120,10 @@ function BevanJelentkezve() {
     else { return true; }
 }
 
+function FelaTetore() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 
 function orderby( num )   {
     ID = 0; // reset... nincs kijelölve egyetlen sor sem...
@@ -487,12 +491,12 @@ function CARD_BETOLT(adatok){
 
     var pp = `
         <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" id="Vissza2" onclick="Kovi(this)" href="#"> << </a></li>
-            <li class="page-item"><a class="page-link" id="vissza1" onclick="Kovi(this)" href="#">Előző</a></li>
-            <li class="page-item"><a class="page-link" href="#"><b id="Mostoldal">1</b> /<span id="DBoldal">100</span></a></li>
+            <li class="page-item"><a class="page-link" id="Vissza2" onclick="Kovi(this)"> << </a></li>
+            <li class="page-item"><a class="page-link" id="vissza1" onclick="Kovi(this)">Előző</a></li>
+            <li class="page-item"><a class="page-link"><b id="Mostoldal">1</b> / <span id="DBoldal">100</span></a></li>
             
-            <li class="page-item"><a class="page-link" id="Kovi1" onclick="Kovi(this)" href="#">Következő</a></li>
-            <li class="page-item"><a class="page-link" id="Kovi2" onclick="Kovi(this)" href="#"> >> </a></li>
+            <li class="page-item"><a class="page-link" id="Kovi1" onclick="Kovi(this)">Következő</a></li>
+            <li class="page-item"><a class="page-link" id="Kovi2" onclick="Kovi(this)"> >> </a></li>
         </ul>`;
     // alul a lapválastó feltöltése
     
@@ -601,6 +605,7 @@ function OLDALFELTOTL(darab){
 }
 
 function Kovi(keri){
+    FelaTetore();
     switch(keri.id){
         case("Kovi1"):{ // következő oldal
             if(Joldal < oldalszam){
@@ -819,44 +824,12 @@ $(document).ready(function() {
 
     $("#nev1").on("focus", function() {
         console.log("keresomezo focus xd");
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        FelaTetore();
     });
 
     
     
-    /*
-    let oldal = "kozep";
-
-    $("#login_oksi_button").on("mouseenter", function() {
-        
-        let email = $("#login_nev").val().trim();
-        let jelsz = $("#login_passwd").val().trim();
-        console.log(email);
-
-        if (email == "" || jelsz == "") {
-            
-            if (oldal == "bal") {
-                $("#login_gomb_div").removeClass("bal kozep").addClass("jobb");
-                oldal = "jobb";
-            }
-            else {
-                $("#login_gomb_div").removeClass("kozep jobb").addClass("bal");
-                oldal = "bal";
-            }
-        }
-    });
-
-    $("#login_nev, #login_passwd").on("input", function() {
-        let email = $("#login_nev").val().trim();
-        let jelsz = $("#login_passwd").val().trim();
-
-        if (email != "" && jelsz != "") {
-            
-            $("#login_gomb_div").removeClass("bal jobb disabled").addClass("kozep");
-            oldal = "kozep";
-        }
-    });
-    */
+    
 
 
     
@@ -1007,7 +980,7 @@ $(document).ready(function() {
 
     $("#home_button").click(function() {
         Kezdolap();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        FelaTetore();
     });
 
     $("#home_button").trigger("click");
