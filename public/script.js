@@ -795,10 +795,9 @@ $(document).ready(function() {
     
 
     update_gombok(0);           // insert, update, delete nem kell! (csak login után)
-    $('#login_modal').modal('show'); $("#login_gomb_div").removeClass("bal jobb").addClass("kozep");                       
+    $('#login_modal').modal('show');                       
     $("#kategoria1").empty(); 
     
-
     
     
     KategoriaFeltolt("kategoria_section");
@@ -822,7 +821,10 @@ $(document).ready(function() {
         console.log("keresomezo focus xd");
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
     
+    
+    /*
     let oldal = "kozep";
 
     $("#login_oksi_button").on("mouseenter", function() {
@@ -854,7 +856,7 @@ $(document).ready(function() {
             oldal = "kozep";
         }
     });
-
+    */
 
 
     

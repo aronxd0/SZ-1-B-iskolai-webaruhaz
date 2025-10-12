@@ -31,7 +31,7 @@
                                                     <!--      kis kepernyon egymas alatt + kozepen, nagy kepernyotol egymas mellett + balra igazitva     -->
             <div class="col-12 p-3 bg-black text-light d-flex flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-start"> 
               <img class="img-fluid m-2" style="width: 10%;"  src="img/logo2.png"> &nbsp;
-              <h2 class="text-center text-lg-start align-self-center flex-nowrap hover-emoji">Iskolai Webáruház <span class="emoji">🏫🛒💻</span></h2>
+              <h2 class="text-center text-lg-start align-self-center flex-nowrap">Iskolai Webáruház</h2>
             </div>
           </div>
           <div class="col-12 col-lg-6"></div>
@@ -214,36 +214,37 @@
           <h4 id="idx_login" class="modal-title text-center w-100"><i class="bi bi-person-fill"></i> Bejelentkezés</h4>
         </div>
 
-        <div id="idx0" class="modal-body">     
-          <form id="form_login" class="row d-column"> 
-
+        <div id="idx0" class="modal-body">
+          <form id="form_login" class="row d-column was-validated"> 
             <div class="form-floating flex-grow-1 ny-1 mb-2">
-              <input type="email" class="form-control rounded-4" id="login_nev" name="login_nev"  value="balazs.aron@csany-zeg.hu" placeholder="E-mail cím">
+              <input type="email" class="form-control rounded-4" id="login_nev" name="login_nev"  value="balazs.aron@csany-zeg.hu" placeholder="E-mail cím" required>
               <label for="login_nev" class="ps-4">E-mail cím</label>
+              
             </div>
+            
 
             <div class="form-floating flex-grow-1 ny-1 mt-2 ">
-              <input type="password" class="form-control rounded-4" id="login_passwd" name="login_passwd" value="123456" placeholder="Jelszó">
+              <input type="password" class="form-control rounded-4" id="login_passwd" name="login_passwd" value="123456" placeholder="Jelszó" required>
               <label for="login_passwd" class="ps-4">Jelszó</label>
-              <span id="jelszo_mutatasa" class="position-absolute top-50 end-0 translate-middle-y pe-4" style="cursor:pointer;"> <!-- position absolute: pozicionalhato legyen jobbra
+              <span id="jelszo_mutatasa" class="position-absolute top-50 translate-middle-y pe-4" style="right: 25px;cursor:pointer;"> <!-- position absolute: pozicionalhato legyen jobbra
                                                                                                                                 top-50 translate-middle-y: fuggolegesen kozepre  
                                                                                                                                 end-0: jobb oldalra 
                                                                                                                                 pe: padding end -->
                 <i class="bi bi-eye" id="sz"></i>
               </span>
             </div>
-
+            
           </form>
         </div>
 
-        <div class="row modal-footer">
-          <div class="row col-12 d-flex w-100 kozep" id="login_gomb_div">
-            <button id="login_oksi_button" type="button" class="btn btn-success w-auto" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
-          </div>
+        <div class="row modal-footer d-flex justify-content-center">
+          <button id="bezar" type="button" class="btn btn-secondary w-auto" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>
+          <button id="login_oksi_button" type="button" class="btn btn-success w-auto" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
+        
 
-          <div class="row col-12 d-flex justify-content-center">
-            <button id="bezar" type="button" class="btn btn-secondary w-auto" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>  
-          </div>
+        
+            
+          
           
           
           
