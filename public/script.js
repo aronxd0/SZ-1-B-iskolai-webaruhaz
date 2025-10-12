@@ -818,6 +818,10 @@ $(document).ready(function() {
   
     });
 
+    $("#nev1").on("focus", function() {
+        console.log("keresomezo focus xd");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
     
     let oldal = "kozep";
 
