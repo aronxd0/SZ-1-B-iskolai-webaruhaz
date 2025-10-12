@@ -3,6 +3,7 @@ const mysql   = require('mysql2/promise');
 const express = require('express');
 const session = require('express-session');
 const { stringify } = require('querystring');
+const { BADHINTS } = require('dns'); 
 const app     = express();
 const port    = 9012;
 const header1 = 'Content-Type';
@@ -10,9 +11,6 @@ const header2 = 'application/json; charset=UTF-8';
 
 app.use(express.static('public'));       // public/index.html a def.
 app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninitialized:true }));   /* https://www.js-tutorials.com/nodejs-tutorial/nodejs-session-example-using-express-session */
-
-
-// masik edit
 
 const mysql_connection =  {
   host: 'sexard3-214.tolna.net',     /* 10.2.0.11:3306 - fsw */
@@ -22,60 +20,102 @@ const mysql_connection =  {
   database: 'studio13_csany_zeg'           /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
 };
 
+// 1. trim(): levágja az elejéről és végéről a szóközöket
+// 2. replaceAll("'", ""): eltávolítja az összes aposztrófot (')
+// 3. replaceAll("\"", ""): eltávolítja az összes idézőjelet (")
+// 4. replaceAll("\t", ""): eltávolítja az összes tabulátort
+// 5. replaceAll("\\", ""): eltávolítja az összes backslash-t (\)
+// 6. replaceAll("`", ""): eltávolítja az összes backtick-et (`)
 function strE(s) { 
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
-function gen_SQL(req) {
-  var session_data = req.session;
-  const mezők = [ "ID_TERMEK", "NEV", "AR"];
+//#region kereses
+
+function gen_SQL_kereses(req) {
+  session_data = req.session;
+
   // ---------------- sql tokenizer ... ---------------
+  var order  = (req.query.order? parseInt(req.query.order)                :   0); // Rendezés típusa (pl. ár, név, mennyiség)
+  var offset = (req.query.offset? parseInt(req.query.offset)              :   0); // Oldal eltolás (paginációhoz)
+  var elfogyott = (req.query.elfogyott? parseInt(req.query.offset)        :   -1); // Csak elfogyott termékek (admin funkció)
+  var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
+  var id_kat = (req.query.kategoria ?  strE(req.query.kategoria).length   : -1); // Kategória szűrés (ha van)
+  var név    = (req.query.nev? req.query.nev :  ""); // Terméknév vagy leírás szűrés
+  var maxarkeres = (req.query.maxar? parseInt(req.query.maxar) : 0); // Ár felső határ szűréshez
+  var minarkeres = (req.query.minar? parseInt(req.query.minar) : 0); // Ár alsó határ szűréshez
+  var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0); // Csak min/max ár lekérdezéshez (ha 1, csak ezt adja vissza)
+  var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
 
-  var order  = (req.query.order? parseInt(req.query.order)                :   1);
-  var limit  = (req.query.limit? parseInt(req.query.limit)                : 100);
-  var offset = (req.query.offset? parseInt(req.query.offset)              :   0);
-  var elfogyott = (req.query.elfogyott? parseInt(req.query.offset)        :   -1);
-  var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1);
-  var id_kat = (req.query.kategoria ?  strE(req.query.kategoria).length   : -1);
-  var név    = (req.query.nev? req.query.nev :  "");
-  var desc   = order < 0? "desc" : "";
-
-  var where = `(t.AKTIV = "Y" AND t.MENNYISEG >= 0) AND `;   // mindig legyen aktív és készleten
-  
-  if(session_data != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
+  // Ha admin vagy webbolt admin a felhasználó, akkor minden terméket láthat
+  if(session_data.ID_USER != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
     where = "";
   }
 
+  // Ha csak elfogyott termékeket kérünk (admin funkció)
   if(elfogyott != -1){
-    where = `(t.MENNYISEG = 0) AND `;   // adminnak mutassa csak az elfogyott termékeket
+    where = `(t.MENNYISEG = 0) AND `;   // Csak azok, amikből nincs készlet
   }
+
+  // Ha csak inaktív termékeket kérünk (admin funkció)
   if(inaktiv != -1){
-    where = `(t.AKTIV = "N") AND `;   // adminnak mutassa csak az inaktív termékeket
+    where = `(t.AKTIV = "N") AND `;   // Csak azok, amik inaktívak
   }
+
+  // Ha mindkettő szűrés aktív (elfogyott és/vagy inaktív)
   if(elfogyott != -1 && inaktiv != -1){
-    where = `(t.AKTIV = "N" OR t.MENNYISEG = 0) AND `;   // adminnak mutassa csak az inaktív és elfogyott termékeket
+    where = `(t.AKTIV = "N" OR t.MENNYISEG = 0) AND `;   // Bármelyik feltétel teljesül
   }
 
+  // Rendezési feltétel beállítása a lekérdezéshez
+  var order_van = "";
+  switch (Math.abs(order)) {
+    case 1: order_van = "ORDER BY AR";  break;   // Ár szerint rendezés
+    case 2: order_van = "ORDER BY NEV"; break;   // Név szerint rendezés
+    case 3: order_van = "ORDER BY MENNYISEG"; break;   // Mennyiség szerint rendezés
+    default: order_van = "" ; break;  // Nincs rendezés
+  }
 
-  if (order < 0) { order *= -1; }
+  // Kategória szűrés, ha van megadva kategória lista
+  if (id_kat != -1)
+  {
+    where += "(";
+    // A kategória ID-kat '-' karakterrel elválasztva kapjuk, mindegyikre külön OR feltétel
+    for (var i=0; i < strE(req.query.kategoria).split("-").length - 1; ++i) 
+      {
+        where += `k.ID_KATEGORIA=${strE(req.query.kategoria).split("-")[i]} or `;
+      }
+    where = `${where.substring(0, where.length - 3)}) and `; // Az utolsó ' or ' törlése
+  }
 
-  if (id_kat != -1)      
-    {
-      where += "(";
-      for (var i=0; i < strE(req.query.kategoria).split("-").length - 1; ++i) 
-        {
-          where += `k.ID_KATEGORIA=${strE(req.query.kategoria).split("-")[i]} or `;
-        }
-      where = `${where.substring(0, where.length - 3)}) and `; 
-    }
-  
+  // Név vagy leírás szűrés, ha van keresési kifejezés
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
+
+  // Ha van szűrés, akkor a végéről levágjuk az utolsó ' and '-et, és where kulcsszóval kezdjük
   if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
 
+  // Ár szűrés (min/max)
+  var arkeres = "";
+  if (maxarkeres != 0) { 
+    arkeres += `${where.length > 0 ? ` and` : ` where`} (t.AR <= ${parseInt(req.query.maxar)})${minarkeres != 0 ? ` and` : ``} `;  // dupla where elkerülése miatt (ar/where switch) ezért ez azutolsó
+  }
+  if (minarkeres != 0) { 
+    arkeres += `(t.AR >= ${parseInt(req.query.minar)}) `;  
+  }
+
+  // Az SQL lekérdezés összeállítása
   var sql = 
-    `SELECT ID_TERMEK, NEV, k.KATEGORIA AS KATEGORIA, AR, MENNYISEG, MEEGYS, FOTOLINK, AKTIV, LEIRAS
-     FROM webbolt_termekek t INNER JOIN webbolt_kategoriak k 
-     ON t.ID_KATEGORIA = k.ID_KATEGORIA ${where} ORDER BY ${mezők[order-1]} ${desc}
-     limit ${limit} offset ${limit*offset} `;
+    `SELECT 
+    ${maxmin_arkell == 1 
+      ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR`
+      : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
+     FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
+     ON t.ID_KATEGORIA = k.ID_KATEGORIA
+     ${where} 
+     ${maxmin_arkell == 1 ? `` : `${arkeres}` }
+     ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
+     ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${offset}`}
+     `;
+  console.log(sql); // debug
   return (sql);
 }
 
@@ -92,16 +132,60 @@ app.post('/kategoria',(req, res) => {
 });
 
 app.post('/keres', (req, res) => {  
-  var sql = gen_SQL(req);                   // sql select generátor (tokenizer)
+  var sql = gen_SQL_kereses(req);                   // sql select generátor (tokenizer)
   sendJson_toFrontend (res, sql); 
 });
 
+//#endregion
 
+
+//#region vélemények
+
+app.post('/velemenyek',(req, res) => {
+  session_data = req.session;
+  // sima felhasználói
+  var termekid = (req.query.ID_TERMEK ? parseInt(req.query.ID_TERMEK) : 0);
+  var sajatvelemeny = (req.query.SAJATVELEMENY ? parseInt(req.query.SAJATVELEMENY) : 0); // 1 ha csak a saját véleményem kell
+
+  //adminonak az elfogadás érdekében
+  var szelektalas = (req.query.szelektalas? parseInt(req.query.szelektalas) : 0); // 1 ha igen akarom látni az elfogadásra várókat is (admin felület)
+
+  var sql = `
+  SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.DATUM ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
+  FROM webbolt_velemenyek INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
+  WHERE webbolt_velemenyek.ID_TERMEK = ${termekid} 
+  ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'"}
+  ${sajatvelemeny == 1 ? `AND webbolt_velemenyek.ID_USER = ${session_data.ID_USER}` : ""}
+  `;
+  sendJson_toFrontend (res, sql);           // async await ... 
+});
+
+app.post('/velemeny_add', async (req, res) => {
+  try {
+    // sima felhasználói
+    var termekid = parseInt(req.query.ID_TERMEK);
+    var szoveg = strE(req.query.SZOVEG);
+    
+    var sql = `
+    insert into webbolt_velemenyek (ID_TERMEK, ID_USER, SZOVEG, ALLAPOT)
+    values (${termekid}, ${session_data.ID_USER}, "${szoveg}", ${(req.session.WEBBOLT_ADMIN == "Y" || req.session.ADMIN == "Y") ? '"Jóváhagyva"' : '"Jóváhagyásra vár"'});
+    `;
+
+    console.log(sql);
+    const eredmeny = await runExecute(sql, req);
+    res.send(eredmeny);
+
+  } catch (err) { console.log(err) }
+             
+});
+
+//#endregion
+
+
+//#region login/logoff
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
-  var session_data = req.session;
-
   var user= (req.query.login_nev? req.query.login_nev: "");
   var psw = (req.query.login_passwd? req.query.login_passwd  : "");
   var sql = `select ID_USER, NEV, EMAIL, ADMIN, WEBBOLT_ADMIN, CSOPORT from users where EMAIL="${user}" and PASSWORD=md5("${psw}") limit 1`;
@@ -123,9 +207,9 @@ async function login_toFrontend (req, res) {
 }
 
 app.post('/logout', (req, res) => {  
-  var session_data = req.session;
+  session_data = req.session;
   const uid = session_data.ID_USER; // annak a usernek az ID-ja aki kijelentkezett -> kosár törléshez
-  console.log(uid);
+  console.log("kilogolt felhasznalo: " + uid);
   session_data.destroy(function(err) {
     if (err) {
       console.error('Session destroy failed', err);
@@ -138,19 +222,20 @@ app.post('/logout', (req, res) => {
     res.json('Session destroyed successfully');
     res.end();
   });
-  console.log(session_data)
 });
 
+//#endregion
+
+
+//#region függvények
 
 async function runExecute(sql, req) {                     // insert, update, delete sql
+  session_data = req.session;
   var msg = "ok";
   var json_data, conn, res1, jrn1, jrn;
-  var userx = "- no login -";
   session_data = req.session;
-  if (session_data.ID_USER) {  userx = session_data.EMAIL; } 
-
   try {
-      jrn  = `insert into naplo (USER, URL, SQLX) values ("${userx}","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}");`;      
+      jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}");`;      
       conn = await mysql.createConnection(mysql_connection); 
       res1 = await conn.execute(sql);  
       jrn1 = await conn.execute(jrn); 
@@ -195,5 +280,8 @@ async function sendJson_toFrontend (res, sql) {
   res.send(json_data);
   res.end();
 }
+
+//#endregion
+
 
 app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });
