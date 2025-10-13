@@ -254,7 +254,7 @@ async function SajatVelemenyekMutat(id_termek) {
 
             sv += `
             <div class="w-100 p-2 border rounded mt-3 mb-3 comment ${allapot_style}">
-                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <i>${element.DATUM.substring(0,10)}</i></p>
+                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
                 <p> ${element.SZOVEG} </p>
                 <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> <button type="button" class="btn btn-danger" aria-label="Törlés" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> <i class="bi bi-trash"></i> </button> </p>
             </div>`;
@@ -279,7 +279,7 @@ async function VelemenyekMutat(id_termek) {
         for (const element of velemeny_lista.rows) {
             vv += `
             <div class="w-100 p-2 border rounded fhr mt-3 mb-3 comment">
-                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <i>${element.DATUM.substring(0,10)}</i></p>
+                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
                 <p> ${element.SZOVEG} </p>
             </div>`;
         }
@@ -538,7 +538,7 @@ function CARD_BETOLT(adatok){
         <ul class="pagination justify-content-center">
             <li class="page-item"><a class="page-link" id="Vissza2" onclick="Kovi(this)"> << </a></li>
             <li class="page-item"><a class="page-link" id="vissza1" onclick="Kovi(this)">Előző</a></li>
-            <li class="page-item"><a class="page-link"><b id="Mostoldal">1</b> / <span id="DBoldal">100</span></a></li>
+            <li class="page-item"><a class="page-link d-flex"><b id="Mostoldal">1</b> / <span id="DBoldal">100</span></a></li>
             
             <li class="page-item"><a class="page-link" id="Kovi1" onclick="Kovi(this)">Következő</a></li>
             <li class="page-item"><a class="page-link" id="Kovi2" onclick="Kovi(this)"> >> </a></li>
