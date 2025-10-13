@@ -151,7 +151,7 @@ app.post('/velemenyek',(req, res) => {
   var szelektalas = (req.query.szelektalas? parseInt(req.query.szelektalas) : 0); // 1 ha igen akarom látni az elfogadásra várókat is (admin felület)
 
   var sql = `
-  SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.DATUM ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
+  SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, webbolt_velemenyek.DATUM ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
   FROM webbolt_velemenyek INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
   WHERE webbolt_velemenyek.ID_TERMEK = ${termekid} 
   ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'"}

@@ -228,19 +228,38 @@ async function Velemeny_Kozzetesz(id_termek) {
     }
 }
 
-async function SajatVelemenyekMutat(id_termek) {
-    var sv = "";
+async function Velemeny_Torles(id_velemeny, id_termek) {
+    console.log(`gyors teszt xd, ez a velemeny id = ${id_velemeny}, termekid = ${id_termek}`);
 
     try {
-        $("#sajatok").html("");
-        var sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
+        let velemeny_torles = await ajax_post(`velemeny_del?ID_VELEMENY=${id_velemeny}`, 1);
+    } catch (err) { üzen(err, "danger"); }
+    
+}
+
+async function SajatVelemenyekMutat(id_termek) {
+    let sv = "";
+    let allapot_style = "";
+    let ikon = "";
+    $("#sajatok").html("");
+
+    try {
+        
+        let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
         for (const element of sajat_velemeny_lista.rows) {
+
+            if (element.ALLAPOT == "Jóváhagyva") { allapot_style = "alert alert-success"; ikon = "✅" }
+            else if (element.ALLAPOT == "Jóváhagyásra vár") { allapot_style = "alert alert-warning"; ikon = "🔄️" }
+            else if (element.ALLAPOT == "Elutasítva") { allapot_style = "alert alert-danger"; ikon = "❌" }
+
             sv += `
-            <div class="w-100 p-2 border rounded fhr mt-3 mb-3 comment">
-                <p> ${element.NEV}, ${element.SZOVEG}, ${element.DATUM}, ${element.ALLAPOT}</p>
+            <div class="w-100 p-2 border rounded mt-3 mb-3 comment ${allapot_style}">
+                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <i>${element.DATUM.substring(0,10)}</i></p>
+                <p> ${element.SZOVEG} </p>
+                <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> <button type="button" class="btn btn-danger" aria-label="Törlés" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> <i class="bi bi-trash"></i> </button> </p>
             </div>`;
         }
-
+        console.log(sv);
         $("#sajatok").html(sv);
         console.log(`sajat velemenyek betoltve`);
 
@@ -249,19 +268,22 @@ async function SajatVelemenyekMutat(id_termek) {
 
 
 async function VelemenyekMutat(id_termek) {
-    var vv = "";
+    let vv = "";
+    $("#velemenyek").html("");
 
     try {
-        $("#velemenyek").html("");
-        var velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}`, 1);
+        
+        let velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}`, 1);
         console.log(`velemenyek?ID_TERMEK=${id_termek}`);
         
         for (const element of velemeny_lista.rows) {
             vv += `
             <div class="w-100 p-2 border rounded fhr mt-3 mb-3 comment">
-                <p> ${element.NEV}, ${element.SZOVEG}, ${element.DATUM}</p>
+                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <i>${element.DATUM.substring(0,10)}</i></p>
+                <p> ${element.SZOVEG} </p>
             </div>`;
         }
+        console.log(vv);
 
         $("#velemenyek").html(vv);
         console.log(`velemenyek betoltve`);
@@ -273,21 +295,21 @@ async function VelemenyekMutat(id_termek) {
 
 async function Termek_Mutat(event, cuccok) {
     
-
+    $("#termekview").modal("hide");
     console.log(`cuccok: ${cuccok}`);
 
-    var termek_id = cuccok[0];
-    var kategoria = cuccok[1];
-    var nev = cuccok[2];
-    var azon = cuccok[3];
-    var ar = cuccok[4];
-    var mennyiseg = cuccok[5];
-    var meegys = cuccok[6];
-    var aktiv = cuccok[7];
-    var termeklink = cuccok[8];
-    var fotolink = cuccok[9];
-    var leiras = cuccok[10];
-    var datumido = cuccok[11];
+    const termek_id = cuccok[0];
+    const kategoria = cuccok[1];
+    const nev = cuccok[2];
+    const azon = cuccok[3];
+    const ar = cuccok[4];
+    const mennyiseg = cuccok[5];
+    const meegys = cuccok[6];
+    const aktiv = cuccok[7];
+    const termeklink = cuccok[8];
+    const fotolink = cuccok[9];
+    const leiras = cuccok[10];
+    const datumido = cuccok[11];
 
     $("#ga").html("");
     /*
@@ -295,7 +317,7 @@ async function Termek_Mutat(event, cuccok) {
         $("#termek_content").append(cuccok + "<br>");
         
     }*/
-   var ks = "";
+   let ks = "";
 
     if ($("#loginspan").html() == " Bejelentkezés" || aktiv == "N" || mennyiseg == 0) {
             ks = "";
@@ -303,13 +325,13 @@ async function Termek_Mutat(event, cuccok) {
     else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba bele</button>`;
 
 
-    var bal = ` 
+    let bal = ` 
                     <img class="img-fluid rounded mx-auto  m-1 d-block" src="${fotolink}" alt="${nev}">
                 
                 
     `;
 
-    var kozep = `   <div class="row mt-2">
+    let kozep = `   <div class="row mt-2">
                         <b>Termékleírás:</b>
                         <br>
                         <p>${leiras}</p>
@@ -347,21 +369,20 @@ async function Termek_Mutat(event, cuccok) {
 
     $("#termeknev").html(nev);
 
-    var tesztgeci = `
-        
-    `;
-    // Saját vélemény megnézése akkor amikor nincs beloginolva ne legyen
-    // beloginolsz => vélemény irása => mellékattintás => kijelentkezés => utánna tud véleményt irni nem beloginolva    
+    
+     
 
     const cls = new bootstrap.Collapse('#vlm', { toggle: false });
 
-    $("#velemenyek").html("");
-    $("#sajatok").html("");
+    
+    
     $("#vlmg").html("");
     $("#ussr").html("");
 
-    $("#vvl").html("");
-    $("#vvl").html(`<a class="nav-link active" data-bs-toggle="tab" href="#velemenyek" onclick='VelemenyekMutat(${termek_id})'>Vélemények</a>`);
+    
+    $("#vvl").html(`<a class="nav-link show active" href="#velemenyek" id="velemenyek-tab" onclick='VelemenyekMutat(${termek_id})'>Vélemények</a>`);
+    //$("#velemenyek-tab").trigger("click");
+
 
     if (!BevanJelentkezve()) {
         $("#vlmg").html("Vélemény írásához jelentkezzen be");
@@ -374,14 +395,37 @@ async function Termek_Mutat(event, cuccok) {
         $("#vlmg").html(`<button class="btn btn-primary bi bi-chat-dots w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`);
         $("#ussr").html(`${$("#user").html()}`);
 
-        $("#sajatvlm").html(`<a class="nav-link" data-bs-toggle="tab" href="#sajatok" onclick='SajatVelemenyekMutat(${termek_id})'>Véleményeim</a>`);
+        $("#sajatvlm").html(`<a class="nav-link" href="#sajatok" id="sajat-tab" onclick='SajatVelemenyekMutat(${termek_id})'>Véleményeim</a>`);
+        
         $("#sajatvlm").removeClass("eltunt");
     }
 
+    $("#velemenyek").hide().removeClass("fade show");
+    $("#sajatok").hide().removeClass("fade show");
 
+    //velemenyek tab jelenjen meg alapbol
+    $("#velemenyek").addClass("show").show();
+    VelemenyekMutat(termek_id);
+
+    $("#velemenyek-tab").off("click").on("click", () => {
+        $("#velemenyek").addClass("show").show();
+        $("#sajatok").hide().removeClass("show");
+        $(".nav-link").removeClass("active");
+        $("#velemenyek-tab").addClass("active");
+        VelemenyekMutat(termek_id);
+    });
+
+    $("#sajat-tab").off("click").on("click", () => {
+        $("#sajatok").addClass("show").show();
+        $("#velemenyek").hide().removeClass("show");
+        $(".nav-link").removeClass("active");
+        $("#sajat-tab").addClass("active"); 
+        SajatVelemenyekMutat(termek_id);
+    });
 
     
-    VelemenyekMutat(termek_id);
+    
+    console.log(`VelemenyekMutat(${termek_id})`);
     
     
     /*
@@ -391,17 +435,18 @@ async function Termek_Mutat(event, cuccok) {
     }
         */
 
-    var gombs = `
+    let gombs = `
         <button type="button" class="btn btn-info bi bi-info-circle w-auto ms-2" data-bs-toggle="tooltip" title="A vélemény jóváhagyás esetén lesz majd látható!"></button>
         <button type="button" class="btn btn-danger bi bi-x-lg w-auto ms-2" data-bs-toggle="collapse" data-bs-target="#vlm" id="mgs"> Mégse</button>
         <button type="button" class="btn btn-success bi bi-send w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${termek_id})'> Közzététel</button>
     
     `
-
+    //VelemenyekMutat(termek_id);
     if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
     else {
         if (event.target.tagName != "button") { // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
             $("#ga").html(gombs);
+            
             $("#termekview").modal("show");
             cls.hide();
         }

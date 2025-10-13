@@ -107,12 +107,12 @@ li:hover {
 
 
 .feka {
-  background-color: var(--bs-light) !important;
+  background-color: var(--bs-light);
   color: var(--bs-body-color);
 }
 
 .fhr {
-  background-color: var(--bs-white) !important;
+  background-color: var(--bs-white);
   color: var(--bs-body-color);
 }
 
