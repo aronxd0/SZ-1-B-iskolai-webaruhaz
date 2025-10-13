@@ -95,6 +95,16 @@ li:hover {
   cursor: pointer;
 }
 
+#nev1 {
+  border-bottom-right-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+#kereses_gomb {
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
+
 
 .feka {
   background-color: var(--bs-light) !important;

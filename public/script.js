@@ -374,7 +374,7 @@ async function Termek_Mutat(event, cuccok) {
         $("#vlmg").html(`<button class="btn btn-primary bi bi-chat-dots w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`);
         $("#ussr").html(`${$("#user").html()}`);
 
-        $("#sajatvlm").html(`<a class="nav-link" data-bs-toggle="tab" href="#sajatok" onclick='SajatVelemenyekMutat(${termek_id})'>Saját véleményeim</a>`);
+        $("#sajatvlm").html(`<a class="nav-link" data-bs-toggle="tab" href="#sajatok" onclick='SajatVelemenyekMutat(${termek_id})'>Véleményeim</a>`);
         $("#sajatvlm").removeClass("eltunt");
     }
 

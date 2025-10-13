@@ -75,10 +75,10 @@
             </div>
             
             <div class="gombdiv me-3 pb-1">
-              <button id="cart_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3"> 
+              <button id="cart_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3 d-flex"> 
                 <i class="bi bi-cart2"></i>
                 <span class="d-none d-xxl-inline" > Kosár</span>
-                <span class="badge bg-black text-white" id="kosar_content_count">0</span>
+                <span class="badge bg-black text-white align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span>
               </button>
             </div>
             
@@ -93,12 +93,12 @@
           <div class="col-lg-6 mb-2">
             <div class="row">
               <div class="col-12 mt-2">
-                <div class="d-flex flex-nowrap w-100 align-self-center"> <!-- flex-nowrap: ne tordelje szet  -->
-                  <div class="form-floating flex-grow-1 me-2 align-self-center">
+                <div class="d-flex flex-nowrap w-100 align-self-center p-1"> <!-- flex-nowrap: ne tordelje szet  -->
+                  <div class="form-floating flex-grow-1 align-self-center">
                     <input class="form-control rounded-4" id="nev1" name="nev" value="" type="text" placeholder="Termékek keresése...">
                     <label for="nev1"><i class="bi bi-search"></i> Keresés...</label>
                   </div>
-                  <button type="button" aria-label="Keresés" class="btn btn-lg btn-outline-light rounded-4 me-2" id="kereses_gomb" onclick="KERESOBAR()">
+                  <button type="button" aria-label="Keresés" class="btn btn-lg btn-secondary rounded-4 me-2" id="kereses_gomb" onclick="KERESOBAR()">
                     <i class="bi bi-search"></i>
                   </button>
                   <button type="button" aria-label="Szűrők" class="btn btn-lg btn-outline-light rounded-4" data-bs-toggle="offcanvas" data-bs-target="#szurok">
@@ -345,7 +345,7 @@
                     </li>
 
                     <li class="nav-item" id="sajatvlm">
-                      <a class="nav-link" data-bs-toggle="tab" href="#sajatok" >Saját véleményeim</a>
+                      <a class="nav-link" data-bs-toggle="tab" href="#sajatok" >Véleményeim</a>
                     </li>
                   
                  </ul>
