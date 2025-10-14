@@ -243,7 +243,7 @@ async function Velemeny_Torles(id_velemeny, id_termek) {
     try {
         let velemeny_torles = await ajax_post(`velemeny_del?ID_VELEMENY=${id_velemeny}`, 1);
         if (velemeny_torles.message == "ok") {
-            üzen("Vélemény sikeresen elküldve!", "success");
+            üzen("Vélemény sikeresen törölve!", "success");
             SajatVelemenyekMutat(id_termek);
         }
     } catch (err) { üzen(err, "danger"); }
