@@ -306,19 +306,22 @@ async function VelemenyekMutat(id_termek) {
     try {
         
         let velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}`, 1);
-        console.log(`velemenyek?ID_TERMEK=${id_termek}`);
-        
-        for (const element of velemeny_lista.rows) {
-            vv += `
-            <div class="w-100 p-2 border rounded fhr mt-3 mb-3 comment">
-                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
-                <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
-            </div>`;
-        }
-        console.log(vv);
+        if (velemeny_lista.rows.length == 0) { $("#velemenyek").html("Ehhez a termékhez még senki nem írt véleményt :("); }
+        else {
+            for (const element of velemeny_lista.rows) {
+                vv += `
+                <div class="w-100 p-2 border rounded fhr mt-3 mb-3 comment">
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
+                    <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                </div>`;
+            }
+            console.log(vv);
 
-        $("#velemenyek").html(vv);
-        console.log(`velemenyek betoltve`);
+            $("#velemenyek").html(vv);
+            console.log(`velemenyek betoltve`);
+        }
+        
+        
 
     } catch (err) { console.log("hiba:", err); }
 }
