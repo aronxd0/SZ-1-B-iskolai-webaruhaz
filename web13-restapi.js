@@ -154,7 +154,7 @@ app.post('/velemenyek',(req, res) => {
   SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, webbolt_velemenyek.DATUM ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
   FROM webbolt_velemenyek INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
   ${szelektalas == 1 ? "" : `WHERE webbolt_velemenyek.ID_TERMEK = ${termekid} `}
-  ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'"}
+  ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyva' or webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár' or webbolt_velemenyek.ALLAPOT = 'Elutasítva'"}
   ${sajatvelemeny == 1 ? `${szelektalas == 0 ? "AND" : "WHERE"} webbolt_velemenyek.ID_USER = ${session_data.ID_USER}` : ""}
   ORDER BY webbolt_velemenyek.DATUM DESC
   `;
@@ -245,8 +245,25 @@ app.post('/logout', (req, res) => {
 app.post('/kosar_add', async (req, res) => {
   try {
     var termekid = parseInt(req.query.ID_TERMEK);
-
+    var userid = session_data.ID_USER;
     
+    const kosarcsinal = await runExecute(`
+    insert into webbolt_kosar (ID_USER)
+    select ${userid} FROM dual
+    where not exists (select 1 from webbolt_kosar where ID_USER=${userid});
+    `, req)
+    //from dual - hogy tudjak where not exists-t használni
+
+    var termekbetesz = `
+    insert into webbolt_kosar_tetelei (ID_KOSARTETEL, ID_KOSAR, ID_TERMEK, MENNYISEG)
+    select null, @id, termekid, 1
+    where not exists (select 3 from webbolt_kosar_tetelei where ID_KOSAR=@id and ID_TERMEK=termekid);
+    `
+
+
+
+
+
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
 
