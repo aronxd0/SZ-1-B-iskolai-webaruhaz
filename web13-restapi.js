@@ -299,7 +299,7 @@ app.post('/kosarteteldb',(req, res) => {
   
   var sql = `
     SELECT COUNT(*) as kdb
-    FROM webbolt_kosar tetelei
+    FROM webbolt_kosar_tetelei
     INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
     INNER JOIN users ON webbolt_kosar.ID_USER = users.ID_USER
     WHERE users.ID_USER = ${session_data.ID_USER}
