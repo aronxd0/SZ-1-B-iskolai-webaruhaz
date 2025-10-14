@@ -866,7 +866,7 @@ $(document).ready(function() {
 
     update_gombok(0);          
     $('#login_modal').modal('show');                       
-    $("#kategoria1").empty(); 
+     
     
     
     
@@ -934,16 +934,18 @@ $(document).ready(function() {
     
 
      $('#bezar').on('click', function () {
-        ajax_post("logout", 1,).then(logoutt => {});
+        if (!BevanJelentkezve()) {
+            ajax_post("logout", 1,).then(logoutt => {});
+            Kezdolap();
+        }
+       
 
         
 
     });
 
 
-    $("#bezar").click(function () {
-        Kezdolap();
-    });
+   
 
 
     $("#kijelentkezik").click(function() {
@@ -953,7 +955,7 @@ $(document).ready(function() {
             $("#loginout").removeClass("bi bi-box-arrow-in-left");
             $("#loginout").addClass("bi bi-box-arrow-in-right");
             üzen("Sikeres logout", "success");
-            update_gombok(0); 
+             
             $("#user").html("Jelentkezz be a fiókodba");
             $("#user-email").html("");
             $("#csoport").html(``);
@@ -971,6 +973,7 @@ $(document).ready(function() {
             document.getElementById("NEM_AKTIV").innerHTML = ``;
             //Kezdolap();
             $("#home_button").trigger("click");
+            update_gombok(0);
         });  
         
     });
@@ -994,6 +997,7 @@ $(document).ready(function() {
                     webbolt_admin = true;
                     update_gombok(2); 
                 }
+                else { update_gombok(1); }
 
                 
                 Joldal = 1;
@@ -1111,9 +1115,7 @@ $(document).ready(function() {
     });
 
 
-    $("#velemeny_kozzetesz").click(function() {
-        
-    });
+    
 
 
     // admin oldal
@@ -1136,6 +1138,8 @@ function Kezdolap() {
     nev1.value = "";
     bepipaltID = "";
     KERESOBAR();
+
+    if (!BevanJelentkezve()) { update_gombok(0); }
     
     
       // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
@@ -1144,7 +1148,12 @@ function Kezdolap() {
 
 // 0 = nincs bejelentkezve, 1 = sima user, 2 = admin vagy webbolt_admin
 function update_gombok (x) {
-    if (x == 0) { $("#cart_button").hide(); $("#admin_button").hide(); } 
-    else if (x == 1) {  $("#cart_button").show(); }
-    else { $("#cart_button").show(); $("#admin_button").show(); }
+    if (x == 0) { 
+        //$("#cart_button").hide(); 
+        $("#cart_button")[0].style.setProperty('display', 'none', 'important');
+        $("#admin_button").hide(); 
+    }
+    if (x == 1) { $("#cart_button").show(); $("#admin_button").hide(); }
+    if (x == 2) { $("#cart_button").show(); $("#admin_button").show(); }
+    
 }
