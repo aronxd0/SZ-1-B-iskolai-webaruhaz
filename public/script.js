@@ -197,18 +197,21 @@ function Search_rekord() {
     $("#termekview").modal("hide");
 
     // kosarba INSERT INTO ide
-    let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1)
-    if (kosaraddleiras.message == "ok"){
-        kosar_content_count.innerHTML = ++kosar_content_count_DB; // kosár tartalom db növelése
-        üzen("Áru bekerült a kosárba","success");
-    }
-    else{
-        üzen(kosaraddleiras.message, "danger");
-    }
-  
+    try {
+        let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1)
+        if (kosaraddleiras.message == "ok"){
+            kosar_content_count.innerHTML = ++kosar_content_count_DB; // kosár tartalom db növelése
+            üzen("Áru bekerült a kosárba","success");
+        }
+        else { üzen(kosaraddleiras.message, "danger"); }
     
-    $("#idt").html(id_termek);
-    $("#kosarba_bele").modal("show");
+        
+
+        $("#idt").html(id_termek);
+        $("#kosarba_bele").modal("show");
+
+    } catch (err) { üzen(err, "danger"); }
+    
     
 }
 
