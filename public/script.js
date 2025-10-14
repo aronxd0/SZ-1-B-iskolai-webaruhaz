@@ -200,9 +200,6 @@ function Search_rekord() {
     try {
         let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
         if (kosaraddleiras.message == "ok") {
-            kosar_content_count.innerHTML = ++kosar_content_count_DB; // majd a külön le kérdezést kap 
-        }
-        if (kosaraddleiras.message == "ok") {
            KosarTetelDB(); // majd a külön le kérdezést kap 
 
             üzen("Áru bekerült a kosárba","success");
@@ -226,7 +223,7 @@ async function KosarTetelDB() {
         var db = 0;
         for (const element of kosarteteldb.rows) {
             console.log(typeof element.kdb);
-            if (element.kdb == "null") { db = 0;} 
+            if (element.kdb == undefined) { db = 0;} 
             else { db = parseInt(element.kdb); }
             $("#kosar_content_count").html(`${db}`);
         }
@@ -1122,7 +1119,7 @@ $(document).ready(function() {
 
         try {
             ajax_post("tetelek", 1).then(tetelek => {
-                for (const element of object) {
+                for (const element of tetelek.rows) {
                     ts += `<div class="col-12 d-flex p-2">`;
                     ts += ``;
                 }
