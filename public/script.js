@@ -864,7 +864,7 @@ $(document).ready(function() {
     })
     
 
-    update_gombok(0);           // insert, update, delete nem kell! (csak login után)
+    update_gombok(0);          
     $('#login_modal').modal('show');                       
     $("#kategoria1").empty(); 
     
@@ -983,20 +983,26 @@ $(document).ready(function() {
                 
                 $("#csoport").html(`${l_json.rows[0].CSOPORT}`);
 
-                if (l_json.rows[0].ADMIN == "Y") $("#admin").html("<b>ADMIN</b>");
-                else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") $("#admin").html("<b>WEBBOLT ADMIN</b>");
+                if (l_json.rows[0].ADMIN == "Y") {
+                    $("#admin").html("<b>ADMIN</b>");
+                    admin = true;
+                    update_gombok(2); 
+                }
+                else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") {
+                    $("#admin").html("<b>WEBBOLT ADMIN</b>");
+                    webbolt_admin = true;
+                    update_gombok(2); 
+                }
 
                 
                 Joldal = 1;
 
                 $('#login_modal').modal('hide');
                 üzen(`Vásárolj sokat ${l_json.rows[0].NEV}!`,"success");
-                update_gombok(1); 
                 $("#loginspan").html(' Kijelentkezés');
                 $("#loginout").removeClass("bi bi-box-arrow-in-right");
                 $("#loginout").addClass("bi bi-box-arrow-in-left");
-                if (l_json.rows[0].WEBBOLT_ADMIN == 'Y') webbolt_admin = true;
-                if (l_json.rows[0].ADMIN == 'Y') admin = true;
+                 
                 //console.log("webbolt_admin: "+ admin);
                 Kezdolap();
                 ADMINVAGYE();
@@ -1135,8 +1141,9 @@ function Kezdolap() {
     
 }
 
-
+// 0 = nincs bejelentkezve, 1 = sima user, 2 = admin vagy webbolt_admin
 function update_gombok (x) {
-    if (x == 0) { $("#insert_button").hide(); $("#cart_button").hide(); $("#delete_button").hide(); $("#admin_button").hide(); } 
-    else        { $("#insert_button").show(); $("#cart_button").show(); $("#delete_button").show(); $("#admin_button").show(); }
+    if (x == 0) { $("#cart_button").hide(); $("#admin_button").hide(); } 
+    else if (x == 1) {  $("#cart_button").show(); }
+    else { $("#cart_button").show(); $("#admin_button").show(); }
 }
