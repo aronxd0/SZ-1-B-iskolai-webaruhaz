@@ -200,7 +200,7 @@ function Search_rekord() {
     let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1)
     if(kosaraddleiras.message == "ok"){
         kosar_content_count.innerHTML = ++kosar_content_count_DB; // kosár tartalom db növelése
-        üzen("Áru bekerült a kosárba","succes");
+        üzen("Áru bekerült a kosárba","success");
     }
     else{
         üzen("Valami hiba történt","danger");
@@ -928,6 +928,7 @@ $(document).ready(function() {
 
     $("#termekview").on("hidden.bs.modal", function() {
         console.log("bezarva");
+        window.history.replaceState(null, null, window.location.pathname);
     });
     
     
