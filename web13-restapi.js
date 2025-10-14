@@ -166,7 +166,7 @@ app.post('/velemenyek',(req, res) => {
 app.post('/velemeny_add', async (req, res) => {
   try {
     var termekid = parseInt(req.query.ID_TERMEK);
-    var szoveg = req.query.SZOVEG.toString();
+    var szoveg = strE(req.query.SZOVEG);
     
     var sql = `
     insert into webbolt_velemenyek (ID_TERMEK, ID_USER, SZOVEG, ALLAPOT)
