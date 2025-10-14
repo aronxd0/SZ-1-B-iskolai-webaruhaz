@@ -263,7 +263,18 @@ async function SajatVelemenyekMutat(id_termek) {
             <div class="w-100 p-2 border rounded mt-3 mb-3 comment ${allapot_style}">
                 <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
                 <p> ${element.SZOVEG} </p>
-                <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> <button type="button" class="btn btn-danger" aria-label="Törlés" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> <i class="bi bi-trash"></i> </button> </p>
+                <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> 
+                    <div class="dropup">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                         <i class="bi bi-trash"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><span class="dropdown-item-text">Biztosan törlöd a véleményt?</span></li>
+                            <li><button type="button" class="btn btn-danger dropdown-item" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'>Törlés</button></li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn btn-danger" aria-label="Törlés"><i class="bi bi-trash"></i></button> 
+                </p>
             </div>`;
         }
         console.log(sv);

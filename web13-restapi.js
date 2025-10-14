@@ -153,16 +153,16 @@ app.post('/velemenyek',(req, res) => {
   var sql = `
   SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, webbolt_velemenyek.DATUM ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
   FROM webbolt_velemenyek INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
-  WHERE webbolt_velemenyek.ID_TERMEK = ${termekid} 
+  ${szelektalas == 1 ? "" : `WHERE webbolt_velemenyek.ID_TERMEK = ${termekid} `}
   ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'"}
-  ${sajatvelemeny == 1 ? `AND webbolt_velemenyek.ID_USER = ${session_data.ID_USER}` : ""}
+  ${sajatvelemeny == 1 ? `${szelektalas == 0 ? "AND" : "WHERE"} webbolt_velemenyek.ID_USER = ${session_data.ID_USER}` : ""}
+  ORDER BY webbolt_velemenyek.DATUM DESC
   `;
   sendJson_toFrontend (res, sql);           // async await ... 
 });
 
 app.post('/velemeny_add', async (req, res) => {
   try {
-    // sima felhasználói
     var termekid = parseInt(req.query.ID_TERMEK);
     var szoveg = strE(req.query.SZOVEG);
     
@@ -171,12 +171,25 @@ app.post('/velemeny_add', async (req, res) => {
     values (${termekid}, ${session_data.ID_USER}, "${szoveg}", ${(req.session.WEBBOLT_ADMIN == "Y" || req.session.ADMIN == "Y") ? '"Jóváhagyva"' : '"Jóváhagyásra vár"'});
     `;
 
-    console.log(sql);
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
 
-  } catch (err) { console.log(err) }
-             
+  } catch (err) { console.log(err) }        
+});
+
+app.post('/velemeny_del', async (req, res) => {
+  try {
+    var velemenyid = parseInt(req.query.ID_VELEMENY);
+    
+    var sql = `
+    delete from webbolt_velemenyek
+    where ID_VELEMENY = ${velemenyid}
+    `;
+
+    const eredmeny = await runExecute(sql, req);
+    res.send(eredmeny);
+
+  } catch (err) { console.log(err) }        
 });
 
 //#endregion
@@ -223,6 +236,27 @@ app.post('/logout', (req, res) => {
     res.end();
   });
 });
+
+//#endregion
+
+
+//#region kosar
+
+app.post('/kosar_add', async (req, res) => {
+  try {
+    var termekid = parseInt(req.query.ID_TERMEK);
+
+    
+    const eredmeny = await runExecute(sql, req);
+    res.send(eredmeny);
+
+  } catch (err) { console.log(err) }        
+});
+
+
+
+
+
 
 //#endregion
 
