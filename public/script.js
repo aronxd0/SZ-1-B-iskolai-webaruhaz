@@ -8,6 +8,7 @@ let elfogyott = false;
 let Nemaktivak = false;
 let maxarr = 0;
 let minarr = 0;
+let kosar_content_count_DB =0
 
 
 let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
@@ -191,12 +192,20 @@ function Search_rekord() {
 }
 
 
-function Kosarba_Bele(event, id_termek) {
+ async function Kosarba_Bele(event, id_termek) {
     event.stopPropagation();
     $("#termekview").modal("hide");
 
     // kosarba INSERT INTO ide
-
+    let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1)
+    if(kosaraddleiras.message == "ok"){
+        kosar_content_count.innerHTML = ++kosar_content_count_DB; // kosár tartalom db növelése
+        üzen("Áru bekerült a kosárba","succes");
+    }
+    else{
+        üzen("Valami hiba történt","danger");
+    }
+  
     
     $("#idt").html(id_termek);
     $("#kosarba_bele").modal("show");
@@ -245,7 +254,7 @@ async function SajatVelemenyekMutat(id_termek) {
 
     try {
         
-        let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
+        let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1&szelektalas=1`, 1);
         for (const element of sajat_velemeny_lista.rows) {
 
             if (element.ALLAPOT == "Jóváhagyva") { allapot_style = "alert alert-success"; ikon = "✅" }
@@ -256,7 +265,18 @@ async function SajatVelemenyekMutat(id_termek) {
             <div class="w-100 p-2 border rounded mt-3 mb-3 comment ${allapot_style}">
                 <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
                 <p> ${element.SZOVEG} </p>
-                <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> <button type="button" class="btn btn-danger" aria-label="Törlés" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> <i class="bi bi-trash"></i> </button> </p>
+                <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> 
+                    <div class="dropup">
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
+                         <i class="bi bi-trash"></i>
+                        </button>
+                        <ul class="dropdown-menu p-2">
+                            <li><span class="dropdown-item-text">Biztosan törlöd a véleményt?</span></li>
+                            <li class="d-flex justify-content-end p-3"><button class="btn btn-danger bi bi-trash" type="button" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> Törlés</button></li>
+                        </ul>
+                    </div>
+                     
+                </p>
             </div>`;
         }
         console.log(sv);
@@ -1070,7 +1090,7 @@ $(document).ready(function() {
 
         var kd = `
             <div class="col-12">
-                <div class="text-center p-2" id="kosarmenutitle">ha a kosar ures akkor kosar ures ha nem akkor kosar tartalma</div>
+                <div class="text-center p-2 bg-success" id="kosarmenutitle"><h1>ha a kosar ures akkor "kosar ures" ha nem akkor kosar tartalma</h1> </div>
                 <div class="feka p-2" id="kosar_tetelek">
                     ide jonnek a tetelek  | Nagyon sok backend ÁDI készülj, alvásnak vége munka lesz
                 </div>
