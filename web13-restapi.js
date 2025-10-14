@@ -154,8 +154,8 @@ app.post('/velemenyek',(req, res) => {
   SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, webbolt_velemenyek.DATUM ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
   FROM webbolt_velemenyek INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
   ${szelektalas == 1 ? "" : `WHERE webbolt_velemenyek.ID_TERMEK = ${termekid} `}
-  ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyva' or webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár' or webbolt_velemenyek.ALLAPOT = 'Elutasítva'"}
-  ${sajatvelemeny == 1 ? `${szelektalas == 0 ? "AND" : "WHERE"} webbolt_velemenyek.ID_USER = ${session_data.ID_USER}` : ""}
+  ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : `${sajatvelemeny == 1 ? "" : `WHERE webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'`}`}
+  ${sajatvelemeny == 1 ? `${szelektalas == 0 ? "AND" : "WHERE"} webbolt_velemenyek.ID_USER = ${session_data.ID_USER} and` : ``}
   ORDER BY webbolt_velemenyek.DATUM DESC
   `;
   sendJson_toFrontend (res, sql);           // async await ... 
@@ -246,23 +246,33 @@ app.post('/kosar_add', async (req, res) => {
   try {
     var termekid = parseInt(req.query.ID_TERMEK);
     var userid = session_data.ID_USER;
-    
-    const kosarcsinal = await runExecute(`
-    insert into webbolt_kosar (ID_USER)
-    select ${userid} FROM dual
-    where not exists (select 1 from webbolt_kosar where ID_USER=${userid});
-    `, req)
-    //from dual - hogy tudjak where not exists-t használni
 
-    var termekbetesz = `
-    insert into webbolt_kosar_tetelei (ID_KOSARTETEL, ID_KOSAR, ID_TERMEK, MENNYISEG)
-    select null, @id, termekid, 1
-    where not exists (select 3 from webbolt_kosar_tetelei where ID_KOSAR=@id and ID_TERMEK=termekid);
-    `
+    var sql = `
+    START TRANSACTION;
 
+    INSERT INTO webbolt_kosar (ID_KOSAR,ID_USER)
+    SELECT null, ${userid}
+    WHERE NOT EXISTS (SELECT 1 FROM webbolt_kosar WHERE ID_USER = ${userid});
 
+    UPDATE webbolt_kosar_tetelei k
+    INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
+    SET k.MENNYISEG = 
+        CASE
+            WHEN k.MENNYISEG < t.MENNYISEG 
+              THEN k.MENNYISEG + 1
+            ELSE k.MENNYISEG
+        END
+    WHERE k.ID_KOSAR = @id AND k.ID_TERMEK = ${termekid};
 
+    INSERT INTO webbolt_kosar_tetelei (ID_KOSARTETEL, ID_KOSAR, ID_TERMEK, MENNYISEG)
+    SELECT null, @id, ${termekid}, 1
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM webbolt_kosar_tetelei
+        WHERE ID_KOSAR = @id AND ID_TERMEK = ${termekid}
+    );
 
+    COMMIT;`
 
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
