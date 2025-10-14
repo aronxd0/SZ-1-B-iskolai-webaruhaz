@@ -6,7 +6,6 @@ let elfogyott = false;
 let Nemaktivak = false;
 let maxarr = 0;
 let minarr = 0;
-let kosar_content_count_DB =0
 
 
 let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
@@ -22,17 +21,6 @@ function üzen(mit, tip)  {
     $("#toast1").toast("show");  
 }
 
-function makeid(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const charactersLength = characters.length;
-    let counter = 0;
-    while (counter < length) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        counter += 1;
-    }
-    return result;
-}
 
 function ajax_get( urlsor, hova, tipus, aszinkron ) {         // html oldalak beszúrására használjuk
     $.ajax({url: urlsor, type:"get", async:aszinkron, cache:false, dataType:tipus===0?'html':'json',
