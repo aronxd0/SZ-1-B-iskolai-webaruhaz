@@ -75,9 +75,10 @@
             </div>
             
             <div class="gombdiv me-3 pb-1">
-              <button id="cart_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3 d-flex"> 
+              <button id="cart_button" type="button" class="btn btn-lg btn-outline-light gomb rounded-3 d-flex" style="display: none !important;"> 
                 <i class="bi bi-cart2"></i>
-                <span class="d-none d-xxl-inline" > Kosár</span>
+                &nbsp;
+                <span class="d-none d-xxl-inline"> Kosár</span>
                 <span class="badge bg-black text-white align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span>
               </button>
             </div>
@@ -155,7 +156,7 @@
     </div>
     <div class="offcanvas-body">
       <div id="szurokk" class="row mx-auto" style="width: 90%;">
-        <label for="kategoriak"><h6>Termékkategóriák</h6></label> 
+        <label for="kategoria_section"><h6>Termékkategóriák</h6></label> 
         <div class="p-3 border rounded" style="overflow-y: scroll; overflow-x: hidden; height: 35vh;" id="kategoria_section"></div>
 
         <div class="row border rounded p-1 mt-3 mx-auto d-flex align-items-center">  
