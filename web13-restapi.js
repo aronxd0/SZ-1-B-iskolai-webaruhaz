@@ -298,7 +298,7 @@ app.post('/kosarteteldb',(req, res) => {
   session_data = req.session;
   
   var sql = `
-    SELECT COUNT(*) as kdb
+    SELECT SUM(webbolt_kosar_tetelei.MENNYISEG) as kdb
     FROM webbolt_kosar_tetelei
     INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
     INNER JOIN users ON webbolt_kosar.ID_USER = users.ID_USER
