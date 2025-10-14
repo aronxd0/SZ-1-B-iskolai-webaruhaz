@@ -166,8 +166,7 @@ app.post('/velemenyek',(req, res) => {
 app.post('/velemeny_add', async (req, res) => {
   try {
     var termekid = parseInt(req.query.ID_TERMEK);
-    var szoveg = strE(req.query.SZOVEG);
-    console.log(szoveg);
+    var szoveg = req.query.SZOVEG.toString();
     
     var sql = `
     insert into webbolt_velemenyek (ID_TERMEK, ID_USER, SZOVEG, ALLAPOT)
@@ -321,7 +320,6 @@ async function runExecute(sql, req) {                     // insert, update, del
   try {
       jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}");`;      
       conn = await mysql.createConnection(mysql_connection); 
-      console.log(sql);
       res1 = await conn.query(sql);  
       jrn1 = await conn.execute(jrn); 
 
