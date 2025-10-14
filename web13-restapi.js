@@ -155,7 +155,7 @@ app.post('/velemenyek',(req, res) => {
   FROM webbolt_velemenyek INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
   ${szelektalas == 1 ? "" : `WHERE webbolt_velemenyek.ID_TERMEK = ${termekid} `}
   ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : `${sajatvelemeny == 1 ? "" : `and webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'`}`}
-  ${sajatvelemeny == 1 ? `${szelektalas == 0 ? "AND" : "WHERE"} webbolt_velemenyek.ID_USER = ${session_data.ID_USER} and` : ``}
+  ${sajatvelemeny == 1 ? `${szelektalas == 0 ? "AND" : "WHERE"} webbolt_velemenyek.ID_USER = ${session_data.ID_USER}` : ``}
   ORDER BY webbolt_velemenyek.DATUM DESC
   `;
   sendJson_toFrontend (res, sql);           // async await ... 
@@ -250,8 +250,8 @@ app.post('/kosar_add', async (req, res) => {
     var sql = `
     START TRANSACTION;
 
-    INSERT INTO webbolt_kosar (ID_KOSAR,ID_USER)
-    SELECT null, ${userid}
+    INSERT INTO webbolt_kosar (ID_KOSAR, ID_USER)
+    VALUES (null, ${userid})
     WHERE NOT EXISTS (SELECT 1 FROM webbolt_kosar WHERE ID_USER = ${userid});
 
     UPDATE webbolt_kosar_tetelei k
@@ -279,11 +279,6 @@ app.post('/kosar_add', async (req, res) => {
 
   } catch (err) { console.log(err) }        
 });
-
-
-
-
-
 
 //#endregion
 
