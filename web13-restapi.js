@@ -17,7 +17,8 @@ const mysql_connection =  {
   user: 'szaloky.adam',         /* CREATE USER 'itbolt_user'@'%' IDENTIFIED BY '123456'; GRANT all privileges ON ITBOLT.* TO 'itbolt_user'@'%' */ 
   port: "9406",
   password: 'Csany7922',
-  database: 'studio13_csany_zeg'           /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
+  database: 'studio13_csany_zeg',          /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
+  multipleStatements: true // tranzakcióhoz kell, több lekérdezés futtatása egyszerre 
 };
 
 // 1. trim(): levágja az elejéről és végéről a szóközöket
@@ -245,34 +246,43 @@ app.post('/logout', (req, res) => {
 app.post('/kosar_add', async (req, res) => {
   try {
     var termekid = parseInt(req.query.ID_TERMEK);
-    var userid = session_data.ID_USER;
+    var userid = parseInt(session_data.ID_USER);
 
-    var sql = `
+    var sql = 
+    `
     START TRANSACTION;
 
-    INSERT INTO webbolt_kosar (ID_KOSAR, ID_USER)
-    VALUES (null, ${userid})
-    WHERE NOT EXISTS (SELECT 1 FROM webbolt_kosar WHERE ID_USER = ${userid});
+        INSERT INTO webbolt_kosar (ID_USER)
+          SELECT ${userid}
+          WHERE NOT EXISTS (SELECT 1 FROM webbolt_kosar WHERE ID_USER = ${userid});
 
-    UPDATE webbolt_kosar_tetelei k
-    INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
-    SET k.MENNYISEG = 
-        CASE
-            WHEN k.MENNYISEG < t.MENNYISEG 
-              THEN k.MENNYISEG + 1
-            ELSE k.MENNYISEG
-        END
-    WHERE k.ID_KOSAR = @id AND k.ID_TERMEK = ${termekid};
+        SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ${userid});
+                    
+        SET @elsoadd = (
+          SELECT CASE
+                  WHEN EXISTS (SELECT 1 FROM webbolt_kosar_tetelei WHERE webbolt_kosar_tetelei.ID_KOSAR = @kosarid AND webbolt_kosar_tetelei.ID_TERMEK = ${termekid})
+                  THEN
+                  TRUE
+                  ELSE FALSE
+                END
+        );
 
-    INSERT INTO webbolt_kosar_tetelei (ID_KOSARTETEL, ID_KOSAR, ID_TERMEK, MENNYISEG)
-    SELECT null, @id, ${termekid}, 1
-    WHERE NOT EXISTS (
-        SELECT 1
-        FROM webbolt_kosar_tetelei
-        WHERE ID_KOSAR = @id AND ID_TERMEK = ${termekid}
-    );
+        INSERT INTO webbolt_kosar_tetelei (ID_KOSAR, ID_TERMEK, MENNYISEG)
+          SELECT @kosarid, ${termekid}, 1
+          WHERE @elsoadd = FALSE;
 
-    COMMIT;`
+        UPDATE webbolt_kosar_tetelei k
+          INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
+          SET k.MENNYISEG = CASE
+                              WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = 0 then k.MENNYISEG + 1
+                              ELSE k.MENNYISEG
+                            END
+          WHERE k.ID_KOSAR = @kosarid AND k.ID_TERMEK = ${termekid};
+
+    COMMIT;
+    `
+
+    console.log(sql);
 
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
