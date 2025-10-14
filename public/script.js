@@ -1119,7 +1119,7 @@ $(document).ready(function() {
 
         try {
             ajax_post("tetelek", 1).then(tetelek => {
-                for (const element of object) {
+                for (const element of tetelek.rows) {
                     ts += `<div class="col-12 d-flex p-2">`;
                     ts += ``;
                 }
