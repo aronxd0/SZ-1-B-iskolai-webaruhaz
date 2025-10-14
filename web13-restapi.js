@@ -304,7 +304,8 @@ app.post('/kosarteteldb',(req, res) => {
     INNER JOIN users ON webbolt_kosar.ID_USER = users.ID_USER
     WHERE users.ID_USER = ${session_data.ID_USER}
   `;
-  sendJson_toFrontend (res, sql);
+  console.log(sql);
+  sendJson_toFrontend(res, sql);
 });
 
 //#endregion
