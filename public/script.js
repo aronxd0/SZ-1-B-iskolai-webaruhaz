@@ -1,7 +1,5 @@
-let ORDER = 1;
-let ID = 0;    
 const alerts = ["success", "info", "warning", "danger"];
-let bepipaltID ="";
+let bepipaltID = "";
 let webbolt_admin = false;
 let admin = false;
 let elfogyott = false;
