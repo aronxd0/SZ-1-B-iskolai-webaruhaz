@@ -198,7 +198,7 @@ function Search_rekord() {
 
     // kosarba INSERT INTO ide
     try {
-        let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1)
+        let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
         if (kosaraddleiras.message == "ok"){
             kosar_content_count.innerHTML = ++kosar_content_count_DB; // kosár tartalom db növelése
             üzen("Áru bekerült a kosárba","success");
@@ -213,6 +213,17 @@ function Search_rekord() {
     } catch (err) { üzen(err, "danger"); }
     
     
+}
+
+async function KosarTetelDB() {
+    try {
+        let kosarteteldb = await ajax_post("kosarteteldb", 1);
+
+        for (const element of kosarteteldb.rows) {
+            console.log(element.kdb);
+        }
+
+    } catch (err) { üzen(err, "danger"); }
 }
 
 
@@ -1022,6 +1033,7 @@ $(document).ready(function() {
                 //console.log("webbolt_admin: "+ admin);
                 Kezdolap();
                 ADMINVAGYE();
+                KosarTetelDB();
 
             } else {    
                 üzen(`Hibás felhasználónév, vagy jelszó!`,"danger");

@@ -293,6 +293,20 @@ app.post('/kosar_add', async (req, res) => {
   } catch (err) { console.log(err) }        
 });
 
+
+app.post('/kosarteteldb',(req, res) => {
+  session_data = req.session;
+  
+  var sql = `
+    SELECT COUNT(*) as kdb
+    FROM webbolt_kosar tetelei
+    INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
+    INNER JOIN users ON webbolt_kosar.ID_USER = users.ID_USER
+    WHERE users.ID_USER = ${session_data.ID_USER}
+  `;
+  sendJson_toFrontend (res, sql);
+});
+
 //#endregion
 
 
