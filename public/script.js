@@ -223,11 +223,11 @@ function Search_rekord() {
 async function KosarTetelDB() {
     try {
         let kosarteteldb = await ajax_post("kosarteteldb", 1);
-        let db = 0;
+        var db = 0;
         for (const element of kosarteteldb.rows) {
             console.log(typeof element.kdb);
             if (element.kdb == "null") { db = 0;} 
-            else { db =  parseInt(element.kdb); }
+            else { db = parseInt(element.kdb); }
             $("#kosar_content_count").html(`${db}`);
         }
 
