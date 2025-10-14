@@ -201,8 +201,12 @@ function Search_rekord() {
         let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
         if (kosaraddleiras.message == "ok") {
             kosar_content_count.innerHTML = ++kosar_content_count_DB; // majd a külön le kérdezést kap 
+        }
+        if (kosaraddleiras.message == "ok") {
+           KosarTetelDB(); // majd a külön le kérdezést kap 
+
             üzen("Áru bekerült a kosárba","success");
-            KosarTetelDB();
+        
         }
         else { üzen(kosaraddleiras.message, "danger"); }
     
