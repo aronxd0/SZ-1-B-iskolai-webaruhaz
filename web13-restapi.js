@@ -4,6 +4,7 @@ const express = require('express');
 const session = require('express-session');
 const { stringify } = require('querystring');
 const { BADHINTS } = require('dns'); 
+const { type } = require('os');
 const app     = express();
 const port    = 9012;
 const header1 = 'Content-Type';
@@ -116,7 +117,7 @@ function gen_SQL_kereses(req) {
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
      ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${offset}`}
      `;
-  console.log(sql); // debug
+  //console.log(sql); // debug
   return (sql);
 }
 
@@ -174,6 +175,7 @@ app.post('/velemeny_add', async (req, res) => {
 
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
+    res.end();
 
   } catch (err) { console.log(err) }        
 });
@@ -189,6 +191,7 @@ app.post('/velemeny_del', async (req, res) => {
 
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
+    res.end();
 
   } catch (err) { console.log(err) }        
 });
@@ -259,13 +262,13 @@ app.post('/kosar_add', async (req, res) => {
         SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ${userid});
                     
         SET @elsoadd = (
-          SELECT CASE
-                  WHEN EXISTS (SELECT 1 FROM webbolt_kosar_tetelei WHERE webbolt_kosar_tetelei.ID_KOSAR = @kosarid AND webbolt_kosar_tetelei.ID_TERMEK = ${termekid})
-                  THEN
-                  TRUE
-                  ELSE FALSE
-                END
-        );
+        SELECT CASE
+                WHEN EXISTS (SELECT 1 FROM webbolt_kosar_tetelei WHERE webbolt_kosar_tetelei.ID_KOSAR = @kosarid AND webbolt_kosar_tetelei.ID_TERMEK = ${termekid})
+                THEN
+                TRUE
+                ELSE FALSE
+              END
+      );
 
         INSERT INTO webbolt_kosar_tetelei (ID_KOSAR, ID_TERMEK, MENNYISEG)
           SELECT @kosarid, ${termekid}, 1
@@ -274,7 +277,7 @@ app.post('/kosar_add', async (req, res) => {
         UPDATE webbolt_kosar_tetelei k
           INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
           SET k.MENNYISEG = CASE
-                              WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = 0 then k.MENNYISEG + 1
+                              WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = true then k.MENNYISEG + 1
                               ELSE k.MENNYISEG
                             END
           WHERE k.ID_KOSAR = @kosarid AND k.ID_TERMEK = ${termekid};
@@ -282,10 +285,9 @@ app.post('/kosar_add', async (req, res) => {
     COMMIT;
     `
 
-    console.log(sql);
-
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
+    res.end();
 
   } catch (err) { console.log(err) }        
 });
@@ -303,7 +305,8 @@ async function runExecute(sql, req) {                     // insert, update, del
   try {
       jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}");`;      
       conn = await mysql.createConnection(mysql_connection); 
-      res1 = await conn.execute(sql);  
+      console.log(sql);
+      res1 = await conn.query(sql);  
       jrn1 = await conn.execute(jrn); 
 
       console.log(res1);
@@ -348,6 +351,5 @@ async function sendJson_toFrontend (res, sql) {
 }
 
 //#endregion
-
 
 app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });
