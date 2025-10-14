@@ -154,7 +154,7 @@ app.post('/velemenyek',(req, res) => {
   SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, webbolt_velemenyek.DATUM ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
   FROM webbolt_velemenyek INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
   ${szelektalas == 1 ? "" : `WHERE webbolt_velemenyek.ID_TERMEK = ${termekid} `}
-  ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : `${sajatvelemeny == 1 ? "" : `WHERE webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'`}`}
+  ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : `${sajatvelemeny == 1 ? "" : `and webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'`}`}
   ${sajatvelemeny == 1 ? `${szelektalas == 0 ? "AND" : "WHERE"} webbolt_velemenyek.ID_USER = ${session_data.ID_USER} and` : ``}
   ORDER BY webbolt_velemenyek.DATUM DESC
   `;
