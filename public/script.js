@@ -199,9 +199,10 @@ function Search_rekord() {
     // kosarba INSERT INTO ide
     try {
         let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
-        if (kosaraddleiras.message == "ok"){
+        if (kosaraddleiras.message == "ok") {
             kosar_content_count.innerHTML = ++kosar_content_count_DB; // majd a külön le kérdezést kap 
             üzen("Áru bekerült a kosárba","success");
+            KosarTetelDB();
         }
         else { üzen(kosaraddleiras.message, "danger"); }
     
@@ -218,9 +219,12 @@ function Search_rekord() {
 async function KosarTetelDB() {
     try {
         let kosarteteldb = await ajax_post("kosarteteldb", 1);
-
+        let db = 0;
         for (const element of kosarteteldb.rows) {
-            console.log(element.kdb);
+            console.log(typeof element.kdb);
+            if (element.kdb == "null") { db = 0;} 
+            else { db =  parseInt(element.kdb); }
+            $("#kosar_content_count").html(`${db}`);
         }
 
     } catch (err) { üzen(err, "danger"); }
