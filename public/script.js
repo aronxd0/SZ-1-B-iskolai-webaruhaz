@@ -225,6 +225,8 @@ async function Velemeny_Kozzetesz(id_termek) {
 
             if (velemenyiras.message == "ok") {
                 üzen(`Vélemény elküldve`,"success");
+                $("#velemeny_input").val("");
+                SajatVelemenyekMutat(id_termek);
             }
             else {
                 üzen(`Hiba: <br> ${velemenyiras.message}`,"danger");
@@ -244,6 +246,7 @@ async function Velemeny_Torles(id_velemeny, id_termek) {
         let velemeny_torles = await ajax_post(`velemeny_del?ID_VELEMENY=${id_velemeny}`, 1);
         if (velemeny_torles.message == "ok") {
             üzen("Vélemény sikeresen törölve!", "success");
+            $("#velemeny_input").val("");
             SajatVelemenyekMutat(id_termek);
         }
     } catch (err) { üzen(err, "danger"); }
@@ -932,7 +935,8 @@ $(document).ready(function() {
 
     $("#termekview").on("hidden.bs.modal", function() {
         console.log("bezarva");
-        window.history.replaceState(null, null, window.location.pathname);
+        window.history.replaceState(null, null, window.location.pathname); // az url vegen ne maradjon bent a #velemenyek es a #sajatok
+        $("#velemeny_input").val("");
     });
     
     
