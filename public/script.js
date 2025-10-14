@@ -200,9 +200,6 @@ function Search_rekord() {
     try {
         let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
         if (kosaraddleiras.message == "ok") {
-            KosarTetelDB(); // majd a külön le kérdezést kap 
-        }
-        if (kosaraddleiras.message == "ok") {
            KosarTetelDB(); // majd a külön le kérdezést kap 
 
             üzen("Áru bekerült a kosárba","success");
