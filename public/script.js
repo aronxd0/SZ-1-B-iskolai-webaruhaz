@@ -5,9 +5,10 @@ let bepipaltID ="";
 let webbolt_admin = false;
 let admin = false;
 let elfogyott = false;
-let Nemaktivak = false;
+let Nemaktivak = false;[kosa]
 let maxarr = 0;
 let minarr = 0;
+let kosar_content_count_DB =0
 
 
 let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
@@ -198,12 +199,13 @@ function Search_rekord() {
     // kosarba INSERT INTO ide
     let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1)
     if(kosaraddleiras.message == "ok"){
+        kosar_content_count.innerHTML = ++kosar_content_count_DB; // kosár tartalom db növelése
         üzen("Áru bekerült a kosárba","succes");
     }
     else{
         üzen("Valami hiba történt","danger");
     }
-
+  
     
     $("#idt").html(id_termek);
     $("#kosarba_bele").modal("show");
