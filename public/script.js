@@ -191,11 +191,18 @@ function Search_rekord() {
 }
 
 
-function Kosarba_Bele(event, id_termek) {
+ async function Kosarba_Bele(event, id_termek) {
     event.stopPropagation();
     $("#termekview").modal("hide");
 
     // kosarba INSERT INTO ide
+    let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1)
+    if(kosaraddleiras.message == "ok"){
+        üzen("Áru bekerült a kosárba","succes");
+    }
+    else{
+        üzen("Valami hiba történt","danger");
+    }
 
     
     $("#idt").html(id_termek);
@@ -1070,7 +1077,7 @@ $(document).ready(function() {
 
         var kd = `
             <div class="col-12">
-                <div class="text-center p-2" id="kosarmenutitle">ha a kosar ures akkor kosar ures ha nem akkor kosar tartalma</div>
+                <div class="text-center p-2 bg-success" id="kosarmenutitle"><h1>ha a kosar ures akkor "kosar ures" ha nem akkor kosar tartalma</h1> </div>
                 <div class="feka p-2" id="kosar_tetelek">
                     ide jonnek a tetelek  | Nagyon sok backend ÁDI készülj, alvásnak vége munka lesz
                 </div>
