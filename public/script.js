@@ -254,7 +254,7 @@ async function SajatVelemenyekMutat(id_termek) {
 
     try {
         
-        let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1&szelektalas=1`, 1);
+        let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
         for (const element of sajat_velemeny_lista.rows) {
 
             if (element.ALLAPOT == "Jóváhagyva") { allapot_style = "alert alert-success"; ikon = "✅" }
