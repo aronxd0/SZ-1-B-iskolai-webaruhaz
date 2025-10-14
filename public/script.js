@@ -242,6 +242,10 @@ async function Velemeny_Torles(id_velemeny, id_termek) {
 
     try {
         let velemeny_torles = await ajax_post(`velemeny_del?ID_VELEMENY=${id_velemeny}`, 1);
+        if (velemeny_torles.message == "ok") {
+            üzen("Vélemény sikeresen elküldve!", "success");
+            SajatVelemenyekMutat(id_termek);
+        }
     } catch (err) { üzen(err, "danger"); }
     
 }
@@ -264,7 +268,7 @@ async function SajatVelemenyekMutat(id_termek) {
             sv += `
             <div class="w-100 p-2 border rounded mt-3 mb-3 comment ${allapot_style}">
                 <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
-                <p> ${element.SZOVEG} </p>
+                <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
                 <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> 
                     <div class="dropup">
                         <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
@@ -300,7 +304,7 @@ async function VelemenyekMutat(id_termek) {
             vv += `
             <div class="w-100 p-2 border rounded fhr mt-3 mb-3 comment">
                 <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
-                <p> ${element.SZOVEG} </p>
+                <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
             </div>`;
         }
         console.log(vv);
