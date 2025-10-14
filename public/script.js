@@ -245,7 +245,7 @@ async function SajatVelemenyekMutat(id_termek) {
 
     try {
         
-        let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
+        let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1&szelektalas=1`, 1);
         for (const element of sajat_velemeny_lista.rows) {
 
             if (element.ALLAPOT == "Jóváhagyva") { allapot_style = "alert alert-success"; ikon = "✅" }
@@ -258,15 +258,15 @@ async function SajatVelemenyekMutat(id_termek) {
                 <p> ${element.SZOVEG} </p>
                 <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> 
                     <div class="dropup">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
                          <i class="bi bi-trash"></i>
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu p-2">
                             <li><span class="dropdown-item-text">Biztosan törlöd a véleményt?</span></li>
-                            <li><button type="button" class="btn btn-danger dropdown-item" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'>Törlés</button></li>
+                            <li class="d-flex justify-content-end p-3"><button class="btn btn-danger bi bi-trash" type="button" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> Törlés</button></li>
                         </ul>
                     </div>
-                    <button type="button" class="btn btn-danger" aria-label="Törlés"><i class="bi bi-trash"></i></button> 
+                     
                 </p>
             </div>`;
         }
