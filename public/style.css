@@ -86,12 +86,14 @@ label::after { content: none !important; }
 /* velemeny iras mezo merete */
 #velemeny_input { height: 150px; }
 
+#mod_leiras { height: 150px; }
+
 /* nem elerheto termekek kartya stilusa */
 .nem-elerheto {
   background-color: var(--bs-secondary-bg);
   border-radius: var(--bs-border-radius);
   opacity: 0.65; /* halvanyabb */
-  pointer-events: none; /* ne lehessen kattintani */
+  /*pointer-events: none;*/ /* ne lehessen kattintani */
   user-select: none; /* ne lehessen kijelolni */
 }
 
