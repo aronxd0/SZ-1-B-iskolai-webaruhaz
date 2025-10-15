@@ -312,6 +312,7 @@ app.post('/kosarteteldb',(req, res) => {
 
 app.post('/tetelek',(req, res) => {
   session_data = req.session;
+  
   var sql = `
     SELECT webbolt_termekek.NEV, webbolt_termekek.AR, webbolt_termekek.FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG
     FROM webbolt_kosar_tetelei
