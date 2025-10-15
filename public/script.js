@@ -1110,11 +1110,13 @@ $(document).ready(function() {
             ajax_post("tetelek", 1).then(tetelek => {
                 for (const element of tetelek.rows) {
                     ts += `<div class="col-12 d-flex p-2">`;
-                    ts += ``;
+                    ts += `<img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">`;
                 }
             });
 
         } catch (err) { console.log("hiba:", err); }
+
+
 
         var kd = `
             <div class="col-12">
@@ -1127,7 +1129,7 @@ $(document).ready(function() {
         `;
 
 
-        $("#content_hely").html(kd);
+        $("#content_hely").html(ts);
         $("#pagi").html("");
     });
 
