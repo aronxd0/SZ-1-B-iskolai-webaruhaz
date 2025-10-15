@@ -323,6 +323,19 @@ app.post('/tetelek',(req, res) => {
   sendJson_toFrontend(res, sql);
 });
 
+app.post('/noveleskiir',(req, res) => {
+  session_data = req.session;
+  var termekid = parseInt(req.query.ID_TERMEK);
+  var sql = `
+    SELECT webbolt_kosar_tetelei.MENNYISEG
+    FROM webbolt_kosar_tetelei
+    INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
+    WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER} and webbolt_kosar_tetelei.ID_TERMEK = ${termekid}
+  `;
+  console.log(sql);
+  sendJson_toFrontend(res, sql);
+});
+
 //#endregion
 
 
