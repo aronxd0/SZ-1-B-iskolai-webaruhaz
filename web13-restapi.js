@@ -307,6 +307,20 @@ app.post('/kosarteteldb',(req, res) => {
   sendJson_toFrontend(res, sql);
 });
 
+
+app.post('/tetelek',(req, res) => {
+  session_data = req.session;
+  var sql = `
+    SELECT webbolt_termekek.NEV, webbolt_termekek.AR, webbolt_termekek.FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG
+    FROM webbolt_kosar_tetelei
+    INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
+    INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
+    WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER}
+  `;
+  console.log(sql);
+  sendJson_toFrontend(res, sql);
+});
+
 //#endregion
 
 
