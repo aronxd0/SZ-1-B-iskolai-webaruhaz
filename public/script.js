@@ -784,7 +784,9 @@ function Kovi(keri){
 async function KosarPLUSZ(id){
     await ajax_post(`kosar_add?ID_TERMEK=${id.id}`, 1)
     var db = await ajax_post("noveleskiir?ID_TERMEK="+id.id, 1)
-     document.getElementById(`${id.id}2`).innerHTML = db.rows[0].MENNYESEG;
+    document.getElementById(`${id.id}2`).innerHTML = db.rows[0].MENNYISEG;
+    document.getElementById(Kosar_AR).innerHTML = (parseInt( db.rows[0].AR)* parseInt(db.rows[0].MENNYISEG) ) + " Ft";
+     KosarTetelDB();
     };
 
 
@@ -1199,7 +1201,7 @@ $(document).ready(function() {
 
                     ts += `<div class="col-4" style="height: 100px" >  <img src="${element.FOTOLINK}" class="img-fluid" alt="Card image" style="height:100px"> </div>`;
                     ts += `<div class="col-4"> <h4>${element.NEV}</h4> </div>`;
-                    ts += `<div class="col-2 text-center text-white m-auto"><h5><b> ${element.AR * element.MENNYISEG} Ft</b><h5> </div>`;
+                    ts += `<div class="col-2 text-center text-white m-auto"><h5><b id="Kosar_AR"> ${element.AR * element.MENNYISEG} Ft</b><h5> </div>`;
                     ts += `<div class="col-2 m-auto"> <button type="button" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button><span id="${element.ID_TERMEK}2">${element.MENNYISEG}</span> db   <button type="button" id="${element.ID_TERMEK}" onclick="KosarPLUSZ(this)" class="btn btn-success"><i class="bi bi-plus-circle"></i></button></div> `;
         
                     ts += "</div>"
