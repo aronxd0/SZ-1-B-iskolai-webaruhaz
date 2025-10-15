@@ -327,6 +327,58 @@ async function VelemenyekMutat(id_termek) {
 }
 
 
+async function Termek_Edit(event, cuccok) {
+    event.stopPropagation();
+    
+    
+    
+    
+
+    const termek_id = cuccok[0];
+    const kategoria = cuccok[1];
+    const nev = cuccok[2];
+    const azon = cuccok[3];
+    const ar = cuccok[4];
+    const mennyiseg = cuccok[5];
+    const meegys = cuccok[6];
+    const aktiv = cuccok[7];
+    const termeklink = cuccok[8];
+    const fotolink = cuccok[9];
+    const leiras = cuccok[10];
+    const datumido = cuccok[11];
+
+    $("#mod_kat").empty();
+
+    
+    let kategoriak = await ajax_post("kategoria", 1);
+    for (const element of kategoriak.rows) {
+        console.log(element);
+    }
+
+    
+
+    console.log(meegys);
+
+    $("#idx1").html(`${termek_id}; ${nev}`);
+    $("#mod_nev").val(nev);
+    $("#mod_azon").val(azon);
+    $("#mod_ar").val(ar);
+    $("#mod_db").val(mennyiseg);
+    $("#mod_meegys").val(meegys);
+    
+    $("#mod_leiras").html(leiras);
+
+    $("#termek_edit").modal("show");
+}
+
+
+function Termek_Torol(event, cuccok) {
+    event.stopPropagation();
+    for (const element of lista) {
+        console.log(element);
+    }
+}
+
 
 async function Termek_Mutat(event, cuccok) {
     
@@ -498,14 +550,17 @@ function CARD_BETOLT(adatok){
     $("#content_hely").html();/// adatok is undefined
 
     
-    var ks = "";
-    var s = ""
-    var el = "";
-    var ee = "";    
+    let ks = "";
+    let s = ""
+    let el = "";
+    let ee = "";  
+    let gg = "";  
     let cuccli = [];
     $("#keresett_kifejezes").html();
     
    //if (BevanJelentkezve()) { console.log("card betolt: be van jelentkezve"); }
+
+    
 
     for (const element of adatok.rows) {
 
@@ -528,11 +583,17 @@ function CARD_BETOLT(adatok){
 
         if (!BevanJelentkezve() || element.AKTIV == "N" || element.MENNYISEG == 0) {
             ks = "";
-            console.log("card betolt: be van jelentkezve");
         }
 
         else ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba bele</button>`;  //ha be van jelentkezve és elérhető a termék akkor kosár gomb
 
+        if (BevanJelentkezve() && (webbolt_admin || admin)) {
+            gg = "<div class='row d-flex justify-content-center p-3'>";
+            gg += `<button type="button" class="btn btn-lg btn-warning w-auto me-2" aria-label="modositas" onclick='Termek_Edit(event, ${JSON.stringify(cuccli)})'><i class="bi bi-pencil-square"></i></button>`;
+            gg += `<button type="button" class="btn btn-lg btn-danger w-auto" aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
+            gg += "</div>";
+        }
+        else gg = "";
 
 
         //var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
@@ -548,7 +609,7 @@ function CARD_BETOLT(adatok){
                         ${el}
                     </p>
                     ${ks}
-                    
+                    ${gg}
                 </div>
             </div>
          </div>
