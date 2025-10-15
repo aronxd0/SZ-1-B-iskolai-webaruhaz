@@ -117,12 +117,14 @@ function gen_SQL_kereses(req) {
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
      ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${offset}`}
      `;
-  //console.log(sql); // debug
+  console.log(sql); // debug
   return (sql);
 }
 
 app.post('/kategoria',(req, res) => {
+  session_data = req.session;
   var where = `${req.query.nev != "" ? `where (NEV like "%${req.query.nev}%" or LEIRAS like "%${req.query.nev}%") ` : ""}`;
+  where += `${session_data.ID_USER != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y") ? "" : `and (t.AKTIV = "Y" AND t.MENNYISEG > 0) `}`;
   var sql = `
     SELECT DISTINCT k.ID_KATEGORIA, k.KATEGORIA
     FROM webbolt_kategoriak k 
@@ -250,6 +252,7 @@ app.post('/kosar_add', async (req, res) => {
   try {
     var termekid = parseInt(req.query.ID_TERMEK);
     var userid = parseInt(session_data.ID_USER);
+    var mennyit  = (req.query.mennyit? parseInt(req.query.mennyit)  :   1)
 
     var sql = 
     `
@@ -277,7 +280,7 @@ app.post('/kosar_add', async (req, res) => {
         UPDATE webbolt_kosar_tetelei k
           INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
           SET k.MENNYISEG = CASE
-                              WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = true then k.MENNYISEG + 1
+                              WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = true then k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`}
                               ELSE k.MENNYISEG
                             END
           WHERE k.ID_KOSAR = @kosarid AND k.ID_TERMEK = ${termekid};
@@ -303,7 +306,6 @@ app.post('/kosarteteldb',(req, res) => {
     INNER JOIN users ON webbolt_kosar.ID_USER = users.ID_USER
     WHERE users.ID_USER = ${session_data.ID_USER}
   `;
-  console.log(sql);
   sendJson_toFrontend(res, sql);
 });
 
@@ -316,6 +318,18 @@ app.post('/tetelek',(req, res) => {
     INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
     INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
     WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER}
+  `;
+  sendJson_toFrontend(res, sql);
+});
+
+app.post('/noveleskiir',(req, res) => {
+  session_data = req.session;
+  var termekid = parseInt(req.query.ID_TERMEK);
+  var sql = `
+    SELECT webbolt_kosar_tetelei.MENNYISEG, webbolt_kosar_tetelei.AR
+    FROM webbolt_kosar_tetelei
+    INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
+    WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER} and webbolt_kosar_tetelei.ID_TERMEK = ${termekid}
   `;
   console.log(sql);
   sendJson_toFrontend(res, sql);
