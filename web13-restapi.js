@@ -117,7 +117,7 @@ function gen_SQL_kereses(req) {
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
      ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${offset}`}
      `;
-  console.log(sql); // debug
+  //console.log(sql);
   return (sql);
 }
 
@@ -250,6 +250,8 @@ app.post('/logout', (req, res) => {
 
 app.post('/kosar_add', async (req, res) => {
   try {
+    session_data = req.session;
+
     var termekid = parseInt(req.query.ID_TERMEK);
     var userid = parseInt(session_data.ID_USER);
     var mennyit  = (req.query.mennyit? parseInt(req.query.mennyit)  :   1)
@@ -275,7 +277,7 @@ app.post('/kosar_add', async (req, res) => {
 
         INSERT INTO webbolt_kosar_tetelei (ID_KOSAR, ID_TERMEK, MENNYISEG)
           SELECT @kosarid, ${termekid}, 1
-          WHERE @elsoadd = FALSE;
+          WHERE @elsoadd = TRUE;
 
         UPDATE webbolt_kosar_tetelei k
           INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
@@ -319,7 +321,7 @@ app.post('/tetelek',(req, res) => {
     FROM webbolt_kosar_tetelei
     INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
     INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
-    WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER} ${termekid > (-1) ? "and webbolt_kosar_tetelei.ID_TERMEK = ${termekid}" : ""}
+    WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER} ${termekid > (-1) ? `and webbolt_kosar_tetelei.ID_TERMEK = ${termekid}` : ""}
   `;
   console.log(sql)
   sendJson_toFrontend(res, sql);
