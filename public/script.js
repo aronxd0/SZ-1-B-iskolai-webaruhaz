@@ -1177,18 +1177,23 @@ $(document).ready(function() {
 
 
     // kosár menüpont
-    $("#cart_button").click(function () {
+    $("#cart_button").click(async function () {
         $("#content_hely").html("");
 
         var ts = ``;
 
         try {
-            ajax_post("tetelek", 1).then(tetelek => {
+            await ajax_post("tetelek", 1).then(tetelek => {
                 for (const element of tetelek.rows) {
-                    ts += `<div class="col-12 d-flex p-2">`;
-                    ts += `<img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">`;
-                    ts+= `${element.NEV} ${element.AR}Ft`
-                }
+                    ts += `<div class="col-12 d-flex m-2 p-2 bg-secondary bg-gradient text-center">`;
+
+                    ts += `<div class="col-4" style="height: 100px" >  <img src="${element.FOTOLINK}" class="img-fluid" alt="Card image" style="height:100px"> </div>`;
+                    ts += `<div class="col-4"> <h4>${element.NEV}</h4> </div>`;
+                    ts += `<div class="col-2 text-center text-white m-auto"><h5><b> ${element.AR * element.MENNYISEG} Ft</b><h5> </div>`;
+                    ts += `<div class="col-2 m-auto"> <button type="button" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button> ${element.MENNYISEG} db   <button type="button" class="btn btn-success"><i class="bi bi-plus-circle"></i></button></div> `;
+        
+                    ts += "</div>"
+                }   
             });
 
         } catch (err) { console.log("hiba:", err); }
@@ -1205,7 +1210,7 @@ $(document).ready(function() {
         
         `;
 
-
+        console.log(ts +" ez a tr")
         $("#content_hely").html(ts);
         $("#pagi").html("");
     });
