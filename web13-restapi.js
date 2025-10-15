@@ -383,7 +383,3 @@ async function sendJson_toFrontend (res, sql) {
 //#endregion
 
 app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });
-
-
-
-//ajdwbhdgoawiudaékgdaiépOÉjáoápaguaoiwdiagdaiu
