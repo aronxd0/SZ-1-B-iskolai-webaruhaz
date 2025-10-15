@@ -117,12 +117,14 @@ function gen_SQL_kereses(req) {
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
      ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${offset}`}
      `;
-  //console.log(sql); // debug
+  console.log(sql); // debug
   return (sql);
 }
 
 app.post('/kategoria',(req, res) => {
+  session_data = req.session;
   var where = `${req.query.nev != "" ? `where (NEV like "%${req.query.nev}%" or LEIRAS like "%${req.query.nev}%") ` : ""}`;
+  where += `${session_data.ID_USER != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y") ? "" : `and (t.AKTIV = "Y" AND t.MENNYISEG > 0) `}`;
   var sql = `
     SELECT DISTINCT k.ID_KATEGORIA, k.KATEGORIA
     FROM webbolt_kategoriak k 
