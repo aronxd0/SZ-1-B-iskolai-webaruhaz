@@ -268,8 +268,8 @@ app.post('/kosar_add', async (req, res) => {
         SELECT CASE
                 WHEN EXISTS (SELECT 1 FROM webbolt_kosar_tetelei WHERE webbolt_kosar_tetelei.ID_KOSAR = @kosarid AND webbolt_kosar_tetelei.ID_TERMEK = ${termekid})
                 THEN
-                false
-                ELSE true
+                FALSE
+                ELSE TRUE
               END
       );
 
@@ -280,7 +280,7 @@ app.post('/kosar_add', async (req, res) => {
         UPDATE webbolt_kosar_tetelei k
           INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
           SET k.MENNYISEG = CASE
-                              WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = false then k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`}
+                              WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = FALSE then k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`}
                               ELSE k.MENNYISEG
                             END
           WHERE k.ID_KOSAR = @kosarid AND k.ID_TERMEK = ${termekid};
@@ -321,6 +321,7 @@ app.post('/tetelek',(req, res) => {
     INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
     WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER} ${termekid > (-1) ? "and webbolt_kosar_tetelei.ID_TERMEK = ${termekid}" : ""}
   `;
+  console.log(sql)
   sendJson_toFrontend(res, sql);
 });
 
