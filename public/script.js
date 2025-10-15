@@ -812,8 +812,6 @@ async function KosarPLUSZ(id){
     await ajax_post(`kosar_add?ID_TERMEK=${id.id}`, 1)
     var db = await ajax_post("noveleskiir?ID_TERMEK="+id.id, 1)
     document.getElementById(`${id.id}2`).innerHTML = db.rows[0].MENNYISEG;
-    
-
     document.getElementById(`${id.id}3`).innerHTML = ` <h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ;// mindegyiknek igyanaz az idj ? nem jó majd othonm nekiállok .😓
     KosarTetelDB();
 
