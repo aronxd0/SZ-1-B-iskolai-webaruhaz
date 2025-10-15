@@ -312,30 +312,18 @@ app.post('/kosarteteldb',(req, res) => {
 
 app.post('/tetelek',(req, res) => {
   session_data = req.session;
+  var termekid  = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK)  :   -1)
 
   var sql = `
-    SELECT webbolt_termekek.NEV, webbolt_termekek.AR, webbolt_termekek.FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG
+    SELECT ${termekid > (-1) ? "webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR" : "webbolt_termekek.NEV, webbolt_termekek.AR, webbolt_termekek.FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG"} 
     FROM webbolt_kosar_tetelei
     INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
     INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
-    WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER}
+    WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER} ${termekid > (-1) ? "and webbolt_kosar_tetelei.ID_TERMEK = ${termekid}" : ""}
   `;
   sendJson_toFrontend(res, sql);
 });
 
-app.post('/noveleskiir',(req, res) => {
-  session_data = req.session;
-  var termekid = parseInt(req.query.ID_TERMEK);
-  var sql = `
-    SELECT webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR
-    FROM webbolt_kosar_tetelei
-    INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
-    INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
-    WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER} and webbolt_kosar_tetelei.ID_TERMEK = ${termekid}
-  `;
-  console.log(sql);
-  sendJson_toFrontend(res, sql);
-});
 
 //#endregion
 
