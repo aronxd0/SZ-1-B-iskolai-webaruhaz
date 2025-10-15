@@ -327,13 +327,9 @@ async function VelemenyekMutat(id_termek) {
 }
 
 
-async function Termek_Edit(event, cuccok) {
+function Termek_Edit(event, cuccok, tipus) {
     event.stopPropagation();
-    
-    
-    
-    
-
+ 
     const termek_id = cuccok[0];
     const kategoria = cuccok[1];
     const nev = cuccok[2];
@@ -346,27 +342,36 @@ async function Termek_Edit(event, cuccok) {
     const fotolink = cuccok[9];
     const leiras = cuccok[10];
     const datumido = cuccok[11];
+    const id_kategoria = cuccok[12];
 
-    $("#mod_kat").empty();
+    console.log(`ID KATEGORIA TERMEK EDIT XD: ${id_kategoria}`);
 
-    
-    let kategoriak = await ajax_post("kategoria", 1);
-    for (const element of kategoriak.rows) {
-        console.log(element);
+    KategoriaFeltolt("mod_kat", "select");
+
+    if (tipus == "bevitel") {
+
+        $("#mod_nev").val("");
+        $("#mod_azon").val("");
+        $("#mod_ar").val(0);
+        $("#mod_db").val(1);
+        $("#mod_meegys").val("db");
+        $("#mod_leiras").val("");
+    }
+    else {
+        $("#idx1").html(`${termek_id}; ${nev}`);
+        $("#mod_kat").val(id_kategoria); 
+        //$('#mod_kat').find(`option[value="${id_kategoria}"]`).prop('selected', true);
+        $("#mod_nev").val(nev);
+        $("#mod_azon").val(azon);
+        $("#mod_ar").val(ar);
+        $("#mod_db").val(mennyiseg);
+        $("#mod_meegys").val(meegys);
+        
+        $("#mod_leiras").html(leiras);
     }
 
-    
 
     console.log(meegys);
-
-    $("#idx1").html(`${termek_id}; ${nev}`);
-    $("#mod_nev").val(nev);
-    $("#mod_azon").val(azon);
-    $("#mod_ar").val(ar);
-    $("#mod_db").val(mennyiseg);
-    $("#mod_meegys").val(meegys);
-    
-    $("#mod_leiras").html(leiras);
 
     $("#termek_edit").modal("show");
 }
@@ -578,7 +583,7 @@ function CARD_BETOLT(adatok){
 
         cuccli = [];
 
-        cuccli.push(`${element.ID_TERMEK}`, `${element.KATEGORIA}`, `${element.NEV}`, `${element.AZON}`, `${element.AR}`, `${element.MENNYISEG}`, `${element.MEEGYS}`, `${element.AKTIV}`, `${element.TERMEKLINK}`, `${element.FOTOLINK}`, `${element.LEIRAS}`, `${element.DATUMIDO}`);
+        cuccli.push(`${element.ID_TERMEK}`, `${element.KATEGORIA}`, `${element.NEV}`, `${element.AZON}`, `${element.AR}`, `${element.MENNYISEG}`, `${element.MEEGYS}`, `${element.AKTIV}`, `${element.TERMEKLINK}`, `${element.FOTOLINK}`, `${element.LEIRAS}`, `${element.DATUMIDO}`, `${element.ID_KATEGORIA}`);
 
 
         if (!BevanJelentkezve() || element.AKTIV == "N" || element.MENNYISEG == 0) {
@@ -589,7 +594,7 @@ function CARD_BETOLT(adatok){
 
         if (BevanJelentkezve() && (webbolt_admin || admin)) {
             gg = "<div class='row d-flex justify-content-center p-3'>";
-            gg += `<button type="button" class="btn btn-lg btn-warning w-auto me-2" aria-label="modositas" onclick='Termek_Edit(event, ${JSON.stringify(cuccli)})'><i class="bi bi-pencil-square"></i></button>`;
+            gg += `<button type="button" class="btn btn-lg btn-warning w-auto me-2" aria-label="modositas" onclick='Termek_Edit(event, ${JSON.stringify(cuccli)}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
             gg += `<button type="button" class="btn btn-lg btn-danger w-auto" aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
             gg += "</div>";
         }
@@ -723,7 +728,7 @@ async function KERESOBAR() {
     } ); 
      */
     
-    KategoriaFeltolt("kategoria_section");
+    KategoriaFeltolt("kategoria_section", "check");
     
     console.log("elküldve: "+ elküld);
 }
@@ -867,17 +872,27 @@ function Sliderhuz(ettöl){
 }
 
 
-async function KategoriaFeltolt(hova) {
+async function KategoriaFeltolt(hova, type) {
     $(`#${hova}`).html("");
     try {
         let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);
         let listItems  = "";
-        for (let i = 0; i < k_json.rows.length; ++i) {
-            var pipa = ""
-            if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
-                pipa = "checked";
+
+        if (type == "check") {
+            for (let i = 0; i < k_json.rows.length; ++i) {
+                var pipa = ""
+                if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
+                    pipa = "checked";
+                }
+                listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <label class="form-check-label" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </label> </p>`;
             }
-            listItems += `<p> <input class="form-check-input" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <label class="form-check-label" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </label> </p>`;
+            
+        }
+        else {
+            for (let index = 0; index < k_json.rows.length; index++) {
+                listItems += `<option value="${k_json.rows[index].ID_KATEGORIA}">${k_json.rows[index].KATEGORIA}</option>`;
+                
+            }
         }
 
         $(`#${hova}`).html(listItems);
@@ -946,7 +961,7 @@ $(document).ready(function() {
     
     
     
-    KategoriaFeltolt("kategoria_section");
+    KategoriaFeltolt("kategoria_section", "check");
 
     var input = document.getElementById("nev1");
 
