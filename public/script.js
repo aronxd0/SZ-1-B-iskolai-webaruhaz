@@ -1,3 +1,4 @@
+//#region const változók
 const alerts = ["success", "info", "warning", "danger"];
 let bepipaltID = "";
 let webbolt_admin = false;
@@ -7,7 +8,7 @@ let Nemaktivak = false;
 let maxarr = 0;
 let minarr = 0;
 
-
+// endregion
 let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
 let oldalszam = 0; // összes oldal darabszáma
 let Joldal = 1; // jelenlegi oldal
@@ -177,7 +178,7 @@ function Search_rekord() {
     üzen(s, tip);  
 }
 
-
+//#region Kosár dolgok
  async function Kosarba_Bele(event, id_termek) {
     event.stopPropagation();
     $("#termekview").modal("hide");
@@ -216,8 +217,17 @@ async function KosarTetelDB() {
 
     } catch (err) { üzen(err, "danger"); }
 }
+async function KosarPLUSZ(id){
+    await ajax_post(`kosar_add?ID_TERMEK=${id.id}`, 1)
+    var db = await ajax_post("tetelek?ID_TERMEK="+id.id, 1)
+    document.getElementById(`${id.id}2`).innerHTML = db.rows[0].MENNYISEG;
+    document.getElementById(`${id.id}3`).innerHTML = ` <h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ;// mindegyiknek igyanaz az idj ? nem jó majd othonm nekiállok .😓
+    KosarTetelDB();
 
+    };
 
+//endregion
+//#region Vélemények
 
 async function Velemeny_Kozzetesz(id_termek) {
     
@@ -325,8 +335,8 @@ async function VelemenyekMutat(id_termek) {
 
     } catch (err) { console.log("hiba:", err); }
 }
-
-
+//endregion
+//#region Termékek edit 
 function Termek_Edit(event, cuccok, tipus) {
     event.stopPropagation();
  
@@ -575,9 +585,9 @@ async function Termek_Mutat(event, cuccok) {
     
     
 }
+//endregion
 
-
-
+//region CARDBETOLT 
 function CARD_BETOLT(adatok){
     $("#content_hely").html();/// adatok is undefined
 
@@ -676,8 +686,8 @@ function CARD_BETOLT(adatok){
     $("#content_hely").html(s);
     $("#pagi").html(pp);
 }
-
-
+//endregion
+//#region Keresőbar
 async function KERESOBAR() {
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = ""; //reset bepipalt kategória
@@ -759,7 +769,8 @@ async function KERESOBAR() {
     
     console.log("elküldve: "+ elküld);
 }
-
+//endregion
+//#region OLdelkezelés
 function OLDALFELTOTL(darab){
     oldalszam = Math.ceil( darab /51); // oldalszám kiszámolása
     if(oldalszam == 0) oldalszam = 1; // ha 0 akkor 1-re állitom
@@ -807,15 +818,8 @@ function Kovi(keri){
    
     }
 }
-
-async function KosarPLUSZ(id){
-    await ajax_post(`kosar_add?ID_TERMEK=${id.id}`, 1)
-    var db = await ajax_post("noveleskiir?ID_TERMEK="+id.id, 1)
-    document.getElementById(`${id.id}2`).innerHTML = db.rows[0].MENNYISEG;
-    document.getElementById(`${id.id}3`).innerHTML = ` <h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ;// mindegyiknek igyanaz az idj ? nem jó majd othonm nekiállok .😓
-    KosarTetelDB();
-
-    };
+//endregion
+//region Szürés
 
 
 
@@ -961,7 +965,7 @@ function Elfogyott(alma){
        
     }
 }
-
+//enregion
 function ADMINVAGYE(){
     if(admin){// ha admin akkor a "csakelfogyott " és a "Csak inaktiv" gomb is látszódjon
         document.getElementById("Elfogyott_gomb").innerHTML = `
@@ -981,7 +985,7 @@ function ADMINVAGYE(){
 
 
 
-
+//region DOCUMENT READY
 
 $(document).ready(function() {
     // balazs.aron@csany-zeg.hu 123456
@@ -1028,7 +1032,7 @@ $(document).ready(function() {
     
 
     
-
+    //#region LOGIN, LOGOUT
     $("#login_button").click(function() {   
         if (!BevanJelentkezve()) {
             $('#login_modal').modal('show'); $("#login_gomb_div").removeClass("bal jobb").addClass("kozep");
@@ -1208,8 +1212,9 @@ $(document).ready(function() {
         }
     });
 
-
-    // kosár menüpont
+    //#endregion
+    //#region KOSAR HTML
+    //     
     $("#cart_button").click(async function () {
         $("#content_hely").html("");
 
@@ -1296,3 +1301,4 @@ function update_gombok (x) {
     if (x == 2) { $("#cart_button").show(); $("#admin_button").show(); }
     
 }
+
