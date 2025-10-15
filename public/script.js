@@ -359,8 +359,10 @@ function Termek_Edit(event, cuccok, tipus) {
     }
     else {
         $("#idx1").html(`${termek_id}; ${nev}`);
-        $("#mod_kat").val(id_kategoria); 
-        //$('#mod_kat').find(`option[value="${id_kategoria}"]`).prop('selected', true);
+        $("#mod_kat").val("1").change();
+        console.log($("#mod_kat").val()); 
+        $("#mod_kat").val(`${id_kategoria}`).change();
+        //$(`#mod_kat option[value=${id_kategoria}]`).attr("selected", "selected");
         $("#mod_nev").val(nev);
         $("#mod_azon").val(azon);
         $("#mod_ar").val(ar);
@@ -371,7 +373,6 @@ function Termek_Edit(event, cuccok, tipus) {
     }
 
 
-    console.log(meegys);
 
     $("#termek_edit").modal("show");
 }
@@ -379,9 +380,35 @@ function Termek_Edit(event, cuccok, tipus) {
 
 function Termek_Torol(event, cuccok) {
     event.stopPropagation();
-    for (const element of lista) {
-        console.log(element);
-    }
+    const termek_id = cuccok[0];
+
+     $("#delete_modal .modal-body").html(`Biztosan törlöd a(z) ${termek_id} azonosítójú terméket?`);
+     $("#delete_modal").off("click");
+     $("#delete_modal").on("click", ".btn-success", function() {
+        try {
+            var s = "";
+            var tip = "success"; 
+            var d_json = ajax_post(`termek_del?ID_TERMEK=${termek_id}`, 1);
+            console.log(d_json);
+            if (d_json.message == "ok") {
+                if (d_json.rows[0].affectedRows == 1)  {
+                    s = "Törlés OK..."; 
+                    KERESOBAR();                              
+                }     
+                else {
+                    tip = "warning";
+                    s = `Hiba<br>${d_json.message}`;}
+                }
+            else
+            {
+                tip = "danger";
+                s = d_json.message;
+            }  
+            üzen(s, tip);
+        } catch (err) { console.log("hiba:", err); }
+        
+     });
+     $("#delete_modal").modal("show");
 }
 
 
@@ -881,7 +908,7 @@ function Sliderhuz(ettöl){
 
 
 async function KategoriaFeltolt(hova, type) {
-    $(`#${hova}`).html("");
+    $(`#${hova}`).empty("");
     try {
         let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);
         let listItems  = "";
@@ -903,7 +930,7 @@ async function KategoriaFeltolt(hova, type) {
             }
         }
 
-        $(`#${hova}`).html(listItems);
+        $(`#${hova}`).append(listItems);
         
     } catch (err) { console.log("hiba:", err); }                     
       
@@ -1002,11 +1029,7 @@ $(document).ready(function() {
 
     
 
-    $("#search_button").click(function() {               Search_rekord();       } );
-    $("#insert_button").click(function() {               Edit_rekord( 0 );      } );
-    $("#modify_button").click(function() { if (ID > 0) { Edit_rekord( ID );   } } );
-    $("#delete_button").click(function() { if (ID > 0) { Delete_rekord( ID ); } } );
-    $("#save_button").click(function()   {               Save_rekord();         } );
+    
 
     $("#login_button").click(function() {   
         if (!BevanJelentkezve()) {
@@ -1240,6 +1263,11 @@ $(document).ready(function() {
 
     $("#szurogomb").click(function () {
         KERESOBAR();
+    });
+
+
+    $("#save_button").click(function() {
+        console.log(`KURVA ANYÁD: ${$("#mod1").serialize()}`);
     });
 
 
