@@ -254,7 +254,7 @@ app.post('/kosar_add', async (req, res) => {
 
     var termekid = parseInt(req.query.ID_TERMEK);
     var userid = parseInt(session_data.ID_USER);
-    var mennyit  = (req.query.mennyit? parseInt(req.query.mennyit)  :   1)
+    var mennyit  = (req.query.MENNYIT? parseInt(req.query.MENNYIT)  :   1)
 
     var sql = 
     `
@@ -282,7 +282,7 @@ app.post('/kosar_add', async (req, res) => {
         UPDATE webbolt_kosar_tetelei k
           INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
           SET k.MENNYISEG = CASE
-                              WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = FALSE then k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`}
+                              WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = FALSE and t.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`} > 0 then k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`}
                               ELSE k.MENNYISEG
                             END
           WHERE k.ID_KOSAR = @kosarid AND k.ID_TERMEK = ${termekid};
