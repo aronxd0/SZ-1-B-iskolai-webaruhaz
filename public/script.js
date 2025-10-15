@@ -812,8 +812,6 @@ async function KosarPLUSZ(id){
     await ajax_post(`kosar_add?ID_TERMEK=${id.id}`, 1)
     var db = await ajax_post("noveleskiir?ID_TERMEK="+id.id, 1)
     document.getElementById(`${id.id}2`).innerHTML = db.rows[0].MENNYISEG;
-    
-
     document.getElementById(`${id.id}3`).innerHTML = ` <h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ;// mindegyiknek igyanaz az idj ? nem jó majd othonm nekiállok .😓
     KosarTetelDB();
 
@@ -1225,7 +1223,7 @@ $(document).ready(function() {
                     ts += `<div class="col-4" style="height: 100px" >  <img src="${element.FOTOLINK}" class="img-fluid" alt="Card image" style="height:100px"> </div>`;
                     ts += `<div class="col-4"> <h4>${element.NEV}</h4> </div>`;
                     ts += `<div class="col-2 text-center text-white m-auto" id="${element.ID_TERMEK}3"><h5><b > ${element.AR * element.MENNYISEG} Ft</b><h5> </div>`;
-                    ts += `<div class="col-2 m-auto"> <button type="button" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button><span id="${element.ID_TERMEK}2">${element.MENNYISEG}</span> db   <button type="button" id="${element.ID_TERMEK}" onclick="KosarPLUSZ(this)" class="btn btn-success"><i class="bi bi-plus-circle"></i></button></div> `;
+                    ts += `<div class="col-2 m-auto"> <button type="button" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button><span class="p-2" id="${element.ID_TERMEK}2">${element.MENNYISEG}</span> db   <button type="button" id="${element.ID_TERMEK}" onclick="KosarPLUSZ(this)" class="btn btn-success"><i class="bi bi-plus-circle"></i></button> <button type="button" class="btn btn-warning"><i class="bi bi-x-circle-fill"></i></button></div> `;
         
                     ts += "</div>"
                 }   
