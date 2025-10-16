@@ -1,3 +1,5 @@
+// kosar menupont, kosarba helyezes, tetelek
+
 $("#cart_button").click(async function () {
     $("#content_hely").html("");
 

@@ -1,3 +1,5 @@
+// globalis valtozok, betolto/frissito/modosito fuggvenyek
+
 const alerts = ["success", "info", "warning", "danger"];
 let bepipaltID = "";
 let webbolt_admin = false;

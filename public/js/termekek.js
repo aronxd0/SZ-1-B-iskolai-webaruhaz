@@ -1,3 +1,5 @@
+// termekek szerkesztese, torlese, uj felvetele + a betolto fuggveny
+
 function Termek_Edit(event, cuccok, tipus) {
     event.stopPropagation();
  

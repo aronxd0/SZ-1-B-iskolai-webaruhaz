@@ -1,3 +1,5 @@
+// bejelentkezes, kijelentkezes
+
 function BevanJelentkezve() {
     if ($("#loginspan").html() == " Bejelentkezés") { return false; }
     else { return true; }

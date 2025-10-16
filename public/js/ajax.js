@@ -1,3 +1,5 @@
+// itt vannak a backend kommunikációhoz használt függvények
+
 function üzen(mit, tip)  {
     alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
     $("#toast1").addClass( "bg-"+tip );                                           // új class 

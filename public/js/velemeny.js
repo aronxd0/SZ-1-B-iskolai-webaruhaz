@@ -1,3 +1,5 @@
+// velemenyek irasa, torlese, megjelenitese
+
 async function Velemeny_Kozzetesz(id_termek) {
     
     const cls = new bootstrap.Collapse('#vlm', { toggle: false });

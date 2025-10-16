@@ -1,3 +1,5 @@
+// az oldal betoltese utani resz (document ready function)
+
 $(document).ready(function() {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
