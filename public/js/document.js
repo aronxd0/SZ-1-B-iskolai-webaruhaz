@@ -5,8 +5,8 @@ $(document).ready(function() {
     })
 
 
-    update_gombok(0);        
-    $('#login_modal').modal('show');                       
+    update_gombok(0);
+    $('#login_modal').modal('show');                
         
 
 
@@ -108,7 +108,7 @@ $(document).ready(function() {
             $("#min_ar_input").val($("#min_ar").val());
         }
     });
-    
+
 
     // admin oldal
     $("#admin_button").click(function() {
