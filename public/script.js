@@ -224,7 +224,7 @@ async function KosarPLUSZ(id){
     document.getElementById(`${id.id}3`).innerHTML = ` <h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ;// mindegyiknek igyanaz az idj ? nem jó majd othonm nekiállok .😓
     KosarTetelDB();
 
-    };
+};
 
 //endregion
 //#region Vélemények
