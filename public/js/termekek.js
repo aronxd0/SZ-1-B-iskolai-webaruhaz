@@ -347,3 +347,5 @@ function CARD_BETOLT(adatok){
     $("#content_hely").html(s);
     $("#pagi").html(pp);
 }
+
+console.log("termekek.js betoltott xd");

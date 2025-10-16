@@ -300,3 +300,18 @@ function Elfogyott(alma){
        
     }
 }
+
+function Kezdolap() {
+    $("#keresett_kifejezes").html();
+    nev1.value = "";
+    bepipaltID = "";
+    KERESOBAR();
+
+    if (!BevanJelentkezve()) { update_gombok(0); }
+    
+    
+      // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
+    
+}
+
+
