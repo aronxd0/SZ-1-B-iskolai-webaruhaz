@@ -76,11 +76,16 @@ async function KosarTetelDB() {
 
     } catch (err) { üzen(err, "danger"); }
 }
+
 async function KosarPLUSZ(id){
-    await ajax_post(`kosar_add?ID_TERMEK=${id.id}`, 1)
-    var db = await ajax_post("tetelek?ID_TERMEK="+id.id, 1)
-    document.getElementById(`${id.id}2`).innerHTML = db.rows[0].MENNYISEG;
-    document.getElementById(`${id.id}3`).innerHTML = ` <h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ;// mindegyiknek igyanaz az idj ? nem jó majd othonm nekiállok .😓
+    var PluszVAGYminusz = id.id.substring(id.id.length - 1, id.id.length) == 9? -1 : ""  ;// ha nem 9 akkor plusz
+
+    var idk = id.id.substring(0, id.id.length - 1);
+    
+    await ajax_post(`kosar_add?ID_TERMEK=${idk}&MENNYIT=${PluszVAGYminusz}`, 1);
+    var db = await ajax_post("tetelek?ID_TERMEK="+idk, 1);
+    document.getElementById(`${idk}2`).innerHTML = db.rows[0].MENNYISEG;
+    document.getElementById(`${idk}3`).innerHTML = `<h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ;// mindegyiknek igyanaz az idj ? nem jó majd othonm nekiállok .😓
     KosarTetelDB();
 
-};
+    };
