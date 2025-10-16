@@ -13,7 +13,7 @@ $("#cart_button").click(async function () {
                 ts += `<div class="col-4" style="height: 100px" >  <img src="${element.FOTOLINK}" class="img-fluid" alt="Card image" style="height:100px"> </div>`;
                 ts += `<div class="col-4"> <h4>${element.NEV}</h4> </div>`;
                 ts += `<div class="col-2 text-center text-white m-auto" id="${element.ID_TERMEK}3"><h5><b > ${element.AR * element.MENNYISEG} Ft</b><h5> </div>`;
-                ts += `<div class="col-2 m-auto"> <button type="button" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button><span class="p-2" id="${element.ID_TERMEK}2">${element.MENNYISEG}</span> db   <button type="button" id="${element.ID_TERMEK}" onclick="KosarPLUSZ(this)" class="btn btn-success"><i class="bi bi-plus-circle"></i></button> <button type="button" class="btn btn-warning"><i class="bi bi-x-circle-fill"></i></button></div> `;
+                ts += `<div class="col-2 m-auto"> <button type="button" class="btn btn-danger"><i class="bi bi-dash-circle" id="${element.ID_TERMEK}9" onclick="KosarPLUSZ(this)"></i></button><span class="p-2" id="${element.ID_TERMEK}2">${element.MENNYISEG}</span> db   <button type="button" id="${element.ID_TERMEK}1" onclick="KosarPLUSZ(this)" class="btn btn-success"><i class="bi bi-plus-circle"></i></button> <button type="button" class="btn btn-warning"><i class="bi bi-x-circle-fill"></i></button></div> `;
     
                 ts += "</div>"
             }   
