@@ -36,6 +36,7 @@ async function TermekModosit(url) {
         else { üzen(termekmod.message, "danger"); }
     } catch (err) { console.log("hiba:", err); }
     
+        KERESOBAR();
 }
 
 
@@ -59,7 +60,7 @@ function Termek_Edit(event, cuccok, tipus) {
     const id_kategoria = cuccok[12];
 
 
-    KategoriaFeltolt("mod_kat", "select", id_kategoria);
+    KategoriaFeltolt("mod_kat", "select", id_kategoria,"","");
 
     if (tipus == "bevitel") {
 
