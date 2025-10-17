@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 
 
-    KategoriaFeltolt("kategoria_section", "check");
+    KategoriaFeltolt("kategoria_section", "check", "");
 
     var input = document.getElementById("nev1");
 
