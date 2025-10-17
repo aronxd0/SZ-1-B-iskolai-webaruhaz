@@ -39,7 +39,7 @@ function gen_SQL_kereses(req) {
   // ---------------- sql tokenizer ... ---------------
   var order  = (req.query.order? parseInt(req.query.order)                :   0); // Rendezés típusa (pl. ár, név, mennyiség)
   var offset = (req.query.offset? parseInt(req.query.offset)              :   0); // Oldal eltolás (paginációhoz)
-  var elfogyott = (req.query.elfogyott? parseInt(req.query.offset)        :   -1); // Csak elfogyott termékek (admin funkció)
+  var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)        :   -1); // Csak elfogyott termékek (admin funkció)
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
   var id_kat = (req.query.kategoria ?  strE(req.query.kategoria).length   : -1); // Kategória szűrés (ha van)
   var név    = (req.query.nev? req.query.nev :  ""); // Terméknév vagy leírás szűrés
@@ -47,11 +47,6 @@ function gen_SQL_kereses(req) {
   var minarkeres = (req.query.minar? parseInt(req.query.minar) : 0); // Ár alsó határ szűréshez
   var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0); // Csak min/max ár lekérdezéshez (ha 1, csak ezt adja vissza)
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
-
-  // Ha admin vagy webbolt admin a felhasználó, akkor minden terméket láthat
-  if(session_data.ID_USER != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y")) {
-    where = "";
-  }
 
   // Ha csak elfogyott termékeket kérünk (admin funkció)
   if(elfogyott != -1){
@@ -76,6 +71,8 @@ function gen_SQL_kereses(req) {
     case 3: order_van = "ORDER BY MENNYISEG"; break;   // Mennyiség szerint rendezés
     default: order_van = "" ; break;  // Nincs rendezés
   }
+  console.log("order:  " + order)
+  console.log("ordervan:  " + order_van)
 
   // Kategória szűrés, ha van megadva kategória lista
   if (id_kat != -1)
@@ -123,8 +120,27 @@ function gen_SQL_kereses(req) {
 
 app.post('/kategoria',(req, res) => {
   session_data = req.session;
-  var where = `${req.query.nev != "" ? `where (NEV like "%${req.query.nev}%" or LEIRAS like "%${req.query.nev}%") ` : ""}`;
-  where += `${session_data.ID_USER != undefined  && (session_data.ADMIN == "Y" || session_data.WEBBOLT_ADMIN == "Y") ? "" : `and (t.AKTIV = "Y" AND t.MENNYISEG > 0) `}`;
+
+  var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)        :   -1); // Csak elfogyott termékek (admin funkció)
+  var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
+
+  var where = `${req.query.nev != "" ? `where (NEV like "%${req.query.nev}%" or LEIRAS like "%${req.query.nev}%") ` : ``}`;
+
+  switch (elfogyott,inaktiv) {
+    case (elfogyott != -1 && inaktiv == -1):
+      where += `${where.length == 0 ? `where` : `and`} (t.MENNYISEG = 0)`;   // Csak azok, amikből nincs készlet
+      break;
+    case (inaktiv != -1 && elfogyott == -1):
+      where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N")`;   // Csak azok, amik inaktívak
+      break;
+    case (elfogyott != -1 && inaktiv != -1):
+      where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N" OR t.MENNYISEG = 0)`;   // Bármelyik feltétel teljesül
+      break;
+    default:
+      where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "Y" AND t.MENNYISEG > 0)`;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
+      break;
+  }
+
   var sql = `
     SELECT DISTINCT k.ID_KATEGORIA, k.KATEGORIA
     FROM webbolt_kategoriak k 
@@ -297,8 +313,6 @@ app.post('/kosar_add', async (req, res) => {
 
     COMMIT;
     `
-
-    console.log(sql);
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
     res.end();
@@ -312,8 +326,7 @@ app.post('/kosar_del',async (req, res) => {
 
   var sql = `
     start TRANSACTION;
-      SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar INNER JOIN webbolt_kosar_tetelei ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
-              WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER});
+      SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER});
               
       DELETE FROM webbolt_kosar_tetelei
       WHERE webbolt_kosar_tetelei.ID_KOSAR = @kosarid AND webbolt_kosar_tetelei.ID_TERMEK = ${termekid};

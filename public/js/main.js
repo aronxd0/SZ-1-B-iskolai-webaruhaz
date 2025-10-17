@@ -91,7 +91,7 @@ async function KERESOBAR() {
         case("ar_csok"): order = "&order=-1"; break;
         case("abc"): order = "&order=2"; break;
         case("abc_desc"): order = "&order=-2"; break;
-        case("db_no"): order = "&order=3"; break;
+        case("db_nov"): order = "&order=3"; break;
         case("db_csok"): order = "&order=-3"; break;
         default: order = "";
     }

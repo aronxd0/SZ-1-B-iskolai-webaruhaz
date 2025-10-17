@@ -36,6 +36,7 @@ async function TermekModosit(url) {
         else { üzen(termekmod.message, "danger"); }
     } catch (err) { console.log("hiba:", err); }
     
+        KERESOBAR();
 }
 
 
