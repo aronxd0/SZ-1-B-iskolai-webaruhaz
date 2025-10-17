@@ -14,6 +14,47 @@ let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
 let oldalszam = 0; // összes oldal darabszáma
 let Joldal = 1; // jelenlegi oldal
 
+const kezdesek = [
+  "Szerintem", "Őszintén szólva", "Én úgy látom", 
+  "Nekem az a véleményem", "Nyilvánvalóan", "Hát megmondom őszintén, hogy"
+];
+const cselekvesek = [
+  "ez a termék", "ez a szolgáltatás", "a funkció", 
+  "ez az app", "ez a funkció", "semmiképpen sem"
+];
+const jelzok = [
+  "nagyon jó", "elég hasznos", "egészen érdekes", 
+  "meglepően hatékony", "egészen korrekt", "használhatatlan"
+];
+const kozospontok = [
+  "és", "de", "ráadásul", "viszont", "ugyanakkor"
+];
+const zaro = [".", "!", " 😊", " 😎", "."]
+
+
+function randomElem(tomb) {
+  return tomb[Math.floor(Math.random() * tomb.length)];
+}
+
+
+function RandomVelemeny() {
+  const templateek = [
+    "{kezdes} {cselekves} {jelzo}{zaro}",
+    "{kezdes}, {cselekves} {kozospont} {jelzo}{zaro}",
+    "{kezdes} {cselekves} szerint {jelzo}{zaro}"
+  ];
+  
+  const template = randomElem(templateek);
+  
+  return template
+    .replace("{kezdes}", randomElem(kezdesek))
+    .replace("{cselekves}", randomElem(cselekvesek))
+    .replace("{jelzo}", randomElem(jelzok))
+    .replace("{kozospont}", randomElem(kozospontok))
+    .replace("{zaro}", randomElem(zaro));
+}
+
+
 function update_gombok (x) {
     if (x == 0) { 
         //$("#cart_button").hide(); 
