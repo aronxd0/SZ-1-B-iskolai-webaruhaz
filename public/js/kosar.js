@@ -19,7 +19,7 @@ $("#cart_button").click(async function () {
                             <div class="input-group-button oclickable" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9">
                                 <span class="input-number-decrement">-</span>
                             </div>
-                            <input class="input-number" type="number" onchange="INPUTIR()" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2" min="0" max="1000">
+                            <input class="input-number" type="number" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2" min="1" >
                             <div class="input-group-button oclickable" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1">
                                 <span class="input-number-increment">+</span>
                             </div>
@@ -54,9 +54,7 @@ $("#cart_button").click(async function () {
     $("#content_hely").html(ts);
     $("#pagi").html("");
 });
-function INPUTIR(){
-    üzen("Yes OFFICER ,he touched me","danger");
-}
+
 
 
 function KosarItemDelete(id){
@@ -71,19 +69,14 @@ function KosarItemDelete(id){
 async function Kosarba_Bele(event, id_termek) {
     event.stopPropagation();
     $("#termekview").modal("hide");
-
-    // kosarba INSERT INTO ide
+    // Kosár gomb megnyomása után beleteszi a terméket a kosárba
     try {
         let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
         if (kosaraddleiras.message == "ok") {
            KosarTetelDB(); // majd a külön le kérdezést kap 
-
-            üzen("Áru bekerült a kosárba","success");
-        
+            üzen("Áru bekerült a kosárba","success");   
         }
-        else { üzen(kosaraddleiras.message, "danger"); }
-    
-        
+        else { üzen(kosaraddleiras.message, "danger"); }         
 
         $("#idt").html(id_termek);
         $("#kosarba_bele").modal("show");
@@ -108,14 +101,14 @@ async function KosarTetelDB() {
 }
 
 async function KosarPLUSZ(id){
-    var PluszVAGYminusz = id.id.substring(id.id.length - 1, id.id.length) == 9? -1 : ""  ;// ha nem 9 akkor plusz
-
+    var PluszVAGYminusz = id.id.substring(id.id.length - 1, id.id.length) == 9? -1 : ""  ;// ha nem 9 akkor - / ha 1 akkor + 
+    var Menyiseg = id.id.substring(id.id.length - 1, id.id.length) == "2"? `&ERTEK="${id.value}"` : "";// ha 2 akkor az input mező lett változtatva
     var idk = id.id.substring(0, id.id.length - 1);
     
     await ajax_post(`kosar_add?ID_TERMEK=${idk}&MENNYIT=${PluszVAGYminusz}`, 1);
-    var db = await ajax_post("tetelek?ID_TERMEK="+idk, 1);
+    var db = await ajax_post("tetelek?ID_TERMEK="+idk+Menyiseg, 1); // MEnyiség értéket csak akkor adok át ,a mikor az input mező lett változtatva különben üres string
     document.getElementById(`${idk}2`).value = db.rows[0].MENNYISEG;
-    document.getElementById(`${idk}3`).innerHTML = `<h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ;// mindegyiknek igyanaz az idj ? nem jó majd othonm nekiállok .😓
-    KosarTetelDB();
+    document.getElementById(`${idk}3`).innerHTML = `<h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ; // forint firssit
+    KosarTetelDB(); // fönti kosár db frissitése
 
 };
