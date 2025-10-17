@@ -301,12 +301,15 @@ app.post('/kosar_del',async (req, res) => {
   var termekid  = parseInt(req.query.ID_TERMEK)
 
   var sql = `
-    DELETE webbolt_kosar_tetelei
-    FROM webbolt_kosar_tetelei
-    INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
-    WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER}
-    AND webbolt_kosar_tetelei.ID_TERMEK = ${termekid};
+    start TRANSACTION;
+      SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar INNER JOIN webbolt_kosar_tetelei ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
+              WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER});
+              
+      DELETE FROM webbolt_kosar_tetelei
+      WHERE webbolt_kosar_tetelei.ID_KOSAR = @kosarid AND webbolt_kosar_tetelei.ID_TERMEK = ${termekid};
+    COMMIT;
   `;
+  //trigger miatt kell a tranzakció illetve a set @kosarid hogy ne keressen a kitorolt webbolt_kosarban
 
   const eredmeny = await runExecute(sql, req);
   res.send(eredmeny);

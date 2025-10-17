@@ -17,7 +17,6 @@ function Termek_Edit(event, cuccok, tipus) {
     const datumido = cuccok[11];
     const id_kategoria = cuccok[12];
 
-    console.log(`ID KATEGORIA TERMEK EDIT XD: ${id_kategoria}`);
 
     KategoriaFeltolt("mod_kat", "select", id_kategoria);
 
