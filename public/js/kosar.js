@@ -11,20 +11,21 @@ $("#cart_button").click(async function () {
                 ts += `<div class="col-12 d-flex m-2 p-2 bg-secondary bg-gradient text-center" id="${element.ID_TERMEK}NAGY">`;
 
                 ts += `<div class="col-3" style="height: 100px" >  <img src="${element.FOTOLINK}" class="img-fluid" alt="Card image" style="height:100px"> </div>`;
-                ts += `<div class="col-4"> <h4>${element.NEV}</h4> </div>`;
+                ts += `<div class="col-3"> <h4>${element.NEV}</h4> </div>`;
 
-                ts += `<div class="col-2 m-auto">
+                ts += `<div class="col-3 m-auto">
                 
-                <div class="input-group input-number-group">
+                <div class="input-group input-number-group m-auto">
                             <div class="input-group-button oclickable" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9">
                                 <span class="input-number-decrement">-</span>
                             </div>
-                            <input class="input-number" type="number" value="1" id="${element.ID_TERMEK}2" min="0" max="1000">
+                            <input class="input-number" type="number" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2" min="0" max="1000">
                             <div class="input-group-button oclickable" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1">
                                 <span class="input-number-increment">+</span>
                             </div>
+                          
                             </div>
-                        db
+                          (db)
                     </div> 
                 `
 
