@@ -253,13 +253,19 @@ app.post('/kosar_add', async (req, res) => {
     session_data = req.session;
 
     var termekid = parseInt(req.query.ID_TERMEK);
-    var mennyit  = (req.query.MENNYIT? parseInt(req.query.MENNYIT)  :   1)
+    var mennyit  = (req.query.MENNYIT? parseInt(req.query.MENNYIT)  :   1);
+    var mennyire = (req.query.ERTEK ? parseInt(req.query.ERTEK) : 0);
 
-    var sql = 
-    `
-    START TRANSACTION;
+    var megszuro = `${mennyire != 0 ? 
+    `WHEN ${mennyire} < t.MENNYISEG then ${mennyire} ELSE t.MENNYISEG ` 
+    : 
+    `WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = FALSE and k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`} > 0 then k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`} ELSE k.MENNYISEG`}`;
 
-        INSERT INTO webbolt_kosar (ID_USER)
+
+    var belseje = `${mennyire != 0 ? 
+      `SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER});` 
+      : 
+      `INSERT INTO webbolt_kosar (ID_USER)
           SELECT ${session_data.ID_USER}
           WHERE NOT EXISTS (SELECT 1 FROM webbolt_kosar WHERE ID_USER = ${session_data.ID_USER});
 
@@ -276,15 +282,18 @@ app.post('/kosar_add', async (req, res) => {
 
         INSERT INTO webbolt_kosar_tetelei (ID_KOSAR, ID_TERMEK, MENNYISEG)
           SELECT @kosarid, ${termekid}, 1
-          WHERE @elsoadd = TRUE;
+          WHERE @elsoadd = TRUE;`}`;
 
-        UPDATE webbolt_kosar_tetelei k
-          INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
-          SET k.MENNYISEG = CASE
-                              WHEN k.MENNYISEG < t.MENNYISEG AND @elsoadd = FALSE and k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`} > 0 then k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`}
-                              ELSE k.MENNYISEG
-                            END
-          WHERE k.ID_KOSAR = @kosarid AND k.ID_TERMEK = ${termekid};
+
+    var sql = 
+    `
+    START TRANSACTION;
+      ${belseje}
+        
+      UPDATE webbolt_kosar_tetelei k
+        INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
+        SET k.MENNYISEG = CASE ${megszuro} END                  
+        WHERE k.ID_KOSAR = @kosarid AND k.ID_TERMEK = ${termekid};
 
     COMMIT;
     `
@@ -314,32 +323,6 @@ app.post('/kosar_del',async (req, res) => {
   res.send(eredmeny);
   res.end();
 });
-
-app.post('/kosar_menny_upd',async (req, res) => {
-  session_data = req.session;
-  var termekid  = parseInt(req.query.ID_TERMEK)
-  var ujeretek = parseInt(req.query.ERTEK)
-
-  var sql = `
-START TRANSACTION;
-  SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER});
-
-  UPDATE webbolt_kosar_tetelei k
-            INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
-            SET k.MENNYISEG = CASE
-                                WHEN ${ujeretek} < t.MENNYISEG then ${ujeretek}
-                                ELSE t.MENNYISEG
-                              END
-  WHERE k.ID_KOSAR = @kosarid AND k.ID_TERMEK = ${termekid};
-COMMIT;
-  `;
-
-  const eredmeny = await runExecute(sql, req);
-  res.send(eredmeny);
-  res.end();
-});
-
-
 
 app.post('/kosarteteldb',(req, res) => {
   session_data = req.session;
