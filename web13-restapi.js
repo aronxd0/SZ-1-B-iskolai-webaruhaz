@@ -259,7 +259,7 @@ app.post('/kosar_add', async (req, res) => {
     var megszuro = `${mennyire != 0 ? 
     `WHEN ${mennyire} < t.MENNYISEG then ${mennyire} ELSE t.MENNYISEG ` 
     : 
-    `WHEN k.MENNYISEG <= t.MENNYISEG AND @elsoadd = FALSE and k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`} > 0 then k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`} ELSE k.MENNYISEG`}`;
+    `WHEN k.MENNYISEG <= t.MENNYISEG AND @elsoadd = FALSE and k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit} <= t.MENNYISEG` : `- 1`} then k.MENNYISEG ${mennyit > 0 ? `+ ${mennyit}` : `- 1`} ELSE k.MENNYISEG`}`;
 
 
     var belseje = `${mennyire != 0 ? 
