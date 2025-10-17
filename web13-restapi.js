@@ -358,6 +358,42 @@ app.post('/tetelek',(req, res) => {
 
 //#endregion
 
+//#region termekcsinal
+
+app.post('/termek_edit',async (req, res) => {
+  
+  var kategoria = strE(req.query.mod_kat);
+  var nev       = strE(req.query.mod_nev);
+  var azon      = strE(req.query.mod_azon);
+  var ar        = parseInt(req.query.mod_ar);
+  var mennyiseg = parseInt(req.query.mod_db);
+  var meegys    = strE(req.query.mod_meegys);
+  var datum     = strE(req.query.mod_datum);
+  var leiras    = strE(req.query.mod_leiras);
+
+  var sql = `
+    UPDATE webbolt_termekek
+    SET
+      KATEGORIA = '${kategoria}',
+      NEV = '${nev}',
+      AZON = '${azon}',
+      AR = ${ar},
+      MENNYISEG = ${mennyiseg},
+      MEGYS = '${meegys}',
+      DATUM = '${datum}',
+      LEIRAS = '${leiras}'
+    WHERE ID_TERMEK = ${termekid};
+  `;
+
+  const eredmeny = await runExecute(sql, req);
+  res.send(eredmeny);
+  res.end();
+});
+
+
+
+//#endregion
+
 
 //#region függvények
 
