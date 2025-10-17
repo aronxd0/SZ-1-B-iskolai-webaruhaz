@@ -1,5 +1,46 @@
 // termekek szerkesztese, torlese, uj felvetele + a betolto fuggveny
 
+
+
+// termek modositasa MENT gombra kattintaskor
+async function TermekModosit(url) {
+     /*
+            kategoria: req.query.mod_kat
+
+            nev: req.query.mod_nev
+
+            azon: req.query.mod_azon
+
+            ar: req.query.mod_ar
+
+            mennyiseg: req.query.mod_db
+
+            meegys: req.query.mod_meegys
+
+            datum: req.query.mod_datum
+
+            leiras: req.query.mod_leiras
+    */ 
+
+    let ser = url.split("§")[0];
+    let id_termek = url.split("§")[1];
+
+    console.log(ser);
+    console.log(id_termek);
+    console.log();
+    console.log(`ez megy at: termek_edit/ID_TERMEK=${id_termek}&${ser}`);
+    
+    try {
+        let termekmod = await ajax_post(`termek_edit/ID_TERMEK=${id_termek}&${ser}`);
+        if (termekmod.message == "ok") { üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success"); }
+        else { üzen(termekmod.message, "danger"); }
+    } catch (err) { console.log("hiba:", err); }
+    
+}
+
+
+
+// termek szerkeszto ablak
 function Termek_Edit(event, cuccok, tipus) {
     event.stopPropagation();
  
@@ -46,8 +87,10 @@ function Termek_Edit(event, cuccok, tipus) {
     }
 
 
+    $("#save_button").click(function() { TermekModosit(`${$("#mod1").serialize()}§${termek_id}`); });
 
     $("#termek_edit").modal("show");
+
 }
 
 
