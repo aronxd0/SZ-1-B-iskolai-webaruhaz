@@ -27,7 +27,7 @@ $("#cart_button").click(async function () {
                             <button type="button" class="btn btn-secondary bi bi-plus-lg" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                         </div>
                         <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center" id="${element.ID_TERMEK}3">
-                            <h5><b>${element.AR * element.MENNYISEG} Ft</b><h5>
+                            <h4 class="anton-regular">${element.AR * element.MENNYISEG} Ft</h4>
                         </div>
 
                         <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
