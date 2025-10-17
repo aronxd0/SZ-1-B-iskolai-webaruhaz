@@ -3,6 +3,10 @@
 $("#cart_button").click(async function () {
     $("#content_hely").html("");
 
+    $("#keresett_kifejezes").html("");
+    $("#débé").html("");
+    $("#nev1").val("");
+
     var ts = ``;
 
     let cnt = "";
@@ -27,7 +31,7 @@ $("#cart_button").click(async function () {
                             <button type="button" class="btn btn-lg btn-secondary bi bi-plus-lg jobb-gomb" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                         </div>
                         <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center p-3" id="${element.ID_TERMEK}3">
-                            <h4 class="anton-regular">${element.AR * element.MENNYISEG} Ft</h4>
+                            <h4 class="anton-regular text-success">${element.AR * element.MENNYISEG} Ft</h4>
                         </div>
 
                         <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center">
