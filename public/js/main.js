@@ -336,7 +336,7 @@ function Elfogyott(alma){
             document.getElementById("darabfel").disabled = false;
         }
     }
-    else{// csak inaktivakat szeretné látni
+    else{//  inaktivak vannak bepipálva 
 
         Nemaktivak = !Nemaktivak;
         
