@@ -104,17 +104,17 @@ function gen_SQL_kereses(req) {
   // Az SQL lekérdezés összeállítása
   var sql = 
     `SELECT 
-    ${maxmin_arkell == 1 
+    ${maxmin_arkell == 1
       ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR`
       : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
      FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
      ON t.ID_KATEGORIA = k.ID_KATEGORIA
-     ${where} 
+     ${where}
      ${maxmin_arkell == 1 ? `` : `${arkeres}` }
      ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
      ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${offset}`}
      `;
-  //console.log(sql);
+  console.log(sql);
   return (sql);
 }
 
@@ -125,21 +125,17 @@ app.post('/kategoria',(req, res) => {
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
   var nev = (req.query.nev? strE(req.query.nev)           :   ""); // Csak inaktív termékek (admin funkció)
 
-  var where = `${nev != "" ? `where (NEV like "%${nev}%" or LEIRAS like "%${nev}%") ` : ``}`;
+  var where = `${nev != "" ? `where (t.NEV like "%${nev}%" or t.LEIRAS like "%${nev}%") ` : ``}`;
 
-  switch (elfogyott,inaktiv) {
-    case (elfogyott != -1 && inaktiv == -1):
-      where += `${where.length == 0 ? `where` : `and`} (t.MENNYISEG = 0)`;   // Csak azok, amikből nincs készlet
-      break;
-    case (inaktiv != -1 && elfogyott == -1):
-      where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N")`;   // Csak azok, amik inaktívak
-      break;
-    case (elfogyott != -1 && inaktiv != -1):
-      where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N" OR t.MENNYISEG = 0)`;   // Bármelyik feltétel teljesül
-      break;
-    default:
-      where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "Y" AND t.MENNYISEG > 0)`;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
-      break;
+  // Elfogyott/inaktív szűrés helyes kezelése (switch nem megfelelő volt)
+  if (elfogyott != -1 && inaktiv == -1) {
+    where += `${where.length == 0 ? `where` : `and`} (t.MENNYISEG = 0)`;   // Csak azok, amikből nincs készlet
+  } else if (inaktiv != -1 && elfogyott == -1) {
+    where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N")`;   // Csak azok, amik inaktívak
+  } else if (elfogyott != -1 && inaktiv != -1) {
+    where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N" OR t.MENNYISEG = 0)`;   // Bármelyik feltétel teljesül
+  } else {
+    where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "Y" AND t.MENNYISEG > 0)`;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
   }
 
   var sql = `
@@ -149,6 +145,7 @@ app.post('/kategoria',(req, res) => {
     ${where}
     ORDER BY k.KATEGORIA
   `;
+  console.log(sql);
   sendJson_toFrontend (res, sql);           // async await ... 
 });
 
@@ -372,7 +369,8 @@ app.post('/tetelek',(req, res) => {
 
 //#endregion
 
-//#region termekcsinal
+//#region termek
+
 
 app.post('/termek_edit',async (req, res) => {
   
