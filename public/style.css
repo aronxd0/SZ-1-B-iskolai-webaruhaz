@@ -150,7 +150,29 @@ html[data-bs-theme="dark"] .feka {
 }
 
 
+.form-control-lg {
+  border-radius: 0px;
+  border: 1px solid var(--bs-secondary);
+}
+
+.bal-gomb {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.jobb-gomb {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+
+
+
+
 /* tooltip egyedi stilusa */
+
+
+/*
 .input-number-group {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -212,3 +234,4 @@ html[data-bs-theme="dark"] .feka {
 .input-number-group .input-number-increment {
   margin-left: 0.3rem;
 }
+  */
