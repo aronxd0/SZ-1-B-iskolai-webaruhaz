@@ -3,6 +3,10 @@
 $("#cart_button").click(async function () {
     $("#content_hely").html("");
 
+    $("#keresett_kifejezes").html("");
+    $("#débé").html("");
+    $("#nev1").val("");
+
     var ts = ``;
 
     let cnt = "";
@@ -10,10 +14,11 @@ $("#cart_button").click(async function () {
     try {
         await ajax_post("tetelek", 1).then(tetelek => {
             for (const element of tetelek.rows) {
-
+                
+                let pez = element.AR * element.MENNYISEG;
 
                 cnt += `
-                    <div class="d-flex flex-column flex-xxl-row" id="${element.ID_TERMEK}NAGY">
+                    <div class="d-flex flex-column flex-xxl-row feka shadow-lg rounded-4 mt-3 p-3 p-xxl-none" id="${element.ID_TERMEK}NAGY">
                         <div class="col-1"></div>
                         <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center">
                             <img src="${element.FOTOLINK}" class="img img-fluid" style="width:30%;" alt="kep">
@@ -27,7 +32,7 @@ $("#cart_button").click(async function () {
                             <button type="button" class="btn btn-lg btn-secondary bi bi-plus-lg jobb-gomb" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                         </div>
                         <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center p-3" id="${element.ID_TERMEK}3">
-                            <h4 class="anton-regular">${element.AR * element.MENNYISEG} Ft</h4>
+                            <h4 class="anton-regular text-success">${pez.toLocaleString()} Ft</h4>
                         </div>
 
                         <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center">
@@ -144,7 +149,8 @@ async function KosarPLUSZ(id){
     await ajax_post(`kosar_add?ID_TERMEK=${idk}&MENNYIT=${PluszVAGYminusz}${ertek}`, 1);
     var db = await ajax_post("tetelek?ID_TERMEK="+idk, 1); // MEnyiség értéket csak akkor adok át ,a mikor az input mező lett változtatva különben üres string
     document.getElementById(`${idk}2`).value = db.rows[0].MENNYISEG;
-    document.getElementById(`${idk}3`).innerHTML = `<h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ; // forint firssit
+    let money = parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR);
+    document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success">${money.toLocaleString()} Ft<h4>` ; // forint firssit
     KosarTetelDB(); // fönti kosár db frissitése
 
 };

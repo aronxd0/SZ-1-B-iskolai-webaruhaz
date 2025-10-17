@@ -918,7 +918,7 @@ function Sliderhuz(ettöl){
 async function KategoriaFeltolt(hova, type) {
     $(`#${hova}`).empty("");
     try {
-        let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);
+        let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}&ELFOGY`, 1);
         let listItems  = "";
 
         if (type == "check") {

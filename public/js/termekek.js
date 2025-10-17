@@ -60,7 +60,7 @@ function Termek_Edit(event, cuccok, tipus) {
     const id_kategoria = cuccok[12];
 
 
-    KategoriaFeltolt("mod_kat", "select", id_kategoria);
+    KategoriaFeltolt("mod_kat", "select", id_kategoria,"","");
 
     if (tipus == "bevitel") {
 
