@@ -253,7 +253,6 @@ app.post('/kosar_add', async (req, res) => {
     session_data = req.session;
 
     var termekid = parseInt(req.query.ID_TERMEK);
-    var userid = parseInt(session_data.ID_USER);
     var mennyit  = (req.query.MENNYIT? parseInt(req.query.MENNYIT)  :   1)
 
     var sql = 
@@ -261,11 +260,11 @@ app.post('/kosar_add', async (req, res) => {
     START TRANSACTION;
 
         INSERT INTO webbolt_kosar (ID_USER)
-          SELECT ${userid}
-          WHERE NOT EXISTS (SELECT 1 FROM webbolt_kosar WHERE ID_USER = ${userid});
+          SELECT ${session_data.ID_USER}
+          WHERE NOT EXISTS (SELECT 1 FROM webbolt_kosar WHERE ID_USER = ${session_data.ID_USER});
 
-        SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ${userid});
-                    
+        SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER});
+
         SET @elsoadd = (
         SELECT CASE
                 WHEN EXISTS (SELECT 1 FROM webbolt_kosar_tetelei WHERE webbolt_kosar_tetelei.ID_KOSAR = @kosarid AND webbolt_kosar_tetelei.ID_TERMEK = ${termekid})
@@ -315,6 +314,31 @@ app.post('/kosar_del',async (req, res) => {
   res.send(eredmeny);
   res.end();
 });
+
+app.post('/kosar_menny_upd',async (req, res) => {
+  session_data = req.session;
+  var termekid  = parseInt(req.query.ID_TERMEK)
+  var ujeretek = parseInt(req.query.ERTEK)
+
+  var sql = `
+START TRANSACTION;
+  SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER});
+
+  UPDATE webbolt_kosar_tetelei k
+            INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
+            SET k.MENNYISEG = CASE
+                                WHEN ${ujeretek} < t.MENNYISEG then ${ujeretek}
+                                ELSE t.MENNYISEG
+                              END
+  WHERE k.ID_KOSAR = @kosarid AND k.ID_TERMEK = ${termekid};
+COMMIT;
+  `;
+
+  const eredmeny = await runExecute(sql, req);
+  res.send(eredmeny);
+  res.end();
+});
+
 
 
 app.post('/kosarteteldb',(req, res) => {
