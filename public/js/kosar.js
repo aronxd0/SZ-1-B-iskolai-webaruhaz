@@ -19,7 +19,7 @@ $("#cart_button").click(async function () {
                             <div class="input-group-button oclickable" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9">
                                 <span class="input-number-decrement">-</span>
                             </div>
-                            <input class="input-number" type="number" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2" min="0" max="1000">
+                            <input class="input-number" type="number" onchange="INPUTIR()" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2" min="0" max="1000">
                             <div class="input-group-button oclickable" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1">
                                 <span class="input-number-increment">+</span>
                             </div>
@@ -54,6 +54,10 @@ $("#cart_button").click(async function () {
     $("#content_hely").html(ts);
     $("#pagi").html("");
 });
+function INPUTIR(){
+    üzen("Yes OFFICER ,he touched me","danger");
+}
+
 
 function KosarItemDelete(id){
     ajax_post(`/kosar_del?ID_TERMEK=${id.id}`)
