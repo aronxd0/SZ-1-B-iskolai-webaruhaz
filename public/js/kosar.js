@@ -5,17 +5,53 @@ $("#cart_button").click(async function () {
 
     var ts = ``;
 
+    let cnt = "";
+
     try {
         await ajax_post("tetelek", 1).then(tetelek => {
             for (const element of tetelek.rows) {
-                ts += `<div class="col-12 d-flex m-2 p-2 bg-secondary bg-gradient text-center" id="${element.ID_TERMEK}NAGY">`;
 
-                ts += `<div class="col-3" style="height: 100px" >  <img src="${element.FOTOLINK}" class="img-fluid" alt="Card image" style="height:100px"> </div>`;
-                ts += `<div class="col-3"> <h4>${element.NEV}</h4> </div>`;
 
-                ts += `<div class="col-3 m-auto">
+                cnt += `
+                    <div class="d-flex flex-column flex-lg-row">
+                        <div class="col-1"></div>
+                        <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
+                            <img src="${element.FOTOLINK}" class="img img-fluid" style="width:30%;" alt="kep">
+                        </div>
+                        <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
+                            <p>${element.NEV}</p>
+                        </div>
+                        <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
+                            <button type="button" class="btn btn-secondary bi bi-dash-lg" aria-label="minusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9"></button>
+                            <input type="number" class="form-control w-50" min="1" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2">
+                            <button type="button" class="btn btn-secondary bi bi-plus-lg" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
+                        </div>
+                        <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center" id="${element.ID_TERMEK}3">
+                            <h5><b>${element.AR * element.MENNYISEG} Ft</b><h5>
+                        </div>
+
+                        <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
+                            <button type="button" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)" class="btn btn-warning"><i class="bi bi-x-circle-fill"></i></button>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>        
                 
-                <div class="input-group input-number-group m-auto">
+        
+                
+                `;
+
+
+
+
+
+                ts += `<div class="col-12 d-flex flex-column flex-lg-row" id="${element.ID_TERMEK}NAGY">`;
+
+                ts += `<img src="${element.FOTOLINK}" class="img-fluid" style="width:50%;height:50%;" alt="kep"> `;
+                ts += `<h4>${element.NEV}</h4>`;
+
+                ts += `
+                
+                <div >
                             <div class="input-group-button oclickable" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9">
                                 <span class="input-number-decrement">-</span>
                             </div>
@@ -26,12 +62,12 @@ $("#cart_button").click(async function () {
                           
                             </div>
                           (db)
-                    </div> 
+                     
                 `
 
                 //ts += `<div class="col-2 m-auto"> <button type="button" class="btn btn-danger"><i class="bi bi-dash-circle" id="${element.ID_TERMEK}9" onclick="KosarPLUSZ(this)"></i></button><span class="p-2" id="${element.ID_TERMEK}2">${element.MENNYISEG}</span> db   <button type="button" id="${element.ID_TERMEK}1" onclick="KosarPLUSZ(this)" class="btn btn-success"><i class="bi bi-plus-circle"></i></button> </div> `;
-                ts += `<div class="col-2 text-center text-white m-auto" id="${element.ID_TERMEK}3"><h5><b > ${element.AR * element.MENNYISEG} Ft</b><h5> </div>`;               
-                ts += `<div class="col-1 m-auto" ><button type="button" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)" class="btn btn-warning"><i class="bi bi-x-circle-fill"></i></button> </div>`;
+                ts += `<div id="${element.ID_TERMEK}3"><h5><b > ${element.AR * element.MENNYISEG} Ft</b><h5>`;               
+                ts += `<div ><button type="button" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)" class="btn btn-warning"><i class="bi bi-x-circle-fill"></i></button> `;
                 ts += "</div>" 
             }   
         });
@@ -51,7 +87,7 @@ $("#cart_button").click(async function () {
     `;
 
     console.log(ts +" ez a tr")
-    $("#content_hely").html(ts);
+    $("#content_hely").html(cnt);
     $("#pagi").html("");
 });
 
