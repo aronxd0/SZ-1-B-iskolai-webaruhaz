@@ -8,14 +8,14 @@ $("#cart_button").click(async function () {
     try {
         await ajax_post("tetelek", 1).then(tetelek => {
             for (const element of tetelek.rows) {
-                ts += `<div class="col-12 d-flex m-2 p-2 bg-secondary bg-gradient text-center">`;
+                ts += `<div class="col-12 d-flex m-2 p-2 bg-secondary bg-gradient text-center" id="${element.ID_TERMEK}NAGY">`;
 
-                ts += `<div class="col-4" style="height: 100px" >  <img src="${element.FOTOLINK}" class="img-fluid" alt="Card image" style="height:100px"> </div>`;
+                ts += `<div class="col-3" style="height: 100px" >  <img src="${element.FOTOLINK}" class="img-fluid" alt="Card image" style="height:100px"> </div>`;
                 ts += `<div class="col-4"> <h4>${element.NEV}</h4> </div>`;
-                ts += `<div class="col-2 text-center text-white m-auto" id="${element.ID_TERMEK}3"><h5><b > ${element.AR * element.MENNYISEG} Ft</b><h5> </div>`;
-                ts += `<div class="col-2 m-auto"> <button type="button" class="btn btn-danger"><i class="bi bi-dash-circle" id="${element.ID_TERMEK}9" onclick="KosarPLUSZ(this)"></i></button><span class="p-2" id="${element.ID_TERMEK}2">${element.MENNYISEG}</span> db   <button type="button" id="${element.ID_TERMEK}1" onclick="KosarPLUSZ(this)" class="btn btn-success"><i class="bi bi-plus-circle"></i></button> <button type="button" class="btn btn-warning"><i class="bi bi-x-circle-fill"></i></button></div> `;
-    
-                ts += "</div>"
+                ts += `<div class="col-2 m-auto"> <button type="button" class="btn btn-danger"><i class="bi bi-dash-circle" id="${element.ID_TERMEK}9" onclick="KosarPLUSZ(this)"></i></button><span class="p-2" id="${element.ID_TERMEK}2">${element.MENNYISEG}</span> db   <button type="button" id="${element.ID_TERMEK}1" onclick="KosarPLUSZ(this)" class="btn btn-success"><i class="bi bi-plus-circle"></i></button> </div> `;
+                ts += `<div class="col-2 text-center text-white m-auto" id="${element.ID_TERMEK}3"><h5><b > ${element.AR * element.MENNYISEG} Ft</b><h5> </div>`;               
+                ts += `<div class="col-1 m-auto" ><button type="button" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)" class="btn btn-warning"><i class="bi bi-x-circle-fill"></i></button> </div>`;
+                ts += "</div>" 
             }   
         });
 
@@ -37,6 +37,15 @@ $("#cart_button").click(async function () {
     $("#content_hely").html(ts);
     $("#pagi").html("");
 });
+
+function KosarItemDelete(id){
+    ajax_post(`/kosar_del?ID_TERMEK=${id.id}`)
+    .then(() => {
+        $(`#${id.id}NAGY`).remove();
+        KosarTetelDB();
+        üzen("Tétel törölve a kosárból","success");
+    })
+}
 
 async function Kosarba_Bele(event, id_termek) {
     event.stopPropagation();
