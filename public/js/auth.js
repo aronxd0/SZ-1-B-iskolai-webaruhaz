@@ -103,13 +103,13 @@ function ADMINVAGYE(){
         document.getElementById("Elfogyott_gomb").innerHTML = `
             <p>
                 <input class="form-check-input" type="checkbox" id="elf" value="Csakelfogyott" onchange="Elfogyott(this)">
-                <label for="elf" class="form-check-label"> Csak az elfogyott áruk mutatása</label>
+                <label for="elf" class="form-check-label"> Az elfogyott áruk mutatása</label>
             </p>
             `;      
         document.getElementById("NEM_AKTIV").innerHTML = `
             <p>
                 <input class="form-check-input" type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)">
-                <label for="innaktiv" class="form-check-label"> Csak az inaktiv áruk mutatása</label>
+                <label for="innaktiv" class="form-check-label"> Az inaktiv áruk mutatása</label>
             </p>
             `;
     } 
