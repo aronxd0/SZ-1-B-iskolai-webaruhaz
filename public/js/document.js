@@ -124,28 +124,7 @@ $(document).ready(function() {
     });
 
 
-    $("#save_button").click(function() {
-        console.log(`KURVA ANYÁD: ${$("#mod1").serialize()}`);
-        /*
-            kategoria: req.query.mod_kat
-
-            nev: req.query.mod_nev
-
-            azon: req.query.mod_azon
-
-            ar: req.query.mod_ar
-
-            mennyiseg: req.query.mod_db
-
-            meegys: req.query.mod_meegys
-
-            datum: req.query.mod_datum
-
-            leiras: req.query.mod_leiras
-        
-        
-        */ 
-    });
+    
 
 
 
