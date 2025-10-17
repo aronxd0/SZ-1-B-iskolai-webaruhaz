@@ -146,7 +146,7 @@ async function KERESOBAR() {
     } ); 
      */
     
-    KategoriaFeltolt("kategoria_section", "check", "");
+    KategoriaFeltolt("kategoria_section", "check", "",elfogy,nemaktiv);
     
     console.log("elküldve: "+ elküld);
 }
@@ -293,10 +293,10 @@ function Sliderhuz(ettöl){
 }
 
 
-async function KategoriaFeltolt(hova, type, kivalasztott) {
+async function KategoriaFeltolt(hova, type, kivalasztott,elfogy,nemaktiv) {
     $(`#${hova}`).empty("");
     try {
-        let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}`, 1);
+        let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}${elfogy}${nemaktiv}`, 1);
         let listItems  = "";
 
         if (type == "check") {
