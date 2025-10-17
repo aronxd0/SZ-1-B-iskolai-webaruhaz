@@ -13,7 +13,7 @@ $("#cart_button").click(async function () {
 
 
                 cnt += `
-                    <div class="d-flex flex-column flex-xxl-row">
+                    <div class="d-flex flex-column flex-xxl-row" id="${element.ID_TERMEK}NAGY">
                         <div class="col-1"></div>
                         <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center">
                             <img src="${element.FOTOLINK}" class="img img-fluid" style="width:30%;" alt="kep">
