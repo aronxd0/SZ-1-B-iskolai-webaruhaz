@@ -289,12 +289,28 @@ app.post('/kosar_add', async (req, res) => {
 
     COMMIT;
     `
-    console.log(sql);
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
     res.end();
 
   } catch (err) { console.log(err) }        
+});
+
+app.post('/kosar_del',async (req, res) => {
+  session_data = req.session;
+  var termekid  = parseInt(req.query.ID_TERMEK)
+
+  var sql = `
+    DELETE webbolt_kosar_tetelei
+    FROM webbolt_kosar_tetelei
+    INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
+    WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER}
+    AND webbolt_kosar_tetelei.ID_TERMEK = ${termekid};
+  `;
+
+  const eredmeny = await runExecute(sql, req);
+  res.send(eredmeny);
+  res.end();
 });
 
 
