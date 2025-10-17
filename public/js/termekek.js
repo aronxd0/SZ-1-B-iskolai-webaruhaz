@@ -228,7 +228,7 @@ async function Termek_Mutat(event, cuccok) {
         */
 
     let gombs = `
-        <button type="button" class="btn btn-warning bi bi-dice-6 w-auto ms-2" onclick='VeletlenszeruVelemeny()'> Véletlenszerű</button>
+        <button type="button" class="btn btn-warning bi bi-dice-6 w-auto ms-2" onclick='VeletlenszeruVelemeny()'> Generálás</button>
         <button type="button" class="btn btn-danger bi bi-x-lg w-auto ms-2" data-bs-toggle="collapse" data-bs-target="#vlm" id="mgs"> Mégse</button>
         <button type="button" class="btn btn-success bi bi-send w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${termek_id})'> Közzététel</button>
     

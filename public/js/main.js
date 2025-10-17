@@ -16,15 +16,15 @@ let Joldal = 1; // jelenlegi oldal
 
 const kezdesek = [
   "Szerintem", "Őszintén szólva", "Én úgy látom", 
-  "Nekem az a véleményem", "Nyilvánvalóan"
+  "Nekem az a véleményem", "Nyilvánvalóan", "Hát megmondom őszintén, hogy"
 ];
 const cselekvesek = [
   "ez a termék", "ez a szolgáltatás", "a funkció", 
-  "ez az app", "ez a funkció"
+  "ez az app", "ez a funkció", "semmiképpen sem"
 ];
 const jelzok = [
   "nagyon jó", "elég hasznos", "egészen érdekes", 
-  "meglepően hatékony", "egészen korrekt"
+  "meglepően hatékony", "egészen korrekt", "használhatatlan"
 ];
 const kozospontok = [
   "és", "de", "ráadásul", "viszont", "ugyanakkor"
