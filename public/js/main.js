@@ -55,6 +55,16 @@ function RandomVelemeny() {
 }
 
 
+
+function SUM(lista) {
+    let sum = 0;
+    for (const element of lista) {
+        sum += element;
+    }
+    return sum;
+}
+
+
 function update_gombok (x) {
     if (x == 0) { 
         //$("#cart_button").hide(); 

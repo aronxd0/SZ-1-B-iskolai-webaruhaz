@@ -152,17 +152,19 @@ html[data-bs-theme="dark"] .feka {
 
 .form-control-lg {
   border-radius: 0px;
-  border: 1px solid var(--bs-secondary);
+  border: 1px solid var(--bs-dark);
 }
 
 .bal-gomb {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+  
 }
 
 .jobb-gomb {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
+  
 }
 
 

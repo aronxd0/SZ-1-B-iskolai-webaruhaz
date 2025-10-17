@@ -9,7 +9,13 @@ $("#cart_button").click(async function () {
 
     var ts = ``;
 
-    let cnt = "";
+    let cnt = `
+        <div class="col-12">
+            <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad tartalma</h5></div>
+        </div>
+        `;
+    
+    let arak = [];
 
     try {
         await ajax_post("tetelek", 1).then(tetelek => {
@@ -19,39 +25,54 @@ $("#cart_button").click(async function () {
             if (tetelek.rows.length > 0) {
                 for (const element of tetelek.rows) {
                     
+
                     let pez = element.AR * element.MENNYISEG;
+                    arak.push(pez);
 
                     cnt += `
-                        <div class="d-flex flex-column flex-xxl-row feka shadow-lg rounded-4 mt-3 p-3 p-xxl-none" id="${element.ID_TERMEK}NAGY">
+                        
+
+                        <div class="col-12 d-flex flex-column flex-lg-row feka shadow-lg rounded-4 mt-3 p-3 p-xxl-none" id="${element.ID_TERMEK}NAGY">
                             <div class="col-1"></div>
-                            <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center">
+                            <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
                                 <img src="${element.FOTOLINK}" class="img img-fluid" style="width:30%;" alt="kep">
                             </div>
-                            <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center p-3">
+                            <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center p-3">
                                 <p>${element.NEV}</p>
                             </div>
-                            <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center">
-                                <button type="button" class="btn btn-lg btn-secondary bi bi-dash-lg bal-gomb" aria-label="minusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9"></button>
-                                <input type="number" class="form-control-lg w-50" min="1" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2">
-                                <button type="button" class="btn btn-lg btn-secondary bi bi-plus-lg jobb-gomb" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
+                            <div class="col-12 col-sm-8 col-lg-3 d-flex align-self-center justify-content-center">
+                                <button type="button" class="btn btn-lg btn-dark bi bi-dash-lg bal-gomb" aria-label="minusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9"></button>
+                                <input type="number" class="form-control-lg w-50 text-center fhr" min="1" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2">
+                                <button type="button" class="btn btn-lg btn-dark bi bi-plus-lg jobb-gomb" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                             </div>
-                            <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center p-3" id="${element.ID_TERMEK}3">
+                            <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center p-3" id="${element.ID_TERMEK}3">
                                 <h4 class="anton-regular text-success">${pez.toLocaleString()} Ft</h4>
                             </div>
 
-                            <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center">
-                                <button type="button" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)" class="btn btn-danger" aria-label="teteltorol"><i class="bi bi-x-lg"></i></button>
+                            <div class="col-12 col-lg-1 d-flex align-self-center justify-content-center">
+                                <button type="button" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)" class="btn btn-danger" aria-label="teteltorol"><i class="bi bi-trash"></i></button>
                             </div>
                             <div class="col-1"></div>
-                        </div>        
+                        </div> 
+                        
+                        
                     
             
                     `;
        
                 }
+
+                cnt += `
+                    <div class="col-12 mt-2 p-2 d-flex justify-content-center align-self-center">
+                        <h5>Összesen: </h5>&nbsp;<h3 class="anton-regular text-success">${SUM(arak).toLocaleString()} Ft</h3>&nbsp;<h5> (+ ÁFA)</h5>
+                    </div>
+                
+                
+                `;
+
             }
             else {
-                cnt += `
+                cnt = `
                     <div class="col-12">
                         <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
                     </div>
@@ -64,7 +85,7 @@ $("#cart_button").click(async function () {
         } catch (err) { console.log("hiba:", err); }
 
 
-
+        
        
 
         $("#content_hely").html(cnt);
