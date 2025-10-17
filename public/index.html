@@ -416,50 +416,64 @@
       <div class="modal fade" id="termek_edit">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
           <div class="modal-content">
-            <div class="modal-header bg-secondary text-white">
-              <h4 id="idx1" class="modal-title">Modal Heading</h4>
+            <div class="modal-header">
+              <h5 id="idx1" class="modal-title">Modal Heading</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div id="idx0" class="modal-body">     
-              <form id="mod1" class="row"> 
-                <div class="form-floating my-1">
-                  <select class="form-select" id="mod_kat" name="mod_kat"></select>     
-                  <label for="mod_kat">Kategória</label>
+              <form id="mod1" class="row">
+                <div class="col-12 p-2">
+                  <div class="form-floating">
+                    <select class="form-select" id="mod_kat" name="mod_kat"></select>     
+                    <label for="mod_kat">Kategória</label>
+                  </div>
                 </div>
-
-                <div class="form-floating my-1">
-                  <input type="text" class="form-control" id="mod_nev" name="mod_nev">
-                  <label for="mod_nev">Termék neve</label>
+                
+                <div class="col-12 p-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="mod_nev" name="mod_nev">
+                    <label for="mod_nev">Termék neve</label>
+                  </div>
                 </div>
-
-                <div class="form-floating my-1">
-                  <input type="text" class="form-control" id="mod_azon" name="mod_azon">
-                  <label for="mod_azon">Azonosító</label>
+                
+                <div class="col-12 p-2">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="mod_azon" name="mod_azon">
+                    <label for="mod_azon">Azonosító</label>
+                  </div>
                 </div>
-          
-                <div class="form-floating my-1 mr-1" style="width:190px;">
+                
+                <div class="d-flex flex-column flex-lg-row p-2">
+                  <div class="form-floating p-1">
                     <input type="number" class="form-control" id="mod_ar" name="mod_ar">
                     <label for="mod_ar">Ár</label>
-                </div>
-                <div class="form-floating my-1 mr-1" style="width:190px;">
+                  </div>
+
+                  <div class="form-floating p-1">
                     <input type="number" class="form-control" id="mod_db" name="mod_db">
                     <label for="mod_db">Mennyiség</label>
-                </div>
-                <div class="form-floating my-1 mr-1" style="width:190px;">
+                  </div>
+
+                  <div class="form-floating p-1">
                     <input type="text" class="form-control" id="mod_meegys" name="mod_meegys">
                     <label for="mod_meegys">Egység</label>
-                </div>
+                  </div>
 
-                <div class="form-floating my-1 mr-1" style="width:200px;">
-                  <input type="date" class="form-control" id="mod_datum" name="mod_datum">
-                  <label for="mod_datum">Dátum</label>
+                  <div class="form-floating p-1">
+                    <input type="date" class="form-control" id="mod_datum" name="mod_datum">
+                    <label for="mod_datum">Dátum</label>
+                  </div>
                 </div>
-
-                <div class="form-floating my-1">
-                  <textarea class="form-control "rows="4" id="mod_leiras" name="mod_leiras"></textarea>
-                  <label for="mod_leiras">Leírás</label>
+                
+                
+                <div class="col-12 p-2">
+                  <div class="form-floating">
+                    <textarea class="form-control "rows="4" id="mod_leiras" name="mod_leiras"></textarea>
+                    <label for="mod_leiras">Leírás</label>
+                  </div>
                 </div>
+                
 
               </form>
             </div>
