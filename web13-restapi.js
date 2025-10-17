@@ -123,8 +123,9 @@ app.post('/kategoria',(req, res) => {
 
   var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)        :   -1); // Csak elfogyott termékek (admin funkció)
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
+  var nev = (req.query.nev? strE(req.query.nev)           :   ""); // Csak inaktív termékek (admin funkció)
 
-  var where = `${req.query.nev != "" ? `where (NEV like "%${req.query.nev}%" or LEIRAS like "%${req.query.nev}%") ` : ``}`;
+  var where = `${nev != "" ? `where (NEV like "%${nev}%" or LEIRAS like "%${nev}%") ` : ``}`;
 
   switch (elfogyott,inaktiv) {
     case (elfogyott != -1 && inaktiv == -1):
