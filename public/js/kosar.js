@@ -69,7 +69,7 @@ function KosarItemDelete(id){
 async function Kosarba_Bele(event, id_termek) {
     event.stopPropagation();
     $("#termekview").modal("hide");
-    // Kosár gomb megnyomása után beleteszi a terméket a kosárba
+    // Kosár gomb megnyomása után beleteszi a ter
     try {
         let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
         if (kosaraddleiras.message == "ok") {
@@ -102,21 +102,11 @@ async function KosarTetelDB() {
 
 async function KosarPLUSZ(id){
     var PluszVAGYminusz = id.id.substring(id.id.length - 1, id.id.length) == 9? -1 : ""  ;// ha nem 9 akkor - / ha 1 akkor + 
-    var Menyiseg = id.id.substring(id.id.length - 1, id.id.length) == "2"? `&ERTEK=${id.value}` : " ";// ha 2 akkor az input mező lett változtatva
+    var ertek = id.id.substring(id.id.length - 1, id.id.length) == "2"? `&ERTEK=${id.value > 0 ? id.value: 1}` : "";// ha 2 akkor az input mező lett változtatva
     var idk = id.id.substring(0, id.id.length - 1);
     
-    switch(Menyiseg){
-        case " ":
-            await ajax_post(`kosar_add?ID_TERMEK=${idk}&MENNYIT=${PluszVAGYminusz}`, 1);
-            break;
-        default:
-            console.log(`kosar_menny_upd?ID_TERMEK=${idk}${Menyiseg}`);
-            await ajax_post(`/kosar_menny_upd?ID_TERMEK=${idk}${Menyiseg}`, 1);
-            break;
-    }
-
-    
-    var db = await ajax_post("tetelek?ID_TERMEK="+idk+Menyiseg, 1); // MEnyiség értéket csak akkor adok át ,a mikor az input mező lett változtatva különben üres string
+    await ajax_post(`kosar_add?ID_TERMEK=${idk}&MENNYIT=${PluszVAGYminusz}${ertek}`, 1);
+    var db = await ajax_post("tetelek?ID_TERMEK="+idk, 1); // MEnyiség értéket csak akkor adok át ,a mikor az input mező lett változtatva különben üres string
     document.getElementById(`${idk}2`).value = db.rows[0].MENNYISEG;
     document.getElementById(`${idk}3`).innerHTML = `<h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ; // forint firssit
     KosarTetelDB(); // fönti kosár db frissitése
