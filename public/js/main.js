@@ -67,6 +67,9 @@ function update_gombok (x) {
 }
 
 async function KERESOBAR() {
+    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
+    $("#admin_button").closest(".gombdiv").removeClass("aktiv");
+    $("#home_button").closest(".gombdiv").addClass("aktiv");
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = ""; //reset bepipalt kategória
     for(var elem of inputok){
