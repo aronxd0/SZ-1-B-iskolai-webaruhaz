@@ -370,17 +370,18 @@ app.post('/termek_edit',async (req, res) => {
   var meegys    = strE(req.query.mod_meegys);
   var datum     = strE(req.query.mod_datum);
   var leiras    = strE(req.query.mod_leiras);
+  var termekid  = parseInt(req.query.ID_TERMEK);
 
   var sql = `
     UPDATE webbolt_termekek
     SET
-      KATEGORIA = '${kategoria}',
+      ID_KATEGORIA = '${kategoria}',
       NEV = '${nev}',
       AZON = '${azon}',
       AR = ${ar},
       MENNYISEG = ${mennyiseg},
-      MEGYS = '${meegys}',
-      DATUM = '${datum}',
+      MEEGYS = '${meegys}',
+      DATUMIDO = '${datum}',
       LEIRAS = '${leiras}'
     WHERE ID_TERMEK = ${termekid};
   `;
