@@ -13,25 +13,25 @@ $("#cart_button").click(async function () {
 
 
                 cnt += `
-                    <div class="d-flex flex-column flex-lg-row">
+                    <div class="d-flex flex-column flex-xxl-row">
                         <div class="col-1"></div>
-                        <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
+                        <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center">
                             <img src="${element.FOTOLINK}" class="img img-fluid" style="width:30%;" alt="kep">
                         </div>
-                        <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
+                        <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center p-3">
                             <p>${element.NEV}</p>
                         </div>
-                        <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
-                            <button type="button" class="btn btn-secondary bi bi-dash-lg" aria-label="minusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9"></button>
-                            <input type="number" class="form-control w-50" min="1" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2">
-                            <button type="button" class="btn btn-secondary bi bi-plus-lg" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
+                        <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center">
+                            <button type="button" class="btn btn-lg btn-secondary bi bi-dash-lg bal-gomb" aria-label="minusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9"></button>
+                            <input type="number" class="form-control-lg w-50" min="1" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2">
+                            <button type="button" class="btn btn-lg btn-secondary bi bi-plus-lg jobb-gomb" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                         </div>
-                        <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center" id="${element.ID_TERMEK}3">
+                        <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center p-3" id="${element.ID_TERMEK}3">
                             <h4 class="anton-regular">${element.AR * element.MENNYISEG} Ft</h4>
                         </div>
 
-                        <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
-                            <button type="button" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)" class="btn btn-warning"><i class="bi bi-x-circle-fill"></i></button>
+                        <div class="col-12 col-xxl-2 d-flex align-self-center justify-content-center">
+                            <button type="button" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)" class="btn btn-danger" aria-label="teteltorol"><i class="bi bi-x-lg"></i></button>
                         </div>
                         <div class="col-1"></div>
                     </div>        
