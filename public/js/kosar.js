@@ -102,10 +102,19 @@ async function KosarTetelDB() {
 
 async function KosarPLUSZ(id){
     var PluszVAGYminusz = id.id.substring(id.id.length - 1, id.id.length) == 9? -1 : ""  ;// ha nem 9 akkor - / ha 1 akkor + 
-    var Menyiseg = id.id.substring(id.id.length - 1, id.id.length) == "2"? `&ERTEK="${id.value}"` : "";// ha 2 akkor az input mező lett változtatva
+    var Menyiseg = id.id.substring(id.id.length - 1, id.id.length) == "2"? `&ERTEK="${id.value}"` : " ";// ha 2 akkor az input mező lett változtatva
     var idk = id.id.substring(0, id.id.length - 1);
     
-    await ajax_post(`kosar_add?ID_TERMEK=${idk}&MENNYIT=${PluszVAGYminusz}`, 1);
+    switch(Menyiseg){
+        case " ":
+            await ajax_post(`kosar_add?ID_TERMEK=${idk}`, 1);
+            break;
+        case `&ERTEK="${id.value}"`:
+            await ajax_post(`kosar_menny_upd?ID_TERMEK=${idk}${Menyiseg}`, 1);
+            break;
+    }
+
+    
     var db = await ajax_post("tetelek?ID_TERMEK="+idk+Menyiseg, 1); // MEnyiség értéket csak akkor adok át ,a mikor az input mező lett változtatva különben üres string
     document.getElementById(`${idk}2`).value = db.rows[0].MENNYISEG;
     document.getElementById(`${idk}3`).innerHTML = `<h5><b >${parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR)} Ft</b><h5>` ; // forint firssit
