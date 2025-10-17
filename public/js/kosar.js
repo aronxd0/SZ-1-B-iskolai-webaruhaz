@@ -55,7 +55,7 @@ $("#cart_button").click(async function () {
     $("#pagi").html("");
 });
 function INPUTIR(){
-    üzen("Ne nyúlj hozzám","warning");
+    üzen("Yes OFFICER ,he touched me","danger");
 }
 
 
