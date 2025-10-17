@@ -19,7 +19,7 @@ function Termek_Edit(event, cuccok, tipus) {
 
     console.log(`ID KATEGORIA TERMEK EDIT XD: ${id_kategoria}`);
 
-    KategoriaFeltolt("mod_kat", "select");
+    KategoriaFeltolt("mod_kat", "select", id_kategoria);
 
     if (tipus == "bevitel") {
 
@@ -32,16 +32,17 @@ function Termek_Edit(event, cuccok, tipus) {
     }
     else {
         $("#idx1").html(`${termek_id}; ${nev}`);
-        $("#mod_kat").val("1").change();
-        console.log($("#mod_kat").val()); 
-        $("#mod_kat").val(`${id_kategoria}`).change();
+        //$("#mod_kat").val("1").change();
+        //console.log($("#mod_kat").val()); 
+        //$("#mod_kat").val(`${id_kategoria}`).change();
         //$(`#mod_kat option[value=${id_kategoria}]`).attr("selected", "selected");
         $("#mod_nev").val(nev);
         $("#mod_azon").val(azon);
         $("#mod_ar").val(ar);
         $("#mod_db").val(mennyiseg);
         $("#mod_meegys").val(meegys);
-        
+        var datum = new Date();
+        $("#mod_datum").val(datum.toISOString().split('T')[0]); 
         $("#mod_leiras").html(leiras);
     }
 
