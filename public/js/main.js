@@ -55,6 +55,19 @@ function RandomVelemeny() {
 }
 
 
+function AR_SUM(osztaly, hova) {
+    let sum = 0;
+
+    $(`.${osztaly}`).each(function () {
+        let osszeg = parseInt($(this).html().replaceAll(" ", "").replaceAll("&nbsp;", ""));
+        sum += osszeg;
+        
+    });
+    //return sum;
+    $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
+}
+
+
 
 function SUM(lista) {
     let sum = 0;

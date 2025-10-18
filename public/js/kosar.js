@@ -1,11 +1,9 @@
 // kosar menupont, kosarba helyezes, tetelek
 
-let arak = [];
-let tetelekCache = [];
+
 
 $("#cart_button").click(async function () {
-    arak = [];
-    tetelekCache = [];
+    
     $("#content_hely").html("");
 
     $("#keresett_kifejezes").html("");
@@ -32,8 +30,7 @@ $("#cart_button").click(async function () {
                     
 
                     let pez = element.AR * element.MENNYISEG;
-                    tetelekCache.push(element.ID_TERMEK);
-                    arak.push(pez);
+                    
 
                     cnt += `
                         
@@ -52,7 +49,7 @@ $("#cart_button").click(async function () {
                                 <button type="button" class="btn btn-lg btn-dark bi bi-plus-lg jobb-gomb" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                             </div>
                             <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center p-3" id="${element.ID_TERMEK}3">
-                                <h4 class="anton-regular text-success" id="termekdbar">${pez.toLocaleString()} Ft</h4>
+                                <h4 class="anton-regular text-success termek_ar">${pez.toLocaleString()} Ft</h4>
                             </div>
 
                             <div class="col-12 col-lg-1 d-flex align-self-center justify-content-center">
@@ -70,7 +67,7 @@ $("#cart_button").click(async function () {
 
                 cnt += `
                     <div class="col-12 mt-2 p-2 d-flex justify-content-center align-self-center">
-                        <h5>Összesen: </h5>&nbsp;<h3 id="sumar" class="anton-regular text-success">${SUM(arak).toLocaleString()} Ft</h3>&nbsp;<h5> (+ ÁFA)</h5>
+                        <h5>Összesen: </h5>&nbsp;<h3 id="sumar" class="anton-regular text-success"></h3>&nbsp;<h5> (+ ÁFA)</h5>
                     </div>
                 
                 
@@ -92,11 +89,17 @@ $("#cart_button").click(async function () {
 
 
         
-       console.log(arak);
+        
 
         $("#content_hely").html(cnt);
         $("#pagi").html("");
+        AR_SUM("termek_ar", "sumar");
 });
+
+
+
+
+
 
 
 
@@ -105,10 +108,13 @@ function KosarItemDelete(id){
     .then(() => {
         $(`#${id.id}NAGY`).remove();
 
+        /*
         const index = tetelekCache.indexOf(id.id);
         if (index != -1) { tetelekCache.splice(index, 1); arak.splice(index, 1); }
+        */
 
-        $("#sumar").html(`${SUM(arak).toLocaleString()} Ft`);
+        //$("#sumar").html(`${AR_SUM("termek_ar")} Ft`);
+        AR_SUM("termek_ar", "sumar");
 
         KosarTetelDB();
         üzen("Tétel törölve a kosárból","success");
@@ -166,13 +172,18 @@ async function KosarPLUSZ(id) {
     let money = mennyiseg * ar;
     
     document.getElementById(`${idk}2`).value = mennyiseg;
-    document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success">${money.toLocaleString()} Ft<h4>` ; // forint firssit
+    document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success termek_ar">${money.toLocaleString()} Ft<h4>` ; // forint firssit
 
+    /*
     const index = tetelekCache.indexOf(idk);
     if (index != -1) { arak[index] = money; }
     else { tetelekCache.push(idk); arak.push(money); }
+    */
 
-    $("#sumar").html(`${SUM(arak).toLocaleString()} Ft`);
+    //console.log(arak);
+
+    //$("#sumar").html(`${AR_SUM("termek_ar")} Ft`);
+    AR_SUM("termek_ar", "sumar");
     KosarTetelDB(); // fönti kosár db frissitése
 
 };
