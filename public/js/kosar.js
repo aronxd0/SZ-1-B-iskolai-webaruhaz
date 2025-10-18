@@ -66,7 +66,7 @@ $("#cart_button").click(async function () {
 
                 cnt += `
                     <div class="col-12 mt-2 p-2 d-flex justify-content-center align-self-center">
-                        <h5>Összesen: </h5>&nbsp;<h3 class="anton-regular text-success">${SUM(arak).toLocaleString()} Ft</h3>&nbsp;<h5> (+ ÁFA)</h5>
+                        <h5>Összesen: </h5>&nbsp;<h3 id="sumar" class="anton-regular text-success">${SUM(arak).toLocaleString()} Ft</h3>&nbsp;<h5> (+ ÁFA)</h5>
                     </div>
                 
                 
@@ -142,7 +142,7 @@ async function KosarTetelDB() {
     } catch (err) { üzen(err, "danger"); }
 }
 
-async function KosarPLUSZ(id){
+async function KosarPLUSZ(id) {
     var PluszVAGYminusz = id.id.substring(id.id.length - 1, id.id.length) == 9? -1 : ""  ;// ha nem 9 akkor - / ha 1 akkor + 
     var ertek = id.id.substring(id.id.length - 1, id.id.length) == "2"? `&ERTEK=${id.value > 0 ? id.value: 1}` : "";// ha 2 akkor az input mező lett változtatva
     var idk = id.id.substring(0, id.id.length - 1);
@@ -151,7 +151,9 @@ async function KosarPLUSZ(id){
     var db = await ajax_post("tetelek?ID_TERMEK="+idk, 1); // MEnyiség értéket csak akkor adok át ,a mikor az input mező lett változtatva különben üres string
     document.getElementById(`${idk}2`).value = db.rows[0].MENNYISEG;
     let money = parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR);
-    document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success">${money.toLocaleString()} Ft - ${SUM(arak)}<h4>` ; // forint firssit
+    arak.push(money);
+    document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success">${money.toLocaleString()} Ft<h4>` ; // forint firssit
+    $("#sumar").html(`${SUM(arak).toLocaleString()} Ft`);
     KosarTetelDB(); // fönti kosár db frissitése
 
 };
