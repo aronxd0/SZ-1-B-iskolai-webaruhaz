@@ -1,9 +1,9 @@
 // kosar menupont, kosarba helyezes, tetelek
 
-
+let tetelekli = [];
 
 $("#cart_button").click(async function () {
-    
+    tetelekli = [];
     $("#content_hely").html("");
 
     $("#keresett_kifejezes").html("");
@@ -31,6 +31,7 @@ $("#cart_button").click(async function () {
 
                     let pez = element.AR * element.MENNYISEG;
                     
+                    tetelekli.push(`${element.ID_TERMEK}`, `${element.NEV}`, `${element.MENNYISEG}`, `${pez}`);
 
                     cnt += `
                         
@@ -71,7 +72,7 @@ $("#cart_button").click(async function () {
                             <h5 class="align-self-center p-2">Összesen: </h5>&nbsp;<h3 id="sumar" class="anton-regular text-success align-self-center p-2"></h3>&nbsp;<h5 class="align-self-center p-2"> (+ ÁFA)</h5>
                         </div>
                         <div class="col-12 d-flex justify-content-center p-3 mb-5">
-                            <button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez"> Tovább a fizetéshez</button>
+                            <button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='FizetesAblak(${JSON.stringify(tetelekli)})'> Tovább a fizetéshez</button>
                         </div>
                     </div>
                 
