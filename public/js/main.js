@@ -81,11 +81,23 @@ function SUM(lista) {
 function update_gombok (x) {
     if (x == 0) { 
         //$("#cart_button").hide(); 
-        $("#cart_button")[0].style.setProperty('display', 'none', 'important');
-        $("#admin_button").hide(); 
+        //$("#cart_button")[0].style.setProperty('display', 'none', 'important');
+        //$("#admin_button").hide();
+        $("#kosar-gombdiv").hide();
+        $("#admin-gombdiv").hide();
     }
-    if (x == 1) { $("#cart_button").show(); $("#admin_button").hide(); }
-    if (x == 2) { $("#cart_button").show(); $("#admin_button").show(); }
+    if (x == 1) { 
+        $("#kosar-gombdiv").show();
+        //$("#cart_button")[0].style.setProperty('display', 'block', 'important');
+        $("#admin-gombdiv").hide(); 
+    }
+    if (x == 2) { 
+        //$("#cart_button").show(); 
+        //$("#admin_button").show();
+        $("#kosar-gombdiv").show();
+        //$("#cart_button")[0].style.setProperty('display', 'block', 'important');
+        $("#admin-gombdiv").show();
+    }
     
 }
 

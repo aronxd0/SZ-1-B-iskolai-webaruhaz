@@ -66,8 +66,10 @@ $("#cart_button").click(async function () {
                 }
 
                 cnt += `
-                    <div class="col-12 mt-2 p-2 d-flex justify-content-center align-self-center">
-                        <h5 class="align-self-center p-2">Összesen: </h5>&nbsp;<h3 id="sumar" class="anton-regular text-success align-self-center p-2"></h3>&nbsp;<h5 class="align-self-center p-2"> (+ ÁFA)</h5>
+                    <div class="row">
+                        <div class="col-12 mt-2 p-2 d-flex justify-content-center align-self-center">
+                            <h5 class="align-self-center p-2">Összesen: </h5>&nbsp;<h3 id="sumar" class="anton-regular text-success align-self-center p-2"></h3>&nbsp;<h5 class="align-self-center p-2"> (+ ÁFA)</h5>
+                        </div>
                     </div>
                 
                 
@@ -108,12 +110,6 @@ function KosarItemDelete(id){
     .then(() => {
         $(`#${id.id}NAGY`).remove();
 
-        /*
-        const index = tetelekCache.indexOf(id.id);
-        if (index != -1) { tetelekCache.splice(index, 1); arak.splice(index, 1); }
-        */
-
-        //$("#sumar").html(`${AR_SUM("termek_ar")} Ft`);
         AR_SUM("termek_ar", "sumar");
 
         KosarTetelDB();
@@ -174,15 +170,7 @@ async function KosarPLUSZ(id) {
     document.getElementById(`${idk}2`).value = mennyiseg;
     document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success termek_ar">${money.toLocaleString()} Ft<h4>` ; // forint firssit
 
-    /*
-    const index = tetelekCache.indexOf(idk);
-    if (index != -1) { arak[index] = money; }
-    else { tetelekCache.push(idk); arak.push(money); }
-    */
 
-    //console.log(arak);
-
-    //$("#sumar").html(`${AR_SUM("termek_ar")} Ft`);
     AR_SUM("termek_ar", "sumar");
     KosarTetelDB(); // fönti kosár db frissitése
 
