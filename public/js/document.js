@@ -91,6 +91,8 @@ $(document).ready(function() {
     $("#home_button").trigger("click");
 
 
+    // slidernek input mezö , változtatni kell a slider inputokaz as well as  a slider value: Enter után  szürni kell , emouseuot on is .
+
     $("#min_ar").on("input", async function() {
         $("#min_ar_input").val($("#min_ar").val());
 
