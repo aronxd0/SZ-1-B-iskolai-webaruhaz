@@ -67,7 +67,7 @@ $("#cart_button").click(async function () {
 
                 cnt += `
                     <div class="col-12 mt-2 p-2 d-flex justify-content-center align-self-center">
-                        <h5>Összesen: </h5>&nbsp;<h3 id="sumar" class="anton-regular text-success"></h3>&nbsp;<h5> (+ ÁFA)</h5>
+                        <h5 class="align-self-center p-2">Összesen: </h5>&nbsp;<h3 id="sumar" class="anton-regular text-success align-self-center p-2"></h3>&nbsp;<h5 class="align-self-center p-2"> (+ ÁFA)</h5>
                     </div>
                 
                 
