@@ -324,7 +324,8 @@ function SliderELL(item){
             if(parseInt ($("#min_ar").val()) > parseInt( $("#max_ar").val())){
                 $("#max_ar").val(parseInt( $("#min_ar").val()) +1 );  
                 $("#max_ar_input").val($("#max_ar").val());
-            }            
+            }  
+                      
             if($("#min_ar").val() == document.getElementById("min_ar").min){
                 $("#min_ar_input").val($("#min_ar").attr("min"));
             }
