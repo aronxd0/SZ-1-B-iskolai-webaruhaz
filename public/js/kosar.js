@@ -3,6 +3,7 @@
 let arak = [];
 
 $("#cart_button").click(async function () {
+    arak = [];
     $("#content_hely").html("");
 
     $("#keresett_kifejezes").html("");
@@ -143,6 +144,7 @@ async function KosarTetelDB() {
 }
 
 async function KosarPLUSZ(id) {
+    arak = [];
     var PluszVAGYminusz = id.id.substring(id.id.length - 1, id.id.length) == 9? -1 : ""  ;// ha nem 9 akkor - / ha 1 akkor + 
     var ertek = id.id.substring(id.id.length - 1, id.id.length) == "2"? `&ERTEK=${id.value > 0 ? id.value: 1}` : "";// ha 2 akkor az input mező lett változtatva
     var idk = id.id.substring(0, id.id.length - 1);
