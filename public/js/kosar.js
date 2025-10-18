@@ -70,6 +70,9 @@ $("#cart_button").click(async function () {
                         <div class="col-12 mt-2 p-2 d-flex justify-content-center align-self-center">
                             <h5 class="align-self-center p-2">Összesen: </h5>&nbsp;<h3 id="sumar" class="anton-regular text-success align-self-center p-2"></h3>&nbsp;<h5 class="align-self-center p-2"> (+ ÁFA)</h5>
                         </div>
+                        <div class="col-12 d-flex justify-content-center p-3">
+                            <button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez"> Tovább a fizetéshez</button>
+                        </div>
                     </div>
                 
                 
