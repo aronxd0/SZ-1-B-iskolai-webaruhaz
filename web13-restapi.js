@@ -67,14 +67,13 @@ function gen_SQL_kereses(req) {
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
 
   if(maxmin_arkell == 1){
-    var where_arhoz = where.substring(0, where.length-4); // Ár szűréshez szükséges where feltétel tárolása
+    var where = where.substring(0, where.length-4); // Ár szűréshez szükséges where feltétel tárolása
     var sql = 
     `
     SELECT MAX(t.AR) AS MAXAR, MIN(t.AR) AS MINAR
     from webbolt_termekek t
-    where ${where_arhoz}
-    `
-    return (sql);
+    where ${where}
+    `;
   }
   else{
   // Rendezési feltétel beállítása a lekérdezéshez
@@ -133,8 +132,8 @@ app.post('/kategoria',(req, res) => {
   var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)        :   -1); // Csak elfogyott termékek (admin funkció)
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
   var nev = (req.query.nev? strE(req.query.nev)           :   ""); // Csak inaktív termékek (admin funkció)
-  var armin = (req.query.minar? parseInt(req.query.MINAR) : -1); // Ár alsó határ szűréshez
-  var armax = (req.query.maxar? parseInt(req.query.MAXAR) : -1); // Ár felső határ szűréshez
+  var armin = (req.query.minar? parseInt(req.query.minar) : -1); // Ár alsó határ szűréshez
+  var armax = (req.query.maxar? parseInt(req.query.maxar) : -1); // Ár felső határ szűréshez
 
   var where = `${nev != "" ? `where (t.NEV like "%${nev}%" or t.LEIRAS like "%${nev}%") ` : ``}`;
 
@@ -150,11 +149,13 @@ app.post('/kategoria',(req, res) => {
   }
 
   if (armin != -1) {
-    where += `${where.length == 0 ? `where` : `and`} (t.AR >= ${armin})`;
+    where += `and (t.AR >= ${armin})`;
   }
   if (armax != -1) {
-    where += `${where.length == 0 ? `where` : `and`} (t.AR <= ${armax})`;
+    where += `and (t.AR <= ${armax})`;
   }
+  console.log("armin: " + armin + " armax: " + armax);
+  
 
   var sql = `
     SELECT DISTINCT k.ID_KATEGORIA, k.KATEGORIA
@@ -163,6 +164,7 @@ app.post('/kategoria',(req, res) => {
     ${where}
     ORDER BY k.KATEGORIA
   `;
+  console.log("sql: " + sql);
   sendJson_toFrontend (res, sql);           // async await ... 
 });
 
