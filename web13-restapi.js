@@ -45,8 +45,8 @@ function gen_SQL_kereses(req) {
   var név    = (req.query.nev? req.query.nev :  ""); // Terméknév vagy leírás szűrés
   var maxarkeres = (req.query.maxar? parseInt(req.query.maxar) : 0); // Ár felső határ szűréshez
   var minarkeres = (req.query.minar? parseInt(req.query.minar) : 0); // Ár alsó határ szűréshez
-  var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0); // Csak min/max ár lekérdezéshez (ha 1, csak ezt adja vissza)
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
+  var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0);
 
   // Ha csak elfogyott termékeket kérünk (admin funkció)
   if(elfogyott != -1){
@@ -63,59 +63,68 @@ function gen_SQL_kereses(req) {
     where = `(t.AKTIV = "N" OR t.MENNYISEG = 0) AND `;   // Bármelyik feltétel teljesül
   }
 
-  // Rendezési feltétel beállítása a lekérdezéshez
-  var order_van = "";
-  switch (Math.abs(order)) {
-    case 1: order_van = "ORDER BY AR";  break;   // Ár szerint rendezés
-    case 2: order_van = "ORDER BY NEV"; break;   // Név szerint rendezés
-    case 3: order_van = "ORDER BY MENNYISEG"; break;   // Mennyiség szerint rendezés
-    default: order_van = "" ; break;  // Nincs rendezés
-  }
-  console.log("order:  " + order)
-  console.log("ordervan:  " + order_van)
-
-  // Kategória szűrés, ha van megadva kategória lista
-  if (id_kat != -1)
-  {
-    where += "(";
-    // A kategória ID-kat '-' karakterrel elválasztva kapjuk, mindegyikre külön OR feltétel
-    for (var i=0; i < strE(req.query.kategoria).split("-").length - 1; ++i) 
-      {
-        where += `k.ID_KATEGORIA=${strE(req.query.kategoria).split("-")[i]} or `;
-      }
-    where = `${where.substring(0, where.length - 3)}) and `; // Az utolsó ' or ' törlése
-  }
-
   // Név vagy leírás szűrés, ha van keresési kifejezés
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
 
-  // Ha van szűrés, akkor a végéről levágjuk az utolsó ' and '-et, és where kulcsszóval kezdjük
-  if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
-
-  // Ár szűrés (min/max)
-  var arkeres = "";
-  if (maxarkeres != 0) { 
-    arkeres += `${where.length > 0 ? ` and` : ` where`} (t.AR <= ${parseInt(req.query.maxar)})${minarkeres != 0 ? ` and` : ``} `;  // dupla where elkerülése miatt (ar/where switch) ezért ez azutolsó
+  if(maxmin_arkell == 1){
+    var where_arhoz = where.substring(0, where.length-4); // Ár szűréshez szükséges where feltétel tárolása
+    var sql = 
+    `
+    SELECT MAX(t.AR) AS MAXAR, MIN(t.AR) AS MINAR
+    from webbolt_termekek t
+    where ${where_arhoz}
+    `
+    return (sql);
   }
-  if (minarkeres != 0) { 
-    arkeres += `(t.AR >= ${parseInt(req.query.minar)}) `;  
-  }
+  else{
+  // Rendezési feltétel beállítása a lekérdezéshez
+    var order_van = "";
+    switch (Math.abs(order)) {
+      case 1: order_van = "ORDER BY AR";  break;   // Ár szerint rendezés
+      case 2: order_van = "ORDER BY NEV"; break;   // Név szerint rendezés
+      case 3: order_van = "ORDER BY MENNYISEG"; break;   // Mennyiség szerint rendezés
+      default: order_van = "" ; break;  // Nincs rendezés
+    }
 
-  // Az SQL lekérdezés összeállítása
-  var sql = 
-    `SELECT 
-    ${maxmin_arkell == 1
-      ?  `MAX(t.AR) as MAXAR, MIN(t.AR) as MINAR`
-      : `t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, k.KATEGORIA AS KATEGORIA`}
-     FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
-     ON t.ID_KATEGORIA = k.ID_KATEGORIA
-     ${where}
-     ${maxmin_arkell == 1 ? `` : `${arkeres}` }
-     ${maxmin_arkell == 1 ? `` : `${order_van} ${order<0? "DESC": ""}`}
-     ${maxmin_arkell == 1 ? `` : ` limit 51 offset ${offset}`}
-     `;
-  console.log(sql);
-  return (sql);
+    // Kategória szűrés, ha van megadva kategória lista
+    if (id_kat != -1)
+    {
+      where += "(";
+      // A kategória ID-kat '-' karakterrel elválasztva kapjuk, mindegyikre külön OR feltétel
+      for (var i=0; i < strE(req.query.kategoria).split("-").length - 1; ++i) 
+        {
+          where += `k.ID_KATEGORIA=${strE(req.query.kategoria).split("-")[i]} or `;
+        }
+      where = `${where.substring(0, where.length - 3)}) and `; // Az utolsó ' or ' törlése
+    }
+
+    // Ha van szűrés, akkor a végéről levágjuk az utolsó ' and '-et, és where kulcsszóval kezdjük
+    if (where.length >0) { where = " where "+where.substring(0, where.length-4); }
+
+    // Ár szűrés (min/max)
+    var arkeres = "";
+    if (maxarkeres != 0) { 
+      arkeres += `${where.length > 0 ? ` and` : ` where`} (t.AR <= ${parseInt(req.query.maxar)})${minarkeres != 0 ? ` and` : ``} `;  // dupla where elkerülése miatt (ar/where switch) ezért ez azutolsó
+    }
+    if (minarkeres != 0) { 
+      arkeres += `(t.AR >= ${parseInt(req.query.minar)}) `;  
+    }
+
+    // Az SQL lekérdezés összeállítása
+    var sql = 
+      `
+    SELECT 
+        t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, 
+        k.KATEGORIA AS KATEGORIA
+        FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
+        ON t.ID_KATEGORIA = k.ID_KATEGORIA
+        ${where}
+        ${arkeres}
+        ${order_van} ${order<0? "DESC": ""}
+        limit 51 offset ${offset}
+      `;
+    return (sql);
+  }
 }
 
 app.post('/kategoria',(req, res) => {
@@ -124,6 +133,8 @@ app.post('/kategoria',(req, res) => {
   var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)        :   -1); // Csak elfogyott termékek (admin funkció)
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
   var nev = (req.query.nev? strE(req.query.nev)           :   ""); // Csak inaktív termékek (admin funkció)
+  var armin = (req.query.minar? parseInt(req.query.MINAR) : -1); // Ár alsó határ szűréshez
+  var armax = (req.query.maxar? parseInt(req.query.MAXAR) : -1); // Ár felső határ szűréshez
 
   var where = `${nev != "" ? `where (t.NEV like "%${nev}%" or t.LEIRAS like "%${nev}%") ` : ``}`;
 
@@ -138,6 +149,13 @@ app.post('/kategoria',(req, res) => {
     where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "Y" AND t.MENNYISEG > 0)`;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
   }
 
+  if (armin != -1) {
+    where += `${where.length == 0 ? `where` : `and`} (t.AR >= ${armin})`;
+  }
+  if (armax != -1) {
+    where += `${where.length == 0 ? `where` : `and`} (t.AR <= ${armax})`;
+  }
+
   var sql = `
     SELECT DISTINCT k.ID_KATEGORIA, k.KATEGORIA
     FROM webbolt_kategoriak k 
@@ -145,7 +163,6 @@ app.post('/kategoria',(req, res) => {
     ${where}
     ORDER BY k.KATEGORIA
   `;
-  console.log(sql);
   sendJson_toFrontend (res, sql);           // async await ... 
 });
 
