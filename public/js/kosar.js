@@ -1,5 +1,7 @@
 // kosar menupont, kosarba helyezes, tetelek
 
+let arak = [];
+
 $("#cart_button").click(async function () {
     $("#content_hely").html("");
 
@@ -15,7 +17,7 @@ $("#cart_button").click(async function () {
         </div>
         `;
     
-    let arak = [];
+    
 
     try {
         await ajax_post("tetelek", 1).then(tetelek => {
@@ -149,7 +151,7 @@ async function KosarPLUSZ(id){
     var db = await ajax_post("tetelek?ID_TERMEK="+idk, 1); // MEnyiség értéket csak akkor adok át ,a mikor az input mező lett változtatva különben üres string
     document.getElementById(`${idk}2`).value = db.rows[0].MENNYISEG;
     let money = parseInt(db.rows[0].MENNYISEG) * parseInt(db.rows[0].AR);
-    document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success">${money.toLocaleString()} Ft<h4>` ; // forint firssit
+    document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success">${money.toLocaleString()} Ft - ${SUM(arak)}<h4>` ; // forint firssit
     KosarTetelDB(); // fönti kosár db frissitése
 
 };
