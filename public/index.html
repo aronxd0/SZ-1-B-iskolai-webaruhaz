@@ -163,19 +163,19 @@
         <div class="row border rounded p-1 mt-3 mx-auto d-flex align-items-center">  
           <div class="col-lg-3 text-center"> Minimum ár: </div> 
           <div class="col-lg-7"> 
-            <input type="number" onblur="KategoriaFeltolt('kategoria_section', 'check', '')" class="form-control w-100" id="min_ar_input" value="0"> 
+            <input type="number" onchange="Sliderninput(this)" class="form-control w-100" id="min_ar_input" value="0"> 
           </div> 
           <div class="col-lg-2 text-center"> Ft </div>
-          <input type="range" onmouseup="KategoriaFeltolt('kategoria_section', 'check', '')"  class="slider form-range w-100" id="min_ar" > 
+          <input type="range" value="1" onmouseup="KategoriaFeltolt('kategoria_section', 'check', '')"  class="slider form-range w-100" id="min_ar" > 
         </div>       
 
         <div class="row border rounded p-1 mt-2 mx-auto d-flex align-items-center"> 
           <div class="col-lg-3 text-center"> Maximum ár </div> 
           <div class="col-lg-7"> 
-            <input type="number" onblur="KategoriaFeltolt('kategoria_section', 'check', '')" class="form-control w-100" id="max_ar_input" value="0">
+            <input type="number" onchange="Sliderninput(this)" class="form-control w-100" id="max_ar_input" value="0">
           </div> 
           <div class="col-lg-2 text-center">Ft</div> 
-          <input type="range" onmouseup="KategoriaFeltolt('kategoria_section', 'check', '')"  class="slider form-range w-100" id="max_ar"> 
+          <input type="range" value="1" onmouseup="KategoriaFeltolt('kategoria_section', 'check', '')"  class="slider form-range w-100" id="max_ar"> 
         </div> 
         <br><br>
         

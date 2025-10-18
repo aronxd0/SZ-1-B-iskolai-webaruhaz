@@ -303,16 +303,57 @@ async function ArFeltolt(sql, min ,max){
 
 
     } catch (err) { console.log("hiba:", err); }
+}
+function Sliderninput( item ){
+    if(item.id == "min_ar_input"){
+        document.getElementById("min_ar").value = item.value;
+        SliderELL("min");
+    }
+    else{
+        document.getElementById("max_ar").value = item.value;
+        SliderELL("max");       
+    }
     
-     
+    KategoriaFeltolt("kategoria_section", "check", "");
 }
 
+function SliderELL(item){
+    
+    switch(item){
+        case("min"): {
+            if(parseInt ($("#min_ar").val()) > parseInt( $("#max_ar").val())){
+                $("#max_ar").val(parseInt( $("#min_ar").val()) +1 );  
+                $("#max_ar_input").val($("#max_ar").val());
+            }            
+            if($("#min_ar").val() == document.getElementById("min_ar").min){
+                $("#min_ar_input").val($("#min_ar").attr("min"));
+            }
+            if($("#min_ar").val() == document.getElementById("min_ar").max){
+                $("#min_ar_input").val($("#min_ar").attr("max"));
+            }          
+            break;
+        }
+        case("max"): {
+            if(parseInt ($("#max_ar").val()) < parseInt( $("#min_ar").val())){
+                $("#min_ar").val(parseInt( $("#max_ar").val())-1 );  
+                $("#min_ar_input").val($("#min_ar").val());
+            }
+
+            if($("#max_ar").val() == document.getElementById("max_ar").min){
+                $("#max_ar_input").val($("#max_ar").attr("min"));
+            }
+            if($("#max_ar").val() == document.getElementById("max_ar").max){
+                $("#max_ar_input").val($("#max_ar").attr("max"));
+            }      
+
+        }   
+    }   
+}
 
 
 
 async function KategoriaFeltolt(hova, type, kivalasztott) {
     $(`#${hova}`).empty("");
-    console.log("bele");
     var nemaktivt = "";//reset
     if (Nemaktivak) {
      nemaktivt = "&inaktiv=1";

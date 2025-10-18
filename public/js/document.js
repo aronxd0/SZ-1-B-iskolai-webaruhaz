@@ -93,23 +93,27 @@ $(document).ready(function() {
 
     // slidernek input mezö , változtatni kell a slider inputokaz as well as  a slider value: Enter után  szürni kell , emouseuot on is .
 
-    $("#min_ar").on("input", async function() {
+    $("#min_ar").on("input",  function MinarELL() {
         $("#min_ar_input").val($("#min_ar").val());
 
+        SliderELL("min");
+        /*
         if(parseInt ($("#min_ar").val()) > parseInt( $("#max_ar").val())){
             $("#max_ar").val(parseInt( $("#min_ar").val()) +1 );  
             $("#max_ar_input").val($("#max_ar").val());
-        }   
+        }   */
 
     });
 
-    $("#max_ar").on("input", async function() {
+    $("#max_ar").on("input",  function MaxarELL() {
         $("#max_ar_input").val($("#max_ar").val());
 
+        SliderELL("max");
+        /*
         if(parseInt ($("#max_ar").val()) < parseInt( $("#min_ar").val())){
             $("#min_ar").val(parseInt( $("#max_ar").val()) -1 );  
             $("#min_ar_input").val($("#min_ar").val());
-        }
+        }*/
     });
 
 
