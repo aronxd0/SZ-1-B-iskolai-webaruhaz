@@ -299,6 +299,7 @@ function Sliderhuz(ettöl){
             document.getElementById("min_ar_input").value = ettöl.value-1;
         }
     }
+    KategoriaFeltolt();
 
 }
 
