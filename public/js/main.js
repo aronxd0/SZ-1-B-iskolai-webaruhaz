@@ -145,7 +145,7 @@ async function KERESOBAR() {
         } 
         CARD_BETOLT(adatok);
         OLDALFELTOTL(adatok.maxcount);
-        
+        KategoriaFeltolt("kategoria_section", "check", "",elfogy,nemaktiv);    
     } catch (err) { console.log("hiba:", err); }
     
     
@@ -156,7 +156,7 @@ async function KERESOBAR() {
     } ); 
      */
     
-    KategoriaFeltolt("kategoria_section", "check", "",elfogy,nemaktiv);
+    
     
     console.log("elküldve: "+ elküld);
 }
@@ -307,7 +307,8 @@ function Sliderhuz(ettöl){
 async function KategoriaFeltolt(hova, type, kivalasztott,elfogy,nemaktiv) {
     $(`#${hova}`).empty("");
     try {
-        let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}${elfogy}${nemaktiv}`, 1);
+        console.log(`&minar=${document.getElementById("min_ar").value}`)
+        let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}${elfogy}${nemaktiv}&minar=${parseInt( document.getElementById("min_ar").value)}&maxar= ${parseInt( document.getElementById("max_ar").value )}`, 1);
         let listItems  = "";
 
         if (type == "check") {
