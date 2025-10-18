@@ -314,7 +314,7 @@ function CARD_BETOLT(adatok){
     let ee = "";  
     let gg = "";  
     let cuccli = [];
-    $("#keresett_kifejezes").html();
+    
     
    //if (BevanJelentkezve()) { console.log("card betolt: be van jelentkezve"); }
 
@@ -358,7 +358,7 @@ function CARD_BETOLT(adatok){
         
 
          s += `
-         <div class="col-12 col-sm-6 col-xxl-4">
+         <div class="col-12 col-sm-6 col-xxl-4 p-5">
             <div class="card shadow-lg feka hover-shadow m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
@@ -378,8 +378,11 @@ function CARD_BETOLT(adatok){
     
 
 
-    if ($("#nev1").val() != "") $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);// ha van találat kifejezésre akkor kiirja a keresett kifejezést
-    else {$("#keresett_kifejezes").html("")};
+    if ($("#nev1").val() != "") { 
+        $("#keresett_kifejezes").html();
+        $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`); 
+    }
+    //else {/*$("#keresett_kifejezes").html("")*/};
 
     if(nev1.value != "" ){
         débé.innerHTML = ` (${adatok.maxcount} db)`;//talalat darabszam kiirasa
