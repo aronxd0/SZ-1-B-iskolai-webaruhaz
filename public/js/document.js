@@ -12,8 +12,8 @@ $(document).ready(function() {
         
 
 
-    ArFeltolt();
-    KategoriaFeltolt("kategoria_section", "check", "","","");
+    //ArFeltolt();
+    KategoriaFeltolt("kategoria_section", "check", "");
 
     var input = document.getElementById("nev1");
 
@@ -91,18 +91,17 @@ $(document).ready(function() {
     $("#home_button").trigger("click");
 
 
-    $("#min_ar").on("input", function() {
+    $("#min_ar").on("input", async function() {
         $("#min_ar_input").val($("#min_ar").val());
 
         if(parseInt ($("#min_ar").val()) > parseInt( $("#max_ar").val())){
             $("#max_ar").val(parseInt( $("#min_ar").val()) +1 );  
             $("#max_ar_input").val($("#max_ar").val());
-        }
-
+        }   
 
     });
 
-    $("#max_ar").on("input", function() {
+    $("#max_ar").on("input", async function() {
         $("#max_ar_input").val($("#max_ar").val());
 
         if(parseInt ($("#max_ar").val()) < parseInt( $("#min_ar").val())){

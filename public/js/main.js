@@ -145,7 +145,7 @@ async function KERESOBAR() {
         } 
         CARD_BETOLT(adatok);
         OLDALFELTOTL(adatok.maxcount);
-        KategoriaFeltolt("kategoria_section", "check", "",elfogy,nemaktiv);    
+        KategoriaFeltolt("kategoria_section", "check", "");    
     } catch (err) { console.log("hiba:", err); }
     
     
@@ -283,32 +283,22 @@ async function ArFeltolt(sql, min ,max){
 }
 
 
-function Sliderhuz(ettöl){
-    if(ettöl.id == "min_ar"){// ha a minárt huzom
-        document.getElementById("min_ar_input").value = ettöl.value;// új  ár kiirása 
-        if(ettöl.value > document.getElementById("max_ar").value){ // ha a minár nagyobb mint a maxár akkor a maxár legyen a minár + 1
-            document.getElementById("max_ar").value = ettöl.value+1;
-            document.getElementById("max_ar_input").value = ettöl.value+1;
-
-        }
-    }
-    else{// ha a maxárt huzom
-        document.getElementById("max_ar_input").value = ettöl.value;
-        if(ettöl.value < document.getElementById("min_ar").value){// ha a maxár kisebb mint a minár akkor a minár legyen a maxár - 1
-            document.getElementById("min_ar").value = ettöl.value-1;
-            document.getElementById("min_ar_input").value = ettöl.value-1;
-        }
-    }
-    KategoriaFeltolt();
-
-}
 
 
-async function KategoriaFeltolt(hova, type, kivalasztott,elfogy,nemaktiv) {
+async function KategoriaFeltolt(hova, type, kivalasztott) {
     $(`#${hova}`).empty("");
+    console.log("bele");
+    var nemaktivt = "";//reset
+    if (Nemaktivak) {
+     nemaktivt = "&inaktiv=1";
+    }
+    var elfogyt = ""
+    if (elfogyott){
+        elfogyt = "&elfogyott=1";
+    }
     try {
         console.log(`&minar=${document.getElementById("min_ar").value}`)
-        let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}${elfogy}${nemaktiv}&minar=${parseInt( document.getElementById("min_ar").value)}&maxar= ${parseInt( document.getElementById("max_ar").value )}`, 1);
+        let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}${elfogyt}${nemaktivt}&minar=${parseInt( document.getElementById("min_ar").value)}&maxar= ${parseInt( document.getElementById("max_ar").value )}`, 1);
         let listItems  = "";
 
         if (type == "check") {
@@ -327,7 +317,9 @@ async function KategoriaFeltolt(hova, type, kivalasztott,elfogy,nemaktiv) {
                 
             }
         }
-
+        if(listItems == ""){// ha nincs találat akkor kiírja hogy nincs kategória
+            listItems = "<p>Nincs ilyen kategória</p>";
+        }
         $(`#${hova}`).append(listItems);
         
     } catch (err) { console.log("hiba:", err); }                     

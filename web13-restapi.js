@@ -46,7 +46,7 @@ function gen_SQL_kereses(req) {
   var maxarkeres = (req.query.maxar? parseInt(req.query.maxar) : 0); // Ár felső határ szűréshez
   var minarkeres = (req.query.minar? parseInt(req.query.minar) : 0); // Ár alsó határ szűréshez
   var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
-  var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : 0);
+  var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : -1);
 
   // Ha csak elfogyott termékeket kérünk (admin funkció)
   if(elfogyott != -1){
@@ -66,7 +66,7 @@ function gen_SQL_kereses(req) {
   // Név vagy leírás szűrés, ha van keresési kifejezés
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
 
-  if(maxmin_arkell == 1){
+  if(maxmin_arkell != -1){
     var where = where.substring(0, where.length-4); // Ár szűréshez szükséges where feltétel tárolása
     var sql = 
     `
@@ -74,8 +74,9 @@ function gen_SQL_kereses(req) {
     from webbolt_termekek t
     where ${where}
     `;
+    return (sql);
   }
-  else{
+  else {
   // Rendezési feltétel beállítása a lekérdezéshez
     var order_van = "";
     switch (Math.abs(order)) {
@@ -164,7 +165,7 @@ app.post('/kategoria',(req, res) => {
     ${where}
     ORDER BY k.KATEGORIA
   `;
-  console.log("sql: " + sql);
+  console.log(sql);
   sendJson_toFrontend (res, sql);           // async await ... 
 });
 
