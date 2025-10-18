@@ -325,7 +325,7 @@ function SliderELL(item){
                 $("#max_ar").val(parseInt( $("#min_ar").val()) +1 );  
                 $("#max_ar_input").val($("#max_ar").val());
             }  
-                      
+
             if($("#min_ar").val() == document.getElementById("min_ar").min){
                 $("#min_ar_input").val($("#min_ar").attr("min"));
             }
@@ -385,7 +385,7 @@ async function KategoriaFeltolt(hova, type, kivalasztott) {
             }
         }
         if(listItems == ""){// ha nincs találat akkor kiírja hogy nincs kategória
-            listItems = "<p>Nincs ilyen kategória</p>";
+            listItems = "<p>Nincs ilyen termék</p>";
         }
         $(`#${hova}`).append(listItems);
         
