@@ -134,6 +134,18 @@ $(document).ready(function() {
     });
 
 
+    $("#mySwitch").on("change", function() {
+        if ($(this).is(":checked")) {
+            $("#switchtext").html("Aktív");
+            $("#mySwitch").val("YES");
+        }
+        else {
+            $("#switchtext").html("Inaktív");
+            $("#mySwitch").val("NO");
+        }
+    });
+
+
 
 });
 
