@@ -24,14 +24,13 @@ async function TermekModosit(url) {
 
     let ser = url.split("§")[0];
     let id_termek = url.split("§")[1];
-
-    console.log(ser);
-    console.log(id_termek);
+    let aktiv = url.split("§")[2];
+    
     console.log();
-    console.log(`ez megy at: termek_edit/ID_TERMEK=${id_termek}&${ser}`);
+    console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
     
     try {
-        let termekmod = await ajax_post(`termek_edit?ID_TERMEK=${id_termek}&${ser}`);
+        let termekmod = await ajax_post(`termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
         if (termekmod.message == "ok") { üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success"); }
         else { üzen(termekmod.message, "danger"); }
     } catch (err) { console.log("hiba:", err); }
@@ -100,7 +99,9 @@ function Termek_Edit(event, cuccok, tipus) {
     }
 
 
-    $("#save_button").click(function() { /*TermekModosit(`${$("#mod1").serialize()}§${termek_id}`);*/ console.log(`aktiv cucc val: ${$("#mySwitch").val()}`)  });
+    $("#save_button").click(function() { 
+        TermekModosit(`${$("#mod1").serialize()}§${termek_id}§${$("#mySwitch").val()}`);
+      });
 
     $("#termek_edit").modal("show");
 
