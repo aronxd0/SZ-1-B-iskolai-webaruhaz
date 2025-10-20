@@ -330,7 +330,9 @@ function CARD_BETOLT(adatok){
    //if (BevanJelentkezve()) { console.log("card betolt: be van jelentkezve"); }
 
     
+    
 
+    
     for (const element of adatok.rows) {
 
         if (element.AKTIV == "N" || element.MENNYISEG == 0) {//adminoknak a nem aktiv termekek pirossal látszódjanak
@@ -387,34 +389,36 @@ function CARD_BETOLT(adatok){
     }
   
     
+    if (!$("#nev1").val().startsWith("<")) {
 
+        if ($("#nev1").val() != "") { 
+            $("#keresett_kifejezes").html();
+            $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`); 
+        }
+        else {$("#keresett_kifejezes").html("")};
 
-    if ($("#nev1").val() != "") { 
-        $("#keresett_kifejezes").html();
-        $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`); 
+        if(nev1.value != "" ){
+            débé.innerHTML = ` (${adatok.maxcount} db)`;//talalat darabszam kiirasa
+        }
+        else{
+            débé.innerHTML ="";
+        }
+
+        var pp = `
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" id="Vissza2" onclick="Kovi(this)"> << </a></li>
+                <li class="page-item"><a class="page-link" id="vissza1" onclick="Kovi(this)">Előző</a></li>
+                <li class="page-item"><a class="page-link d-flex"><b id="Mostoldal">1</b> / <span id="DBoldal">100</span></a></li>
+                
+                <li class="page-item"><a class="page-link" id="Kovi1" onclick="Kovi(this)">Következő</a></li>
+                <li class="page-item"><a class="page-link" id="Kovi2" onclick="Kovi(this)"> >> </a></li>
+            </ul>`;
+        // alul a lapválastó feltöltése
+        
+        $("#content_hely").html(s);
+        $("#pagi").html(pp);
     }
-    else {$("#keresett_kifejezes").html("")};
-
-    if(nev1.value != "" ){
-        débé.innerHTML = ` (${adatok.maxcount} db)`;//talalat darabszam kiirasa
-    }
-    else{
-        débé.innerHTML ="";
-    }
-
-    var pp = `
-        <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" id="Vissza2" onclick="Kovi(this)"> << </a></li>
-            <li class="page-item"><a class="page-link" id="vissza1" onclick="Kovi(this)">Előző</a></li>
-            <li class="page-item"><a class="page-link d-flex"><b id="Mostoldal">1</b> / <span id="DBoldal">100</span></a></li>
-            
-            <li class="page-item"><a class="page-link" id="Kovi1" onclick="Kovi(this)">Következő</a></li>
-            <li class="page-item"><a class="page-link" id="Kovi2" onclick="Kovi(this)"> >> </a></li>
-        </ul>`;
-    // alul a lapválastó feltöltése
-    
-    $("#content_hely").html(s);
-    $("#pagi").html(pp);
+    else { üzen("Takarodj a gecibe", "danger"); }
 }
 
 console.log("termekek.js betoltott xd");
