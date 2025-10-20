@@ -416,6 +416,7 @@ function Elfogyott(alma){
         
        
     }
+    KategoriaFeltolt("kategoria_section", "check", "");
 }
 
 function Kezdolap() {
