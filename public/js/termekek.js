@@ -382,7 +382,7 @@ function CARD_BETOLT(adatok){
         $("#keresett_kifejezes").html();
         $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`); 
     }
-    //else {/*$("#keresett_kifejezes").html("")*/};
+    else {$("#keresett_kifejezes").html("")};
 
     if(nev1.value != "" ){
         débé.innerHTML = ` (${adatok.maxcount} db)`;//talalat darabszam kiirasa
