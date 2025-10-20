@@ -18,7 +18,7 @@ const mysql_connection =  {
   user: 'szaloky.adam',         /* CREATE USER 'itbolt_user'@'%' IDENTIFIED BY '123456'; GRANT all privileges ON ITBOLT.* TO 'itbolt_user'@'%' */ 
   port: "9406",
   password: 'Csany7922',
-  database: 'studio13_csany_zeg',          /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
+  database: '2021SZ_szaloky_adam',          /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
   multipleStatements: true // tranzakcióhoz kell, több lekérdezés futtatása egyszerre 
 };
 
