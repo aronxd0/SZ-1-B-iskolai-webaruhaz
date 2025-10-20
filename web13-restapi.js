@@ -402,7 +402,7 @@ app.post('/termek_edit',async (req, res) => {
   var datum     = strE(req.query.mod_datum);
   var leiras    = strE(req.query.mod_leiras);
   var termekid  = parseInt(req.query.ID_TERMEK);
-  var aktiv  = strE(req.query.mod_aktiv);
+  var aktiv  = req.query.mod_aktiv == undefined ? "NO" : "YES";
 
   var sql = `
     UPDATE webbolt_termekek
@@ -418,6 +418,7 @@ app.post('/termek_edit',async (req, res) => {
       AKTIV = '${aktiv == "YES" ? "Y" : "N"}'
     WHERE ID_TERMEK = ${termekid};
   `;
+  
   console.log(sql);
 
   const eredmeny = await runExecute(sql, req);
