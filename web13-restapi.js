@@ -401,7 +401,7 @@ app.post('/termek_edit',async (req, res) => {
   var datum     = strE(req.query.mod_datum);
   var leiras    = strE(req.query.mod_leiras);
   var termekid  = parseInt(req.query.ID_TERMEK);
-  var aktiv  = parseInt(req.query.AKTIV);
+  var aktiv  = strE(req.query.mod_aktiv);
 
   var sql = `
     UPDATE webbolt_termekek
@@ -414,7 +414,7 @@ app.post('/termek_edit',async (req, res) => {
       MEEGYS = '${meegys}',
       DATUMIDO = '${datum}',
       LEIRAS = '${leiras}',
-      AKTIV = '${aktiv == "" ? "Y" : "N"}'
+      AKTIV = '${aktiv == "YES" ? "Y" : "N"}'
     WHERE ID_TERMEK = ${termekid};
   `;
 
