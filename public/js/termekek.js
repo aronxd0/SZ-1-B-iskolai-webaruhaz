@@ -389,7 +389,7 @@ function CARD_BETOLT(adatok){
     }
   
     
-    if (!$("#nev1").val().startsWith("<")) {
+    if (!$("#nev1").val().includes("<")) {
 
         if ($("#nev1").val() != "") { 
             $("#keresett_kifejezes").html();
