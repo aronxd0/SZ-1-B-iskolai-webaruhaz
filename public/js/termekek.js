@@ -85,6 +85,17 @@ function Termek_Edit(event, cuccok, tipus) {
         var datum = new Date();
         $("#mod_datum").val(datum.toISOString().split('T')[0]); 
         $("#mod_leiras").html(leiras);
+
+        if (aktiv == "Y") { 
+            $("#mySwitch").prop("checked", true);
+            $("#switchtext").html("Aktív");
+            $("#mySwitch").val("YES"); 
+        }
+        else { 
+            $("#mySwitch").prop("checked", false);
+            $("#switchtext").html("Inaktív");
+            $("#mySwitch").val("NO"); 
+         }
     }
 
 
