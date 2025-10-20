@@ -233,6 +233,8 @@ app.post('/velemeny_del', async (req, res) => {
 
 
 //#region login/logoff
+
+
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
@@ -399,6 +401,7 @@ app.post('/termek_edit',async (req, res) => {
   var datum     = strE(req.query.mod_datum);
   var leiras    = strE(req.query.mod_leiras);
   var termekid  = parseInt(req.query.ID_TERMEK);
+  var aktiv  = parseInt(req.query.AKTIV);
 
   var sql = `
     UPDATE webbolt_termekek
@@ -410,7 +413,8 @@ app.post('/termek_edit',async (req, res) => {
       MENNYISEG = ${mennyiseg},
       MEEGYS = '${meegys}',
       DATUMIDO = '${datum}',
-      LEIRAS = '${leiras}'
+      LEIRAS = '${leiras}',
+      AKTIV = '${aktiv == "" ? "Y" : "N"}'
     WHERE ID_TERMEK = ${termekid};
   `;
 
