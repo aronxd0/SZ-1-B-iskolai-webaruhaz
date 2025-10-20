@@ -418,6 +418,7 @@ app.post('/termek_edit',async (req, res) => {
       AKTIV = '${aktiv == "YES" ? "Y" : "N"}'
     WHERE ID_TERMEK = ${termekid};
   `;
+  console.log(sql);
 
   const eredmeny = await runExecute(sql, req);
   res.send(eredmeny);
