@@ -100,7 +100,7 @@ function Termek_Edit(event, cuccok, tipus) {
     }
 
 
-    $("#save_button").click(function() { TermekModosit(`${$("#mod1").serialize()}§${termek_id}`); });
+    $("#save_button").click(function() { /*TermekModosit(`${$("#mod1").serialize()}§${termek_id}`);*/ console.log(`aktiv cucc val: ${$("#mySwitch").val()}`)  });
 
     $("#termek_edit").modal("show");
 
