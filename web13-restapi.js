@@ -155,8 +155,6 @@ app.post('/kategoria',(req, res) => {
   if (armax != -1) {
     where += `and (t.AR <= ${armax})`;
   }
-  console.log("armin: " + armin + " armax: " + armax);
-  
 
   var sql = `
     SELECT DISTINCT k.ID_KATEGORIA, k.KATEGORIA
@@ -165,7 +163,6 @@ app.post('/kategoria',(req, res) => {
     ${where}
     ORDER BY k.KATEGORIA
   `;
-  console.log(sql);
   sendJson_toFrontend (res, sql);           // async await ... 
 });
 
@@ -382,7 +379,6 @@ app.post('/tetelek',(req, res) => {
     INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
     WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER} ${termekid > (-1) ? `and webbolt_kosar_tetelei.ID_TERMEK = ${termekid}` : ""}
   `;
-  //console.log(sql)
   sendJson_toFrontend(res, sql);
 });
 
