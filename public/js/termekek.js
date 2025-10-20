@@ -70,6 +70,7 @@ function Termek_Edit(event, cuccok, tipus) {
         $("#mod_db").val(1);
         $("#mod_meegys").val("db");
         $("#mod_leiras").val("");
+        $("#mySwitch").val("YES");
     }
     else {
         $("#idx1").html(`${termek_id}; ${nev}`);
@@ -87,14 +88,14 @@ function Termek_Edit(event, cuccok, tipus) {
         $("#mod_leiras").html(leiras);
 
         if (aktiv == "Y") { 
-            $("#mySwitch").prop("checked", true);
-            $("#switchtext").html("Aktív");
-            $("#mySwitch").val("YES"); 
+            $("#mySwitch").prop("checked", true).trigger("change");
+            
+             
         }
         else { 
-            $("#mySwitch").prop("checked", false);
-            $("#switchtext").html("Inaktív");
-            $("#mySwitch").val("NO"); 
+            $("#mySwitch").prop("checked", false).trigger("change");
+           
+            
          }
     }
 
