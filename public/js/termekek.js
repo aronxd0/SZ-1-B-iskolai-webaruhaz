@@ -84,6 +84,7 @@ function Termek_Edit(event, cuccok, tipus) {
         $("#mod_meegys").val(meegys);
         var datum = new Date();
         $("#mod_datum").val(datum.toISOString().split('T')[0]); 
+        $("#mod_leiras").html("");
         $("#mod_leiras").html(leiras);
 
         if (aktiv == "Y") { 
