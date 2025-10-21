@@ -34,11 +34,22 @@ function FizetesAblak(li) {
 
     z += "</ul>";
 
-    z += `<div class="row" id="sumsum"></div>`;
+    z += `
+    <div class="col-12 d-flex align-self-center">
+         <span class="align-self-center p-2 me-2">Összesen: </span><span id="summu" class="anton-regular text-success align-self-center p-2 me-2"></span><span class="align-self-center p-2"> (+ ÁFA)</span>
+    
+    </div>`;
+
+    z += `
+        <div class="col-12 d-flex align-self-center">
+            Végösszeg (nettó ár): 
+        </div>
+    
+    `;
 
     $("#cc").html(z);
 
-    AR_SUM("osszegek", "sumsum");
+    AR_SUM("osszegek", "summu");
 
     $("#fizetes").modal("show");
 }
