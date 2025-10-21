@@ -90,7 +90,7 @@ function Termek_Edit(event, cuccok, tipus) {
         
     }
 
-    const aktiv = $("#mySwitch").is(":checked") ? "Y" : "N";
+    const aktiv = $("#mySwitch").is(":checked") ? "YES" : "NO";
 
     $("#save_button").off().one("click", function() {
         TermekModosit(`${$("#mod1").serialize()}§${termek_id}§${aktiv}`);
