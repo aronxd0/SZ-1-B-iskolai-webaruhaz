@@ -1,5 +1,18 @@
-function FizetesAblak(li) {
+function RendelesAblak(li) {
+
+    Attekintes(li);
+
+
+    $("#fizetes").modal("show");
+}
+
+
+
+
+function Attekintes(li) {
     console.log(li);
+
+    $("#aktualis").html(`<span class="text-primary"><b>Áttekintés</b></span> - <span class="text-muted">Adatok</span> - <span class="text-muted">Fizetés</span`);
 
     let z = `<label for="rend" class="p-1">A rendelésed tartalma:</label>`
      z += "<ul class='list-group p-2' id='rend'>";
@@ -20,7 +33,7 @@ function FizetesAblak(li) {
                 </span>
 
                 
-                <span class="osszegek anton-regular text-success">${element.PENZ.toLocaleString()} Ft</span>
+                <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
                 
                 
             </li>
@@ -36,7 +49,7 @@ function FizetesAblak(li) {
 
     z += `
     <div class="col-12 d-flex align-self-center">
-         <span class="align-self-center p-2 me-2">Összesen: </span><span id="summu" class="anton-regular text-success align-self-center p-2 me-2"></span><span class="align-self-center p-2"> (+ ÁFA)</span>
+         <span class="align-self-center p-2 me-2">Összesen: </span><span id="summu" class="text-success align-self-center p-2 me-2"></span><span class="align-self-center p-2"> (+ ÁFA)</span>
     
     </div>`;
 
@@ -47,9 +60,104 @@ function FizetesAblak(li) {
     
     `;
 
+    let navigacio = `
+        <button type="button" class="btn btn-lg btn-danger bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
+        <button type="button" class="btn btn-lg btn-success bi bi-arrow-right" onclick='Adatok(${JSON.stringify(li)})'> Tovább</button>
+    `;
+    $("#lab").html(navigacio);
+
     $("#cc").html(z);
 
     AR_SUM("osszegek", "summu");
+}
 
-    $("#fizetes").modal("show");
+
+function Adatok(li) {
+    $("#aktualis").html(`<span class="text-muted">Áttekintés</span> - <span class="text-primary"><b>Adatok</b></span> - <span class="text-muted">Fizetés</span`);
+    $("#cc").html("");
+
+    let form = `
+        <div class="row">
+            <div class="col-0 col-lg-3"></div>
+            <div class="col-12 col-lg-6 mt-2 p-1">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="keresztnev" name="knev" placeholder="Teljes név">
+                    <label for="keresztnev"><i class="bi bi-person"></i> Teljes név</label>
+                </div>
+            </div>
+            <div class="col-0 col-lg-3"></div>
+
+            <div class="col-0 col-lg-3"></div>
+            <div class="col-12 col-lg-6 mt-2 p-1">
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="emil" name="imel" placeholder="E-mail cím">
+                    <label for="emil"><i class="bi bi-envelope"></i> E-mail cím</label>
+                </div>
+            </div>
+            <div class="col-0 col-lg-3"></div>
+
+            <div class="col-0 col-lg-3"></div>
+            <div class="col-12 col-lg-6 mt-2 p-1">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="cim" name="cim" placeholder="Pl. Kossuth Lajos utca 69.">
+                    <label for="cim"><i class="bi bi-geo-alt"></i> Cím</label>
+                </div>
+            </div>
+            <div class="col-0 col-lg-3"></div>
+
+            <div class="col-0 col-lg-3"></div>
+            <div class="col-12 col-lg-6 mt-2 p-1">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="city" name="city" placeholder="Város">
+                    <label for="city"><i class="bi bi-building"></i> Város</label>
+                </div>
+            </div>
+            <div class="col-0 col-lg-3"></div>
+
+            <div class="col-0 col-lg-3"></div>
+            <div class="col-12 col-lg-6 mt-2 p-1">
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="iszam" name="iszam" placeholder="Irányítószám">
+                    <label for="iszam"><i class="bi bi-hash"></i> Irányítószám</label>
+                </div>
+            </div>
+            <div class="col-0 col-lg-3"></div>
+
+            <div class="col-0 col-lg-3"></div>
+            <div class="col-12 col-lg-6 mt-2 p-1">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="country" name="country" placeholder="Ország">
+                    <label for="country"><i class="bi bi-globe"></i> Ország</label>
+                </div>
+            </div>
+            <div class="col-0 col-lg-3"></div>
+            
+        </div>
+    
+    `;
+
+    $("#cc").html(form);
+
+    let navigacio = `
+        <button type="button" class="btn btn-lg btn-danger bi bi-backspace" onclick='Attekintes(${JSON.stringify(li)})'> Vissza</button>
+        <button type="button" class="btn btn-lg btn-success bi bi-arrow-right" onclick='Fizetes(${JSON.stringify(li)})'> Tovább</button>
+    `;
+    $("#lab").html(navigacio);
+}
+
+
+
+
+function Fizetes(li) {
+    $("#aktualis").html(`<span class="text-muted">Áttekintés</span> - <span class="text-muted">Adatok</span> - <span class="text-primary"><b>Fizetés</b></span`);
+    $("#cc").html("");
+
+    
+
+
+    let navigacio = `
+        <button type="button" class="btn btn-lg btn-danger bi bi-backspace" onclick='Adatok(${JSON.stringify(li)})'> Vissza</button>
+        <button type="button" class="btn btn-lg btn-success bi bi-credit-card"> Fizetés</button>
+    `;
+    $("#lab").html(navigacio);
 }
