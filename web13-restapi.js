@@ -279,7 +279,7 @@ app.post('/logout', (req, res) => {
 //#endregion
 
 
-//#region kosar
+//#region kosar / rendeles
 
 app.post('/kosar_add', async (req, res) => {
   try {
@@ -384,6 +384,64 @@ app.post('/tetelek',(req, res) => {
   sendJson_toFrontend(res, sql);
 });
 
+app.post('/rendeles',async (req, res) => {
+  try{
+  session_data = req.session;
+  var termekid  = parseInt(req.query.ID_TERMEK)
+  var fizmod = strE(req.query.FIZMOD);
+  var szallmod = strE(req.query.SZALLMOD);
+  var megjegyzes = strE(req.query.MEGJEGYZES ? req.query.MEGJEGYZES : '');
+
+  var termemekek_sql = 
+  `
+  SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG
+  FROM webbolt_kosar_tetelei ct
+  JOIN webbolt_kosar k ON ct.ID_KOSAR = k.ID_KOSAR
+  WHERE k.ID_USER = ${session_data.ID_USER};
+  `;
+
+  var json_termekek =JSON.parse(await runQueries(termemekek_sql));
+  if (json_termekek.message != "ok") { // || json_termekek.maxcount <= 0
+      res.set(header1, header2);
+      res.send(JSON.stringify({ message: "nagy baj történt" }));
+      res.end();
+      return;
+  }
+
+  let sql = `
+      START TRANSACTION;
+
+      SET @kosarid = (SELECT ID_KOSAR FROM webbolt_kosar WHERE ID_USER = ${session_data.ID_USER});
+
+      INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES)
+      VALUES (${session_data.ID_USER}, "${fizmod}", "${szallmod}", "${megjegyzes}");
+
+      SET @rendeles_id = LAST_INSERT_ID();
+    `;
+
+    for (var termek of json_termekek.rows) {
+      var termek_id = parseInt(termek.ID_TERMEK);
+      var termek_mennyiseg = parseInt(termek.MENNYISEG);
+      sql += `INSERT INTO webbolt_rendeles_tetelei (ID_RENDELES, ID_TERMEK, MENNYISEG)
+      VALUES (@rendeles_id, ${termek_id}, ${termek_mennyiseg});`;
+    }
+
+  sql += 
+  `
+  DELETE FROM webbolt_kosar WHERE ID_KOSAR = @kosarid;
+  COMMIT;
+  `;
+
+  var eredmeny = await runExecute(sql, req);
+  res.set(header1, header2);
+  res.send(eredmeny);
+  res.end();
+  } catch (err) {
+    console.error(err);
+    res.status(500).set(header1, header2).send(JSON.stringify({ message: "error", error: err.message }));
+  }
+});
+
 
 //#endregion
 
@@ -399,7 +457,6 @@ app.post('/termek_edit',async (req, res) => {
   var ar        = parseInt(req.query.mod_ar);
   var mennyiseg = parseInt(req.query.mod_db);
   var meegys    = strE(req.query.mod_meegys);
-  var datum     = strE(req.query.mod_datum);
   var leiras    = strE(req.query.mod_leiras);
   var termekid  = parseInt(req.query.ID_TERMEK);
   var aktiv  = req.query.mod_aktiv == undefined ? "NO" : "YES";
@@ -413,7 +470,6 @@ app.post('/termek_edit',async (req, res) => {
       AR = ${ar},
       MENNYISEG = ${mennyiseg},
       MEEGYS = '${meegys}',
-      DATUMIDO = '${datum}',
       LEIRAS = '${leiras}',
       AKTIV = '${aktiv == "YES" ? "Y" : "N"}'
     WHERE ID_TERMEK = ${termekid};
