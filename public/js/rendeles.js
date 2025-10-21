@@ -15,7 +15,7 @@ function Attekintes(li) {
     $("#aktualis").html(`<span class="text-primary"><b>Áttekintés</b></span> - <span class="text-muted">Adatok</span> - <span class="text-muted">Fizetés</span`);
 
     let z = `<label for="rend" class="p-1">A rendelésed tartalma:</label>`
-     z += "<ul class='list-group p-2' id='rend'>";
+     z += "<ul class='list-group-flush rounded feka p-3 shadow-lg' id='rend'>";
 
     $("#cc").html("");
     for (const element of li) {
@@ -81,8 +81,8 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="keresztnev" name="knev" placeholder="Teljes név">
-                    <label for="keresztnev"><i class="bi bi-person"></i> Teljes név</label>
+                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="keresztnev" name="knev" placeholder="Teljes név">
+                    <label for="keresztnev"><i class="bi bi-person"></i> Teljes név *</label>
                 </div>
             </div>
             <div class="col-0 col-lg-3"></div>
@@ -90,8 +90,8 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="email" class="form-control" id="emil" name="imel" placeholder="E-mail cím">
-                    <label for="emil"><i class="bi bi-envelope"></i> E-mail cím</label>
+                    <input type="email" class="form-control rounded-4 shadow-lg feka" id="emil" name="imel" placeholder="E-mail cím">
+                    <label for="emil"><i class="bi bi-envelope"></i> E-mail cím *</label>
                 </div>
             </div>
             <div class="col-0 col-lg-3"></div>
@@ -99,8 +99,8 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="cim" name="cim" placeholder="Pl. Kossuth Lajos utca 69.">
-                    <label for="cim"><i class="bi bi-geo-alt"></i> Cím</label>
+                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="cim" name="cim" placeholder="Pl. Kossuth Lajos utca 69.">
+                    <label for="cim"><i class="bi bi-geo-alt"></i> Cím *</label>
                 </div>
             </div>
             <div class="col-0 col-lg-3"></div>
@@ -108,8 +108,8 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="city" name="city" placeholder="Város">
-                    <label for="city"><i class="bi bi-building"></i> Város</label>
+                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="city" name="city" placeholder="Város">
+                    <label for="city"><i class="bi bi-building"></i> Város *</label>
                 </div>
             </div>
             <div class="col-0 col-lg-3"></div>
@@ -117,8 +117,8 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="number" class="form-control" id="iszam" name="iszam" placeholder="Irányítószám">
-                    <label for="iszam"><i class="bi bi-hash"></i> Irányítószám</label>
+                    <input type="number" class="form-control rounded-4 shadow-lg feka" id="iszam" name="iszam" placeholder="Irányítószám">
+                    <label for="iszam"><i class="bi bi-hash"></i> Irányítószám *</label>
                 </div>
             </div>
             <div class="col-0 col-lg-3"></div>
@@ -126,8 +126,8 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="country" name="country" placeholder="Ország">
-                    <label for="country"><i class="bi bi-globe"></i> Ország</label>
+                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="country" name="country" placeholder="Ország">
+                    <label for="country"><i class="bi bi-globe"></i> Ország *</label>
                 </div>
             </div>
             <div class="col-0 col-lg-3"></div>
