@@ -51,12 +51,13 @@ function Termek_Edit(event, cuccok, tipus) {
     const ar = cuccok[4];
     const mennyiseg = cuccok[5];
     const meegys = cuccok[6];
-    const aktiv = cuccok[7];
     const termeklink = cuccok[8];
     const fotolink = cuccok[9];
     const leiras = cuccok[10];
     const datumido = cuccok[11];
     const id_kategoria = cuccok[12];
+
+    console.log(leiras);
 
 
     KategoriaFeltolt("mod_kat", "select", id_kategoria);
@@ -83,26 +84,20 @@ function Termek_Edit(event, cuccok, tipus) {
         $("#mod_db").val(mennyiseg);
         $("#mod_meegys").val(meegys);
         var datum = new Date();
-        $("#mod_datum").val(datum.toISOString().split('T')[0]); 
-        $("#mod_leiras").html("");
-        $("#mod_leiras").html(leiras);
+        $("#mod_datum").val(datum.toISOString().split('T')[0]);
+        $("#mod_leiras").val(leiras);
 
-        if (aktiv == "Y") { 
-            $("#mySwitch").prop("checked", true).trigger("change");
-            
-             
-        }
-        else { 
-            $("#mySwitch").prop("checked", false).trigger("change");
-           
-            
-         }
+        
     }
 
+    const aktiv = $("#mySwitch").is(":checked") ? "YES" : "NO";
 
-    $("#save_button").click(function() { 
-        TermekModosit(`${$("#mod1").serialize()}§${termek_id}§${$("#mySwitch").val()}`);
-      });
+    $("#save_button").off().one("click", function() {
+        TermekModosit(`${$("#mod1").serialize()}§${termek_id}§${aktiv}`);
+        console.log("KURVA ANYÁD");
+    });
+        
+      
 
     $("#termek_edit").modal("show");
 

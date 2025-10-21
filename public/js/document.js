@@ -134,6 +134,7 @@ $(document).ready(function() {
     });
 
 
+    
     $("#mySwitch").on("change", function() {
         if ($(this).is(":checked")) {
             $("#switchtext").html("Aktív");

@@ -1,8 +1,8 @@
 function FizetesAblak(li) {
     console.log(li);
 
-
-    let z = "<ul class='list-group p-2 w-auto '>";
+    let z = `<label for="rend" class="p-1">A rendelésed tartalma:</label>`
+     z += "<ul class='list-group p-2' id='rend'>";
 
     $("#cc").html("");
     for (const element of li) {
@@ -34,7 +34,11 @@ function FizetesAblak(li) {
 
     z += "</ul>";
 
+    z += `<div class="row" id="sumsum"></div>`;
+
     $("#cc").html(z);
+
+    AR_SUM("osszegek", "sumsum");
 
     $("#fizetes").modal("show");
 }
