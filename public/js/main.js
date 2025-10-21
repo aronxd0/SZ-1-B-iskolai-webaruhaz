@@ -354,11 +354,23 @@ function SliderELL(item){
 
 
 async function KategoriaFeltolt(hova, type, kivalasztott) {
+    const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
+     bepipaltID = ""; //reset bepipalt kategória
+    for(var elem of inputok){
+        if(elem.checked) {
+            bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
+        }
+    }
+    
+   
+   
     $(`#${hova}`).empty("");
     var nemaktivt = "";//reset
     if (Nemaktivak) {
      nemaktivt = "&inaktiv=1";
     }
+
+   
     var elfogyt = ""
     if (elfogyott){
         elfogyt = "&elfogyott=1";
@@ -371,6 +383,7 @@ async function KategoriaFeltolt(hova, type, kivalasztott) {
         if (type == "check") {
             for (let i = 0; i < k_json.rows.length; ++i) {
                 var pipa = ""
+                console.log(bepipaltID +" adas űdasőksoiídr hf");
                 if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
                     pipa = "checked";
                 }

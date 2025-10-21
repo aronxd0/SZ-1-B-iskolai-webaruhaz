@@ -399,7 +399,7 @@ app.post('/rendeles',async (req, res) => {
   JOIN webbolt_kosar k ON ct.ID_KOSAR = k.ID_KOSAR
   WHERE k.ID_USER = ${session_data.ID_USER};
   `;
-
+  
   var json_termekek =JSON.parse(await runQueries(termemekek_sql));
   if (json_termekek.message != "ok") { // || json_termekek.maxcount <= 0
       res.set(header1, header2);
