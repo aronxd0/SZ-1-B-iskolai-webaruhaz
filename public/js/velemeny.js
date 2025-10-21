@@ -12,7 +12,7 @@ async function Velemeny_Kozzetesz(id_termek) {
             if (velemenyiras.message == "ok") {
                 üzen(`Vélemény elküldve`,"success");
                 $("#velemeny_input").val("");
-                SajatVelemenyekMutat(id_termek);
+                VelemenyekMutat(id_termek);
             }
             else {
                 üzen(`Hiba: <br> ${velemenyiras.message}`,"danger");
