@@ -408,7 +408,7 @@ app.post('/rendeles',async (req, res) => {
       return;
   }
 
-  let sql = `
+  var sql = `
       START TRANSACTION;
 
       SET @kosarid = (SELECT ID_KOSAR FROM webbolt_kosar WHERE ID_USER = ${session_data.ID_USER});
@@ -474,8 +474,6 @@ app.post('/termek_edit',async (req, res) => {
       AKTIV = '${aktiv == "YES" ? "Y" : "N"}'
     WHERE ID_TERMEK = ${termekid};
   `;
-  
-  console.log(sql);
 
   const eredmeny = await runExecute(sql, req);
   res.send(eredmeny);
