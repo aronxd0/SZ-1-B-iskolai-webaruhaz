@@ -132,7 +132,19 @@ function KosarItemDelete(id){
 
         AR_SUM("termek_ar", "sumar");
 
-        KosarTetelDB();
+         KosarTetelDB();
+
+        console.log( " fazsa" + $("#kosar_content_count").html());
+        if($("#kosar_content_count").html()== ""){
+             cnt = `
+                    <div class="col-12">
+                        <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
+                    </div>
+            
+            `;
+                  $("#content_hely").html(cnt);
+        }
+
         üzen("Tétel törölve a kosárból","success");
     })
 }
