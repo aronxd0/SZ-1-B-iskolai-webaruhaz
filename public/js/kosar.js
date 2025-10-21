@@ -1,7 +1,6 @@
 // kosar menupont, kosarba helyezes, tetelek
 
 let tetelekli = [];
-
 $("#cart_button").click(async function () {
     tetelekli = [];
     $("#content_hely").html("");
@@ -31,7 +30,13 @@ $("#cart_button").click(async function () {
 
                     let pez = element.AR * element.MENNYISEG;
                     
-                    tetelekli.push(`${element.ID_TERMEK}`, `${element.NEV}`, `${element.MENNYISEG}`, `${pez}`);
+                    tetelekli.push({
+                        ID_TERMEK: element.ID_TERMEK,
+                        NEV: element.NEV,
+                        MENNYISEG: element.MENNYISEG,
+                        PENZ: pez
+                    });
+                   
 
                     cnt += `
                         
@@ -71,7 +76,7 @@ $("#cart_button").click(async function () {
                         <div class="col-12 mt-2 p-2 d-flex justify-content-center align-self-center">
                             <h5 class="align-self-center p-2">Összesen: </h5>&nbsp;<h3 id="sumar" class="anton-regular text-success align-self-center p-2"></h3>&nbsp;<h5 class="align-self-center p-2"> (+ ÁFA)</h5>
                         </div>
-                        <div class="col-12 d-flex justify-content-center p-3 mb-5">
+                        <div class="col-12 d-flex justify-content-center p-3 mb-5" id="pay_button">
                             <button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='FizetesAblak(${JSON.stringify(tetelekli)})'> Tovább a fizetéshez</button>
                         </div>
                     </div>
@@ -114,6 +119,17 @@ function KosarItemDelete(id){
     .then(() => {
         $(`#${id.id}NAGY`).remove();
 
+        console.log(id.id);
+
+        const ti = tetelekli.findIndex(x => x.ID_TERMEK == parseInt(id.id));
+
+        if (ti != -1) {
+            tetelekli.splice(ti, 1);
+        }
+
+        $("#pay_button").html("");
+        $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='FizetesAblak(${JSON.stringify(tetelekli)})'> Tovább a fizetéshez</button>`);
+
         AR_SUM("termek_ar", "sumar");
 
         KosarTetelDB();
@@ -128,7 +144,7 @@ async function Kosarba_Bele(event, id_termek) {
     try {
         let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
         if (kosaraddleiras.message == "ok") {
-           KosarTetelDB(); // majd a külön le kérdezést kap 
+            KosarTetelDB(); // majd a külön le kérdezést kap 
             üzen("Áru bekerült a kosárba","success");   
         }
         else { üzen(kosaraddleiras.message, "danger"); }         
@@ -170,10 +186,24 @@ async function KosarPLUSZ(id) {
     let mennyiseg = parseInt(db.rows[0].MENNYISEG);
     let ar = parseInt(db.rows[0].AR);
     let money = mennyiseg * ar;
+
+    for (const element of tetelekli) {
+        if (element.ID_TERMEK == parseInt(idk)) {
+            element.MENNYISEG = mennyiseg;
+            element.PENZ = money;
+        };
+        
+    }
+
+    
+
+    console.log(tetelekli);
     
     document.getElementById(`${idk}2`).value = mennyiseg;
     document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success termek_ar">${money.toLocaleString()} Ft<h4>` ; // forint firssit
 
+    $("#pay_button").html("");
+    $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='FizetesAblak(${JSON.stringify(tetelekli)})'> Tovább a fizetéshez</button>`);
 
     AR_SUM("termek_ar", "sumar");
     KosarTetelDB(); // fönti kosár db frissitése
