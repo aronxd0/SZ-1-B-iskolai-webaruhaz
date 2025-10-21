@@ -475,6 +475,8 @@ app.post('/termek_edit',async (req, res) => {
     WHERE ID_TERMEK = ${termekid};
   `;
 
+  console.log(sql);
+
   const eredmeny = await runExecute(sql, req);
   res.send(eredmeny);
   res.end();
@@ -498,8 +500,8 @@ async function runExecute(sql, req) {                     // insert, update, del
       res1 = await conn.query(sql);  
       jrn1 = await conn.execute(jrn); 
 
-      console.log(res1);
-      console.log("execute: "+res1.affectedRows);
+      //console.log(res1);
+      //console.log("execute: "+res1.affectedRows);
   } catch (err) {
       msg = err.sqlMessage; console.error('Hiba:', err); 
   } finally {
