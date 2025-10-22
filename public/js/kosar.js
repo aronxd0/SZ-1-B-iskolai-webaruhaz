@@ -128,7 +128,7 @@ function KosarItemDelete(id){
         }
 
         $("#pay_button").html("");
-        $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='FizetesAblak(${JSON.stringify(tetelekli)})'> Tovább a fizetéshez</button>`);
+        $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a fizetéshez</button>`);
 
         AR_SUM("termek_ar", "sumar");
 
@@ -215,7 +215,7 @@ async function KosarPLUSZ(id) {
     document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success termek_ar">${money.toLocaleString()} Ft<h4>` ; // forint firssit
 
     $("#pay_button").html("");
-    $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='FizetesAblak(${JSON.stringify(tetelekli)})'> Tovább a fizetéshez</button>`);
+    $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a fizetéshez</button>`);
 
     AR_SUM("termek_ar", "sumar");
     KosarTetelDB(); // fönti kosár db frissitése
