@@ -65,7 +65,7 @@ function AR_SUM(osztaly, hova, vegossszeg) {
     });
     //return sum;
     if (vegossszeg) {
-        sum = Math.round(sum/1.27);
+        sum = Math.round(sum * 1.27);
     }
     $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
 }
