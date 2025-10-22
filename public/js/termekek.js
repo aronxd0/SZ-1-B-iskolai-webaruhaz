@@ -303,7 +303,7 @@ function CARD_BETOLT(adatok) {
 
       ee = "nem-elerheto";
     } else {
-      el = `<h2 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h2>(Bruttó ár)`;
+      el = `<h2 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h2>(Nettó ár)`;
       ee = "";
     } //Ár kiiras
 
