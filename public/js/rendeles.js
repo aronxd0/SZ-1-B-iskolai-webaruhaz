@@ -47,18 +47,14 @@ function Attekintes(li) {
 
     z += "</ul>";
 
+    /*
     z += `
     <div class="col-12 d-flex align-self-center">
          <span class="align-self-center p-2 me-2">Összesen: </span><span id="summu" class="text-success align-self-center p-2 me-2"></span><span class="align-self-center p-2"> (+ ÁFA)</span>
     
     </div>`;
-
-    z += `
-        <div class="col-12 d-flex align-self-center">
-            Végösszeg (nettó ár): 
-        </div>
-    
-    `;
+    */
+   
 
     let navigacio = `
         <button type="button" class="btn btn-lg btn-danger bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
@@ -68,7 +64,7 @@ function Attekintes(li) {
 
     $("#cc").html(z);
 
-    AR_SUM("termek_ar", "summu");
+    AR_SUM("termek_ar", "also");
 }
 
 
@@ -150,7 +146,7 @@ function Adatok(li) {
 
 function Fizetes(li) {
     $("#aktualis").html(`<span class="text-muted">Áttekintés</span> - <span class="text-muted">Adatok</span> - <span class="text-primary"><b>Fizetés</b></span`);
-    $("#cc").html("");
+    //$("#cc").html("");
 
     
 
