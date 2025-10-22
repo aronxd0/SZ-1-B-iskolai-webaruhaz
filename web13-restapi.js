@@ -330,6 +330,8 @@ app.post('/kosar_add', async (req, res) => {
 
     COMMIT;
     `
+
+    console.log(sql);
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
     res.end();
@@ -387,7 +389,6 @@ app.post('/tetelek',(req, res) => {
 app.post('/rendeles',async (req, res) => {
   try{
   session_data = req.session;
-  var termekid  = parseInt(req.query.ID_TERMEK)
   var fizmod = strE(req.query.FIZMOD);
   var szallmod = strE(req.query.SZALLMOD);
   var megjegyzes = strE(req.query.MEGJEGYZES ? req.query.MEGJEGYZES : '');
@@ -401,7 +402,7 @@ app.post('/rendeles',async (req, res) => {
   `;
   
   var json_termekek =JSON.parse(await runQueries(termemekek_sql));
-  if (json_termekek.message != "ok") { // || json_termekek.maxcount <= 0
+  if (json_termekek.message != "ok") { // || json_termekek.maxcount < 0
       res.set(header1, header2);
       res.send(JSON.stringify({ message: "nagy baj történt" }));
       res.end();
@@ -474,8 +475,6 @@ app.post('/termek_edit',async (req, res) => {
       AKTIV = '${aktiv == "YES" ? "Y" : "N"}'
     WHERE ID_TERMEK = ${termekid};
   `;
-
-  console.log(sql);
 
   const eredmeny = await runExecute(sql, req);
   res.send(eredmeny);
