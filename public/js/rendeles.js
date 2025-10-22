@@ -68,7 +68,7 @@ function Attekintes(li) {
 
     $("#cc").html(z);
 
-    AR_SUM("termek_ar", "summu");
+    AR_SUM("termek_ar", "summu", true);
 }
 
 

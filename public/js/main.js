@@ -55,7 +55,7 @@ function RandomVelemeny() {
 }
 
 
-function AR_SUM(osztaly, hova) {
+function AR_SUM(osztaly, hova, vegossszeg) {
     let sum = 0;
 
     $(`.${osztaly}`).each(function () {
@@ -64,6 +64,9 @@ function AR_SUM(osztaly, hova) {
         
     });
     //return sum;
+    if (vegossszeg) {
+        sum = Math.round(sum/1.27);
+    }
     $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
 }
 

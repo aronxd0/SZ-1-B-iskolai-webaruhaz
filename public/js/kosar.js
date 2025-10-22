@@ -104,7 +104,7 @@ $("#cart_button").click(async function () {
 
         $("#content_hely").html(cnt);
         $("#pagi").html("");
-        AR_SUM("termek_ar", "sumar");
+        AR_SUM("termek_ar", "sumar", false);
 });
 
 
@@ -130,7 +130,7 @@ function KosarItemDelete(id){
         $("#pay_button").html("");
         $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a fizetéshez</button>`);
 
-        AR_SUM("termek_ar", "sumar");
+        AR_SUM("termek_ar", "sumar" , false);
 
          KosarTetelDB();
 
@@ -217,7 +217,7 @@ async function KosarPLUSZ(id) {
     $("#pay_button").html("");
     $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a fizetéshez</button>`);
 
-    AR_SUM("termek_ar", "sumar");
+    AR_SUM("termek_ar", "sumar" , false);
     KosarTetelDB(); // fönti kosár db frissitése
 
 };
