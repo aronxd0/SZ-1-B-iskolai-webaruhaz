@@ -147,7 +147,7 @@ function Adatok(li) {
 
 function Fizetes(li) {
     $("#aktualis").html(`<span class="text-muted">Áttekintés</span> - <span class="text-muted">Adatok</span> - <span class="text-primary"><b>Fizetés</b></span`);
-    //$("#cc").html("");
+    $("#cc").html("");
 
     
 
