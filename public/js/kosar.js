@@ -1,9 +1,15 @@
 // kosar menupont, kosarba helyezes, tetelek
 
 let tetelekli = [];
+
+let ureskosar = `
+                <div class="col-12">
+                    <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
+                </div>`;
+
 $("#cart_button").click(async function () {
     tetelekli = [];
-    $("#content_hely").html("");
+    //$("#content_hely").html("");
 
     $("#keresett_kifejezes").html("");
     $("#débé").html("");
@@ -86,12 +92,7 @@ $("#cart_button").click(async function () {
 
             }
             else {
-                cnt = `
-                    <div class="col-12">
-                        <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
-                    </div>
-            
-            `;
+                cnt = ureskosar;
             }
                    
             });
@@ -102,9 +103,12 @@ $("#cart_button").click(async function () {
         
         
 
-        $("#content_hely").html(cnt);
+        $("#content_hely").fadeOut(300, function() {
+            $("#content_hely").html(cnt).fadeIn(300);
+            AR_SUM("termek_ar", "sumar", false);
+        });
         $("#pagi").html("");
-        AR_SUM("termek_ar", "sumar", false);
+        
 });
 
 
@@ -127,22 +131,22 @@ function KosarItemDelete(id){
             tetelekli.splice(ti, 1);
         }
 
-        $("#pay_button").html("");
-        $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>`);
+        
 
-        AR_SUM("termek_ar", "sumar" , false);
+        KosarTetelDB();
 
-         KosarTetelDB();
+        
+        if (tetelekli.length > 0) {
+            $("#pay_button").html("");
+            $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>`);
 
-        console.log( " fazsa" + $("#kosar_content_count").html());
-        if($("#kosar_content_count").html()== ""){
-             cnt = `
-                    <div class="col-12">
-                        <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
-                    </div>
+            AR_SUM("termek_ar", "sumar" , false);
+        }
+        else {
+            $("#content_hely").fadeOut(300, function() {
+                $("#content_hely").html(ureskosar).fadeIn(300);
             
-            `;
-                  $("#content_hely").html(cnt);
+            });
         }
 
         üzen("Tétel törölve a kosárból","success");

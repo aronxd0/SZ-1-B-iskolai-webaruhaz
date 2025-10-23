@@ -282,7 +282,7 @@ function VeletlenszeruVelemeny() {
 
 //region CARDBETOLT
 function CARD_BETOLT(adatok) {
-  $("#content_hely").html(); /// adatok is undefined
+  $("#content_hely").html(); 
 
   let ks = "";
   let s = "";
@@ -364,17 +364,21 @@ function CARD_BETOLT(adatok) {
 
   if (!$("#nev1").val().includes("<")) {
     if ($("#nev1").val() != "") {
-      $("#keresett_kifejezes").html();
-      $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
+      
+      $("#keresett_kifejezes").fadeOut(300, function() {
+        $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`).fadeIn(300);
+      });
+
+      $("#débé").fadeOut(300, function() {
+        $("#débé").html(` (${adatok.maxcount} db)`).fadeIn(300);
+      });
+      
     } else {
       $("#keresett_kifejezes").html("");
+      $("#débé").html("");
     }
 
-    if (nev1.value != "") {
-      débé.innerHTML = ` (${adatok.maxcount} db)`; //talalat darabszam kiirasa
-    } else {
-      débé.innerHTML = "";
-    }
+    
 
     var pp = `
             <ul class="pagination justify-content-center">
@@ -387,11 +391,15 @@ function CARD_BETOLT(adatok) {
             </ul>`;
     // alul a lapválastó feltöltése
 
-    $("#content_hely").html(s);
+    $("#content_hely").fadeOut(300, function() {
+      $("#content_hely").html(s).fadeIn(300);
+    });
+
+    
     $("#pagi").html(pp);
+    
+    
   } else {
-    üzen("Takarodj a gecibe", "danger");
+    üzen("404", "danger");
   }
 }
-
-console.log("termekek.js betoltott xd");
