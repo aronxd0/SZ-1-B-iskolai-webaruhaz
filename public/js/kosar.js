@@ -50,7 +50,7 @@ $("#cart_button").click(async function () {
                         <div class="col-12 d-flex flex-column flex-lg-row feka shadow-lg rounded-4 mt-3 p-3 p-xxl-none" id="${element.ID_TERMEK}NAGY">
                             <div class="col-1"></div>
                             <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
-                                <img src="${element.FOTOLINK}" class="img img-fluid" style="width:30%;" alt="kep">
+                                <img src="${element.FOTOLINK}" class="img img-fluid img-thumbnail" style="width:30%;" alt="kep">
                             </div>
                             <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center p-3">
                                 <p>${element.NEV}</p>

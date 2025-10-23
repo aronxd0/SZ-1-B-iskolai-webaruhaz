@@ -144,7 +144,7 @@ async function Termek_Mutat(event, cuccok) {
     ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba bele</button>`;
 
   let bal = ` 
-                    <img class="img-fluid rounded mx-auto  m-1 d-block" src="${fotolink}" alt="${nev}">
+                    <img class="img-fluid img-thumbnail rounded mx-auto  m-1 d-block" src="${fotolink}" alt="${nev}">
                 
                 
     `;
@@ -348,7 +348,7 @@ function CARD_BETOLT(adatok) {
             <div class="card shadow-lg feka hover-shadow m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(
       cuccli
     )})'>
-                <img class="card-img-top img-fluid mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
+                <img class="card-img-top img-fluid img-thumbnail mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
                     <p class="card-text">
