@@ -17,7 +17,7 @@ function Attekintes(li) {
     let z = `<label for="rend" class="p-1">A rendelésed tartalma:</label>`
      z += "<ul class='list-group-flush rounded feka p-3 shadow-lg' id='rend'>";
 
-    $("#cc").html("");
+    //$("#cc").html("");
     for (const element of li) {
 
         z += ` 
@@ -62,7 +62,11 @@ function Attekintes(li) {
     `;
     $("#lab").html(navigacio);
 
-    $("#cc").html(z);
+    $("#cc").fadeOut(300, function() {
+        $("#cc").html(z).fadeIn(300);
+    });
+
+    
 
 
     AR_SUM("termek_ar", "also", true);
@@ -71,7 +75,7 @@ function Attekintes(li) {
 
 function Adatok(li) {
     $("#aktualis").html(`<span class="text-muted">Áttekintés</span> - <span class="text-primary"><b>Adatok</b></span> - <span class="text-muted">Fizetés</span`);
-    $("#cc").html("");
+    //$("#cc").html("");
 
     let form = `
         <div class="row">
@@ -133,7 +137,11 @@ function Adatok(li) {
     
     `;
 
-    $("#cc").html(form);
+    $("#cc").fadeOut(300, function() {
+        $("#cc").html(form).fadeIn(300);
+    });
+
+    
 
     let navigacio = `
         <button type="button" class="btn btn-lg btn-danger bi bi-backspace" onclick='Attekintes(${JSON.stringify(li)})'> Vissza</button>
