@@ -1,3 +1,5 @@
+
+
 .anton-regular {
   font-family: "Anton", sans-serif;
   font-weight: 400;
@@ -67,12 +69,20 @@ label::after { content: none !important; }
 
 
 /* felso menusor doboz also border (feher csik) */
-.gombdiv {
-  border-bottom: 2px solid transparent; /* alapbol nincs */ 
-  transition: border-color 0.5s ease;
+.gombdiv button {
+  background-color: transparent;
 }
 
-.gombdiv.aktiv { border-bottom: 2px solid #fff; } /* ha eppen ott vagyok akkor legyen csak */
+/* vilagos modban */
+.gombdiv button.aktiv { background-color: oklch(87.1% 0.006 286.286);} 
+
+/* sotet modban */
+html.dark .gombdiv button.aktiv { background-color: oklch(37.3% 0.034 259.733);} 
+
+
+.shadow-bottom {
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175);
+}
 
 
 #login_gomb_div {
