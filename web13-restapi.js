@@ -45,7 +45,7 @@ function gen_SQL_kereses(req) {
   var név    = (req.query.nev? req.query.nev :  ""); // Terméknév vagy leírás szűrés
   var maxarkeres = (req.query.maxar? parseInt(req.query.maxar) : 0); // Ár felső határ szűréshez
   var minarkeres = (req.query.minar? parseInt(req.query.minar) : 0); // Ár alsó határ szűréshez
-  var where = `(t.AKTIV = "Y" AND t.MENNYISEG > 0) AND `;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
+  var where = `(t.AKTIV = "Y") AND `;   // Alapértelmezett szűrés: csak aktív termékek
   var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : -1);
 
   // Ha csak elfogyott termékeket kérünk (admin funkció)
@@ -402,12 +402,12 @@ app.post('/rendeles',async (req, res) => {
   `;
   
   var json_termekek =JSON.parse(await runQueries(termemekek_sql));
-  if (json_termekek.message != "ok") { // || json_termekek.maxcount < 0
+  if (json_termekek.message != "ok") {
       res.set(header1, header2);
       res.send(JSON.stringify({ message: "nagy baj történt" }));
       res.end();
       return;
-  }
+  } 
 
   var sql = `
       START TRANSACTION;
@@ -460,7 +460,8 @@ app.post('/termek_edit',async (req, res) => {
   var meegys    = strE(req.query.mod_meegys);
   var leiras    = strE(req.query.mod_leiras);
   var termekid  = parseInt(req.query.ID_TERMEK);
-  var aktiv  = req.query.mod_aktiv == undefined ? "NO" : "YES";
+  var aktiv  = ((req.query.mod_aktiv == undefined ? "NO" : "YES") == "YES" ? "Y" : "N") == "Y" && mennyiseg > 0 ? "Y" : "N";
+  // aktiv = [Admin szándéka = 'Y'] && [Készlet > 0] ? 'Y' : 'N';
 
   var sql = `
     UPDATE webbolt_termekek
@@ -472,7 +473,7 @@ app.post('/termek_edit',async (req, res) => {
       MENNYISEG = ${mennyiseg},
       MEEGYS = '${meegys}',
       LEIRAS = '${leiras}',
-      AKTIV = '${aktiv == "YES" ? "Y" : "N"}'
+      AKTIV = '${aktiv}'
     WHERE ID_TERMEK = ${termekid};
   `;
 
