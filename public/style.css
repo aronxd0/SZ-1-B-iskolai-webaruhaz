@@ -34,6 +34,21 @@
   opacity: 1 !important;
 }
 
+.offcanvas-backdrop {
+  transition: backdrop-filter 0.4s ease, background-color 0.4s ease, opacity 0.4s ease;
+  backdrop-filter: blur(0px);
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 0;
+}
+
+.offcanvas-backdrop.show {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1 !important;
+}
+
+
+
 /* modal fejlec-lablec semmi border */
 .modal-header { border-bottom: none; }
 .modal-footer { border-top: none; }

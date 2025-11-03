@@ -57,17 +57,26 @@ function RandomVelemeny() {
 
 function AR_SUM(osztaly, hova, vegossszeg) {
     let sum = 0;
-
+    
     $(`.${osztaly}`).each(function () {
-        let osszeg = parseInt($(this).html().replaceAll(" ", "").replaceAll("&nbsp;", ""));
+        let osszeg = parseInt($(this).html().replaceAll("&nbsp;", "").replaceAll(" ", ""));
+        
         sum += osszeg;
         
     });
-    //return sum;
+    
     if (vegossszeg) {
         sum = Math.round(sum * 1.27);
+        $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
     }
-    $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
+    else {
+        $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
+    }
+    
+    
+    
+    
+    
 }
 
 

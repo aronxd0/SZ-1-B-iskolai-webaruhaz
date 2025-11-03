@@ -43,7 +43,7 @@ async function SajatVelemenyekMutat(id_termek) {
     let sv = "";
     let allapot_style = "";
     let ikon = "";
-    $("#sajatok").html("");
+    //$("#sajatok").html("");
 
     try {
         
@@ -73,7 +73,9 @@ async function SajatVelemenyekMutat(id_termek) {
             </div>`;
         }
         console.log(sv);
-        $("#sajatok").html(sv);
+        $("#sajatok").fadeOut(300, function() {
+            $("#sajatok").html(sv).fadeIn(300);
+        });
         console.log(`sajat velemenyek betoltve`);
 
     } catch (err) { console.log("hiba:", err); }
@@ -82,7 +84,7 @@ async function SajatVelemenyekMutat(id_termek) {
 
 async function VelemenyekMutat(id_termek) {
     let vv = "";
-    $("#velemenyek").html("");
+    //$("#velemenyek").html("");
 
     try {
         
@@ -98,7 +100,9 @@ async function VelemenyekMutat(id_termek) {
             }
             console.log(vv);
 
-            $("#velemenyek").html(vv);
+            $("#velemenyek").fadeOut(300, function() {
+                $("#velemenyek").html(vv).fadeIn(300);
+            });
             console.log(`velemenyek betoltve`);
         }
         
