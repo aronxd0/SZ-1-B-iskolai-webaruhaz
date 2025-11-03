@@ -159,10 +159,9 @@
                 dark:text-zinc-200 
                 hover:bg-zinc-300 
                 hover:text-slate-900 
-                transition-all 
-                duration-300 
+                transition-all duration-300 
                 gomb 
-                rounded-3"> 
+                rounded-3 "> 
 
                 <i class="bi bi-gear"></i>
                 <span class="d-none d-xxl-inline" > STAFF ONLY !</span>
@@ -177,14 +176,14 @@
                   
                   <input class="form-control rounded-4 
                                 text-gray-900 placeholder-gray-400 
+                                outline outline-slate-900/50
                                 focus:outline outline-slate-900/10 
-                                outline outline-slate-900/10 
-                                dark:outline outline-zinc-200/10 
+                                dark:outline outline-zinc-200/10
                                 dark:focus:outline outline-white/10 
-                                dark:focus:bg-zinc-800 
+                                dark:focus:bg-gray-700 
                                 dark:focus:text-gray-100 
                                 dark:focus:placeholder-gray-500 
-                                dark:bg-zinc-900 dark:text-gray-100 dark:placeholder-gray-500
+                                dark:bg-slate-800 dark:text-gray-100 dark:placeholder-gray-500
                                 transition-all duration-300 " id="nev1" name="nev" value="" type="text" placeholder="Keresés...">
                   <!--<label for="nev1" class="dark:text-gray-500"><i class="bi bi-search"></i> Keresés...</label>-->
                   
@@ -192,14 +191,25 @@
                     class="btn btn-lg 
                     bg-zinc-300 
                     text-slate-900
-                    hover:bg-zinc-400 
-                    rounded-4 me-2" 
+                    hover:bg-zinc-300 
+                    dark:bg-gray-800 
+                    dark:text-zinc-200 
+                    rounded-4 me-2 
+                    transition-all duration-300" 
                     id="kereses_gomb" 
                     onclick="KERESOBAR()">
 
                     <i class="bi bi-search"></i>
                   </button>
-                  <button type="button" aria-label="Szűrők" class="btn btn-lg btn-outline-light rounded-4" data-bs-toggle="offcanvas" data-bs-target="#szurok">
+                  <button type="button" aria-label="Szűrők" 
+                  class="btn btn-lg
+                   bg-zinc-300 
+                   text-slate-900 
+                   hover:bg-zinc-300 
+                   dark:bg-gray-800 
+                   dark:text-zinc-200 
+                   rounded-4" 
+                   data-bs-toggle="offcanvas" data-bs-target="#szurok">
                     <i class="bi bi-funnel"></i>
                     <!--<span class="d-none d-lg-inline" > Szűrők</span>-->
                   </button>
