@@ -97,9 +97,12 @@ function update_gombok (x) {
         //$("#admin_button").hide();
         $("#kosar-gombdiv").hide();
         $("#admin-gombdiv").hide();
+        $("#rendeles-gombdiv").hide();
+        
     }
     if (x == 1) { 
         $("#kosar-gombdiv").show();
+        $("#rendeles-gombdiv").show();
         //$("#cart_button")[0].style.setProperty('display', 'block', 'important');
         $("#admin-gombdiv").hide(); 
     }
@@ -107,6 +110,7 @@ function update_gombok (x) {
         //$("#cart_button").show(); 
         //$("#admin_button").show();
         $("#kosar-gombdiv").show();
+        $("#rendeles-gombdiv").show();
         //$("#cart_button")[0].style.setProperty('display', 'block', 'important');
         $("#admin-gombdiv").show();
     }
