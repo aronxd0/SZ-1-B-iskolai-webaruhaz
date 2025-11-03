@@ -326,14 +326,28 @@
 
 
   <!-- login ablak -->
-  <div class="modal fade" id="login_modal">
-    <div class="modal-dialog modal-md modal-dialog-centered" >
-      <div class="modal-content" >
-        <div class="modal-header bg-success text-light">
-          <h4 id="idx_login" class="modal-title text-center w-100"><i class="bi bi-person-fill"></i> Bejelentkezés</h4>
+  <div class="modal fade " id="login_modal">
+    <div class="modal-dialog modal-md modal-dialog-centered " >
+      <div class="modal-content border border-black dark:border border-white">
+        <div 
+          class="
+            modal-header 
+            bg-zinc-200 
+            text-slate-900 
+            dark:bg-slate-900 
+            dark:text-zinc-200 
+            text-light">
+          <h4 id="idx_login" class="modal-title text-center w-100 text-slate-900 dark:text-zinc-200"><i class="bi bi-person-fill"></i> Bejelentkezés</h4>
         </div>
 
-        <div id="idx0" class="modal-body">
+        <div id="idx0" 
+        class="
+          modal-body 
+          bg-zinc-100 
+          text-slate-900 
+          dark:bg-slate-800 
+          dark:text-zinc-200 ">
+
           <form id="form_login" class="row d-column was-validated"> 
             <div class="form-floating flex-grow-1 ny-1 mb-2">
               <input type="email" class="form-control rounded-4" id="login_nev" name="login_nev"  value="balazs.aron@csany-zeg.hu" placeholder="E-mail cím" required>
