@@ -8,13 +8,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script> tailwind.config = { darkMode: 'class', } </script>
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"> 
     <link href="style.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> 
-    <script> tailwind.config = { darkMode: 'class', } </script>
+    
     <!--<script type="text/javascript" src="script.js"></script>--> 
   </head>
 <body>
@@ -176,7 +177,9 @@
                   
                   <input class="form-control rounded-4 
                                 text-gray-900 placeholder-gray-400 
-                                dark:outline outline-white/10 
+                                focus:outline outline-slate-900/10 
+                                outline outline-slate-900/10 
+                                dark:outline outline-zinc-200/10 
                                 dark:focus:outline outline-white/10 
                                 dark:focus:bg-zinc-800 
                                 dark:focus:text-gray-100 
@@ -185,7 +188,15 @@
                                 transition-all duration-300 " id="nev1" name="nev" value="" type="text" placeholder="Keresés...">
                   <!--<label for="nev1" class="dark:text-gray-500"><i class="bi bi-search"></i> Keresés...</label>-->
                   
-                  <button type="button" aria-label="Keresés" class="btn btn-lg bg-slate-700 text-light hover:bg-slate-600 rounded-4 me-2" id="kereses_gomb" onclick="KERESOBAR()">
+                  <button type="button" aria-label="Keresés" 
+                    class="btn btn-lg 
+                    bg-zinc-300 
+                    text-slate-900
+                    hover:bg-zinc-400 
+                    rounded-4 me-2" 
+                    id="kereses_gomb" 
+                    onclick="KERESOBAR()">
+
                     <i class="bi bi-search"></i>
                   </button>
                   <button type="button" aria-label="Szűrők" class="btn btn-lg btn-outline-light rounded-4" data-bs-toggle="offcanvas" data-bs-target="#szurok">
@@ -406,7 +417,7 @@
                   <button type="button" class="btn btn-primary bi bi-chat-dots w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>
                 </div>
 
-                <div id="vlm" class="collapse pe-0">
+                <div id="vlm" class="collapse !visible pe-0 text-slate-900">
                   <div class="mt-3 d-flex justify-content-center justify-content-lg-start" id="ussr"></div>
                  
                   <div class="mt-3">
