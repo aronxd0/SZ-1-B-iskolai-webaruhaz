@@ -193,7 +193,7 @@ app.post('/velemenyek',(req, res) => {
   ${sajatvelemeny == 1 ? `${szelektalas == 0 ? "AND" : "WHERE"} webbolt_velemenyek.ID_USER = ${session_data.ID_USER}` : ``}
   ORDER BY webbolt_velemenyek.DATUM DESC
   `;
-  sendJson_toFrontend (res, sql);           // async await ... 
+  sendJson_toFrontend (res, sql);           // async await ...
 });
 
 app.post('/velemeny_add', async (req, res) => {
