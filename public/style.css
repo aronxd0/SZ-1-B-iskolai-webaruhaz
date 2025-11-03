@@ -8,8 +8,8 @@
 
 /* termekeknel a kep lekicsinyitese */
 .kepp {
-    width: 30% !important;
-    height: 5%;
+    width: 50px !important;
+    height: 50px;
     object-fit: cover;
 }
 
