@@ -305,7 +305,7 @@ function CARD_BETOLT(adatok) {
 
       ee = "nem-elerheto";
     } else {
-      el = `<h2 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h2>(Nettó ár)`;
+      el = `<p class="p-3 d-flex justify-content-center align-items-center align-self-center"><span class="text-2xl text-emerald-600 me-2 anton-regular">${element.AR.toLocaleString()} Ft</span>(Nettó ár)</p>`;
       ee = "";
     } //Ár kiiras
 
@@ -389,7 +389,7 @@ function CARD_BETOLT(adatok) {
               m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid img-thumbnail mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
-                    <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
+                    <span class="card-title text-lg">${element.NEV} </span> <br> <span class="text-sm">(${element.KATEGORIA})</span>
                     <p class="card-text">
                         ${el}
                     </p>
