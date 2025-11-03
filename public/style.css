@@ -119,6 +119,8 @@ li:hover {
 #nev1 {
   border-bottom-right-radius: 0 !important;
   border-top-right-radius: 0 !important;
+  border: none;
+  
 }
 
 #kereses_gomb {

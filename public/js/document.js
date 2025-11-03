@@ -50,6 +50,8 @@ $(document).ready(function() {
     });
 
     // sotet mod - vilagos mod valto
+
+    /*
     $("#switch").click(function() {
         if ($("html").attr("data-bs-theme") === "dark") {
             $("html").removeAttr("data-bs-theme");
@@ -57,6 +59,17 @@ $(document).ready(function() {
         }
         else {
             $("html").attr("data-bs-theme", "dark");
+            $("#switch").html(`<i class="bi bi-sun-fill"></i>`);
+        }
+    });
+    */
+
+    $("#switch").click(function() {
+        if ($("html").hasClass("dark")) {
+            $("html").removeClass("dark");
+            $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
+        } else {
+            $("html").addClass("dark");
             $("#switch").html(`<i class="bi bi-sun-fill"></i>`);
         }
     });
