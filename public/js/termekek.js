@@ -337,7 +337,8 @@ function CARD_BETOLT(adatok) {
           hover:bg-emerald-700 
           hover:text-zinc-200 
           hover:shadow-lg 
-          hover:shadow-emerald-700/70
+          hover:shadow-emerald-700/70 
+          transition-all duration-150 ease-in-out
           rounded-3xl 
           kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
     }
@@ -384,7 +385,8 @@ function CARD_BETOLT(adatok) {
               dark:hover:bg-gray-800 
               dark:hover:-outline-offset-1 
               dark:hover:outline-white/10 
-              transition-all duration-150 ease-in-out 
+              transition-hover duration-150 ease-in-out 
+              transition-color duration-700 ease-in-out 
               shadow-lg 
               m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid img-thumbnail mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
