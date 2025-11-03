@@ -349,11 +349,24 @@ function CARD_BETOLT(adatok) {
       class="btn btn-lg 
         bg-transparent 
         text-slate-900 
+        hover:text-blue-400 
+        dark:text-zinc-200 
+        dark:hover:text-blue-400 
+        transition-all duration-150 ease-in-out
         w-auto 
         me-2" aria-label="modositas" onclick='Termek_Edit(event, ${JSON.stringify(cuccli)}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
      
      
-      gg += `<button type="button" class="btn btn-lg btn-danger w-auto" aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
+      gg += `<button type="button" 
+      class="btn btn-lg 
+        bg-transparent 
+        text-slate-900 
+        hover:text-red-700 
+        dark:text-zinc-200 
+        dark:hover:text-red-700 
+        transition-all duration-150 ease-in-out
+        w-auto" aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
+      
       gg += "</div>";
     } else gg = "";
 
