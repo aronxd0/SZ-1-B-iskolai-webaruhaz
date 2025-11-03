@@ -20,6 +20,7 @@ async function TermekModosit(url) {
   }
 
   KERESOBAR();
+  KosarTetelDB(); // kosár darab mutatása frissítése
 }
 
 // termek szerkeszto ablak
@@ -111,6 +112,7 @@ function Termek_Torol(event, cuccok) {
     }
   });
   $("#delete_modal").modal("show");
+  KosarTetelDB(); // kosár darab mutatása frissítése
 }
 
 async function Termek_Mutat(event, cuccok) {
