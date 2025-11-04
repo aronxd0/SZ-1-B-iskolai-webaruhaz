@@ -261,7 +261,12 @@ async function Fizetésclick() {
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
         await ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉG SEMMI"}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
 
+        
+        KosarTetelDB();
+        document.getElementById("home_button").click();
+
         üzen("A terméket sikeresen megvásároltad.","success");
+        
     }
     catch(e){
         üzen(e,"danger");
