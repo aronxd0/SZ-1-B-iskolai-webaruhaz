@@ -1,5 +1,5 @@
 <!DOCTYPE html> 
-<html lang="hu"> 
+<html lang="hu" class="transition-color duration-700"> 
   <head> 
     <title>Iskolai Webáruház</title> 
     <meta charset="UTF-8"> 
@@ -50,20 +50,31 @@
                 hover:bg-zinc-300 
                 hover:text-slate-900 
                 hover:shadow-lg 
+                hover:shadow-gray-950/50 
                 dark:hover:shadow-gray-700/70 
                 dark:bg-slate-900 
                 dark:text-zinc-200 
                 dark:hover:bg-gray-700
                 dark:hover:text-zinc-200 
                 
-                transition-all duration-700 ease-in-out 
+                transition-hover duration-300 ease-in-out 
+
                 gomb 
                 dropdown-toggle 
                 rounded-4" 
                 data-bs-toggle="dropdown" >
                 <i class="bi bi-person"></i>
               </button>
-              <div class="dropdown-menu rounded-4 p-3 bg-black text-white" style="min-width: 250px;">
+              <div 
+              class="
+                dropdown-menu 
+                rounded-4 
+                p-3 
+                bg-zinc-200 
+                text-slate-900 
+                transition-all duration-300 ease-in-out 
+                " 
+              style="min-width: 250px; border: none;">
                 
                 <span class="" id="user">Jelentkezz be a fiókodba</span>
                 <span class=" badge bg-warning text-dark w-50 m-2" id="csoport"></span>
@@ -73,10 +84,36 @@
                 </div>
                 
                 <div class="row d-flex align-self-center justify-content-evenly align-items-center mt-5 pt-3 border-top border-secondary">
-                  <button type="button" aria-label="Téma" class="btn btn-outline-light w-auto rounded-5" id="switch">
+                  <button type="button" aria-label="Téma" 
+                  class="
+                   btn 
+                   bg-zinc-200 
+                   text-slate-900 
+                   hover:bg-zinc-300 
+                   hover:text-slate-900 
+                   hover:shadow-lg 
+                   hover:shadow-gray-950/50 
+                   w-auto 
+                   transition-hover duration-300 ease-in-out 
+                   
+                   rounded-5" 
+                   
+                   id="switch">
                     <i class="bi bi-moon-fill" ></i>
                   </button>
-                  <button id="login_button"  type="button" class="btn btn-outline-light w-auto"> 
+
+                  <button id="login_button"  type="button" 
+                  class="
+                    btn 
+                    bg-zinc-200 
+                    text-slate-900 
+                    hover:bg-zinc-300 
+                    hover:text-slate-900 
+                    hover:shadow-lg 
+                    hover:shadow-gray-950/50 
+                    transition-hover duration-300 ease-in-out 
+                    
+                    w-auto"> 
                     <i class="bi bi-box-arrow-in-right" id="loginout"></i>
                     <span  id="loginspan"> Bejelentkezés</span>
                   </button>
@@ -93,13 +130,16 @@
                 hover:bg-zinc-300 
                 hover:text-slate-900 
                 hover:shadow-lg 
-                dark:hover:shadow-gray-700/70 
+                hover:shadow-gray-950/50 
+                dark:hover:shadow-lg 
+                dark:hover:shadow-slate-600/90 
                 dark:bg-slate-900
                 dark:hover:bg-gray-700
                 dark:hover:text-zinc-200 
                 dark:text-zinc-200 
                 
-                transition-all duration-700 ease-in-out 
+                transition-hover duration-300 ease-in-out 
+                
                 gomb rounded-3"> 
 
                 <i class="bi bi-house" id="loginout"></i>
@@ -115,13 +155,16 @@
                 hover:bg-zinc-300 
                 hover:text-slate-900 
                 hover:shadow-lg 
-                dark:hover:shadow-gray-700/70 
+                hover:shadow-gray-950/50 
+                dark:hover:shadow-lg 
+                dark:hover:shadow-slate-600/90 
                 dark:bg-slate-900 
                 dark:text-zinc-200 
                 dark:hover:bg-gray-700
                 dark:hover:text-zinc-200 
                  
-                transition-all duration-700 ease-in-out 
+                transition-hover duration-300 ease-in-out 
+                
                 gomb 
                 rounded-3 
                 d-flex" 
@@ -140,13 +183,16 @@
                 hover:bg-zinc-300 
                 hover:text-slate-900 
                 hover:shadow-lg 
-                dark:hover:shadow-gray-700/70 
+                hover:shadow-gray-950/50 
+                dark:hover:shadow-lg 
+                dark:hover:shadow-slate-600/90 
                 dark:bg-slate-900 
                 dark:hover:bg-gray-700 
                 dark:hover:text-zinc-200 
                 dark:text-zinc-200 
                  
-                transition-all duration-700 ease-in-out 
+                transition-hover duration-300 ease-in-out 
+                
                 gomb 
                 rounded-3"> 
 
@@ -164,12 +210,15 @@
                 dark:hover:bg-gray-700  
                 dark:hover:text-zinc-200 
                 dark:hover:shadow-lg 
-                dark:hover:shadow-gray-700/70 
+                dark:hover:shadow-slate-600/90 
                 dark:text-zinc-200 
                 hover:bg-zinc-300 
                 hover:text-slate-900 
-                hover:shadow-lg
-                transition-all duration-700 ease-in-out 
+                hover:shadow-lg 
+                hover:shadow-gray-950/50 
+
+                transition-hover duration-300 ease-in-out 
+                
                 gomb 
                 rounded-3 "> 
 

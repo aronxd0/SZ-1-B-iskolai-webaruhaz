@@ -386,7 +386,7 @@ function CARD_BETOLT(adatok) {
               dark:hover:-outline-offset-1 
               dark:hover:outline-white/10 
               transition-hover duration-150 ease-in-out 
-              transition-color duration-700 ease-in-out 
+              
               shadow-lg 
               m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid img-thumbnail mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
