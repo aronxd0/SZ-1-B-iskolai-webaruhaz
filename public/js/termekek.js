@@ -20,6 +20,7 @@ async function TermekModosit(url) {
   }
 
   KERESOBAR();
+  KosarTetelDB(); // kosár darab mutatása frissítése
 }
 
 // termek szerkeszto ablak
@@ -111,6 +112,7 @@ function Termek_Torol(event, cuccok) {
     }
   });
   $("#delete_modal").modal("show");
+  KosarTetelDB(); // kosár darab mutatása frissítése
 }
 
 async function Termek_Mutat(event, cuccok) {
@@ -303,7 +305,7 @@ function CARD_BETOLT(adatok) {
 
       ee = "nem-elerheto";
     } else {
-      el = `<h2 class="text-success anton-regular">${element.AR.toLocaleString()} Ft</h2>(Nettó ár)`;
+      el = `<p class="p-3 d-flex justify-content-center align-items-center align-self-center"><span class="text-2xl text-emerald-600 me-2 anton-regular">${element.AR.toLocaleString()} Ft</span>(Nettó ár)</p>`;
       ee = "";
     } //Ár kiiras
 
@@ -327,17 +329,45 @@ function CARD_BETOLT(adatok) {
 
     if (!BevanJelentkezve() || element.AKTIV == "N" || element.MENNYISEG == 0) {
       ks = "";
-    } else
-      ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba bele</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
+    } else {
+      ks = `<button 
+        class="btn btn-lg 
+          bg-emerald-800 
+          text-zinc-200 
+          hover:bg-emerald-700 
+          hover:text-zinc-200 
+          hover:shadow-lg 
+          hover:shadow-emerald-700/70 
+          transition-all duration-150 ease-in-out
+          rounded-3xl 
+          kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
+    }
+
 
     if (BevanJelentkezve() && (webbolt_admin || admin)) {
       gg = "<div class='row d-flex justify-content-center p-3'>";
-      gg += `<button type="button" class="btn btn-lg btn-warning w-auto me-2" aria-label="modositas" onclick='Termek_Edit(event, ${JSON.stringify(
-        cuccli
-      )}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
-      gg += `<button type="button" class="btn btn-lg btn-danger w-auto" aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(
-        cuccli
-      )})'><i class="bi bi-trash"></i></button>`;
+      gg += `<button type="button" 
+      class="btn btn-lg 
+        bg-transparent 
+        text-slate-900 
+        hover:text-blue-400 
+        dark:text-zinc-200 
+        dark:hover:text-blue-400 
+        transition-all duration-150 ease-in-out
+        w-auto 
+        me-2" aria-label="modositas" onclick='Termek_Edit(event, ${JSON.stringify(cuccli)}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
+     
+     
+      gg += `<button type="button" 
+      class="btn btn-lg 
+        bg-transparent 
+        text-slate-900 
+        hover:text-red-700 
+        dark:text-zinc-200 
+        dark:hover:text-red-700 
+        transition-all duration-150 ease-in-out
+        w-auto" aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
+      
       gg += "</div>";
     } else gg = "";
 
@@ -345,12 +375,23 @@ function CARD_BETOLT(adatok) {
 
     s += `
          <div class="col-12 col-md-6 col-xxl-4">
-            <div class="card shadow-lg feka hover-shadow m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(
-      cuccli
-    )})'>
+            <div 
+            class="card 
+              bg-zinc-100 
+              hover:bg-gray-200 
+              hover:outline outline-black/10
+              dark:bg-slate-900 
+              dark:text-zinc-200 
+              dark:hover:bg-gray-800 
+              dark:hover:-outline-offset-1 
+              dark:hover:outline-white/10 
+              transition-hover duration-150 ease-in-out 
+              
+              shadow-lg 
+              m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(cuccli)})'>
                 <img class="card-img-top img-fluid img-thumbnail mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
-                    <h5 class="card-title">${element.NEV} </h5> (${element.KATEGORIA})
+                    <span class="card-title text-lg">${element.NEV} </span> <br> <span class="text-sm">(${element.KATEGORIA})</span>
                     <p class="card-text">
                         ${el}
                     </p>

@@ -90,8 +90,8 @@ $(document).ready(function() {
     });
 
     $(".gombdiv button").click(function() {
-        $(".gombdiv").removeClass("aktiv");
-        $(this).closest(".gombdiv").addClass("aktiv");
+        $(".gombdiv button").removeClass("aktiv");
+        $(this).addClass("aktiv");
     });
 
 
