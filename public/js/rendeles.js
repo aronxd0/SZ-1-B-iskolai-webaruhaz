@@ -259,7 +259,7 @@ function Fizetes(li) {
 async function Fizetésclick() {
     try{
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
-        await ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉG SEMMI"}&SZALCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
+        await ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉG SEMMI"}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
 
         üzen("A terméket sikeresen megvásároltad.","success");
     }
