@@ -392,6 +392,7 @@ app.post('/rendeles',async (req, res) => {
   var fizmod = strE(req.query.FIZMOD);
   var szallmod = strE(req.query.SZALLMOD);
   var megjegyzes = strE(req.query.MEGJEGYZES ? req.query.MEGJEGYZES : '');
+  var szallcim = strE(req.query.SZALLCIM ? req.query.SZALLCIM : '');
 
   var termemekek_sql = 
   `
@@ -402,7 +403,7 @@ app.post('/rendeles',async (req, res) => {
   `;
   
   var json_termekek =JSON.parse(await runQueries(termemekek_sql));
-  if (json_termekek.message != "ok") {
+  if (json_termekek.message != "ok" || json_termekek.maxcount == 0) {
       res.set(header1, header2);
       res.send(JSON.stringify({ message: "nagy baj történt" }));
       res.end();
@@ -414,8 +415,8 @@ app.post('/rendeles',async (req, res) => {
 
       SET @kosarid = (SELECT ID_KOSAR FROM webbolt_kosar WHERE ID_USER = ${session_data.ID_USER});
 
-      INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES)
-      VALUES (${session_data.ID_USER}, "${fizmod}", "${szallmod}", "${megjegyzes}");
+      INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES, SZALLCIM)
+      VALUES (${session_data.ID_USER}, "${fizmod}", "${szallmod}", "${megjegyzes}", "${szallcim}");
 
       SET @rendeles_id = LAST_INSERT_ID();
     `;
