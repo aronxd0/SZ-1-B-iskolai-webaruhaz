@@ -2,6 +2,8 @@
 
 let tetelekli = [];
 
+
+
 let ureskosar = `
                 <div class="col-12">
                     <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
@@ -84,8 +86,8 @@ $("#cart_button").click(async function () {
                                     dark:bg-sky-950 
                                     dark:text-red-600 
                                     rounded-4 me-2 
-                                    text-bold 
-                                    transition-hover duration-300 ease-in-out
+                                    
+                                    
                                     
                                     " 
 
@@ -115,8 +117,8 @@ $("#cart_button").click(async function () {
                                     dark:bg-sky-950 
                                     dark:text-emerald-500 
                                     rounded-4 ms-2 
-                                    text-bold 
-                                    transition-hover duration-300 ease-in-out
+                                    
+                                    
                                     " 
                                 
                                 aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
@@ -155,7 +157,21 @@ $("#cart_button").click(async function () {
                             <h5 class="align-self-center p-2">Összesen: </h5>&nbsp;<h4 id="sumar" class="anton-regular text-success align-self-center p-2"></h4>&nbsp;<h5 class="align-self-center p-2"> (+ ÁFA)</h5>
                         </div>
                         <div class="col-12 d-flex justify-content-center p-3 mb-5" id="pay_button">
-                            <button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>
+                            <button type="button" 
+                                class="btn btn-lg 
+                                bg-emerald-700 
+                                text-zinc-200 
+                                rounded-5 
+                                shadow-xl 
+                                hover:bg-emerald-600 
+                                hover:shadow-lg  
+                                hover:shadow-emerald-600/70 
+                                hover:text-zinc-200 
+                                transition-hover duration-300 ease-in-out 
+                                bi bi-credit-card 
+
+                                
+                                " id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>
                         </div>
                     </div>
                 
@@ -210,7 +226,23 @@ function KosarItemDelete(id){
         
         if (tetelekli.length > 0) {
             $("#pay_button").html("");
-            $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>`);
+            $("#pay_button").html(`
+                
+                <button type="button" 
+                                class="btn btn-lg 
+                                bg-emerald-700 
+                                text-zinc-200 
+                                rounded-5 
+                                shadow-xl 
+                                hover:bg-emerald-600 
+                                hover:shadow-lg  
+                                hover:shadow-emerald-600/70 
+                                hover:text-zinc-200 
+                                transition-hover duration-300 ease-in-out 
+                                bi bi-credit-card 
+
+                                
+                                " id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>`);
 
             AR_SUM("termek_ar", "sumar" , false);
         }
@@ -291,7 +323,22 @@ async function KosarPLUSZ(id) {
     document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success termek_ar">${money.toLocaleString()} Ft<h4>` ; // forint firssit
 
     $("#pay_button").html("");
-    $("#pay_button").html(`<button type="button" class="btn btn-lg btn-success bi bi-credit-card" id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>`);
+    $("#pay_button").html(`
+                <button type="button" 
+                        class="btn btn-lg 
+                        bg-emerald-700 
+                        text-zinc-200 
+                        rounded-5 
+                        shadow-xl 
+                        hover:bg-emerald-600 
+                        hover:shadow-lg  
+                        hover:shadow-emerald-600/70 
+                        hover:text-zinc-200 
+                        transition-hover duration-300 ease-in-out 
+                        bi bi-credit-card 
+
+                        
+                        " id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>`);
 
     AR_SUM("termek_ar", "sumar" , false);
     KosarTetelDB(); // fönti kosár db frissitése
