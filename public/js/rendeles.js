@@ -5,6 +5,14 @@ function RendelesAblak(li) {
 
     $("#fizetes").modal("show");
 }
+//most jelenleg beir adtatok
+
+let _nev = ""  //globális változó a név tárolására
+let _emil = "" //globális változó az e-mail tárolására
+let _cim = ""  //globális változó a cím tárolására
+let _city = "" //globális változó a város tárolására
+let _iszam = ""//globális változó az irányítószám tárolására
+let _country = ""//globális változó az ország tárolására
 
 
 
@@ -82,7 +90,11 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="keresztnev" name="knev" value="${document.getElementById("user").querySelector('h5').textContent.trim()}" placeholder="Teljes név">
+                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="keresztnev" name="knev" 
+
+                    value="${ _nev != ""? _nev :  document.getElementById("user").querySelector('h5').textContent.trim()}"
+                    
+                    placeholder="Teljes név">
                     <label for="keresztnev"><i class="bi bi-person"></i> Teljes név *</label>
                 </div>
             </div>
@@ -91,7 +103,11 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="email" class="form-control rounded-4 shadow-lg feka" id="emil" value="${document.getElementById("user-email").innerHTML}" name="imel" placeholder="E-mail cím">
+                    <input type="email" class="form-control rounded-4 shadow-lg feka" id="emil"
+
+                     value="${  _emil != "" ? _emil : document.getElementById("user-email").innerHTML}" 
+
+                     name="imel" placeholder="E-mail cím">
                     <label for="emil"><i class="bi bi-envelope"></i> E-mail cím *</label>
                 </div>
             </div>
@@ -100,7 +116,11 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="cim" name="cim" placeholder="Pl. Kossuth Lajos utca 69.">
+                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="cim" name="cim"
+                    
+                    value="${_cim}"
+                    
+                    placeholder="Pl. Kossuth Lajos utca 69.">
                     <label for="cim"><i class="bi bi-geo-alt"></i> Cím *</label>
                 </div>
             </div>
@@ -109,7 +129,11 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="city" name="city" placeholder="Város">
+                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="city" 
+                    
+                    value="${_city}"
+                    
+                    name="city" placeholder="Város">
                     <label for="city"><i class="bi bi-building"></i> Város *</label>
                 </div>
             </div>
@@ -118,7 +142,11 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="number" class="form-control rounded-4 shadow-lg feka" id="iszam" name="iszam" placeholder="Irányítószám">
+                    <input type="number" class="form-control rounded-4 shadow-lg feka" id="iszam" 
+                    
+                    value="${_iszam}"
+
+                    name="iszam" placeholder="Irányítószám">
                     <label for="iszam"><i class="bi bi-hash"></i> Irányítószám *</label>
                 </div>
             </div>
@@ -127,7 +155,11 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="country" name="country" placeholder="Ország">
+                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="country" name="country"
+                    
+                    value="${_country}"
+
+                    placeholder="Ország">
                     <label for="country"><i class="bi bi-globe"></i> Ország *</label>
                 </div>
             </div>
@@ -164,7 +196,16 @@ function Adatok(li) {
 
 
 function Fizetes(li) {
-    
+    _nev = keresztnev.value;
+    _emil = emil.value;
+    _cim = cim.value;
+    _city = city.value;
+    _iszam = iszam.value;
+    _country = country.value;
+
+
+
+
     try{
         if(keresztnev.value.trim() == "" || emil.value.trim() == "" || cim.value.trim() == "" || city.value.trim() == "" || iszam.value.trim() == "" || country.value.trim() == ""){         
             throw "Töltse ki a kötelező mezőket";
@@ -172,7 +213,7 @@ function Fizetes(li) {
         if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(keresztnev.value)) {// a-z → kis angol betűk,A-Z → nagy angol betűk, áéíóöőúüűÁÉÍÓÖŐÚÜŰ → magyar ékezetes betűk,\s → szóköz (space, tab stb.)- → kötőjel (pl. „Kovács-Nagy”),^ → a string eleje,$ → a string vége
             throw "A név csak betűket, szóközt és kötőjelet tartalmazhat!";
         }
-        
+
         const minta = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!minta.test(emil.value)) {  // ^[^\s@]+ → az e-mail első része: nem tartalmazhat szóközt vagy @ jelet ||  @ → kötelező kukac jel || [^\s@]+ → a domain rész (pl. gmail) || \. → kötelező pont || [^\s@]+$ → a végződés (pl. com, hu stb.)
             return "Érvénytelen e-mail cím formátum!";
