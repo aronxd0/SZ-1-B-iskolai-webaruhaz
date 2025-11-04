@@ -29,6 +29,7 @@ const mysql_connection =  {
 // 5. replaceAll("\\", ""): eltávolítja az összes backslash-t (\)
 // 6. replaceAll("`", ""): eltávolítja az összes backtick-et (`)
 function strE(s) { 
+  console.log("eredeti string: " + s);
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
 //#region kereses
@@ -393,9 +394,15 @@ app.post('/rendeles',async (req, res) => {
   var szallmod = strE(req.query.SZALLMOD);
   var megjegyzes = strE(req.query.MEGJEGYZES);
   var szallcim = strE(req.query.SZALLCIM);
-  
   var nev = strE(req.query.NEV);
   var email = strE(req.query.EMAIL);
+
+  console.log("fizmod: " + fizmod);
+  console.log("szallmod: " + szallmod);
+  console.log("megjegyzes: " + megjegyzes);
+  console.log("szallcim: " + szallcim);
+  console.log("nev: " + nev);
+  console.log("email: " + email);
 
   var termemekek_sql = 
   `
@@ -443,8 +450,9 @@ app.post('/rendeles',async (req, res) => {
   res.end();
   } catch (err) {
     console.error(err);
-    res.status(500).set(header1, header2).send(JSON.stringify({ message: "error", error: err.message }));
+    res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
   }
+  console.log(sql);
 });
 
 
