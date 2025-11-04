@@ -29,7 +29,6 @@ const mysql_connection =  {
 // 5. replaceAll("\\", ""): eltávolítja az összes backslash-t (\)
 // 6. replaceAll("`", ""): eltávolítja az összes backtick-et (`)
 function strE(s) { 
-  console.log("eredeti string: " + s);
   return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
 //#region kereses
@@ -331,8 +330,6 @@ app.post('/kosar_add', async (req, res) => {
 
     COMMIT;
     `
-
-    console.log(sql);
     const eredmeny = await runExecute(sql, req);
     res.send(eredmeny);
     res.end();
@@ -397,19 +394,12 @@ app.post('/rendeles',async (req, res) => {
   var nev = strE(req.query.NEV);
   var email = strE(req.query.EMAIL);
 
-  console.log("fizmod: " + fizmod);
-  console.log("szallmod: " + szallmod);
-  console.log("megjegyzes: " + megjegyzes);
-  console.log("szallcim: " + szallcim);
-  console.log("nev: " + nev);
-  console.log("email: " + email);
-
   var termemekek_sql = 
   `
   SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG
   FROM webbolt_kosar_tetelei ct
   JOIN webbolt_kosar k ON ct.ID_KOSAR = k.ID_KOSAR
-  WHERE k.ID_USER = ${session_data.ID_USER};
+  WHERE k.ID_USER = ${session_data.ID_USER}
   `;
   
   var json_termekek =JSON.parse(await runQueries(termemekek_sql));
@@ -452,7 +442,6 @@ app.post('/rendeles',async (req, res) => {
     console.error(err);
     res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
   }
-  console.log(sql);
 });
 
 
@@ -472,7 +461,9 @@ app.post('/termek_edit',async (req, res) => {
   var meegys    = strE(req.query.mod_meegys);
   var leiras    = strE(req.query.mod_leiras);
   var termekid  = parseInt(req.query.ID_TERMEK);
-  var aktiv  = ((req.query.mod_aktiv == undefined ? "NO" : "YES") == "YES" ? "Y" : "N") == "Y" && mennyiseg > 0 ? "Y" : "N";
+  var aktiv  = (req.query.mod_aktiv == "NO" ? "N" : "Y")
+
+  //var aktiv  = ((req.query.mod_aktiv == undefined ? "NO" : "YES") == "YES" ? "Y" : "N") == "Y" && mennyiseg > 0 ? "Y" : "N";
   // aktiv = [Admin szándéka = 'Y'] && [Készlet > 0] ? 'Y' : 'N';
 
   var sql = `
