@@ -156,31 +156,31 @@ async function Termek_Mutat(event, cuccok) {
           kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba</button>`;
 
   let bal = ` 
-                    <img class="img-fluid img-thumbnail rounded mx-auto m-1 d-block kepp2" src="${fotolink}" alt="${nev}">
+                    <img class="img-fluid img-thumbnail rounded-4 mx-auto m-5 d-block kepp2" src="${fotolink}" alt="${nev}">
                 
                 
     `;
 
   let kozep = `   <div class="row mt-2">
-                        <b><i class="bi bi-card-list"></i> Termékleírás:</b>
+                        <b class="text-lg"><i class="bi bi-card-list"></i> Termékleírás:</b>
                         <br>
                         <p>${leiras}</p>
                     </div>
     
                     <div class="row mt-3">
                         <p>
-                            <b><i class="bi bi-grid"></i> Kategória: </b> ${kategoria}
+                            <b class="text-lg"><i class="bi bi-grid"></i> Kategória: </b> ${kategoria}
                         </p>
                     </div>
     
                     <div class="row mt-3">
                         <p>
-                            <b><i class="bi bi-hash"></i> Termékazonosító: </b> <span class="tracking-4">${azon}</span>
+                            <b class="text-lg"><i class="bi bi-hash"></i> Termékazonosító: </b> <span class="tracking-4">${azon}</span>
                         </p>
                     </div>
                     <div class="row mt-3">
                         <p> 
-                            <b><i class="bi bi-box-seam"></i> Raktáron: </b> ${mennyiseg} ${meegys}
+                            <b class="text-lg"><i class="bi bi-box-seam"></i> Raktáron: </b> ${mennyiseg} ${meegys}
                         </p>
                     </div>
                     <div class="row mt-5 mb-3">
