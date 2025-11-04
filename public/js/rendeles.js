@@ -82,7 +82,7 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="keresztnev" name="knev" placeholder="Teljes név">
+                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="keresztnev" name="knev" value="${document.getElementById("user").querySelector('h5').textContent.trim()}" placeholder="Teljes név">
                     <label for="keresztnev"><i class="bi bi-person"></i> Teljes név *</label>
                 </div>
             </div>
@@ -91,7 +91,7 @@ function Adatok(li) {
             <div class="col-0 col-lg-3"></div>
             <div class="col-12 col-lg-6 mt-2 p-1">
                 <div class="form-floating">
-                    <input type="email" class="form-control rounded-4 shadow-lg feka" id="emil" name="imel" placeholder="E-mail cím">
+                    <input type="email" class="form-control rounded-4 shadow-lg feka" id="emil" value="${document.getElementById("user-email").innerHTML}" name="imel" placeholder="E-mail cím">
                     <label for="emil"><i class="bi bi-envelope"></i> E-mail cím *</label>
                 </div>
             </div>
@@ -131,6 +131,14 @@ function Adatok(li) {
                     <label for="country"><i class="bi bi-globe"></i> Ország *</label>
                 </div>
             </div>
+            
+
+            <div class="col-0 col-lg-3"></div>
+                <div class="col-12 col-lg-6 mt-2 p-1 text-center m-auto">
+                    <label class="text-danger" id="hiba"> &nbsp;</label>
+                </div>
+            </div>
+
             <div class="col-0 col-lg-3"></div>
             
         </div>
@@ -141,6 +149,8 @@ function Adatok(li) {
         $("#cc").html(form).fadeIn(300);
     });
 
+    console.log(document.getElementById("user").querySelector('h5').textContent.trim());
+    
     
 
     let navigacio = `
@@ -154,6 +164,42 @@ function Adatok(li) {
 
 
 function Fizetes(li) {
+    
+    try{
+        if(keresztnev.value.trim() == "" || emil.value.trim() == "" || cim.value.trim() == "" || city.value.trim() == "" || iszam.value.trim() == "" || country.value.trim() == ""){         
+            throw "Töltse ki a kötelező mezőket";
+        }
+        if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(keresztnev.value)) {// a-z → kis angol betűk,A-Z → nagy angol betűk, áéíóöőúüűÁÉÍÓÖŐÚÜŰ → magyar ékezetes betűk,\s → szóköz (space, tab stb.)- → kötőjel (pl. „Kovács-Nagy”),^ → a string eleje,$ → a string vége
+            throw "A név csak betűket, szóközt és kötőjelet tartalmazhat!";
+        }
+        
+        const minta = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!minta.test(emil.value)) {  // ^[^\s@]+ → az e-mail első része: nem tartalmazhat szóközt vagy @ jelet ||  @ → kötelező kukac jel || [^\s@]+ → a domain rész (pl. gmail) || \. → kötelező pont || [^\s@]+$ → a végződés (pl. com, hu stb.)
+            return "Érvénytelen e-mail cím formátum!";
+        }
+
+        if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(city.value)) {// a-z → kis angol betűk,A-Z → nagy angol betűk, áéíóöőúüűÁÉÍÓÖŐÚÜŰ → magyar ékezetes betűk,\s → szóköz (space, tab stb.)- → kötőjel (pl. „Kovács-Nagy”),^ → a string eleje,$ → a string vége
+            throw "A Város neve csak betűket, szóközt és kötőjelet tartalmazhat!";
+        }
+        if (!/^\d{4}$/.test(iszam.value)) {// 4 katakter számjegy
+            throw "Az irányítószámnak 4 számjegyből kell állnia!";
+        }
+        if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(country.value)) {
+            throw "Az ország neve csak betűket, szóközt és kötőjelet tartalmazhat!";
+        }
+
+
+    } 
+    catch (error) {
+       
+        document.getElementById("hiba").innerHTML = error;
+        return;
+    }
+
+
+
+
+
     $("#aktualis").html(`<span class="text-muted">Áttekintés</span> - <span class="text-muted">Adatok</span> - <span class="text-primary"><b>Fizetés</b></span`);
     $("#cc").html("");
 
