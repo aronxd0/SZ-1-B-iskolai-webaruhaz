@@ -258,12 +258,13 @@ function Fizetes(li) {
 
 function Fizetésclick() {
     try{
-        let szallcim = `${cim.value}, ${iszam.value} ${city.value}, ${country.value}`;
-        let  asd = ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉS SEMMI "}&SZALCIM=${szallcim}&NEV=${_nev}&EMAIL=#${_emil}`, 1);
+        let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
+        ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉG SEMMI"}&SZALCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
+        
         üzen("A terméket sikeresen megvásároltad.","success");
     }
     catch(e){
-        üzen("Hiba történt a vásárlás során.","danger");
+        üzen(e,"danger");
     }
 
     
