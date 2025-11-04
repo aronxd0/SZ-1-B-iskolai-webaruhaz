@@ -20,6 +20,12 @@ body, html {
     object-fit: cover;
 }
 
+.kepp2 {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
 /* termekeknel a kartya merete */
 .card {
   min-height: 350px;

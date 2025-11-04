@@ -143,43 +143,51 @@ async function Termek_Mutat(event, cuccok) {
   if ($("#loginspan").html() == " Bejelentkezés" || aktiv == "N" || mennyiseg == 0) {
     ks = "";
   } else
-    ks = `<button class="btn btn-lg btn-success kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba bele</button>`;
+    ks = `<button 
+        class="btn btn-lg 
+          bg-emerald-800 
+          text-zinc-200 
+          hover:bg-emerald-700 
+          hover:text-zinc-200 
+          hover:shadow-lg 
+          hover:shadow-emerald-700/70 
+          transition-all duration-150 ease-in-out
+          rounded-3xl 
+          kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba</button>`;
 
   let bal = ` 
-                    <img class="img-fluid img-thumbnail rounded mx-auto  m-1 d-block" src="${fotolink}" alt="${nev}">
+                    <img class="img-fluid img-thumbnail rounded mx-auto m-1 d-block kepp2" src="${fotolink}" alt="${nev}">
                 
                 
     `;
 
   let kozep = `   <div class="row mt-2">
-                        <b>Termékleírás:</b>
+                        <b><i class="bi bi-card-list"></i> Termékleírás:</b>
                         <br>
                         <p>${leiras}</p>
                     </div>
     
-                    <div class"row">
+                    <div class="row mt-3">
                         <p>
-                            <b>Kategória: </b> ${kategoria}
+                            <b><i class="bi bi-grid"></i> Kategória: </b> ${kategoria}
                         </p>
                     </div>
     
-                    <div class"row">
+                    <div class="row mt-3">
                         <p>
-                            <b>Termékazonosító: </b> ${azon}
+                            <b><i class="bi bi-hash"></i> Termékazonosító: </b> <span class="tracking-4">${azon}</span>
                         </p>
                     </div>
-                    <div class="row">
+                    <div class="row mt-3">
                         <p> 
-                            <b> Raktáron: </b> ${mennyiseg} ${meegys}
+                            <b><i class="bi bi-box-seam"></i> Raktáron: </b> ${mennyiseg} ${meegys}
                         </p>
                     </div>
-                    <div class="row">
-                        <h1 class="text-success anton-regular">${parseInt(ar).toLocaleString()} Ft</h1>
+                    <div class="row mt-5 mb-3">
+                        <span class="text-success text-4xl anton-regular">${parseInt(ar).toLocaleString()} Ft</span>
                     </div>
 
-                    <div class="row p-2">
-                        
-                    </div>
+                    
     
     `;
 
@@ -206,7 +214,7 @@ async function Termek_Mutat(event, cuccok) {
     $("#sajatvlm").addClass("eltunt");
   } else {
     $("#vlmg").html(
-      `<button class="btn btn-primary bi bi-chat-dots w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`
+      `<button class="btn btn-primary bi bi-pen w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`
     );
     $("#ussr").html(`${$("#user").html()}`);
 
