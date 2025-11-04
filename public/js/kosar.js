@@ -78,9 +78,9 @@ $("#cart_button").click(async function () {
                                     btn-lg  
                                     bi bi-dash-lg 
                                     bal-gomb 
-                                    bg-zinc-200 
-                                    text-red-600
-                                    hover:bg-zinc-300 
+                                    bg-transparent 
+                                    text-red-600 
+                                    
                                     dark:bg-sky-950 
                                     dark:text-red-600 
                                     rounded-4 me-2 
@@ -109,9 +109,9 @@ $("#cart_button").click(async function () {
                                     btn btn-lg 
                                     bi bi-plus-lg 
                                     jobb-gomb
-                                    bg-zinc-200 
+                                    bg-transparent  
                                     text-emerald-600
-                                    hover:bg-zinc-300 
+                                    
                                     dark:bg-sky-950 
                                     dark:text-emerald-500 
                                     rounded-4 ms-2 
