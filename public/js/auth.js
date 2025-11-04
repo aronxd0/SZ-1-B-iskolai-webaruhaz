@@ -85,6 +85,12 @@ $("#kijelentkezik").click(function() {
         elfogyott = false;
         Nemaktivak = false;
         Joldal =1;
+        _nev = "" ;
+        _emil = "" ;
+        _cim = ""  ;
+        _city = "" ;
+        _iszam = "";
+        _country = "";
         
         document.getElementById("rendalap").selected = true;
 
