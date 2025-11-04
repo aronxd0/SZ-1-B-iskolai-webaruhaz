@@ -249,7 +249,22 @@ function Fizetes(li) {
 
     let navigacio = `
         <button type="button" class="btn btn-lg btn-danger bi bi-backspace" onclick='Adatok(${JSON.stringify(li)})'> Vissza</button>
-        <button type="button" class="btn btn-lg btn-success bi bi-credit-card"> Fizetés</button>
+        <button type="button" class="btn btn-lg btn-success bi bi-credit-card"   data-bs-dismiss="modal" onclick="Fizetésclick()" > Fizetés</button>
     `;
     $("#lab").html(navigacio);
+}
+
+function Fizetésclick() {
+    try{
+         let  asd = ajax_post(`rendeles?FIZMOD=${"das"}&`, 1, );
+
+
+        üzen("A terméket sikeresen megvásároltad.","success");
+    }
+    
+    catch(e){
+        üzen("Hiba történt a vásárlás során.","danger");
+    }
+
+    
 }
