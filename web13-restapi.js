@@ -391,8 +391,11 @@ app.post('/rendeles',async (req, res) => {
   session_data = req.session;
   var fizmod = strE(req.query.FIZMOD);
   var szallmod = strE(req.query.SZALLMOD);
-  var megjegyzes = strE(req.query.MEGJEGYZES ? req.query.MEGJEGYZES : '');
-  var szallcim = strE(req.query.SZALLCIM ? req.query.SZALLCIM : '');
+  var megjegyzes = strE(req.query.MEGJEGYZES);
+  var szallcim = strE(req.query.SZALLCIM);
+  
+  var nev = strE(req.query.NEV);
+  var email = strE(req.query.EMAIL);
 
   var termemekek_sql = 
   `
@@ -415,8 +418,8 @@ app.post('/rendeles',async (req, res) => {
 
       SET @kosarid = (SELECT ID_KOSAR FROM webbolt_kosar WHERE ID_USER = ${session_data.ID_USER});
 
-      INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES, SZALLCIM)
-      VALUES (${session_data.ID_USER}, "${fizmod}", "${szallmod}", "${megjegyzes}", "${szallcim}");
+      INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES, SZALLCIM, NEV, EMAIL)
+      VALUES (${session_data.ID_USER}, "${fizmod}", "${szallmod}", "${megjegyzes}", "${szallcim}", "${nev}", "${email}");
 
       SET @rendeles_id = LAST_INSERT_ID();
     `;
