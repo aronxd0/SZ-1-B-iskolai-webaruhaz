@@ -423,12 +423,79 @@ function CARD_BETOLT(adatok) {
 
     var pp = `
             <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" id="Vissza2" onclick="Kovi(this)"> << </a></li>
-                <li class="page-item"><a class="page-link" id="vissza1" onclick="Kovi(this)">Előző</a></li>
-                <li class="page-item"><a class="page-link d-flex"><b id="Mostoldal">1</b> / <span id="DBoldal">100</span></a></li>
+                <li class="page-item  shadow-xl" style="border: none;">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="Vissza2" onclick="Kovi(this)"> << </a></li>
+                <li class="page-item  shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="vissza1" onclick="Kovi(this)">Előző</a></li>
+                <li class="page-item shadow-xl">
+                    <a class="
+                        page-link 
+                        d-flex 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        "><b id="Mostoldal">1</b> / <span id="DBoldal">100</span></a></li>
                 
-                <li class="page-item"><a class="page-link" id="Kovi1" onclick="Kovi(this)">Következő</a></li>
-                <li class="page-item"><a class="page-link" id="Kovi2" onclick="Kovi(this)"> >> </a></li>
+                <li class="page-item  shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="Kovi1" onclick="Kovi(this)">Következő</a></li>
+
+                <li class="page-item shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="Kovi2" onclick="Kovi(this)"> >> </a></li>
             </ul>`;
     // alul a lapválastó feltöltése
 
