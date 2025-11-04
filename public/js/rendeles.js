@@ -218,7 +218,7 @@ function Fizetes(li) {
 
         const minta = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!minta.test(emil.value)) {  // ^[^\s@]+ → az e-mail első része: nem tartalmazhat szóközt vagy @ jelet ||  @ → kötelező kukac jel || [^\s@]+ → a domain rész (pl. gmail) || \. → kötelező pont || [^\s@]+$ → a végződés (pl. com, hu stb.)
-            return "Érvénytelen e-mail cím formátum!";
+            throw "Érvénytelen e-mail cím formátum!";
         }
 
         if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(city.value)) {// a-z → kis angol betűk,A-Z → nagy angol betűk, áéíóöőúüűÁÉÍÓÖŐÚÜŰ → magyar ékezetes betűk,\s → szóköz (space, tab stb.)- → kötőjel (pl. „Kovács-Nagy”),^ → a string eleje,$ → a string vége
@@ -256,11 +256,11 @@ function Fizetes(li) {
     $("#lab").html(navigacio);
 }
 
-function Fizetésclick() {
+async function Fizetésclick() {
     try{
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
-        ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉG SEMMI"}&SZALCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
-        
+        await ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉG SEMMI"}&SZALCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
+
         üzen("A terméket sikeresen megvásároltad.","success");
     }
     catch(e){
