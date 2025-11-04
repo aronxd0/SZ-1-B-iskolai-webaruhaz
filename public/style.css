@@ -81,10 +81,16 @@ label::after { content: none !important; }
 }
 
 /* vilagos modban */
-.gombdiv button.aktiv { background-color: oklch(87.1% 0.006 286.286);} 
+.gombdiv button.aktiv { 
+  background-color: oklch(96.7% 0.001 286.375);
+  box-shadow: 0 8px 6px -6px oklch(96.7% 0.001 286.375);
+} 
 
 /* sotet modban */
-html.dark .gombdiv button.aktiv { background-color: oklch(37.3% 0.034 259.733);} 
+html.dark .gombdiv button.aktiv { 
+  background-color: oklch(37.3% 0.034 259.733);
+  box-shadow: 0px 8px 6px -6px oklch(37.3% 0.034 259.733);
+} 
 
 
 .shadow-bottom {
@@ -185,17 +191,6 @@ html[data-bs-theme="dark"] .feka {
   border: 1px solid var(--bs-dark);
 }
 
-.bal-gomb {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-  
-}
-
-.jobb-gomb {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  
-}
 
 
 
