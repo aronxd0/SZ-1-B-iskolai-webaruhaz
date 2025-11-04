@@ -18,6 +18,8 @@ let _country = ""//globális változó az ország tárolására
 
 
 function Attekintes(li) {
+   
+
     console.log(li);
 
     $("#aktualis").html(`<span class="text-primary"><b>Áttekintés</b></span> - <span class="text-muted">Adatok</span> - <span class="text-muted">Fizetés</span`);
@@ -256,12 +258,10 @@ function Fizetes(li) {
 
 function Fizetésclick() {
     try{
-         let  asd = ajax_post(`rendeles?FIZMOD=${"das"}&`, 1, );
-
-
+        let szallcim = `${cim.value}, ${iszam.value} ${city.value}, ${country.value}`;
+        let  asd = ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉS SEMMI "}&SZALCIM=${szallcim}&NEV=${_nev}&EMAIL=#${_emil}`, 1);
         üzen("A terméket sikeresen megvásároltad.","success");
     }
-    
     catch(e){
         üzen("Hiba történt a vásárlás során.","danger");
     }
