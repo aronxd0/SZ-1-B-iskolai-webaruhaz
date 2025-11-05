@@ -203,7 +203,13 @@ async function Termek_Mutat(event, cuccok) {
   $("#ussr").html("");
 
   $("#vvl").html(
-    `<a class="nav-link show active" href="#velemenyek" id="velemenyek-tab" onclick='VelemenyekMutat(${termek_id})'>Vélemények</a>`
+    `<a 
+    class="
+        nav-link 
+        show 
+        active 
+        
+    " href="#velemenyek" id="velemenyek-tab" onclick='VelemenyekMutat(${termek_id})'>Vélemények</a>`
   );
   //$("#velemenyek-tab").trigger("click");
 
