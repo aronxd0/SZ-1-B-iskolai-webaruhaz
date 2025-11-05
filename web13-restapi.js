@@ -400,6 +400,23 @@ app.post('/rendeles',async (req, res) => {
   var nev = strE(req.query.NEV);
   var email = strE(req.query.EMAIL);
 
+  var ellenorzes = `
+    SELECT 
+    t.ID_TERMEK
+    FROM webbolt_kosar_tetelei k
+    INNER JOIN webbolt_kosar wk ON k.ID_KOSAR = wk.ID_KOSAR
+    INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
+    WHERE wk.ID_USER = ${session_data.ID_USER}
+    AND (t.AKTIV = 'N' OR t.MENNYISEG < k.MENNYISEG)
+  `;
+
+  var nezzukcsak = JSON.parse(await runQueries(ellenorzes));
+  if (nezzukcsak.rows.length > 0) {
+    // Ha a rendelés során változott a termékek állapota (pl. elfogyott vagy inaktív lett)
+    res.send(JSON.stringify({ message: "nagy baj történt" }));
+    return;
+  }
+
   var termemekek_sql = 
   `
   SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, t.FOTOLINK
@@ -453,6 +470,8 @@ app.post('/rendeles',async (req, res) => {
     res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
   }
 });
+
+
 
 
 
