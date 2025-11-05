@@ -202,7 +202,7 @@ html[data-bs-theme="dark"] .feka {
 
 /* scrollbar szelesseg */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 9px;
 }
 
 /* az egesz */
