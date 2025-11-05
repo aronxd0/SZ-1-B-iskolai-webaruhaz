@@ -667,13 +667,26 @@
         </div>
 
         
-        <div class="row modal-body">
+        <div 
+        class="
+          row 
+          modal-body 
+          bg-zinc-100 
+          text-slate-900 
+          dark:bg-slate-700 
+          dark:text-zinc-200 
+        ">
           <div class="col-12 text-center">A termék a kosárba került.</div>
           <div class="col-12 text-center" id="idt"></div>
         </div>
 
         
-        <div class="modal-footer d-flex justify-content-center justify-content-lg-end">
+        <div 
+        class="
+        modal-footer 
+        d-flex 
+        justify-content-center 
+        justify-content-lg-end">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vásárlás folytatása</button>
           <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="kosarmegtekintese">Kosár megtekintése</button>
         </div>
@@ -688,55 +701,74 @@
 
       <!----------------- modal adatbevitel ablak ----------------------->
       <div class="modal fade" id="termek_edit">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
           <div class="modal-content">
-            <div class="modal-header">
+            <div 
+            class="
+            modal-header 
+            bg-zinc-300 
+            text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            shadow-bottom 
+            ">
               <h5 id="idx1" class="modal-title">Modal Heading</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <div id="idx0" class="modal-body">     
+            <div id="idx0" 
+            class="
+              modal-body 
+              bg-zinc-100 
+              text-slate-900 
+              dark:bg-slate-700 
+              dark:text-zinc-200 
+              ">     
               <form id="mod1" class="row">
                 <div class="col-12 p-2">
-                  <div class="form-floating">
-                    <select class="form-select" id="mod_kat" name="mod_kat"></select>     
-                    <label for="mod_kat">Kategória</label>
-                  </div>
+                    <label for="mod_kat" class="text-slate-900 text-lg p-2">Kategória</label>
+                    <select class="form-select shadow-xl" id="mod_kat" name="mod_kat"></select>     
+                    
+                  
                 </div>
                 
                 <div class="col-12 p-2">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="mod_nev" name="mod_nev">
-                    <label for="mod_nev">Termék neve</label>
-                  </div>
+                    <label for="mod_nev" class="text-slate-900 text-lg p-2">Név</label>
+                    <input type="text" class="form-control shadow-xl" id="mod_nev" name="mod_nev">
+                    
+                  
                 </div>
                 
                 <div class="col-12 p-2">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="mod_azon" name="mod_azon">
-                    <label for="mod_azon">Azonosító</label>
-                  </div>
+                    <label for="mod_azon" class="text-slate-900 text-lg p-2">Azonosító</label>
+                    <input type="text" class="form-control shadow-xl" id="mod_azon" name="mod_azon">
+                    
+                  
                 </div>
                 
                 <div class="d-flex flex-column flex-lg-row p-2">
-                  <div class="form-floating p-1">
-                    <input type="number" class="form-control" id="mod_ar" name="mod_ar">
-                    <label for="mod_ar">Ár</label>
+                  <div>
+                    <label for="mod_ar" class="text-slate-900 text-lg p-2">Ár</label>
+                    <input type="number" class="form-control shadow-xl" id="mod_ar" name="mod_ar">
+                    
                   </div>
 
-                  <div class="form-floating p-1">
-                    <input type="number" class="form-control" id="mod_db" name="mod_db">
-                    <label for="mod_db">Mennyiség</label>
+                  <div>
+                    <label for="mod_db" class="text-slate-900 text-lg p-2">Mennyiség</label>
+                    <input type="number" class="form-control shadow-xl" min="0" id="mod_db" name="mod_db">
+                    
                   </div>
 
-                  <div class="form-floating p-1">
-                    <input type="text" class="form-control" id="mod_meegys" name="mod_meegys">
-                    <label for="mod_meegys">Egység</label>
+                  <div >
+                    <label for="mod_meegys" class="text-slate-900 text-lg p-2">Egység</label>
+                    <input type="text" class="form-control shadow-xl" id="mod_meegys" name="mod_meegys">
+                    
                   </div>
 
-                  <div class="form-floating p-1">
-                    <input type="date" class="form-control" id="mod_datum" name="mod_datum">
-                    <label for="mod_datum">Dátum</label>
+                  <div >
+                    <label for="mod_datum" class="text-slate-900 text-lg p-2">Dátum</label><i>(opcionális)</i>
+                    <input type="date" class="form-control shadow-xl" id="mod_datum" name="mod_datum">
+                    
                   </div>
                 </div>
 
@@ -749,9 +781,10 @@
                 
                 
                 <div class="col-12 p-2">
-                  <div class="form-floating">
-                    <textarea class="form-control "rows="4" id="mod_leiras" name="mod_leiras"></textarea>
-                    <label for="mod_leiras">Leírás</label>
+                  <div>
+                    <label for="mod_leiras" class="text-slate-900 text-lg p-2">Leírás</label>
+                    <textarea class="form-control shadow-xl"rows="4" id="mod_leiras" name="mod_leiras"></textarea>
+                    
                   </div>
                 </div>
                 
@@ -759,7 +792,14 @@
               </form>
             </div>
 
-            <div class="modal-footer">
+            <div 
+            class="
+              modal-footer 
+              bg-zinc-300 
+              text-slate-900 
+              dark:bg-slate-800 
+              dark:text-zinc-200 
+            ">
               <button id="save_button" type="button" class="btn btn-success"  data-bs-dismiss="modal"> <i class="bi bi-save2"></i> Ment</button>
             </div>
 
