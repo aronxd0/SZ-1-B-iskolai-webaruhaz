@@ -712,7 +712,7 @@
             dark:text-zinc-200 
             shadow-bottom 
             ">
-              <h5 id="idx1" class="modal-title">Modal Heading</h5>
+              <span id="idx1" class="modal-title text-lg">Modal Heading</span>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -725,49 +725,114 @@
               dark:text-zinc-200 
               ">     
               <form id="mod1" class="row">
-                <div class="col-12 p-2">
-                    <label for="mod_kat" class="text-slate-900 text-lg p-2">Kategória</label>
-                    <select class="form-select shadow-xl" id="mod_kat" name="mod_kat"></select>     
+
+                <div class="col-12 d-flex flex-column flex-lg-row p-2">
+
+                  <div class="col-lg-6 p-1">
+                    <label for="mod_kat" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><i class="bi bi-grid"></i> Kategória</label>
+                    <select 
+                    class="
+                    form-select 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-800 
+                    dark:text-zinc-200 
+                    " id="mod_kat" name="mod_kat" style="border: none;"></select>     
                     
                   
-                </div>
-                
-                <div class="col-12 p-2">
-                    <label for="mod_nev" class="text-slate-900 text-lg p-2">Név</label>
-                    <input type="text" class="form-control shadow-xl" id="mod_nev" name="mod_nev">
-                    
+                  </div>
                   
+                  <div class="col-lg-6 p-1">
+                      <label for="mod_nev" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><i class="bi bi-type"></i> Név</label>
+                      <input type="text" 
+                      class="
+                      form-control 
+                      shadow-xl 
+                      bg-zinc-50 
+                      text-slate-900 
+                      dark:bg-slate-800 
+                      dark:text-zinc-200 " id="mod_nev" name="mod_nev" style="border: none;">
+                      
+                    
+                  </div>
+
+
+
+
                 </div>
+
+                
                 
                 <div class="col-12 p-2">
-                    <label for="mod_azon" class="text-slate-900 text-lg p-2">Azonosító</label>
-                    <input type="text" class="form-control shadow-xl" id="mod_azon" name="mod_azon">
+                    <label for="mod_azon" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><i class="bi bi-hash"></i> Azonosító</label>
+                    <input type="text" 
+                    class="
+                    form-control 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-800 
+                    dark:text-zinc-200 
+                    " id="mod_azon" name="mod_azon" style="border: none;">
                     
                   
                 </div>
                 
                 <div class="d-flex flex-column flex-lg-row p-2">
-                  <div>
-                    <label for="mod_ar" class="text-slate-900 text-lg p-2">Ár</label>
-                    <input type="number" class="form-control shadow-xl" id="mod_ar" name="mod_ar">
+                  <div class="p-1">
+                    <label for="mod_ar" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><i class="bi bi-cash"></i> Ár</label>
+                    <input type="number" 
+                    class="
+                    form-control 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-800 
+                    dark:text-zinc-200 
+                    " id="mod_ar" name="mod_ar" style="border: none;">
                     
                   </div>
 
-                  <div>
-                    <label for="mod_db" class="text-slate-900 text-lg p-2">Mennyiség</label>
-                    <input type="number" class="form-control shadow-xl" min="0" id="mod_db" name="mod_db">
+                  <div class="p-1">
+                    <label for="mod_db" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><i class="bi bi-123"></i> Mennyiség</label>
+                    <input type="number" 
+                    class="
+                    form-control 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-800 
+                    dark:text-zinc-200 
+                    " min="0" id="mod_db" name="mod_db" style="border: none;">
                     
                   </div>
 
-                  <div >
-                    <label for="mod_meegys" class="text-slate-900 text-lg p-2">Egység</label>
-                    <input type="text" class="form-control shadow-xl" id="mod_meegys" name="mod_meegys">
+                  <div class="p-1">
+                    <label for="mod_meegys" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><i class="bi bi-boxes"></i> Egység</label>
+                    <input type="text" 
+                    class="
+                    form-control 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-800 
+                    dark:text-zinc-200 
+                    " id="mod_meegys" name="mod_meegys" style="border: none;">
                     
                   </div>
 
-                  <div >
-                    <label for="mod_datum" class="text-slate-900 text-lg p-2">Dátum</label><i>(opcionális)</i>
-                    <input type="date" class="form-control shadow-xl" id="mod_datum" name="mod_datum">
+                  <div class="p-1">
+                    <label for="mod_datum" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><i class="bi bi-calendar4-week"></i> Dátum</label><i>(opcionális)</i>
+                    <input type="date" 
+                    class="
+                    form-control 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-800 
+                    dark:text-zinc-200 
+                    " id="mod_datum" name="mod_datum" style="border: none;">
                     
                   </div>
                 </div>
@@ -775,15 +840,23 @@
                 <div class="col-12">
                   <div class="form-check form-switch">
                     <input class="form-control form-check-input" type="checkbox" id="mySwitch" name="mod_aktiv" value="yes">
-                    <label class="form-check-label" for="mySwitch" id="switchtext">Aktív</label>
+                    <label class="form-check-label text-slate-900 dark:text-zinc-200" for="mySwitch" id="switchtext">Aktív</label>
                   </div>
                 </div>
                 
                 
                 <div class="col-12 p-2">
                   <div>
-                    <label for="mod_leiras" class="text-slate-900 text-lg p-2">Leírás</label>
-                    <textarea class="form-control shadow-xl"rows="4" id="mod_leiras" name="mod_leiras"></textarea>
+                    <label for="mod_leiras" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><i class="bi bi-card-list"></i> Leírás</label>
+                    <textarea 
+                    class="
+                    form-control 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-800 
+                    dark:text-zinc-200 
+                    " rows="4" id="mod_leiras" name="mod_leiras" style="border: none;"></textarea>
                     
                   </div>
                 </div>
