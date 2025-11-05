@@ -276,6 +276,9 @@ async function Fizetésclick() {
     
 }
 
+
+//#region Autocomplete országokhoz
+
 // ----------------- Autocomplete support (countries) -----------------
 const countries = [
   "Afganisztán", "Albánia", "Algéria", "Andorra", "Angola", "Argentína", "Örményország", "Ausztrália", "Ausztria", "Azerbajdzsán",
@@ -289,70 +292,92 @@ const countries = [
   "Szlovénia", "Dél-afrikai Köztársaság", "Dél-Korea", "Spanyolország", "Svédország", "Svájc", "Tajvan", "Thaiföld", "Törökország",
   "Ukrajna", "Egyesült Királyság", "Amerikai Egyesült Államok", "Venezuela", "Vietnam", "Zimbabwe"
 ]
+ 
+
+
 
 function autocomplete(inp, arr) {
+  //arr == countries
+  //inp == country input mező
   var currentFocus;
   inp.addEventListener("input", function(e) {
     var a, b, i, val = this.value;
+    // bezárja a régi ablakokat  listákat 
     closeAllLists();
     if (!val) { return false; }
     currentFocus = -1;
     a = document.createElement("DIV");
-    a.setAttribute("id", this.id + "autocomplete-list");
+    a.setAttribute("id", this.id + "autocomplete-list"); // ha már volt country kiválasztva akkor újra létrehozza
     a.setAttribute("class", "autocomplete-items");
     this.parentNode.appendChild(a);
+
+    //létrehozunk egy divet amibe betesszük a találatokat
+
+    var darab  = 0;
     for (i = 0; i < arr.length; i++) {
-      if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+      if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) { //ha be van valmi irva akkor összehasonlítja a beírt értékkel a lista minden elemének a kezdését
+        // ha találat van akkor ide bejön
+        
+        if(darab == 3) {break}; // maximum 4 találat legyen megjelenitve
+        darab = darab +1 ;
+        // létrehoz egy divet a találathoz
         b = document.createElement("DIV");
-        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>"; // félkövérrel kiemeli a találat elejét
         b.innerHTML += arr[i].substr(val.length);
-        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>"; // inputtá teszi a találatot hogy később ki lehessen választani
+
+        // amikor rákattint a találatra akkor beírja az input mezőbe a kiválasztott értéket
         b.addEventListener("click", function(e) {
           inp.value = this.getElementsByTagName("input")[0].value;
           closeAllLists();
         });
-        a.appendChild(b);
+        a.appendChild(b); // betesszi a találatot a divbe
       }
     }
   });
+
+
   inp.addEventListener("keydown", function(e) {
     var x = document.getElementById(this.id + "autocomplete-list");
     if (x) x = x.getElementsByTagName("div");
-    if (e.keyCode == 40) {
-      currentFocus++;
+    if (e.keyCode == 40) { // lefelenyil nyíl
+      currentFocus++;// növeli a fókuszt
       addActive(x);
-    } else if (e.keyCode == 38) {
+    } else if (e.keyCode == 38) {// felnyil nyíl
       currentFocus--;
       addActive(x);
-    } else if (e.keyCode == 13) {
+    } else if (e.keyCode == 13) { // enter
       e.preventDefault();
       if (currentFocus > -1) {
-        if (x) x[currentFocus].click();
+        if (x) x[currentFocus].click(); // ha van fókuszban lévő elem akkor rákattint
       }
     }
   });
+
+
   function addActive(x) {
-    if (!x) return false;
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    x[currentFocus].classList.add("autocomplete-active");
+    if (!x) return false; // ha nincs találat akkor kilép
+    removeActive(x);// eltávolítja az aktív osztályt minden elemtől
+    if (currentFocus >= x.length) currentFocus = 0; // ha a fókusz nagyobb mint a találatok száma akkor visszaállítja 0-ra
+    if (currentFocus < 0) currentFocus = (x.length - 1); // ha a fókusz kisebb mint 0 akkor a találatok utolsó elemére állítja
+    x[currentFocus].classList.add("autocomplete-active"); // hozzáadja az aktív osztályt a fókuszban lévő elemhez
   }
   function removeActive(x) {
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
+    for (var i = 0; i < x.length; i++) { //
+      x[i].classList.remove("autocomplete-active"); // eltávolítja az aktív osztályt minden elemtől
     }
   }
+
   function closeAllLists(elmnt) {
-    var x = document.getElementsByClassName("autocomplete-items");
+    var x = document.getElementsByClassName("autocomplete-items"); // lekéri az összes találatot
     for (var i = 0; i < x.length; i++) {
       if (elmnt != x[i] && elmnt != inp) {
-        x[i].parentNode.removeChild(x[i]);
+        x[i].parentNode.removeChild(x[i]); // eltávolítja a találatot ha nem az input mező vagy a találat maga az elem
       }
     }
   }
   document.addEventListener("click", function (e) {
-    closeAllLists(e.target);
+    closeAllLists(e.target); // bezárja a találatokat ha máshova kattintanak
   });
 }
-// ----------------- /autocomplete -----------------
+//#endregion
