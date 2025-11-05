@@ -198,6 +198,12 @@ html[data-bs-theme="dark"] .feka {
 }
 
 
+input::-webkit-outer-spin-button, /* number inputoknal a fel-le nyilak eltuntetese */
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 
 
 
