@@ -231,3 +231,26 @@ html.dark ::-webkit-scrollbar-thumb {
   background: oklch(44.6% 0.03 256.802); /* gray-600 */
 }
 
+/* Autocomplete styling (összhangban az example-lel) */
+.autocomplete { position: relative; display: inline-block; }
+.autocomplete .form-control { width: 100%; }
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 9999;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bs-body-bg, #fff);
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover { background-color: #e9e9e9; }
+.autocomplete-active { background-color: #0d6efd !important; color: #fff; }
+
