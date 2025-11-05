@@ -413,7 +413,7 @@ app.post('/rendeles',async (req, res) => {
   var nezzukcsak = JSON.parse(await runQueries(ellenorzes));
   if (nezzukcsak.rows.length > 0) {
     // Ha a rendelés során változott a termékek állapota (pl. elfogyott vagy inaktív lett)
-    res.send(JSON.stringify({ message: "nagy baj történt" }));
+    res.send(JSON.stringify({ message: "A rendelés nem véglegesíthető, mert a kosárban lévő termékek közül egy vagy több időközben elfogyott vagy inaktiválódott vagy nincs a kívánt mennyiség készleten. Ellenőrizzük és korrigáljuk önnek a kosara tartalmát." }));
     return;
   }
 
