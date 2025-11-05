@@ -279,7 +279,7 @@ app.post('/logout', (req, res) => {
 //#endregion
 
 
-//#region kosar / rendeles
+//#region kosar
 
 app.post('/kosar_add', async (req, res) => {
   try {
@@ -384,6 +384,12 @@ app.post('/tetelek',(req, res) => {
   sendJson_toFrontend(res, sql);
 });
 
+
+//#endregion
+
+
+//#region rendeles
+
 app.post('/rendeles',async (req, res) => {
   try{
   session_data = req.session;
@@ -396,9 +402,10 @@ app.post('/rendeles',async (req, res) => {
 
   var termemekek_sql = 
   `
-  SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG
+  SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, t.FOTOLINK
   FROM webbolt_kosar_tetelei ct
-  JOIN webbolt_kosar k ON ct.ID_KOSAR = k.ID_KOSAR
+  INNER JOIN webbolt_kosar k ON ct.ID_KOSAR = k.ID_KOSAR
+  INNER JOIN webbolt_termekek t ON ct.ID_TERMEK = t.ID_TERMEK
   WHERE k.ID_USER = ${session_data.ID_USER}
   `;
   
@@ -424,8 +431,11 @@ app.post('/rendeles',async (req, res) => {
     for (var termek of json_termekek.rows) {
       var termek_id = parseInt(termek.ID_TERMEK);
       var termek_mennyiseg = parseInt(termek.MENNYISEG);
-      sql += `INSERT INTO webbolt_rendeles_tetelei (ID_RENDELES, ID_TERMEK, MENNYISEG)
-      VALUES (@rendeles_id, ${termek_id}, ${termek_mennyiseg});`;
+      var termek_fotolink = termek.FOTOLINK;
+      var termek_ar = parseInt(termek.AR);
+      termek_nev = termek.NEV;
+      sql += `INSERT INTO webbolt_rendeles_tetelei (ID_RENDELES,  MENNYISEG, NEV, AR, FOTOLINK, ID_TERMEK)
+      VALUES (@rendeles_id, ${termek_mennyiseg}, "${termek_nev}", ${termek_ar}, "${termek_fotolink}", ${termek_id});`;
     }
 
   sql += 
@@ -443,6 +453,9 @@ app.post('/rendeles',async (req, res) => {
     res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
   }
 });
+
+
+
 
 
 //#endregion
