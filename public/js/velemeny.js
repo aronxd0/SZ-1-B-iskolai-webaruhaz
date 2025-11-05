@@ -89,11 +89,23 @@ async function VelemenyekMutat(id_termek) {
     try {
         
         let velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}`, 1);
-        if (velemeny_lista.rows.length == 0) { $("#velemenyek").html("Ehhez a termékhez még senki nem írt véleményt :("); }
+        if (velemeny_lista.rows.length == 0) { $("#velemenyek").html("<div class='col-12 text-xl text-center p-3'>Ehhez a termékhez még senki nem írt véleményt :(</div>"); }
         else {
             for (const element of velemeny_lista.rows) {
                 vv += `
-                <div class="w-100 p-2 border rounded fhr mt-3 mb-3 comment">
+                <div 
+                class="
+                    w-100 
+                    p-3 
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-700 
+                    dark:text-zinc-200 
+                    mt-3 
+                    mb-3 
+                    comment">
                     <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
                     <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
                 </div>`;

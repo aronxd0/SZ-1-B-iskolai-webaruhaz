@@ -208,7 +208,7 @@ async function Termek_Mutat(event, cuccok) {
         nav-link 
         show 
         active 
-        
+
     " href="#velemenyek" id="velemenyek-tab" onclick='VelemenyekMutat(${termek_id})'>Vélemények</a>`
   );
   //$("#velemenyek-tab").trigger("click");
@@ -220,7 +220,25 @@ async function Termek_Mutat(event, cuccok) {
     $("#sajatvlm").addClass("eltunt");
   } else {
     $("#vlmg").html(
-      `<button class="btn btn-primary bi bi-pen w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`
+      `<button 
+      class="
+      btn 
+      
+      bi bi-pen 
+      bg-zinc-300 
+      text-slate-900 
+      hover:shadow-xl 
+      hover:shadow-gray-950/60 
+      hover:bg-zinc-200 
+      hover:text-slate-900 
+      dark:bg-slate-900 
+      dark:text-zinc-200 
+      dark:hover:bg-slate-800 
+      dark:hover:text-zinc-200 
+      dark:hover:shadow-xl 
+      dark:hover:shadow-slate-600/90 
+      transition-hover duration-300 ease-in-out 
+        w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`
     );
     $("#ussr").html(`${$("#user").html()}`);
 
