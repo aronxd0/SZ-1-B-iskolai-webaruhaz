@@ -394,10 +394,11 @@ async function KategoriaFeltolt(hova, type, kivalasztott) {
     }
     try {
         console.log(`&minar=${document.getElementById("min_ar").value}`)
-        let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}${elfogyt}${nemaktivt}&minar=${parseInt( document.getElementById("min_ar").value)}&maxar= ${parseInt( document.getElementById("max_ar").value )}`, 1);
+       
         let listItems  = "";
 
         if (type == "check") {
+             let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}${elfogyt}${nemaktivt}&minar=${parseInt( document.getElementById("min_ar").value)}&maxar= ${parseInt( document.getElementById("max_ar").value )}`, 1);
             for (let i = 0; i < k_json.rows.length; ++i) {
                 var pipa = ""
                 console.log(bepipaltID +" adas űdasőksoiídr hf");
@@ -409,6 +410,7 @@ async function KategoriaFeltolt(hova, type, kivalasztott) {
             
         }
         else {
+             let k_json = await ajax_post(`kategoria`, 1);
             for (let index = 0; index < k_json.rows.length; index++) {
                 listItems += `<option value="${k_json.rows[index].ID_KATEGORIA}" ${k_json.rows[index].ID_KATEGORIA == kivalasztott ? "selected" : ""}>${k_json.rows[index].KATEGORIA}</option>`;
                 
