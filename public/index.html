@@ -359,8 +359,10 @@
     <div 
       class="
       offcanvas-header 
-      bg-zinc-200 
+      bg-zinc-100 
       text-slate-900 
+      dark:bg-slate-700 
+      dark:text-zinc-200 
       ">
       <span class="offcanvas-title text-xl"><i class="bi bi-gear"></i> Szűrési beállítások</span>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
@@ -368,8 +370,10 @@
     <div 
       class="
       offcanvas-body 
-      bg-zinc-200 
+      bg-zinc-100 
       text-slate-900 
+      dark:text-zinc-200 
+      dark:bg-slate-700 
       ">
       <div id="szurokk" class="row mx-auto" style="width: 90%;">
         <label for="kategoria_section"><span class="text-lg"><i class="bi bi-grid"></i> Termékkategóriák</span></label> 
@@ -378,22 +382,26 @@
         p-3 
         shadow-xl 
         rounded-2 
-        bg-zinc-100 
+        bg-zinc-200 
         text-slate-900 
+        dark:bg-slate-800 
+        dark:text-zinc-200 
         " style="overflow-y: scroll; overflow-x: hidden; height: 35vh;" id="kategoria_section"></div>
 
         <div 
           class="
           row 
           shadow-xl 
-          rounded-3 
+          rounded-4 
           p-2 
-          mt-3 
+          mt-5 
           mx-auto 
           d-flex 
           align-items-center 
-          bg-zinc-100 
+          bg-zinc-200 
           text-slate-900 
+          dark:bg-slate-800 
+          dark:text-zinc-200 
           ">  
           <div class="col-lg-3 text-center"> Minimum ár: </div> 
           <div class="col-lg-7"> 
@@ -402,13 +410,13 @@
             form-control 
             w-100 
             text-center 
-            bg-zinc-200 
+            bg-zinc-100 
             rounded-4 
             text-slate-900 
             dark:bg-sky-950 
             dark:text-zinc-200 
             focus:outline-none 
-            focus:bg-zinc-200 
+            focus:bg-zinc-100 
             " id="min_ar_input" value="0"> 
           </div> 
           <div class="col-lg-2 text-center"> Ft </div>
@@ -419,14 +427,16 @@
           class="
           row 
           shadow-xl 
-          rounded-3 
+          rounded-4 
           p-2 
-          mt-2 
+          mt-5  
           mx-auto 
           d-flex 
           align-items-center 
-          bg-zinc-100 
+          bg-zinc-200 
           text-slate-900 
+          dark:bg-slate-800 
+          dark:text-slate-200 
           "> 
           <div class="col-lg-3 text-center"> Maximum ár </div> 
           <div class="col-lg-7"> 
@@ -436,13 +446,13 @@
             w-100 
             rounded-4 
             text-center 
-            bg-zinc-200 
+            bg-zinc-100 
             rounded-4 
             text-slate-900 
             dark:bg-sky-950 
             dark:text-zinc-200 
             focus:outline-none 
-            focus:bg-zinc-200 
+            focus:bg-zinc-100 
             " id="max_ar_input" value="0">
           </div> 
           <div class="col-lg-2 text-center">Ft</div> 
@@ -451,7 +461,16 @@
         <br><br>
         <div class="row col-12 d-flex justify-content-center text-center mt-4">
           <label for="rend"><span class="text-lg"><i class="bi bi-list-ol"></i> Rendezés</span></label>
-          <select id="rend" class="form-select w-50 shadow-xl"> 
+          <select id="rend" 
+          class="
+          form-select 
+          w-50 
+          shadow-xl 
+          bg-zinc-50 
+          text-slate-900 
+          dark:bg-slate-800 
+          dark:text-zinc-200 
+          "> 
             
             <option id="rendalap"  selected value="ar_csok">Ár ↓</option> 
             <option value="ar_nov">Ár ↑</option> 
