@@ -73,10 +73,23 @@
         <div class="navbar navbar-expand-xxl p-2">
           <div class="container-fluid d-flex flex-nowrap">
 
-            <button class="navbar-toggler border-0" type="button"
+            <button 
+            class="
+            navbar-toggler 
+            border-0 
+            text-3xl
+            bg-zinc-300 
+            text-slate-900 
+            hover:shadow-xl 
+            hover:shadow-gray-950/80 
+            dark:bg-slate-900 
+            dark:text-zinc-200 
+            dark:hover:shadow-xl 
+            dark:hover:shadow-gray-700/90 
+            " type="button"
              data-bs-toggle="offcanvas"
               data-bs-target="#top-navbar" aria-controls="top-navbar">
-              <span class="text-3xl"><i class="bi bi-list"></i></span>
+              <span class=""><i class="bi bi-list"></i></span>
             </button>
 
             <!--<img src="img/logo-fekete.png" alt="" class="iemge">-->
@@ -97,6 +110,8 @@
             offcanvas-start 
             bg-zinc-300 
             text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
             " tabindex="-1" id="top-navbar"
               aria-labelledby="top-navbar">
 
@@ -104,14 +119,15 @@
                   data-bs-toggle="offcanvas"
                   data-bs-target="#top-navbar" aria-controls="top-navbar">
                   <div class="d-flex justify-content-between p-3">
-                    <img src="img/logo-fekete.png" alt="" class="iemge">
+                    <img class="img-fluid m-2 hidden dark:block transition-all duration-300" style="width: 30%;"  src="img/logo2.png">
+                    <img class="img-fluid m-2 block dark:hidden transition-all duration-300" style="width: 30%;"  src="img/logo-fekete.png">
                     <i class="bi bi-x-lg"></i>
                   </div>
               </button>
 
-              <ul class="navbar-nav p-4 p-lg-0">
+              <ul class="navbar-nav p-4">
 
-                <li class="nav-item py-4 dropdown me-2">
+                <li class="nav-item py-2 dropdown me-2">
                    <button type="button" aria-label="Fiók" 
                     class="btn btn-lg 
                       bg-zinc-300 
@@ -149,7 +165,7 @@
                       dark:text-zinc-200 
                       transition-all duration-300 ease-in-out 
                       " 
-                    style="min-width: 250px; border: none;">
+                    style="max-width: 250px; border: none;">
                       
                       <span class="" id="user">Jelentkezz be a fiókodba</span>
                       <span class=" badge bg-warning text-dark w-50 m-2" id="csoport"></span>
@@ -203,7 +219,7 @@
                         
                         rounded-5" 
                         
-                        id="switch">
+                        id="switch" data-bs-dismiss="offcanvas">
                           <i class="bi bi-moon-fill" ></i>
                         </button>
 
@@ -222,7 +238,7 @@
                           dark:hover:shadow-slate-600/70 
                           transition-hover duration-300 ease-in-out 
                           
-                          w-auto"> 
+                          w-auto" data-bs-dismiss="offcanvas"> 
                           <i class="bi bi-box-arrow-in-right" id="loginout"></i>
                           <span  id="loginspan"> Bejelentkezés</span>
                         </button>
@@ -231,7 +247,7 @@
 
 
 
-                <li class="nav-item py-4">
+                <li class="nav-item py-2">
                   <div class="gombdiv me-3 pb-1">
                     <button id="home_button"  type="button" 
                     class="btn btn-lg 
@@ -259,7 +275,7 @@
                   </div>
                 </li>
 
-                <li class="nav-item py-4">
+                <li class="nav-item py-2">
                   <div class="gombdiv me-3 pb-1" id="kosar-gombdiv">
                     <button id="cart_button" type="button" 
                       class="btn btn-lg 
@@ -289,11 +305,8 @@
                   </div>
                 </li>
 
-                <li class="nav-item py-4">
-                  
-                </li>
 
-                <li class="nav-item py-4">
+                <li class="nav-item py-2">
                   <div class="gombdiv pb-1" id="admin-gombdiv">
                     <button id="admin_button" type="button" 
                       class="btn btn-lg 
