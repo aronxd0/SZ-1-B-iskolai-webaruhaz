@@ -243,7 +243,7 @@ async function Termek_Mutat(event, cuccok) {
     $("#ussr").html(`${$("#user").html()}`);
 
     $("#sajatvlm").html(
-      `<a class="nav-link" href="#sajatok" id="sajat-tab" onclick='SajatVelemenyekMutat(${termek_id})'>Véleményeim</a>`
+      `<a class="nav-link text-slate-900 " href="#sajatok" id="sajat-tab" onclick='SajatVelemenyekMutat(${termek_id})'>Véleményeim</a>`
     );
 
     $("#sajatvlm").removeClass("eltunt");

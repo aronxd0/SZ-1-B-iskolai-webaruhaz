@@ -205,6 +205,19 @@ input::-webkit-inner-spin-button {
 }
 
 
+::-webkit-slider-runnable-track {
+  background: oklch(98.5% 0 0); /* zinc-50 */
+}
+
+html.dark ::-webkit-slider-runnable-track {
+  background: oklch(37.2% 0.044 257.287);
+}
+
+
+.nav-link.active {
+  background-color: oklch(92% 0.004 286.32) !important;
+}
+
 
 /* scrollbar szelesseg */
 ::-webkit-scrollbar {
