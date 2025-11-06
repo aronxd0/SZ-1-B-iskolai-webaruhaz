@@ -215,7 +215,16 @@ html.dark ::-webkit-slider-runnable-track {
 
 
 .nav-link.active {
-  background-color: oklch(92% 0.004 286.32) !important;
+  background-color: oklch(92% 0.004 286.32) !important; /* zinc-200 */
+  border: none;
+  border-bottom: 1px solid oklch(20.8% 0.042 265.755);
+}
+
+html.dark .nav-link.active {
+  background-color: oklch(27.9% 0.041 260.031) !important; /* slate-800 */
+  color: oklch(92% 0.004 286.32) !important;
+  border: none;
+  border-bottom: 1px solid oklch(92% 0.004 286.32);
 }
 
 

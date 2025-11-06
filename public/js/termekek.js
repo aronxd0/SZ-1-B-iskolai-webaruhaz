@@ -208,8 +208,21 @@ async function Termek_Mutat(event, cuccok) {
         nav-link 
         show 
         active 
+        bg-zinc-200 
+        
+        text-slate-900 
+        hover:text-slate-900 
+        hover:border-t-none 
+        hover:border-r-none 
+        hover:border-l-none 
+        dark:hover:border-t-none 
+        dark:hover:border-r-none 
+        dark:hover:border-l-none 
+        
+        dark:bg-slate-800 
+        dark:text-zinc-200 
 
-    " href="#velemenyek" id="velemenyek-tab" onclick='VelemenyekMutat(${termek_id})'>Vélemények</a>`
+    " href="#velemenyek" id="velemenyek-tab" onclick='VelemenyekMutat(${termek_id})' style="border-radius:0px;"><i class="bi bi-chat-dots"></i> Vélemények</a>`
   );
   //$("#velemenyek-tab").trigger("click");
 
@@ -243,7 +256,22 @@ async function Termek_Mutat(event, cuccok) {
     $("#ussr").html(`${$("#user").html()}`);
 
     $("#sajatvlm").html(
-      `<a class="nav-link text-slate-900 " href="#sajatok" id="sajat-tab" onclick='SajatVelemenyekMutat(${termek_id})'>Véleményeim</a>`
+      `<a 
+      class="
+      nav-link 
+      bg-zinc-200 
+      
+      text-slate-900 
+      hover:text-slate-900 
+      hover:border-t-none 
+      hover:border-r-none 
+      hover:border-l-none 
+      dark:hover:border-t-none 
+      dark:hover:border-r-none 
+      dark:hover:border-l-none 
+      dark:bg-slate-800 
+      dark:text-zinc-200 
+       " href="#sajatok" id="sajat-tab" onclick='SajatVelemenyekMutat(${termek_id})' style="border-radius:0px;"><i class="bi bi-person"></i> Véleményeim</a>`
     );
 
     $("#sajatvlm").removeClass("eltunt");
