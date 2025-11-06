@@ -105,6 +105,8 @@ html.dark .gombdiv button.aktiv {
   box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175);
 }
 
+.dropdown-toggle::after { display: none !important; }
+
 
 #login_gomb_div {
   transition: all 0.3s ease;
