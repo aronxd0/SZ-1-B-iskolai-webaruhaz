@@ -151,6 +151,7 @@
                       " 
                       data-bs-toggle="dropdown" >
                       <i class="bi bi-person"></i>
+                      <span class="d-inline d-xxl-none"> Fiók</span>
                     </button>
 
 
@@ -308,7 +309,7 @@
 
 
                 <li class="nav-item py-2">
-                  <div class="gombdiv pb-1" id="admin-gombdiv">
+                  <div class="dropdown pb-1" id="admin-gombdiv">
                     <button id="admin_button" type="button" 
                       class="btn btn-lg 
                       bg-zinc-300 
@@ -325,13 +326,89 @@
                       hover:shadow-gray-950/60 
 
                       transition-hover duration-300 ease-in-out 
+                      dropdown-toggle 
                       
                       gomb 
-                      rounded-3 " data-bs-dismiss="offcanvas"> 
+                      rounded-3 " data-bs-toggle="dropdown"> 
 
                       <i class="bi bi-gear"></i>
                       <span > STAFF ONLY !</span>
                     </button>
+                    <ul class="
+                      dropdown-menu 
+                      rounded-4 
+                      p-3 
+                      bg-zinc-200 
+                      text-slate-900 
+                      dark:bg-slate-950 
+                      dark:text-zinc-200 
+                      shadow-xl 
+                      transition-all duration-700 ease-in-out 
+                      " 
+                    style="max-width: 250px; border: none;">
+
+                      <button type="button" 
+                        class="
+                        btn 
+                        bg-zinc-200 
+                        text-slate-900 
+                        hover:bg-zinc-200 
+                        hover:text-slate-900 
+                        hover:shadow-xl 
+                        hover:shadow-gray-950/80 
+                        " type="button" id="admin_velemenyek">
+                      
+                        <i class="bi bi-chat-dots"></i>
+                         Vélemények
+                      </button>
+
+                      
+                      <button type="button" 
+                        class="
+                        btn 
+                        bg-zinc-200 
+                        text-slate-900 
+                        hover:bg-zinc-200 
+                        hover:text-slate-900 
+                        hover:shadow-xl 
+                        hover:shadow-gray-950/80 
+                        " type="button" id="admin_uj_termek">
+                      
+                        <i class="bi bi-plus"></i>
+                         Új termék
+                      </button>
+
+                      <button type="button" 
+                        class="
+                        btn 
+                        bg-zinc-200 
+                        text-slate-900 
+                        hover:bg-zinc-200 
+                        hover:text-slate-900 
+                        hover:shadow-xl 
+                        hover:shadow-gray-950/80 
+                        " type="button" id="admin_stats">
+                      
+                        <i class="bi bi-bar-chart"></i>
+                         Statisztikák 
+                      </button>
+
+                      <button type="button" 
+                        class="
+                        btn 
+                        bg-zinc-200 
+                        text-slate-900 
+                        hover:bg-zinc-200 
+                        hover:text-slate-900 
+                        hover:shadow-xl 
+                        hover:shadow-gray-950/80 
+                        " type="button" id="admin_sql">
+                      
+                        <i class="bi bi-database"></i>
+                         SQL
+                      </button>
+
+                    </ul>
                   </div>
                 </li>
 

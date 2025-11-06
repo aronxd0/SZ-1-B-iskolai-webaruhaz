@@ -76,8 +76,6 @@ body, html {
 /* label korul ne legyen semmi ::after elem mert neha nem jeleniti meg jol */
 label::after { content: none !important; }
 
-/* a dropdown-nal ne mutassa azt a kis nyilat */
-/*.dropdown-toggle::after { display: none !important; }*/
 
 /* felso menusorban a gomboknak semmi border + atmenet ha raviszem az egeret */
 .gomb { border: none; }
@@ -105,7 +103,7 @@ html.dark .gombdiv button.aktiv {
   box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175);
 }
 
-.dropdown-toggle::after { display: none !important; }
+/*.dropdown-toggle::after { display: none !important; }*/
 
 
 #login_gomb_div {
