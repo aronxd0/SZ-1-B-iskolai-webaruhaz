@@ -405,7 +405,18 @@ async function KategoriaFeltolt(hova, type, kivalasztott) {
                 if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
                     pipa = "checked";
                 }
-                listItems += `<p class="p-2"> <input class="form-check-input outline outline-[1px] outline-black/10 bg-zinc-200" type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <label class="form-check-label" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </label> </p>`;
+                listItems += `<p class="p-2"> <input 
+                class="
+                form-check-input 
+                outline 
+                outline-[1px] 
+                outline-black/10 
+                bg-zinc-200 
+                dark:outline 
+                dark:outline-[1px] 
+                dark:outline-zinc-100/5  
+                dark:bg-slate-800 
+                " type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <label class="form-check-label" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </label> </p>`;
             }
             
         }
