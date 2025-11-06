@@ -49,6 +49,8 @@ body, html {
   opacity: 1 !important;
 }
 
+
+
 .offcanvas-backdrop {
   transition: backdrop-filter 0.4s ease, background-color 0.4s ease, opacity 0.4s ease;
   backdrop-filter: blur(0px);
@@ -74,8 +76,6 @@ body, html {
 /* label korul ne legyen semmi ::after elem mert neha nem jeleniti meg jol */
 label::after { content: none !important; }
 
-/* a dropdown-nal ne mutassa azt a kis nyilat */
-.dropdown-toggle::after { display: none !important; }
 
 /* felso menusorban a gomboknak semmi border + atmenet ha raviszem az egeret */
 .gomb { border: none; }
@@ -102,6 +102,8 @@ html.dark .gombdiv button.aktiv {
 .shadow-bottom {
   box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175);
 }
+
+/*.dropdown-toggle::after { display: none !important; }*/
 
 
 #login_gomb_div {
@@ -276,3 +278,57 @@ html.dark ::-webkit-scrollbar-thumb {
 .autocomplete-items div:hover { background-color: #e9e9e9; }
 .autocomplete-active { background-color: #0d6efd !important; color: #fff; }
 
+
+
+
+/* uj navbar css */
+
+.iemge {
+  max-width: 150px;
+  width: 100%;
+}
+
+.nav-link {
+  font-weight: bold;
+  color: #000;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+
+}
+
+#top-navbar {
+  width: 250px;
+}
+
+/*
+.dropdown.dropdown-menu {
+  background-color: #fff;
+  border: none;
+  border-radius: 0;
+}
+
+@media (min-width:992px) {
+  .dropdown.dropdown-menu {
+    visibility: hidden;
+    opacity: 0;
+    top: 100%;
+    display: block;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .dropdown:hover.dropdown.dropdown-menu {
+    padding: 20px 0;
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .dropdown-item:hover {
+    color: #fff;
+    background-color: #000;
+  }
+}
+*/

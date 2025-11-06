@@ -36,7 +36,7 @@
 
     <!--#region fejlec-->
     
-      
+        
         <div 
           class="row 
             bg-zinc-300 
@@ -44,9 +44,8 @@
             dark:bg-slate-900 
             dark:text-zinc-200  
             transition-all duration-700 ease-in-out ">
-          <!-- kis kepernyon teljes szelesseg, nagy kepernyotol fele szelesseg -->
           <div class="col-12 col-lg-6 mb-2"> 
-                                                    <!--      kis kepernyon egymas alatt + kozepen, nagy kepernyotol egymas mellett + balra igazitva     -->
+                                                           
             <div class="col-12 p-3 d-flex flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-start"> 
               <img class="img-fluid m-2 hidden dark:block transition-all duration-300" style="width: 10%;"  src="img/logo2.png">
               <img class="img-fluid m-2 block dark:hidden transition-all duration-300" style="width: 10%;"  src="img/logo-fekete.png">
@@ -55,9 +54,424 @@
           </div>
           <div class="col-12 col-lg-6"></div>
         </div>
+       
       
+        <div 
+        class="
+        row 
+        sticky-top 
+        bg-zinc-300 
+        text-slate-900 
+        dark:bg-slate-900 
+        dark:text-zinc-200  
+        transition-all duration-700 ease-in-out 
+        shadow-bottom 
+        ">
 
-      
+        
+
+        <div class="navbar navbar-expand-xxl p-2">
+          <div class="container-fluid d-flex flex-nowrap">
+
+            <button 
+            class="
+            navbar-toggler 
+            border-0 
+            text-3xl
+            bg-zinc-300 
+            text-slate-900 
+            hover:shadow-xl 
+            hover:shadow-gray-950/80 
+            dark:bg-slate-900 
+            dark:text-zinc-200 
+            dark:hover:shadow-xl 
+            dark:hover:shadow-gray-700/90 
+            " type="button"
+             data-bs-toggle="offcanvas"
+              data-bs-target="#top-navbar" aria-controls="top-navbar">
+              <span class=""><i class="bi bi-list"></i></span>
+            </button>
+
+            <!--<img src="img/logo-fekete.png" alt="" class="iemge">-->
+
+           
+
+
+            
+
+
+            
+
+
+
+            <div 
+            class="
+            offcanvas 
+            offcanvas-start 
+            bg-zinc-300 
+            text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            " tabindex="-1" id="top-navbar"
+              aria-labelledby="top-navbar">
+
+              <button class="navbar-toggler border-0" type="button"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#top-navbar" aria-controls="top-navbar">
+                  <div class="d-flex justify-content-between p-3">
+                    <img class="img-fluid m-2 hidden dark:block transition-all duration-300" style="width: 30%;"  src="img/logo2.png">
+                    <img class="img-fluid m-2 block dark:hidden transition-all duration-300" style="width: 30%;"  src="img/logo-fekete.png">
+                    <i class="bi bi-x-lg"></i>
+                  </div>
+              </button>
+
+              <ul class="navbar-nav p-4">
+
+                <li class="nav-item py-2 dropdown me-2">
+                   <button type="button" aria-label="Fiók" 
+                    class="btn btn-lg 
+                      bg-zinc-300 
+                      text-slate-900 
+                      hover:bg-zinc-200 
+                      hover:text-slate-900 
+                      hover:shadow-xl 
+                      hover:shadow-gray-950/50 
+                      dark:bg-slate-900 
+                      dark:text-zinc-200 
+                      dark:hover:shadow-xl 
+                      dark:hover:shadow-slate-600/70 
+                      dark:hover:bg-gray-700 
+                      dark:hover:text-zinc-200 
+                      
+                      transition-hover duration-300 ease-in-out 
+
+                      gomb 
+                      dropdown-toggle 
+                      rounded-4 
+                      " 
+                      data-bs-toggle="dropdown" >
+                      <i class="bi bi-person"></i>
+                      <span class="d-inline d-xxl-none"> Fiók</span>
+                    </button>
+
+
+                   <div 
+                    class="
+                      dropdown-menu 
+                      rounded-4 
+                      p-3 
+                      bg-zinc-200 
+                      text-slate-900 
+                      dark:bg-slate-950 
+                      dark:text-zinc-200 
+                      shadow-xl 
+                      transition-all duration-700 ease-in-out 
+                      " 
+                    style="max-width: 250px; border: none;">
+                      
+                      <span class="" id="user">Jelentkezz be a fiókodba</span>
+                      <span class=" badge bg-warning text-dark w-50 m-2" id="csoport"></span>
+                      <span class=" badge bg-danger w-50 m-2" id="admin"></span>
+                      <div class="row text-center">
+                        <span class="" id="user-email"></span>
+                      </div>
+
+                      <div class="gombdiv me-3 pb-1" id="rendeles-gombdiv">
+                        <button id="rend_button"  type="button" 
+                          class="btn btn-lg 
+                          bg-zinc-300 
+                          text-slate-900 
+                          hover:bg-zinc-200 
+                          hover:text-slate-900 
+                          hover:shadow-xl 
+                          hover:shadow-gray-950/60 
+                          dark:hover:shadow-xl 
+                          dark:hover:shadow-slate-600/90 
+                          dark:bg-slate-900 
+                          dark:hover:bg-gray-700 
+                          dark:hover:text-zinc-200 
+                          dark:text-zinc-200 
+                          
+                          transition-hover duration-300 ease-in-out 
+                          
+                          gomb 
+                          rounded-3" data-bs-dismiss="offcanvas"> 
+
+                          <i class="bi bi-bag-check" ></i>
+                          <span > Rendeléseim</span>
+                        </button>
+                      </div>
+                      
+                      <div class="row d-flex align-self-center justify-content-evenly align-items-center mt-5 pt-3 border-top border-secondary">
+                        <button type="button" aria-label="Téma" 
+                        class="
+                        btn 
+                        bg-zinc-200 
+                        text-slate-900 
+                        dark:bg-slate-950 
+                        dark:text-zinc-200 
+                        hover:bg-zinc-300 
+                        hover:text-slate-900 
+                        hover:shadow-xl 
+                        hover:shadow-gray-950/50 
+                        dark:hover:shadow-xl 
+                        dark:hover:shadow-slate-600/70 
+                        w-auto 
+                        transition-hover duration-300 ease-in-out 
+                        
+                        rounded-5" 
+                        
+                        id="switch" data-bs-dismiss="offcanvas">
+                          <i class="bi bi-moon-fill" ></i>
+                        </button>
+
+                        <button id="login_button"  type="button" 
+                        class="
+                          btn 
+                          bg-zinc-200 
+                          text-slate-900 
+                          dark:bg-slate-950 
+                          dark:text-zinc-200 
+                          hover:bg-zinc-300 
+                          hover:text-slate-900 
+                          hover:shadow-xl 
+                          hover:shadow-gray-950/50 
+                          dark:hover:shadow-xl  
+                          dark:hover:shadow-slate-600/70 
+                          transition-hover duration-300 ease-in-out 
+                          
+                          w-auto" data-bs-dismiss="offcanvas"> 
+                          <i class="bi bi-box-arrow-in-right" id="loginout"></i>
+                          <span  id="loginspan"> Bejelentkezés</span>
+                        </button>
+                      </div>
+                </li>
+
+
+
+                <li class="nav-item py-2">
+                  <div class="gombdiv me-3 pb-1">
+                    <button id="home_button"  type="button" 
+                    class="btn btn-lg 
+                      bg-zinc-300 
+                      text-slate-900 
+                      hover:bg-zinc-200 
+                      hover:text-slate-900 
+                      hover:shadow-xl  
+                      hover:shadow-gray-950/60 
+                      dark:hover:shadow-xl 
+                      dark:hover:shadow-slate-600/90 
+                      dark:bg-slate-900
+                      dark:hover:bg-gray-700 
+                      dark:hover:text-zinc-200 
+                      dark:text-zinc-200 
+                      
+                      transition-hover duration-300 ease-in-out 
+                      
+                      
+                      gomb rounded-3" data-bs-dismiss="offcanvas"> 
+
+                      <i class="bi bi-house" id="loginout"></i>
+                      <span > Kezdőlap</span>
+                    </button>
+                  </div>
+                </li>
+
+                <li class="nav-item py-2">
+                  <div class="gombdiv me-3 pb-1" id="kosar-gombdiv">
+                    <button id="cart_button" type="button" 
+                      class="btn btn-lg 
+                      bg-zinc-300 
+                      text-slate-900 
+                      hover:bg-zinc-200 
+                      hover:text-slate-900 
+                      hover:shadow-xl 
+                      hover:shadow-gray-950/60 
+                      dark:hover:shadow-xl 
+                      dark:hover:shadow-slate-600/90 
+                      dark:bg-slate-900 
+                      dark:text-zinc-200 
+                      dark:hover:bg-gray-700
+                      dark:hover:text-zinc-200 
+                      
+                      transition-hover duration-300 ease-in-out 
+                      
+                      gomb 
+                      rounded-3 
+                      d-flex" 
+                      style="display: block !important;" data-bs-dismiss="offcanvas"> 
+                      <i class="bi bi-cart2"></i>
+                      <span> Kosár</span>
+                      <span class="badge bg-black text-white align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span>
+                    </button>
+                  </div>
+                </li>
+
+
+                <li class="nav-item py-2">
+                  <div class="dropdown pb-1" id="admin-gombdiv">
+                    <button id="admin_button" type="button" 
+                      class="btn btn-lg 
+                      bg-zinc-300 
+                      text-slate-900 
+                      dark:bg-slate-900 
+                      dark:hover:bg-gray-700  
+                      dark:hover:text-zinc-200 
+                      dark:hover:shadow-xl 
+                      dark:hover:shadow-slate-600/90 
+                      dark:text-zinc-200 
+                      hover:bg-zinc-200 
+                      hover:text-slate-900 
+                      hover:shadow-xl 
+                      hover:shadow-gray-950/60 
+
+                      transition-hover duration-300 ease-in-out 
+                      dropdown-toggle 
+                      
+                      gomb 
+                      rounded-3 " data-bs-toggle="dropdown"> 
+
+                      <i class="bi bi-gear"></i>
+                      <span > STAFF ONLY !</span>
+                    </button>
+                    <ul class="
+                      dropdown-menu 
+                      rounded-4 
+                      p-3 
+                      bg-zinc-200 
+                      text-slate-900 
+                      dark:bg-slate-950 
+                      dark:text-zinc-200 
+                      shadow-xl 
+                      transition-all duration-700 ease-in-out 
+                      " 
+                    style="max-width: 250px; border: none;">
+
+                      <button type="button" 
+                        class="
+                        btn 
+                        bg-zinc-200 
+                        text-slate-900 
+                        hover:bg-zinc-200 
+                        hover:text-slate-900 
+                        hover:shadow-xl 
+                        hover:shadow-gray-950/80 
+                        " type="button" id="admin_velemenyek">
+                      
+                        <i class="bi bi-chat-dots"></i>
+                         Vélemények
+                      </button>
+
+                      
+                      <button type="button" 
+                        class="
+                        btn 
+                        bg-zinc-200 
+                        text-slate-900 
+                        hover:bg-zinc-200 
+                        hover:text-slate-900 
+                        hover:shadow-xl 
+                        hover:shadow-gray-950/80 
+                        " type="button" id="admin_uj_termek">
+                      
+                        <i class="bi bi-plus"></i>
+                         Új termék
+                      </button>
+
+                      <button type="button" 
+                        class="
+                        btn 
+                        bg-zinc-200 
+                        text-slate-900 
+                        hover:bg-zinc-200 
+                        hover:text-slate-900 
+                        hover:shadow-xl 
+                        hover:shadow-gray-950/80 
+                        " type="button" id="admin_stats">
+                      
+                        <i class="bi bi-bar-chart"></i>
+                         Statisztikák 
+                      </button>
+
+                      <button type="button" 
+                        class="
+                        btn 
+                        bg-zinc-200 
+                        text-slate-900 
+                        hover:bg-zinc-200 
+                        hover:text-slate-900 
+                        hover:shadow-xl 
+                        hover:shadow-gray-950/80 
+                        " type="button" id="admin_sql">
+                      
+                        <i class="bi bi-database"></i>
+                         SQL
+                      </button>
+
+                    </ul>
+                  </div>
+                </li>
+
+                
+              </ul>
+
+            </div>
+
+            <div class="col-lg-6 d-flex flex-grow-1">
+               <div class="d-flex flex-nowrap w-100 align-self-center p-1"> 
+                  
+                  <input class="form-control rounded-4 
+                                bg-zinc-50 
+                                text-slate-900 placeholder-slate-900 
+                                focus:outline outline-slate-900/10 
+                                dark:focus:outline outline-white/10  
+                                dark:focus:bg-gray-700 
+                                dark:focus:text-zinc-200 
+                                dark:focus:placeholder-zinc-200 
+                                dark:bg-gray-700 dark:text-zinc-200 dark:placeholder-zinc-200
+                                transition-all duration-700 ease-in-out shadow-lg" id="nev1" name="nev" value="" type="text" placeholder="🔍 Keresés...">
+                  
+                  
+                  <button type="button" aria-label="Keresés" 
+                    class="btn btn-lg 
+                    bg-zinc-400 
+                    text-zinc-50
+                    hover:bg-zinc-50 
+                    hover:text-slate-900 
+                    dark:bg-sky-950 
+                    dark:text-zinc-200 
+                    rounded-4 me-2 
+                    transition-hover duration-300 ease-in-out" 
+                    id="kereses_gomb" 
+                    onclick="KERESOBAR()">
+
+                    <i class="bi bi-search"></i>
+                  </button>
+                  <button type="button" aria-label="Szűrők" 
+                  class="btn btn-lg
+                   bg-zinc-400 
+                   text-zinc-50 
+                   hover:bg-zinc-50 
+                   hover:text-slate-900 
+                   dark:bg-sky-950 
+                   dark:text-zinc-200 
+                   transition-hover duration-300 ease-in-out 
+                   rounded-4" 
+                   data-bs-toggle="offcanvas" data-bs-target="#szurok">
+                    <i class="bi bi-funnel"></i>
+                    
+                  </button>
+              </div>
+            </div>
+            
+
+
+          </div>
+        </div>
+
+        </div>
+
+        <!--
         <div class="row bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 shadow-bottom  transition-all duration-700 ease-in-out  sticky-top p-3">
           <div class="col-lg-6 d-flex align-self-center mb-2 justify-content-evenly align-items-center justify-content-xxl-start">
             <div class="dropdown me-3">
@@ -259,7 +673,7 @@
           <div class="col-lg-6 mb-2">
             <div class="row">
               <div class="col-12 mt-2">
-                <div class="d-flex flex-nowrap w-100 align-self-center p-1"> <!-- flex-nowrap: ne tordelje szet  -->
+                <div class="d-flex flex-nowrap w-100 align-self-center p-1"> 
                   
                   <input class="form-control rounded-4 
                                 bg-zinc-50 
@@ -271,7 +685,7 @@
                                 dark:focus:placeholder-zinc-200 
                                 dark:bg-gray-700 dark:text-zinc-200 dark:placeholder-zinc-200
                                 transition-all duration-700 ease-in-out shadow-lg" id="nev1" name="nev" value="" type="text" placeholder="🔍 Keresés...">
-                  <!--<label for="nev1" class="dark:text-gray-500"><i class="bi bi-search"></i> Keresés...</label>-->
+                  
                   
                   <button type="button" aria-label="Keresés" 
                     class="btn btn-lg 
@@ -300,13 +714,13 @@
                    rounded-4" 
                    data-bs-toggle="offcanvas" data-bs-target="#szurok">
                     <i class="bi bi-funnel"></i>
-                    <!--<span class="d-none d-lg-inline" > Szűrők</span>-->
+                    
                   </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       
     
     <!--#endregion-->

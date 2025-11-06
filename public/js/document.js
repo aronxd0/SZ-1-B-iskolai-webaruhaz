@@ -131,11 +131,14 @@ $(document).ready(function() {
 
 
     // admin oldal
+
+    /*
     $("#admin_button").click(function() {
         $("#content_hely").html("");
         $("#content_hely").html("ide jon az admin resz");
         $("#pagi").html("");
     });
+    */
 
     $("#szurogomb").click(function () {
         KERESOBAR();
