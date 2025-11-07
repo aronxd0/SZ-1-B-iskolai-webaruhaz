@@ -37,7 +37,7 @@ function Attekintes(li) {
                 <span >
                     <span class="badge bg-primary rounded-pill me-2 float-start">${element.MENNYISEG} db</span>
                     
-                    
+                         
                         ${element.NEV} 
                     
                 </span>
@@ -248,17 +248,25 @@ function Fizetes(li) {
     $("#cc").html("");
 
     
-
+    console.log( `li ::    +${JSON.stringify(li)}`);
 
     let navigacio = `
         <button type="button" class="btn btn-lg btn-danger bi bi-backspace" onclick='Adatok(${JSON.stringify(li)})'> Vissza</button>
-        <button type="button" class="btn btn-lg btn-success bi bi-credit-card"   data-bs-dismiss="modal" onclick="Fizetésclick()" > Fizetés</button>
+        <button type="button" class="btn btn-lg btn-success bi bi-credit-card"   data-bs-dismiss="modal" onclick='Fizetésclick(${JSON.stringify(li)})'> Fizetés</button>
     `;
     $("#lab").html(navigacio);
 }
 
-async function Fizetésclick() {
+async function Fizetésclick(li) {
     try{
+      for (const element of li) {
+        var ell = await ajax_get(`rendeles_ellenorzes?ID_TERMEK=${element.ID}&MENNYISEG=${element.MENNYISEG}`, 1);
+        if(ell.rows[0].allapot == "karramba") {
+            throw `Az egyik termékből nincs elég készleten. A rendelése módosítva lett.`;
+        }
+      }
+      
+
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
         await ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉG SEMMI"}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
 
@@ -271,6 +279,7 @@ async function Fizetésclick() {
     }
     catch(e){
         üzen(e,"danger");
+        document.getElementById("cart_button").click();
     }
 
     
