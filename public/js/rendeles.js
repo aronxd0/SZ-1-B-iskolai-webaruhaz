@@ -45,19 +45,32 @@ function Attekintes(li) {
             class='
             table 
             rounded-4 
+            border-collapse border-1 border-gray-800/20  
             p-3 
             shadow-xl 
-            bg-zinc-200 
-            text-slate-900 
-            dark:bg-slate-800 
-            dark:text-zinc-200 
+            
             ' id='rend'>
             
             <thead>
               <tr>
-                <th>Mennyiség</th>
-                <th>Termék</th>
-                <th>Ár</th>
+                <th 
+                class="bg-zinc-200 
+                text-slate-900 
+                dark:bg-slate-800 
+                dark:text-zinc-200 
+                border border-gray-800/20">Mennyiség</th>
+                <th 
+                class="bg-zinc-200 
+                text-slate-900 
+                dark:bg-slate-800 
+                dark:text-zinc-200 
+                border border-gray-800/20">Termék</th>
+                <th 
+                class="bg-zinc-200 
+                text-slate-900 
+                dark:bg-slate-800 
+                dark:text-zinc-200 
+                border border-gray-800/20">Ár</th>
               </tr>
               
             </thead>
@@ -72,17 +85,32 @@ function Attekintes(li) {
         z += ` 
             <tr>
 
-                <td>
+                <td 
+                class="bg-zinc-200 
+                text-slate-900 
+                dark:bg-slate-800 
+                dark:text-zinc-200 
+                border border-gray-800/20">
                     ${element.MENNYISEG} db
                 </td>
                         
-                <td>
+                <td 
+                class="bg-zinc-200 
+                text-slate-900 
+                dark:bg-slate-800 
+                dark:text-zinc-200 
+                border border-gray-800/20">
                         ${element.NEV} 
                 </td>
                     
                 
 
-                <td>
+                <td 
+                class="bg-zinc-200 
+                text-slate-900 
+                dark:bg-slate-800 
+                dark:text-zinc-200 
+                border border-gray-800/20">
                   <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
                 </td>
                 
