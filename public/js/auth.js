@@ -100,12 +100,11 @@ $("#kijelentkezik").click(function() {
         $("#home_button").trigger("click");
         update_gombok(0);
     });  
-        
 });
 
 
 function ADMINVAGYE(){
-    if(admin){// ha admin akkor a "csakelfogyott " és a "Csak inaktiv" gomb is látszódjon
+    if(admin || webbolt_admin){// ha admin akkor a "csakelfogyott " és a "Csak inaktiv" gomb is látszódjon
         document.getElementById("Elfogyott_gomb").innerHTML = `
             <p>
                 <input class="form-check-input" type="checkbox" id="elf" value="Csakelfogyott" onchange="Elfogyott(this)">

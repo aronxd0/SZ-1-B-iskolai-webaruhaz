@@ -400,23 +400,6 @@ app.post('/rendeles',async (req, res) => {
   var nev = strE(req.query.NEV);
   var email = strE(req.query.EMAIL);
 
-  var ellenorzes = `
-    SELECT 
-    t.ID_TERMEK
-    FROM webbolt_kosar_tetelei k
-    INNER JOIN webbolt_kosar wk ON k.ID_KOSAR = wk.ID_KOSAR
-    INNER JOIN webbolt_termekek t ON k.ID_TERMEK = t.ID_TERMEK
-    WHERE wk.ID_USER = ${session_data.ID_USER}
-    AND (t.AKTIV = 'N' OR t.MENNYISEG < k.MENNYISEG)
-  `;
-
-  var nezzukcsak = JSON.parse(await runQueries(ellenorzes));
-  if (nezzukcsak.rows.length > 0) {
-    // Ha a rendelés során változott a termékek állapota (pl. elfogyott vagy inaktív lett)
-    res.send(JSON.stringify({ message: "A rendelés nem véglegesíthető, mert a kosárban lévő termékek közül egy vagy több időközben elfogyott vagy inaktiválódott vagy nincs a kívánt mennyiség készleten. Ellenőrizzük és korrigáljuk önnek a kosara tartalmát." }));
-    return;
-  }
-
   var termemekek_sql = 
   `
   SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, t.FOTOLINK
@@ -471,10 +454,27 @@ app.post('/rendeles',async (req, res) => {
   }
 });
 
+app.post('/rendeles_ellenorzes',async (req, res) => {
+  try{
+  var termekid = parseInt(req.query.ID_TERMEK);
+  var mennyiseg = parseInt(req.query.MENNYISEG);
 
+  var sql = 
+  `
+SELECT IF(webbolt_termekek.MENNYISEG < ${mennyiseg} or webbolt_termekek.AKTIV = 'N', 'karramba', '') AS allapot
+FROM webbolt_termekek
+WHERE ID_TERMEK = ${termekid};
+  `;
 
-
-
+  var eredmeny = await runQueries(sql, req);
+  res.set(header1, header2);
+  res.send(eredmeny);
+  res.end();
+  } catch (err) {
+    console.error(err);
+    res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
+  }
+});
 
 
 //#endregion
