@@ -145,13 +145,13 @@ function Adatok(li) {
         <span 
         class="
         text-gray-500 
-        dark:text-gray-500"><b>Áttekintés</b></span> - 
+        dark:text-gray-500">Áttekintés</span> - 
         
         <span 
         class="
         text-cyan-600 
         dark:text-cyan-600 
-        ">Adatok</span> - 
+        "><b>Adatok</b></span> - 
         
         <span 
         class="
@@ -344,7 +344,23 @@ function Fizetes(li) {
 
 
 
-    $("#aktualis").html(`<span class="text-muted">Áttekintés</span> - <span class="text-muted">Adatok</span> - <span class="text-primary"><b>Fizetés</b></span`);
+    $("#aktualis").html(`
+        <span 
+        class="
+        text-gray-500 
+        dark:text-gray-500">Áttekintés</span> - 
+        
+        <span 
+        class="
+        text-gray-500 
+        dark:text-gray-500 
+        ">Adatok</span> - 
+        
+        <span 
+        class="
+        text-cyan-600 
+        dark:text-cyan-600 
+        "><b>Fizetés</b></span`);
     $("#cc").html("");
 
     
