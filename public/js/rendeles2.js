@@ -5,9 +5,9 @@ $("#rend_button").click(async function () {
 
     
     var itemek = await ajax_post("rendelesek",1)
-    console.log("ITEMEK" + itemek);
+    console.log(`ITEMEK + ${JSON.stringify(itemek)}`);
     
-    if(itemek[0] !=  undefined){
+    if(itemek.maxcount !=  0){
         console.log("itemek van");
     }
     else{
