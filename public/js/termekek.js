@@ -399,7 +399,33 @@ function VeletlenszeruVelemeny() {
 
 //region CARDBETOLT
 function CARD_BETOLT(adatok) {
-  $("#content_hely").html(); 
+  $("#content_hely").fadeOut(300, function() {
+      $("#content_hely").html(`<div class="col-12 col-md-6 col-xxl-4">
+            <div 
+            class="card 
+              bg-zinc-100 
+              hover:bg-gray-200 
+              hover:outline outline-black/10
+              dark:bg-slate-900 
+              dark:text-zinc-200 
+              dark:hover:bg-gray-800 
+              dark:hover:-outline-offset-1 
+              dark:hover:outline-white/10 
+              transition-hover duration-150 ease-in-out 
+              
+              shadow-lg 
+              m-3 p-3 rounded-4 text-center">
+                <span class="card-img-top placeholder img-fluid img-thumbnail mx-auto d-block kepp" " alt="Card image" style="width:100%">í/span>
+                <div class="card-body">
+                    <span class="card-title text-lg placeholder"> </span> <br> <span class="text-sm">()</span>
+                    <p class="card-text placeholder">
+                        
+                    </p>
+                  
+                </div>
+            </div>
+         </div>`).fadeIn(300);
+    }); 
 
   let ks = "";
   let s = "";
