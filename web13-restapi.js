@@ -476,6 +476,52 @@ WHERE ID_TERMEK = ${termekid}
   }
 });
 
+app.post('/rendelesek',async (req, res) => {
+  try{
+  session_data = req.session;
+
+  var sql = 
+  `
+SELECT r.ID_RENDELES, r.DATUM, round(SUM(rt.AR * rt.MENNYISEG)*1.27) AS RENDELES_VEGOSSZEGE
+FROM webbolt_rendeles AS r
+JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
+GROUP BY r.ID_RENDELES
+WHERE r.ID_USER = ${session_data.ID_USER}
+ORDER BY r.ID_RENDELES;
+  `;
+
+  var eredmeny = await runQueries(sql, req);
+  res.set(header1, header2);
+  res.send(eredmeny);
+  res.end();
+  } catch (err) {
+    console.error(err);
+    res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
+  }
+});
+
+app.post('/rendelesek_tetelei',async (req, res) => {
+  try{
+  var rendelesid = parseInt(req.query.ID_RENDELES);
+
+  var sql =
+  `
+SELECT rt.NEV, rt.MENNYISEG, rt.AR, rt.FOTOLINK
+from webbolt_rendeles_tetelei AS rt
+WHERE rt.ID_RENDELES = ${rendelesid}
+  `;
+
+  var eredmeny = await runQueries(sql, req);
+  res.set(header1, header2);
+  res.send(eredmeny);
+  res.end();
+  } catch (err) {
+    console.error(err);
+    res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
+  }
+});
+
+
 
 //#endregion
 
