@@ -463,7 +463,7 @@ app.post('/rendeles_ellenorzes',async (req, res) => {
   `
 SELECT IF(webbolt_termekek.MENNYISEG < ${mennyiseg} or webbolt_termekek.AKTIV = 'N', 'karramba', '') AS allapot
 FROM webbolt_termekek
-WHERE ID_TERMEK = ${termekid};
+WHERE ID_TERMEK = ${termekid}
   `;
 
   var eredmeny = await runQueries(sql, req);
