@@ -260,7 +260,7 @@ function Fizetes(li) {
 async function Fizetésclick(li) {
     try{
       for (const element of li) {
-        var ell = await ajax_get(`rendeles_ellenorzes?ID_TERMEK=${element.ID}&MENNYISEG=${element.MENNYISEG}`, 1);
+        var ell = await ajax_post(`rendeles_ellenorzes?ID_TERMEK=${element.ID_TERMEK}&MENNYISEG=${element.MENNYISEG}`, 1);
         if(ell.rows[0].allapot == "karramba") {
             throw `Az egyik termékből nincs elég készleten. A rendelése módosítva lett.`;
         }
