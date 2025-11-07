@@ -238,7 +238,6 @@ app.post('/velemeny_del', async (req, res) => {
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
-  session_data = req.session;
   var user= (req.query.login_nev? req.query.login_nev: "");
   var psw = (req.query.login_passwd? req.query.login_passwd  : "");
   var sql = `select ID_USER, NEV, EMAIL, ADMIN, WEBBOLT_ADMIN, CSOPORT from users where EMAIL="${user}" and PASSWORD=md5("${psw}") limit 1`;
