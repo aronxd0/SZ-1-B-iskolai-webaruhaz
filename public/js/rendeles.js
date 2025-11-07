@@ -43,34 +43,32 @@ function Attekintes(li) {
     let z = `<label for="rend" class="p-1">A rendelésed tartalma:</label>`
      z += `<table 
             class='
-            table 
-            rounded-4 
-            border-collapse border-1 border-gray-800/20  
+            w-full 
+            border-collapse 
+            rounded-lg  
+            overflow-hidden 
             p-3 
             shadow-xl 
             
             ' id='rend'>
             
             <thead>
-              <tr>
+              <tr 
+              class="
+              border-b 
+              border-gray-300 
+              dark:border-gray-700 
+              bg-zinc-300 
+              text-slate-900 
+              dark:bg-slate-900 
+              dark:text-zinc-200 
+              ">
                 <th 
-                class="bg-zinc-200 
-                text-slate-900 
-                dark:bg-slate-800 
-                dark:text-zinc-200 
-                border border-gray-800/20">Mennyiség</th>
+                class="p-2 ">Mennyiség</th>
                 <th 
-                class="bg-zinc-200 
-                text-slate-900 
-                dark:bg-slate-800 
-                dark:text-zinc-200 
-                border border-gray-800/20">Termék</th>
+                class=" p-2 ">Termék</th>
                 <th 
-                class="bg-zinc-200 
-                text-slate-900 
-                dark:bg-slate-800 
-                dark:text-zinc-200 
-                border border-gray-800/20">Ár</th>
+                class="p-2 ">Ár</th>
               </tr>
               
             </thead>
@@ -83,14 +81,15 @@ function Attekintes(li) {
     for (const element of li) {
 
         z += ` 
-            <tr>
+            <tr class="border-b border-gray-300 dark:border-gray-700">
 
                 <td 
                 class="bg-zinc-200 
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                border border-gray-800/20">
+                 p-2 
+                ">
                     ${element.MENNYISEG} db
                 </td>
                         
@@ -99,7 +98,8 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                border border-gray-800/20">
+                 p-2 
+                ">
                         ${element.NEV} 
                 </td>
                     
@@ -110,7 +110,8 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                border border-gray-800/20">
+                 p-2 
+                ">
                   <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
                 </td>
                 
