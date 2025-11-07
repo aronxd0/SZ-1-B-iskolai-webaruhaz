@@ -115,10 +115,14 @@ function Termek_Torol(event, cuccok) {
   KosarTetelDB(); // kosár darab mutatása frissítése
 }
 
-async function Termek_Mutat(event, cuccok) {
-  $("#termekview").modal("hide");
-  console.log(`cuccok: ${cuccok}`);
 
+
+
+async function Termek_Mutat(event, termek_id) {
+  $("#termekview").modal("hide");
+  //console.log(`cuccok: ${cuccok}`);
+
+  /*
   const termek_id = cuccok[0];
   const kategoria = cuccok[1];
   const nev = cuccok[2];
@@ -131,6 +135,7 @@ async function Termek_Mutat(event, cuccok) {
   const fotolink = cuccok[9];
   const leiras = cuccok[10];
   const datumido = cuccok[11];
+  */
 
   $("#ga").html("");
   /*
@@ -140,9 +145,28 @@ async function Termek_Mutat(event, cuccok) {
     }*/
   let ks = "";
 
-  if ($("#loginspan").html() == " Bejelentkezés" || aktiv == "N" || mennyiseg == 0) {
+
+  try {
+
+
+
+    let termekadatok = await ajax_post(`termek_adatok?ID_TERMEK=${termek_id}`, 1);
+
+    
+    const nev = termekadatok.rows[0].NEV;
+    const kategoria = termekadatok.rows[0].KATEGORIA;
+    const azon = termekadatok.rows[0].AZON;
+    const ar = termekadatok.rows[0].AR;
+    const mennyiseg = termekadatok.rows[0].MENNYISEG;
+    const aktiv = termekadatok.rows[0].AKTIV;
+    const meegys = termekadatok.rows[0].MEEGYS;
+    const fotolink = termekadatok.rows[0].FOTOLINK;
+    const leiras = termekadatok.rows[0].LEIRAS;
+
+
+    if ($("#loginspan").html() == " Bejelentkezés" || aktiv == "N" || mennyiseg == 0) {
     ks = "";
-  } else
+    } else
     ks = `<button 
         class="btn btn-lg 
           bg-emerald-800 
@@ -321,17 +345,27 @@ async function Termek_Mutat(event, cuccok) {
         <button type="button" class="btn btn-success bi bi-send w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${termek_id})'> Közzététel</button>
     
     `;
-  //VelemenyekMutat(termek_id);
-  if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
-  else {
-    if (event.target.tagName != "button") {
-      // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
-      $("#ga").html(gombs);
+      
 
-      $("#termekview").modal("show");
-      cls.hide();
+    if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
+    else {
+      if (event.target.tagName != "button") {
+        // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
+        $("#ga").html(gombs);
+
+        $("#termekview").modal("show");
+        cls.hide();
+      }
     }
-  }
+    
+
+
+  } catch (err) { console.log("hiba:", err); }
+
+
+  
+  //VelemenyekMutat(termek_id);
+  
 }
 
 function VeletlenszeruVelemeny() {
@@ -448,7 +482,7 @@ function CARD_BETOLT(adatok) {
               transition-hover duration-150 ease-in-out 
               
               shadow-lg 
-              m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${JSON.stringify(cuccli)})'>
+              m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
                 <img class="card-img-top img-fluid img-thumbnail mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <span class="card-title text-lg">${element.NEV} </span> <br> <span class="text-sm">(${element.KATEGORIA})</span>
