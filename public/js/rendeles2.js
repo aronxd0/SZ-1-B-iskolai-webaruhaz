@@ -38,7 +38,7 @@ $("#rend_button").click(async function () {
                                 <p>${elemek.DATUM}</p>
                             </div>
                               <div class="col-12 col-lg-3 d-flex align-self-center justify-content-center p-3">
-                                  <h4 class="anton-regular text-success termek_ar">${elemek.RENDELES_VEGOSSZEGE}Ft</h4>
+                                  <h4 class="anton-regular text-success termek_ar">${parseInt( elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft</h4>
                             </div>                                            
 
                             <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center ">
