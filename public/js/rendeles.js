@@ -22,17 +22,44 @@ function Attekintes(li) {
 
     console.log(li);
 
-    $("#aktualis").html(`<span class="text-primary"><b>Áttekintés</b></span> - <span class="text-muted">Adatok</span> - <span class="text-muted">Fizetés</span`);
+    $("#aktualis").html(`
+        <span 
+        class="
+        text-cyan-600 
+        dark:text-cyan-600"><b>Áttekintés</b></span> - 
+        
+        <span 
+        class="
+        text-gray-500 
+        dark:text-gray-500 
+        ">Adatok</span> - 
+        
+        <span 
+        class="
+        text-gray-500 
+        dark:text-gray-500 
+        ">Fizetés</span`);
 
     let z = `<label for="rend" class="p-1">A rendelésed tartalma:</label>`
-     z += "<ul class='list-group-flush rounded feka p-3 shadow-lg' id='rend'>";
+     z += `<ul 
+            class='
+            list-group-flush 
+            rounded 
+            p-3 
+            shadow-xl 
+            bg-zinc-200 
+            text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            ' id='rend'>`;
 
     //$("#cc").html("");
     for (const element of li) {
 
         z += ` 
             
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <li 
+              class="list-group-item d-flex justify-content-between align-items-center">
 
                 <span >
                     <span class="badge bg-primary rounded-pill me-2 float-start">${element.MENNYISEG} db</span>
@@ -67,8 +94,38 @@ function Attekintes(li) {
    
 
     let navigacio = `
-        <button type="button" class="btn btn-lg btn-danger bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
-        <button type="button" class="btn btn-lg btn-success bi bi-arrow-right" onclick='Adatok(${JSON.stringify(li)})'> Tovább</button>
+        <button type="button" 
+        class="
+        btn btn-lg 
+        bg-zinc-300 
+        text-red-700 
+        dark:bg-slate-800 
+        dark:text-red-700 
+        hover:shadow-xl 
+        hover:shadow-gray-950/70 
+        hover:text-red-700 
+        dark:hover:shadow-xl 
+        dark:hover:text-red-700 
+        dark:hover:shadow-gray-700/80  
+        bi bi-x-lg
+        " data-bs-dismiss="modal"> Mégse</button>
+
+        <button type="button" 
+        class="
+        btn btn-lg 
+        bg-zinc-300 
+        text-emerald-600 
+        dark:bg-slate-800 
+        dark:text-emerald-600 
+        hover:shadow-xl 
+        hover:shadow-gray-950/70 
+        hover:text-emerald-600 
+        dark:hover:text-emerald-600 
+        dark:hover:shadow-xl 
+        dark:hover:shadow-gray-700/80 
+        
+        bi bi-arrow-right
+        " onclick='Adatok(${JSON.stringify(li)})'> Tovább</button>
     `;
     $("#lab").html(navigacio);
 
@@ -84,7 +141,23 @@ function Attekintes(li) {
 
 
 function Adatok(li) {
-    $("#aktualis").html(`<span class="text-muted">Áttekintés</span> - <span class="text-primary"><b>Adatok</b></span> - <span class="text-muted">Fizetés</span`);
+    $("#aktualis").html(`
+        <span 
+        class="
+        text-gray-500 
+        dark:text-gray-500"><b>Áttekintés</b></span> - 
+        
+        <span 
+        class="
+        text-cyan-600 
+        dark:text-cyan-600 
+        ">Adatok</span> - 
+        
+        <span 
+        class="
+        text-gray-500 
+        dark:text-gray-500 
+        ">Fizetés</span`);
     //$("#cc").html("");
 
     let form = `
@@ -189,8 +262,35 @@ function Adatok(li) {
     
 
     let navigacio = `
-        <button type="button" class="btn btn-lg btn-danger bi bi-backspace" onclick='Attekintes(${JSON.stringify(li)})'> Vissza</button>
-        <button type="button" class="btn btn-lg btn-success bi bi-arrow-right" onclick='Fizetes(${JSON.stringify(li)})'> Tovább</button>
+        <button type="button" 
+        class="
+        btn btn-lg
+        bg-zinc-300 
+        text-red-700 
+        dark:bg-slate-800 
+        dark:text-red-700 
+        hover:shadow-xl 
+        hover:text-red-700 
+        dark:hover:text-red-700 
+        hover:shadow-gray-950/70 
+        dark:hover:shadow-xl 
+        dark:hover:shadow-gray-700/80 
+         bi bi-backspace
+         " onclick='Attekintes(${JSON.stringify(li)})'> Vissza</button>
+
+        <button type="button" 
+        class="btn btn-lg 
+        bg-zinc-300 
+        text-emerald-600 
+        dark:bg-slate-800 
+        dark:text-emerald-600 
+        hover:shadow-xl 
+        hover:shadow-gray-950/70 
+        hover:text-emerald-600 
+        dark:hover:text-emerald-600 
+        dark:hover:shadow-xl 
+        dark:hover:shadow-gray-700/80 
+        bi bi-arrow-right" onclick='Fizetes(${JSON.stringify(li)})'> Tovább</button>
     `;
     $("#lab").html(navigacio);
 }
@@ -251,8 +351,35 @@ function Fizetes(li) {
     console.log( `li ::    +${JSON.stringify(li)}`);
 
     let navigacio = `
-        <button type="button" class="btn btn-lg btn-danger bi bi-backspace" onclick='Adatok(${JSON.stringify(li)})'> Vissza</button>
-        <button type="button" class="btn btn-lg btn-success bi bi-credit-card"   data-bs-dismiss="modal" onclick='Fizetésclick(${JSON.stringify(li)})'> Fizetés</button>
+        <button type="button" 
+        class="
+        btn btn-lg  
+        bi bi-backspace 
+        bg-zinc-300 
+        text-red-700 
+        hover:text-red-700 
+        dark:bg-slate-800 
+        dark:text-red-700 
+        hover:shadow-xl 
+        dark:hover:text-red-700 
+        hover:shadow-gray-950/70 
+        dark:hover:shadow-xl 
+        dark:hover:shadow-gray-700/80 
+        " onclick='Adatok(${JSON.stringify(li)})'> Vissza</button>
+
+        <button type="button" 
+        class="btn btn-lg 
+        bg-zinc-300 
+        text-emerald-600 
+        dark:bg-slate-800 
+        dark:text-emerald-600 
+        hover:shadow-xl 
+        hover:shadow-gray-950/70 
+        hover:text-emerald-600 
+        dark:hover:text-emerald-600 
+        dark:hover:shadow-xl 
+        dark:hover:shadow-gray-700/80 
+        bi bi-credit-card"   data-bs-dismiss="modal" onclick='Fizetésclick(${JSON.stringify(li)})'> Fizetés</button>
     `;
     $("#lab").html(navigacio);
 }
