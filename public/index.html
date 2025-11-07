@@ -159,7 +159,7 @@
                     class="
                       dropdown-menu 
                       rounded-4 
-                      p-3 
+                      p-3   
                       bg-zinc-200 
                       text-slate-900 
                       dark:bg-slate-950 
@@ -167,14 +167,14 @@
                       shadow-xl 
                       transition-all duration-700 ease-in-out 
                       " 
-                    style="max-width: 260px; border: none;">
+                    style="width: 220px; border: none;">
                       
                       <span class="" id="user">Jelentkezz be a fiókodba</span>
-                      <span class=" badge bg-warning text-dark m-2" id="csoport"></span>
-                      <span class=" badge bg-danger m-2" id="admin"></span>
-                      <div class="row text-center">
-                        <span class="text-sm" id="user-email"></span>
-                      </div>
+                      <span class=" badge bg-warning text-dark" id="csoport"></span>
+                      <span class=" badge bg-danger" id="admin"></span>
+                      <br>
+                      <span class="text-sm" id="user-email"></span>
+                      
 
                       <div class="gombdiv me-3 pb-1" id="rendeles-gombdiv">
                         <button id="rend_button"  type="button" 
@@ -202,10 +202,11 @@
                         </button>
                       </div>
                       
-                      <div class="row d-flex align-self-center justify-content-evenly align-items-center mt-5 pt-3 border-top border-secondary">
+                      <div class="row d-flex flex-column align-items-start ps-2 border-top border-secondary">
                         <button type="button" aria-label="Téma" 
                         class="
                         btn 
+                        mt-2
                         bg-zinc-200 
                         text-slate-900 
                         dark:bg-slate-950 
@@ -229,6 +230,7 @@
                         class="
                           btn 
                           bg-zinc-200 
+                          mt-2 
                           text-slate-900 
                           dark:bg-slate-950 
                           dark:text-zinc-200 
