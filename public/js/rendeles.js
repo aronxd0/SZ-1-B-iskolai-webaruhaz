@@ -41,39 +41,53 @@ function Attekintes(li) {
         ">Fizetés</span`);
 
     let z = `<label for="rend" class="p-1">A rendelésed tartalma:</label>`
-     z += `<ul 
+     z += `<table 
             class='
-            list-group-flush 
-            rounded 
+            table 
+            rounded-4 
             p-3 
             shadow-xl 
             bg-zinc-200 
             text-slate-900 
             dark:bg-slate-800 
             dark:text-zinc-200 
-            ' id='rend'>`;
+            ' id='rend'>
+            
+            <thead>
+              <tr>
+                <th>Mennyiség</th>
+                <th>Termék</th>
+                <th>Ár</th>
+              </tr>
+              
+            </thead>
+
+            <tbody>
+            
+            `;
 
     //$("#cc").html("");
     for (const element of li) {
 
         z += ` 
-            
-            <li 
-              class="list-group-item d-flex justify-content-between align-items-center">
+            <tr>
 
-                <span >
-                    <span class="badge bg-primary rounded-pill me-2 float-start">${element.MENNYISEG} db</span>
-                    
-                         
+                <td>
+                    ${element.MENNYISEG} db
+                </td>
+                        
+                <td>
                         ${element.NEV} 
+                </td>
                     
-                </span>
+                
 
+                <td>
+                  <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
+                </td>
                 
-                <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
-                
-                
-            </li>
+              </tr>
+            
             
             
         
@@ -82,7 +96,7 @@ function Attekintes(li) {
         
     }
 
-    z += "</ul>";
+    z += "</tbody></table>";
 
     /*
     z += `
