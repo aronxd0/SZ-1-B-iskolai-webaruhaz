@@ -24,9 +24,10 @@ async function TermekModosit(url) {
 }
 
 // termek szerkeszto ablak
-function Termek_Edit(event, cuccok, tipus) {
+async function Termek_Edit(event, termek_id, tipus) {
   event.stopPropagation();
 
+  /*
   const termek_id = cuccok[0];
   const kategoria = cuccok[1];
   const nev = cuccok[2];
@@ -40,46 +41,66 @@ function Termek_Edit(event, cuccok, tipus) {
   const leiras = cuccok[10];
   const datumido = cuccok[11];
   const id_kategoria = cuccok[12];
+  */
 
-  console.log(leiras);
+  //console.log(leiras);
 
-  KategoriaFeltolt("mod_kat", "select", id_kategoria);
+  try {
 
-  if (tipus == "bevitel") {
-    $("#mod_nev").val("");
-    $("#mod_azon").val("");
-    $("#mod_ar").val(0);
-    $("#mod_db").val(1);
-    $("#mod_meegys").val("db");
-    $("#mod_leiras").val("");
-    $("#mySwitch").prop("checked", true).trigger("change"); // Default érték beállítása
-  } else {
-    $("#idx1").html(`${termek_id}; ${nev}`);
-    $("#mod_nev").val(nev);
-    $("#mod_azon").val(azon);
-    $("#mod_ar").val(ar);
-    $("#mod_db").val(mennyiseg);
-    $("#mod_meegys").val(meegys);
-    var datum = new Date();
-    $("#mod_datum").val(datum.toISOString().split("T")[0]);
-    $("#mod_leiras").val(leiras);
 
-    // Switch állapot beállítása
-    if (aktiv === "Y") {
-      $("#mySwitch").prop("checked", true).trigger("change");
+    let ta = await ajax_post(`termekeditablak?ID_TERMEK=${termek_id}`, 1);
+
+    const nev = ta.rows[0].NEV;
+    const azon = ta.rows[0].AZON;
+    const ar = ta.rows[0].AR;
+    const mennyiseg = ta.rows[0].MENNYISEG;
+    const meegys = ta.rows[0].MEEGYS;
+    const aktiv = ta.rows[0].AKTIV;
+    const leiras = ta.rows[0].LEIRAS;
+    const id_kategoria = ta.rows[0].ID_KATEGORIA;
+
+    KategoriaFeltolt("mod_kat", "select", id_kategoria);
+
+    if (tipus == "bevitel") {
+      $("#mod_nev").val("");
+      $("#mod_azon").val("");
+      $("#mod_ar").val(0);
+      $("#mod_db").val(1);
+      $("#mod_meegys").val("db");
+      $("#mod_leiras").val("");
+      $("#mySwitch").prop("checked", true).trigger("change"); // Default érték beállítása
     } else {
-      $("#mySwitch").prop("checked", false).trigger("change");
+      $("#idx1").html(`${termek_id}; ${nev}`);
+      $("#mod_nev").val(nev);
+      $("#mod_azon").val(azon);
+      $("#mod_ar").val(ar);
+      $("#mod_db").val(mennyiseg);
+      $("#mod_meegys").val(meegys);
+      var datum = new Date();
+      $("#mod_datum").val(datum.toISOString().split("T")[0]);
+      $("#mod_leiras").val(leiras);
+
+      // Switch állapot beállítása
+      if (aktiv === "Y") {
+        $("#mySwitch").prop("checked", true).trigger("change");
+      } else {
+        $("#mySwitch").prop("checked", false).trigger("change");
+      }
     }
-  }
 
-  $("#save_button")
-    .off()
-    .one("click", function () {
-      const aktiv = $("#mySwitch").is(":checked") ? "YES" : "NO"; // Itt olvassuk ki az értéket
-      TermekModosit(`${$("#mod1").serialize()}§${termek_id}§${aktiv}`);
-    });
+    $("#save_button")
+      .off()
+      .one("click", function () {
+        const aktiv = $("#mySwitch").is(":checked") ? "YES" : "NO"; // Itt olvassuk ki az értéket
+        TermekModosit(`${$("#mod1").serialize()}§${termek_id}§${aktiv}`);
+      });
 
-  $("#termek_edit").modal("show");
+    $("#termek_edit").modal("show");
+
+
+  } catch (err) { console.log("hiba:", err);}
+
+  
 }
 
 function Termek_Torol(event, cuccok) {
@@ -449,7 +470,7 @@ function CARD_BETOLT(adatok) {
         dark:hover:text-blue-400 
         transition-all duration-150 ease-in-out
         w-auto 
-        me-2" aria-label="modositas" onclick='Termek_Edit(event, ${JSON.stringify(cuccli)}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
+        me-2" aria-label="modositas" onclick='Termek_Edit(event, ${element.ID_TERMEK}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
      
      
       gg += `<button type="button" 
