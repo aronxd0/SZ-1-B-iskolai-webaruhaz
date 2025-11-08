@@ -49,6 +49,7 @@ function Attekintes(li) {
             overflow-hidden 
             p-3 
             shadow-xl 
+            mb-4 
             
             ' id='rend'>
             
@@ -187,8 +188,8 @@ function Adatok(li) {
     $("#aktualis").html(`
         <span 
         class="
-        text-gray-500 
-        dark:text-gray-500">Áttekintés</span> - 
+        text-emerald-500 
+        dark:text-emerald-500">Áttekintés <i class="bi bi-check2"></i></span> - 
         
         <span 
         class="
@@ -204,86 +205,106 @@ function Adatok(li) {
     //$("#cc").html("");
 
     let form = `
-        <div class="row">
-            <div class="col-0 col-lg-3"></div>
-            <div class="col-12 col-lg-6 mt-2 p-1">
-                <div class="form-floating">
-                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="keresztnev" name="knev" 
+
+        <div class="row mt-3">
+          <div class="col-12 text-center">
+            <i class="bi bi-info-circle"></i> A *-gal jelölt mezők kitöltése kötelező!
+          </div>
+        </div>
+
+        <div class="row p-1 px-xl-5">
+            
+            <div class="col-12 d-flex flex-column flex-xl-row p-1">
+                
+                <div class="col-12 col-xl-6 p-1">
+                    <label for="keresztnev" class="p-2"><i class="bi bi-person"></i> Teljes név *</label>
+                    <input type="text" class="form-control rounded-4 shadow-xl" id="keresztnev" name="knev" 
 
                     value="${ _nev != ""? _nev :  document.getElementById("user").querySelector('h5').textContent.trim()}"
                     
-                    placeholder="Teljes név">
-                    <label for="keresztnev"><i class="bi bi-person"></i> Teljes név *</label>
+                    placeholder="pl.: Füty Imre">
+                    
                 </div>
-            </div>
-            <div class="col-0 col-lg-3"></div>
 
-            <div class="col-0 col-lg-3"></div>
-            <div class="col-12 col-lg-6 mt-2 p-1">
-                <div class="form-floating">
-                    <input type="email" class="form-control rounded-4 shadow-lg feka" id="emil"
+                <div class="col-12 col-xl-6 p-1">
+                    <label for="emil" class="p-2"><i class="bi bi-envelope"></i> E-mail cím *</label>
+                    <input type="email" class="form-control rounded-4 shadow-xl" id="emil"
 
                      value="${  _emil != "" ? _emil : document.getElementById("user-email").innerHTML}" 
 
-                     name="imel" placeholder="E-mail cím">
-                    <label for="emil"><i class="bi bi-envelope"></i> E-mail cím *</label>
+                     name="imel" placeholder="pl.: futyimre69@valami.xd">
+                    
+                </div>
+                
+            </div>
+            
+
+            <div class="col-12 d-flex flex-column flex-xl-row mt-2 p-1">
+
+                <div class="col-12 col-xl-3 p-1">
+                    <label for="iszam" class="p-2"><i class="bi bi-hash"></i> Irányítószám *</label>
+                    <input type="number" class="form-control rounded-4 shadow-xl" id="iszam" 
+                    
+                    value="${_iszam}"
+
+                    name="iszam" placeholder="pl.: 8900">
+                    
+                </div>
+
+                <div class="col-12 col-xl-9 p-1">
+                    <label for="city" class="p-2"><i class="bi bi-building"></i> Város *</label>
+                    <input type="text" class="form-control rounded-4 shadow-xl" id="city" 
+                    
+                    value="${_city}"
+                    
+                    name="city" placeholder="pl.: Miskolc">
+                    
                 </div>
             </div>
-            <div class="col-0 col-lg-3"></div>
+            
 
-            <div class="col-0 col-lg-3"></div>
-            <div class="col-12 col-lg-6 mt-2 p-1">
-                <div class="form-floating">
-                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="cim" name="cim"
+            
+            <div class="col-12 d-flex flex-column flex-xl-row mt-2 p-1">
+                <div class="col-12 col-xl-6 p-1">
+                    <label for="cim" class="p-2"><i class="bi bi-geo-alt"></i> Cím *</label>
+                    <input type="text" class="form-control rounded-4 shadow-xl" id="cim" name="cim"
                     
                     value="${_cim}"
                     
                     placeholder="Pl. Kossuth Lajos utca 69.">
-                    <label for="cim"><i class="bi bi-geo-alt"></i> Cím *</label>
-                </div>
-            </div>
-            <div class="col-0 col-lg-3"></div>
-
-            <div class="col-0 col-lg-3"></div>
-            <div class="col-12 col-lg-6 mt-2 p-1">
-                <div class="form-floating">
-                    <input type="text" class="form-control rounded-4 shadow-lg feka" id="city" 
                     
-                    value="${_city}"
-                    
-                    name="city" placeholder="Város">
-                    <label for="city"><i class="bi bi-building"></i> Város *</label>
                 </div>
-            </div>
-            <div class="col-0 col-lg-3"></div>
 
-            <div class="col-0 col-lg-3"></div>
-            <div class="col-12 col-lg-6 mt-2 p-1">
-                <div class="form-floating">
-                    <input type="number" class="form-control rounded-4 shadow-lg feka" id="iszam" 
-                    
-                    value="${_iszam}"
-
-                    name="iszam" placeholder="Irányítószám">
-                    <label for="iszam"><i class="bi bi-hash"></i> Irányítószám *</label>
-                </div>
-            </div>
-            <div class="col-0 col-lg-3"></div>  
-
-            <div class="col-0 col-lg-3"></div>
-            <div class="col-12 col-lg-6 mt-2 p-1">
-                <!-- autocomplete container köré tett country input -->
                 <div class="autocomplete" style="width:100%;">
-                  <div class="form-floating">
-                      <input type="text" class="form-control rounded-4 shadow-lg feka" id="country" name="country"
+                  <div class="col-12 p-1">
+                      <label for="country" class="p-2"><i class="bi bi-globe"></i> Ország *</label>
+                      <input type="text" class="form-control rounded-4 shadow-xl" id="country" name="country"
                         value="${_country}"
-                        placeholder="Ország">
-                      <label for="country"><i class="bi bi-globe"></i> Ország *</label>
+                        placeholder="pl.: Magyarország">
+                      
                   </div>
                 </div>
+
             </div>
 
-            <div class="col-0 col-lg-3"></div>
+            <div class="col-12 mt-2 p-1">
+              <label for="megj" class="p-2"><i class="bi bi-chat-left-text"></i> Megjegyzés</label>
+              <textarea class="form-control shadow-xl rounded-4" name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..."></textarea> 
+            </div>
+            
+
+            
+            
+            
+
+            
+            
+             
+
+            
+            
+
+            
 
             <div class="col-12 col-lg-6 mt-2 p-1 text-center m-auto">
                 <label class="text-danger" id="hiba"> &nbsp;</label>
@@ -390,14 +411,14 @@ function Fizetes(li) {
     $("#aktualis").html(`
         <span 
         class="
-        text-gray-500 
-        dark:text-gray-500">Áttekintés</span> - 
+        text-emerald-500 
+        dark:text-emerald-500">Áttekintés <i class="bi bi-check2"></i></span> - 
         
         <span 
         class="
-        text-gray-500 
-        dark:text-gray-500 
-        ">Adatok</span> - 
+        text-emerald-500 
+        dark:text-emerald-500 
+        ">Adatok <i class="bi bi-check2"></i></span> - 
         
         <span 
         class="
