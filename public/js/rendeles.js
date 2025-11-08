@@ -425,10 +425,111 @@ function Fizetes(li) {
         text-cyan-600 
         dark:text-cyan-600 
         "><b>Fizetés</b></span`);
-    $("#cc").html("");
+    
 
     
     console.log( `li ::    +${JSON.stringify(li)}`);
+
+
+      let form = `
+      
+      <div class="row">
+      
+        <div class="col-12 text-center">
+          Fizetési mód kiválasztása
+        </div>
+
+        <div class="col-12 justify-content-center">
+          <div class="row">
+            <div class="col-4"></div>
+            <div
+              class="
+              has-checked:bg-indigo-50 
+              has-checked:text-indigo-900 
+              has-checked:ring-indigo-200 
+              dark:has-checked:bg-indigo-950 
+              dark:has-checked:text-indigo-200 
+              dark:has-checked:ring-indigo-900 
+              p-2 
+              form-check 
+              col-4 
+              d-flex 
+              justify-content-center"
+            >
+              
+              
+              <input type="radio" class="checked:border-indigo-500 form-check-input" name="fiz" id="radio1">
+              <label class="form-check-label" for="radio1">Google Pay</label>
+            </div>
+            <div class="col-4"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-4"></div>
+            <div
+              class="
+              has-checked:bg-indigo-50 
+              has-checked:text-indigo-900 
+              has-checked:ring-indigo-200 
+              dark:has-checked:bg-indigo-950 
+              dark:has-checked:text-indigo-200 
+              dark:has-checked:ring-indigo-900 
+              p-2 
+              form-check 
+              col-4 d-flex justify-content-center"
+            >
+              
+              
+              <input type="radio" class="checked:border-indigo-500 form-check-input" name="fiz" id="radio2">
+              <label class="form-check-label" for="radio2">Apple Pay</label>
+            </div>
+            <div class="col-4"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-4"></div>
+            <div
+              class="
+              has-checked:bg-indigo-50 
+              has-checked:text-indigo-900 
+              has-checked:ring-indigo-200 
+              dark:has-checked:bg-indigo-950 
+              dark:has-checked:text-indigo-200 
+              dark:has-checked:ring-indigo-900 
+              p-2 
+              form-check col-4 d-flex justify-content-center"
+            >
+              
+              
+              <input type="radio" class="checked:border-indigo-500 form-check-input" name="fiz" id="radio3">
+              <label class="form-check-label" for="radio3">Bankkártya</label>
+            </div>
+            <div class="col-4"></div>
+          </div>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+      
+      
+      `;
+
+
+
+
+    $("#cc").fadeOut(300, function() {
+        $("#cc").html(form).fadeIn(300);
+    });
+
+
+
 
     let navigacio = `
         <button type="button" 
