@@ -106,14 +106,14 @@ async function Termek_Edit(event, termek_id, tipus) {
 function Termek_Torol(event, cuccok) {
   event.stopPropagation();
   const termek_id = cuccok[0];
-
+ console.log("bejoszssssssssssssssss")
   $("#delete_modal .modal-body").html(`Biztosan törlöd a(z) ${termek_id} azonosítójú terméket?`);
   $("#delete_modal").off("click");
-  $("#delete_modal").on("click", ".btn-success", function () {
+  $("#delete_modal").on("click", ".btn-danger", async function () {
     try {
       var s = "";
       var tip = "success";
-      var d_json = ajax_post(`termek_del?ID_TERMEK=${termek_id}`, 1);
+      var d_json = await ajax_post(`termek_del?ID_TERMEK=${termek_id}`, 1);
       console.log(d_json);
       if (d_json.message == "ok") {
         if (d_json.rows[0].affectedRows == 1) {
@@ -134,6 +134,7 @@ function Termek_Torol(event, cuccok) {
   });
   $("#delete_modal").modal("show");
   KosarTetelDB(); // kosár darab mutatása frissítése
+
 }
 
 
