@@ -440,7 +440,7 @@ app.post('/rendeles',async (req, res) => {
 
   sql += 
   `
-  DELETE FROM webbolt_kosar WHERE ID_KOSAR = @kosarid;
+  DELETE FROM webbolt_kosar_tetelei WHERE ID_KOSAR = @kosarid;
   COMMIT;
   `;
 
