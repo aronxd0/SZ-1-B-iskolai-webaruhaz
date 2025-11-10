@@ -177,17 +177,10 @@ $("#rend_button").click(async function () {
 
 // 🔹 Ha a gombot lenyitják, akkor betöltjük a rendelés tételeit
 async function toggleRendeles(rendelId) {
-    
-    
-
     // AJAX hívás, hogy lekérd a rendelés tételeit
-    const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
-
-
-
-    let html ="";
-
     
+    const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
+    let html =""; 
 
     for (const elem of tetelek.rows) {
         html += `
@@ -235,8 +228,6 @@ async function toggleRendeles(rendelId) {
         <div class="col-0 col-lg-2"></div>
         `;
     }
-    console.log("Rendelés tételei betöltve.");
-
 
     $(`#tetelek_${rendelId}`).html(html);
     
