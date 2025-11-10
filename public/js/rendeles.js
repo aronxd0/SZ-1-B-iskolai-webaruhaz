@@ -13,6 +13,8 @@ let _cim = ""  //globális változó a cím tárolására
 let _city = "" //globális változó a város tárolására
 let _iszam = ""//globális változó az irányítószám tárolására
 let _country = ""//globális változó az ország tárolására
+let fizmod = "" //globális változó a fizetési mód tárolására
+let szallmod = ""//globális változó a szállítási mód tárolására
 
 
 
@@ -519,14 +521,15 @@ function Fizetes(li) {
       
       <div class="row">
       
-        <div class="col-12 text-center">
-          Fizetési mód kiválasztása
+        <div class="col-12 text-center p-2">
+          
+           Fizetési mód kiválasztása
         </div>
 
-        <div class="col-12 d-flex flex-row justify-content-center">
+        <div class="col-12 d-flex flex-row justify-content-center p-3">
           <div class="d-flex justify-content-center gap-3 m-2">
             
-            <input type="radio" class="form-check-input peer hidden" name="fiz" id="radio1">
+            <input type="radio" class="form-check-input peer hidden" name="fiz" id="radio1" onchange="fizetesmodvalto()">
             <label
               for="radio1" 
               
@@ -545,12 +548,12 @@ function Fizetes(li) {
               border border-gray-400 
               dark:border-gray-700 
               hover:shadow-md 
-              "
+              " 
             >
               
+              <i class="bi bi-google"></i>
               
-              
-              Google Pay
+               Google Pay
             </label>
             
           </div>
@@ -576,9 +579,9 @@ function Fizetes(li) {
               hover:shadow-md "
             >
               
+              <i class="bi bi-apple"></i>
               
-              
-              Apple Pay
+               Apple Pay
             </label>
             
           </div>
@@ -604,8 +607,8 @@ function Fizetes(li) {
             >
               
               
-              
-              Bankkártya
+              <i class="bi bi-credit-card"></i>
+               Bankkártya
             </label>
             
           </div>
