@@ -135,7 +135,16 @@ $(document).on('show.bs.collapse', '.collapse', async function (e) {
 
 
     
-    let html = ``; 
+    let html = `<div class="col-lg-12 row text-center" >
+
+    <div class="col-1"></div> 
+    <div class="col-2"><strong>KÉP </strong></div> 
+    <div class="col-3"><strong>NÉV </strong></div> 
+    <div class="col-2"><strong>MENNYISÉG </strong></div> 
+    <div class="col-3"><strong>ÁR </strong></div>
+    <div class="col-1"></div>
+    
+    </div>`; 
 
     for (const elem of tetelek.rows) {
         html += `
