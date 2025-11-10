@@ -217,22 +217,42 @@ function Adatok(li) {
             <div class="col-12 d-flex flex-column flex-xl-row p-1">
                 
                 <div class="col-12 col-xl-6 p-1">
-                    <label for="keresztnev" class="p-2"><i class="bi bi-person"></i> Teljes név *</label>
-                    <input type="text" class="form-control rounded-4 shadow-xl" id="keresztnev" name="knev" 
+                    <label for="keresztnev" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-person"></i> Teljes név *</label>
+                    <input type="text" 
+                    class="
+                    form-control 
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    dark:bg-slate-800 
+                    text-slate-900 
+                    dark:text-zinc-200 
+                    dark:shadow-xl 
+                    " id="keresztnev" name="knev" 
 
                     value="${ _nev != ""? _nev :  document.getElementById("user").querySelector('h5').textContent.trim()}"
                     
-                    placeholder="pl.: Füty Imre">
+                    placeholder="pl.: Füty Imre" style="border: none;">
                     
                 </div>
 
                 <div class="col-12 col-xl-6 p-1">
-                    <label for="emil" class="p-2"><i class="bi bi-envelope"></i> E-mail cím *</label>
-                    <input type="email" class="form-control rounded-4 shadow-xl" id="emil"
+                    <label for="emil" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-envelope"></i> E-mail cím *</label>
+                    <input type="email" 
+                    class="
+                    form-control 
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    dark:bg-slate-800 
+                    text-slate-900 
+                    dark:text-zinc-200 
+                    dark:shadow-xl 
+                    " id="emil"
 
                      value="${  _emil != "" ? _emil : document.getElementById("user-email").innerHTML}" 
 
-                     name="imel" placeholder="pl.: futyimre69@valami.xd">
+                     name="imel" placeholder="pl.: futyimre69@valami.xd" style="border: none;">
                     
                 </div>
                 
@@ -242,22 +262,42 @@ function Adatok(li) {
             <div class="col-12 d-flex flex-column flex-xl-row mt-2 p-1">
 
                 <div class="col-12 col-xl-3 p-1">
-                    <label for="iszam" class="p-2"><i class="bi bi-hash"></i> Irányítószám *</label>
-                    <input type="number" class="form-control rounded-4 shadow-xl" id="iszam" 
+                    <label for="iszam" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-hash"></i> Irányítószám *</label>
+                    <input type="number" 
+                    class="
+                    form-control 
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    dark:bg-slate-800 
+                    text-slate-900 
+                    dark:text-zinc-200 
+                    dark:shadow-xl 
+                    " id="iszam" 
                     
                     value="${_iszam}"
 
-                    name="iszam" placeholder="pl.: 8900">
+                    name="iszam" placeholder="pl.: 8900" style="border: none;">
                     
                 </div>
 
                 <div class="col-12 col-xl-9 p-1">
-                    <label for="city" class="p-2"><i class="bi bi-building"></i> Város *</label>
-                    <input type="text" class="form-control rounded-4 shadow-xl" id="city" 
+                    <label for="city" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-building"></i> Város *</label>
+                    <input type="text" 
+                    class="
+                    form-control 
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    dark:bg-slate-800 
+                    text-slate-900 
+                    dark:text-zinc-200 
+                    dark:shadow-xl 
+                    " id="city" 
                     
                     value="${_city}"
                     
-                    name="city" placeholder="pl.: Miskolc">
+                    name="city" placeholder="pl.: Miskolc" style="border: none;">
                     
                 </div>
             </div>
@@ -266,21 +306,41 @@ function Adatok(li) {
             
             <div class="col-12 d-flex flex-column flex-xl-row mt-2 p-1">
                 <div class="col-12 col-xl-6 p-1">
-                    <label for="cim" class="p-2"><i class="bi bi-geo-alt"></i> Cím *</label>
-                    <input type="text" class="form-control rounded-4 shadow-xl" id="cim" name="cim"
+                    <label for="cim" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-geo-alt"></i> Cím *</label>
+                    <input type="text" 
+                    class="
+                    form-control 
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    dark:bg-slate-800 
+                    text-slate-900 
+                    dark:text-zinc-200 
+                    dark:shadow-xl 
+                    " id="cim" name="cim"
                     
                     value="${_cim}"
                     
-                    placeholder="Pl. Kossuth Lajos utca 69.">
+                    placeholder="Pl. Kossuth Lajos utca 69." style="border: none;">
                     
                 </div>
 
                 <div class="autocomplete" style="width:100%;">
                   <div class="col-12 p-1">
-                      <label for="country" class="p-2"><i class="bi bi-globe"></i> Ország *</label>
-                      <input type="text" class="form-control rounded-4 shadow-xl" id="country" name="country"
+                      <label for="country" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-globe"></i> Ország *</label>
+                      <input type="text" 
+                      class="
+                      form-control 
+                      rounded-4 
+                      shadow-xl 
+                      bg-zinc-50 
+                      dark:bg-slate-800 
+                      text-slate-900 
+                      dark:text-zinc-200 
+                      dark:shadow-xl 
+                      " id="country" name="country"
                         value="${_country}"
-                        placeholder="pl.: Magyarország">
+                        placeholder="pl.: Magyarország" style="border: none;">
                       
                   </div>
                 </div>
@@ -288,8 +348,18 @@ function Adatok(li) {
             </div>
 
             <div class="col-12 mt-2 p-1">
-              <label for="megj" class="p-2"><i class="bi bi-chat-left-text"></i> Megjegyzés</label>
-              <textarea class="form-control shadow-xl rounded-4" name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..."></textarea> 
+              <label for="megj" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-chat-left-text"></i> Megjegyzés</label>
+              <textarea 
+              class="
+                form-control 
+                shadow-xl 
+                rounded-4 
+                bg-zinc-50 
+                dark:bg-slate-800 
+                text-slate-900 
+                dark:text-zinc-200 
+                dark:shadow-xl 
+              " name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..."></textarea> 
             </div>
             
 
