@@ -181,7 +181,7 @@ async function toggleRendeles(rendelId) {
     
     const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
     let html =""; 
-
+    
     for (const elem of tetelek.rows) {
         html += `
         <div class="col-0 col-lg-2"></div>
@@ -228,6 +228,7 @@ async function toggleRendeles(rendelId) {
         <div class="col-0 col-lg-2"></div>
         `;
     }
+
 
     $(`#tetelek_${rendelId}`).html(html);
     
