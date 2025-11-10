@@ -224,6 +224,8 @@ function Adatok(li) {
                     rounded-4 
                     shadow-xl 
                     bg-zinc-50 
+                    placeholder-gray-400 
+                    dark:placeholder-gray-400 
                     dark:bg-slate-800 
                     text-slate-900 
                     dark:text-zinc-200 
@@ -244,6 +246,8 @@ function Adatok(li) {
                     rounded-4 
                     shadow-xl 
                     bg-zinc-50 
+                    placeholder-gray-400 
+                    dark:placeholder-gray-400 
                     dark:bg-slate-800 
                     text-slate-900 
                     dark:text-zinc-200 
@@ -269,6 +273,8 @@ function Adatok(li) {
                     rounded-4 
                     shadow-xl 
                     bg-zinc-50 
+                    placeholder-gray-400 
+                    dark:placeholder-gray-400 
                     dark:bg-slate-800 
                     text-slate-900 
                     dark:text-zinc-200 
@@ -289,6 +295,8 @@ function Adatok(li) {
                     rounded-4 
                     shadow-xl 
                     bg-zinc-50 
+                    placeholder-gray-400 
+                    dark:placeholder-gray-400 
                     dark:bg-slate-800 
                     text-slate-900 
                     dark:text-zinc-200 
@@ -313,6 +321,8 @@ function Adatok(li) {
                     rounded-4 
                     shadow-xl 
                     bg-zinc-50 
+                    placeholder-gray-400 
+                    dark:placeholder-gray-400 
                     dark:bg-slate-800 
                     text-slate-900 
                     dark:text-zinc-200 
@@ -334,6 +344,8 @@ function Adatok(li) {
                       rounded-4 
                       shadow-xl 
                       bg-zinc-50 
+                      placeholder-gray-400 
+                      dark:placeholder-gray-400 
                       dark:bg-slate-800 
                       text-slate-900 
                       dark:text-zinc-200 
@@ -355,6 +367,8 @@ function Adatok(li) {
                 shadow-xl 
                 rounded-4 
                 bg-zinc-50 
+                placeholder-gray-400 
+                dark:placeholder-gray-400 
                 dark:bg-slate-800 
                 text-slate-900 
                 dark:text-zinc-200 
