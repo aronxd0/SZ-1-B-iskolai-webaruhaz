@@ -33,7 +33,12 @@ $("#rend_button").click(async function () {
                         mt-4 
                         p-3 
                         p-xxl-none" 
+                        card
+
                     id="rendeles_${elemek.ID_RENDELES}" 
+
+                    role="button"
+                    onclick="toggleRendeles(${elemek.ID_RENDELES})"
 
                     data-bs-toggle="collapse"
                     data-bs-target="#${collapseId}"
@@ -121,6 +126,7 @@ $("#rend_button").click(async function () {
                             aria-expanded="false"
                             aria-controls="${collapseId}"
                         >
+                        onclick="toggleRendeles(${elemek.ID_RENDELES})"
                             <i class="bi bi-three-dots"></i>
                         </button>
                     </div>
@@ -170,9 +176,9 @@ $("#rend_button").click(async function () {
 
 
 // 🔹 Ha a gombot lenyitják, akkor betöltjük a rendelés tételeit
-$(document).on('show.bs.collapse', '.collapse', async function (e) {
-    const collapseId = $(this).attr('id'); // az adott collapse elem ID-je pl. collapse_123
-    const rendelId = collapseId.split('_')[1]; // collapse_123 → 123
+async function toggleRendeles(rendelId) {
+    
+    
 
     // AJAX hívás, hogy lekérd a rendelés tételeit
     const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
@@ -229,7 +235,12 @@ $(document).on('show.bs.collapse', '.collapse', async function (e) {
         <div class="col-0 col-lg-2"></div>
         `;
     }
+    console.log("Rendelés tételei betöltve.");
 
 
     $(`#tetelek_${rendelId}`).html(html);
-});
+    
+}
+
+
+
