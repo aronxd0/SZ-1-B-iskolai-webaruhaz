@@ -56,7 +56,14 @@ async function SajatVelemenyekMutat(id_termek) {
 
             sv += `
             <div class="w-100 p-2 border rounded mt-3 mb-3 comment ${allapot_style}">
-                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
+                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                                                                                                                                                                            year: 'numeric',
+                                                                                                                                                                            month: '2-digit',
+                                                                                                                                                                            day: '2-digit',
+                                                                                                                                                                            hour: '2-digit',
+                                                                                                                                                                            minute: '2-digit',
+                                                                                                                                                                            hour12: false
+                                                                                                                                                                        })}</span></p>
                 <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
                 <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> 
                     <div class="dropup">
@@ -106,7 +113,14 @@ async function VelemenyekMutat(id_termek) {
                     mt-3 
                     mb-3 
                     comment">
-                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${element.DATUM.substring(0,10)}</span></p>
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                })}</span></p>
                     <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
                 </div>`;
             }

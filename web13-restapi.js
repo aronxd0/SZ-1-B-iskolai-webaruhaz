@@ -487,7 +487,7 @@ FROM webbolt_rendeles AS r
 JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
 WHERE r.ID_USER = ${session_data.ID_USER}
 GROUP BY r.ID_RENDELES
-ORDER BY r.ID_RENDELES;
+ORDER BY r.ID_RENDELES DESC;
   `;
 
   var eredmeny = await runQueries(sql, req);
