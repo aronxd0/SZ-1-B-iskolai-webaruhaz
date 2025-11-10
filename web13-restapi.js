@@ -13,14 +13,17 @@ const header2 = 'application/json; charset=UTF-8';
 app.use(express.static('public'));       // public/index.html a def.
 app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninitialized:true }));   /* https://www.js-tutorials.com/nodejs-tutorial/nodejs-session-example-using-express-session */
 
-const mysql_connection =  {
-  host: 'sexard3-214.tolna.net',     /* 10.2.0.11:3306 - fsw */
-  user: 'szaloky.adam',         /* CREATE USER 'itbolt_user'@'%' IDENTIFIED BY '123456'; GRANT all privileges ON ITBOLT.* TO 'itbolt_user'@'%' */ 
-  port: "9406",
-  password: 'Csany7922',
-  database: '2021SZ_szaloky_adam',          /* gdrive/public/tananyag/adatbázis/mysql_dumps/create_it_termekek.sql */
-  multipleStatements: true // tranzakcióhoz kell, több lekérdezés futtatása egyszerre 
-};
+const pool = mysql.createPool({
+    host: 'sexard3-214.tolna.net',
+    user: 'szaloky.adam',
+    port: "9406",
+    password: 'Csany7922',
+    database: '2021SZ_szaloky_adam',
+    multipleStatements: true,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
 
 // 1. trim(): levágja az elejéről és végéről a szóközöket
 // 2. replaceAll("'", ""): eltávolítja az összes aposztrófot (')
@@ -541,9 +544,6 @@ app.post('/termek_edit',async (req, res) => {
   var termekid  = parseInt(req.query.ID_TERMEK);
   var aktiv  = (req.query.mod_aktiv == "NO" ? "N" : "Y")
 
-  //var aktiv  = ((req.query.mod_aktiv == undefined ? "NO" : "YES") == "YES" ? "Y" : "N") == "Y" && mennyiseg > 0 ? "Y" : "N";
-  // aktiv = [Admin szándéka = 'Y'] && [Készlet > 0] ? 'Y' : 'N';
-
   var sql = `
     UPDATE webbolt_termekek
     SET
@@ -565,7 +565,6 @@ app.post('/termek_edit',async (req, res) => {
 
 
 app.post('/termek_adatok',async (req, res) => {
-  
   
   let termekid  = parseInt(req.query.ID_TERMEK);
 
@@ -600,6 +599,22 @@ app.post('/termekeditablak',async (req, res) => {
   sendJson_toFrontend(res, sql);
 });
 
+app.post('/termek_del',async (req, res) => {
+  
+  var termekid  = parseInt(req.query.ID_TERMEK);
+
+  console.log("Törlendő termék ID: " + termekid);
+
+  var sql = `
+    DELETE FROM webbolt_termekek
+    WHERE ID_TERMEK = ${termekid};
+  `;
+
+  const eredmeny = await runExecute(sql, req);
+  res.send(eredmeny);
+  res.end();
+});
+
 
 
 //#endregion
@@ -607,47 +622,60 @@ app.post('/termekeditablak',async (req, res) => {
 
 //#region függvények
 
-async function runExecute(sql, req) {                     // insert, update, delete sql
+async function runExecute(sql, req) {               // insert, update, delete sql
   session_data = req.session;
   var msg = "ok";
-  var json_data, conn, res1, jrn1, jrn;
+  var json_data, res1, jrn;
   session_data = req.session;
+  
+  let conn; // Kapcsolat változó deklarálása a try-on kívül
   try {
-      jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}");`;      
-      conn = await mysql.createConnection(mysql_connection); 
+      jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}");`;     
+      
+      // Kapcsolat kérése a POOL-ból
+      //    NEM pedig mysql.createConnection()!
+      conn = await pool.getConnection(); 
+      
+      // A .query() futtatja a tranzakciós blokkokat (START...COMMIT)
       res1 = await conn.query(sql);  
-      jrn1 = await conn.execute(jrn); 
+      await conn.execute(jrn); 
 
-      //console.log(res1);
-      //console.log("execute: "+res1.affectedRows);
   } catch (err) {
       msg = err.sqlMessage; console.error('Hiba:', err); 
   } finally {
-      await conn.end();                                    
-      json_data = JSON.stringify({"message":msg, "rows":res1 });  // rest-api
+      // Kapcsolat VISSZAADÁSA a pool-ba (conn.release())
+      //    NEM pedig végleges bezárása (conn.end())!
+      if (conn) conn.release(); 
+      
+      json_data = JSON.stringify({"message":msg, "rows":res1 });   // rest-api
   }
   return json_data;
 }
 
-async function runQueries(sql) {                         // SELECT sql (+ count)
-  var maxcount = 0;                                      // rekordszám
+async function runQueries(sql) {                // SELECT sql (+ count)
+  var maxcount = 0;                         // rekordszám
   var msg = "ok";
-  var poz = sql.toUpperCase().lastIndexOf("ORDER BY ");  // rekord count-hoz nem kell az order by (ha van)
-  poz == -1? poz = sql.length : poz;                     // nincs "order by"
-  var json_data, conn, res1, res2=[];
+  var poz = sql.toUpperCase().lastIndexOf("ORDER BY ");   // rekord count-hoz nem kell az order by (ha van)
+  poz == -1? poz = sql.length : poz;             // nincs "order by"
+  var json_data, res1, res2=[];
 
+  let conn; // Kapcsolat változó deklarálása a try-on kívül
   try {
-      conn = await mysql.createConnection(mysql_connection);
-      [res1] = await conn.execute(`select count(*) as db from (${sql.substring(0, poz)}) as tabla;`);  // tömb 0. eleme 
-      maxcount = res1[0].db | 0;                         // :-) 
-      if (maxcount > 0) {  
+      //Kapcsolat kérése a POOL-ból
+      conn = await pool.getConnection();
+      
+      [res1] = await conn.execute(`select count(*) as db from (${sql.substring(0, poz)}) as tabla;`);   // tömb 0. eleme 
+      maxcount = res1[0].db | 0;                     // :-) 
+      if (maxcount > 0) {   
         [res2] = await conn.execute(sql);   
       }
   } catch (err) {
       msg = err.sqlMessage; maxcount = -1; console.error('Hiba:', err); 
   } finally {
-      await conn.end();                                     // !!! conn error esetet nem kezeli 
-      json_data = JSON.stringify({ "message":msg, "maxcount":maxcount, "rows":res2 });  // rest-api
+      // Kapcsolat VISSZAADÁSA a pool-ba
+      if (conn) conn.release();
+      
+      json_data = JSON.stringify({ "message":msg, "maxcount":maxcount, "rows":res2 });   // rest-api
   }
   return json_data;
 }
@@ -656,7 +684,7 @@ async function sendJson_toFrontend (res, sql) {
   var json_data = await runQueries(sql);
   res.set(header1, header2);
   res.send(json_data);
-  res.end();
+  res.end(); 
 }
 
 //#endregion
