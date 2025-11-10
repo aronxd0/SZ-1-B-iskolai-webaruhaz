@@ -616,7 +616,7 @@ function Fizetes(li) {
 
           </div>
 
-          <div class="col-12 p-2 d-flex flex-column flex-sm-row" id="fm">
+          <div class="col-12 p-2 m-2 d-flex flex-column flex-sm-row" id="fm">
           
           
           </div>
@@ -778,7 +778,7 @@ function Fizetes(li) {
 
 
 function Fizetesmodvalaszto(sigma) {
-  console.log(sigma.id);
+  
 
   if(sigma.id == "googlepay") {
     fizmod = "Google Pay";
@@ -801,7 +801,7 @@ function Fizetesmodvalaszto(sigma) {
     $("#fm").html(`
       <div 
       class="
-        col-12 col-sm-6 p-2 m-2">
+        col-12 col-sm-6 p-2">
         
         <label for="kszam" class="p-2">Kártyaszám</label>
         <input 
@@ -819,7 +819,7 @@ function Fizetesmodvalaszto(sigma) {
         >
       </div>
 
-      <div class="col-12 col-sm-3 p-2 m-2">
+      <div class="col-12 col-sm-3 p-2">
         <label for="lejarat" class="p-2">Lejárat</label>
         <input 
         inputmode="numeric"
@@ -834,7 +834,7 @@ function Fizetesmodvalaszto(sigma) {
 
       </div>
 
-      <div class="col-12 col-sm-3 p-2 m-2">
+      <div class="col-12 col-sm-3 p-2">
         <label for="lejarat" class="p-2">CVC</label>
         <input 
         inputmode="numeric"
@@ -851,6 +851,20 @@ function Fizetesmodvalaszto(sigma) {
 
     `);
   }
+  console.log(fizmod);
+}
+
+function Szallitasmodvalaszto(sigma) {
+  if(sigma.id == "mpl") {
+    szallmod = "MPL";
+  }
+  else if(sigma.id == "expressone") {
+    szallmod = "Express One";
+  }
+  else if(sigma.id == "gls") {
+    szallmod = "GLS";
+  }
+  console.log(szallmod);
 }
 
 
