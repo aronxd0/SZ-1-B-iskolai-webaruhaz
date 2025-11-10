@@ -129,23 +129,17 @@ $("#rend_button").click(async function () {
 
                 <!-- Itt jelenik meg az összehajtható rész -->
 
-                <div class="collapse !visible mt-2" id="${collapseId}">
+                <div class="collapse !visible mt-2 mb-5" id="${collapseId}">
 
                    
                 <!-- card card-body  || p-3 mind a kettő jó-->
 
 
-                    <div class="
-                        p-3
-                        bg-white
-                        
-                     
-                     text-dark 
-                     dark:text-zinc-100">
-                        <div id="tetelek_${elemek.ID_RENDELES}">
-                            <h6>Tételek betöltése...</h6>
+                    
+                        <div class="row" id="tetelek_${elemek.ID_RENDELES}">
+                            
                         </div>
-                    </div>
+                    
                 </div>
 
             `;
@@ -182,50 +176,54 @@ $(document).on('show.bs.collapse', '.collapse', async function (e) {
 
 
 
-    let html ="<div class='border-b border-gray-400'></div>";
+    let html ="";
 
     
 
     for (const elem of tetelek.rows) {
         html += `
+        <div class="col-0 col-lg-2"></div>
         <div class="col-12 
-        d-flex 
-        flex-column 
-        flex-lg-row 
- 
-        text-slate-900
-          dark:text-zinc-200 
+            col-lg-8 
+            d-flex 
+            flex-column 
+            flex-sm-row 
+    
+            text-slate-900
+            dark:text-zinc-200 
 
-          border-b
-         border-gray-400
+            border-b
+            border-gray-300 
+            border-t border-gray-300 
 
-      
-          
-          
-          mt-3 p-3 
-          p-xxl-none">
-            <div class="col-1"></div>
+        
+            
+            
+            mt-3 p-3 
+            p-xxl-none">
+            
 
-                            <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
-                                <img src="${elem.FOTOLINK}" class="img img-fluid img-thumbnail" style="width:30%;" alt="kep">
-                            </div>
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center">
+                        <img src="${elem.FOTOLINK}" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
+                    </div>
 
-                            <div class="col-12 col-lg-3 d-flex align-self-center justify-content-center p-3">
-                                <p>${elem.NEV}</p>
-                            </div>
-                            
-                             <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center p-3">
-                                <p>${elem.MENNYISEG} db</p>
-                            </div>
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-3">
+                        <p>${elem.NEV}</p>
+                    </div>
+                    
+                        <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-3">
+                        <p>${elem.MENNYISEG} db</p>
+                    </div>
 
-                         
-                            <div class="col-12 col-lg-3 d-flex align-self-center justify-content-center p-3">
-                                <h4 class="anton-regular text-success termek_ar">${elem.AR.toLocaleString()} Ft</h4> 
-                            
-                             </div>
-            <div class="col-1"></div>
+                    
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center justify-content-lg-end p-3">
+                        <h4 class="anton-regular text-success termek_ar">${elem.AR.toLocaleString()} Ft</h4> 
+                    
+                    </div>
+            
 
         </div>
+        <div class="col-0 col-lg-2"></div>
         `;
     }
 
