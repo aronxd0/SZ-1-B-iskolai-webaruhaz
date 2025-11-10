@@ -135,7 +135,7 @@ $(document).on('show.bs.collapse', '.collapse', async function (e) {
 
 
     
-    let html = `<div ><h1 class="text-center fs-1">${rendelId} id rendelés tételei: </h1> </div>`; // Kezdő div a soroknak
+    let html = ``; 
 
     for (const elem of tetelek.rows) {
         html += `
