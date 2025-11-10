@@ -32,7 +32,7 @@ $("#rend_button").click(async function () {
                                 <span>Kosár id: ${elemek.ID_RENDELES}</span>
                             </div>
                             <div class="col-12 col-lg-3 d-flex align-self-center justify-content-center p-3">
-                                <p>${elemek.DATUM}</p>
+                                <p>${elemek.DATUM.split("T")[0]}</p>
                             </div>
                               <div class="col-12 col-lg-3 d-flex align-self-center justify-content-center p-3">
                                   <h4 class="anton-regular text-success termek_ar">${parseInt( elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft</h4>
