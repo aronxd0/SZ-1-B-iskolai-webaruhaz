@@ -30,7 +30,7 @@ $("#rend_button").click(async function () {
                         hover:cursor-pointer 
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
-                        mt-3 
+                        mt-4 
                         p-3 
                         p-xxl-none" 
                     id="rendeles_${elemek.ID_RENDELES}" 
@@ -53,7 +53,7 @@ $("#rend_button").click(async function () {
                     py-3 p-lg-1
                     
                     ">
-                        <span>Rendelés Azonosító</span>
+                        <span><i class="bi bi-hash"></i> Rendelés Azonosító</span>
                         <span>${elemek.ID_RENDELES}</span>
                     </div>
 
@@ -70,15 +70,18 @@ $("#rend_button").click(async function () {
                     lg:border-t-0 
                     lg:border-b-0 
                     ">
-                        <span>Dátum</span>
-                        <span>${new Date(elemek.DATUM).toLocaleString('hu-HU', {
+                        <span><i class="bi bi-calendar"></i> Dátum</span>
+                        <time class="text-gray-400">
+                        
+                        
+                         <i>${new Date(elemek.DATUM).toLocaleString('hu-HU', {
                                     year: 'numeric',
                                     month: '2-digit',
                                     day: '2-digit',
                                     hour: '2-digit',
                                     minute: '2-digit',
                                     hour12: false
-                                })}</span>
+                                })}</i></time>
                     </div>
 
                     <div 
@@ -91,7 +94,7 @@ $("#rend_button").click(async function () {
                     align-items-lg-end 
                     py-3 p-lg-1
                     ">
-                        <span>Végösszeg</span>
+                        <span><i class="bi bi-cash"></i> Végösszeg</span>
                         <span class="anton-regular text-success termek_ar">
                             ${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft
                         </span>
