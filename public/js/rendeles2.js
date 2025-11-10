@@ -11,9 +11,13 @@ $("#rend_button").click(async function () {
             const collapseId = `collapse_${elemek.ID_RENDELES}`;
 
             s += `
+
+                <div class="col-0 col-lg-2"></div>
+
                 <div 
                     class="
                         col-12 
+                        col-lg-8   
                         d-flex 
                         flex-column 
                         flex-lg-row 
@@ -23,35 +27,77 @@ $("#rend_button").click(async function () {
                         dark:text-zinc-200 
                         shadow-lg  
                         rounded-4 
+                        hover:cursor-pointer 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
                         mt-3 
                         p-3 
                         p-xxl-none" 
-                    id="rendeles_${elemek.ID_RENDELES}"
+                    id="rendeles_${elemek.ID_RENDELES}" 
+
+                    data-bs-toggle="collapse"
+                    data-bs-target="#${collapseId}"
+                    aria-expanded="false"
+                    aria-controls="${collapseId}"
                 >
 
-                    <div class="col-1"></div>
+                    
 
-                    <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
-                        <span>Azonosító: ${elemek.ID_RENDELES}</span>
+                    <div 
+                    class="
+                    col-12 
+                    col-lg-4 
+                    d-flex 
+                    flex-lg-column 
+                    justify-content-between 
+                    py-3 p-lg-1
+                    
+                    ">
+                        <span>Rendelés Azonosító</span>
+                        <span>${elemek.ID_RENDELES}</span>
                     </div>
 
-                    <div class="col-12 col-lg-3 d-flex align-self-center justify-content-center p-3">
-                         <p>${new Date(elemek.DATUM).toLocaleString('hu-HU', {
+                    <div 
+                    class="
+                    col-12 
+                    col-lg-4 
+                    d-flex 
+                    flex-lg-column 
+                    justify-content-between 
+                    py-3 p-lg-1 
+                    border-t border-gray-300 
+                    border-b border-gray-300 
+                    lg:border-t-0 
+                    lg:border-b-0 
+                    ">
+                        <span>Dátum</span>
+                        <span>${new Date(elemek.DATUM).toLocaleString('hu-HU', {
                                     year: 'numeric',
                                     month: '2-digit',
                                     day: '2-digit',
                                     hour: '2-digit',
                                     minute: '2-digit',
                                     hour12: false
-                                })}</p>
+                                })}</span>
                     </div>
 
-                    <div class="col-12 col-lg-3 d-flex align-self-center justify-content-center p-3">
-                        <h4 class="anton-regular text-success termek_ar">
+                    <div 
+                    class="
+                    col-12 
+                    col-lg-4 
+                    d-flex 
+                    flex-lg-column 
+                    justify-content-between 
+                    align-items-lg-end 
+                    py-3 p-lg-1
+                    ">
+                        <span>Végösszeg</span>
+                        <span class="anton-regular text-success termek_ar">
                             ${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft
-                        </h4>
+                        </span>
                     </div>      
-
+                    
+                    <!--
                     <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
                         <button 
                             type="button"
@@ -75,10 +121,11 @@ $("#rend_button").click(async function () {
                             <i class="bi bi-three-dots"></i>
                         </button>
                     </div>
-
-                    <div class="col-1"></div>
+                        -->
+                    
 
                 </div>
+                <div class="col-0 col-lg-2"></div>
 
                 <!-- Itt jelenik meg az összehajtható rész -->
 
