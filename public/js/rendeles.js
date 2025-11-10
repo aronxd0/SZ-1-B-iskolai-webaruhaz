@@ -523,72 +523,91 @@ function Fizetes(li) {
           Fizetési mód kiválasztása
         </div>
 
-        <div class="col-12 justify-content-center">
-          <div class="row">
-            <div class="col-4"></div>
-            <div
+        <div class="col-12 d-flex flex-row justify-content-center">
+          <div class="d-flex justify-content-center gap-3 m-2">
+            
+            <input type="radio" class="form-check-input peer hidden" name="fiz" id="radio1">
+            <label
+              for="radio1" 
+              
               class="
-              has-checked:bg-indigo-50 
-              has-checked:text-indigo-900 
-              has-checked:ring-indigo-200 
-              dark:has-checked:bg-indigo-950 
-              dark:has-checked:text-indigo-200 
-              dark:has-checked:ring-indigo-900 
-              p-2 
-              form-check 
-              col-4 
-              d-flex 
-              justify-content-center"
+              peer-checked:bg-slate-900 
+              peer-checked:text-zinc-200 
+              dark:peer-checked:bg-slate-700 
+              dark:peer-checked:text-zinc-200 
+              p-2  
+              rounded-xl 
+              transition-all 
+              duration-200 
+              
+              gap-2 
+              cursor-pointer 
+              border border-gray-400 
+              dark:border-gray-700 
+              hover:shadow-md 
+              "
             >
               
               
-              <input type="radio" class="checked:border-indigo-500 form-check-input" name="fiz" id="radio1">
-              <label class="form-check-label" for="radio1">Google Pay</label>
-            </div>
-            <div class="col-4"></div>
+              
+              Google Pay
+            </label>
+            
           </div>
 
-          <div class="row">
-            <div class="col-4"></div>
-            <div
+          <div class="d-flex justify-content-center gap-3 m-2">
+            <input type="radio" class="peer hidden form-check-input" name="fiz" id="radio2">
+            <label 
+              for="radio2" 
               class="
-              has-checked:bg-indigo-50 
-              has-checked:text-indigo-900 
-              has-checked:ring-indigo-200 
-              dark:has-checked:bg-indigo-950 
-              dark:has-checked:text-indigo-200 
-              dark:has-checked:ring-indigo-900 
-              p-2 
-              form-check 
-              col-4 d-flex justify-content-center"
+              peer-checked:bg-slate-900 
+              peer-checked:text-zinc-200 
+              dark:peer-checked:bg-slate-700 
+              dark:peer-checked:text-zinc-200 
+              p-2  
+              rounded-xl 
+              transition-all 
+              duration-200 
+              
+              gap-2 
+              cursor-pointer 
+              border border-gray-400 
+              dark:border-gray-700 
+              hover:shadow-md "
             >
               
               
-              <input type="radio" class="checked:border-indigo-500 form-check-input" name="fiz" id="radio2">
-              <label class="form-check-label" for="radio2">Apple Pay</label>
-            </div>
-            <div class="col-4"></div>
+              
+              Apple Pay
+            </label>
+            
           </div>
 
-          <div class="row">
-            <div class="col-4"></div>
-            <div
+          <div class="d-flex justify-content-center gap-3 m-2">
+            <input type="radio" class="peer hidden form-check-input" name="fiz" id="radio3">
+            <label 
+              for="radio3" 
               class="
-              has-checked:bg-indigo-50 
-              has-checked:text-indigo-900 
-              has-checked:ring-indigo-200 
-              dark:has-checked:bg-indigo-950 
-              dark:has-checked:text-indigo-200 
-              dark:has-checked:ring-indigo-900 
+              peer-checked:bg-slate-900 
+              peer-checked:text-zinc-200 
+              dark:peer-checked:bg-slate-700 
+              dark:peer-checked:text-zinc-200 
               p-2 
-              form-check col-4 d-flex justify-content-center"
+              rounded-xl 
+              transition-all 
+              duration-200 
+              gap-2 
+              cursor-pointer 
+              border border-gray-400 
+              dark:border-gray-700 
+              hover:shadow-md "
             >
               
               
-              <input type="radio" class="checked:border-indigo-500 form-check-input" name="fiz" id="radio3">
-              <label class="form-check-label" for="radio3">Bankkártya</label>
-            </div>
-            <div class="col-4"></div>
+              
+              Bankkártya
+            </label>
+            
           </div>
 
 
