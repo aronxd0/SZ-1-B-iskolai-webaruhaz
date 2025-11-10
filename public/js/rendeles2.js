@@ -32,7 +32,7 @@ $("#rend_button").click(async function () {
                     <div class="col-1"></div>
 
                     <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
-                        <span>Kosár id: ${elemek.ID_RENDELES}</span>
+                        <span>Azonosító: ${elemek.ID_RENDELES}</span>
                     </div>
 
                     <div class="col-12 col-lg-3 d-flex align-self-center justify-content-center p-3">
@@ -134,14 +134,29 @@ $(document).on('show.bs.collapse', '.collapse', async function (e) {
     const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
 
 
-    
-    let html ="";
+
+    let html ="<div class='border-b border-gray-400'></div>";
 
     
 
     for (const elem of tetelek.rows) {
         html += `
-        <div class="col-12 d-flex flex-column flex-lg-row bg-white text-slate-900 dark:bg-slate-900 dark:text-zinc-200 shadow-lg rounded-4 mt-3 p-3 p-xxl-none">
+        <div class="col-12 
+        d-flex 
+        flex-column 
+        flex-lg-row 
+ 
+        text-slate-900
+          dark:text-zinc-200 
+
+          border-b
+         border-gray-400
+
+      
+          
+          
+          mt-3 p-3 
+          p-xxl-none">
             <div class="col-1"></div>
 
                             <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
@@ -157,7 +172,7 @@ $(document).on('show.bs.collapse', '.collapse', async function (e) {
                             </div>
 
                          
-                            <div class="col-12 col-lg-3 d-flex align-self-center justify-content-center p-3" id="${elem.ID_TERMEK}3">
+                            <div class="col-12 col-lg-3 d-flex align-self-center justify-content-center p-3">
                                 <h4 class="anton-regular text-success termek_ar">${elem.AR.toLocaleString()} Ft</h4> 
                             
                              </div>
