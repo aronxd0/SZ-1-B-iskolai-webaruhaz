@@ -57,16 +57,6 @@ $("#login_oksi_button").click(function() {
     });
 
 
-$('#login_modal').on('hidden.bs.modal', function () {
-
-    if(!BevanJelentkezve()){
-        ajax_post("logout", 1,).then(logoutt => {});
-        Kezdolap();
-    }
-
-});
-
-
 $("#kijelentkezik").click(function() {
     ajax_post("logout", 1).then(logout_json => {
         console.log(logout_json);
