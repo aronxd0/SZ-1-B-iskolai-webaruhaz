@@ -298,7 +298,7 @@ html.dark ::-webkit-scrollbar-thumb {
 
 }
 
-.navbar {
+.navbar, .cim {
   font-family: 'Poppins', sans-serif;
 }
 
