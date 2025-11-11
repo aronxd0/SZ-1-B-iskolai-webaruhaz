@@ -234,20 +234,20 @@ async function toggleRendeles(rendelId) {
             
                     
 
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center">
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
                         <img src="${elem.FOTOLINK}" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
                     </div>
 
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-3">
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
                         <p>${elem.NEV}</p>
                     </div>
                     
-                        <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-3">
+                        <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
                         <p>${elem.MENNYISEG} db</p>
                     </div>
 
                     
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-3">
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-1">
                         <span class="anton-regular text-success text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span> <span> <i> (Nettó)</i></span> 
                     
                     </div>
