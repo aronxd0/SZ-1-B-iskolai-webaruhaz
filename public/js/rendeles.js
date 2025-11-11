@@ -577,6 +577,34 @@ function Fizetes(li) {
             </div>
 
             <div class="d-flex justify-content-center gap-3 m-2">
+              <input type="radio" class="peer hidden form-check-input" name="fiz" id="paypal" onchange="Fizetesmodvalaszto(this)">
+              <label 
+                for="paypal" 
+                class="
+                peer-checked:bg-slate-900 
+                peer-checked:text-zinc-200 
+                dark:peer-checked:bg-slate-700 
+                dark:peer-checked:text-zinc-200 
+                p-2  
+                rounded-xl 
+                transition-all 
+                duration-200 
+                
+                gap-2 
+                cursor-pointer 
+                border border-gray-400 
+                dark:border-gray-700 
+                hover:shadow-md "
+              >
+                
+                <i class="bi bi-paypal"></i>
+                
+                 PayPal
+              </label>
+              
+            </div>
+
+            <div class="d-flex justify-content-center gap-3 m-2">
               <input type="radio" class="peer hidden form-check-input" name="fiz" id="kartya" onchange="Fizetesmodvalaszto(this)">
               <label 
                 for="kartya" 
@@ -780,6 +808,13 @@ function Fizetesmodvalaszto(sigma) {
     $("#fm").html(`
       <i class="bi bi-google fs-1"></i>
       <p class="p-2">A Google Pay fizetési módot választottad.</p>
+    `);
+  }
+  else if(sigma.id == "paypal") {
+    fizmod = "PayPal";
+    $("#fm").html(`
+      <i class="bi bi-paypal fs-1"></i>
+      <p class="p-2">A PayPal fizetési módot választottad.</p>
     `);
   }
 
