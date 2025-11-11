@@ -15,7 +15,7 @@ const { type } = require('os');
 const { get } = require('http');
 */
 
-app.use(express.static('public'));       // public/index.html a def.
+app.use(express.static('public')); // public/index.html a def.
 app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninitialized:true }));   /* https://www.js-tutorials.com/nodejs-tutorial/nodejs-session-example-using-express-session */
 
 const pool = mysql.createPool({
@@ -66,13 +66,25 @@ function gen_SQL_kereses(req) {
     where = `(t.AKTIV = "N") AND `;   // Csak azok, amik inaktívak
   }
 
-  // Ha mindkettő szűrés aktív (elfogyott és/vagy inaktív)
+  // Ha mindkettő szűrés aktív (elfogyott és/vagy inaktív, admin funkció)
   if(elfogyott != -1 && inaktiv != -1){
     where = `(t.AKTIV = "N" OR t.MENNYISEG = 0) AND `;   // Bármelyik feltétel teljesül
   }
 
   // Név vagy leírás szűrés, ha van keresési kifejezés
   if (név.length > 0)  { where += `(NEV like "%${név}%" or LEIRAS like "%${név}%") and `;   }
+
+  //kategoria szerint
+  if (id_kat != -1)
+    {
+      where += "(";
+      // A kategória ID-kat '-' karakterrel elválasztva kapjuk, mindegyikre külön OR feltétel
+      for (var i=0; i < strE(req.query.kategoria).split("-").length - 1; ++i) 
+        {
+          where += `k.ID_KATEGORIA=${strE(req.query.kategoria).split("-")[i]} or `;
+        }
+      where = `${where.substring(0, where.length - 3)}) and `; // Az utolsó ' or ' törlése
+    }
 
   if(maxmin_arkell != -1){
     var where = where.substring(0, where.length-4); // Ár szűréshez szükséges where feltétel tárolása
@@ -82,6 +94,7 @@ function gen_SQL_kereses(req) {
     from webbolt_termekek t
     where ${where}
     `;
+    console.log(sql);
     return (sql);
   }
   else {
@@ -141,8 +154,6 @@ app.post('/kategoria',(req, res) => {
   var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)        :   -1); // Csak elfogyott termékek (admin funkció)
   var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
   var nev = (req.query.nev? strE(req.query.nev)           :   ""); // Csak inaktív termékek (admin funkció)
-  var armin = (req.query.minar? parseInt(req.query.minar) : -1); // Ár alsó határ szűréshez
-  var armax = (req.query.maxar? parseInt(req.query.maxar) : -1); // Ár felső határ szűréshez
 
   var where = `${nev != "" ? `where (t.NEV like "%${nev}%" or t.LEIRAS like "%${nev}%") ` : ``}`;
 
@@ -155,13 +166,6 @@ app.post('/kategoria',(req, res) => {
     where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N" OR t.MENNYISEG = 0)`;   // Bármelyik feltétel teljesül
   } else {
     where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "Y" AND t.MENNYISEG > 0)`;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
-  }
-
-  if (armin != -1) {
-    where += `and (t.AR >= ${armin})`;
-  }
-  if (armax != -1) {
-    where += `and (t.AR <= ${armax})`;
   }
 
   var sql = `
