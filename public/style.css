@@ -91,12 +91,22 @@ label::after { content: none !important; }
 /* vilagos modban */
 .gombdiv.aktiv { 
   border-bottom: 1px solid oklch(20.8% 0.042 265.755);
+  color: oklch(20.8% 0.042 265.755);
 } 
+
+.gombdiv.aktiv button {
+  color: oklch(20.8% 0.042 265.755);
+}
 
 /* sotet modban */
 html.dark .gombdiv.aktiv { 
   border-bottom: 1px solid oklch(92% 0.004 286.32);
+  color: oklch(92% 0.004 286.32);
 } 
+
+html.dark .gombdiv.aktiv button {
+  color: oklch(92% 0.004 286.32);
+}
 
 
 .shadow-bottom {
@@ -307,6 +317,9 @@ html.dark ::-webkit-scrollbar-thumb {
 
 }
 
+
+
+
 /*
 .dropdown.dropdown-menu {
   background-color: #fff;
@@ -331,9 +344,6 @@ html.dark ::-webkit-scrollbar-thumb {
     transition: all 0.3s ease-in-out;
   }
 
-  .dropdown-item:hover {
-    color: #fff;
-    background-color: #000;
-  }
+  
 }
 */
