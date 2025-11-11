@@ -91,28 +91,32 @@ function SUM(lista) {
 
 
 function update_gombok (x) {
-    if (x == 0) { 
-        //$("#cart_button").hide(); 
-        //$("#cart_button")[0].style.setProperty('display', 'none', 'important');
-        //$("#admin_button").hide();
-        $("#kosar-gombdiv").hide();
-        $("#admin-gombdiv").hide();
-        $("#rendeles-gombdiv").hide();
+
+    // a "d-inline-block" class-t ha leveszem akkor eltunik ha hozzaadom akkor megjelenik
+
+    if (x == 0) { // vendeg
+       
+        
+        $("#kosar-gombdiv").removeClass("d-inline-block").addClass("eltunt");
+
+        
+        $("#admin-gombdiv").removeClass("d-inline-block").addClass("eltunt");
+        $("#rendeles-gombdiv").removeClass("d-inline-block").addClass("eltunt");
         
     }
-    if (x == 1) { 
-        $("#kosar-gombdiv").show();
-        $("#rendeles-gombdiv").show();
-        //$("#cart_button")[0].style.setProperty('display', 'block', 'important');
-        $("#admin-gombdiv").hide(); 
+    if (x == 1) { // sima user
+        
+        $("#kosar-gombdiv").addClass("d-inline-block").removeClass("eltunt");
+        $("#rendeles-gombdiv").addClass("d-inline-block").removeClass("eltunt");
+       
+        $("#admin-gombdiv").removeClass("d-inline-block").addClass("eltunt"); 
     }
-    if (x == 2) { 
-        //$("#cart_button").show(); 
-        //$("#admin_button").show();
-        $("#kosar-gombdiv").show();
-        $("#rendeles-gombdiv").show();
-        //$("#cart_button")[0].style.setProperty('display', 'block', 'important');
-        $("#admin-gombdiv").show();
+    if (x == 2) { // admin
+        
+        $("#kosar-gombdiv").addClass("d-inline-block").removeClass("eltunt");
+        $("#rendeles-gombdiv").addClass("d-inline-block").removeClass("eltunt");
+        
+        $("#admin-gombdiv").addClass("d-inline-block").removeClass("eltunt");
     }
     
 }
