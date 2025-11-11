@@ -1,7 +1,14 @@
 
 $("#rend_button").click(async function () {
 
-    var s = "";  
+    var s = `
+    
+        <div class="col-12 text-center p-2">
+            <span class="text-xl">Rendeléseim</span>
+        </div>
+    `;
+    
+    
     var itemek = await ajax_post("rendelesek", 1);
     
     if (itemek.maxcount != 0) {
@@ -30,6 +37,9 @@ $("#rend_button").click(async function () {
                         hover:cursor-pointer 
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
+                        dark:hover:bg-gray-800 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
                         mt-4 
                         p-3 
                         p-xxl-none" 
@@ -99,7 +109,7 @@ $("#rend_button").click(async function () {
                     align-items-lg-end 
                     py-3 p-lg-1
                     ">
-                        <span><i class="bi bi-cash"></i> Végösszeg</span>
+                        <span><i class="bi bi-cash"></i> Bruttó végösszeg</span>
                         <span class="anton-regular text-success termek_ar">
                             ${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft
                         </span>
@@ -180,10 +190,24 @@ async function toggleRendeles(rendelId) {
     // AJAX hívás, hogy lekérd a rendelés tételeit
     
     const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
-    let html =`
-                    <div class="col-12 text-center p-2">
+
+    let html =`     <div class="col-0 col-lg-2"></div>
+
+                    <div 
+                    class="
+                    col-12 
+                    col-lg-8 
+                    text-center 
+                    p-2 
+                    mt-3 
+                    border-b 
+                    border-gray-300 
+                    dark:border-b 
+                    dark:border-gray-600 
+                    ">
                         A rendelés tartalma:
-                    </div>`; 
+                    </div>
+                    <div class="col-0 col-lg-2"></div>`; 
     
     for (const elem of tetelek.rows) {
         html += `
@@ -199,12 +223,13 @@ async function toggleRendeles(rendelId) {
 
             border-b
             border-gray-300 
-            border-t border-gray-300 
+            dark:border-b 
+            dark:border-gray-600 
 
         
             
             
-            mt-3 p-3 
+             
             p-xxl-none">
             
                     

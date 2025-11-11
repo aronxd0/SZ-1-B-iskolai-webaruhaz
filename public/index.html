@@ -185,24 +185,32 @@
                       " 
                     style="width: 220px; border: none;">
                       
-                      <span class="" id="user">Jelentkezz be a fiókodba</span>
-                      <span class=" badge bg-warning text-dark" id="csoport"></span>
-                      <span class=" badge bg-danger" id="admin"></span>
-                      <br>
-                      <span class="text-sm" id="user-email"></span>
+                      <div class="d-flex flex-column align-items-center gap-2 ">
+
+
+                        <span class="" id="user">Jelentkezz be a fiókodba</span>
+                        <span class=" badge bg-warning text-dark" id="csoport"></span>
+                        <span class=" badge bg-danger" id="admin"></span>
+                        
+                        <span class="text-sm" id="user-email"></span>
+
+
+                      </div>
+
+                      
                       
 
-                      <div class="gombdiv me-3 pb-1" id="rendeles-gombdiv">
+                      <div class="d-flex justify-content-center mb-2 mt-2" id="rendeles-gombdiv">
                         <button id="rend_button"  type="button" 
                           class="btn 
-                          bg-zinc-300 
+                          bg-zinc-100 
                           text-slate-900 
-                          hover:bg-zinc-200 
-                          hover:text-slate-900 
-                          hover:shadow-xl 
+                          hover:bg-zinc-950 
+                          hover:text-zinc-100 
+                          hover:shadow-sm  
                           hover:shadow-gray-950/60 
-                          dark:hover:shadow-xl 
-                          dark:hover:shadow-slate-600/90 
+                          dark:hover:shadow-sm  
+                          dark:hover:shadow-slate-600/40 
                           dark:bg-slate-900 
                           dark:hover:bg-gray-700 
                           dark:hover:text-zinc-200 
@@ -210,8 +218,8 @@
                           
                           transition-hover duration-300 ease-in-out 
                           
-                          gomb 
-                          rounded-3" data-bs-dismiss="offcanvas"> 
+                          w-auto  
+                          rounded-2xl" data-bs-dismiss="offcanvas"> 
 
                           <i class="bi bi-bag-check" ></i>
                           <span > Rendeléseim</span>
