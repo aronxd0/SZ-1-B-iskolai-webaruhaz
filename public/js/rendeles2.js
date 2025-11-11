@@ -1,6 +1,10 @@
 
 $("#rend_button").click(async function () {
 
+    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
+    $("#admin_button").closest(".gombdiv").removeClass("aktiv");
+    $("#home_button").closest(".gombdiv").removeClass("aktiv");
+
     var s = `
     
         <div class="col-12 text-center p-2">
