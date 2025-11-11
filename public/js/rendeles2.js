@@ -180,7 +180,10 @@ async function toggleRendeles(rendelId) {
     // AJAX hívás, hogy lekérd a rendelés tételeit
     
     const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
-    let html =""; 
+    let html =`
+                    <div class="col-12 text-center p-2">
+                        A rendelés tartalma:
+                    </div>`; 
     
     for (const elem of tetelek.rows) {
         html += `
@@ -204,6 +207,7 @@ async function toggleRendeles(rendelId) {
             mt-3 p-3 
             p-xxl-none">
             
+                    
 
                     <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center">
                         <img src="${elem.FOTOLINK}" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
@@ -218,8 +222,8 @@ async function toggleRendeles(rendelId) {
                     </div>
 
                     
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center justify-content-lg-end p-3">
-                        <h4 class="anton-regular text-success termek_ar">${elem.AR.toLocaleString()} Ft</h4> 
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-3">
+                        <span class="anton-regular text-success text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span> <span> <i> (Nettó)</i></span> 
                     
                     </div>
             
