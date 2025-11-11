@@ -92,7 +92,7 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                 p-2 
+                 p-3 
                 ">
                     ${element.MENNYISEG} db
                 </td>
@@ -102,7 +102,7 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                 p-2 
+                 p-3 
                 ">
                         ${element.NEV} 
                 </td>
@@ -114,7 +114,7 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                 p-2 
+                 p-3  
                 ">
                   <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
                 </td>
@@ -380,20 +380,6 @@ function Adatok(li) {
                 dark:shadow-xl 
               " name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." >${megjegyzes}</textarea> 
             </div>
-            
-
-            
-            
-            
-
-            
-            
-             
-
-            
-            
-
-            
 
             <div class="col-12 col-lg-6 mt-2 p-1 text-center m-auto">
                 <label class="text-danger" id="hiba"> &nbsp;</label>

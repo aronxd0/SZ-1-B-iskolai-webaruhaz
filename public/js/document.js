@@ -67,10 +67,10 @@ $(document).ready(function() {
     $("#switch").click(function() {
         if ($("html").hasClass("dark")) {
             $("html").removeClass("dark");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
+            $("#switch").html(`<i class="bi bi-moon-fill"></i> Téma`);
         } else {
             $("html").addClass("dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i>`);
+            $("#switch").html(`<i class="bi bi-sun-fill"></i> Téma`);
         }
     });
 

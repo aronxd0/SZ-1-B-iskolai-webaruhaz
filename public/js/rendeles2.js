@@ -1,7 +1,14 @@
 
 $("#rend_button").click(async function () {
 
-    var s = "";  
+    var s = `
+    
+        <div class="col-12 text-center p-2">
+            <span class="text-xl">Rendeléseim</span>
+        </div>
+    `;
+    
+    
     var itemek = await ajax_post("rendelesek", 1);
     
     if (itemek.maxcount != 0) {
@@ -30,6 +37,9 @@ $("#rend_button").click(async function () {
                         hover:cursor-pointer 
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
+                        dark:hover:bg-gray-800 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
                         mt-4 
                         p-3 
                         p-xxl-none" 
@@ -99,7 +109,7 @@ $("#rend_button").click(async function () {
                     align-items-lg-end 
                     py-3 p-lg-1
                     ">
-                        <span><i class="bi bi-cash"></i> Végösszeg</span>
+                        <span><i class="bi bi-cash"></i> Bruttó végösszeg</span>
                         <span class="anton-regular text-success termek_ar">
                             ${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft
                         </span>
@@ -180,7 +190,24 @@ async function toggleRendeles(rendelId) {
     // AJAX hívás, hogy lekérd a rendelés tételeit
     
     const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
-    let html =""; 
+
+    let html =`     <div class="col-0 col-lg-2"></div>
+
+                    <div 
+                    class="
+                    col-12 
+                    col-lg-8 
+                    text-center 
+                    p-2 
+                    mt-3 
+                    border-b 
+                    border-gray-300 
+                    dark:border-b 
+                    dark:border-gray-600 
+                    ">
+                        A rendelés tartalma:
+                    </div>
+                    <div class="col-0 col-lg-2"></div>`; 
     
     for (const elem of tetelek.rows) {
         html += `
@@ -196,30 +223,32 @@ async function toggleRendeles(rendelId) {
 
             border-b
             border-gray-300 
-            border-t border-gray-300 
+            dark:border-b 
+            dark:border-gray-600 
 
         
             
             
-            mt-3 p-3 
+             
             p-xxl-none">
             
+                    
 
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center">
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
                         <img src="${elem.FOTOLINK}" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
                     </div>
 
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-3">
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
                         <p>${elem.NEV}</p>
                     </div>
                     
-                        <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-3">
+                        <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
                         <p>${elem.MENNYISEG} db</p>
                     </div>
 
                     
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center justify-content-lg-end p-3">
-                        <h4 class="anton-regular text-success termek_ar">${elem.AR.toLocaleString()} Ft</h4> 
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-1">
+                        <span class="anton-regular text-success text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span> <span> <i> (Nettó)</i></span> 
                     
                     </div>
             
