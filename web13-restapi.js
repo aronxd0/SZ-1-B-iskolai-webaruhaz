@@ -30,6 +30,7 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
+
 // 1. trim(): levágja az elejéről és végéről a szóközöket
 // 2. replaceAll("'", ""): eltávolítja az összes aposztrófot (')
 // 3. replaceAll("\"", ""): eltávolítja az összes idézőjelet (")
@@ -130,7 +131,6 @@ function gen_SQL_kereses(req) {
     FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k ON t.ID_KATEGORIA = k.ID_KATEGORIA
     where ${where}
     `;
-    console.log(sql);
     return (sql);
   }
   else {

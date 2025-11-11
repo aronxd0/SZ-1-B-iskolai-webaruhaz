@@ -87,13 +87,12 @@ label::after { content: none !important; }
 }
 
 /* vilagos modban */
-.gombdiv button.aktiv { 
-  background-color: oklch(96.7% 0.001 286.375);
-  box-shadow: 0 8px 6px -6px oklch(96.7% 0.001 286.375);
+.gombdiv.aktiv { 
+  border-bottom: 1px solid oklch(20.8% 0.042 265.755);
 } 
 
 /* sotet modban */
-html.dark .gombdiv button.aktiv { 
+html.dark .gombdiv.aktiv { 
   background-color: oklch(37.3% 0.034 259.733);
   box-shadow: 0px 8px 6px -6px oklch(37.3% 0.034 259.733);
 } 
