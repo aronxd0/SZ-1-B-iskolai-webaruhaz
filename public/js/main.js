@@ -99,6 +99,11 @@ function update_gombok (x) {
         
         $("#kosar-gombdiv").removeClass("d-inline-block").addClass("eltunt");
 
+        $("#sql-gombdiv").removeClass("d-inline-block").addClass("eltunt");
+        $("#stat-gombdiv").removeClass("d-inline-block").addClass("eltunt");
+        $("#ujtermek-gombdiv").removeClass("d-inline-block").addClass("eltunt");
+        $("#velemeny-gombdiv").removeClass("d-inline-block").addClass("eltunt");
+
         
         $("#admin-gombdiv").removeClass("d-inline-block").addClass("eltunt");
         $("#rendeles-gombdiv").removeClass("d-inline-block").addClass("eltunt");
@@ -108,6 +113,10 @@ function update_gombok (x) {
         
         $("#kosar-gombdiv").addClass("d-inline-block").removeClass("eltunt");
         $("#rendeles-gombdiv").addClass("d-inline-block").removeClass("eltunt");
+        $("#sql-gombdiv").removeClass("d-inline-block").addClass("eltunt");
+        $("#stat-gombdiv").removeClass("d-inline-block").addClass("eltunt");
+        $("#ujtermek-gombdiv").removeClass("d-inline-block").addClass("eltunt");
+        $("#velemeny-gombdiv").removeClass("d-inline-block").addClass("eltunt");
        
         $("#admin-gombdiv").removeClass("d-inline-block").addClass("eltunt"); 
     }
@@ -117,6 +126,10 @@ function update_gombok (x) {
         $("#rendeles-gombdiv").addClass("d-inline-block").removeClass("eltunt");
         
         $("#admin-gombdiv").addClass("d-inline-block").removeClass("eltunt");
+        $("#sql-gombdiv").addClass("d-inline-block").removeClass("eltunt");
+        $("#stat-gombdiv").addClass("d-inline-block").removeClass("eltunt");
+        $("#ujtermek-gombdiv").addClass("d-inline-block").removeClass("eltunt");
+        $("#velemeny-gombdiv").addClass("d-inline-block").removeClass("eltunt");
     }
     
 }
