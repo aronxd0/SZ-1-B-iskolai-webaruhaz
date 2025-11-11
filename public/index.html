@@ -44,9 +44,9 @@
             dark:bg-slate-900 
             dark:text-zinc-200  
             transition-all duration-700 ease-in-out ">
-          <div class="col-12 col-lg-6 mb-2"> 
+          <div class="col-12 col-lg-6"> 
                                                            
-            <div class="col-12 p-3 d-flex flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-start"> 
+            <div class="col-12 p-1 d-flex flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-start"> 
               <img class="img-fluid m-2 hidden dark:block transition-all duration-300" style="width: 10%;"  src="img/logo2.png">
               <img class="img-fluid m-2 block dark:hidden transition-all duration-300" style="width: 10%;"  src="img/logo-fekete.png">
               <span class="text-center text-3xl text-lg-start align-self-center flex-nowrap ms-2">Iskolai Webáruház</span>
@@ -70,7 +70,7 @@
 
         
 
-        <div class="navbar navbar-expand-xxl p-2">
+        <div class="navbar navbar-expand-xxl ">
           <div class="container-fluid d-flex flex-nowrap">
 
             <button 
@@ -141,7 +141,7 @@
                   </div>
               </button>
 
-              <ul class="navbar-nav p-4">
+              <ul class="navbar-nav p-4 p-xl-0">
 
                 <li class="nav-item py-2 dropdown me-2">
                    <button type="button" aria-label="Fiók" 
@@ -175,7 +175,7 @@
                     class="
                       dropdown-menu 
                       rounded-4 
-                      p-3   
+                         
                       bg-zinc-200 
                       text-slate-900 
                       dark:bg-slate-950 
@@ -200,10 +200,10 @@
                       
                       
 
-                      <div class="d-flex justify-content-center mb-2 mt-2" id="rendeles-gombdiv">
+                      <div class="d-flex justify-content-center mt-2" id="rendeles-gombdiv">
                         <button id="rend_button"  type="button" 
                           class="btn 
-                          bg-zinc-100 
+                          bg-zinc-200 
                           text-slate-900 
                           hover:bg-zinc-950 
                           hover:text-zinc-100 
@@ -216,57 +216,62 @@
                           dark:hover:text-zinc-200 
                           dark:text-zinc-200 
                           
-                          transition-hover duration-300 ease-in-out 
+                          transition-hover duration-150 ease-in-out 
                           
-                          w-auto  
-                          rounded-2xl" data-bs-dismiss="offcanvas"> 
+                          w-full   
+                          rounded-none " data-bs-dismiss="offcanvas"> 
 
                           <i class="bi bi-bag-check" ></i>
                           <span > Rendeléseim</span>
                         </button>
                       </div>
                       
-                      <div class="row d-flex flex-column align-items-start ps-2 border-top border-secondary" >
+                      <div class="d-flex flex-column align-items-center mb-3" >
                         <button type="button" aria-label="Téma" 
                         class="
                         btn 
                         mt-2
                         bg-zinc-200 
                         text-slate-900 
-                        dark:bg-slate-950 
+                        hover:bg-zinc-950 
+                        hover:text-zinc-100 
+                        hover:shadow-sm  
+                        hover:shadow-gray-950/60 
+                        dark:hover:shadow-sm  
+                        dark:hover:shadow-slate-600/40 
+                        dark:bg-slate-900 
+                        dark:hover:bg-gray-700 
+                        dark:hover:text-zinc-200 
                         dark:text-zinc-200 
-                        hover:bg-zinc-300 
-                        hover:text-slate-900 
-                        hover:shadow-xl 
-                        hover:shadow-gray-950/50 
-                        dark:hover:shadow-xl 
-                        dark:hover:shadow-slate-600/70 
-                        w-auto 
-                        transition-hover duration-300 ease-in-out 
+                        w-full  
+                        transition-hover duration-150 ease-in-out 
                         
-                        rounded-5" 
+                        rounded-none" 
                         
                         id="switch" data-bs-dismiss="offcanvas">
                           <i class="bi bi-moon-fill" ></i>
+                           Téma 
                         </button>
 
                         <button id="login_button"  type="button" 
                         class="
                           btn 
-                          bg-zinc-200 
                           mt-2 
+                          bg-zinc-200 
                           text-slate-900 
-                          dark:bg-slate-950 
+                          hover:bg-zinc-950 
+                          hover:text-zinc-100 
+                          hover:shadow-sm  
+                          hover:shadow-gray-950/60 
+                          dark:hover:shadow-sm  
+                          dark:hover:shadow-slate-600/40 
+                          dark:bg-slate-900 
+                          dark:hover:bg-gray-700 
+                          dark:hover:text-zinc-200 
                           dark:text-zinc-200 
-                          hover:bg-zinc-300 
-                          hover:text-slate-900 
-                          hover:shadow-xl 
-                          hover:shadow-gray-950/50 
-                          dark:hover:shadow-xl  
-                          dark:hover:shadow-slate-600/70 
-                          transition-hover duration-300 ease-in-out 
-                          
-                          w-auto" data-bs-dismiss="offcanvas"> 
+                          transition-hover duration-150 ease-in-out 
+                          rounded-none 
+                          w-full " data-bs-dismiss="offcanvas"> 
                           <i class="bi bi-box-arrow-in-right" id="loginout"></i>
                           <span  id="loginspan"> Bejelentkezés</span>
                         </button>
