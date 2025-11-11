@@ -81,6 +81,9 @@ $("#kijelentkezik").click(function() {
         _city = "" ;
         _iszam = "";
         _country = "";
+        fizmod = "";
+        szallmod = "";
+        megjegyzes = "";
         
         document.getElementById("rendalap").selected = true;
 

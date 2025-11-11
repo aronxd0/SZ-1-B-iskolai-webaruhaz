@@ -15,12 +15,13 @@ let _iszam = ""//globális változó az irányítószám tárolására
 let _country = ""//globális változó az ország tárolására
 let fizmod = "" //globális változó a fizetési mód tárolására
 let szallmod = ""//globális változó a szállítási mód tárolására
+let megjegyzes =""
 
 
 
 
 function Attekintes(li) {
-   
+ 
 
     console.log(li);
 
@@ -187,6 +188,8 @@ function Attekintes(li) {
 
 
 function Adatok(li) {
+  szallmod ="";
+  fizmod ="";
     $("#aktualis").html(`
         <span 
         class="
@@ -375,7 +378,7 @@ function Adatok(li) {
                 text-slate-900 
                 dark:text-zinc-200 
                 dark:shadow-xl 
-              " name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..."></textarea> 
+              " name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." id="MEGJ">${megjegyzes}</textarea> 
             </div>
             
 
@@ -455,6 +458,7 @@ function Fizetes(li) {
     _city = city.value;
     _iszam = iszam.value;
     _country = country.value;
+    megjegyzes = MEGJ.value;
 
 
 
@@ -727,8 +731,13 @@ function Fizetes(li) {
 
 
         </div>
+
+
+      <div class="col-12 mt-2 p-1 text-danger text-center" id="hibauzen"></div>
+
+
       </div>
-      
+
       `;
 
 
@@ -770,7 +779,7 @@ function Fizetes(li) {
         dark:hover:text-emerald-600 
         dark:hover:shadow-xl 
         dark:hover:shadow-gray-700/80 
-        bi bi-credit-card"   data-bs-dismiss="modal" onclick='Fizetésclick(${JSON.stringify(li)})'> Fizetés</button>
+        bi bi-credit-card" id="FIZ" onclick='Fizetésclick(${JSON.stringify(li)})'> Fizetés</button>
     `;
     $("#lab").html(navigacio);
 }
@@ -877,19 +886,29 @@ async function Fizetésclick(li) {
             throw `Az egyik termékből nincs elég készleten. A rendelése módosítva lett.`;
         }
       }
+      if(szallmod == "" ||  fizmod == "") {
+        throw "Válassza ki a fizetési és szállítási módot!";
+      }
       
 
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
-        await ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉG SEMMI"}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
+        await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
 
         
         KosarTetelDB();
         document.getElementById("home_button").click();
 
         üzen("A terméket sikeresen megvásároltad.","success");
+        $("#fizetes").modal("hide");
         
     }
     catch(e){
+      if(e == "Válassza ki a fizetési és szállítási módot!"){
+        document.getElementById("hibauzen").innerHTML = e;
+        return;
+      }
+
+
         üzen(e,"danger");
         document.getElementById("cart_button").click();
     }
