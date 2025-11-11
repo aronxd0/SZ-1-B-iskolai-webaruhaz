@@ -117,11 +117,8 @@ function update_gombok (x) {
     
 }
 
-async function KERESOBAR() {
-    $("#cart_button").removeClass("aktiv");
-    $("#admin_button").removeClass("aktiv");
-    $("#rend_button").removeClass("aktiv");
-    $("#home_button").addClass("aktiv");
+
+function KeresonekSQLCraft(){
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = ""; //reset bepipalt kategória
     for(var elem of inputok){
@@ -139,6 +136,37 @@ async function KERESOBAR() {
     }
     // elfogyot + nemaktive chechbox bepipálásának megnézése
 
+    
+  
+    //console.log (document.getElementById("min_ar").value +  "amire szor ")
+   
+
+    
+    return "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
+
+
+}
+
+
+async function KERESOBAR() {
+    $("#cart_button").removeClass("aktiv");
+    $("#admin_button").removeClass("aktiv");
+    $("#rend_button").removeClass("aktiv");
+    $("#home_button").addClass("aktiv");
+  
+
+
+    //console.log("elküld: "+ elküld);
+
+    var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
+    var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
+    var elküld = KeresonekSQLCraft();
+
+    //elküldöm az sql-t offset, limit nélkül és az eddig beállított min max árakat
+    await ArFeltolt(elküld, min , max);
+
+
+
     var order = "";
     //console.log(document.getElementById("rend").value);
     switch($("#rend").val()){
@@ -151,26 +179,12 @@ async function KERESOBAR() {
         default: order = "";
     }
 
-    console.log("fronted log ID-K: "+ bepipaltID );
-    //console.log (document.getElementById("min_ar").value +  "amire szor ")
-   
-
-    
-    var elküld = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
-
-    //console.log("elküld: "+ elküld);
-
-    var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
-    var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
-
-    //elküldöm az sql-t offset, limit nélkül és az eddig beállított min max árakat
-    await ArFeltolt(elküld, min , max);
 
      min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
      max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
     //lekérdezes az új max és min árat
     
-    var elküld2 = "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv+order+"&minar="+ min +"&maxar="+ max;
+    var elküld2 = KeresonekSQLCraft()+order+"&minar="+ min +"&maxar="+ max;
     if(sqleddig != elküld2){
         Joldal = 1;
     }
@@ -260,7 +274,8 @@ async function ArFeltolt(sql, min ,max){
     try {
         var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);//arak lekérdezése limit offset nélkül
         
-        console.log(min+ "minarr");
+      
+
         if(min == ""){// ha még nem volt minar akkor a minar = legkisebb ár
             min = arak.rows[0].MINAR;
         }
@@ -268,6 +283,9 @@ async function ArFeltolt(sql, min ,max){
             max = arak.rows[0].MAXAR;
         }
         
+        console.log(arak.rows[0].MINAR + " - " + "minar");
+
+
         if(arak.rows[0].MINAR == null){// ha nincs találat akkor a max és min ár 0 legyen
             document.getElementById("min_ar").min = 0;
             document.getElementById("min_ar").max = 0;
@@ -321,6 +339,7 @@ async function ArFeltolt(sql, min ,max){
 
     } catch (err) { console.log("hiba:", err); }
 }
+
 function Sliderninput( item ){
     if(item.id == "min_ar_input"){
         document.getElementById("min_ar").value = item.value;
@@ -331,8 +350,8 @@ function Sliderninput( item ){
         SliderELL("max");       
     }
     
-    KategoriaFeltolt("kategoria_section", "check", "");
 }
+
 
 function SliderELL(item){
     
@@ -371,8 +390,9 @@ function SliderELL(item){
 
 
 async function KategoriaFeltolt(hova, type, kivalasztott) {
+
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
-     bepipaltID = ""; //reset bepipalt kategória
+    bepipaltID = ""; //reset bepipalt kategória
     for(var elem of inputok){
         if(elem.checked) {
             bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
@@ -393,19 +413,21 @@ async function KategoriaFeltolt(hova, type, kivalasztott) {
         elfogyt = "&elfogyott=1";
     }
     try {
+
         console.log(`&minar=${document.getElementById("min_ar").value}`)
        
         let listItems  = "";
 
         if (type == "check") {
-             let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}${elfogyt}${nemaktivt}&minar=${parseInt( document.getElementById("min_ar").value)}&maxar= ${parseInt( document.getElementById("max_ar").value )}`, 1);
+             let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}${elfogyt}${nemaktivt}`, 1);
             for (let i = 0; i < k_json.rows.length; ++i) {
                 var pipa = ""
-                console.log(bepipaltID +" adas űdasőksoiídr hf");
+              
                 if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
                     pipa = "checked";
                 }
-                listItems += `<p class="p-2"> <input 
+
+                listItems += `<p class="p-2"> <input onchange="KatbolAR()"
                 class="
                 form-check-input 
                 outline 
@@ -416,7 +438,7 @@ async function KategoriaFeltolt(hova, type, kivalasztott) {
                 dark:outline-[1px] 
                 dark:outline-zinc-100/5  
                 dark:bg-slate-800 
-                " type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <label class="form-check-label" for="${k_json.rows[i].ID_KATEGORIA}" > ${k_json.rows[i].KATEGORIA} </label> </p>`;
+                " type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <label class="form-check-label" for="${k_json.rows[i].ID_KATEGORIA}"> ${k_json.rows[i].KATEGORIA} </label> </p>`;
             }
             
         }
@@ -427,13 +449,16 @@ async function KategoriaFeltolt(hova, type, kivalasztott) {
                 
             }
         }
-        if(listItems == ""){// ha nincs találat akkor kiírja hogy nincs kategória
-            listItems = "<p>Nincs ilyen termék</p>";
-        }
+        
+     
         $(`#${hova}`).append(listItems);
         
     } catch (err) { console.log("hiba:", err); }                     
       
+}
+
+function KatbolAR(){
+    ArFeltolt(KeresonekSQLCraft(), -1,Number.MAX_SAFE_INTEGER );// árak újra feltöltése limit nélkül
 }
 
 
