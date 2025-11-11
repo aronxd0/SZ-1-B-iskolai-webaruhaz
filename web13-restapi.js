@@ -41,6 +41,41 @@ function strE(s) {
 
 //#region kereses
 
+app.post('/kategoria',(req, res) => {
+  session_data = req.session;
+
+  var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)        :   -1); // Csak elfogyott termékek (admin funkció)
+  var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
+  var nev = (req.query.nev? strE(req.query.nev)           :   ""); // Csak inaktív termékek (admin funkció)
+
+  var where = `${nev != "" ? `where (t.NEV like "%${nev}%" or t.LEIRAS like "%${nev}%") ` : ``}`;
+
+  // Elfogyott/inaktív szűrés helyes kezelése (switch nem megfelelő volt)
+  if (elfogyott != -1 && inaktiv == -1) {
+    where += `${where.length == 0 ? `where` : `and`} (t.MENNYISEG = 0)`;   // Csak azok, amikből nincs készlet
+  } else if (inaktiv != -1 && elfogyott == -1) {
+    where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N")`;   // Csak azok, amik inaktívak
+  } else if (elfogyott != -1 && inaktiv != -1) {
+    where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N" OR t.MENNYISEG = 0)`;   // Bármelyik feltétel teljesül
+  } else {
+    where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "Y" AND t.MENNYISEG > 0)`;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
+  }
+
+  var sql = `
+    SELECT DISTINCT k.ID_KATEGORIA, k.KATEGORIA
+    FROM webbolt_kategoriak k 
+    inner JOIN webbolt_termekek t ON t.ID_KATEGORIA = k.ID_KATEGORIA
+    ${where}
+    ORDER BY k.KATEGORIA
+  `;
+  sendJson_toFrontend (res, sql);           // async await ... 
+});
+
+app.post('/keres', (req, res) => {  
+  var sql = gen_SQL_kereses(req);                   // sql select generátor (tokenizer)
+  sendJson_toFrontend (res, sql); 
+});
+
 function gen_SQL_kereses(req) {
   session_data = req.session;
 
@@ -90,8 +125,9 @@ function gen_SQL_kereses(req) {
     var where = where.substring(0, where.length-4); // Ár szűréshez szükséges where feltétel tárolása
     var sql = 
     `
-    SELECT MAX(t.AR) AS MAXAR, MIN(t.AR) AS MINAR
-    from webbolt_termekek t
+    SELECT MAX(t.AR) AS MAXAR, MIN(t.AR) AS MINAR,
+    k.KATEGORIA AS KATEGORIA
+    FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k ON t.ID_KATEGORIA = k.ID_KATEGORIA
     where ${where}
     `;
     console.log(sql);
@@ -147,41 +183,6 @@ function gen_SQL_kereses(req) {
     return (sql);
   }
 }
-
-app.post('/kategoria',(req, res) => {
-  session_data = req.session;
-
-  var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)        :   -1); // Csak elfogyott termékek (admin funkció)
-  var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)           :   -1); // Csak inaktív termékek (admin funkció)
-  var nev = (req.query.nev? strE(req.query.nev)           :   ""); // Csak inaktív termékek (admin funkció)
-
-  var where = `${nev != "" ? `where (t.NEV like "%${nev}%" or t.LEIRAS like "%${nev}%") ` : ``}`;
-
-  // Elfogyott/inaktív szűrés helyes kezelése (switch nem megfelelő volt)
-  if (elfogyott != -1 && inaktiv == -1) {
-    where += `${where.length == 0 ? `where` : `and`} (t.MENNYISEG = 0)`;   // Csak azok, amikből nincs készlet
-  } else if (inaktiv != -1 && elfogyott == -1) {
-    where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N")`;   // Csak azok, amik inaktívak
-  } else if (elfogyott != -1 && inaktiv != -1) {
-    where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "N" OR t.MENNYISEG = 0)`;   // Bármelyik feltétel teljesül
-  } else {
-    where += `${where.length == 0 ? `where` : `and`} (t.AKTIV = "Y" AND t.MENNYISEG > 0)`;   // Alapértelmezett szűrés: csak aktív és készleten lévő termékek
-  }
-
-  var sql = `
-    SELECT DISTINCT k.ID_KATEGORIA, k.KATEGORIA
-    FROM webbolt_kategoriak k 
-    inner JOIN webbolt_termekek t ON t.ID_KATEGORIA = k.ID_KATEGORIA
-    ${where}
-    ORDER BY k.KATEGORIA
-  `;
-  sendJson_toFrontend (res, sql);           // async await ... 
-});
-
-app.post('/keres', (req, res) => {  
-  var sql = gen_SQL_kereses(req);                   // sql select generátor (tokenizer)
-  sendJson_toFrontend (res, sql); 
-});
 
 //#endregion
 
