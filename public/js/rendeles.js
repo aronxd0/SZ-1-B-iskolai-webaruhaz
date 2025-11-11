@@ -91,7 +91,7 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                 p-2 
+                 p-3 
                 ">
                     ${element.MENNYISEG} db
                 </td>
@@ -101,7 +101,7 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                 p-2 
+                 p-3 
                 ">
                         ${element.NEV} 
                 </td>
@@ -113,7 +113,7 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                 p-2 
+                 p-3  
                 ">
                   <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
                 </td>
