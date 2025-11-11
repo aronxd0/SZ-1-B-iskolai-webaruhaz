@@ -156,10 +156,9 @@ function KeresonekSQLCraft(){
 
 
 async function KERESOBAR() {
-    $("#cart_button").removeClass("aktiv");
-    $("#admin_button").removeClass("aktiv");
-    $("#rend_button").removeClass("aktiv");
-    $("#home_button").addClass("aktiv");
+    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
+    $("#admin_button").closest(".gombdiv").removeClass("aktiv");
+    $("#home_button").closest(".gombdiv").addClass("aktiv");
   
 
 

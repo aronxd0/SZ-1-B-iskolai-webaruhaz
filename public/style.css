@@ -102,7 +102,7 @@ html.dark .gombdiv.aktiv {
   box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175);
 }
 
-/*.dropdown-toggle::after { display: none !important; }*/
+.dropdown-toggle::after { display: none !important; }
 
 
 #login_gomb_div {
