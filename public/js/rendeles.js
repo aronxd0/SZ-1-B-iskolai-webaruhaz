@@ -15,12 +15,13 @@ let _iszam = ""//globális változó az irányítószám tárolására
 let _country = ""//globális változó az ország tárolására
 let fizmod = "" //globális változó a fizetési mód tárolására
 let szallmod = ""//globális változó a szállítási mód tárolására
+let megjegyzes =""
 
 
 
 
 function Attekintes(li) {
-   
+ 
 
     console.log(li);
 
@@ -91,7 +92,7 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                 p-2 
+                 p-3 
                 ">
                     ${element.MENNYISEG} db
                 </td>
@@ -101,7 +102,7 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                 p-2 
+                 p-3 
                 ">
                         ${element.NEV} 
                 </td>
@@ -113,7 +114,7 @@ function Attekintes(li) {
                 text-slate-900 
                 dark:bg-slate-800 
                 dark:text-zinc-200 
-                 p-2 
+                 p-3  
                 ">
                   <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
                 </td>
@@ -187,6 +188,8 @@ function Attekintes(li) {
 
 
 function Adatok(li) {
+  szallmod ="";
+  fizmod ="";
     $("#aktualis").html(`
         <span 
         class="
@@ -375,7 +378,7 @@ function Adatok(li) {
                 text-slate-900 
                 dark:text-zinc-200 
                 dark:shadow-xl 
-              " name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." id="megj"></textarea> 
+              " name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." id="MEGJ" >${megjegyzes}</textarea> 
             </div>
 
             <div class="col-12 col-lg-6 mt-2 p-1 text-center m-auto">
@@ -441,6 +444,7 @@ function Fizetes(li) {
     _city = city.value;
     _iszam = iszam.value;
     _country = country.value;
+    megjegyzes = MEGJ.value;
 
 
 
@@ -568,6 +572,34 @@ function Fizetes(li) {
                 <i class="bi bi-apple"></i>
                 
                 Apple Pay
+              </label>
+              
+            </div>
+
+            <div class="d-flex justify-content-center gap-3 m-2">
+              <input type="radio" class="peer hidden form-check-input" name="fiz" id="paypal" onchange="Fizetesmodvalaszto(this)">
+              <label 
+                for="paypal" 
+                class="
+                peer-checked:bg-slate-900 
+                peer-checked:text-zinc-200 
+                dark:peer-checked:bg-slate-700 
+                dark:peer-checked:text-zinc-200 
+                p-2  
+                rounded-xl 
+                transition-all 
+                duration-200 
+                
+                gap-2 
+                cursor-pointer 
+                border border-gray-400 
+                dark:border-gray-700 
+                hover:shadow-md "
+              >
+                
+                <i class="bi bi-paypal"></i>
+                
+                 PayPal
               </label>
               
             </div>
@@ -713,8 +745,13 @@ function Fizetes(li) {
 
 
         </div>
+
+
+      <div class="col-12 mt-2 p-1 text-danger text-center" id="hibauzen"></div>
+
+
       </div>
-      
+
       `;
 
 
@@ -756,7 +793,7 @@ function Fizetes(li) {
         dark:hover:text-emerald-600 
         dark:hover:shadow-xl 
         dark:hover:shadow-gray-700/80 
-        bi bi-credit-card"   data-bs-dismiss="modal" onclick='Fizetésclick(${JSON.stringify(li)})'> Fizetés</button>
+        bi bi-credit-card" id="FIZ" onclick='Fizetésclick(${JSON.stringify(li)})'> Fizetés</button>
     `;
     $("#lab").html(navigacio);
 }
@@ -771,6 +808,13 @@ function Fizetesmodvalaszto(sigma) {
     $("#fm").html(`
       <i class="bi bi-google fs-1"></i>
       <p class="p-2">A Google Pay fizetési módot választottad.</p>
+    `);
+  }
+  else if(sigma.id == "paypal") {
+    fizmod = "PayPal";
+    $("#fm").html(`
+      <i class="bi bi-paypal fs-1"></i>
+      <p class="p-2">A PayPal fizetési módot választottad.</p>
     `);
   }
 
@@ -863,19 +907,29 @@ async function Fizetésclick(li) {
             throw `Az egyik termékből nincs elég készleten. A rendelése módosítva lett.`;
         }
       }
+      if(szallmod == "" ||  fizmod == "") {
+        throw "Válassza ki a fizetési és szállítási módot!";
+      }
       
 
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
-        await ajax_post(`rendeles?FIZMOD=${"PayPal"}&SZALLMOD=${"MPL"}&MEGJEGYZES=${"MÉG SEMMI"}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
+        await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
 
         
         KosarTetelDB();
         document.getElementById("home_button").click();
 
         üzen("A terméket sikeresen megvásároltad.","success");
+        $("#fizetes").modal("hide");
         
     }
     catch(e){
+      if(e == "Válassza ki a fizetési és szállítási módot!"){
+        document.getElementById("hibauzen").innerHTML = e;
+        return;
+      }
+
+
         üzen(e,"danger");
         document.getElementById("cart_button").click();
     }
