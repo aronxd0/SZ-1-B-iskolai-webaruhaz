@@ -509,15 +509,15 @@ function Fizetes(li) {
 
       let form = `
       <div class="row mt-3">
-        <div class="row col-12 col-lg-6">
+        <div class="col-12 col-lg-6">
         
           <div class="col-12 text-center p-2">
             
             Fizetési mód kiválasztása
           </div>
 
-          <div class="col-12 d-flex flex-row justify-content-center p-3">
-            <div class="d-flex justify-content-center gap-3 m-2">
+          <div class="col-12 d-flex flex-wrap justify-content-center p-3">
+            <div class="col-6 col-sm-3 d-flex justify-content-center gap-3">
               
               <input type="radio" class="form-check-input peer hidden" name="fiz" id="googlepay" onchange="Fizetesmodvalaszto(this)">
               <label
@@ -538,6 +538,7 @@ function Fizetes(li) {
                 border border-gray-400 
                 dark:border-gray-700 
                 hover:shadow-md 
+                d-flex align-items-center 
                 " 
               >
                 
@@ -548,7 +549,7 @@ function Fizetes(li) {
               
             </div>
 
-            <div class="d-flex justify-content-center gap-3 m-2">
+            <div class="col-6 col-sm-3 d-flex justify-content-center gap-3">
               <input type="radio" class="peer hidden form-check-input" name="fiz" id="applepay" onchange="Fizetesmodvalaszto(this)">
               <label 
                 for="applepay" 
@@ -566,7 +567,8 @@ function Fizetes(li) {
                 cursor-pointer 
                 border border-gray-400 
                 dark:border-gray-700 
-                hover:shadow-md "
+                hover:shadow-md 
+                d-flex align-items-center "
               >
                 
                 <i class="bi bi-apple"></i>
@@ -576,7 +578,7 @@ function Fizetes(li) {
               
             </div>
 
-            <div class="d-flex justify-content-center gap-3 m-2">
+            <div class="col-6 col-sm-3 d-flex justify-content-center gap-3">
               <input type="radio" class="peer hidden form-check-input" name="fiz" id="paypal" onchange="Fizetesmodvalaszto(this)">
               <label 
                 for="paypal" 
@@ -594,7 +596,8 @@ function Fizetes(li) {
                 cursor-pointer 
                 border border-gray-400 
                 dark:border-gray-700 
-                hover:shadow-md "
+                hover:shadow-md 
+                d-flex align-items-center "
               >
                 
                 <i class="bi bi-paypal"></i>
@@ -604,7 +607,7 @@ function Fizetes(li) {
               
             </div>
 
-            <div class="d-flex justify-content-center gap-3 m-2">
+            <div class="col-6 col-sm-3 d-flex justify-content-center gap-3">
               <input type="radio" class="peer hidden form-check-input" name="fiz" id="kartya" onchange="Fizetesmodvalaszto(this)">
               <label 
                 for="kartya" 
@@ -621,7 +624,8 @@ function Fizetes(li) {
                 cursor-pointer 
                 border border-gray-400 
                 dark:border-gray-700 
-                hover:shadow-md "
+                hover:shadow-md 
+                d-flex align-items-center "
               >
                 
                 
@@ -681,7 +685,7 @@ function Fizetes(li) {
               
             </div>
 
-            <div class="d-flex justify-content-center gap-3 m-2">
+            <div class="d-flex justify-content-center gap-3">
               <input type="radio" class="peer hidden form-check-input" name="szal" id="expressone" onchange="Szallitasmodvalaszto(this)">
               <label 
                 for="expressone" 
@@ -710,7 +714,7 @@ function Fizetes(li) {
               
             </div>
 
-            <div class="d-flex justify-content-center gap-3 m-2">
+            <div class="d-flex justify-content-center gap-3">
               <input type="radio" class="peer hidden form-check-input" name="szal" id="gls" onchange="Szallitasmodvalaszto(this)">
               <label 
                 for="gls" 
@@ -806,23 +810,29 @@ function Fizetesmodvalaszto(sigma) {
   if(sigma.id == "googlepay") {
     fizmod = "Google Pay";
     $("#fm").html(`
-      <i class="bi bi-google fs-1"></i>
-      <p class="p-2">A Google Pay fizetési módot választottad.</p>
+      <div class="col-12 text-center">
+        <i class="bi bi-google fs-1"></i>
+        <p class="p-2">A Google Pay fizetési módot választottad.</p>
+      </div>
     `);
   }
   else if(sigma.id == "paypal") {
     fizmod = "PayPal";
     $("#fm").html(`
-      <i class="bi bi-paypal fs-1"></i>
-      <p class="p-2">A PayPal fizetési módot választottad.</p>
+      <div class="col-12 text-center">
+        <i class="bi bi-paypal fs-1"></i>
+        <p class="p-2">A PayPal fizetési módot választottad.</p>
+      </div>
     `);
   }
 
   else if(sigma.id == "applepay") {
     fizmod = "Apple Pay";
     $("#fm").html(`
-      <i class="bi bi-apple fs-1"></i>
-      <p class="p-2">Az Apple Pay fizetési módot választottad.</p>
+      <div class="col-12 text-center">
+        <i class="bi bi-apple fs-1"></i>
+        <p class="p-2">Az Apple Pay fizetési módot választottad.</p>
+      </div>
     `);
   }
 
