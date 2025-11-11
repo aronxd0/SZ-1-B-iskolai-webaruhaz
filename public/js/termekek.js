@@ -48,7 +48,7 @@ async function Termek_Edit(event, termek_id, tipus) {
   try {
 
 
-    let ta = await ajax_post(`termekeditablak?ID_TERMEK=${termek_id}`, 1);
+    let ta = await ajax_post(`termek_adatok?ID_TERMEK=${termek_id}`, 1);
 
     const nev = ta.rows[0].NEV;
     const azon = ta.rows[0].AZON;

@@ -377,20 +377,6 @@ function Adatok(li) {
                 dark:shadow-xl 
               " name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..."></textarea> 
             </div>
-            
-
-            
-            
-            
-
-            
-            
-             
-
-            
-            
-
-            
 
             <div class="col-12 col-lg-6 mt-2 p-1 text-center m-auto">
                 <label class="text-danger" id="hiba"> &nbsp;</label>
