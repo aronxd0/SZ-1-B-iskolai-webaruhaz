@@ -3,12 +3,17 @@ const mysql   = require('mysql2/promise');
 const express = require('express');
 const session = require('express-session');
 const { stringify } = require('querystring');
-const { BADHINTS } = require('dns'); 
-const { type } = require('os');
 const app     = express();
 const port    = 9012;
 const header1 = 'Content-Type';
 const header2 = 'application/json; charset=UTF-8';
+
+//nembiztos hogy kell : 
+/*
+const { BADHINTS } = require('dns'); 
+const { type } = require('os');
+const { get } = require('http');
+*/
 
 app.use(express.static('public'));       // public/index.html a def.
 app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninitialized:true }));   /* https://www.js-tutorials.com/nodejs-tutorial/nodejs-session-example-using-express-session */
@@ -117,7 +122,7 @@ function gen_SQL_kereses(req) {
     var sql = 
       `
     SELECT 
-        t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, t.DATUMIDO, 
+        t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, 
         k.KATEGORIA AS KATEGORIA
         FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
         ON t.ID_KATEGORIA = k.ID_KATEGORIA
@@ -189,12 +194,12 @@ app.post('/velemenyek',(req, res) => {
   var szelektalas = (req.query.szelektalas? parseInt(req.query.szelektalas) : 0); // 1 ha igen akarom látni az elfogadásra várókat is (admin felület)
 
   var sql = `
-  SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, webbolt_velemenyek.DATUM ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
+  SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, CONVERT_TZ(webbolt_velemenyek.datum, '+00:00','${idozona()}') AS DATUM ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
   FROM webbolt_velemenyek INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
   ${szelektalas == 1 ? "" : `WHERE webbolt_velemenyek.ID_TERMEK = ${termekid} `}
   ${szelektalas == 1 ? "AND webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'" : `${sajatvelemeny == 1 ? "" : `and webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'`}`}
   ${sajatvelemeny == 1 ? `${szelektalas == 0 ? "AND" : "WHERE"} webbolt_velemenyek.ID_USER = ${session_data.ID_USER}` : ``}
-  ORDER BY webbolt_velemenyek.DATUM DESC
+  ORDER BY DATUM DESC
   `;
   sendJson_toFrontend (res, sql);           // async await ...
 });
@@ -485,7 +490,7 @@ app.post('/rendelesek',async (req, res) => {
 
   var sql = 
   `
-SELECT r.ID_RENDELES, r.DATUM, round(SUM(rt.AR * rt.MENNYISEG)*1.27) AS RENDELES_VEGOSSZEGE
+SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, round(SUM(rt.AR * rt.MENNYISEG)*1.27) AS RENDELES_VEGOSSZEGE
 FROM webbolt_rendeles AS r
 JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
 WHERE r.ID_USER = ${session_data.ID_USER}
@@ -668,6 +673,31 @@ async function sendJson_toFrontend (res, sql) {
   res.end(); 
 }
 
+function idozona() {
+    const date = new Date();
+    
+    // 1. A .getTimezoneOffset() percekben adja vissza az eltolást,
+    //    de FORDÍTOTT előjellel.
+    //    Például a magyar UTC+2 időzónára -120 értéket ad.
+    const offsetInMinutes = date.getTimezoneOffset();
+
+    // 2. Megfordítjuk az előjelet, hogy helyes legyen
+    const offsetHours = Math.floor(Math.abs(offsetInMinutes) / 60);
+    const offsetMinutes = Math.abs(offsetInMinutes) % 60;
+
+    // 3. Meghatározzuk az előjelet (a + vagy -)
+    // Ha az eredeti offset negatív (-120), akkor az + eltolás (UTC+2)
+    const sign = offsetInMinutes < 0 ? "+" : "-";
+
+    // 4. Összerakjuk a stringet, 2 számjegyűre formázva
+    //    a 'padStart'-tal (pl. "2" -> "02")
+    const hoursString = String(offsetHours).padStart(2, '0');
+    const minutesString = String(offsetMinutes).padStart(2, '0');
+
+    return `${sign}${hoursString}:${minutesString}`;
+}
+
 //#endregion
+
 
 app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });
