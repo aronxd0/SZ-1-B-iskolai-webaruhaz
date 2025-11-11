@@ -378,7 +378,7 @@ function Adatok(li) {
                 text-slate-900 
                 dark:text-zinc-200 
                 dark:shadow-xl 
-              " name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." id="MEGJ">${megjegyzes}</textarea> 
+              " name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." >${megjegyzes}</textarea> 
             </div>
             
 
