@@ -119,6 +119,13 @@ function update_gombok (x) {
 
 
 function KeresonekSQLCraft(){
+
+    // ez van használva a KERESOBAR fuggvényben is
+    //                      Árfeltölt fügyvényben is 
+
+
+
+
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = ""; //reset bepipalt kategória
     for(var elem of inputok){
@@ -458,7 +465,10 @@ async function KategoriaFeltolt(hova, type, kivalasztott) {
 }
 
 function KatbolAR(){
-    ArFeltolt(KeresonekSQLCraft(), -1,Number.MAX_SAFE_INTEGER );// árak újra feltöltése limit nélkül
+
+    var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
+    var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
+    ArFeltolt(KeresonekSQLCraft(), min,max );// árak újra feltöltése limit nélkül
 }
 
 
