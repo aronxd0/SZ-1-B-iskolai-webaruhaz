@@ -190,7 +190,7 @@ html[data-bs-theme="dark"] .feka {
 }
 
 .eltunt {
-  display: none;
+  display: none !important;
 }
 
 .hover-shadow {
