@@ -934,6 +934,7 @@
       <span class="offcanvas-title text-xl"><i class="bi bi-gear"></i> Szűrési beállítások</span>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
     </div>
+
     <div 
       class="
       offcanvas-body 
@@ -942,6 +943,28 @@
       dark:text-zinc-200 
       dark:bg-slate-700 
       ">
+
+      <div class="row col-12 d-flex justify-content-center text-center mb-4 ">
+          <label for="rend"><span class="text-lg"><i class="bi bi-list-ol"></i> Rendezés</span></label>
+          <select id="rend" 
+          class="
+          form-select 
+          w-50 
+          shadow-xl 
+          bg-zinc-50 
+          text-slate-900 
+          dark:bg-slate-800 
+          dark:text-zinc-200 
+          " style="border: none;"> 
+            
+            <option id="rendalap"  selected value="ar_csok">Ár ↓</option> 
+            <option value="ar_nov">Ár ↑</option> 
+            <option value="abc">Név (A-Z)</option> 
+            <option value="abc_desc">Név (Z-A)</option> 
+            <option id="darable" value="db_csok">Darab ↓</option> 
+            <option id="darabfel" value="db_nov">Darab ↑</option> 
+          </select>
+        </div>
       <div id="szurokk" class="row mx-auto" style="width: 90%;">
         <label for="kategoria_section"><span class="text-lg"><i class="bi bi-grid"></i> Termékkategóriák</span></label> 
         <div 
@@ -1033,27 +1056,6 @@
           <input type="range" value="1" onmouseup="KategoriaFeltolt('kategoria_section', 'check', '')"  class="slider form-range w-100 rounded-4" id="max_ar"> 
         </div> 
         <br><br>
-        <div class="row col-12 d-flex justify-content-center text-center mt-4">
-          <label for="rend"><span class="text-lg"><i class="bi bi-list-ol"></i> Rendezés</span></label>
-          <select id="rend" 
-          class="
-          form-select 
-          w-50 
-          shadow-xl 
-          bg-zinc-50 
-          text-slate-900 
-          dark:bg-slate-800 
-          dark:text-zinc-200 
-          " style="border: none;"> 
-            
-            <option id="rendalap"  selected value="ar_csok">Ár ↓</option> 
-            <option value="ar_nov">Ár ↑</option> 
-            <option value="abc">Név (A-Z)</option> 
-            <option value="abc_desc">Név (Z-A)</option> 
-            <option id="darable" value="db_csok">Darab ↓</option> 
-            <option id="darabfel" value="db_nov">Darab ↑</option> 
-          </select>
-        </div>
         
         <br><br>
     
