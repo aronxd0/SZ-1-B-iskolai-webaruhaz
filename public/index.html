@@ -318,7 +318,7 @@
                   dark:hover:border-zinc-200 
                   transition-hover duration-150 ease-in-out">
                     <button id="home_button"  type="button" 
-                    class="btn btn-md 
+                    class="btn btn-lg  
                       bg-zinc-300 
                       text-gray-500 
                       hover:bg-zinc-300 
@@ -359,7 +359,7 @@
                   dark:hover:border-zinc-200 
                   transition-hover duration-150 ease-in-out" id="kosar-gombdiv">
                     <button id="cart_button" type="button" 
-                      class="btn 
+                      class="btn btn-lg 
                       bg-zinc-300 
                       text-gray-500 
                       hover:bg-zinc-300 
@@ -388,10 +388,52 @@
                 <li class="nav-item my-2">
 
 
-                  <div class="relative group d-inline-block">
+                  <div class="relative group d-inline-block" id="admin-gombdiv">
 
                     <button id="admin_button" type="button" 
-                      class="btn 
+                      class="btn btn-lg 
+                      bg-zinc-300 
+                      text-gray-500 
+                      hover:bg-zinc-300 
+                      hover:text-slate-700 
+                      
+                      
+                      dark:bg-slate-900 
+                      dark:text-zinc-200 
+                      dark:hover:bg-slate-900
+                      dark:hover:text-zinc-200 
+                      
+                      transition-hover duration-300 ease-in-out 
+                      
+                      gomb 
+                      rounded-3 
+                      d-flex"> 
+
+                      <i class="bi bi-gear"></i>
+                      <span>&nbsp;Admin</span>
+                    </button>
+
+                    
+                    <div 
+                    class="
+                    absolute 
+                    left-0 
+                    bg-zinc-300 
+                    dark:bg-slate-900 
+                    dark:text-zinc-200 
+                    p-3 
+                    hidden 
+                    group-hover:block 
+                    transition-all duration-700 
+                    z-50 
+                    border-t 
+                    border-gray-400 
+                    dark:border-t 
+                    dark:border-zinc-200 
+                    ">
+                    
+                    <button id="vlm_button" type="button" 
+                      class="btn btn-lg 
                       bg-zinc-300 
                       text-gray-500 
                       hover:bg-zinc-300 
@@ -410,16 +452,87 @@
                       d-flex"> 
 
                       <i class="bi bi-chat-dots"></i>
-                      <span > Admin eszközök</span>
+                      <span>&nbsp;Vélemények</span>
                     </button>
 
+                    <button type="button" 
+                        class="btn btn-lg 
+                      bg-zinc-300 
+                      text-gray-500 
+                      hover:bg-zinc-300 
+                      hover:text-slate-700 
+                      
+                      
+                      dark:bg-slate-900 
+                      dark:text-zinc-200 
+                      dark:hover:bg-slate-900
+                      dark:hover:text-zinc-200 
+                      
+                      transition-hover duration-300 ease-in-out 
+                      
+                      gomb 
+                      rounded-3 
+                      d-flex" type="button" id="admin_uj_termek">
+                      
+                        <i class="bi bi-plus"></i>
+                         <span>&nbsp;Új termék</span
+                      </button>
+
+                      <button type="button" 
+                        class="btn btn-lg 
+                      bg-zinc-300 
+                      text-gray-500 
+                      hover:bg-zinc-300 
+                      hover:text-slate-700 
+                      
+                      
+                      dark:bg-slate-900 
+                      dark:text-zinc-200 
+                      dark:hover:bg-slate-900
+                      dark:hover:text-zinc-200 
+                      
+                      transition-hover duration-300 ease-in-out 
+                      
+                      gomb 
+                      rounded-3 
+                      d-flex" type="button" id="admin_stats">
+                      
+                        <i class="bi bi-bar-chart"></i>
+                         <span>&nbsp;Statisztikák</span> 
+                      </button>
+
+                      <button type="button" 
+                        class="btn  btn-lg 
+                      bg-zinc-300 
+                      text-gray-500 
+                      hover:bg-zinc-300 
+                      hover:text-slate-700 
+                      
+                      
+                      dark:bg-slate-900 
+                      dark:text-zinc-200 
+                      dark:hover:bg-slate-900
+                      dark:hover:text-zinc-200 
+                      
+                      transition-hover duration-300 ease-in-out 
+                      
+                      gomb 
+                      rounded-3 
+                      d-flex" type="button" id="admin_sql">
+                      
+                        <i class="bi bi-database"></i>
+                         <span>&nbsp;SQL</span>
+                      </button>
+                  
+                  
+                   </div>
 
 
                   </div>
 
 
 
-
+                  <!--
                   <div 
                   class=" 
                   gombdiv 
@@ -590,7 +703,7 @@
                 
                 
                 </div>
-                      
+              -->
 
                       
 
@@ -1710,8 +1823,8 @@
   <script src="js/kosar.js"></script>
   <script src="js/velemeny.js"></script>
   <script src="js/termekek.js"></script>
+  <script src="js/fizetes.js"></script>
   <script src="js/rendeles.js"></script>
   <script src="js/document.js"></script>
-  <script src="js/rendeles2.js"></script>
 </body>
 </html>
