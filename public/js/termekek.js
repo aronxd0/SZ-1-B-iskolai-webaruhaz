@@ -27,41 +27,32 @@ async function TermekModosit(url) {
 async function Termek_Edit(event, termek_id, tipus) {
   event.stopPropagation();
 
-  /*
-  const termek_id = cuccok[0];
-  const kategoria = cuccok[1];
-  const nev = cuccok[2];
-  const azon = cuccok[3];
-  const ar = cuccok[4];
-  const mennyiseg = cuccok[5];
-  const meegys = cuccok[6];
-  const aktiv = cuccok[7];
-  const termeklink = cuccok[8];
-  const fotolink = cuccok[9];
-  const leiras = cuccok[10];
-  const datumido = cuccok[11];
-  const id_kategoria = cuccok[12];
-  */
+  
 
   //console.log(leiras);
 
+  let nev, azon, ar, mennyiseg, meegys, aktiv, leiras, id_kategoria;
+
   try {
 
+    if (termek_id != 0) {
+      let ta = await ajax_post(`termek_adatok?ID_TERMEK=${termek_id}`, 1);
 
-    let ta = await ajax_post(`termek_adatok?ID_TERMEK=${termek_id}`, 1);
+      nev = ta.rows[0].NEV;
+      azon = ta.rows[0].AZON;
+      ar = ta.rows[0].AR;
+      mennyiseg = ta.rows[0].MENNYISEG;
+      meegys = ta.rows[0].MEEGYS;
+      aktiv = ta.rows[0].AKTIV;
+      leiras = ta.rows[0].LEIRAS;
+      id_kategoria = ta.rows[0].ID_KATEGORIA;
+    }
+    
 
-    const nev = ta.rows[0].NEV;
-    const azon = ta.rows[0].AZON;
-    const ar = ta.rows[0].AR;
-    const mennyiseg = ta.rows[0].MENNYISEG;
-    const meegys = ta.rows[0].MEEGYS;
-    const aktiv = ta.rows[0].AKTIV;
-    const leiras = ta.rows[0].LEIRAS;
-    const id_kategoria = ta.rows[0].ID_KATEGORIA;
-
-    KategoriaFeltolt("mod_kat", "select", id_kategoria);
+    
 
     if (tipus == "bevitel") {
+      KategoriaFeltolt("mod_kat", "select", 1);
       $("#mod_nev").val("");
       $("#mod_azon").val("");
       $("#mod_ar").val(0);
@@ -70,6 +61,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       $("#mod_leiras").val("");
       $("#mySwitch").prop("checked", true).trigger("change"); // Default érték beállítása
     } else {
+      KategoriaFeltolt("mod_kat", "select", id_kategoria);
       $("#idx1").html(`${termek_id}; ${nev}`);
       $("#mod_nev").val(nev);
       $("#mod_azon").val(azon);
@@ -79,6 +71,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       var datum = new Date();
       $("#mod_datum").val(datum.toISOString().split("T")[0]);
       $("#mod_leiras").val(leiras);
+      $("#save_button").html(`<i class="bi bi-save2"></i>&nbsp;Módosítások mentése`);
 
       // Switch állapot beállítása
       if (aktiv === "Y") {
