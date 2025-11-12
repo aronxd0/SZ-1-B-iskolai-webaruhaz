@@ -308,6 +308,10 @@ html.dark ::-webkit-scrollbar-thumb {
 
 }
 
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
 .navbar, .cim {
   font-family: 'Poppins', sans-serif;
 }
