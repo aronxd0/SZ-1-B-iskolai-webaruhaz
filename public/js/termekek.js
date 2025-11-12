@@ -414,7 +414,7 @@ function CARD_BETOLT(adatok) {
 
       ee = "nem-elerheto";
     } else {
-      el = `<p class="p-3 d-flex justify-content-center align-items-center align-self-center"><span class="text-2xl text-emerald-600 me-2 anton-regular">${element.AR.toLocaleString()} Ft</span>(Nettó ár)</p>`;
+      el = `<p class="p-3 d-flex flex-column justify-content-center align-items-center align-self-center"><span class="text-2xl text-emerald-600 me-2 anton-regular">${element.AR.toLocaleString()} Ft</span><span class="text-sm">(Nettó ár)</span></p>`;
       ee = "";
     } //Ár kiiras
 
