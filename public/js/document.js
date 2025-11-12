@@ -30,6 +30,19 @@ $(document).ready(function() {
 
     });
 
+
+    $("#login_passwd").on("keydown", function(e) {
+        if (e.key === " ") {
+            e.preventDefault();
+        }
+    });
+
+    $("#login_passwd").on("input", function() {
+        let val = $(this).val();
+        $(this).val(val.replace(/\s/g, ''));
+    });
+
+
     $("#nev1").on("focus", function() {
         console.log("keresomezo focus xd");
         FelaTetore();
