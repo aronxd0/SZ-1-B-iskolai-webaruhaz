@@ -1,5 +1,7 @@
 function Admin_Velemenykezeles() {
 
+    $("#home_button").closest(".gombdiv").removeClass("aktiv");
+
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
         <div class="row">
@@ -8,5 +10,6 @@ function Admin_Velemenykezeles() {
             </div>
         </div>
         `).fadeIn(300);
+        $("#pagi").html("");
     });
 }
