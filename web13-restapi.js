@@ -38,7 +38,7 @@ const pool = mysql.createPool({
 // 5. replaceAll("\\", ""): eltávolítja az összes backslash-t (\)
 // 6. replaceAll("`", ""): eltávolítja az összes backtick-et (`)
 function strE(s) { 
-  return s.trim().replaceAll("'","").replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
+  return s.trim().replaceAll("\"","").replaceAll("\t","").replaceAll("\\","").replaceAll("`","");}
 
 //#region kereses
 
@@ -253,7 +253,7 @@ app.post('/login', (req, res) => { login_toFrontend (req, res); });
 async function login_toFrontend (req, res) {
   var user= (req.query.login_nev? req.query.login_nev: "");
   var psw = (req.query.login_passwd? req.query.login_passwd  : "");
-  var sql = `select ID_USER, NEV, EMAIL, ADMIN, WEBBOLT_ADMIN, CSOPORT from users where EMAIL="${user}" and PASSWORD=md5("${psw}") limit 1`;
+  console.log(sql);
   var data = await runQueries(sql);
   var json_data = JSON.parse(data);
   if (json_data.message == "ok" && json_data.maxcount == 1)  {    /* rövidzár kiértékelés : sikeres bejelentkezés, megvan a juzer... */                    
