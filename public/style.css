@@ -301,6 +301,7 @@ html.dark ::-webkit-scrollbar-thumb {
 .nav-link {
   font-weight: bold;
   color: #000;
+  font-size: small;
 }
 
 .navbar-toggler:focus {
