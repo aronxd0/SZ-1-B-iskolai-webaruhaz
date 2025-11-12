@@ -43,7 +43,7 @@ function Attekintes(li) {
         dark:text-gray-500 
         ">Fizetés</span`);
 
-    let z = `<label for="rend" class="p-1">A rendelésed tartalma:</label>`
+    let z = `<label for="rend" class="p-1 mt-4">A rendelésed tartalma:</label>`
      z += `<table 
             class='
             w-full 
