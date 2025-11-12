@@ -61,16 +61,16 @@ $("#cart_button").click(async function () {
                             dark:text-zinc-200 
                             shadow-lg  
                             rounded-4 
-                            mt-3 
-                            p-3 
+                            p-2 
+                            mt-3  
                             p-xxl-none" 
 
                          id="${element.ID_TERMEK}NAGY">
-                            <div class="col-1"></div>
+                            
                             <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
-                                <img src="${element.FOTOLINK}" class="img img-fluid img-thumbnail" style="width:30%;" alt="kep">
+                                <img src="${element.FOTOLINK}" class="img img-fluid img-thumbnail w-20 h-20" style="object-fit:cover;" alt="kep">
                             </div>
-                            <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center p-3">
+                            <div class="col-12 col-lg-4 d-flex align-self-center justify-content-center p-3">
                                 <p>${element.NEV}</p>
                             </div>
                             <div class="col-12 col-sm-8 col-lg-3 d-flex align-self-center justify-content-center">
@@ -141,7 +141,7 @@ $("#cart_button").click(async function () {
 
                                 aria-label="teteltorol"><i class="bi bi-trash"></i></button>
                             </div>
-                            <div class="col-1"></div>
+                            
                         </div> 
                         
                         
@@ -153,8 +153,8 @@ $("#cart_button").click(async function () {
 
                 cnt += `
                     <div class="row">
-                        <div class="col-12 mt-2 p-2 d-flex justify-content-center align-self-center">
-                            <h5 class="align-self-center p-2">Összesen: </h5>&nbsp;<h4 id="sumar" class="anton-regular text-success align-self-center p-2"></h4>&nbsp;<h5 class="align-self-center p-2"> (+ ÁFA)</h5>
+                        <div class="col-12 mt-2 p-2 d-flex flex-column flex-lg-row justify-content-center align-self-center">
+                            <span class="align-self-center p-none p-lg-2 text-xl">Összesen: </span>&nbsp;<span id="sumar" class="anton-regular text-success text-xl align-self-center p-none p-lg-2 "></span>&nbsp;<span class="align-self-center text-xl p-none p-lg-2 "> (+ ÁFA)</span>
                         </div>
                         <div class="col-12 d-flex justify-content-center p-3 mb-5" id="pay_button">
                             <button type="button" 
