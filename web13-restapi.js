@@ -716,11 +716,12 @@ async function runExecute(sql, req, ertekek = []) {
     
     let conn; // Kapcsolat változó deklarálása a try-on kívül
     try {
+        var naplozasraKeszSql = osszeallitottSqlNaplozasra(sql, ertekek);
         // Naplózás (az SQL-t stringként naplózzuk)
-        jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${sql.replaceAll("\"","'")}");`;
+        jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${naplozasraKeszSql.replaceAll("\"","'")}");`;
         conn = await pool.getConnection(); 
         [res1] = await conn.query(sql, ertekek); // Az értékekkel paraméterezve
-        
+
         // Napló bejegyzés
         await conn.execute(jrn); 
 
@@ -795,6 +796,36 @@ function idozona() {
     const minutesString = String(offsetMinutes).padStart(2, '0');
 
     return `${sign}${hoursString}:${minutesString}`;
+}
+
+function osszeallitottSqlNaplozasra(sql, ertekek) {
+    let i = 0;
+    
+    // String (szöveg) literálok biztonságos beszúrása
+    const finalSql = sql.replace(/\?/g, () => {
+        if (i >= ertekek.length) {
+            return '<<HIÁNYZÓ ÉRTÉK>>';
+        }
+        
+        let ertek = ertekek[i++];
+        
+        // Ha null vagy undefined, térjen vissza 'NULL' értékkel (idezőjelek nélkül)
+        if (ertek === null || typeof ertek === 'undefined') {
+            return 'NULL';
+        }
+
+        // Ha szám, boolean vagy bigint, ne használjunk idézőjelet.
+        if (typeof ertek === 'number' || typeof ertek === 'boolean' || typeof ertek === 'bigint') {
+            return ertek.toString();
+        }
+
+        // Minden más (string, dátum, stb.) esetén tegyünk idézőjelet.
+        // CSERÉLJÜK a beágyazott idézőjeleket escapelt idézőjelekre (pl. ' -> '' a MySQL szabvány szerint)
+        ertek = ertek.toString().replace(/'/g, "''");
+        return `'${ertek}'`;
+    });
+
+    return finalSql;
 }
 
 
