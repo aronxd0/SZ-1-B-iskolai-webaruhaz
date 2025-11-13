@@ -932,7 +932,7 @@ async function Fizetésclick(li) {
         await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
 
         //email küldés a backendnek
-        console.log( "htmltobck : "+ htmtoback );
+        
 
         await ajax_post( `send-email?email=${_emil}&html=Tisztelt ${_nev};<br>${htmtoback.replace(/\s+/g, ' ')}&subject=Rendelés visszaigazolása`, 1)
               
