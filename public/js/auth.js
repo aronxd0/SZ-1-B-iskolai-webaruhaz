@@ -48,6 +48,9 @@ $("#login_oksi_button").click(function() {
             Kezdolap();
             ADMINVAGYE();
             KosarTetelDB();
+            sendEmailToBackend("dsaaasdad", "szaloky.aron@csany-zeg.hu", "<br>Boldog lehetsz</br>", 'Bejelentkezés a webboltba')
+                .then(resp => console.log('send-email:', resp))
+                .catch(err => console.error('send-email error:', err));
 
         } else {    
             üzen(`Hibás felhasználónév, vagy jelszó!`,"danger");

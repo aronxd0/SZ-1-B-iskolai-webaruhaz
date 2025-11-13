@@ -3,6 +3,10 @@ const mysql     = require('mysql2/promise');
 const express   = require('express');
 const session   = require('express-session');
 const { stringify } = require('querystring');
+
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') }); // <- hozzáadva
+
 const app       = express();
 const port      = 9012;
 
@@ -947,6 +951,34 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
 
 
 //#endregion
+
+const { sendEmail } = require('./email-sender'); 
+
+
+app.post('/send-email', async (req, res) => {
+    try {
+        const name = req.query.name || 'Felhasználó';
+        const email = req.query.email;
+        const html = req.query.html || `<p>Üdv, ${name}</p>`;
+        const subject = req.query.subject || 'Értesítés';
+
+        if (!email) {
+            res.set(header1, header2);
+            res.send(JSON.stringify({ message: 'Hiányzó paraméter: email' }));
+            return;
+        }
+
+        console.log('Sending email to:', email);
+        await sendEmail(email, subject, html);
+
+        res.set(header1, header2);
+        res.send(JSON.stringify({ message: 'Email sikeresen elküldve' }));
+    } catch (err) {
+        console.error('Email hiba:', err);
+        res.set(header1, header2);
+        res.send(JSON.stringify({ message: 'Email hiba: ' + err.message }));
+    }
+});
 
 
 app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });
