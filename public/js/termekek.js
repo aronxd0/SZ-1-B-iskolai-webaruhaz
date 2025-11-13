@@ -100,7 +100,7 @@ function Termek_Torol(event, cuccok) {
   event.stopPropagation();
   const termek_id = cuccok[0];
  console.log("bejoszssssssssssssssss")
-  $("#delete_modal .modal-body").html(`Biztosan törlöd a(z) ${termek_id} azonosítójú terméket?`);
+  $("#delete_modal .modal-body").html(`Biztosan törlöd a(z) <b>${termek_id}.</b> azonosítójú terméket?`);
   $("#delete_modal").off("click");
   $("#delete_modal").on("click", ".btn-danger", async function () {
     try {
