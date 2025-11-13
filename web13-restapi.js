@@ -734,7 +734,9 @@ app.post('/rendelesek_tetelei',async (req, res) => {
 //  - ID_TERMEK: (int) melyik terméket módosítjuk
 app.post('/termek_edit',async (req, res) => {
     
-    var kategoria = req.query.mod_kat;
+    var kategoria = req.query.mod_kat; // ha uj kateogira erkezik akkor ez nem letezik xd
+    let uj_kategoria = req.query.uj_kat; // az uj kategoria neve ha van, lehet ures is
+
     var nev       = req.query.mod_nev;
     var azon      = req.query.mod_azon;
     var ar        = parseInt(req.query.mod_ar);
