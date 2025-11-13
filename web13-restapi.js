@@ -3,9 +3,10 @@ const mysql     = require('mysql2/promise');
 const express   = require('express');
 const session   = require('express-session');
 const { stringify } = require('querystring');
+const { sendEmail } = require('./email-sender');  // email küldő
 
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '.env') }); // <- hozzáadva
+require('dotenv').config({ path: path.join(__dirname, '.env') }); // <- .env hozzáadva
 
 const app       = express();
 const port      = 9012;
@@ -726,8 +727,9 @@ app.post('/rendelesek_tetelei',async (req, res) => {
 
 // POST /termek_edit
 // Leírás: termék szerkesztése (admin funkció). Paraméterezett update.
-// Várható req.query paraméterek (mind a mod_* prefix-szel):
-//  - mod_kat: kategória ID (string/number)
+// Várható req.query paraméterek:
+//  - mod_kat: (int) kategória ID
+//  - uj_kat: (string) új kategória neve (ha meg van adva, azt használjuk)
 //  - mod_nev: (string) termék neve
 //  - mod_azon: (string) azonosító/cikkszám
 //  - mod_ar: (int) ár
@@ -736,10 +738,19 @@ app.post('/rendelesek_tetelei',async (req, res) => {
 //  - mod_leiras: (string) leírás
 //  - mod_aktiv: ("NO" vagy más) -> "N" vagy "Y"
 //  - ID_TERMEK: (int) melyik terméket módosítjuk
-app.post('/termek_edit',async (req, res) => {
-    
+app.post('/termek_edit', async (req, res) => {
+    try {
     var kategoria = req.query.mod_kat; // ha uj kateogira erkezik akkor ez nem letezik xd
-    let uj_kategoria = req.query.uj_kat; // az uj kategoria neve ha van, lehet ures is
+    let uj_kategoria = req.query.uj_kat.trim(); // az uj kategoria neve ha van, lehet ures is
+
+    if(kategoria == "" && uj_kategoria == ""){
+        res.set(header1, header2);
+        res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor"}));
+        res.end();
+    }
+
+    console.log("kategoria :", kategoria);
+    console.log("uj_kategoria :", uj_kategoria);
 
     var nev       = req.query.mod_nev;
     var azon      = req.query.mod_azon;
@@ -750,10 +761,15 @@ app.post('/termek_edit',async (req, res) => {
     var termekid  = parseInt(req.query.ID_TERMEK);
     var aktiv    = (req.query.mod_aktiv == "NO" ? "N" : "Y")
 
+    if(kategoria == undefined && uj_kategoria != ""){
+
+    }
+
+    var kategoria_idje;
     var sql = 
 `UPDATE webbolt_termekek
 SET
-ID_KATEGORIA =  (SELECT webbolt_kategoriak.ID_KATEGORIA FROM webbolt_kategoriak WHERE webbolt_kategoriak.KATEGORIA = "Alaplap"),
+ID_KATEGORIA = ?,
 NEV = ?,
 AZON = ?,
 AR = ?,
@@ -762,11 +778,18 @@ MEEGYS = ?,
 LEIRAS = ?,
 AKTIV = ?
 WHERE ID_TERMEK = ?`;
-    let ertekek = [kategoria, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, termekid];
+    let ertekek = [kategoria_idje, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, termekid];
 
-    const eredmeny = await runExecute(sql, req, ertekek, true);
-    res.send(eredmeny);
+    //const eredmeny = await runExecute(sql, req, ertekek, true);
+    //res.send(eredmeny);
     res.end();
+
+    } catch (err) {
+        console.error('termek_edit hiba:', err);
+        res.set(header1, header2);
+        res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor: " + err.message }));
+        res.end();
+    }
 });
 
 
@@ -952,8 +975,7 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
 
 //#endregion
 
-const { sendEmail } = require('./email-sender');  // meghicom az emilküldöt
-
+//#region email_kuldes
 
 app.post('/send-email', async (req, res) => {
     try {
@@ -962,8 +984,6 @@ app.post('/send-email', async (req, res) => {
         const email = req.query.email;
         const html = req.query.html 
         const subject = req.query.subject
-
-      
 
         if (!email) {
             res.set(header1, header2);
@@ -982,6 +1002,8 @@ app.post('/send-email', async (req, res) => {
         res.send(JSON.stringify({ message: 'Email hiba: ' + err.message }));
     }
 });
+
+//#endregion
 
 
 app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });
