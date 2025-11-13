@@ -930,6 +930,12 @@ async function Fizetésclick(li) {
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
         await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
 
+        //email küldés a backendnek
+        await ajax_post( "send-email?name=OKSA&email=szaloky.aron@csany-zeg.hu&html=<br>Boldog lehetsz</br>&subject=Rendelés visszaigazolása", 1)
+              
+        
+
+
         
         KosarTetelDB(); // frissítjük a kosár db-t
         document.getElementById("home_button").click(); // visszairányítjuk a főoldalra
