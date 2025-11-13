@@ -749,7 +749,7 @@ app.post('/termek_edit',async (req, res) => {
     var sql = 
 `UPDATE webbolt_termekek
 SET
-ID_KATEGORIA = ?,
+ID_KATEGORIA =  (SELECT webbolt_kategoriak.ID_KATEGORIA FROM webbolt_kategoriak WHERE webbolt_kategoriak.KATEGORIA = "Alaplap"),
 NEV = ?,
 AZON = ?,
 AR = ?,
