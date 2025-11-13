@@ -69,7 +69,7 @@ async function Termek_Edit(event, termek_id, tipus) {
         if (keres != "") { $("#mod_kat").prop("disabled", true).val(""); }
         else { 
           $("#mod_kat").prop("disabled", false); 
-          KategoriaFeltolt("mod_kat", "select", id_kategoria);
+          KategoriaFeltolt("mod_kat", "select", 1);
         }
       });
 
