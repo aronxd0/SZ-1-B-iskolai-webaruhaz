@@ -15,7 +15,7 @@ let _iszam = ""//globális változó az irányítószám tárolására
 let _country = ""//globális változó az ország tárolására
 let fizmod = "" //globális változó a fizetési mód tárolására
 let szallmod = ""//globális változó a szállítási mód tárolására
-let megjegyzes =""
+let megjegyzes =""// globális változó a megjegyzés tárolására
 
 
 
@@ -438,7 +438,10 @@ function Adatok(li) {
 
 
 function Fizetes(li) {
-    _nev = keresztnev.value;
+
+  // ha már tovább ment az adatok oldalról, akkor a mezők értékeit elmentjük a globális változókba
+
+    _nev = keresztnev.value; 
     _emil = emil.value;
     _cim = cim.value;
     _city = city.value;
@@ -447,7 +450,7 @@ function Fizetes(li) {
     megjegyzes = MEGJ.value;
 
 
-
+  // Lellenőrzések az adatok helyességére miellöt betöltjük a kövi oldalt
 
     try{
         if(keresztnev.value.trim() == "" || emil.value.trim() == "" || cim.value.trim() == "" || city.value.trim() == "" || iszam.value.trim() == "" || country.value.trim() == ""){         
@@ -476,12 +479,12 @@ function Fizetes(li) {
     } 
     catch (error) {
        
-        document.getElementById("hiba").innerHTML = error;
+        document.getElementById("hiba").innerHTML = error;// ha valami rosz akkor visszairjük a hiba html elembe
         return;
     }
 
 
-
+    
 
 
     $("#aktualis").html(`
@@ -910,24 +913,26 @@ function Szallitasmodvalaszto(sigma) {
 
 
 async function Fizetésclick(li) {
+  // rákattiontoo a fizetés gombra
+  // ellenörizzük, hogy minden rendben van-e
     try{
-      for (const element of li) {
+      for (const element of li) { // ellenőrizzük, hogy abból a tételből van a még készleten a kivánt darabból
         var ell = await ajax_post(`rendeles_ellenorzes?ID_TERMEK=${element.ID_TERMEK}&MENNYISEG=${element.MENNYISEG}`, 1);
         if(ell.rows[0].allapot == "karramba") {
             throw `Az egyik termékből nincs elég készleten. A rendelése módosítva lett.`;
         }
       }
-      if(szallmod == "" ||  fizmod == "") {
+      if(szallmod == "" ||  fizmod == "") { // ha nincs kiválasztva fizetési vagy szállítási mód
         throw "Válassza ki a fizetési és szállítási módot!";
       }
       
-
+       // ha minden jó akkor elküldjük a rendelést
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
         await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
 
         
-        KosarTetelDB();
-        document.getElementById("home_button").click();
+        KosarTetelDB(); // frissítjük a kosár db-t
+        document.getElementById("home_button").click(); // visszairányítjuk a főoldalra
 
         üzen("A terméket sikeresen megvásároltad.","success");
         $("#fizetes").modal("hide");
@@ -973,11 +978,15 @@ function autocomplete(inp, arr) {
   var currentFocus;
   inp.addEventListener("input", function(e) {
     var a, b, i, val = this.value;
+
     // bezárja a régi ablakokat  listákat 
     closeAllLists();
+
     if (!val) { return false; }
+
     currentFocus = -1;
     a = document.createElement("DIV");
+
     a.setAttribute("id", this.id + "autocomplete-list"); // ha már volt country kiválasztva akkor újra létrehozza
     a.setAttribute("class", "autocomplete-items");
     this.parentNode.appendChild(a);
@@ -1009,6 +1018,9 @@ function autocomplete(inp, arr) {
 
 
   inp.addEventListener("keydown", function(e) {
+
+    // az aoutoccomplete listában való navigáció billentyűkkel
+
     var x = document.getElementById(this.id + "autocomplete-list");
     if (x) x = x.getElementsByTagName("div");
     if (e.keyCode == 40) { // lefelenyil nyíl
