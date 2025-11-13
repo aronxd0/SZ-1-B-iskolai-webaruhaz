@@ -90,14 +90,40 @@ async function Termek_Edit(event, termek_id, tipus) {
       $("#mod_leiras").val(leiras);
       $("#save_button").html(`<i class="bi bi-save2"></i>&nbsp;Módosítások mentése`); 
 
+
+
+      // ha uj kategoriat irok be akkor ne lehessen a meglevoekbol valasztani
+
       $("#uj_kat").on("keyup", function (e) {
-        let keres = $(this).val();
-        if (keres != "") { $("#mod_kat").prop("disabled", true).val(""); }
+        let a = $(this).val();
+        if (a != "") { $("#mod_kat").prop("disabled", true).val(""); }
         else { 
           $("#mod_kat").prop("disabled", false); 
           KategoriaFeltolt("mod_kat", "select", id_kategoria);
         }
       });
+
+
+
+
+      // ha kivalasztok kepet feltolteskor akkor ne legyen fotolink
+
+      $("#mod_foto").on("change", function() {
+        if (this.files.length > 0) {
+          console.log("Kiválasztott fájl:", this.files[0].name);
+          $("#mod_fotolink").val("");
+        } else {
+          console.log("Nincs semmi kiválasztva.");
+          $("#mod_fotolink").val(fotolink);
+        }
+      });
+
+      $("#mod_fotolink").on("keyup", function() {
+        let b = $(this).val();
+        if (b != "") { $("#mod_foto").val(""); }
+      });
+
+      
 
       // Switch állapot beállítása
       if (aktiv === "Y") {
