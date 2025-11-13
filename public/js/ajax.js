@@ -38,23 +38,3 @@ function ajax_post(urlsor, tipus) {
     });
   });
 }
-
-
-
-function ajax_get( urlsor, hova, tipus, aszinkron ) {         // html oldalak beszúrására használjuk
-    $.ajax({url: urlsor, type:"get", async:aszinkron, cache:false, dataType:tipus===0?'html':'json',
-        beforeSend:function(xhr)   { 
-            const spinner = '<div id="spinner" class="spinner-border text-primary" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;"></div>';
-            // Spinner hozzáadása a body-hoz
-            $('body').append(spinner);
-         },
-        success:   function(data)  { $(hova).html(data); },
-        error:     function(jqXHR, textStatus, errorThrown) {üzen(jqXHR.responseText, "danger");},
-        complete:  function()      { $('#spinner').remove(); }  
-    });
-    return true;
-};
-
-
-
-
