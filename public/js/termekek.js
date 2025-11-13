@@ -6,6 +6,7 @@ async function TermekModosit(url) {
     let ser = url.split("§")[0];
     let id_termek = url.split("§")[1];
     let aktiv = url.split("§")[2];
+    let uj_kategoria = url.split("§")[3];
 
     console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
 
@@ -48,7 +49,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       id_kategoria = ta.rows[0].ID_KATEGORIA;
     }
     
-
+    
     
 
     if (tipus == "bevitel") {
@@ -60,6 +61,13 @@ async function Termek_Edit(event, termek_id, tipus) {
       $("#mod_meegys").val("db");
       $("#mod_leiras").val("");
       $("#mySwitch").prop("checked", true).trigger("change"); // Default érték beállítása
+
+      $("#uj_kat").on("keyup", function (e) {
+        let keres = $(this).val();
+        if (keres != "") { $("#mod_kat").prop("disabled", true); }
+        else { $("#mod_kat").prop("disabled", false); }
+      });
+
     } else {
       KategoriaFeltolt("mod_kat", "select", id_kategoria);
       $("#idx1").html(`${termek_id}; ${nev}`);
@@ -71,7 +79,13 @@ async function Termek_Edit(event, termek_id, tipus) {
       var datum = new Date();
       $("#mod_datum").val(datum.toISOString().split("T")[0]);
       $("#mod_leiras").val(leiras);
-      $("#save_button").html(`<i class="bi bi-save2"></i>&nbsp;Módosítások mentése`);
+      $("#save_button").html(`<i class="bi bi-save2"></i>&nbsp;Módosítások mentése`); 
+
+      $("#uj_kat").on("keyup", function (e) {
+        let keres = $(this).val();
+        if (keres != "") { $("#mod_kat").prop("disabled", true); }
+        else { $("#mod_kat").prop("disabled", false); }
+      });
 
       // Switch állapot beállítása
       if (aktiv === "Y") {
@@ -85,7 +99,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       .off()
       .one("click", function () {
         const aktiv = $("#mySwitch").is(":checked") ? "YES" : "NO"; // Itt olvassuk ki az értéket
-        TermekModosit(`${$("#mod1").serialize()}§${termek_id}§${aktiv}`);
+        TermekModosit(`${$("#mod1").serialize()}§${termek_id}§${aktiv}§${$("#uj_kat").val()}`);
       });
 
     $("#termek_edit").modal("show");
