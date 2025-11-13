@@ -124,7 +124,7 @@ $("#cart_button").click(async function () {
                                 aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                             </div>
                             <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center p-3" id="${element.ID_TERMEK}3">
-                                <h4 class="anton-regular text-success termek_ar">${pez.toLocaleString()} Ft</h4>
+                                <h4 class="text-success termek_ar slashed-zero tabular-nums">${pez.toLocaleString()} Ft</h4>
                             </div>
 
                             <div class="col-12 col-lg-1 d-flex align-self-center justify-content-center">

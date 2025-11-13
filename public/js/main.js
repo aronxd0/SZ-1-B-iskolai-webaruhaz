@@ -516,7 +516,6 @@ function Elfogyott(alma){
 
 function Kezdolap() {
     $("#keresett_kifejezes").html();
-    $("#keresett_kifejezes").html("<h1 class='text-danger'><b>KIEMELT AJÁNLATOK -50%</b></h1>")
     nev1.value = "";
     bepipaltID = "";
     KERESOBAR();
