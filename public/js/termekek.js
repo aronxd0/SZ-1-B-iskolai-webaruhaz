@@ -418,7 +418,7 @@ function VeletlenszeruVelemeny() {
 //region CARDBETOLT
 function CARD_BETOLT(adatok) {
    
-
+  
   let ks = "";
   let s = "";
   let el = "";
@@ -538,7 +538,7 @@ function CARD_BETOLT(adatok) {
 
   if (!$("#nev1").val().includes("<")) {
     if ($("#nev1").val() != "") {
-      
+      $("#welcome_section").fadeOut(300);
       $("#keresett_kifejezes").fadeOut(300, function() {
         $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`).fadeIn(300);
       });
