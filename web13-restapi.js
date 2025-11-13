@@ -952,15 +952,21 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
 
 //#endregion
 
-const { sendEmail } = require('./email-sender'); 
+const { sendEmail } = require('./email-sender');  // meghicom az emilküldöt
 
 
 app.post('/send-email', async (req, res) => {
     try {
+        console.log('Received email send request with query params:', req.query);
         const name = req.query.name || 'Felhasználó';
         const email = req.query.email;
         const html = req.query.html 
         const subject = req.query.subject
+
+        console.log('Preparing to send email to:', email);
+        console.log('Email subject:', subject);
+        console.log('Email HTML content:', html);
+
 
         if (!email) {
             res.set(header1, header2);

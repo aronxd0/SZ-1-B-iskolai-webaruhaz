@@ -16,6 +16,7 @@ let _country = ""//globális változó az ország tárolására
 let fizmod = "" //globális változó a fizetési mód tárolására
 let szallmod = ""//globális változó a szállítási mód tárolására
 let megjegyzes =""// globális változó a megjegyzés tárolására
+let htmtoback =""
 
 
 
@@ -43,8 +44,8 @@ function Attekintes(li) {
         dark:text-gray-500 
         ">Fizetés</span`);
 
-    let z = `<label for="rend" class="p-1 mt-4">A rendelésed tartalma:</label>`
-     z += `<table 
+     htmtoback = `<label for="rend" class="p-1 mt-4">A rendelésed tartalma:</label>`
+     htmtoback += `<table 
             class='
             w-full 
             border-collapse 
@@ -84,7 +85,7 @@ function Attekintes(li) {
     //$("#cc").html("");
     for (const element of li) {
 
-        z += ` 
+        htmtoback += ` 
             <tr class="border-b border-gray-300 dark:border-gray-700">
 
                 <td 
@@ -129,7 +130,7 @@ function Attekintes(li) {
         
     }
 
-    z += "</tbody></table>";
+    htmtoback += "</tbody></table>";
 
     /*
     z += `
@@ -177,7 +178,7 @@ function Attekintes(li) {
     $("#lab").html(navigacio);
 
     $("#cc").fadeOut(300, function() {
-        $("#cc").html(z).fadeIn(300);
+        $("#cc").html(htmtoback).fadeIn(300);
     });
 
     
@@ -931,9 +932,11 @@ async function Fizetésclick(li) {
         await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
 
         //email küldés a backendnek
-        await ajax_post( "send-email?name=OKSA&email=szaloky.aron@csany-zeg.hu&html=<br>Boldog lehetsz</br>&subject=Rendelés visszaigazolása", 1)
+        console.log( "htmltobck : "+ htmtoback );
+
+        await ajax_post( `send-email?name=OKSA&email=szaloky.aron@csany-zeg.hu&html=${htmtoback.replace(/\s+/g, ' ')}&subject=Rendelés visszaigazolása`, 1)
               
-        
+        console.log("Email elküldve a backendnek.");
 
 
         
