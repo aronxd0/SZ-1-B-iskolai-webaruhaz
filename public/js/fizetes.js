@@ -934,7 +934,7 @@ async function Fizetésclick(li) {
         //email küldés a backendnek
         console.log( "htmltobck : "+ htmtoback );
 
-        await ajax_post( `send-email?name=OKSA&email=${$("#emil").val()}&html=${htmtoback.replace(/\s+/g, ' ')}&subject=Rendelés visszaigazolása`, 1)
+        await ajax_post( `send-email?name=OKSA&email=${_emil}}&html=${htmtoback.replace(/\s+/g, ' ')}&subject=Rendelés visszaigazolása`, 1)
               
         console.log("Email elküldve a backendnek.");
 
