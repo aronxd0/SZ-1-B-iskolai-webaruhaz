@@ -20,11 +20,11 @@ app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninit
 // Adatbázis kapcsolat pool
 // Megjegyzés: itt a host/user/password/database a DB kapcsolódáshoz szükséges hitelesítési adatok.
 const pool = mysql.createPool({
-    host: 'sexard3-214.tolna.net',
-    user: 'szaloky.adam',
-    port: "9406",
-    password: 'Csany7922',
-    database: '2021SZ_szaloky_adam',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    port: process.env.DB_PORT,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
     multipleStatements: true, // komplex tranzakciókhoz szükséges (START TRANSACTION + több utasítás)
     waitForConnections: true,
     connectionLimit: 10,

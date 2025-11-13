@@ -931,9 +931,8 @@ async function Fizetésclick(li) {
         await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
 
         //email küldés a backendnek
-        await sendEmailToBackend("OKSA", "szaloky.aron@csany-zeg.hu", "<br>Boldog lehetsz</br>", 'Rendelés visszaigazolás')
-                .then(resp => console.log('send-email:', resp))
-                .catch(err => console.error('send-email error:', err));
+        await ajax_post( "send-email?name=OKSA&email=szaloky.aron@csany-zeg.hu&html=<br>Boldog lehetsz</br>&subject=Rendelés visszaigazolása", 1)
+              
         
 
 
