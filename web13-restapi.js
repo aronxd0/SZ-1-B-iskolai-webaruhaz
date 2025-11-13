@@ -959,8 +959,8 @@ app.post('/send-email', async (req, res) => {
     try {
         const name = req.query.name || 'Felhasználó';
         const email = req.query.email;
-        const html = req.query.html || `<p>Üdv, ${name}</p>`;
-        const subject = req.query.subject || 'Értesítés';
+        const html = req.query.html 
+        const subject = req.query.subject
 
         if (!email) {
             res.set(header1, header2);
