@@ -13,6 +13,8 @@ $("#cart_button").click(async function () {
     tetelekli = [];
     //$("#content_hely").html("");
 
+    $("#welcome_section").fadeOut(300);
+
     $("#keresett_kifejezes").html("");
     $("#débé").html("");
     $("#nev1").val("");

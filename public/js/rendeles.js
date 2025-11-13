@@ -1,6 +1,6 @@
 
 $("#rend_button").click(async function () {
-
+    $("#welcome_section").fadeOut(300);
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
     $("#home_button").closest(".gombdiv").removeClass("aktiv");

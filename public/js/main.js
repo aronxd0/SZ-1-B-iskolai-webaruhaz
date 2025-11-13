@@ -516,6 +516,7 @@ function Elfogyott(alma){
 
 function Kezdolap() {
     $("#keresett_kifejezes").html();
+    $("#welcome_section").fadeIn(300);
     nev1.value = "";
     bepipaltID = "";
     KERESOBAR();
