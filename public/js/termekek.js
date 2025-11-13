@@ -32,7 +32,7 @@ async function Termek_Edit(event, termek_id, tipus) {
 
   //console.log(leiras);
 
-  let nev, azon, ar, mennyiseg, meegys, aktiv, leiras, id_kategoria;
+  let nev, azon, ar, mennyiseg, meegys, aktiv, leiras, id_kategoria, fotolink;
 
   try {
 
@@ -47,6 +47,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       aktiv = ta.rows[0].AKTIV;
       leiras = ta.rows[0].LEIRAS;
       id_kategoria = ta.rows[0].ID_KATEGORIA;
+      fotolink = ta.rows[0].FOTOLINK;
     }
     
     
@@ -82,6 +83,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       $("#mod_azon").val(azon);
       $("#mod_ar").val(ar);
       $("#mod_db").val(mennyiseg);
+      $("#mod_fotolink").val(fotolink);
       $("#mod_meegys").val(meegys);
       var datum = new Date();
       $("#mod_datum").val(datum.toISOString().split("T")[0]);
