@@ -53,6 +53,8 @@ async function Termek_Edit(event, termek_id, tipus) {
     
 
     if (tipus == "bevitel") {
+      $("#uj_kat").val("");
+      $("#mod_kat").prop("disabled", false);
       KategoriaFeltolt("mod_kat", "select", 1);
       $("#mod_nev").val("");
       $("#mod_azon").val("");
@@ -64,11 +66,16 @@ async function Termek_Edit(event, termek_id, tipus) {
 
       $("#uj_kat").on("keyup", function (e) {
         let keres = $(this).val();
-        if (keres != "") { $("#mod_kat").prop("disabled", true); }
-        else { $("#mod_kat").prop("disabled", false); }
+        if (keres != "") { $("#mod_kat").prop("disabled", true).val(""); }
+        else { 
+          $("#mod_kat").prop("disabled", false); 
+          KategoriaFeltolt("mod_kat", "select", id_kategoria);
+        }
       });
 
     } else {
+      $("#uj_kat").val("");
+      $("#mod_kat").prop("disabled", false);
       KategoriaFeltolt("mod_kat", "select", id_kategoria);
       $("#idx1").html(`${termek_id}; ${nev}`);
       $("#mod_nev").val(nev);
@@ -83,8 +90,11 @@ async function Termek_Edit(event, termek_id, tipus) {
 
       $("#uj_kat").on("keyup", function (e) {
         let keres = $(this).val();
-        if (keres != "") { $("#mod_kat").prop("disabled", true); }
-        else { $("#mod_kat").prop("disabled", false); }
+        if (keres != "") { $("#mod_kat").prop("disabled", true).val(""); }
+        else { 
+          $("#mod_kat").prop("disabled", false); 
+          KategoriaFeltolt("mod_kat", "select", id_kategoria);
+        }
       });
 
       // Switch állapot beállítása
