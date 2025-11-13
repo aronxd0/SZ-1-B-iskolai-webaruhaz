@@ -92,6 +92,7 @@ $("#kijelentkezik").click(function() {
         document.getElementById("NEM_AKTIV").innerHTML = ``;
         //Kezdolap();
         $("#home_button").trigger("click");
+        $("#udv").html(`<b>Üdvözlünk a Csány webáruházban!</b>`);
         update_gombok(0);
     });  
 });
