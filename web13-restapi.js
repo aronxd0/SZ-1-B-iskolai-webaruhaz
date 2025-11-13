@@ -802,7 +802,7 @@ app.post('/termek_adatok',async (req, res) => {
     let termekid  = parseInt(req.query.ID_TERMEK);
 
     let sql = `
-        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, webbolt_termekek.AR, webbolt_termekek.MENNYISEG, webbolt_termekek.MEEGYS, webbolt_termekek.FOTOLINK, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
+        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, webbolt_termekek.AR, webbolt_termekek.MENNYISEG, webbolt_termekek.FOTOLINK, webbolt_termekek.MEEGYS, webbolt_termekek.FOTOLINK, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
         FROM webbolt_termekek 
         INNER JOIN webbolt_kategoriak ON webbolt_termekek.ID_KATEGORIA = webbolt_kategoriak.ID_KATEGORIA
         WHERE webbolt_termekek.ID_TERMEK = ?
