@@ -20,6 +20,7 @@ $("#login_oksi_button").click(function() {
         if (l_json.message == "ok" && l_json.maxcount == 1) {  
             $("#user").html(`<h5><i class="bi bi-person"></i> ${l_json.rows[0].NEV}</h5>`);
             $("#user-email").html(`${l_json.rows[0].EMAIL}`);
+            $("#udv").html(`<b>Üdvözlünk a Csány webáruházban <span>${l_json.rows[0].NEV.split(" ")[1]}</span>!</b>`);
             
             $("#csoport").html(`${l_json.rows[0].CSOPORT}`);
 
