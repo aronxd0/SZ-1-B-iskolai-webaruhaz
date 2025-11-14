@@ -72,8 +72,8 @@ function SQLinput() {
             </div>
         </div>
 
-        <div class="row mt-3">
-            <div class="col-12 p-5">
+        <div class=mt-3">
+            <div class="col-12 px-0 px-lg-5 py-1">
                 <textarea id="sql_input_area" 
                 class="
                 resize-none 
@@ -88,6 +88,25 @@ function SQLinput() {
                 placeholder-gray-400 
                 dark:placeholder-gray-400 
                 " rows="10" placeholder="Ide írd be az SQL lekérdezést..." style="border:none;"></textarea>
+            </div>
+
+            <div class="col-12 d-flex justify-content-center justify-content-lg-end px-0 px-lg-5 py-1">
+                <button id="sql_execute_button" 
+                class="
+                btn 
+                
+                text-zinc-200 
+                bg-zinc-600 
+          rounded-4 
+          dark:bg-slate-800 
+          dark:text-zinc-200 
+          hover:bg-zinc-700 
+          hover:text-zinc-200 
+          dark:hover:bg-slate-900 
+          dark:hover:text-zinc-200
+                ">
+                    <i class="bi bi-play-fill"></i>&nbsp;Lekérdezés futtatása
+                </button>
             </div>
         </div>
 
