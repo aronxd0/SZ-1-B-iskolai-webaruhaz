@@ -1285,51 +1285,88 @@
   <!-- login ablak -->
   <div class="modal fade " id="login_modal">
     <div class="modal-dialog modal-md modal-dialog-centered " >
-      <div class="modal-content border border-black dark:border border-white">
+      <div class="modal-content">
         <div 
           class="
             modal-header 
-            bg-zinc-200 
-            text-slate-900 
-            dark:bg-slate-900 
-            dark:text-zinc-200 
-            text-light">
-          <h4 id="idx_login" class="modal-title text-center w-100 text-slate-900 dark:text-zinc-200"><i class="bi bi-person-fill"></i> Bejelentkezés</h4>
+            
+          bg-zinc-300 
+          text-slate-900 
+          dark:bg-slate-700 
+          dark:text-zinc-200">
+          <span id="idx_login" class="modal-title text-center w-100 text-slate-900 dark:text-zinc-200 text-xl"><i class="bi bi-person-fill"></i> Bejelentkezés</span>
         </div>
 
         <div id="idx0" 
         class="
           modal-body 
-          bg-zinc-100 
+          bg-zinc-300 
           text-slate-900 
-          dark:bg-slate-800 
+          dark:bg-slate-700 
           dark:text-zinc-200 ">
 
           <form id="form_login" class="row d-column was-validated"> 
-            <div class="form-floating flex-grow-1 ny-1 mb-2">
-              <input type="email" class="form-control rounded-4" id="login_nev" name="login_nev"  value='balazs.aron@csany-zeg.hu' placeholder="E-mail cím" required>
-              <label for="login_nev" class="ps-4">E-mail cím</label>
+            <div class="col-12 p-2 ">
+              <label for="login_nev" class="p-1">E-mail cím</label>
+              <input type="email" 
+              class="
+              form-control 
+              shadow-xl 
+              bg-zinc-50 
+              text-slate-900 
+              dark:bg-slate-800 
+                      dark:text-zinc-200 rounded-4 placeholder-gray-400 
+                    dark:placeholder-gray-400 
+              " id="login_nev" name="login_nev"  value='balazs.aron@csany-zeg.hu' placeholder="Írd be az e-mail címedet" required style="border: none;">
+              
               
             </div>
             
 
-            <div class="form-floating flex-grow-1 ny-1 mt-2 ">
-              <input type="password" class="form-control rounded-4" id="login_passwd" name="login_passwd" value='123456' placeholder="Jelszó" required>
-              <label for="login_passwd" class="ps-4">Jelszó</label>
-              <span id="jelszo_mutatasa" class="position-absolute top-50 translate-middle-y pe-4" style="right: 25px;cursor:pointer;"> <!-- position absolute: pozicionalhato legyen jobbra
-                                                                                                                                top-50 translate-middle-y: fuggolegesen kozepre  
-                                                                                                                                end-0: jobb oldalra 
-                                                                                                                                pe: padding end -->
-                <i class="bi bi-eye" id="sz"></i>
-              </span>
+            <div class="col-12 p-2 ">
+              <label for="login_passwd" class=" p-1">Jelszó</label>
+              <input type="password" 
+              class="form-control 
+                      shadow-xl 
+                      bg-zinc-50 
+                      text-slate-900 
+                      dark:bg-slate-800 
+                      dark:text-zinc-200 rounded-4 
+                      placeholder-gray-400 
+                    dark:placeholder-gray-400 " id="login_passwd" name="login_passwd" value='123456' placeholder="Írd be a jelszavadat" required style="border: none;">
+              
+              
             </div>
             
           </form>
         </div>
 
-        <div class="row modal-footer d-flex justify-content-center">
-          <button id="bezar" type="button" class="btn btn-secondary w-auto" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>
-          <button id="login_oksi_button" type="button" class="btn btn-success w-auto" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
+        <div 
+        class="
+        
+          bg-zinc-300 
+          text-slate-900 
+          dark:bg-slate-700 
+          dark:text-zinc-200
+        modal-footer d-flex justify-content-center">
+          <button id="bezar" type="button" class="btn bg-zinc-600 
+          text-zinc-200 
+          rounded-4 
+          dark:bg-slate-800 
+          dark:text-zinc-200 
+          hover:bg-zinc-700 
+          hover:text-zinc-200 
+          dark:hover:bg-slate-900 
+          dark:hover:text-zinc-200  w-auto" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>
+          <button id="login_oksi_button" type="button" class="btn bg-zinc-600 
+          text-zinc-200 
+          rounded-4 
+          dark:bg-slate-800 
+          dark:text-zinc-200 
+          hover:bg-zinc-700 
+          hover:text-zinc-200 
+          dark:hover:bg-slate-900 
+          dark:hover:text-zinc-200  w-auto" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
         
 
         
@@ -1536,24 +1573,31 @@
 
   <!-- kosarba gomb utani modal -->
   <div class="modal fade" id="kosarba_bele">
-  <div class="modal-dialog modal-dialog-centered modal-sm">
+  <div class="modal-dialog modal-dialog-centered modal-md">
     <div class="modal-content">
 
        
-        <div class="modal-header">
-          <h4 class="modal-title">Siker</h4>
+        <div 
+        class="
+        modal-header 
+        bg-zinc-300 
+        text-slate-900 
+        dark:bg-slate-800 
+        dark:text-zinc-200
+        ">
+          <h4 class="modal-title"></h4>
           <button type="button" class="btn text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
         </div>
 
         
         <div 
         class="
-          row 
+         
           modal-body 
-          bg-zinc-100 
+          bg-zinc-300 
           text-slate-900 
-          dark:bg-slate-700 
-          dark:text-zinc-200 
+          dark:bg-slate-800 
+          dark:text-zinc-200
         ">
           <div class="col-12 text-center">A termék a kosárba került.</div>
           <div class="col-12 text-center" id="idt"></div>
@@ -1565,9 +1609,37 @@
         modal-footer 
         d-flex  
         justify-content-center 
-        justify-content-lg-end">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vásárlás folytatása</button>
-          <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="kosarmegtekintese">Kosár megtekintése</button>
+        
+        bg-zinc-300 
+          text-slate-900 
+          dark:bg-slate-800 
+          dark:text-zinc-200
+        ">
+          <button type="button" 
+          class="
+          btn bg-zinc-600 
+          text-zinc-200 
+          rounded-4 
+          dark:bg-slate-800 
+          dark:text-zinc-200 
+          hover:bg-zinc-700 
+          hover:text-zinc-200 
+          dark:hover:bg-slate-900 
+          dark:hover:text-zinc-200 
+          bi bi-bag" data-bs-dismiss="modal"> Vásárlás folytatása</button>
+
+          <button type="button" 
+          class="
+          btn bg-zinc-600 
+          text-zinc-200 
+          rounded-4 
+          dark:bg-slate-800 
+          dark:text-zinc-200 
+          hover:bg-zinc-700 
+          hover:text-zinc-200 
+          dark:hover:bg-slate-900 
+          dark:hover:text-zinc-200 
+          bi bi-cart" data-bs-dismiss="modal" id="kosarmegtekintese"> Kosár megtekintése</button>
         </div>
 
      </div>
@@ -1695,7 +1767,7 @@
                     text-slate-900 
                     dark:bg-slate-800 
                     dark:text-zinc-200 
-                    " id="mod_foto" name="mod_foto" style="border: none;">
+                    " id="mod_foto" name="mod_foto" style="border: none;" accept=".jpg,.jpeg,.png,.webp">
                     
                   
                 </div>
