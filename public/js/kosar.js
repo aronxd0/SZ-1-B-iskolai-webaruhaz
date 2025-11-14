@@ -262,7 +262,7 @@ function KosarItemDelete(id){
 async function Kosarba_Bele(event, id_termek) {
     event.stopPropagation();
     $("#termekview").modal("hide");
-    // Kosár gomb megnyomása után beleteszi a ter
+    // Kosár gomb megnyomása után beleteszi a termeket
     try {
         let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
         if (kosaraddleiras.message == "ok") {
@@ -271,7 +271,7 @@ async function Kosarba_Bele(event, id_termek) {
         }
         else { üzen(kosaraddleiras.message, "danger"); }         
 
-        $("#idt").html(id_termek);
+        //$("#idt").html(id_termek);
         $("#kosarba_bele").modal("show");
 
     } catch (err) { üzen(err, "danger"); }

@@ -1536,24 +1536,31 @@
 
   <!-- kosarba gomb utani modal -->
   <div class="modal fade" id="kosarba_bele">
-  <div class="modal-dialog modal-dialog-centered modal-sm">
+  <div class="modal-dialog modal-dialog-centered modal-md">
     <div class="modal-content">
 
        
-        <div class="modal-header">
-          <h4 class="modal-title">Siker</h4>
+        <div 
+        class="
+        modal-header 
+        bg-zinc-300 
+        text-slate-900 
+        dark:bg-slate-800 
+        dark:text-zinc-200
+        ">
+          <h4 class="modal-title"></h4>
           <button type="button" class="btn text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
         </div>
 
         
         <div 
         class="
-          row 
+         
           modal-body 
-          bg-zinc-100 
+          bg-zinc-300 
           text-slate-900 
-          dark:bg-slate-700 
-          dark:text-zinc-200 
+          dark:bg-slate-800 
+          dark:text-zinc-200
         ">
           <div class="col-12 text-center">A termék a kosárba került.</div>
           <div class="col-12 text-center" id="idt"></div>
@@ -1565,9 +1572,37 @@
         modal-footer 
         d-flex  
         justify-content-center 
-        justify-content-lg-end">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vásárlás folytatása</button>
-          <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="kosarmegtekintese">Kosár megtekintése</button>
+        
+        bg-zinc-300 
+          text-slate-900 
+          dark:bg-slate-800 
+          dark:text-zinc-200
+        ">
+          <button type="button" 
+          class="
+          btn bg-zinc-600 
+          text-zinc-200 
+          rounded-4 
+          dark:bg-slate-800 
+          dark:text-zinc-200 
+          hover:bg-zinc-700 
+          hover:text-zinc-200 
+          dark:hover:bg-slate-900 
+          dark:hover:text-zinc-200 
+          bi bi-bag" data-bs-dismiss="modal"> Vásárlás folytatása</button>
+
+          <button type="button" 
+          class="
+          btn bg-zinc-600 
+          text-zinc-200 
+          rounded-4 
+          dark:bg-slate-800 
+          dark:text-zinc-200 
+          hover:bg-zinc-700 
+          hover:text-zinc-200 
+          dark:hover:bg-slate-900 
+          dark:hover:text-zinc-200 
+          bi bi-cart" data-bs-dismiss="modal" id="kosarmegtekintese"> Kosár megtekintése</button>
         </div>
 
      </div>
