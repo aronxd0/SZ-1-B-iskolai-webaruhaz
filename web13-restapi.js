@@ -192,6 +192,8 @@ function gen_SQL_kereses(req) {
         `;
         // Az offset a LIMIT-hez tartozó paraméterként kerül a végére
         ertekek.push(offset); 
+
+        console.log(sql);
         
         return { sql, values: ertekek };
     }
@@ -729,7 +731,7 @@ app.post('/rendelesek_tetelei',async (req, res) => {
 // Leírás: termék szerkesztése (admin funkció). Paraméterezett update.
 // Várható req.query paraméterek:
 //  - mod_kat: (int) kategória ID
-//  - uj_kat: (string) új kategória neve (ha meg van adva, azt használjuk)
+//  . uj_kat: (string) új kategória neve (ha meg van adva, azt használjuk)
 //  - mod_nev: (string) termék neve
 //  - mod_azon: (string) azonosító/cikkszám
 //  - mod_ar: (int) ár
@@ -740,49 +742,70 @@ app.post('/rendelesek_tetelei',async (req, res) => {
 //  - ID_TERMEK: (int) melyik terméket módosítjuk
 app.post('/termek_edit', async (req, res) => {
     try {
-    var kategoria = req.query.mod_kat; // ha uj kateogira erkezik akkor ez nem letezik xd
-    let uj_kategoria = req.query.uj_kat.trim(); // az uj kategoria neve ha van, lehet ures is
+        var kategoria = req.query.mod_kat; // lehet undefined
+        let uj_kategoria = (req.query.uj_kat || "").trim(); // most biztonságos
 
-    if(kategoria == "" && uj_kategoria == ""){
-        res.set(header1, header2);
-        res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor"}));
-        res.end();
-    }
+        if ((kategoria == "" || typeof kategoria === 'undefined') && uj_kategoria == "") {
+            res.set(header1, header2);
+            res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor - nincs kategória" }));
+            res.end();
+            return;
+        }
 
-    console.log("kategoria :", kategoria);
-    console.log("uj_kategoria :", uj_kategoria);
+        var nev       = req.query.mod_nev;
+        var azon      = req.query.mod_azon;
+        var ar        = parseInt(req.query.mod_ar) || 0;
+        var mennyiseg = parseInt(req.query.mod_db) || 0;
+        var meegys    = req.query.mod_meegys || "";
+        var leiras    = req.query.mod_leiras || "";
+        var termekid  = parseInt(req.query.ID_TERMEK);
+        var aktiv     = (req.query.mod_aktiv == "NO" ? "N" : "Y");
 
-    var nev       = req.query.mod_nev;
-    var azon      = req.query.mod_azon;
-    var ar        = parseInt(req.query.mod_ar);
-    var mennyiseg = parseInt(req.query.mod_db);
-    var meegys    = req.query.mod_meegys;
-    var leiras    = req.query.mod_leiras;
-    var termekid  = parseInt(req.query.ID_TERMEK);
-    var aktiv    = (req.query.mod_aktiv == "NO" ? "N" : "Y")
+        //  kategoria id
+        var kategoria_idje = null;
 
-    if(kategoria == undefined && uj_kategoria != ""){
+        if (uj_kategoria !== "") {
+            // 1) próbáljuk meg kikeresni
+            const rawSel = await runQueries(`SELECT ID_KATEGORIA FROM webbolt_kategoriak WHERE KATEGORIA = ?`, [uj_kategoria]);
+            const sel = JSON.parse(rawSel);
+            if (sel.message === "ok" && sel.maxcount > 0) {
+                kategoria_idje = sel.rows[0].ID_KATEGORIA;
+            } else {
+                // 2) nincs ilyen -> beszúrjuk (runExecute visszaadása JSON string)
+                const rawIns = await runExecute(`/*termek_add - nem volt ilyen kategoria*/INSERT INTO webbolt_kategoriak (KATEGORIA) VALUES (?)`, req, [uj_kategoria], true);
+                const ins = JSON.parse(rawIns);
+                kategoria_idje = ins.rows.insertId;
+            }
+        } else {
+            // mod_kat érkezett: használjuk numerikusan
+            kategoria_idje = kategoria;
+        }
 
-    }
+        if (!kategoria_idje) {
+            res.set(header1, header2);
+            res.send(JSON.stringify({ message: "Hiba: nem sikerült kategória ID-t megállapítani" }));
+            res.end();
+            return;
+        }
 
-    var kategoria_idje;
-    var sql = 
-`UPDATE webbolt_termekek
+        var sql = `
+UPDATE webbolt_termekek
 SET
-ID_KATEGORIA = ?,
-NEV = ?,
-AZON = ?,
-AR = ?,
-MENNYISEG = ?,
-MEEGYS = ?,
-LEIRAS = ?,
-AKTIV = ?
+  ID_KATEGORIA = ?,
+  NEV = ?,
+  AZON = ?,
+  AR = ?,
+  MENNYISEG = ?,
+  MEEGYS = ?,
+  LEIRAS = ?,
+  AKTIV = ?
 WHERE ID_TERMEK = ?`;
-    let ertekek = [kategoria_idje, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, termekid];
+        let ertekek = [kategoria_idje, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, termekid];
 
-    //const eredmeny = await runExecute(sql, req, ertekek, true);
-    //res.send(eredmeny);
-    res.end();
+        const eredmeny = await runExecute(sql, req, ertekek, true);
+        res.set(header1, header2);
+        res.send(eredmeny);
+        res.end();
 
     } catch (err) {
         console.error('termek_edit hiba:', err);
