@@ -360,7 +360,25 @@ async function ArFeltolt(sql, min ,max){
         document.getElementById("max_ar_input").value =max;
 
 
-    } catch (err) { console.log("hiba:", err); }
+    } catch (err) { 
+        console.log("hiba:", err);
+        $("#welcome_section").fadeOut(300);
+        $("#content_hely").fadeOut(300, function() {
+            $("#content_hely").html(`
+                <div class="col-12 d-flex justify-content-center align-items-center flex-column">
+                    <span class="p-3" style="font-size:70px; font-weight:bold;">404</span>
+                    <span class="alert alert-danger">${err}</span>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=csanywebbolt@gmail.com" target="_blank">
+                        Hiba jelentése
+                    </a>
+                </div>`).fadeIn(300);
+        });
+        $("#pagi").html(``);
+        $("#fejlec1").fadeOut(300);
+        $("#fejlec2").fadeOut(300);
+        $('#login_modal').modal('hide');
+        
+     }
 }
 
 function Sliderninput( item ){
@@ -531,3 +549,12 @@ function Kezdolap() {
 function FelaTetore() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+
+
+
+
+
+
+
+

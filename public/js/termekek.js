@@ -591,6 +591,7 @@ function CARD_BETOLT(adatok) {
     } else {
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
+      console.log("card betolt: üres a kereső");
     }
 
     
