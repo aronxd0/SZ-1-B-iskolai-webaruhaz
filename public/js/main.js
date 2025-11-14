@@ -466,7 +466,7 @@ async function KategoriaFeltolt(hova, type, kivalasztott) {
             
         }
         else {
-            listItems += `<option value="">-</option>`;
+            listItems += `<option value="" disabled>-</option>`;
             let k_json = await ajax_post(`kategoria`, 1);
             for (let index = 0; index < k_json.rows.length; index++) {
                 listItems += `<option value="${k_json.rows[index].ID_KATEGORIA}" ${k_json.rows[index].ID_KATEGORIA == kivalasztott ? "selected" : ""}>${k_json.rows[index].KATEGORIA}</option>`;
