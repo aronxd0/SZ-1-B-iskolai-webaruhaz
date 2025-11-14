@@ -1015,6 +1015,7 @@ app.post('/send-email', async (req, res) => {
         }
 
         console.log('Sending email to:', email);
+        console.log('Subject:', subject);
         await sendEmail(email, subject, html);
 
         res.set(header1, header2);

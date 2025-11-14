@@ -6,7 +6,20 @@ async function TermekModosit(url) {
     let ser = url.split("§")[0];
     let id_termek = url.split("§")[1];
     let aktiv = url.split("§")[2];
-    let uj_kategoria = url.split("§")[3];
+    //let uj_kategoria = url.split("§")[3];
+
+    const fd = new FormData(document.getElementById("mod1"));
+
+    fd.append("ID_TERMEK", id_termek);
+    fd.append("mod_aktiv", aktiv);
+
+    // ha van új kép feltöltve → add hozzá
+    let file = $("#mod_foto")[0].files[0];
+    if (file) {
+      fd.append("foto", file);
+    }
+
+    console.log(fd);
 
     console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
 
