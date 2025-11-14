@@ -933,13 +933,6 @@ async function Fizetésclick(li) {
 
         //email küldés a backendnek
         
-
-        await ajax_post( `send-email?email=${_emil}&html=Tisztelt ${_nev};<br>${htmtoback.replace(/\s+/g, ' ')}&subject=Rendelés visszaigazolása`, 1)
-              
-        console.log("Email elküldve a backendnek.");
-
-
-        
         KosarTetelDB(); // frissítjük a kosár db-t
         document.getElementById("home_button").click(); // visszairányítjuk a főoldalra
 
@@ -952,14 +945,111 @@ async function Fizetésclick(li) {
         document.getElementById("hibauzen").innerHTML = e;
         return;
       }
-
-
         üzen(e,"danger");
+        $("#fizetes").modal("hide");
         document.getElementById("cart_button").click();
+    }
+
+    try{
+      const html = `${emailDesign(li)}`;
+      
+      ajax_post(
+        `send-email?email=${_emil}&subject=${encodeURIComponent("Rendelés visszaigazolása")}&html=${encodeURIComponent(html)}`,
+        1
+      );
+
+    }
+    catch(e){
+      üzen("Hiba történt a visszaigazoló e-mail küldése során." + e,"warning");
     }
 
     
 }
+
+
+function emailDesign(li){
+  let rows = "";
+  let osszes = 0;
+
+  for(const e of li){
+      rows += `
+          <tr>
+              <td style="padding:10px;border-bottom:1px solid #eee;">
+                  ${e.MENNYISEG} db
+              </td>
+              <td style="padding:10px;border-bottom:1px solid #eee;">
+                  ${e.NEV}
+              </td>
+              <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;color:#059669;">
+                  ${e.PENZ.toLocaleString()} Ft
+              </td>
+          </tr>
+      `;
+      osszes += e.PENZ;
+  }
+
+  return `
+      <div style="
+          font-family:Arial, Helvetica, sans-serif;
+          max-width:700px;
+          margin:auto;
+          background:#ffffff;
+          border-radius:12px;
+          padding:25px 30px;
+          border:1px solid #e5e5e5;
+      ">
+        <h2 style="
+              margin-top:0;
+              font-size:22px;
+              color:#222;
+              text-align:center;
+          ">
+              Tisztelt ${_nev}!
+          </h2>
+          <h2 style="
+              margin-top:0;
+              font-size:22px;
+              color:#222;
+              text-align:center;
+          ">
+              Rendelésed tartalma
+          </h2>
+
+          <table style="width:100%;border-collapse:collapse;margin-top:20px;">
+              <thead>
+                  <tr style="background:#f1f1f1;color:#111;">
+                      <th style="padding:12px;border-bottom:1px solid #ddd;">Mennyiség</th>
+                      <th style="padding:12px;border-bottom:1px solid #ddd;">Termék</th>
+                      <th style="padding:12px;border-bottom:1px solid #ddd;">Ár</th>
+                  </tr>
+              </thead>
+
+              <tbody>
+                  ${rows}
+              </tbody>
+          </table>
+
+          <div style="
+              text-align:right;
+              margin-top:25px;
+              font-size:15px;
+              
+              color:#059669;
+          ">
+             Összesen: ${Math.round(osszes * 1,27).toLocaleString()} Ft + Áfa
+          </div>
+           <div style="
+              text-align:right;
+              font-size:20px;
+              font-weight:bold;
+              color:#059669;
+          ">
+              Végösszeg: ${Math.round(osszes * 1.27).toLocaleString()} Ft
+          </div>
+      </div>
+  `.replace(/\s+/g, " "); // e-mail kódolási hibák elkerülése
+}
+
 
 
 //#region Autocomplete országokhoz
