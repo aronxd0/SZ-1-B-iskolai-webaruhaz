@@ -21,12 +21,7 @@ async function TermekModosit(url) {
 
     
 
-    /*
-    let file = $("#mod_foto")[0].files[0];
-    if (file) {
-      fd.append("foto", file);
-    }
-      */
+  
 
     console.log("");
     console.log("-----------FD------------");

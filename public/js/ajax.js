@@ -26,11 +26,11 @@ function ajax_post(urlsor, tipus) {
         $("body").append(spinner);
       },
       success: function(data) {
-        resolve(data); // promise megoldva, a “return” a sikeres aszinkron hívásnál.
+        resolve(data); // promise megoldva, a “return” a sikeres aszinkron hivasnal.
       },
       error: function(jqXHR) {
         üzen(jqXHR.responseText, "danger");
-        reject(jqXHR.responseText); // ❌ Promise elutasítva
+        reject(jqXHR.responseText); // promise elutasitva
       },
       complete: function() {
         $('#spinner-overlay').remove();
@@ -39,6 +39,9 @@ function ajax_post(urlsor, tipus) {
   });
 }
 
+
+
+// masik post fuggveny formdata-hoz (kep feltolteshez stimmeljen minden szar)
 
 function ajax_post_formdata(url, formData) {
   return new Promise((resolve, reject) => {
