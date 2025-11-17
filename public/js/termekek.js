@@ -11,19 +11,35 @@ async function TermekModosit(url) {
     const fd = new FormData(document.getElementById("mod1"));
 
     fd.append("ID_TERMEK", id_termek);
-    fd.append("mod_aktiv", aktiv);
 
-    // ha van új kép feltöltve → add hozzá
+
+    // eloszor kitorlom az aktiv erteket akarmi is az
+    fd.delete("mod_aktiv");
+
+    // majd hozzaadom ami van h fixen benne legyen
+    fd.append("mod_aktiv", $("#mySwitch").is(":checked") ? "YES" : "NO");
+
+    
+
+    /*
     let file = $("#mod_foto")[0].files[0];
     if (file) {
       fd.append("foto", file);
     }
+      */
 
-    console.log(fd);
+    console.log("");
+    console.log("-----------FD------------");
+    for (let [key, value] of fd.entries()) {
+      console.log(key, value);
+    }
+    console.log("-----------FD------------");
+    console.log("");
+    
 
-    console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
+    //console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
 
-    let termekmod = await ajax_post(`termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`); // aktiv is átküldve
+    let termekmod = await ajax_post_formdata(`termek_edit`, fd); 
     if (termekmod.message == "ok") {
       üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success");
     } else {
@@ -41,7 +57,7 @@ async function TermekModosit(url) {
 async function Termek_Edit(event, termek_id, tipus) {
   event.stopPropagation();
 
-  
+  $("#mod_foto").val("");
 
   //console.log(leiras);
 
@@ -121,7 +137,7 @@ async function Termek_Edit(event, termek_id, tipus) {
 
       // ha kivalasztok kepet feltolteskor akkor ne legyen fotolink
 
-      $("#mod_foto").on("change", function() {
+      $("#mod_foto").off("change").on("change", function() {
         if (this.files.length > 0) {
           console.log("Kiválasztott fájl:", this.files[0].name);
           $("#mod_fotolink").val("");
