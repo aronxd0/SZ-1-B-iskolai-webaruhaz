@@ -33,6 +33,47 @@ const pool = mysql.createPool({
 });
 
 
+
+
+
+const multer = require("multer");
+
+// hova mentse a képeket
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/img/uploads/"); 
+  },
+
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname); 
+    const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e5) + ext;
+    cb(null, uniqueName);
+  }
+});
+
+// MIME típus ellenőrzés (opcionális, de ajánlott)
+function fileFilter(req, file, cb) {
+  const allowed = ["image/jpeg", "image/png", "image/webp"];
+  if (allowed.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error("Csak képfájl tölthető fel!"), false);
+  }
+}
+
+const upload = multer({ storage, fileFilter });
+
+module.exports = upload;
+
+
+
+
+
+
+
+
+
+
 //#region kereses
 
 // POST /kategoria
@@ -740,10 +781,15 @@ app.post('/rendelesek_tetelei',async (req, res) => {
 //  - mod_leiras: (string) leírás
 //  - mod_aktiv: ("NO" vagy más) -> "N" vagy "Y"
 //  - ID_TERMEK: (int) melyik terméket módosítjuk
-app.post('/termek_edit', async (req, res) => {
+app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
+
+    console.log(req.body);
+
+
+    
     try {
-        var kategoria = req.query.mod_kat; // lehet undefined
-        let uj_kategoria = (req.query.uj_kat || "").trim(); // most biztonságos
+        var kategoria = req.body.mod_kat; // lehet undefined
+        let uj_kategoria = (req.body.uj_kat || "").trim(); // most biztonságos
 
         if ((kategoria == "" || typeof kategoria === 'undefined') && uj_kategoria == "") {
             res.set(header1, header2);
@@ -752,14 +798,17 @@ app.post('/termek_edit', async (req, res) => {
             return;
         }
 
-        var nev       = req.query.mod_nev;
-        var azon      = req.query.mod_azon;
-        var ar        = parseInt(req.query.mod_ar) || 0;
-        var mennyiseg = parseInt(req.query.mod_db) || 0;
-        var meegys    = req.query.mod_meegys || "";
-        var leiras    = req.query.mod_leiras || "";
-        var termekid  = parseInt(req.query.ID_TERMEK);
-        var aktiv     = (req.query.mod_aktiv == "NO" ? "N" : "Y");
+        var nev       = req.body.mod_nev;
+        var azon      = req.body.mod_azon;
+        var ar        = parseInt(req.body.mod_ar) || 0;
+        var mennyiseg = parseInt(req.body.mod_db) || 0;
+        var meegys    = req.body.mod_meegys || "";
+        var leiras    = req.body.mod_leiras || "";
+        var termekid  = parseInt(req.body.ID_TERMEK);
+        var aktiv     = (req.body.mod_aktiv == "NO" ? "N" : "Y");
+
+        let fotolink = req.body.mod_fotolink; // ha fajl van kivalasztva akkor ures
+        let fajl = req.file; // a kivalasztott fajl adatai
 
         //  kategoria id
         var kategoria_idje = null;
@@ -788,6 +837,11 @@ app.post('/termek_edit', async (req, res) => {
             return;
         }
 
+
+        console.log(`feltoltott fajl: ${fajl}`);
+
+
+        
         var sql = `
 UPDATE webbolt_termekek
 SET
@@ -802,6 +856,7 @@ SET
 WHERE ID_TERMEK = ?`;
         let ertekek = [kategoria_idje, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, termekid];
 
+        
         const eredmeny = await runExecute(sql, req, ertekek, true);
         res.set(header1, header2);
         res.send(eredmeny);
@@ -813,6 +868,8 @@ WHERE ID_TERMEK = ?`;
         res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor: " + err.message }));
         res.end();
     }
+        
+        
 });
 
 
