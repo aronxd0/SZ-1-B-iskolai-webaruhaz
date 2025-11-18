@@ -1,3 +1,5 @@
+
+
 function RendelesAblak(li) {
 
     Attekintes(li);
@@ -916,6 +918,7 @@ function Szallitasmodvalaszto(sigma) {
 async function Fizetésclick(li) {
   // rákattiontoo a fizetés gombra
   // ellenörizzük, hogy minden rendben van-e
+  let mindenjo = true;
     try{
       for (const element of li) { // ellenőrizzük, hogy abból a tételből van a még készleten a kivánt darabból
         var ell = await ajax_post(`rendeles_ellenorzes?ID_TERMEK=${element.ID_TERMEK}&MENNYISEG=${element.MENNYISEG}`, 1);
@@ -948,20 +951,25 @@ async function Fizetésclick(li) {
         üzen(e,"danger");
         $("#fizetes").modal("hide");
         document.getElementById("cart_button").click();
+        mindenjo = false;
     }
 
-    try{
-      const html = `${emailDesign(li)}`;
+    if(mindenjo){
+      try{
+        const html = `${emailDesign(li)}`;
+        
+        ajax_post_SpinnerNelkul(
+          `send-email?email=${_emil}&subject=${encodeURIComponent("Rendelés visszaigazolása")}&html=${encodeURIComponent(html)}`,
+          1
+        );
+  
+      }
+      catch{
+        console.log("Email küldési hiba!");
+      }
       
-      ajax_post(
-        `send-email?email=${_emil}&subject=${encodeURIComponent("Rendelés visszaigazolása")}&html=${encodeURIComponent(html)}`,
-        1
-      );
-
-    }
-    catch(e){
-      üzen("Hiba történt a visszaigazoló e-mail küldése során." + e,"warning");
-    }
+    } 
+    
 
     
 }
@@ -988,65 +996,93 @@ function emailDesign(li){
       osszes += e.PENZ;
   }
 
-  return `
-      <div style="
-          font-family:Arial, Helvetica, sans-serif;
-          max-width:700px;
-          margin:auto;
-          background:#ffffff;
-          border-radius:12px;
-          padding:25px 30px;
-          border:1px solid #e5e5e5;
+  return `<div style="background:#f6f2e8; padding:20px 0;">
+  <div style="
+      font-family:Arial, Helvetica, sans-serif;
+      max-width:700px;
+      margin:auto;
+      background:#ffffff;
+      border-radius:12px;
+      padding:25px 30px;
+      border:1px solid #e2e2e2;
+  ">
+    <div style="
+        text-align:center;
+        margin-bottom:25px;
+        background:#91ffbd;
+        padding:20px 0;
+        border-radius:10px;
+        box-shadow:0 2px 4px rgba(0,0,0,0.08);
+    ">
+      <h2 style="
+          margin:0;
+          font-size:24px;
+          color:#064e3b;
       ">
-        <h2 style="
-              margin-top:0;
-              font-size:22px;
-              color:#222;
-              text-align:center;
-          ">
-              Tisztelt ${_nev}!
-          </h2>
-          <h2 style="
-              margin-top:0;
-              font-size:22px;
-              color:#222;
-              text-align:center;
-          ">
-              Rendelésed tartalma
-          </h2>
+        Hurrá! A rendelésed sikeresen beérkezett hozzánk!
+      </h2>
 
-          <table style="width:100%;border-collapse:collapse;margin-top:20px;">
-              <thead>
-                  <tr style="background:#f1f1f1;color:#111;">
-                      <th style="padding:12px;border-bottom:1px solid #ddd;">Mennyiség</th>
-                      <th style="padding:12px;border-bottom:1px solid #ddd;">Termék</th>
-                      <th style="padding:12px;border-bottom:1px solid #ddd;">Ár</th>
-                  </tr>
-              </thead>
+      <h6 style="
+          font-size:16px;
+          color:#064e3b;
+          font-weight:400;
+          margin-top:12px;
+          line-height:1.5;
+      ">
+        Kedves ${_nev}!<br>
+        Köszönjük, hogy nálunk vásároltál!  
+        Ha bármilyen kérdésed van, fordulj hozzánk bizalommal.  
+        Az email további részében összefoglaltuk a rendelésed adatait. <br>
+        <strong>Üdvözlettel, a Csanya Webshop csapata</strong>
+      </h6>
+    </div>
 
-              <tbody>
-                  ${rows}
-              </tbody>
-          </table>
+    
+    <h2 style="
+        margin-top:0;
+        font-size:22px;
+        color:#065f46;
+        text-align:center;
+    ">
+      Rendelésed tartalma
+    </h2>
 
-          <div style="
-              text-align:right;
-              margin-top:25px;
-              font-size:15px;
-              
-              color:#059669;
-          ">
-             Összesen: ${Math.round(osszes * 1,27).toLocaleString()} Ft + Áfa
-          </div>
-           <div style="
-              text-align:right;
-              font-size:20px;
-              font-weight:bold;
-              color:#059669;
-          ">
-              Végösszeg: ${Math.round(osszes * 1.27).toLocaleString()} Ft
-          </div>
-      </div>
+    <!-- TABLE -->
+    <table style="width:100%;border-collapse:collapse;margin-top:20px;font-size:15px;">
+      <thead>
+        <tr style="background:#e0f7d7;color:#064e3b;">
+          <th style="padding:12px;border-bottom:2px solid #cceccc;">Mennyiség</th>
+          <th style="padding:12px;border-bottom:2px solid #cceccc;">Termék</th>
+          <th style="padding:12px;border-bottom:2px solid #cceccc;">Ár</th>
+        </tr>
+      </thead>
+
+      <tbody style="text-align:center; background:#ffffff;">
+        ${rows}
+      </tbody>
+    </table>
+
+    <!-- TOTALS -->
+    <div style="
+        text-align:right;
+        margin-top:25px;
+        font-size:15px;
+        color:#047857;
+    ">
+       Összesen: ${osszes } Ft + Áfa
+    </div>
+
+    <div style="
+        text-align:right; 
+        font-size:22px;
+        font-weight:bold;
+        color:#047857;
+    ">
+      Végösszeg: ${Math.round(osszes * 1.27).toLocaleString()} Ft
+    </div>
+
+  </div>
+</div>
   `.replace(/\s+/g, " "); // e-mail kódolási hibák elkerülése
 }
 
