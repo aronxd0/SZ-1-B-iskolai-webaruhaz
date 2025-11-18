@@ -839,6 +839,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 
 
         console.log(`feltoltott fajl: `, fajl);
+        console.log(fajl.path);
 
 
         
