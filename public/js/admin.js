@@ -2,6 +2,7 @@ function Admin_Velemenykezeles() {
 
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
+    $("#welcome_section").fadeOut(300);
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
