@@ -39,6 +39,8 @@ const pool = mysql.createPool({
 const multer = require("multer");
 
 // hova mentse a képeket
+
+/*
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/img/uploads/"); 
@@ -50,6 +52,8 @@ const storage = multer.diskStorage({
     cb(null, uniqueName);
   }
 });
+*/
+
 
 // MIME típus ellenőrzés (opcionális, de ajánlott)
 function fileFilter(req, file, cb) {
@@ -61,7 +65,7 @@ function fileFilter(req, file, cb) {
   }
 }
 
-const upload = multer({ storage, fileFilter });
+const upload = multer({ fileFilter });
 
 module.exports = upload;
 
