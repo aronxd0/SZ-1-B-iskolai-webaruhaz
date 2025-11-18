@@ -1069,7 +1069,7 @@ function emailDesign(li){
         font-size:15px;
         color:#047857;
     ">
-       Összesen: ${osszes } Ft + Áfa
+       Összesen: ${osszes.toLocaleString() } Ft + Áfa
     </div>
 
     <div style="
