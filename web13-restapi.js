@@ -33,8 +33,11 @@ const pool = mysql.createPool({
 });
 
 
+
+
+
 const multer = require("multer");
-/* 
+
 // hova mentse a képeket
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -47,8 +50,6 @@ const storage = multer.diskStorage({
     cb(null, uniqueName);
   }
 });
-*/
-
 
 // MIME típus ellenőrzés (opcionális, de ajánlott)
 function fileFilter(req, file, cb) {
@@ -837,10 +838,8 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         }
 
 
-        console.log(`feltoltott fajl: ${fajl}`);
-
-        
-        console.log()
+        console.log(`feltoltott fajl: `, fajl);
+        console.log(fajl.path);
 
 
         
