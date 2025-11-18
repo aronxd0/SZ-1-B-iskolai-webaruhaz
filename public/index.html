@@ -319,7 +319,7 @@
                       dark:bg-slate-900
                       dark:hover:bg-slate-900 
                       dark:hover:text-zinc-200 
-                      dark:text-zinc-200 
+                      dark:text-zinc-400 
                       
                       transition-hover duration-300 ease-in-out 
                       
@@ -357,7 +357,7 @@
                       
                       
                       dark:bg-slate-900 
-                      dark:text-zinc-200 
+                      dark:text-zinc-400 
                       dark:hover:bg-slate-900
                       dark:hover:text-zinc-200 
                       
@@ -389,7 +389,7 @@
                        
                       
                       dark:bg-slate-900 
-                      dark:text-zinc-200 
+                      dark:text-zinc-400 
                       dark:hover:bg-slate-900
                       dark:hover:text-zinc-200 
                       
@@ -429,7 +429,7 @@
                       
                       
                       dark:bg-slate-900 
-                      dark:text-zinc-200 
+                      dark:text-zinc-400 
                       dark:hover:bg-slate-900
                       dark:hover:text-zinc-200 
                       
@@ -453,7 +453,7 @@
                       
                       
                       dark:bg-slate-900 
-                      dark:text-zinc-200 
+                      dark:text-zinc-400 
                       dark:hover:bg-slate-900
                       dark:hover:text-zinc-200 
                       
@@ -476,7 +476,7 @@
                       
                       
                       dark:bg-slate-900 
-                      dark:text-zinc-200 
+                      dark:text-zinc-400 
                       dark:hover:bg-slate-900
                       dark:hover:text-zinc-200 
                       
@@ -499,7 +499,7 @@
                       
                       
                       dark:bg-slate-900 
-                      dark:text-zinc-200 
+                      dark:text-zinc-400 
                       dark:hover:bg-slate-900
                       dark:hover:text-zinc-200 
                       
@@ -1333,16 +1333,25 @@
                 </div>
 
                 <div class="col-12 col-lg-6 p-2">
-                    <label for="mod_azon" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-upload"></i> Fotó feltöltése</b></label>
+                    <label for="mod_foto" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-upload"></i> Fotó feltöltése</b></label>
+
                     <input type="file" 
-                    class="
-                    form-control 
-                    shadow-xl 
-                    bg-zinc-50 
-                    text-slate-900 
-                    dark:bg-slate-800 
-                    dark:text-zinc-200 
-                    " id="mod_foto" name="mod_foto" style="border: none;" accept=".jpg,.jpeg,.png,.webp">
+                      class="block w-full text-gray-500
+                        file:me-4 file:py-2 file:px-4
+                        file:rounded-lg file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-zinc-600 file:text-zinc-200 
+                        hover:file:bg-zinc-700
+                        file:disabled:opacity-50 file:disabled:pointer-events-none
+                        dark:text-zinc-400
+                        dark:file:bg-sky-900
+                        dark:file:text-zinc-200 
+                        dark:hover:file:bg-sky-950 
+                        file:cursor-pointer 
+                        transition-hover duration-300 ease-in-out
+                      " id="mod_foto" name="mod_foto" style="border: none;">
+
+                    
                     
                   
                 </div>
