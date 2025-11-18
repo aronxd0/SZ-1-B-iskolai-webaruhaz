@@ -237,9 +237,8 @@ function gen_SQL_kereses(req) {
         `;
         // Az offset a LIMIT-hez tartozó paraméterként kerül a végére
         ertekek.push(offset); 
-
-        console.log(sql);
         
+        console.log("Generated SQL:", sql);
         return { sql, values: ertekek };
     }
 }
