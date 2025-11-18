@@ -6,11 +6,22 @@ function Admin_Velemenykezeles() {
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
-        <div class="row">
-            <div class="col-12 text-center p-2 mt-3">
-                <span class="text-xl">admin velemenykezeles hely</span>
+        
+        <div class="d-flex flex-column flex-lg-row">
+
+            <div class="col-12 col-lg-4 text-center p-2 mt-3">
+                <span class="text-xl">jovahagyasra varo velemenyek</span>
+            </div>
+
+            <div class="col-12 col-lg-4 text-center p-2 mt-3">
+                <span class="text-xl">jovahagyott velemenyek</span>
+            </div>
+
+            <div class="col-12 col-lg-4 text-center p-2 mt-3">
+                <span class="text-xl">elutasitott velemenyek</span>
             </div>
         </div>
+        
         `).fadeIn(300);
         $("#pagi").html("");
     });
