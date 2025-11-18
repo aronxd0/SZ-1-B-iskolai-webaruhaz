@@ -838,7 +838,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         if (fajl != undefined && fotolink == "") {
             // van feltöltött fájl
             var filename = fajl.originalname;
-            var filepath = fajl.path;
+            var filepath = fajl.path.replaceAll("\\", "/");
 
             const er = await runQueries(`select count(*) as db, webbolt_fotok.FILEPATH from webbolt_fotok where webbolt_fotok.ID_TERMEK = ?`, [termekid]);
             const er_json = JSON.parse(er);
@@ -849,8 +849,9 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                     try{
                         await runExecute(`/*termek_edit - uj kepecske*/update webbolt_fotok set FILENAME = ?, FILEPATH = ? where ID_TERMEK = ?`, req, [filename, filepath, termekid], true);
                         //kép kitörlése a mappábol - régi kép
-                        if(fs.existsSync(er_json.rows[0].FILEPATH)){
-                            await fs.promises.unlink(er_json.rows[0].FILEPATH);
+                        console.log("törlendő kép fájlútvonala: ", er_json.rows[0].FILEPATH.replaceAll("\\", "/"));
+                        if(fs.existsSync(er_json.rows[0].FILEPATH.replaceAll("\\", "/"))){
+                            await fs.promises.unlink(er_json.rows[0].FILEPATH.replaceAll("\\", "/"));
                         }
                         else {
                             res.set(header1, header2);
@@ -881,8 +882,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 
 
         
-        var sql = `
-UPDATE webbolt_termekek
+        var sql = `UPDATE webbolt_termekek
 SET
   ID_KATEGORIA = ?,
   NEV = ?,
@@ -973,7 +973,7 @@ async function runExecute(sql, req, ertekek = [], naplozas) {
         // Napló bejegyzés (csak ha naplozas = true)
         if(naplozas)
         {
-          var naplozasraKeszSql = osszeallitottSqlNaplozasra(sql, ertekek);
+          var naplozasraKeszSql =  osszeallitottSqlNaplozasra(sql, ertekek).toString();
           // Naplózás: insert a naplo táblába (ID_USER session-ből)
           jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${naplozasraKeszSql.replaceAll("\"","'")}");`;
           await conn.execute(jrn);
