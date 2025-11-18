@@ -33,15 +33,15 @@ const pool = mysql.createPool({
 });
 
 
+//#region Multer setup kép feltöltéshez
 
-
-
+const fs = require("fs");
 const multer = require("multer");
 
 // hova mentse a képeket
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/img/uploads/"); 
+    cb(null, "public/img/uploads/");
   },
 
   filename: function (req, file, cb) {
@@ -53,7 +53,7 @@ const storage = multer.diskStorage({
 
 // MIME típus ellenőrzés (opcionális, de ajánlott)
 function fileFilter(req, file, cb) {
-  const allowed = ["image/jpeg", "image/png", "image/webp"];
+  const allowed = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
   if (allowed.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -65,13 +65,7 @@ const upload = multer({ storage, fileFilter });
 
 module.exports = upload;
 
-
-
-
-
-
-
-
+//#endregion
 
 
 //#region kereses
@@ -223,18 +217,17 @@ function gen_SQL_kereses(req) {
         var sql = 
         `
         SELECT 
-            t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, 
+            t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, CASE WHEN t.FOTOLINK IS NOT NULL THEN t.FOTOLINK ELSE webbolt_fotok.FILEPATH END AS FOTOLINK, t.LEIRAS, 
             k.KATEGORIA AS KATEGORIA
-            FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
+            FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k
             ON t.ID_KATEGORIA = k.ID_KATEGORIA
+            left JOIN webbolt_fotok ON t.ID_TERMEK = webbolt_fotok.ID_TERMEK
             ${where}
             ${order_van} ${order<0? "DESC": ""}
             limit 51 offset ?
         `;
         // Az offset a LIMIT-hez tartozó paraméterként kerül a végére
         ertekek.push(offset); 
-
-        console.log(sql);
         
         return { sql, values: ertekek };
     }
@@ -560,7 +553,7 @@ app.post('/tetelek',(req, res) => {
 
     let selectFields = termekid > (-1) 
         ? "webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR" 
-        : "webbolt_termekek.NEV, webbolt_termekek.AR, webbolt_termekek.FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
+        : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILEPATH END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
 
     let whereClause = `WHERE webbolt_kosar.ID_USER = ?`;
     let ertekek = [session_data.ID_USER];
@@ -575,6 +568,7 @@ app.post('/tetelek',(req, res) => {
         FROM webbolt_kosar_tetelei
         INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
         INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
+        ${termekid > (-1) ? "" : "left JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK"}
         ${whereClause}
     `;
     sendJson_toFrontend(res, sql, ertekek);
@@ -610,10 +604,11 @@ app.post('/rendeles',async (req, res) => {
     // 1. Kosár tételek lekérdezése (Termékek listája)
     var termemekek_sql = 
     `
-    SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, t.FOTOLINK
+    SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILEPATH END AS FOTOLINK
     FROM webbolt_kosar_tetelei ct
     INNER JOIN webbolt_kosar k ON ct.ID_KOSAR = k.ID_KOSAR
     INNER JOIN webbolt_termekek t ON ct.ID_TERMEK = t.ID_TERMEK
+    left JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
     WHERE k.ID_USER = ?
     `;
     var termekek_ertekek = [session_data.ID_USER];
@@ -785,8 +780,6 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 
     console.log(req.body);
 
-
-    
     try {
         var kategoria = req.body.mod_kat; // lehet undefined
         let uj_kategoria = (req.body.uj_kat || "").trim(); // most biztonságos
@@ -807,7 +800,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         var termekid  = parseInt(req.body.ID_TERMEK);
         var aktiv     = (req.body.mod_aktiv == "NO" ? "N" : "Y");
 
-        let fotolink = req.body.mod_fotolink; // ha fajl van kivalasztva akkor ures
+        let fotolink = req.body.mod_fotolink.trim(); // ha fajl van kivalasztva akkor ures
         let fajl = req.file; // a kivalasztott fajl adatai
 
         //  kategoria id
@@ -821,7 +814,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                 kategoria_idje = sel.rows[0].ID_KATEGORIA;
             } else {
                 // 2) nincs ilyen -> beszúrjuk (runExecute visszaadása JSON string)
-                const rawIns = await runExecute(`/*termek_add - nem volt ilyen kategoria*/INSERT INTO webbolt_kategoriak (KATEGORIA) VALUES (?)`, req, [uj_kategoria], true);
+                const rawIns = await runExecute(`/*termek_edit - nem volt ilyen kategoria*/INSERT INTO webbolt_kategoriak (KATEGORIA) VALUES (?)`, req, [uj_kategoria], true);
                 const ins = JSON.parse(rawIns);
                 kategoria_idje = ins.rows.insertId;
             }
@@ -838,7 +831,53 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         }
 
 
-        console.log(`feltoltott fajl: ${fajl}`);
+        console.log(`feltoltott fajl:`, fajl);
+
+
+        //fotolink kezelése
+        if (fajl != undefined && fotolink == "") {
+            // van feltöltött fájl
+            var filename = fajl.originalname;
+            var filepath = fajl.path;
+
+            const er = await runQueries(`select count(*) as db, webbolt_fotok.FILEPATH from webbolt_fotok where webbolt_fotok.ID_TERMEK = ?`, [termekid]);
+            const er_json = JSON.parse(er);
+
+            if (er_json.message === "ok") {
+                if (er_json.rows[0].db > 0) {
+                    // van már fotó, frissítjük
+                    try{
+                        await runExecute(`/*termek_edit - uj kepecske*/update webbolt_fotok set FILENAME = ?, FILEPATH = ? where ID_TERMEK = ?`, req, [filename, filepath, termekid], true);
+                        //kép kitörlése a mappábol - régi kép
+                        if(fs.existsSync(er_json.rows[0].FILEPATH)){
+                            await fs.promises.unlink(er_json.rows[0].FILEPATH);
+                        }
+                        else {
+                            res.set(header1, header2);
+                            res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor - kepecske delete" }));
+                            res.end();
+                        return;
+                        }
+
+                    }
+                    catch(err){
+                        res.set(header1, header2);
+                        res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor - kepecske frissítése" }));
+                        res.end();
+                        return;
+                    }
+                } else {
+                    // nincs még fotó, beszúrjuk
+                    await runExecute(`/*termek_edit - uj kepecske*/insert into webbolt_fotok (ID_TERMEK, FILENAME, FILEPATH) values (?, ?, ?)`, req, [termekid, filename, filepath], true);
+                }
+            }
+            else{
+                res.set(header1, header2);
+                res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor - kepecske" }));
+                res.end();
+                return;
+            }
+        }
 
 
         
@@ -852,9 +891,10 @@ SET
   MENNYISEG = ?,
   MEEGYS = ?,
   LEIRAS = ?,
-  AKTIV = ?
+  AKTIV = ?,
+  FOTOLINK = ?
 WHERE ID_TERMEK = ?`;
-        let ertekek = [kategoria_idje, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, termekid];
+        let ertekek = [kategoria_idje, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, fotolink == "" ? null : fotolink, termekid];
 
         
         const eredmeny = await runExecute(sql, req, ertekek, true);
@@ -882,9 +922,10 @@ app.post('/termek_adatok',async (req, res) => {
     let termekid  = parseInt(req.query.ID_TERMEK);
 
     let sql = `
-        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, webbolt_termekek.AR, webbolt_termekek.MENNYISEG, webbolt_termekek.FOTOLINK, webbolt_termekek.MEEGYS, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
+        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, webbolt_termekek.AR, webbolt_termekek.MENNYISEG, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILEPATH END AS FOTOLINK, webbolt_termekek.MEEGYS, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
         FROM webbolt_termekek 
         INNER JOIN webbolt_kategoriak ON webbolt_termekek.ID_KATEGORIA = webbolt_kategoriak.ID_KATEGORIA
+        left JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
         WHERE webbolt_termekek.ID_TERMEK = ?
     `;
     let ertekek = [termekid];

@@ -176,7 +176,7 @@ function Termek_Torol(event, cuccok) {
   event.stopPropagation();
   const termek_id = cuccok[0];
  console.log("bejoszssssssssssssssss")
-  $("#delete_modal .modal-body").html(`Biztosan törlöd a(z) <b>${termek_id}.</b> azonosítójú terméket?`);
+  $("#delete_modal .modal-body").html(`Biztosan törlöd a(z) <b>${termek_id}.</b> azonosítójú terméket?<br><br>A termék örökre el fog veszni (ami hosszú idő).`);
   $("#delete_modal").off("click");
   $("#delete_modal").on("click", ".btn-danger", async function () {
     try {
@@ -251,7 +251,7 @@ async function Termek_Mutat(event, termek_id) {
     const mennyiseg = termekadatok.rows[0].MENNYISEG;
     const aktiv = termekadatok.rows[0].AKTIV;
     const meegys = termekadatok.rows[0].MEEGYS;
-    const fotolink = termekadatok.rows[0].FOTOLINK;
+    const fotolink = termekadatok.rows[0].FOTOLINK.replace("public","");  //.replaceAll("\\", "/").replace("public","");
     const leiras = termekadatok.rows[0].LEIRAS;
 
 
@@ -607,7 +607,7 @@ function CARD_BETOLT(adatok) {
               
               shadow-lg 
               m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
-                <img class="card-img-top img-fluid img-thumbnail mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
+                <img class="card-img-top img-fluid img-thumbnail mx-auto d-block kepp" src="${element.FOTOLINK.replace('public','')}" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <span class="card-title text-lg">${element.NEV} </span> <br> <span class="text-sm">(${element.KATEGORIA})</span>
                     <p class="card-text">

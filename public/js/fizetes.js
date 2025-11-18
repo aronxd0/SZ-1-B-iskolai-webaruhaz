@@ -262,7 +262,7 @@ function Adatok(li) {
                     dark:shadow-xl 
                     " id="emil"
 
-                     value="${  _emil != "" ? _emil : document.getElementById("user-email").innerHTML}" 
+                     value="" 
 
                      name="imel" placeholder="pl.: futyimre69@valami.xd" style="border: none;">
                     
