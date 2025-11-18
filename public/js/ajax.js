@@ -9,7 +9,7 @@ function üzen(mit, tip)  {
 }
 
 
-function ajax_post(urlsor, tipus) {
+function ajax_post(urlsor, tipus) { // harmadik tipus 
   return new Promise((resolve, reject) => {
     $.ajax({
       url: urlsor,
@@ -38,6 +38,26 @@ function ajax_post(urlsor, tipus) {
     });
   });
 }
+
+function ajax_post_SpinnerNelkul(urlsor, tipus) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: urlsor,
+      type: "post",
+      async: true,
+      cache: false,
+      dataType: tipus === 0 ? "html" : "json",
+      success: function(data) {
+        resolve(data); // promise megoldva, a “return” a sikeres aszinkron hivasnal.
+      },
+      error: function(jqXHR) {
+        üzen(jqXHR.responseText, "danger");
+        reject(jqXHR.responseText); // promise elutasitva
+      },    
+    });
+  });
+}
+
 
 
 
