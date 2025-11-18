@@ -251,7 +251,7 @@ async function Termek_Mutat(event, termek_id) {
     const mennyiseg = termekadatok.rows[0].MENNYISEG;
     const aktiv = termekadatok.rows[0].AKTIV;
     const meegys = termekadatok.rows[0].MEEGYS;
-    const fotolink = termekadatok.rows[0].FOTOLINK.replaceAll("\\", "/");
+    const fotolink = termekadatok.rows[0].FOTOLINK.replaceAll("\\", "/").replace("public","");
     const leiras = termekadatok.rows[0].LEIRAS;
 
 
