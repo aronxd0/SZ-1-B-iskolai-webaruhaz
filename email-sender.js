@@ -16,12 +16,18 @@ async function sendEmail(to, subject, html) {
             pass: process.env.APP_PASSWORD,
         }
     });
+    const fs = require('fs'); // fájl beolvasásához
 
     const info = await transporter.sendMail({
-        from: `"Csany webaruhaz" <${process.env.USER}>`,
+        from: `"Csány webaruhaz" <${process.env.USER}>`,
         to,
         subject,
-        html
+        html,
+        attachments: [{
+            filename: 'logo2.png', // csatolt fájl neve
+            content: fs.readFileSync("public/img/logo2.png"), // fájl beolvasása ami csatolva lesz
+            cid: 'logo2@example.com' // azonosító a HTML-ben való hivatkozáshoz
+        }],
     });
 
     return info;

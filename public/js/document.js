@@ -87,6 +87,8 @@ $(document).ready(function() {
         }
     });
 
+    
+
 
     // jelszo mutatasa ikon a bejelentkezesnel
     $("#jelszo_mutatasa").click(function() {
