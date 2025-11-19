@@ -1247,8 +1247,10 @@ function emailDesign(li){
         border-radius:10px;
         box-shadow:0 2px 4px rgba(0,0,0,0.08);
     ">
-    <div style="text-align:center; margin-bottom:15px; ">
-    <img src="cid:logo2@example.com" style="width:200px; height:auto;" />
+    <div style="text-align:center; margin-bottom:15px;">
+        <a href="#_" style="text-decoration:none; cursor:default;">
+            <img src="cid:logo2@example.com" style="width:200px; height:auto;" />
+        </a>
     </div>
       <h2 style="
           margin:0;
