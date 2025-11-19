@@ -138,10 +138,12 @@ label::after { content: none !important; }
 .gombdiv.aktiv { 
   border-bottom: 1px solid oklch(20.8% 0.042 265.755);
   color: oklch(20.8% 0.042 265.755);
+
 } 
 
 .gombdiv.aktiv button {
   color: oklch(20.8% 0.042 265.755);
+  font-weight: bold;
 }
 
 /* sotet modban */
@@ -152,6 +154,7 @@ html.dark .gombdiv.aktiv {
 
 html.dark .gombdiv.aktiv button {
   color: oklch(92% 0.004 286.32);
+  font-weight: bold;
 }
 
 
