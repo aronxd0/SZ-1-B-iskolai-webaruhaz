@@ -1106,11 +1106,6 @@ app.post('/send-email', async (req, res) => {
         const html = req.query.html 
         const subject = req.query.subject
 
-        if (!email) {
-            res.set(header1, header2);
-            res.send(JSON.stringify({ message: 'Hiányzó paraméter: email' }));
-            return;
-        }
 
         console.log('Sending email to:', email);
         console.log('Subject:', subject);
