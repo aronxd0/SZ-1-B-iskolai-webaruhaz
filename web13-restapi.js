@@ -32,27 +32,20 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-
-
+// longblob hoz
+const fs = require("fs");
 
 
 const multer = require("multer");
 
 // hova mentse a képeket
 
-/*
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/img/uploads/"); 
-  },
-
-  filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname); 
-    const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e5) + ext;
-    cb(null, uniqueName);
-  }
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage,
+  limits: { fileSize: 15 * 1024 * 1024 }, // képméret 15mb
+  fileFilter: fileFilter
 });
-*/
 
 
 // MIME típus ellenőrzés (opcionális, de ajánlott)
@@ -65,15 +58,8 @@ function fileFilter(req, file, cb) {
   }
 }
 
-const upload = multer({ fileFilter });
 
 module.exports = upload;
-
-
-
-
-
-
 
 
 
@@ -238,7 +224,6 @@ function gen_SQL_kereses(req) {
         // Az offset a LIMIT-hez tartozó paraméterként kerül a végére
         ertekek.push(offset); 
         
-        console.log("Generated SQL:", sql);
         return { sql, values: ertekek };
     }
 }
@@ -785,18 +770,18 @@ app.post('/rendelesek_tetelei',async (req, res) => {
 //  - mod_aktiv: ("NO" vagy más) -> "N" vagy "Y"
 //  - ID_TERMEK: (int) melyik terméket módosítjuk
 app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
-
-    console.log(req.body);
-
-
     
     try {
+
         var kategoria = req.body.mod_kat; // lehet undefined
         let uj_kategoria = (req.body.uj_kat || "").trim(); // most biztonságos
 
-        if ((kategoria == "" || typeof kategoria === 'undefined') && uj_kategoria == "") {
+        let fotolink = req.body.mod_fotolink; // ha fajl van kivalasztva akkor ures
+        let fajl = req.file; // a kivalasztott fajl adatai
+
+        if ((kategoria == "" || typeof kategoria === 'undefined') && uj_kategoria == "" && (!fajl || typeof fajl === 'undefined') && (fotolink == "" || typeof fotolink === 'undefined')) {
             res.set(header1, header2);
-            res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor - nincs kategória" }));
+            res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor - hiba a kategóriában vagy a képben" }));
             res.end();
             return;
         }
@@ -810,8 +795,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         var termekid  = parseInt(req.body.ID_TERMEK);
         var aktiv     = (req.body.mod_aktiv == "NO" ? "N" : "Y");
 
-        let fotolink = req.body.mod_fotolink; // ha fajl van kivalasztva akkor ures
-        let fajl = req.file; // a kivalasztott fajl adatai
+
 
         //  kategoria id
         var kategoria_idje = null;
@@ -842,10 +826,38 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 
 
         console.log(`feltoltott fajl: `, fajl);
-        console.log(fajl.path);
 
 
+        // kép kíirása longtextként az adatbázisba
+        if(fotolink === "") {
+            fotolink = null;
+            var longblob_fajl = `data:${fajl.mimetype};base64,` + fajl.buffer.toString('base64');
+            const rawSel = await runQueries(`SELECT ID_TERMEK FROM webbolt_fotok WHERE ID_TERMEK = ?`, [termekid]);
+            const sel = JSON.parse(rawSel);
+            if (sel.message === "ok" && sel.maxcount > 0) {
+                // frissítjük a meglévő fotót
+                await runExecute(`/*termek_add - kep frissitese*/UPDATE webbolt_fotok SET FILENAME = ?, IMG = ? WHERE ID_TERMEK = ?`, req, [fajl.originalname, longblob_fajl, termekid], true);
+}
+            else{
+                // új fotó beszúrása
+                await runExecute(`/*termek_add - uj kep*/INSERT INTO webbolt_fotok (ID_TERMEK, FILENAME, IMG) VALUES (?, ?, ?)`, req, [termekid, fajl.originalname, longblob_fajl], true);
+                await runExecute(`/*termek_add - kep frissitese miatt termek_fotolink null*/UPDATE webbolt_termekek SET FOTOLINK = NULL WHERE ID_TERMEK = ?`, req, [termekid], true);
+            }
+        }
+        else{
+            // csak fotolink frissítése
+            const rawSel = await runQueries(`SELECT IMG FROM webbolt_fotok WHERE ID_TERMEK = ?`, [termekid]);
+            const sel = JSON.parse(rawSel);
+            if(sel.rows[0].IMG == null){
+                await runExecute(`/*termek_add - uj keplink*/UPDATE webbolt_termekek SET FOTOLINK = ? WHERE ID_TERMEK = ?`, req, [fotolink, termekid], true);
+            }
+            else{
+                await runExecute(`/*termek_add - keplink frissitese*/UPDATE webbolt_fotok SET IMG = NULL WHERE ID_TERMEK = ?`, req, [termekid], true);
+                await runExecute(`/*termek_add - keplink frissitese miatt termek_fotolink*/UPDATE webbolt_termekek SET FOTOLINK = ? WHERE ID_TERMEK = ?`, req, [fotolink, termekid], true);
+            }
+        }
         
+
         var sql = `
 UPDATE webbolt_termekek
 SET
