@@ -527,7 +527,7 @@ function Fizetes(li) {
                   has-[:checked]:shadow-md">
 
             <div class="flex items-center gap-3">
-              <input type="radio" name="fizz" class="form-check-input" checked>
+              <input type="radio" name="fizz" class="form-check-input" id="kartya" onchange="Fizetesmodvalaszto(this)">
               <span class="font-semibold">Bankkártya</span>
             </div>
 
@@ -576,7 +576,7 @@ function Fizetes(li) {
                   has-[:checked]:shadow-md">
 
             <div class="flex items-center gap-3">
-              <input type="radio" name="fizz" class="form-check-input">
+              <input type="radio" name="fizz" class="form-check-input" id="paypal" onchange="Fizetesmodvalaszto(this)">
               <span class="font-semibold">PayPal</span>
             </div>
 
@@ -629,13 +629,28 @@ function Fizetes(li) {
                   has-[:checked]:shadow-md">
 
             <div class="flex items-center gap-3">
-              <input type="radio" name="fizz" class="form-check-input">
+              <input type="radio" name="fizz" class="form-check-input" id="googlepay" onchange="Fizetesmodvalaszto(this)">
               <span class="font-semibold">Google Pay</span>
             </div>
 
             <div class="flex flex-col text-right">
-              <span class="font-semibold">$249 / mo ($2490 / yr)</span>
-              <span class="text-sm text-indigo-600">Unlimited active job postings</span>
+              <svg height="30" width="50" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 
+              xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2387.3 948" xml:space="preserve" 
+              fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" 
+              stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+               <style type="text/css"> .st0{fill:#5F6368;} .st1{fill:#4285F4;} .st2{fill:#34A853;} .st3{fill:#FBBC04;} .st4{fill:#EA4335;} 
+               </style> <g> <path class="st0" d="M1129.1,463.2V741h-88.2V54.8h233.8c56.4-1.2,110.9,20.2,151.4,59.4c41,36.9,64.1,89.7,63.2,144.8 
+               c1.2,55.5-21.9,108.7-63.2,145.7c-40.9,39-91.4,58.5-151.4,58.4L1129.1,463.2L1129.1,463.2z M1129.1,139.3v239.6h147.8 c32.8,1,64.4-11.9,87.2-35.5c46.3-45,47.4-119.1,2.3-165.4c-0.8-0.8-1.5-1.6-2.3-2.3c-22.5-24.1-54.3-37.3-87.2-36.4L1129.1,139.3
+                L1129.1,139.3z M1692.5,256.2c65.2,0,116.6,17.4,154.3,52.2c37.7,34.8,56.5,82.6,56.5,143.2V741H1819v-65.2h-3.8 
+                c-36.5,53.7-85.1,80.5-145.7,80.5c-51.7,0-95-15.3-129.8-46c-33.8-28.5-53-70.7-52.2-115c0-48.6,18.4-87.2,55.1-115.9 
+                c36.7-28.7,85.7-43.1,147.1-43.1c52.3,0,95.5,9.6,129.3,28.7v-20.2c0.2-30.2-13.2-58.8-36.4-78c-23.3-21-53.7-32.5-85.1-32.1 
+                c-49.2,0-88.2,20.8-116.9,62.3l-77.6-48.9C1545.6,286.8,1608.8,256.2,1692.5,256.2L1692.5,256.2z M1578.4,597.3 
+                c-0.1,22.8,10.8,44.2,29.2,57.5c19.5,15.3,43.7,23.5,68.5,23c37.2-0.1,72.9-14.9,99.2-41.2c29.2-27.5,43.8-59.7,43.8-96.8 
+                c-27.5-21.9-65.8-32.9-115-32.9c-35.8,0-65.7,8.6-89.6,25.9C1590.4,550.4,1578.4,571.7,1578.4,597.3L1578.4,597.3z M2387.3,271.5
+                 L2093,948h-91l109.2-236.7l-193.6-439.8h95.8l139.9,337.3h1.9l136.1-337.3L2387.3,271.5z"></path> </g> <path class="st1"
+                  d="M772.8,403.2c0-26.9-2.2-53.7-6.8-80.2H394.2v151.8h212.9c-8.8,49-37.2,92.3-78.7,119.8v98.6h127.1
+                   C729.9,624.7,772.8,523.2,772.8,403.2L772.8,403.2z"></path> <path class="st2" d="M394.2,788.5c106.4,0,196-34.9,261.3-95.2l-127.1-98.6c-35.4,24-80.9,37.7-134.2,37.7 
+                   c-102.8,0-190.1-69.3-221.3-162.7H42v101.6C108.9,704.5,245.2,788.5,394.2,788.5z"></path> <path class="st3" d="M172.9,469.7c-16.5-48.9-16.5-102,0-150.9V217.2H42c-56,111.4-56,242.7,0,354.1L172.9,469.7z"></path> <path class="st4" d="M394.2,156.1c56.2-0.9,110.5,20.3,151.2,59.1L658,102.7C586.6,35.7,492.1-1.1,394.2,0 C245.2,0,108.9,84.1,42,217.2l130.9,101.6C204.1,225.4,291.4,156.1,394.2,156.1z"></path> </g></svg>
             </div>
           </label>
 
@@ -648,13 +663,27 @@ function Fizetes(li) {
                   has-[:checked]:shadow-md">
 
             <div class="flex items-center gap-3">
-              <input type="radio" name="fizz" class="form-check-input">
+              <input type="radio" name="fizz" class="form-check-input" id="applepay" onchange="Fizetesmodvalaszto(this)">
               <span class="font-semibold">Apple Pay</span>
             </div>
 
             <div class="flex flex-col text-right">
-              <span class="font-semibold">$249 / mo ($2490 / yr)</span>
-              <span class="text-sm text-indigo-600">Unlimited active job postings</span>
+              <svg height="30" width="50" viewBox="0 -11 70 70" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0">
+              </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
+              <rect x="0.5" y="0.5" width="69" height="47" rx="5.5" fill="white" stroke="#D9D9D9"></rect> <path fill-rule="evenodd"
+               clip-rule="evenodd" d="M19.1601 16.6863C18.5726 17.3901 17.6325 17.9452 16.6924 17.8659C16.5749 16.9143 17.0352 15.9032 17.5737
+                15.2787C18.1613 14.5551 19.1895 14.0397 20.0219 14C20.1198 14.9913 19.7379 15.9627 19.1601 16.6863ZM20.012 18.0542C19.1838 
+                18.006 18.4281 18.3064 17.8177 18.549C17.4249 18.7051 17.0923 18.8373 16.8392 18.8373C16.5552 18.8373 16.2089 18.6981 15.82 18.5417L15.82 
+                18.5417L15.82 18.5417L15.82 18.5417C15.3104 18.3368 14.7278 18.1025 14.1169 18.1137C12.7166 18.1335 11.4142 18.9365 10.6993 20.2152C9.23044
+                 22.7726 10.3174 26.5593 11.7373 28.6409C12.4326 29.6718 13.265 30.8018 14.3617 30.7622C14.8442 30.7438 15.1913 30.5947 15.5505 30.4404C15.9641
+                  30.2628 16.3937 30.0782 17.0645 30.0782C17.712 30.0782 18.1228 30.2579 18.5172 30.4305C18.8921 30.5945 19.2522 30.752 19.7868 30.7424C20.9227
+                   30.7225 21.6376 29.7115 22.3328 28.6806C23.0831 27.5741 23.4129 26.4943 23.4629 26.3304L23.4688 26.3114C23.4676 26.3102 23.4583 26.3059 23.4419
+                    26.2984C23.1911 26.1821 21.274 25.2937 21.2557 22.9114C21.2372 20.9118 22.7762 19.8987 23.0185 19.7392C23.0332 19.7295 23.0432 19.723 23.0477
+                     19.7196C22.0684 18.2525 20.5408 18.0939 20.012 18.0542ZM27.8755 30.6333V15.1796H33.6041C36.5615 15.1796 38.6277 17.2414 38.6277 20.2548C38.6277
+                      23.2683 36.5223 25.3499 33.5258 25.3499H30.2453V30.6333H27.8755ZM30.2451 17.2018H32.9772C35.0336 17.2018 36.2087 18.312 36.2087 20.2648C36.2087 
+                      22.2175 35.0336 23.3377 32.9674 23.3377H30.2451V17.2018ZM46.452 28.7797C45.8253 29.989 44.4445 30.7523 42.9561 30.7523C40.7527 30.7523 39.2153 
+                      29.424 39.2153 27.4217C39.2153 25.4391 40.7038 24.2992 43.4555 24.1307L46.4128 23.9522V23.0998C46.4128 21.8409 45.6 21.1569 44.1508 21.1569C42.9561 
+                      21.1569 42.0845 21.7814 41.9083 22.733H39.7735C39.842 20.7307 41.7026 19.2735 44.2193 19.2735C46.9318 19.2735 48.6945 20.7108 48.6945 22.9412V30.6333H46.501V28.7797H46.452ZM43.5924 28.9185C42.3292 28.9185 41.5262 28.3039 41.5262 27.3622C41.5262 26.3908 42.2998 25.8257 43.7785 25.7365L46.4127 25.568V26.4403C46.4127 27.8876 45.1984 28.9185 43.5924 28.9185ZM55.9702 31.238C55.0204 33.9442 53.9334 34.8363 51.6224 34.8363C51.4461 34.8363 50.8585 34.8165 50.7214 34.7768V32.9232C50.8683 32.943 51.2307 32.9628 51.4167 32.9628C52.4645 32.9628 53.0521 32.5167 53.4144 31.357L53.6298 30.673L49.6149 19.4222H52.0924L54.8833 28.5517H54.9322L57.7231 19.4222H60.1321L55.9702 31.238Z" fill="#000000"></path> </g></svg>
             </div>
           </label>
 
@@ -672,7 +701,7 @@ function Fizetes(li) {
                   has-[:checked]:shadow-md">
 
             <div class="flex items-center gap-3">
-              <input type="radio" name="szall" class="form-check-input" checked>
+              <input type="radio" name="szall" class="form-check-input" id="mpl" onchange="Szallitasmodvalaszto(this)">
               <span class="font-semibold">MPL</span>
             </div>
 
@@ -691,7 +720,7 @@ function Fizetes(li) {
                   has-[:checked]:shadow-md">
 
             <div class="flex items-center gap-3">
-              <input type="radio" name="szall" class="form-check-input">
+              <input type="radio" name="szall" class="form-check-input" id="gls" onchange="Szallitasmodvalaszto(this)">
               <span class="font-semibold">GLS</span>
             </div>
 
@@ -710,7 +739,7 @@ function Fizetes(li) {
                   has-[:checked]:shadow-md">
 
             <div class="flex items-center gap-3">
-              <input type="radio" name="szall" class="form-check-input">
+              <input type="radio" name="szall" class="form-check-input" id="expressone" onchange="Szallitasmodvalaszto(this)">
               <span class="font-semibold">Express One</span>
             </div>
 
