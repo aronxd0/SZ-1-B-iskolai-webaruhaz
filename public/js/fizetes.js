@@ -958,7 +958,7 @@ async function Fizetésclick(li) {
       try{
         const html = `${emailDesign(li)}`;
         
-        ajax_post_SpinnerNelkul("send-email", {
+        ajax_post_SpinnerNelkul("send-email", { // 2 adata egyfajta tömb amit majd a backend fogad
           email: _emil,
           subject: "Rendelés visszaigazolása",
           html: html
@@ -1086,7 +1086,8 @@ function emailDesign(li){
     </div>
 
   </div>
-</div>
+
+
   `
 }
 

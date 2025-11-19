@@ -4,7 +4,7 @@ const express   = require('express');
 const session   = require('express-session');
 const { stringify } = require('querystring');
 
-const { sendEmail } = require('./email-sender');  // email küldő
+
 
 
 
@@ -15,8 +15,9 @@ require('dotenv').config({ path: path.join(__dirname, '.env') }); // <- .env hoz
 const app       = express();
 const port      = 9012;
 
+//email-sender.js 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); // emailnek kell, hogy app.postnak legyem bodyja is
 
 // Változók a válasz headerhez
 const header1 = 'Content-Type';
@@ -1068,13 +1069,14 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
 
 //#region email_kuldes
 
+const { sendEmail } = require('./email-sender');  // email küldő
+
 app.post('/send-email', async (req, res) => {
     try {
-        const { email, subject, html } = req.body;
+        const { email, subject, html } = req.body; // lekérjük a body-ból az adatokat
 
-        console.log("BACKEND HTML:", html); // így látod, jó-e
-
-        await sendEmail(email, subject, html);
+            console.log("email küldése: ", email,);
+        await sendEmail(email, subject, html); 
 
         res.json({ message: 'Email sikeresen elküldve' });
     } catch (err) {

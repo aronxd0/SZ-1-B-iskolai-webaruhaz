@@ -16,7 +16,7 @@ async function sendEmail(to, subject, html) {
             pass: process.env.APP_PASSWORD,
         }
     });
-    const fs = require('fs');
+    const fs = require('fs'); // fájl beolvasásához
 
     const info = await transporter.sendMail({
         from: `"Csany webaruhaz" <${process.env.USER}>`,
@@ -24,9 +24,9 @@ async function sendEmail(to, subject, html) {
         subject,
         html,
         attachments: [{
-            filename: 'logo2.png',
-            content: fs.readFileSync("public/img/logo2.png"),
-            cid: 'logo2@example.com' // same cid value as in the html img src
+            filename: 'logo2.png', // csatolt fájl neve
+            content: fs.readFileSync("public/img/logo2.png"), // fájl beolvasása ami csatolva lesz
+            cid: 'logo2@example.com' // azonosító a HTML-ben való hivatkozáshoz
         }],
     });
 
