@@ -9,7 +9,7 @@ function üzen(mit, tip)  {
 }
 
 
-function ajax_post(urlsor, tipus) { // harmadik tipus 
+function ajax_post(urlsor, tipus) {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: urlsor,
@@ -39,25 +39,25 @@ function ajax_post(urlsor, tipus) { // harmadik tipus
   });
 }
 
-function ajax_post_SpinnerNelkul(urlsor, tipus) {
-  return new Promise((resolve, reject) => {
+function ajax_post_SpinnerNelkul(urlsor, adat) { // emailnek a ajaxposta 
+  return new Promise((resolve, reject) => { // 2 paraméter küldése ami a backendnek kell html/email/subject 
     $.ajax({
       url: urlsor,
       type: "post",
       async: true,
       cache: false,
-      dataType: tipus === 0 ? "html" : "json",
+      data: adat,           // <<< KELL !!! az a + adat ami a hmtl / subject / email
+      dataType: "json",
       success: function(data) {
-        resolve(data); // promise megoldva, a “return” a sikeres aszinkron hivasnal.
+        resolve(data);
       },
       error: function(jqXHR) {
         üzen(jqXHR.responseText, "danger");
-        reject(jqXHR.responseText); // promise elutasitva
+        reject(jqXHR.responseText);
       },    
     });
   });
 }
-
 
 
 

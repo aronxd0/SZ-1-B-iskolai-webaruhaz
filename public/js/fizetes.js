@@ -1203,10 +1203,11 @@ async function Fizetésclick(li) {
       try{
         const html = `${emailDesign(li)}`;
         
-        ajax_post_SpinnerNelkul(
-          `send-email?email=${_emil}&subject=${encodeURIComponent("Rendelés visszaigazolása")}&html=${encodeURIComponent(html)}`,
-          1
-        );
+        ajax_post_SpinnerNelkul("send-email", { // 2 adata egyfajta tömb amit majd a backend fogad
+          email: _emil,
+          subject: "Rendelés visszaigazolása",
+          html: html
+      });
   
       }
       catch{
@@ -1259,6 +1260,9 @@ function emailDesign(li){
         border-radius:10px;
         box-shadow:0 2px 4px rgba(0,0,0,0.08);
     ">
+    <div style="text-align:center; margin-bottom:15px; ">
+    <img src="cid:logo2@example.com" style="width:200px; height:auto;" />
+    </div>
       <h2 style="
           margin:0;
           font-size:24px;
@@ -1327,8 +1331,9 @@ function emailDesign(li){
     </div>
 
   </div>
-</div>
-  `.replace(/\s+/g, " "); // e-mail kódolási hibák elkerülése
+
+
+  `
 }
 
 

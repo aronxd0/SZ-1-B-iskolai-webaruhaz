@@ -3,13 +3,21 @@ const mysql     = require('mysql2/promise');
 const express   = require('express');
 const session   = require('express-session');
 const { stringify } = require('querystring');
-const { sendEmail } = require('./email-sender');  // email küldő
+
+
+
+
+
 
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') }); // <- .env hozzáadva
 
 const app       = express();
 const port      = 9012;
+
+//email-sender.js 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // emailnek kell, hogy app.postnak legyem bodyja is
 
 // Változók a válasz headerhez
 const header1 = 'Content-Type';
@@ -1061,25 +1069,19 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
 
 //#region email_kuldes
 
+const { sendEmail } = require('./email-sender');  // email küldő
+
 app.post('/send-email', async (req, res) => {
     try {
-       
-        const name = req.query.name ;
-        const email = req.query.email;
-        const html = req.query.html 
-        const subject = req.query.subject
+        const { email, subject, html } = req.body; // lekérjük a body-ból az adatokat
 
+            console.log("email küldése: ", email,);
+        await sendEmail(email, subject, html); 
 
-        console.log('Sending email to:', email);
-        console.log('Subject:', subject);
-        await sendEmail(email, subject, html);
-
-        res.set(header1, header2);
-        res.send(JSON.stringify({ message: 'Email sikeresen elküldve' }));
+        res.json({ message: 'Email sikeresen elküldve' });
     } catch (err) {
         console.error('Email hiba:', err);
-        res.set(header1, header2);
-        res.send(JSON.stringify({ message: 'Email hiba: ' + err.message }));
+        res.json({ message: 'Email hiba: ' + err.message });
     }
 });
 
