@@ -213,10 +213,11 @@ function gen_SQL_kereses(req) {
         var sql = 
         `
         SELECT 
-            t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, t.FOTOLINK, t.LEIRAS, 
+            t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, CASE WHEN t.FOTOLINK IS NOT NULL THEN t.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, t.LEIRAS, 
             k.KATEGORIA AS KATEGORIA
             FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
             ON t.ID_KATEGORIA = k.ID_KATEGORIA
+            left join webbolt_fotok ON t.ID_TERMEK = webbolt_fotok.ID_TERMEK
             ${where}
             ${order_van} ${order<0? "DESC": ""}
             limit 51 offset ?
@@ -548,7 +549,7 @@ app.post('/tetelek',(req, res) => {
 
     let selectFields = termekid > (-1) 
         ? "webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR" 
-        : "webbolt_termekek.NEV, webbolt_termekek.AR, webbolt_termekek.FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
+        : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
 
     let whereClause = `WHERE webbolt_kosar.ID_USER = ?`;
     let ertekek = [session_data.ID_USER];
@@ -563,6 +564,7 @@ app.post('/tetelek',(req, res) => {
         FROM webbolt_kosar_tetelei
         INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
         INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
+        left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
         ${whereClause}
     `;
     sendJson_toFrontend(res, sql, ertekek);
@@ -598,10 +600,11 @@ app.post('/rendeles',async (req, res) => {
     // 1. Kosár tételek lekérdezése (Termékek listája)
     var termemekek_sql = 
     `
-    SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, t.FOTOLINK
+    SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, CASE WHEN t.FOTOLINK IS NOT NULL THEN t.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK
     FROM webbolt_kosar_tetelei ct
     INNER JOIN webbolt_kosar k ON ct.ID_KOSAR = k.ID_KOSAR
     INNER JOIN webbolt_termekek t ON ct.ID_TERMEK = t.ID_TERMEK
+    left join webbolt_fotok ON t.ID_TERMEK = webbolt_fotok.ID_TERMEK
     WHERE k.ID_USER = ?
     `;
     var termekek_ertekek = [session_data.ID_USER];
@@ -841,18 +844,16 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
             else{
                 // új fotó beszúrása
                 await runExecute(`/*termek_add - uj kep*/INSERT INTO webbolt_fotok (ID_TERMEK, FILENAME, IMG) VALUES (?, ?, ?)`, req, [termekid, fajl.originalname, longblob_fajl], true);
-                await runExecute(`/*termek_add - kep frissitese miatt termek_fotolink null*/UPDATE webbolt_termekek SET FOTOLINK = NULL WHERE ID_TERMEK = ?`, req, [termekid], true);
             }
         }
         else{
             // csak fotolink frissítése
             const rawSel = await runQueries(`SELECT IMG FROM webbolt_fotok WHERE ID_TERMEK = ?`, [termekid]);
             const sel = JSON.parse(rawSel);
-            if(sel.rows[0].IMG == null){
+            if(sel.rows[0].IMG == null && sel.maxcount == 0){
                 await runExecute(`/*termek_add - uj keplink*/UPDATE webbolt_termekek SET FOTOLINK = ? WHERE ID_TERMEK = ?`, req, [fotolink, termekid], true);
             }
             else{
-                await runExecute(`/*termek_add - keplink frissitese*/UPDATE webbolt_fotok SET IMG = NULL WHERE ID_TERMEK = ?`, req, [termekid], true);
                 await runExecute(`/*termek_add - keplink frissitese miatt termek_fotolink*/UPDATE webbolt_termekek SET FOTOLINK = ? WHERE ID_TERMEK = ?`, req, [fotolink, termekid], true);
             }
         }
@@ -898,9 +899,10 @@ app.post('/termek_adatok',async (req, res) => {
     let termekid  = parseInt(req.query.ID_TERMEK);
 
     let sql = `
-        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, webbolt_termekek.AR, webbolt_termekek.MENNYISEG, webbolt_termekek.FOTOLINK, webbolt_termekek.MEEGYS, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
+        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, webbolt_termekek.AR, webbolt_termekek.MENNYISEG, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILENAME END AS FOTONEV, webbolt_termekek.MEEGYS, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
         FROM webbolt_termekek 
         INNER JOIN webbolt_kategoriak ON webbolt_termekek.ID_KATEGORIA = webbolt_kategoriak.ID_KATEGORIA
+        left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
         WHERE webbolt_termekek.ID_TERMEK = ?
     `;
     let ertekek = [termekid];

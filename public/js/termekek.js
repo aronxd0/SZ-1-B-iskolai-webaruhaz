@@ -72,6 +72,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       leiras = ta.rows[0].LEIRAS;
       id_kategoria = ta.rows[0].ID_KATEGORIA;
       fotolink = ta.rows[0].FOTOLINK;
+      fotonev = ta.rows[0].FOTONEV;
     }
     
     
@@ -107,7 +108,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       $("#mod_azon").val(azon);
       $("#mod_ar").val(ar);
       $("#mod_db").val(mennyiseg);
-      $("#mod_fotolink").val(fotolink);
+      $("#mod_fotolink").val(fotonev);
       $("#mod_meegys").val(meegys);
       var datum = new Date();
       $("#mod_datum").val(datum.toISOString().split("T")[0]);
@@ -138,7 +139,7 @@ async function Termek_Edit(event, termek_id, tipus) {
           $("#mod_fotolink").val("");
         } else {
           console.log("Nincs semmi kiválasztva.");
-          $("#mod_fotolink").val(fotolink);
+          $("#mod_fotolink").val(fotonev);
         }
       });
 
@@ -251,7 +252,7 @@ async function Termek_Mutat(event, termek_id) {
     const mennyiseg = termekadatok.rows[0].MENNYISEG;
     const aktiv = termekadatok.rows[0].AKTIV;
     const meegys = termekadatok.rows[0].MEEGYS;
-    const fotolink = termekadatok.rows[0].FOTOLINK;  //.replaceAll("\\", "/").replace("public","");
+    const fotolink = termekadatok.rows[0].FOTOLINK; 
     const leiras = termekadatok.rows[0].LEIRAS;
 
 
