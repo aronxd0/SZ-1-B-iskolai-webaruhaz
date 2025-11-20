@@ -5,10 +5,6 @@ const session   = require('express-session');
 const { stringify } = require('querystring');
 
 
-
-
-
-
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') }); // <- .env hozzáadva
 
@@ -40,13 +36,11 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-// longblob hoz
-const fs = require("fs");
 
+
+// képes csoda
 
 const multer = require("multer");
-
-// hova mentse a képeket
 
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -65,7 +59,6 @@ function fileFilter(req, file, cb) {
     cb(new Error("Csak képfájl tölthető fel!"), false);
   }
 }
-
 
 module.exports = upload;
 
@@ -1062,7 +1055,7 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
         
         let ertek = ertekek[i++];
 
-        if(ertek.substring(0,5) === "data:") {
+        if(typeof ertek === "string" && ertek.substring(0,5) === "data:") {
             return "'<<BINARY DATA>>'";
         }
         
