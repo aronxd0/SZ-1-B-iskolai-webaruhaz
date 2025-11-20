@@ -787,9 +787,6 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         let fajl = req.file; // a kivalasztott fajl adatai
 
         if ((kategoria == "" || typeof kategoria === 'undefined') && uj_kategoria == "" && (!fajl || typeof fajl === 'undefined') && (fotolink == "" || typeof fotolink === 'undefined')) {
-            res.set(header1, header2);
-            res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor - hiba a kategóriában vagy a képben" }));
-            res.end();
             return;
         }
 
@@ -886,7 +883,7 @@ WHERE ID_TERMEK = ?`;
     } catch (err) {
         console.error('termek_edit hiba:', err);
         res.set(header1, header2);
-        res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor: " + err.message }));
+        res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor: "  }));
         res.end();
     }
         
