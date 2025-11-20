@@ -276,6 +276,9 @@ app.post('/velemenyek',(req, res) => {
     else if (szelektalas == 1) {
         whereFeltetelek.push(`webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'`);
     }
+    else if (szelektalas == 2) {
+        whereFeltetelek.push(`webbolt_velemenyek.ALLAPOT = 'Elutasítva'`);
+    }
     
     if (sajatvelemeny == 1 && session_data.ID_USER) {
         // ha kéri a saját véleményeket és be van lépve, csak az ő user-ére szűrünk
