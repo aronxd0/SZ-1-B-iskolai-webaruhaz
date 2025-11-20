@@ -1058,6 +1058,10 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
         }
         
         let ertek = ertekek[i++];
+
+        if(ertek.substring(0,5) === "data:") {
+            return "'<<BINARY DATA>>'";
+        }
         
         // Ha null vagy undefined, térjen vissza 'NULL' értékkel (idezőjelek nélkül)
         if (ertek === null || typeof ertek === 'undefined') {
