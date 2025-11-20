@@ -97,7 +97,13 @@ async function AdminVelemenyekMutat(asd) {
 
             let varo = await ajax_post("velemenyek?szelektalas=1", 1);
 
-            if (varo.rows.length == 0) { $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek jóváhagyásra váró vélemények.</div>"); return; }
+            if (varo.rows.length == 0) { 
+                $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek jóváhagyásra váró vélemények.</div>");
+
+                }).fadeIn(300);
+                
+             }
             else {
                 for (const element of varo.rows) {
                     ss += `
@@ -123,13 +129,50 @@ async function AdminVelemenyekMutat(asd) {
                                     hour12: false
                                 })}</span></p>
                     <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                    <div class="d-flex justify-content-end gap-2 mt-2">
+                        <button 
+                        class="
+                        btn 
+                        
+                        bi bi-x-lg 
+                        bg-zinc-600 
+                        text-zinc-200 
+                        rounded-4 
+                        dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        hover:bg-zinc-700 
+                        hover:text-zinc-200 
+                        dark:hover:bg-slate-950 
+                        dark:hover:text-zinc-200
+                        transition-hover duration-300 ease-in-out 
+                            w-auto" > Elutasítás </button>
+
+                        <button 
+                        class="
+                        btn 
+                        
+                        bi bi-check2  
+                        bg-zinc-600 
+                        text-zinc-200 
+                        rounded-4 
+                        dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        hover:bg-zinc-700 
+                        hover:text-zinc-200 
+                        dark:hover:bg-slate-950 
+                        dark:hover:text-zinc-200
+                        transition-hover duration-300 ease-in-out 
+                            w-auto" > Jóváhagyás </button>
+                    </div>
                 </div>`;
                 }
+
+                $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html(ss).fadeIn(300);
+                });
             }
 
-            $("#velemenyek_hely").fadeOut(300, function() {
-                $("#velemenyek_hely").html(ss).fadeIn(300);
-            });
+            
 
 
         } catch (err) { console.log("hiba:", err);}
@@ -138,10 +181,106 @@ async function AdminVelemenyekMutat(asd) {
         //$("#velemenyek_hely").html("ide a jovahagyasra varo velemenyek");
     }
     else if (asd.id == "jovahagyott") {
-        $("#velemenyek_hely").html("ide a jovahagyott velemenyek");
+        try {
+
+            let sv = ``;
+
+            let stimm = await ajax_post("velemenyek?szelektalas=0", 1);
+
+            if (stimm.rows.length == 0) { 
+               $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek jóváhagyott vélemények.</div>");
+
+                }).fadeIn(300);
+            }
+            else {
+                for (const element of stimm.rows) {
+                    sv += `
+                <div 
+                class="
+                    w-100 
+                    p-3 
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-700 
+                    dark:text-zinc-200 
+                    mt-3 
+                    mb-3 
+                    comment">
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                })}</span></p>
+                    <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                </div>`;
+                }
+
+                $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html(sv).fadeIn(300);
+                });
+            }
+
+            
+
+
+        } catch (err) { console.log("hiba:", err);}
     }
     else if (asd.id == "elutasitott") {
-        $("#velemenyek_hely").html("ide az elutasitott velemenyek");
+        try {
+
+            let ssg = ``;
+
+            let dec = await ajax_post("velemenyek?szelektalas=2", 1);
+
+            if (dec.rows.length == 0) { 
+                $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek elutasított vélemények.</div>");
+
+                }).fadeIn(300);
+             }
+            else {
+                for (const element of dec.rows) {
+                    ssg += `
+                <div 
+                class="
+                    w-100 
+                    p-3 
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-700 
+                    dark:text-zinc-200 
+                    mt-3 
+                    mb-3 
+                    comment">
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                })}</span></p>
+                    <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                </div>`;
+                }
+
+                $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html(ssg).fadeIn(300);
+                });
+            }
+
+            
+
+
+        } catch (err) { console.log("hiba:", err);}
     }
 }
 

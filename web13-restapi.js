@@ -285,6 +285,8 @@ app.post('/velemenyek',(req, res) => {
 
     sql += `ORDER BY DATUM DESC`;
 
+    console.log(sql);
+
     sendJson_toFrontend (res, sql, ertekek);
 });
 
