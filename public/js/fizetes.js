@@ -1092,7 +1092,7 @@ function emailDesign(li){
         Köszönjük, hogy nálunk vásároltál!  
         Ha bármilyen kérdésed van, fordulj hozzánk bizalommal.  
         Az email további részében összefoglaltuk a rendelésed adatait. <br>
-        <strong>Üdvözlettel, a Csany Websáruház csapata</strong>
+        <strong>Üdvözlettel, a Csany Webáruház csapata</strong>
       </h6>
     </div>
 

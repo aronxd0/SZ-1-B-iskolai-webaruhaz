@@ -996,9 +996,6 @@ try {
         // Ellenőrzés, hogy tartalmaz-e tiltott parancsot
         const nem_select = nem_select_parancsok.some(cucci => sql.toLowerCase().includes(cucci));
 
-        console.log("HTML SQL kérés: ", sql, "sql hossz: ", sql.length);
-        console.log("nem_select: ", nem_select);
-
 
         // Engedélyezzük a SELECT-et, de csak akkor, ha nem tartalmaz tiltott parancsot
         if (!nem_select) 
@@ -1094,7 +1091,7 @@ async function runExecute(sql, req, ertekek = [], naplozas) {
         [res1] = await conn.query(sql, ertekek); // execute a paraméterezett SQL-lel
 
         // Napló bejegyzés (csak ha naplozas = true)
-        if(naplozas)
+        if(naplozas && res1.affectedRows > 0)
         {
           var naplozasraKeszSql = osszeallitottSqlNaplozasra(sql, ertekek);
           // Naplózás: insert a naplo táblába (ID_USER session-ből)
