@@ -457,7 +457,7 @@ function SQLinput() {
 
 async function KER_CLICk(){
     try{
-         if(sql_input_area.value.replaceAll(/\n/g, " ") =="") throw "Üres a lekérdezés mező";
+        if(sql_input_area.value.replaceAll(/\n/g, " ").trim() =="") throw "Üres a lekérdezés mező";
 
          
         var adat = await ajax_post(`html_sql?SQL=${sql_input_area.value.replaceAll(/\n/g, " ")}`,1)    
