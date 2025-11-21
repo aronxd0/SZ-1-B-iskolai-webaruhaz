@@ -474,7 +474,7 @@ async function KER_CLICk(){
                     html += "<tr>";
     
                     for (var nev of tablamevek) {
-                        html += `<td>${item[nev].toString()}</td>`;
+                        html += `<td>${item[nev] == null ? item[nev] : item[nev].toString() }</td>`;
                     }
     
                     html += "</tr>";
