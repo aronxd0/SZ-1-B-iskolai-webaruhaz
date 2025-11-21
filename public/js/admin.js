@@ -404,6 +404,7 @@ async function KER_CLICk(){
     try{
          
         var adat = await ajax_post(`html_sql?SQL=${sql_input_area}`,1)
+        document.getElementById("SQL_hiba").innerHTML =adat ;
     }
     catch(e){
         var sad = ` <div class="border border-danger rounded-4 bg-zinc-50 p-3   shadow-xl  "> 
