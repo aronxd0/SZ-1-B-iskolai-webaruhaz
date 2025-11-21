@@ -459,7 +459,7 @@ function SQLinput() {
 async function KER_CLICk(){
     try{
          
-        var adat = await ajax_post(`html_sql?SQL=${sql_input_area.value.replaceAll(/\n˛/g, " ")}`,1)    
+        var adat = await ajax_post(`html_sql?SQL=${sql_input_area.value.replaceAll(/\n/g, " ")}`,1)    
 
         if(adat.select == true){
             if (adat.adat.rows.length > 0) {
@@ -469,7 +469,7 @@ async function KER_CLICk(){
                 console.log(" tablanevek"+ tablamevek);
                 // elso sor betölt 
                 for(var nevek of tablamevek){
-                    html += `<th class="p-2">${ nevek.toString()}</th>`
+                    html += `<tr> <th class="p-2">${ nevek.toString()}</th></tr>`
                 }
 
                 for (var item of adat.adat.rows) {
