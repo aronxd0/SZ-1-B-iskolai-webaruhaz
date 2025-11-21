@@ -1012,17 +1012,30 @@ try {
                 throw new Error(parsed.message);
             }
 
-            // rekurzív csere a bináris adatok maszkolására
+            // Rekurzív függvény, ami bejár egy értéket (objektum/tömb/érték) és minden
+            // 'data:' prefixel kezdődő stringet maszkol '-- BINARY DATA --' szövegre.
             function maskBinaryValues(value) {
+                // Ha null vagy undefined, marad változatlanul (nincs mit maszkolni)
                 if (value === null || typeof value === 'undefined') return value;
+
+                // Ha sima string, ellenőrizzük a prefixet:
+                // - ha 'data:'-val kezdődik (data-URI / base64 kép), visszaadjuk a maszkolt szöveget
+                // - különben visszaadjuk az eredeti stringet változatlanul
                 if (typeof value === 'string') {
-                    return value.startsWith('data:') ? '<<BINARY DATA>>' : value;
+                    return value.startsWith('data:') ? '-- BINARY DATA --' : value;
                 }
+
+                // Ha tömböt kaptunk, minden elemre rekurzívan meghívjuk ugyanazt a függvényt
                 if (Array.isArray(value)) return value.map(maskBinaryValues);
+
+                // Ha objektumot kaptunk, egyesével az összes kulcsára/értékére
+                // rekurzívan maszkolunk (módosítás inplace - az eredeti objektumot változtatja)
                 if (typeof value === 'object') {
                     for (const k of Object.keys(value)) value[k] = maskBinaryValues(value[k]);
                     return value;
                 }
+
+                // Más típusok (szám, boolean, stb.) változatlanul visszakerülnek
                 return value;
             }
 
@@ -1184,7 +1197,7 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
         let ertek = ertekek[i++];
 
         if(typeof ertek === "string" && ertek.substring(0,5) === "data:") {
-            return "'<<BINARY DATA>>'";
+            return "'-- BINARY DATA --'";
         }
         
         // Ha null vagy undefined, térjen vissza 'NULL' értékkel (idezőjelek nélkül)
