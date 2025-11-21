@@ -366,15 +366,13 @@ html.dark ::-webkit-scrollbar-thumb {
   font-family: 'Poppins', sans-serif;
 }
 
-#top-navbar {
-  width: 70%;
-}
 
-@media (min-width: 992px) {
-  #top-navbar {
-    width: 60%;
+@media (max-width: 1400px) {
+  #top-navbar.offcanvas-start {
+    width: 270px !important;
   }
 }
+
 
 
 
