@@ -330,6 +330,44 @@ app.post('/velemeny_del', async (req, res) => {
     } catch (err) { console.log(err) }      
 });
 
+
+app.post('/velemeny_elfogad', async (req, res) => {
+    try {
+        var velemenyid = parseInt(req.query.ID_VELEMENY);
+        
+        var sql = `
+        UPDATE webbolt_velemenyek 
+        SET ALLAPOT = "Jóváhagyva"
+        WHERE ID_VELEMENY = ?
+        `;
+        let ertekek = [velemenyid];
+
+        const eredmeny = await runExecute(sql, req, ertekek, false);
+        res.send(eredmeny);
+        res.end();
+
+    } catch (err) { console.log(err) }      
+});
+
+
+app.post('/velemeny_elutasit', async (req, res) => {
+    try {
+        var velemenyid = parseInt(req.query.ID_VELEMENY);
+        
+        var sql = `
+        UPDATE webbolt_velemenyek 
+        SET ALLAPOT = "Elutasítva"
+        WHERE ID_VELEMENY = ?
+        `;
+        let ertekek = [velemenyid];
+
+        const eredmeny = await runExecute(sql, req, ertekek, false);
+        res.send(eredmeny);
+        res.end();
+
+    } catch (err) { console.log(err) }      
+});
+
 //#endregion
 
 //#region login/logoff

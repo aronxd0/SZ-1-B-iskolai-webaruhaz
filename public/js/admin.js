@@ -145,7 +145,7 @@ async function AdminVelemenyekMutat(asd) {
                         dark:hover:bg-slate-950 
                         dark:hover:text-red-600
                         transition-hover duration-300 ease-in-out 
-                            w-auto" > Elutasítás </button>
+                            w-auto" onclick="Velemeny_Elutasit(${element.ID_VELEMENY})"> Elutasítás </button>
 
                         <button 
                         class="
@@ -162,7 +162,7 @@ async function AdminVelemenyekMutat(asd) {
                         dark:hover:bg-slate-950 
                         dark:hover:text-emerald-600
                         transition-hover duration-300 ease-in-out 
-                            w-auto" > Jóváhagyás </button>
+                            w-auto" onclick="Velemeny_Elfogad(${element.ID_VELEMENY})"> Jóváhagyás </button>
                     </div>
                 </div>`;
                 }
@@ -285,6 +285,49 @@ async function AdminVelemenyekMutat(asd) {
         } catch (err) { console.log("hiba:", err);}
     }
 }
+
+
+
+
+
+async function Velemeny_Elutasit(id_velemeny) {
+    try {
+
+        let elutasit = await ajax_post(`velemeny_elutasit?ID_VELEMENY=${id_velemeny}`, 1);
+
+        if (elutasit.message == "ok") {
+            üzen("Művelet sikeresen végrehajtva","success");
+        }
+        else { üzen(elutasit.message, "danger"); }
+
+
+        AdminVelemenyekMutat($("#varo")[0]);
+
+    } catch (err) { console.log("hiba:", err); }
+}
+
+async function Velemeny_Elfogad(id_velemeny) {
+    try {
+
+        let elfogad = await ajax_post(`velemeny_elfogad?ID_VELEMENY=${id_velemeny}`, 1);
+
+        if (elfogad.message == "ok") {
+            üzen("Művelet sikeresen végrehajtva","success");
+        }
+        else { üzen(elfogad.message, "danger"); }
+        
+        AdminVelemenyekMutat($("#varo")[0]);
+
+
+    } catch (err) { console.log("hiba:", err); }
+}
+
+
+
+
+
+
+
 
 
 
