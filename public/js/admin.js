@@ -403,7 +403,7 @@ function SQLinput() {
 async function KER_CLICk(){
     try{
          
-        var adat = await ajax_post(`html_sql?SQL=${sql_input_area}`,1)
+        var adat = await ajax_post(`html_sql?SQL=${sql_input_area.value}`,1)
         document.getElementById("SQL_hiba").innerHTML =adat ;
     }
     catch(e){
