@@ -516,15 +516,28 @@ function Fizetes(li) {
 
       let form = `
       <div class="row d-flex flex-column flex-lg-row p-3">
-        <div class="col-12 col-lg-6 mx-auto mt-5 space-y-2">
+        <div class="col-12 col-lg-6 mx-auto mt-5 space-y-3">
           <span class="text-lg p-1">Válasszon fizetési módot</span>
           <!-- bankkartya -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            shadow-xl 
+            text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="kartya" onchange="Fizetesmodvalaszto(this)">
@@ -569,11 +582,24 @@ function Fizetes(li) {
 
           <!-- paypal -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            shadow-xl 
+            text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="paypal" onchange="Fizetesmodvalaszto(this)">
@@ -622,11 +648,24 @@ function Fizetes(li) {
 
           <!-- google pay -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            text-slate-900 
+            shadow-xl 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="googlepay" onchange="Fizetesmodvalaszto(this)">
@@ -656,11 +695,24 @@ function Fizetes(li) {
 
           <!-- apple pay -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            text-slate-900 
+            shadow-xl 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="applepay" onchange="Fizetesmodvalaszto(this)">
@@ -680,15 +732,28 @@ function Fizetes(li) {
         </div>
 
 
-        <div class="col-12 col-lg-6 mx-auto mt-5 space-y-2">
+        <div class="col-12 col-lg-6 mx-auto mt-5 space-y-3">
           <span class="text-lg p-1">Válasszon szállítási módot</span>
           <!-- mpl -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            shadow-xl 
+            text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="szall" class="form-check-input" id="mpl" onchange="Szallitasmodvalaszto(this)">
@@ -702,11 +767,24 @@ function Fizetes(li) {
 
           <!-- gls -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            shadow-xl 
+            text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="szall" class="form-check-input" id="gls" onchange="Szallitasmodvalaszto(this)">
@@ -720,11 +798,24 @@ function Fizetes(li) {
 
           <!-- express one -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            text-slate-900 
+            shadow-xl 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                  transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="szall" class="form-check-input" id="expressone" onchange="Szallitasmodvalaszto(this)">
@@ -742,262 +833,6 @@ function Fizetes(li) {
       `;
 
 
-
-
-      /*
-      let form = `
-      <div class="row mt-3">
-        <div class="col-12 col-lg-6">
-        
-          <div class="col-12 text-center p-2">
-            
-            Fizetési mód kiválasztása
-          </div>
-
-          <div class="col-12 d-flex flex-wrap justify-content-center p-3">
-            <div class="col-6 col-sm-3 d-flex justify-content-center gap-3">
-              
-              <input type="radio" class="form-check-input peer hidden" name="fiz" id="googlepay" onchange="Fizetesmodvalaszto(this)">
-              <label
-                for="googlepay" 
-                
-                class="
-                peer-checked:bg-slate-900 
-                peer-checked:text-zinc-200 
-                dark:peer-checked:bg-slate-700 
-                dark:peer-checked:text-zinc-200 
-                p-2  
-                rounded-xl 
-                transition-all 
-                duration-200 
-                
-                gap-2 
-                cursor-pointer 
-                border border-gray-400 
-                dark:border-gray-700 
-                hover:shadow-md 
-                d-flex align-items-center 
-                " 
-              >
-                
-                <i class="bi bi-google"></i>
-                
-                Google Pay
-              </label>
-              
-            </div>
-
-            <div class="col-6 col-sm-3 d-flex justify-content-center gap-3">
-              <input type="radio" class="peer hidden form-check-input" name="fiz" id="applepay" onchange="Fizetesmodvalaszto(this)">
-              <label 
-                for="applepay" 
-                class="
-                peer-checked:bg-slate-900 
-                peer-checked:text-zinc-200 
-                dark:peer-checked:bg-slate-700 
-                dark:peer-checked:text-zinc-200 
-                p-2  
-                rounded-xl 
-                transition-all 
-                duration-200 
-                
-                gap-2 
-                cursor-pointer 
-                border border-gray-400 
-                dark:border-gray-700 
-                hover:shadow-md 
-                d-flex align-items-center "
-              >
-                
-                <i class="bi bi-apple"></i>
-                
-                Apple Pay
-              </label>
-              
-            </div>
-
-            <div class="col-6 col-sm-3 d-flex justify-content-center gap-3">
-              <input type="radio" class="peer hidden form-check-input" name="fiz" id="paypal" onchange="Fizetesmodvalaszto(this)">
-              <label 
-                for="paypal" 
-                class="
-                peer-checked:bg-slate-900 
-                peer-checked:text-zinc-200 
-                dark:peer-checked:bg-slate-700 
-                dark:peer-checked:text-zinc-200 
-                p-2  
-                rounded-xl 
-                transition-all 
-                duration-200 
-                
-                gap-2 
-                cursor-pointer 
-                border border-gray-400 
-                dark:border-gray-700 
-                hover:shadow-md 
-                d-flex align-items-center "
-              >
-                
-                <i class="bi bi-paypal"></i>
-                
-                 PayPal
-              </label>
-              
-            </div>
-
-            <div class="col-6 col-sm-3 d-flex justify-content-center gap-3">
-              <input type="radio" class="peer hidden form-check-input" name="fiz" id="kartya" onchange="Fizetesmodvalaszto(this)">
-              <label 
-                for="kartya" 
-                class="
-                peer-checked:bg-slate-900 
-                peer-checked:text-zinc-200 
-                dark:peer-checked:bg-slate-700 
-                dark:peer-checked:text-zinc-200 
-                p-2 
-                rounded-xl 
-                transition-all 
-                duration-200 
-                gap-2 
-                cursor-pointer 
-                border border-gray-400 
-                dark:border-gray-700 
-                hover:shadow-md 
-                d-flex align-items-center "
-              >
-                
-                
-                <i class="bi bi-credit-card"></i>
-                Bankkártya
-              </label>
-              
-            </div>
-
-
-          </div>
-
-          <div class="col-12 p-2 m-2 d-flex flex-column flex-sm-row" id="fm">
-          
-          
-          </div>
-
-
-
-        </div>
-
-        <div class="col-12 col-lg-6">
-          <div class="col-12 text-center p-2">
-            Szállítási mód kiválasztása
-          </div>
-
-          <div class="col-12 d-flex flex-row justify-content-center p-3">
-            <div class="d-flex justify-content-center gap-3 m-2">
-              
-              <input type="radio" class="form-check-input peer hidden" name="szal" id="mpl" onchange="Szallitasmodvalaszto(this)">
-              <label
-                for="mpl" 
-                
-                class="
-                peer-checked:bg-slate-900 
-                peer-checked:text-zinc-200 
-                dark:peer-checked:bg-slate-700 
-                dark:peer-checked:text-zinc-200 
-                p-2  
-                rounded-xl 
-                transition-all 
-                duration-200 
-                
-                gap-2 
-                cursor-pointer 
-                border border-gray-400 
-                dark:border-gray-700 
-                hover:shadow-md 
-                d-flex align-self-center
-                " 
-              >
-                
-                <img src="img/mplsvg.png" alt="MPL logo" class="w-5 h-5">
-                
-                <span>MPL</span>
-              </label>
-              
-            </div>
-
-            <div class="d-flex justify-content-center gap-3">
-              <input type="radio" class="peer hidden form-check-input" name="szal" id="expressone" onchange="Szallitasmodvalaszto(this)">
-              <label 
-                for="expressone" 
-                class="
-                peer-checked:bg-slate-900 
-                peer-checked:text-zinc-200 
-                dark:peer-checked:bg-slate-700 
-                dark:peer-checked:text-zinc-200 
-                p-2  
-                rounded-xl 
-                transition-all 
-                duration-200 
-                
-                gap-2 
-                cursor-pointer 
-                border border-gray-400 
-                dark:border-gray-700 
-                hover:shadow-md 
-                d-flex align-self-center"
-              >
-                
-                <img src="img/expressonesvg.png" alt="Express One logo" class="w-5 h-5">
-                
-                <span>Express One</span> 
-              </label>
-              
-            </div>
-
-            <div class="d-flex justify-content-center gap-3">
-              <input type="radio" class="peer hidden form-check-input" name="szal" id="gls" onchange="Szallitasmodvalaszto(this)">
-              <label 
-                for="gls" 
-                class="
-                peer-checked:bg-slate-900 
-                peer-checked:text-zinc-200 
-                dark:peer-checked:bg-slate-700 
-                dark:peer-checked:text-zinc-200 
-                p-2 
-                rounded-xl 
-                transition-all 
-                duration-200 
-                gap-2 
-                cursor-pointer 
-                border border-gray-400 
-                dark:border-gray-700 
-                hover:shadow-md 
-                d-flex align-self-center"
-              >
-                
-                
-                <img src="img/gls.png" alt="GLS logo" class="w-5 h-5 rounded">
-                
-                <span>GLS</span>
-              </label>
-              
-            </div>
-
-
-          </div>
-
-
-
-        </div>
-
-
-      <div class="col-12 mt-2 p-1 text-danger text-center" id="hibauzen"></div>
-
-
-      </div>
-
-      `;
-
-
-      */
 
     $("#cc").fadeOut(300, function() {
         $("#cc").html(form).fadeIn(300);
