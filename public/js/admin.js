@@ -426,6 +426,7 @@ function SQLinput() {
                 
                 text-zinc-200 
                 bg-zinc-600 
+                my-4
           rounded-4 
           dark:bg-slate-800 
           dark:text-zinc-200 
@@ -456,6 +457,8 @@ function SQLinput() {
 
 async function KER_CLICk(){
     try{
+         if(sql_input_area.value.replaceAll(/\n/g, " ") =="") throw "Üres a lekérdezés mező";
+
          
         var adat = await ajax_post(`html_sql?SQL=${sql_input_area.value.replaceAll(/\n/g, " ")}`,1)    
 
@@ -489,7 +492,9 @@ async function KER_CLICk(){
             }        
         }
         else{
-            document.getElementById("SQL_hiba").innerHTML = "hkaki" ;
+            document.getElementById("SQL_hiba").innerHTML =  ` <div class="border border-success rounded-4 bg-zinc-50 p-3   shadow-xl  "> 
+            ${adat.adat.rows.info}  
+            </div> `
         }
     }
     catch(e){
