@@ -283,8 +283,6 @@ app.post('/velemenyek',(req, res) => {
 
     sql += `ORDER BY DATUM DESC`;
 
-    console.log(sql);
-
     sendJson_toFrontend (res, sql, ertekek);
 });
 
@@ -952,23 +950,38 @@ try {
             "exec",
             "execute",
             // A UNION veszélyes lehet az SQL Injection-re nézve
-            "union" 
+            "union" ,
+            "transaction"
         ];
 
         // Ellenőrzés, hogy tartalmaz-e tiltott parancsot
-        const nem_select = nem_select_parancsok.some(cucci => sql.includes(cucci));
+        const nem_select = nem_select_parancsok.some(cucci => sql.toLowerCase().includes(cucci));
+
+        console.log("sql: ", sql);
+        console.log("nem_select: ", nem_select);
 
         // Engedélyezzük a SELECT-et, de csak akkor, ha nem tartalmaz tiltott parancsot
-        if (sql.startsWith("select") && !nem_select) 
+        if (!nem_select) 
         {
+            // runQueries visszaad egy JSON stringet: parse-oljuk, és küldjük vissza objektumként
             var asd =  await runQueries(sql, []);
-            console.log(asd);
-           
-        } 
+            let parsed;
+            try { parsed = JSON.parse(asd); } catch (e) { parsed = asd; }
+            res.set(header1, header2);
+            console.log("parsed select: ", parsed);
+            res.json({ adat: parsed, select: true });
+            res.end();
+        }
         else 
         {
-            // Nem select parancs
-            
+            // nem select: futtassuk runExecute-et és alakítsuk objektummá a visszatérést
+            var asd =  await runExecute(sql, req, [], true);
+            let parsed;
+            try { parsed = JSON.parse(asd); } catch (e) { parsed = asd; }
+            res.set(header1, header2);
+            console.log("parsed nem select: ", parsed);
+            res.json({ adat: parsed, select: false });
+            res.end();
         }
 
     } 
