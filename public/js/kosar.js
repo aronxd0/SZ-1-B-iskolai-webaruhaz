@@ -5,7 +5,7 @@ let tetelekli = [];
 
 
 let ureskosar = `
-                <div class="col-12">
+                <div class="col-12 mt-5">
                     <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
                 </div>`;
 
@@ -22,7 +22,7 @@ $("#cart_button").click(async function () {
     var ts = ``;
 
     let cnt = `
-        <div class="col-12">
+        <div class="col-12 mt-5">
             <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad tartalma</h5></div>
         </div>
         `;
