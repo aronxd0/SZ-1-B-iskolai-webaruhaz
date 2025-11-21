@@ -458,11 +458,41 @@ async function KER_CLICk(){
     try{
          
         var adat = await ajax_post(`html_sql?SQL=${sql_input_area.value}`,1)
-        document.getElementById("SQL_hiba").innerHTML =adat ;
+        alert(adat)
+
+        if(adat.select == true){
+            if (adat.adat.rows.length > 0) {
+                var html = "<table class=' table table-striped table-bordered p-4 mt-3'>"
+                // mezőnevek
+                var tablamevek = Object.keys(adat.adat.rows[0])
+                console.log(" tablanevek"+ tablamevek);
+                // elso sor betölt 
+                for(var nevek of tablamevek){
+                    html += `<th class="p-2">${ nevek.toString()}</th>`
+                }
+
+                for (var item of adat.adat.rows) {
+                    html += "<tr>";
+    
+                    for (var nev of tablamevek) {
+                        html += `<td>${item[nev]}</td>`;
+                    }
+    
+                    html += "</tr>";
+                }
+    
+                html += "</table>";
+                document.getElementById("SQL_hiba").innerHTML = html ;
+            }        
+        }
+        else{
+            document.getElementById("SQL_hiba").innerHTML = "hkaki" ;
+        }
     }
     catch(e){
+    
         var sad = ` <div class="border border-danger rounded-4 bg-zinc-50 p-3   shadow-xl  "> 
-                ${e}
+                ${e}  
                 </div> `
 
         document.getElementById("SQL_hiba").innerHTML =sad ;
