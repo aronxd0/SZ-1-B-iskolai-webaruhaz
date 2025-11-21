@@ -116,14 +116,42 @@ function SQLinput() {
           hover:text-zinc-200 
           dark:hover:bg-slate-900 
           dark:hover:text-zinc-200
-                ">
+                " onclick="KER_CLICk()">
                     <i class="bi bi-play-fill"></i>&nbsp;Lekérdezés futtatása
                 </button>
             </div>
         </div>
 
+        <div class="col-12 
+         d-flex justify-content-center 
+        
+         "  
+            id="SQL_hiba">
+
+             &nbsp
+            </div>
+
 
         `).fadeIn(300);
         $("#pagi").html("");
+        
     })
+}
+
+async function KER_CLICk(){
+    try{
+         
+        var adat = await ajax_post(`html_sql?SQL=${sql_input_area}`,1)
+    }
+    catch(e){
+        var sad = ` <div class="border border-danger rounded-4 bg-zinc-50 p-3   shadow-xl  "> 
+                ${e}
+                </div> `
+
+        document.getElementById("SQL_hiba").innerHTML =sad ;
+    }
+    
+
+
+
 }
