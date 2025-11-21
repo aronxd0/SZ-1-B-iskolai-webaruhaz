@@ -5,7 +5,7 @@ let tetelekli = [];
 
 
 let ureskosar = `
-                <div class="col-12">
+                <div class="col-12 mt-5">
                     <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
                 </div>`;
 
@@ -22,7 +22,7 @@ $("#cart_button").click(async function () {
     var ts = ``;
 
     let cnt = `
-        <div class="col-12">
+        <div class="col-12 mt-5">
             <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad tartalma</h5></div>
         </div>
         `;
@@ -154,7 +154,7 @@ $("#cart_button").click(async function () {
                 }
 
                 cnt += `
-                    <div class="row">
+                    <div class="d-flex flex-column">
                         <div class="col-12 mt-2 p-2 d-flex flex-column flex-lg-row justify-content-center align-self-center">
                             <span class="align-self-center p-none p-lg-2 text-xl">Összesen: </span>&nbsp;<span id="sumar" class="anton-regular text-success text-xl align-self-center p-none p-lg-2 "></span>&nbsp;<span class="align-self-center text-xl p-none p-lg-2 "> (+ ÁFA)</span>
                         </div>
