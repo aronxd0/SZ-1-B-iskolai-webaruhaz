@@ -128,7 +128,7 @@ async function AdminVelemenyekMutat(asd) {
                                     minute: '2-digit',
                                     hour12: false
                                 })}</span></p>
-                    <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                    <p class="d-flex justify-content-start">${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
                     <div class="d-flex justify-content-end gap-2 mt-2">
                         <button 
                         class="
@@ -141,9 +141,9 @@ async function AdminVelemenyekMutat(asd) {
                         dark:bg-slate-900 
                         dark:text-zinc-200 
                         hover:bg-zinc-700 
-                        hover:text-zinc-200 
+                        hover:text-red-600 
                         dark:hover:bg-slate-950 
-                        dark:hover:text-zinc-200
+                        dark:hover:text-red-600
                         transition-hover duration-300 ease-in-out 
                             w-auto" > Elutasítás </button>
 
@@ -158,9 +158,9 @@ async function AdminVelemenyekMutat(asd) {
                         dark:bg-slate-900 
                         dark:text-zinc-200 
                         hover:bg-zinc-700 
-                        hover:text-zinc-200 
+                        hover:text-emerald-600 
                         dark:hover:bg-slate-950 
-                        dark:hover:text-zinc-200
+                        dark:hover:text-emerald-600
                         transition-hover duration-300 ease-in-out 
                             w-auto" > Jóváhagyás </button>
                     </div>
@@ -200,6 +200,8 @@ async function AdminVelemenyekMutat(asd) {
                 class="
                     w-100 
                     p-3 
+                    
+
                     rounded-4 
                     shadow-xl 
                     bg-zinc-50 
@@ -217,7 +219,7 @@ async function AdminVelemenyekMutat(asd) {
                                     minute: '2-digit',
                                     hour12: false
                                 })}</span></p>
-                    <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                    <p class="d-flex justify-content-start">${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
                 </div>`;
                 }
 
@@ -268,7 +270,7 @@ async function AdminVelemenyekMutat(asd) {
                                     minute: '2-digit',
                                     hour12: false
                                 })}</span></p>
-                    <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                    <p class="d-flex justify-content-start">${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
                 </div>`;
                 }
 
