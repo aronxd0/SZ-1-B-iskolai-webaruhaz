@@ -373,7 +373,16 @@ html.dark ::-webkit-scrollbar-thumb {
   }
 }
 
+.table-responsive {
+  max-height: 600px; /* Set a fixed height */
+}
 
+.table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa; /* Ensure visibility */
+  z-index: 10; /* Keep above other elements */
+}
 
 
 
