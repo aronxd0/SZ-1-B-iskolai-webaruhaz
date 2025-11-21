@@ -1091,7 +1091,7 @@ async function runExecute(sql, req, ertekek = [], naplozas) {
         [res1] = await conn.query(sql, ertekek); // execute a paraméterezett SQL-lel
 
         // Napló bejegyzés (csak ha naplozas = true)
-        if(naplozas && res1.affectedRows > 0)
+        if(naplozas && res1.changedRows > 0)
         {
           var naplozasraKeszSql = osszeallitottSqlNaplozasra(sql, ertekek);
           // Naplózás: insert a naplo táblába (ID_USER session-ből)
