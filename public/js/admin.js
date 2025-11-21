@@ -107,9 +107,10 @@ async function AdminVelemenyekMutat(asd) {
             else {
 
                 ss += `
-                    <div role="alert" class="bg-blue-100 border border-blue-500 text-blue-700 px-4 py-3 rounded">
-                        <strong class="font-bold">Figyelem!</strong>
-                        <span class="block sm:inline ml-2">Valami fontos infó történt.</span>
+                    <div role="alert" class="bg-blue-100 border border-blue-500 text-blue-700 px-4 py-3 rounded-4">
+                        <i class="bi bi-info-circle-fill"></i>
+                        <strong class="font-bold">${varo.maxcount} db</strong>
+                        <span> vélemény vár jóváhagyásra</span>
                         
                     </div>
                 
