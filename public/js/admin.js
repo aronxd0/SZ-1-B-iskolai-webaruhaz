@@ -429,8 +429,9 @@ function SQLinput() {
 
         <div class="col-12 
          d-flex justify-content-center 
-        
+           
          "  
+          style='overflow-x:scroll;'
             id="SQL_hiba">
 
              &nbsp
@@ -446,12 +447,11 @@ function SQLinput() {
 async function KER_CLICk(){
     try{
          
-        var adat = await ajax_post(`html_sql?SQL=${sql_input_area.value}`,1)
-        alert(adat)
+        var adat = await ajax_post(`html_sql?SQL=${sql_input_area.value.replaceAll(/\n˛/g, " ")}`,1)    
 
         if(adat.select == true){
             if (adat.adat.rows.length > 0) {
-                var html = "<table class=' table table-striped table-bordered p-4 mt-3'>"
+                var html = "<table class=' table table-striped table-bordered p-4 mt-3'  >"
                 // mezőnevek
                 var tablamevek = Object.keys(adat.adat.rows[0])
                 console.log(" tablanevek"+ tablamevek);
