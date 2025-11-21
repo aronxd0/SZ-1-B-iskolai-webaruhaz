@@ -516,20 +516,28 @@ function Fizetes(li) {
 
       let form = `
       <div class="row d-flex flex-column flex-lg-row p-3">
-        <div class="col-12 col-lg-6 mx-auto mt-5 space-y-2">
+        <div class="col-12 col-lg-6 mx-auto mt-5 space-y-3">
           <span class="text-lg p-1">Válasszon fizetési módot</span>
           <!-- bankkartya -->
           <label 
             class="
             bg-zinc-50 
+            shadow-xl 
             text-slate-900 
             dark:bg-slate-800 
             dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
             flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="kartya" onchange="Fizetesmodvalaszto(this)">
@@ -574,11 +582,24 @@ function Fizetes(li) {
 
           <!-- paypal -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            shadow-xl 
+            text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="paypal" onchange="Fizetesmodvalaszto(this)">
@@ -627,11 +648,24 @@ function Fizetes(li) {
 
           <!-- google pay -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            text-slate-900 
+            shadow-xl 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="googlepay" onchange="Fizetesmodvalaszto(this)">
@@ -661,11 +695,24 @@ function Fizetes(li) {
 
           <!-- apple pay -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            text-slate-900 
+            shadow-xl 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="applepay" onchange="Fizetesmodvalaszto(this)">
@@ -685,15 +732,28 @@ function Fizetes(li) {
         </div>
 
 
-        <div class="col-12 col-lg-6 mx-auto mt-5 space-y-2">
+        <div class="col-12 col-lg-6 mx-auto mt-5 space-y-3">
           <span class="text-lg p-1">Válasszon szállítási módot</span>
           <!-- mpl -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            shadow-xl 
+            text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="szall" class="form-check-input" id="mpl" onchange="Szallitasmodvalaszto(this)">
@@ -707,11 +767,24 @@ function Fizetes(li) {
 
           <!-- gls -->
           <label 
-            class="flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            class="
+            bg-zinc-50 
+            shadow-xl 
+            text-slate-900 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer
+                   transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="szall" class="form-check-input" id="gls" onchange="Szallitasmodvalaszto(this)">
@@ -726,12 +799,23 @@ function Fizetes(li) {
           <!-- express one -->
           <label 
             class="
-            
-            flex items-center justify-between p-4 rounded-xl cursor-pointer
-                  border transition-all duration-200
-                  has-[:checked]:bg-indigo-50 
+            bg-zinc-50 
+            text-slate-900 
+            shadow-xl 
+            dark:bg-slate-800 
+            dark:text-zinc-200 
+            hover:bg-gray-200 
+            hover:outline outline-black/10 
+            dark:hover:bg-gray-700 
+            dark:hover:-outline-offset-1 
+            dark:hover:outline-white/10 
+            flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                  transition-all duration-200
+                  has-[:checked]:bg-zinc-200 
                   has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md">
+                  has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 
+                  " style="border: none;">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="szall" class="form-check-input" id="expressone" onchange="Szallitasmodvalaszto(this)">

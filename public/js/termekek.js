@@ -598,7 +598,7 @@ function CARD_BETOLT(adatok) {
             class="card 
               bg-zinc-100 
               hover:bg-gray-200 
-              hover:outline outline-black/10
+              hover:outline outline-black/10 
               dark:bg-slate-900 
               dark:text-zinc-200 
               dark:hover:bg-gray-800 
