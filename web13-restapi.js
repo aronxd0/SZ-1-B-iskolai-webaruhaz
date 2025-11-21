@@ -995,8 +995,9 @@ try {
         // Ellenőrzés, hogy tartalmaz-e tiltott parancsot
         const nem_select = nem_select_parancsok.some(cucci => sql.toLowerCase().includes(cucci));
 
-        console.log("sql: ", sql);
+        console.log("HTML SQL kérés: ", sql);
         console.log("nem_select: ", nem_select);
+
 
         // Engedélyezzük a SELECT-et, de csak akkor, ha nem tartalmaz tiltott parancsot
         if (!nem_select) 
@@ -1005,10 +1006,11 @@ try {
             var asd =  await runQueries(sql, []);
             let parsed;
             try { parsed = JSON.parse(asd); } catch (e) { parsed = asd; }
-            res.set(header1, header2);
-            console.log("parsed select: ", parsed);
-            res.json({ adat: parsed, select: true });
-            res.end();
+
+            if(parsed.message != "ok"){
+                throw new Error(parsed.message);
+            }
+
         }
         else 
         {
@@ -1016,17 +1018,18 @@ try {
             var asd =  await runExecute(sql, req, [], true);
             let parsed;
             try { parsed = JSON.parse(asd); } catch (e) { parsed = asd; }
-            res.set(header1, header2);
-            console.log("parsed nem select: ", parsed);
-            res.json({ adat: parsed, select: false });
-            res.end();
+            
+            if(parsed.message != "ok"){
+                throw new Error(parsed.message);
+            }
         }
 
     } 
     catch (err) 
     { 
-        console.error("Hiba történt a feldolgozás során:", err);
-        res.status(500).send("Szerver hiba.");
+        res.set(header1, header2);
+        res.send(err.message);
+        res.end();
     }    
 });
 
@@ -1101,8 +1104,7 @@ async function runQueries(sql, ertekek = []) {
     } catch (err) {
         msg = err.sqlMessage; maxcount = -1; console.error('Hiba:', err); 
     } finally {
-        if (conn) conn.release();
-        
+        if (conn) conn.release();   
         json_data = JSON.stringify({ "message":msg, "maxcount":maxcount, "rows":res2 });    // rest-api
     }
     return json_data;
