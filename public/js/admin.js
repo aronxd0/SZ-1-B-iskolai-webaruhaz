@@ -7,25 +7,287 @@ function Admin_Velemenykezeles() {
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
         
-        <div class="d-flex flex-column flex-lg-row">
+            <div class="row d-flex flex-column flex-xl-row p-1 mx-auto mt-5 space-y-2">
 
-            <div class="col-12 col-lg-4 text-center p-2 mt-3">
-                <span class="text-xl">jovahagyasra varo velemenyek</span>
-            </div>
+                <!-- OPTION 1 -->
+                <div class="col-12 col-xl-4 mx-auto mt-3">
+                    <label 
+                        class="flex items-center justify-between p-3 rounded-xl cursor-pointer 
+                            bg-zinc-100 
+                            border transition-all duration-200
+                            has-[:checked]:bg-indigo-50 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:shadow-md">
 
-            <div class="col-12 col-lg-4 text-center p-2 mt-3">
-                <span class="text-xl">jovahagyott velemenyek</span>
-            </div>
+                        <div class="flex items-center gap-3">
+                        <input type="radio" name="plan" class="form-check-input" id="varo" checked onchange="AdminVelemenyekMutat(this)">
+                        <span class="font-semibold">Jóváhagyásra váró vélemények</span>
+                        </div>
 
-            <div class="col-12 col-lg-4 text-center p-2 mt-3">
-                <span class="text-xl">elutasitott velemenyek</span>
-            </div>
-        </div>
+                        <div class="flex flex-col text-right">
+                        
+                        </div>
+                    </label>
+                </div>
+
+                <!-- OPTION 2 -->
+                <div class="col-12 col-xl-4 mx-auto mt-3">
+                    <label 
+                        class="flex items-center justify-between p-3 rounded-xl cursor-pointer 
+                        bg-zinc-100 
+                            border transition-all duration-200
+                            has-[:checked]:bg-indigo-50 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:shadow-md">
+
+                        <div class="flex items-center gap-3">
+                        <input type="radio" name="plan" class="form-check-input" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
+                        <span class="font-semibold">Jóváhagyott vélemények</span>
+                        </div>
+
+                        <div class="flex flex-col text-right">
+                       
+                        </div>
+                    </label>
+                </div>
+
+                <!-- OPTION 3 -->
+                <div class="col-12 col-xl-4 mx-auto mt-3">
+                    <label 
+                        class="flex items-center justify-between p-3 rounded-xl cursor-pointer 
+                        bg-zinc-100 
+                            border transition-all duration-200
+                            has-[:checked]:bg-indigo-50 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:shadow-md">
+
+                        <div class="flex items-center gap-3">
+                        <input type="radio" name="plan" class="form-check-input" id="elutasitott" onchange="AdminVelemenyekMutat(this)">
+                        <span class="font-semibold">Elutasított vélemények</span>
+                        </div>
+
+                        <div class="flex flex-col text-right">
+                        
+                        </div>
+                    </label>
+                </div>
+
+                </div>
+
+                <div class="col-12 text-center mt-5" id="velemenyek_hely">
+
+                </div>
+
+            
         
         `).fadeIn(300);
+        AdminVelemenyekMutat($("#varo")[0]);
         $("#pagi").html("");
+        
     });
 }
+
+
+async function AdminVelemenyekMutat(asd) {
+    if (asd.id == "varo") {
+
+        try {
+
+            let ss = ``;
+
+            let varo = await ajax_post("velemenyek?szelektalas=1", 1);
+
+            if (varo.rows.length == 0) { 
+                $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek jóváhagyásra váró vélemények.</div>");
+
+                }).fadeIn(300);
+                
+             }
+            else {
+                for (const element of varo.rows) {
+                    ss += `
+                <div 
+                class="
+                    w-100 
+                    p-3 
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-700 
+                    dark:text-zinc-200 
+                    mt-3 
+                    mb-3 
+                    comment">
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                })}</span></p>
+                    <p class="d-flex justify-content-start">${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                    <div class="d-flex justify-content-end gap-2 mt-2">
+                        <button 
+                        class="
+                        btn 
+                        
+                        bi bi-x-lg 
+                        bg-zinc-600 
+                        text-zinc-200 
+                        rounded-4 
+                        dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        hover:bg-zinc-700 
+                        hover:text-red-600 
+                        dark:hover:bg-slate-950 
+                        dark:hover:text-red-600
+                        transition-hover duration-300 ease-in-out 
+                            w-auto" > Elutasítás </button>
+
+                        <button 
+                        class="
+                        btn 
+                        
+                        bi bi-check2  
+                        bg-zinc-600 
+                        text-zinc-200 
+                        rounded-4 
+                        dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        hover:bg-zinc-700 
+                        hover:text-emerald-600 
+                        dark:hover:bg-slate-950 
+                        dark:hover:text-emerald-600
+                        transition-hover duration-300 ease-in-out 
+                            w-auto" > Jóváhagyás </button>
+                    </div>
+                </div>`;
+                }
+
+                $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html(ss).fadeIn(300);
+                });
+            }
+
+            
+
+
+        } catch (err) { console.log("hiba:", err);}
+
+
+        //$("#velemenyek_hely").html("ide a jovahagyasra varo velemenyek");
+    }
+    else if (asd.id == "jovahagyott") {
+        try {
+
+            let sv = ``;
+
+            let stimm = await ajax_post("velemenyek?szelektalas=0", 1);
+
+            if (stimm.rows.length == 0) { 
+               $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek jóváhagyott vélemények.</div>");
+
+                }).fadeIn(300);
+            }
+            else {
+                for (const element of stimm.rows) {
+                    sv += `
+                <div 
+                class="
+                    w-100 
+                    p-3 
+                    
+
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-700 
+                    dark:text-zinc-200 
+                    mt-3 
+                    mb-3 
+                    comment">
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                })}</span></p>
+                    <p class="d-flex justify-content-start">${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                </div>`;
+                }
+
+                $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html(sv).fadeIn(300);
+                });
+            }
+
+            
+
+
+        } catch (err) { console.log("hiba:", err);}
+    }
+    else if (asd.id == "elutasitott") {
+        try {
+
+            let ssg = ``;
+
+            let dec = await ajax_post("velemenyek?szelektalas=2", 1);
+
+            if (dec.rows.length == 0) { 
+                $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek elutasított vélemények.</div>");
+
+                }).fadeIn(300);
+             }
+            else {
+                for (const element of dec.rows) {
+                    ssg += `
+                <div 
+                class="
+                    w-100 
+                    p-3 
+                    rounded-4 
+                    shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-700 
+                    dark:text-zinc-200 
+                    mt-3 
+                    mb-3 
+                    comment">
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                })}</span></p>
+                    <p class="d-flex justify-content-start">${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                </div>`;
+                }
+
+                $("#velemenyek_hely").fadeOut(300, function() {
+                    $("#velemenyek_hely").html(ssg).fadeIn(300);
+                });
+            }
+
+            
+
+
+        } catch (err) { console.log("hiba:", err);}
+    }
+}
+
+
+
 
 function UjTermek() {
     $("#home_button").closest(".gombdiv").removeClass("aktiv");

@@ -5,10 +5,6 @@ const session   = require('express-session');
 const { stringify } = require('querystring');
 
 
-
-
-
-
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') }); // <- .env hozzáadva
 
@@ -40,13 +36,11 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-// longblob hoz
-const fs = require("fs");
 
+
+// képes csoda
 
 const multer = require("multer");
-
-// hova mentse a képeket
 
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -66,10 +60,7 @@ function fileFilter(req, file, cb) {
   }
 }
 
-
 module.exports = upload;
-
-
 
 
 //#region kereses
@@ -276,6 +267,9 @@ app.post('/velemenyek',(req, res) => {
     else if (szelektalas == 1) {
         whereFeltetelek.push(`webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'`);
     }
+    else if (szelektalas == 2) {
+        whereFeltetelek.push(`webbolt_velemenyek.ALLAPOT = 'Elutasítva'`);
+    }
     
     if (sajatvelemeny == 1 && session_data.ID_USER) {
         // ha kéri a saját véleményeket és be van lépve, csak az ő user-ére szűrünk
@@ -288,6 +282,8 @@ app.post('/velemenyek',(req, res) => {
     }
 
     sql += `ORDER BY DATUM DESC`;
+
+    console.log(sql);
 
     sendJson_toFrontend (res, sql, ertekek);
 });
@@ -791,9 +787,6 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         let fajl = req.file; // a kivalasztott fajl adatai
 
         if ((kategoria == "" || typeof kategoria === 'undefined') && uj_kategoria == "" && (!fajl || typeof fajl === 'undefined') && (fotolink == "" || typeof fotolink === 'undefined')) {
-            res.set(header1, header2);
-            res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor - hiba a kategóriában vagy a képben" }));
-            res.end();
             return;
         }
 
@@ -890,7 +883,7 @@ WHERE ID_TERMEK = ?`;
     } catch (err) {
         console.error('termek_edit hiba:', err);
         res.set(header1, header2);
-        res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor: " + err.message }));
+        res.send(JSON.stringify({ message: "Hiba a termék szerkesztésekor: "  }));
         res.end();
     }
         
@@ -936,6 +929,61 @@ app.post('/termek_del',async (req, res) => {
 
 //#endregion
 
+//#region sql lekerdezesek html
+
+app.post('/html_sql', async (req, res) => {
+try {
+        // A lekérdezés normalizálása (kisbetűssé tétel és szóközök eltávolítása)
+        const sql = req.query.SQL.toString().trim();
+
+        // Tiltott parancsok listája
+        const nem_select_parancsok = [
+            "insert",
+            "update",
+            "delete",
+            "drop",
+            "alter",
+            "create",
+            "truncate",
+            "grant",
+            "revoke",
+            "commit",
+            "rollback",
+            "exec",
+            "execute",
+            // A UNION veszélyes lehet az SQL Injection-re nézve
+            "union" 
+        ];
+
+        // Ellenőrzés, hogy tartalmaz-e tiltott parancsot
+        const nem_select = nem_select_parancsok.some(cucci => sql.includes(cucci));
+
+        // Engedélyezzük a SELECT-et, de csak akkor, ha nem tartalmaz tiltott parancsot
+        if (sql.startsWith("select") && !nem_select) 
+        {
+            var asd =  await runQueries(sql, []);
+            console.log(asd);
+           
+        } 
+        else 
+        {
+            // Nem select parancs
+            
+        }
+
+    } 
+    catch (err) 
+    { 
+        console.error("Hiba történt a feldolgozás során:", err);
+        res.status(500).send("Szerver hiba.");
+    }    
+});
+
+
+
+//#endregion
+
+
 //#region függvények
 
 // runExecute() - paraméterezve
@@ -960,7 +1008,7 @@ async function runExecute(sql, req, ertekek = [], naplozas) {
         {
           var naplozasraKeszSql = osszeallitottSqlNaplozasra(sql, ertekek);
           // Naplózás: insert a naplo táblába (ID_USER session-ből)
-          jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház","${req.socket.remoteAddress}","${naplozasraKeszSql.replaceAll("\"","'")}");`;
+          jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház, (vegrehajto neve: ${session_data.NEV})","${req.socket.remoteAddress}","${naplozasraKeszSql.replaceAll("\"","'")}");`;
           await conn.execute(jrn);
         }
         
@@ -1058,6 +1106,10 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
         }
         
         let ertek = ertekek[i++];
+
+        if(typeof ertek === "string" && ertek.substring(0,5) === "data:") {
+            return "'<<BINARY DATA>>'";
+        }
         
         // Ha null vagy undefined, térjen vissza 'NULL' értékkel (idezőjelek nélkül)
         if (ertek === null || typeof ertek === 'undefined') {
