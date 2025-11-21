@@ -1045,7 +1045,6 @@ try {
 
 //#endregion
 
-
 //#region függvények
 
 // runExecute() - paraméterezve

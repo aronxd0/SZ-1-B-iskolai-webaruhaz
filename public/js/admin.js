@@ -395,7 +395,7 @@ function SQLinput() {
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-12 text-center p-2 mt-3">
                 <span class="text-xl">SQL Input</span>
             </div>
