@@ -105,6 +105,17 @@ async function AdminVelemenyekMutat(asd) {
                 
              }
             else {
+
+                ss += `
+                    <div role="alert" class="bg-blue-100 border border-blue-500 text-blue-700 px-4 py-3 rounded">
+                        <strong class="font-bold">Figyelem!</strong>
+                        <span class="block sm:inline ml-2">Valami fontos infó történt.</span>
+                        
+                    </div>
+                
+                
+                `;
+
                 for (const element of varo.rows) {
                     ss += `
                 <div 
@@ -315,7 +326,7 @@ async function Velemeny_Elfogad(id_velemeny) {
             üzen("Művelet sikeresen végrehajtva","success");
         }
         else { üzen(elfogad.message, "danger"); }
-        
+
         AdminVelemenyekMutat($("#varo")[0]);
 
 
