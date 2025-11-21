@@ -970,6 +970,7 @@ app.post('/termek_del',async (req, res) => {
 app.post('/html_sql', async (req, res) => {
 try {
         // A lekérdezés normalizálása (kisbetűssé tétel és szóközök eltávolítása)
+        //html enter kezelése
         const sql = req.query.SQL.toString().trim();
 
         // Tiltott parancsok listája
@@ -995,7 +996,7 @@ try {
         // Ellenőrzés, hogy tartalmaz-e tiltott parancsot
         const nem_select = nem_select_parancsok.some(cucci => sql.toLowerCase().includes(cucci));
 
-        console.log("HTML SQL kérés: ", sql);
+        console.log("HTML SQL kérés: ", sql, "sql hossz: ", sql.length);
         console.log("nem_select: ", nem_select);
 
 
@@ -1011,6 +1012,9 @@ try {
                 throw new Error(parsed.message);
             }
 
+            res.set(header1, header2);
+            res.json({ adat: parsed, select: true });
+            res.end();
         }
         else 
         {
@@ -1022,6 +1026,10 @@ try {
             if(parsed.message != "ok"){
                 throw new Error(parsed.message);
             }
+
+            res.set(header1, header2);
+            res.json({ adat: parsed, select: false });
+            res.end();
         }
 
     } 
