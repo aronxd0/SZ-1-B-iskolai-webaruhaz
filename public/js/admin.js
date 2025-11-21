@@ -440,10 +440,8 @@ function SQLinput() {
         </div>
 
         <div class="col-12 
-         d-flex justify-content-center 
-           
+         d-flex justify-content-center       
          "  
-          style='overflow-x:scroll;'
             id="SQL_hiba">
 
              &nbsp
@@ -463,15 +461,15 @@ async function KER_CLICk(){
 
         if(adat.select == true){
             if (adat.adat.rows.length > 0) {
-                var html = "<table class=' table table-striped table-bordered p-4 mt-3'  >"
+                var html = "<table class=' table table-striped table-bordered p-4 mt-3 text-center'  ><tr>"
                 // mezőnevek
                 var tablamevek = Object.keys(adat.adat.rows[0])
                 console.log(" tablanevek"+ tablamevek);
                 // elso sor betölt 
                 for(var nevek of tablamevek){
-                    html += `<tr> <th class="p-2">${ nevek.toString()}</th></tr>`
+                    html +=  `<th class="p-2">${ nevek.toString()}</th>`
                 }
-
+                html+="<>"
                 for (var item of adat.adat.rows) {
                     html += "<tr>";
     
@@ -483,7 +481,11 @@ async function KER_CLICk(){
                 }
     
                 html += "</table>";
-                document.getElementById("SQL_hiba").innerHTML = html ;
+                document.getElementById("SQL_hiba").innerHTML = `
+                        <div class="table-responsive mt-3">
+                            ${html}
+                        </div>
+                    `;
             }        
         }
         else{
