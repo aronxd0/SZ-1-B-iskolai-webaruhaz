@@ -12,12 +12,22 @@ function Admin_Velemenykezeles() {
                 <!-- OPTION 1 -->
                 <div class="col-12 col-xl-4 mx-auto mt-3">
                     <label 
-                        class="flex items-center justify-between p-3 rounded-xl cursor-pointer 
-                            bg-zinc-100 
-                            border transition-all duration-200
-                            has-[:checked]:bg-indigo-50 
+                        class="bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-zinc-200 
                             has-[:checked]:border-indigo-400 
-                            has-[:checked]:shadow-md">
+                            has-[:checked]:shadow-md
+                            has-[:checked]:dark:bg-sky-900 ">
 
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input" id="varo" checked onchange="AdminVelemenyekMutat(this)">
@@ -33,12 +43,22 @@ function Admin_Velemenykezeles() {
                 <!-- OPTION 2 -->
                 <div class="col-12 col-xl-4 mx-auto mt-3">
                     <label 
-                        class="flex items-center justify-between p-3 rounded-xl cursor-pointer 
-                        bg-zinc-100 
-                            border transition-all duration-200
-                            has-[:checked]:bg-indigo-50 
+                        class="bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-zinc-200 
                             has-[:checked]:border-indigo-400 
-                            has-[:checked]:shadow-md">
+                            has-[:checked]:shadow-md
+                            has-[:checked]:dark:bg-sky-900 ">
 
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
@@ -54,12 +74,22 @@ function Admin_Velemenykezeles() {
                 <!-- OPTION 3 -->
                 <div class="col-12 col-xl-4 mx-auto mt-3">
                     <label 
-                        class="flex items-center justify-between p-3 rounded-xl cursor-pointer 
-                        bg-zinc-100 
-                            border transition-all duration-200
-                            has-[:checked]:bg-indigo-50 
+                        class="bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-zinc-200 
                             has-[:checked]:border-indigo-400 
-                            has-[:checked]:shadow-md">
+                            has-[:checked]:shadow-md
+                  has-[:checked]:dark:bg-sky-900 ">
 
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input" id="elutasitott" onchange="AdminVelemenyekMutat(this)">
@@ -107,7 +137,14 @@ async function AdminVelemenyekMutat(asd) {
             else {
 
                 ss += `
-                    <div role="alert" class="bg-blue-100 border border-blue-500 text-blue-700 px-4 py-3 rounded-4">
+                    <div role="alert" 
+                    class="
+                    bg-blue-100 
+                    text-blue-700 
+                    dark:bg-blue-900 
+                    dark:text-blue-500 
+                    
+                    px-4 py-3 rounded-4" style="border: none;">
                         <i class="bi bi-info-circle-fill"></i>
                         <strong class="font-bold">${varo.maxcount} db</strong>
                         <span> vélemény vár jóváhagyásra</span>
@@ -127,7 +164,7 @@ async function AdminVelemenyekMutat(asd) {
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-700 
+                    dark:bg-slate-900 
                     dark:text-zinc-200 
                     mt-3 
                     mb-3 
@@ -150,7 +187,7 @@ async function AdminVelemenyekMutat(asd) {
                         bg-zinc-600 
                         text-zinc-200 
                         rounded-4 
-                        dark:bg-slate-900 
+                        dark:bg-slate-800 
                         dark:text-zinc-200 
                         hover:bg-zinc-700 
                         hover:text-red-600 
@@ -167,7 +204,7 @@ async function AdminVelemenyekMutat(asd) {
                         bg-zinc-600 
                         text-zinc-200 
                         rounded-4 
-                        dark:bg-slate-900 
+                        dark:bg-slate-800 
                         dark:text-zinc-200 
                         hover:bg-zinc-700 
                         hover:text-emerald-600 
@@ -218,7 +255,7 @@ async function AdminVelemenyekMutat(asd) {
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-700 
+                    dark:bg-slate-900 
                     dark:text-zinc-200 
                     mt-3 
                     mb-3 
@@ -269,7 +306,7 @@ async function AdminVelemenyekMutat(asd) {
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-700 
+                    dark:bg-slate-900 
                     dark:text-zinc-200 
                     mt-3 
                     mb-3 
