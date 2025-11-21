@@ -461,7 +461,7 @@ async function KER_CLICk(){
 
         if(adat.select == true){
             if (adat.adat.rows.length > 0) {
-                var html = "<table class=' table table-striped table-bordered p-4 mt-3 text-center'  ><tr>"
+                var html = "<table class=' table table-striped table-bordered p-4 mt-3 text-center sticky-header'> <thead><tr>"
                 // mezőnevek
                 var tablamevek = Object.keys(adat.adat.rows[0])
                 console.log(" tablanevek"+ tablamevek);
@@ -469,18 +469,18 @@ async function KER_CLICk(){
                 for(var nevek of tablamevek){
                     html +=  `<th class="p-2">${ nevek.toString()}</th>`
                 }
-                html+="<>"
+                html += "</tr></thead><tbody>"
                 for (var item of adat.adat.rows) {
                     html += "<tr>";
     
                     for (var nev of tablamevek) {
-                        html += `<td>${item[nev]}</td>`;
+                        html += `<td>${item[nev] == null ? item[nev] : item[nev].toString() }</td>`;
                     }
     
                     html += "</tr>";
                 }
     
-                html += "</table>";
+                html += "</tbody></table>";
                 document.getElementById("SQL_hiba").innerHTML = `
                         <div class="table-responsive mt-3">
                             ${html}
