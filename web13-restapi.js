@@ -45,7 +45,7 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({
   storage,
-  limits: { fileSize: 15 * 1024 * 1024 }, // képméret 15mb
+  limits: { fileSize: 10 * 1024 * 1024 }, // képméret 10mb
   fileFilter: fileFilter
 });
 
@@ -1011,6 +1011,22 @@ try {
             if(parsed.message != "ok"){
                 throw new Error(parsed.message);
             }
+
+            // rekurzív csere a bináris adatok maszkolására
+            function maskBinaryValues(value) {
+                if (value === null || typeof value === 'undefined') return value;
+                if (typeof value === 'string') {
+                    return value.startsWith('data:') ? '<<BINARY DATA>>' : value;
+                }
+                if (Array.isArray(value)) return value.map(maskBinaryValues);
+                if (typeof value === 'object') {
+                    for (const k of Object.keys(value)) value[k] = maskBinaryValues(value[k]);
+                    return value;
+                }
+                return value;
+            }
+
+            parsed = maskBinaryValues(parsed);
 
             res.set(header1, header2);
             res.json({ adat: parsed, select: true });
