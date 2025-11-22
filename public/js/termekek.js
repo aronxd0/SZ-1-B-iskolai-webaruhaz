@@ -318,6 +318,49 @@ async function Termek_Mutat(event, termek_id) {
   $("#vlmg").html("");
   $("#ussr").html("");
 
+
+  $("#vvl").html(`
+    
+      
+          <label 
+              class="bg-zinc-50 
+              my-2 
+              text-slate-900 
+              shadow-xl 
+              dark:bg-slate-900 
+              dark:text-zinc-200 
+              hover:bg-gray-200 
+              hover:outline outline-black/10 
+              dark:hover:bg-gray-700 
+              dark:hover:-outline-offset-1 
+              dark:hover:outline-white/10 
+              flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                  transition-all duration-200
+                  has-[:checked]:bg-indigo-100 
+                  has-[:checked]:border-indigo-400 
+                  has-[:checked]:border 
+                  has-[:checked]:shadow-md
+
+                  dark:has-[:checked]:bg-sky-950
+                  dark:has-[:checked]:border-sky-700
+                  dark:has-[:checked]:border ">
+
+              <div class="flex items-center gap-3">
+              <input type="radio" name="comment" class="form-check-input hidden" id="velemeny" checked onchange="VelemenyekMutat(${termek_id})">
+              <span class="font-semibold">Vélemények</span>
+              </div>
+
+              <div class="flex flex-col text-right">
+              
+              </div>
+          </label>
+                
+
+    
+    `);
+
+
+  /*
   $("#vvl").html(
     `<a 
     class="
@@ -340,6 +383,7 @@ async function Termek_Mutat(event, termek_id) {
 
     " href="#velemenyek" id="velemenyek-tab" onclick='VelemenyekMutat(${termek_id})' style="border-radius:0px;"><i class="bi bi-chat-dots"></i> Vélemények</a>`
   );
+  */
   //$("#velemenyek-tab").trigger("click");
 
   if (!BevanJelentkezve()) {
@@ -369,22 +413,39 @@ async function Termek_Mutat(event, termek_id) {
     $("#ussr").html(`${$("#user").html()}`);
 
     $("#sajatvlm").html(
-      `<a 
-      class="
-      nav-link 
-      bg-zinc-200 
-      
-      text-slate-900 
-      hover:text-slate-900 
-      hover:border-t-none 
-      hover:border-r-none 
-      hover:border-l-none 
-      dark:hover:border-t-none 
-      dark:hover:border-r-none 
-      dark:hover:border-l-none 
-      dark:bg-slate-800 
-      dark:text-zinc-200 
-       " href="#sajatok" id="sajat-tab" onclick='SajatVelemenyekMutat(${termek_id})' style="border-radius:0px;"><i class="bi bi-person"></i> Véleményeim</a>`
+      `
+            <label 
+              class="bg-zinc-50 
+              my-2 
+              text-slate-900 
+              shadow-xl 
+              dark:bg-slate-900 
+              dark:text-zinc-200 
+              hover:bg-gray-200 
+              hover:outline outline-black/10 
+              dark:hover:bg-gray-700 
+              dark:hover:-outline-offset-1 
+              dark:hover:outline-white/10 
+              flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                  transition-all duration-200
+                  has-[:checked]:bg-indigo-100 
+                  has-[:checked]:border-indigo-400 
+                  has-[:checked]:border 
+                  has-[:checked]:shadow-md
+
+                  dark:has-[:checked]:bg-sky-950
+                  dark:has-[:checked]:border-sky-700
+                  dark:has-[:checked]:border ">
+
+              <div class="flex items-center gap-3">
+              <input type="radio" name="comment" class="form-check-input hidden " id="sajat_velemeny" onchange="SajatVelemenyekMutat(${termek_id})">
+              <span class="font-semibold">Véleményeim</span>
+              </div>
+
+              <div class="flex flex-col text-right">
+              
+              </div>
+          </label>`
     );
 
     $("#sajatvlm").removeClass("eltunt");
