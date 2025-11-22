@@ -441,7 +441,10 @@ async function Termek_Mutat(event, termek_id) {
       hover:text-zinc-200 
       dark:hover:bg-slate-950 
       dark:hover:text-zinc-200
-      transition-hover duration-300 ease-in-out  bi bi-dice-6 w-auto ms-2" onclick='VeletlenszeruVelemeny()'> Generálás</button>
+      transition-hover duration-300 ease-in-out   w-auto " onclick='VeletlenszeruVelemeny()'> 
+      <i class="bi bi-dice-6"></i>
+      <span class="d-none d-lg-inline"> Generálás</span>
+      </button>
         
         <button type="button" 
         class="
@@ -454,7 +457,10 @@ async function Termek_Mutat(event, termek_id) {
       hover:text-zinc-200 
       dark:hover:bg-slate-950 
       dark:hover:text-zinc-200
-      transition-hover duration-300 ease-in-out  bi bi-x-lg w-auto ms-2" data-bs-toggle="collapse" data-bs-target="#vlm" id="mgs"> Mégse</button>
+      transition-hover duration-300 ease-in-out   w-auto ms-2" data-bs-toggle="collapse" data-bs-target="#vlm" id="mgs">
+      <i class="bi bi-x-lg"></i>
+      <span class="d-none d-lg-inline"> Mégse</span>
+      </button>
         
         <button type="button" 
         class="
@@ -467,7 +473,10 @@ async function Termek_Mutat(event, termek_id) {
       hover:text-zinc-200 
       dark:hover:bg-slate-950 
       dark:hover:text-zinc-200
-      transition-hover duration-300 ease-in-out  bi bi-send w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${termek_id})'> Közzététel</button>
+      transition-hover duration-300 ease-in-out   w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${termek_id})'> 
+      <i class="bi bi-send"></i>
+      <span class="d-none d-lg-inline"> Közzététel</span>
+      </button>
     
     `;
       

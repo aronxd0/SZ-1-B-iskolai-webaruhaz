@@ -55,7 +55,7 @@ html.dark .welcome {
 }
 
 .cim {
-  font-size: 40px;
+  font-size: 30px;
 }
 
 
@@ -92,7 +92,7 @@ html.dark .welcome {
 
 /* modal ablakok megnyitasakor blur hatter */
 .modal-open .modal-backdrop {
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 1 !important;
 }
@@ -107,8 +107,8 @@ html.dark .welcome {
 }
 
 .offcanvas-backdrop.show {
-  backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0);
   opacity: 1 !important;
 }
 
