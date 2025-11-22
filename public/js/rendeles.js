@@ -7,7 +7,7 @@ $("#rend_button").click(async function () {
 
     var s = `
     
-        <div class="col-12 text-center p-2">
+        <div class="col-12 text-center p-2 mt-5">
             <span class="text-xl">Rendeléseim</span>
         </div>
     `;
