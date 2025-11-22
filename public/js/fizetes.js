@@ -47,83 +47,82 @@ function Attekintes(li) {
         ">Fizetés</span`);
 
      htmtoback = `<label for="rend" class="p-1 mt-4">A rendelésed tartalma:</label>`
-     htmtoback += `<table 
-            class='
-            w-full 
-            border-collapse 
-            rounded-lg  
-            overflow-hidden 
-            p-3 
-            shadow-xl 
-            mb-4 
+     
+     
+     
             
-            ' id='rend'>
-            
-            <thead>
-              <tr 
-              class="
-              border-b 
-              border-gray-300 
-              dark:border-gray-700 
-              bg-zinc-300 
-              text-slate-900 
-              dark:bg-slate-900 
-              dark:text-zinc-200 
-              ">
-                <th 
-                class="p-2 ">Mennyiség</th>
-                <th 
-                class=" p-2 ">Termék</th>
-                <th 
-                class="p-2 ">Ár</th>
-              </tr>
-              
-            </thead>
-
-            <tbody>
-            
-            `;
 
     //$("#cc").html("");
     for (const element of li) {
 
         htmtoback += ` 
-            <tr class="border-b border-gray-300 dark:border-gray-700">
+          <div class="row p-2">
+            <div class="col-0 col-lg-1"></div>
+            <div class=" col-12 
+                        col-lg-10   
+                        d-flex 
+                        flex-column 
+                        flex-lg-row 
+                        bg-zinc-100 
+                        text-slate-900 
+                        dark:bg-slate-800 
+                        dark:text-zinc-200 
+                        shadow-lg  
+                        rounded-4 
+                        mt-2  
+                        p-3 
+                        p-xxl-none
+                        ">
 
-                <td 
-                class="bg-zinc-200 
-                text-slate-900 
-                dark:bg-slate-800 
-                dark:text-zinc-200 
-                 p-3 
+                <div  
+                class="
+                    col-12 
+                    col-lg-2  
+                    d-flex 
+                    flex-lg-column 
+                    justify-content-between 
+                    py-3 p-lg-1
                 ">
-                    ${element.MENNYISEG} db
-                </td>
+
+                    <span>Mennyiség</span>
+                    <span>${element.MENNYISEG} db</span>
+                </div>
                         
-                <td 
-                class="bg-zinc-200 
-                text-slate-900 
-                dark:bg-slate-800 
-                dark:text-zinc-200 
-                 p-3 
+                <div  
+                class="
+                    col-12 
+                    col-lg-8  
+                    d-flex 
+                    flex-lg-column 
+                    justify-content-between 
+                    py-3 p-lg-1 
+                    border-t border-gray-300 
+                    border-b border-gray-300 
+                    lg:border-t-0 
+                    lg:border-b-0 
                 ">
-                        ${element.NEV} 
-                </td>
+                        <span>Termék</span>
+                        <span class="text-end text-lg-start">${element.NEV}</span>
+                </div>
                     
                 
 
-                <td 
-                class="bg-zinc-200 
-                text-slate-900 
-                dark:bg-slate-800 
-                dark:text-zinc-200 
-                 p-3  
+                <div  
+                class="
+                    col-12 
+                    col-lg-2  
+                    d-flex 
+                    flex-lg-column 
+                    justify-content-between 
+                    py-3 p-lg-1
                 ">
+                  <span>Ár</span>
                   <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
-                </td>
+                </div>
                 
-              </tr>
-            
+              </div>
+              <div class="col-0 col-lg-1"></div>
+            </div>
             
             
         
@@ -132,7 +131,7 @@ function Attekintes(li) {
         
     }
 
-    htmtoback += "</tbody></table>";
+    
 
     /*
     z += `
