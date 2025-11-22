@@ -1,10 +1,20 @@
 // az oldal betoltese utani resz (document ready function)
 
 $(document).ready(function() {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
+    
+    document.addEventListener('show.bs.offcanvas', () => {
+        document.documentElement.classList.add('offcanvas-open');
+    });
+    document.addEventListener('hidden.bs.offcanvas', () => {
+        document.documentElement.classList.remove('offcanvas-open');
+    });
+
+    document.addEventListener('show.bs.modal', () => {
+        document.documentElement.style.overflow = 'hidden';
+    });
+    document.addEventListener('hidden.bs.modal', () => {
+        document.documentElement.style.overflow = '';
+    });
 
 
     update_gombok(0);
@@ -90,19 +100,9 @@ $(document).ready(function() {
     
 
 
-    // jelszo mutatasa ikon a bejelentkezesnel
-    $("#jelszo_mutatasa").click(function() {
-        let v = $("#login_passwd"); // azert nincs .val() mert akkor leljebb nem lehetne attributumot valtoztatni
-        
-        if(v.attr('type') === 'password') {
-        v.attr('type', 'text'); // atvaltozik szovegge tehat lathato lesz
-        $("#sz").removeClass('bi-eye').addClass('bi-eye-slash');
-        } 
-        else {
-        v.attr('type', 'password'); // vissza 
-        $("#sz").removeClass('bi-eye-slash').addClass('bi-eye');
-        }
-    });
+    
+
+
 
     $(".gombdiv button").click(function() {
         $(".gombdiv").removeClass("aktiv");

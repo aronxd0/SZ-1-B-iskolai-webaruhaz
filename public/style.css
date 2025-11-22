@@ -386,6 +386,13 @@ html.dark ::-webkit-scrollbar-thumb {
 
 
 
+html.modal-open,
+html.offcanvas-open,
+body.modal-open,
+body.offcanvas-open {
+  overflow: hidden !important;
+}
+
 
 
 
