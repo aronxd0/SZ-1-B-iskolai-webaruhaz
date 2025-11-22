@@ -24,10 +24,14 @@ function Admin_Velemenykezeles() {
                         dark:hover:outline-white/10 
                         flex items-center justify-between p-4 rounded-xl cursor-pointer 
                             transition-all duration-200
-                            has-[:checked]:bg-zinc-200 
+                            has-[:checked]:bg-indigo-100 
                             has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
                             has-[:checked]:shadow-md
-                            has-[:checked]:dark:bg-sky-900 ">
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border ">
 
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input" id="varo" checked onchange="AdminVelemenyekMutat(this)">
@@ -55,10 +59,14 @@ function Admin_Velemenykezeles() {
                         dark:hover:outline-white/10 
                         flex items-center justify-between p-4 rounded-xl cursor-pointer 
                             transition-all duration-200
-                            has-[:checked]:bg-zinc-200 
+                            has-[:checked]:bg-indigo-100 
                             has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
                             has-[:checked]:shadow-md
-                            has-[:checked]:dark:bg-sky-900 ">
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border ">
 
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
@@ -86,10 +94,15 @@ function Admin_Velemenykezeles() {
                         dark:hover:outline-white/10 
                         flex items-center justify-between p-4 rounded-xl cursor-pointer 
                             transition-all duration-200
-                            has-[:checked]:bg-zinc-200 
+                            has-[:checked]:bg-indigo-100 
                             has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
                             has-[:checked]:shadow-md
-                  has-[:checked]:dark:bg-sky-900 ">
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border
+                                        ">
 
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input" id="elutasitott" onchange="AdminVelemenyekMutat(this)">

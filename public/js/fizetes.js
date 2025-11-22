@@ -84,7 +84,7 @@ function Attekintes(li) {
                     py-3 p-lg-1
                 ">
 
-                    <span>Mennyiség</span>
+                    <span class="font-semibold">Mennyiség</span>
                     <span>${element.MENNYISEG} db</span>
                 </div>
                         
@@ -101,8 +101,8 @@ function Attekintes(li) {
                     lg:border-t-0 
                     lg:border-b-0 
                 ">
-                        <span>Termék</span>
-                        <span class="text-end text-lg-start">${element.NEV}</span>
+                        <span class="font-semibold">Termék</span>
+                        <span class="text-end text-lg-start text-sm">${element.NEV}</span>
                 </div>
                     
                 
@@ -116,7 +116,7 @@ function Attekintes(li) {
                     justify-content-between 
                     py-3 p-lg-1
                 ">
-                  <span>Ár</span>
+                  <span class="font-semibold">Ár</span>
                   <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
                 </div>
                 
@@ -532,11 +532,15 @@ function Fizetes(li) {
             dark:hover:outline-white/10 
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
-                  has-[:checked]:bg-zinc-200 
-                  has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md
-                  has-[:checked]:dark:bg-sky-900 
-                  " style="border: none;">
+                  has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border
+                  " >
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="kartya" onchange="Fizetesmodvalaszto(this)">
@@ -594,11 +598,15 @@ function Fizetes(li) {
             dark:hover:outline-white/10 
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
-                  has-[:checked]:bg-zinc-200 
-                  has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md
-                  has-[:checked]:dark:bg-sky-900 
-                  " style="border: none;">
+                  has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border
+                  " >
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="paypal" onchange="Fizetesmodvalaszto(this)">
@@ -660,11 +668,15 @@ function Fizetes(li) {
             dark:hover:outline-white/10 
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
-                  has-[:checked]:bg-zinc-200 
-                  has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md
-                  has-[:checked]:dark:bg-sky-900 
-                  " style="border: none;">
+                  has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border
+                  " >
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="googlepay" onchange="Fizetesmodvalaszto(this)">
@@ -691,11 +703,15 @@ function Fizetes(li) {
             dark:hover:outline-white/10 
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
-                  has-[:checked]:bg-zinc-200 
-                  has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md
-                  has-[:checked]:dark:bg-sky-900 
-                  " style="border: none;">
+                  has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border
+                  ">
 
             <div class="flex items-center gap-3">
               <input type="radio" name="fizz" class="form-check-input" id="applepay" onchange="Fizetesmodvalaszto(this)">
@@ -734,11 +750,15 @@ function Fizetes(li) {
             dark:hover:outline-white/10 
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
-                  has-[:checked]:bg-zinc-200 
-                  has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md
-                  has-[:checked]:dark:bg-sky-900 
-                  " style="border: none;">
+                  has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border
+                  " >
 
             <div class="flex items-center gap-3">
               <input type="radio" name="szall" class="form-check-input" id="mpl" onchange="Szallitasmodvalaszto(this)">
@@ -765,11 +785,15 @@ function Fizetes(li) {
             dark:hover:outline-white/10 
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
-                  has-[:checked]:bg-zinc-200 
-                  has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md
-                  has-[:checked]:dark:bg-sky-900 
-                  " style="border: none;">
+                  has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border
+                  " >
 
             <div class="flex items-center gap-3">
               <input type="radio" name="szall" class="form-check-input" id="gls" onchange="Szallitasmodvalaszto(this)">
@@ -796,11 +820,15 @@ function Fizetes(li) {
             dark:hover:outline-white/10 
             flex items-center justify-between p-4 rounded-xl cursor-pointer 
                   transition-all duration-200
-                  has-[:checked]:bg-zinc-200 
-                  has-[:checked]:border-indigo-400 
-                  has-[:checked]:shadow-md
-                  has-[:checked]:dark:bg-sky-900 
-                  " style="border: none;">
+                  has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border
+                  " >
 
             <div class="flex items-center gap-3">
               <input type="radio" name="szall" class="form-check-input" id="expressone" onchange="Szallitasmodvalaszto(this)">
