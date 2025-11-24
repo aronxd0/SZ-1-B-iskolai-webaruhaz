@@ -514,20 +514,20 @@ async function KER_CLICk(){
 
         if(adat.select == true){
             if (adat.adat.rows.length > 0) {
-                var html = "<table class=' table table-striped table-bordered p-4 mt-3 text-center sticky-header'> <thead><tr>"
+                var html = "<table class='tablazat p-4 mt-3 text-center sticky-header'> <thead class='bg-slate-900 text-zinc-200 border-b-gray-400'><tr>"
                 // mezőnevek
                 var tablamevek = Object.keys(adat.adat.rows[0])
                 console.log(" tablanevek"+ tablamevek);
                 // elso sor betölt 
                 for(var nevek of tablamevek){
-                    html +=  `<th class="p-2">${ nevek.toString()}</th>`
+                    html +=  `<th class="p-2 ">${ nevek.toString()}</th>`
                 }
                 html += "</tr></thead><tbody>"
                 for (var item of adat.adat.rows) {
-                    html += "<tr>";
+                    html += "<tr class='bg-zinc-50 text-slate-900 dark:bg-sky-950 dark:text-zinc-200 border !border-b-gray-400 !border-r-0 !border-l-0 !border-t-0 dark:!border-b-gray-600 dark:!border-r-0 dark:!border-l-0 dark:!border-t-0'>";
     
                     for (var nev of tablamevek) {
-                        html += `<td>${item[nev]}</td>`;
+                        html += `<td class='p-2'>${item[nev]}</td>`;
                     }
     
                     html += "</tr>";
