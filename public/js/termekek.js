@@ -82,6 +82,9 @@ async function Termek_Edit(event, termek_id, tipus) {
     
 
     if (tipus == "bevitel") {
+
+      $("#idx1").html(`Új termék: `);
+
       $("#uj_kat").val("");
       $("#mod_kat").prop("disabled", false);
       KategoriaFeltolt("mod_kat", "select", 1);
@@ -103,6 +106,12 @@ async function Termek_Edit(event, termek_id, tipus) {
         }
       });
 
+
+      $("#mod_nev").on("keyup", function(e) {
+        let keres = $(this).val();
+        $("#idx1").html(`Új termék: <b>${keres}</b>`);
+      });
+
     } else {
       $("#uj_kat").val("");
       $("#mod_kat").prop("disabled", false);
@@ -119,7 +128,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       $("#mod_leiras").val(leiras);
       $("#save_button").html(`<i class="bi bi-save2"></i>&nbsp;Módosítások mentése`); 
 
-
+      $("#mod_nev").off("keyup");
 
       // ha uj kategoriat irok be akkor ne lehessen a meglevoekbol valasztani
 

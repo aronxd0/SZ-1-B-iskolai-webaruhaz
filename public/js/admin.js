@@ -410,12 +410,9 @@ function UjTermek() {
     });
     Termek_Edit(event,0,"bevitel");
 
-    $("#idx1").html(`Új termék: `);
+    
 
-    $("#mod_nev").on("keyup", function(e) {
-        let keres = $(this).val();
-        $("#idx1").html(`Új termék: <b>${keres}</b>`);
-    });
+    
 
     $("#save_button").html(`<i class="bi bi-plus-lg"></i>&nbsp;Új termék létrehozása`);
 }
