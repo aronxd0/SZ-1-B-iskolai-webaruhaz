@@ -31,6 +31,9 @@ async function TermekModosit(url) {
     console.log("-----------FD------------");
     console.log("");
     
+    if (upd == 1) {
+      fd.delete("ID_TERMEK"); // uj termeknel ne legyen ID_TERMEK kuldve
+    }
 
     //console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
     console.log("az t kapod inser/ update: "  + `termek_edit?insert=${upd}}`, fd)
