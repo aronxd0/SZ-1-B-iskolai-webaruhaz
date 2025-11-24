@@ -7,7 +7,7 @@ async function TermekModosit(url) {
     let id_termek = url.split("§")[1];
     let aktiv = url.split("§")[2];
     //let uj_kategoria = url.split("§")[3];
-
+    var upd = getElementById("idx1").innerHTML.Substring(0,9) == "Új termék" ? 1 : 0;
     const fd = new FormData(document.getElementById("mod1"));
 
     fd.append("ID_TERMEK", id_termek);
@@ -34,7 +34,7 @@ async function TermekModosit(url) {
 
     //console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
 
-    let termekmod = await ajax_post_formdata(`termek_edit`, fd); 
+    let termekmod = await ajax_post_formdata(`termek_edit?insert=${upd}}`, fd); 
     if (termekmod.message == "ok") {
       üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success");
     } else {
@@ -162,6 +162,7 @@ async function Termek_Edit(event, termek_id, tipus) {
     $("#save_button")
       .off()
       .one("click", function () {
+        
         const aktiv = $("#mySwitch").is(":checked") ? "YES" : "NO"; // Itt olvassuk ki az értéket
         TermekModosit(`${$("#mod1").serialize()}§${termek_id}§${aktiv}§${$("#uj_kat").val()}`);
       });
