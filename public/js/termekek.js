@@ -33,7 +33,7 @@ async function TermekModosit(url) {
     
 
     //console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
-
+    console.log("az t kapod inser/ update: "  + `termek_edit?insert=${upd}}`, fd)
     let termekmod = await ajax_post_formdata(`termek_edit?insert=${upd}}`, fd); 
     if (termekmod.message == "ok") {
       üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success");
