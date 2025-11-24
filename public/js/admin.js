@@ -542,16 +542,41 @@ async function KER_CLICk(){
             }        
         }
         else{
-            document.getElementById("SQL_hiba").innerHTML =  ` <div class="border border-success rounded-4 bg-zinc-50 p-3   shadow-xl  "> 
-            ${adat.adat.rows.info}  
-            </div> `
+            document.getElementById("SQL_hiba").innerHTML =  `
+            
+            <div role="alert" 
+                    class="
+                    bg-emerald-200 
+                    text-emerald-700 
+                    dark:bg-emerald-900 
+                    dark:text-emerald-400 
+                    
+                    px-4 py-3 rounded-4" style="border: none;">
+                        <i class="bi bi-check2"></i>
+                        <strong class="font-bold">Művelet sikeresen végrehajtva: </strong>
+                        &nbsp;
+                        <span> ${adat.adat.rows.info} </span>  
+                        
+                    </div> `
         }
     }
     catch(e){
     
-        var sad = ` <div class="border border-danger rounded-4 bg-zinc-50 p-3   shadow-xl  "> 
-                ${e}  
-                </div> `
+        var sad = ` 
+                <div role="alert" 
+                    class="
+                    bg-red-200 
+                    text-red-700 
+                    dark:bg-red-950 
+                    dark:text-red-400 
+                    
+                    px-4 py-3 rounded-4" style="border: none;">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <strong class="font-bold">Hiba: </strong>
+                        &nbsp;
+                        <span> ${e}</span>
+                        
+                    </div> `
 
         document.getElementById("SQL_hiba").innerHTML =sad ;
     }
