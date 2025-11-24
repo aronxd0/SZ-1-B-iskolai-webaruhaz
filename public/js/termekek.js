@@ -86,6 +86,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       $("#mod_azon").val("");
       $("#mod_ar").val(0);
       $("#mod_db").val(1);
+      $("#mod_fotolink").val("");
       $("#mod_meegys").val("db");
       $("#mod_leiras").val("");
       $("#mySwitch").prop("checked", true).trigger("change"); // Default érték beállítása
