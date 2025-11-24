@@ -910,9 +910,20 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 
                 fotolink = null;
             }
-            else {
-                if (fotolink === "") fotolink = null;
+            else{
+                //kép lekérdezése 
+                var qkep = JSON.parse(
+                    await runQueries(
+                        "SELECT FILENAME, IMG FROM webbolt_fotok WHERE ID_TERMEK = ?",
+                        [termekid]
+                    )
+                );
+                if(qkep.maxcount>0 && fotolink == qkep.rows[0].FILENAME){
+                    fotolink = null;
+                }
             }
+            
+
 
             var sql = `
                 UPDATE webbolt_termekek SET
