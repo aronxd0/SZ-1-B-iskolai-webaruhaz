@@ -7,7 +7,7 @@ async function TermekModosit(url) {
     let id_termek = url.split("§")[1];
     let aktiv = url.split("§")[2];
     //let uj_kategoria = url.split("§")[3];
-    var upd = getElementById("idx1").innerHTML.Substring(0,9) == "Új termék" ? 1 : 0;
+    var upd = document.getElementById("idx1").innerHTML.Substring(0,9) == "Új termék" ? 1 : 0;
     const fd = new FormData(document.getElementById("mod1"));
 
     fd.append("ID_TERMEK", id_termek);
