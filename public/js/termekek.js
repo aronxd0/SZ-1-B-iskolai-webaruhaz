@@ -31,6 +31,9 @@ async function TermekModosit(url) {
     console.log("-----------FD------------");
     console.log("");
     
+    if (upd == 1) {
+      fd.delete("ID_TERMEK"); // uj termeknel ne legyen ID_TERMEK kuldve
+    }
 
     //console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
     console.log("az t kapod inser/ update: "  + `termek_edit?insert=${upd}}`, fd)
@@ -453,34 +456,10 @@ async function Termek_Mutat(event, termek_id) {
     $("#sajatvlm").removeClass("eltunt");
   }
 
-  $("#velemenyek").hide().removeClass("fade show");
-  $("#sajatok").hide().removeClass("fade show");
-
-  //velemenyek tab jelenjen meg alapbol
-  $("#velemenyek").addClass("show").show();
+  $("#velemenyek").html("");
   VelemenyekMutat(termek_id);
 
-  $("#velemenyek-tab")
-    .off("click")
-    .on("click", () => {
-      // eloszor levesszuk a click-et majd visszarakjuk hogy ne halmozodjon
-      $("#velemenyek").addClass("show").show(); // show class + megjelenites
-      $("#sajatok").hide().removeClass("show"); // show class takarodj + eltuntetes
-      $(".nav-link").removeClass("active"); // minden nav linkről aktiv allapot le
-      $("#velemenyek-tab").addClass("active"); // ez legyen az aktiv nav-link
-      VelemenyekMutat(termek_id); // velemenyek betoltese
-    });
-
-  $("#sajat-tab")
-    .off("click")
-    .on("click", () => {
-      /* ugyanaz mint feljebb csak a "sajat velemenyek" reszre  */
-      $("#sajatok").addClass("show").show();
-      $("#velemenyek").hide().removeClass("show");
-      $(".nav-link").removeClass("active");
-      $("#sajat-tab").addClass("active");
-      SajatVelemenyekMutat(termek_id);
-    });
+  
 
   console.log(`VelemenyekMutat(${termek_id})`);
 

@@ -64,7 +64,7 @@ async function SajatVelemenyekMutat(id_termek) {
                                                                                                                                                                             minute: '2-digit',
                                                                                                                                                                             hour12: false
                                                                                                                                                                         })}</span></p>
-                <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                <p class="break-all">${element.SZOVEG.toString()}</p>
                 <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> 
                     <div class="dropup">
                         <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
@@ -80,8 +80,8 @@ async function SajatVelemenyekMutat(id_termek) {
             </div>`;
         }
         console.log(sv);
-        $("#sajatok").fadeOut(300, function() {
-            $("#sajatok").html(sv).fadeIn(300);
+        $("#velemenyek").fadeOut(300, function() {
+            $("#velemenyek").html(sv).fadeIn(300);
         });
         console.log(`sajat velemenyek betoltve`);
 
@@ -121,7 +121,7 @@ async function VelemenyekMutat(id_termek) {
                                     minute: '2-digit',
                                     hour12: false
                                 })}</span></p>
-                    <p>${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                    <p class="break-all">${element.SZOVEG.toString()}</p>
                 </div>`;
             }
             console.log(vv);
