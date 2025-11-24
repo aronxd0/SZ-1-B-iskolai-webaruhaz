@@ -190,27 +190,23 @@ async function Termek_Edit(event, termek_id, tipus) {
 function Termek_Torol(event, cuccok) {
   event.stopPropagation();
   const termek_id = cuccok[0];
- console.log("bejoszssssssssssssssss")
+ console.log("bejoszssssssssssssssss" + termek_id)
   $("#delete_modal .modal-body").html(`Biztosan törlöd a(z) <b>${termek_id}.</b> azonosítójú terméket?<br><br>A termék örökre el fog veszni (ami hosszú idő).`);
   $("#delete_modal").off("click");
-  $("#delete_modal").on("click", ".btn-danger", async function () {
+  $("#delete_modal").on("click", ".szemetes", async function () {
     try {
       var s = "";
       var tip = "success";
       var d_json = await ajax_post(`termek_del?ID_TERMEK=${termek_id}`, 1);
       console.log(d_json);
       if (d_json.message == "ok") {
-        if (d_json.rows[0].affectedRows == 1) {
           s = "Törlés OK...";
           KERESOBAR();
-        } else {
+        } 
+        else {
           tip = "warning";
           s = `Hiba<br>${d_json.message}`;
         }
-      } else {
-        tip = "danger";
-        s = d_json.message;
-      }
       üzen(s, tip);
     } catch (err) {
       console.log("hiba:", err);
