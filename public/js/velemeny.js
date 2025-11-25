@@ -65,18 +65,28 @@ async function SajatVelemenyekMutat(id_termek) {
                                                                                                                                                                             hour12: false
                                                                                                                                                                         })}</span></p>
                 <p class="break-all">${element.SZOVEG.toString()}</p>
-                <p class="d-flex align-self-center justify-content-between"><span><strong>${element.ALLAPOT} ${ikon}</strong></span> 
+
+                 <div class="d-flex justify-content-between align-items-center">
+                    <div class="w-auto">
+                       <span><strong>${element.ALLAPOT} ${ikon}</strong></span>                                                                                                                                                     
+                    </div>
+
                     <div class="dropup">
                         <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
-                         <i class="bi bi-trash"></i>
+                            <i class="bi bi-trash"></i>
                         </button>
-                        <ul class="dropdown-menu p-2">
+                        <ul class="dropdown-menu p-2 w-100">
                             <li><span class="dropdown-item-text">Biztosan törlöd a véleményt?</span></li>
                             <li class="d-flex justify-content-end p-3"><button class="btn btn-danger bi bi-trash" type="button" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> Törlés</button></li>
                         </ul>
-                    </div>
+                    </div>                                                                                                                                                     
+                 
+                 </div>                                                                                                                                                       
+
+                <p class="d-flex align-self-center justify-content-between"> </p>
+                
                      
-                </p>
+                
             </div>`;
         }
         console.log(sv);
