@@ -81,7 +81,7 @@ function fileFilter(req, file, cb) {
 module.exports = upload;
 
 // === AFA lekérdezése ===
-// GET /afa
+// GET: /afa
 
 app.post('/afa',(req, res) => {
     var sql = `
