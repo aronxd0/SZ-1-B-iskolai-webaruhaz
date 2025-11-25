@@ -150,20 +150,24 @@ async function AdminVelemenyekMutat(asd) {
             else {
 
                 ss += `
-                    <div role="alert" 
-                    class="
-                    bg-blue-100 
-                    text-blue-700 
-                    dark:bg-blue-900 
-                    dark:text-blue-500 
-                    
-                    px-4 py-3 rounded-4" style="border: none;">
-                        <i class="bi bi-info-circle-fill"></i>
-                        <strong class="font-bold">${varo.maxcount} db</strong>
-                        <span> vélemény vár jóváhagyásra</span>
+                    <div class="row d-flex justify-content-center">
+                        <div role="alert" 
+                        class="
+                        col-12 col-lg-4
+                        !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50
+                        bg-blue-200/30 
+                        text-blue-800 
+                        dark:bg-blue-900/20 
+                        dark:text-blue-200 
+                        w-auto 
                         
+                        px-4 py-3 rounded-4">
+                            <i class="bi bi-info-circle-fill"></i>
+                            <strong class="font-bold">${varo.maxcount} db</strong>
+                            <span> vélemény vár jóváhagyásra</span>
+                            
+                        </div>
                     </div>
-                
                 
                 `;
 
