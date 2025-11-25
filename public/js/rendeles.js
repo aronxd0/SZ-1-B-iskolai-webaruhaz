@@ -20,7 +20,7 @@ $("#rend_button").click(async function () {
 
             // Egyedi azonosító a collapse részhez
             const collapseId = `collapse_${elemek.ID_RENDELES}`;
-
+          
             s += `
 
                 <div class="col-0 col-lg-2"></div>
@@ -114,7 +114,7 @@ $("#rend_button").click(async function () {
                     py-3 p-lg-1
                     ">
                         <span><i class="bi bi-cash"></i> Bruttó végösszeg</span>
-                        <span>(áfa rendeléskor: ${elemek.AFA}%)</span>
+                        <span>(áfatartalom: ${elemek.AFA}%)</span>
                         <span class="anton-regular text-success termek_ar">
                             ${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft
                         </span>
