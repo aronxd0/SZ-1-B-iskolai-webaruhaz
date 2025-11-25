@@ -50,7 +50,12 @@ const pool = mysql.createPool({
     queueLimit: 0                           // Végtelen várakozási sor (ha nincs szabad kapcsolat)
 });
 
-
+app.post('/afa',(req, res) => {
+    var sql = `
+        SELECT AFA from webbolt_konstansok
+    `;
+    sendJson_toFrontend(res, sql, []);
+});
 
 // === KÉPFELTÖLTÉS KEZELÉSE (MULTER) ===
 // Multer: Express middleware a fájlfeltöltéshez, képek feldolgozásához
@@ -820,8 +825,8 @@ app.post('/rendelesek',async (req, res) => {
 
     var sql = 
     `
-    SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, r.AFA, 
-           round(SUM(rt.AR * rt.MENNYISEG)*(1+r.AFA/100)) AS RENDELES_VEGOSSZEGE
+    SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, r.AFA,
+    round(SUM(rt.AR * rt.MENNYISEG)*(1+(r.AFA/100))) AS RENDELES_VEGOSSZEGE
     FROM webbolt_rendeles AS r
     JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
     WHERE r.ID_USER = ?

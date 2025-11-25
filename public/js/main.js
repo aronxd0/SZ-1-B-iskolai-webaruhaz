@@ -66,7 +66,7 @@ async function AR_SUM(osztaly, hova, vegossszeg) {
     });
     
     if (vegossszeg) {
-        sum = Math.round(sum * ((1+(await ajax_post(`afa`, 1)).rows[0].AFA)/100));
+        sum = Math.round(sum * (1 + (await ajax_post(`afa`, 1)).rows[0].AFA / 100));
         $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
     }
     else {
