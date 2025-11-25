@@ -416,23 +416,107 @@ function UjTermek() {
 
     $("#save_button").html(`<i class="bi bi-plus-lg"></i>&nbsp;Új termék létrehozása`);
 }
+//#region Statisztika
 
 function Statisztikak() {
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     
+    $("#welcome_section").fadeOut(300);
 
-    $("#content_hely").fadeOut(300, function() {
-        $("#content_hely").html(`
-        <div class="row">
-            <div class="col-12 text-center p-2 mt-3">
-                <span class="text-xl">statisztikak</span>
+    var html = `
+      <div class="text-center fs-1 mt-4">Statisztikák</div>
+
+     <div class="container p-3 mt-2">
+        <div class="row justify-content-center g-3">
+
+            <!-- BAL OLDAL (mobilon teljes szélesség, nagyobb képernyőn 4/12) -->
+            <div class="col-12 col-md-4 bg-gray-400 border border-dark rounded-4 p-2">
+                <div class="mt-2">
+
+                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                        <input type="radio" name="cucc" id="_01" onclick="Diagrammok(this)" checked>
+                        Darab vásárlás
+                    </label>
+
+                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                        <input type="radio" name="cucc" id="_02" onclick="Diagrammok(this)">
+                        Jövedelem
+                    </label>
+
+                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                        <input type="radio" name="cucc" id="_03" onclick="Diagrammok(this)">
+                        Népszerű áruk
+                    </label>
+
+                </div>
             </div>
+
+            <!-- JOBB OLDAL (mobilon teljes szélesség, nagyobb képernyőn 8/12) -->
+            <div class="col-12 col-md-8 bg-slate-500 p-5 rounded-4 border border-dark">
+                
+                <div class="row mb-2">
+                    <div class="col-12 bg-danger text-center fs-3 py-2 rounded-2" id="cim"></div>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-12 col-lg-7 bg-warning d-flex justify-content-center py-5 rounded-2"> diaagram helye</div>
+                    <div class="col-12 col-lg-5 bg-info d-flex justify-content-center py-5 rounded-2">
+                        leirása
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-md-4">                
+                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                            <input type="radio" name="hatar" id="_03">
+                            1 hónap
+                        </label>
+                    </div>
+                      <div class="col-md-4">                
+                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                            <input type="radio" name="hatar" id="_03" >
+                            3 hónap
+                        </label>
+                    </div>
+                      <div class="col-md-4">                
+                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                            <input type="radio" name="hatar" id="_03" >
+                            1 év
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-        `).fadeIn(300);
+    </div>
+            `;
+            
+
+
+
+     $("#content_hely").fadeOut(300,  function() {
+         $("#content_hely").html(html).fadeIn(300); 
         $("#pagi").html("");
+        document.getElementById("_01").click(); 
     });
+
 }
+
+function Diagrammok(id){
+        if(id.id == "_01"){
+            document.getElementById("cim").innerHTML ="Darab áru let megvásárolva:    "
+        }
+        if(id.id == "_02"){
+            document.getElementById("cim").innerHTML ="Jövedelem"
+        }
+        if(id.id == "_03"){
+            document.getElementById("cim").innerHTML ="Legnépszerübb áru"
+        }
+        
+}
+//#endregion
+//#region SQl input 
 
 function SQLinput() {
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
@@ -582,3 +666,4 @@ async function KER_CLICk(){
 
 
 }
+//#endregion
