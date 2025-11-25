@@ -150,20 +150,24 @@ async function AdminVelemenyekMutat(asd) {
             else {
 
                 ss += `
-                    <div role="alert" 
-                    class="
-                    bg-blue-100 
-                    text-blue-700 
-                    dark:bg-blue-900 
-                    dark:text-blue-500 
-                    
-                    px-4 py-3 rounded-4" style="border: none;">
-                        <i class="bi bi-info-circle-fill"></i>
-                        <strong class="font-bold">${varo.maxcount} db</strong>
-                        <span> vélemény vár jóváhagyásra</span>
-                        
+                    <div class="row d-flex justify-content-center">
+                        <div role="alert" 
+                        class="
+                        col-12 col-lg-4
+                        !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50
+                        bg-blue-200/30 
+                        text-blue-800 
+                        dark:bg-blue-900/20 
+                        dark:text-blue-200 
+                        w-auto
+                        mx-3 
+                        px-2 py-3 rounded-4">
+                            <i class="bi bi-info-circle-fill"></i>
+                            <strong class="font-bold">${varo.maxcount} db</strong>
+                            <span> vélemény vár jóváhagyásra</span>
+                            
+                        </div>
                     </div>
-                
                 
                 `;
 
@@ -196,7 +200,7 @@ async function AdminVelemenyekMutat(asd) {
                         class="
                         btn 
                         
-                        bi bi-x-lg 
+                        
                         bg-zinc-600 
                         text-zinc-200 
                         rounded-4 
@@ -207,13 +211,15 @@ async function AdminVelemenyekMutat(asd) {
                         dark:hover:bg-slate-950 
                         dark:hover:text-red-600
                         transition-hover duration-300 ease-in-out 
-                            w-auto" onclick="Velemeny_Elutasit(${element.ID_VELEMENY})"> Elutasítás </button>
+                            w-auto" onclick="Velemeny_Elutasit(${element.ID_VELEMENY})"> 
+                            <i class="bi bi-x-lg"></i>
+                            <span class="d-none d-sm-inline"> Elutasítás</span>
+                        </button>
 
                         <button 
                         class="
                         btn 
-                        
-                        bi bi-check2  
+                         
                         bg-zinc-600 
                         text-zinc-200 
                         rounded-4 
@@ -224,7 +230,10 @@ async function AdminVelemenyekMutat(asd) {
                         dark:hover:bg-slate-950 
                         dark:hover:text-emerald-600
                         transition-hover duration-300 ease-in-out 
-                            w-auto" onclick="Velemeny_Elfogad(${element.ID_VELEMENY})"> Jóváhagyás </button>
+                            w-auto" onclick="Velemeny_Elfogad(${element.ID_VELEMENY})"> 
+                            <i class="bi bi-check2"></i>
+                             <span class="d-none d-sm-inline"> Jóváhagyás</span> 
+                        </button>
                     </div>
                 </div>`;
                 }

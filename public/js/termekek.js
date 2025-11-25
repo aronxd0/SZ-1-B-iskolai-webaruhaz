@@ -344,7 +344,7 @@ async function Termek_Mutat(event, termek_id) {
               dark:hover:bg-gray-700 
               dark:hover:-outline-offset-1 
               dark:hover:outline-white/10 
-              flex items-center justify-between p-4 rounded-xl cursor-pointer 
+              d-flex align-items-center justify-content-center p-1 text-center rounded-xl cursor-pointer 
                   transition-all duration-200
                   has-[:checked]:bg-indigo-100 
                   has-[:checked]:border-indigo-400 
@@ -357,7 +357,7 @@ async function Termek_Mutat(event, termek_id) {
 
               <div class="flex items-center gap-3">
               <input type="radio" name="comment" class="form-check-input hidden" id="velemeny" checked onchange="VelemenyekMutat(${termek_id})">
-              <span class="font-semibold">Vélemények</span>
+              <span class="font-semibold"><i class="bi bi-chat-dots"></i> Vélemények</span>
               </div>
 
               <div class="flex flex-col text-right">
@@ -370,31 +370,7 @@ async function Termek_Mutat(event, termek_id) {
     `);
 
 
-  /*
-  $("#vvl").html(
-    `<a 
-    class="
-        nav-link 
-        show 
-        active 
-        bg-zinc-200 
-        
-        text-slate-900 
-        hover:text-slate-900 
-        hover:border-t-none 
-        hover:border-r-none 
-        hover:border-l-none 
-        dark:hover:border-t-none 
-        dark:hover:border-r-none 
-        dark:hover:border-l-none 
-        
-        dark:bg-slate-800 
-        dark:text-zinc-200 
-
-    " href="#velemenyek" id="velemenyek-tab" onclick='VelemenyekMutat(${termek_id})' style="border-radius:0px;"><i class="bi bi-chat-dots"></i> Vélemények</a>`
-  );
-  */
-  //$("#velemenyek-tab").trigger("click");
+  
 
   if (!BevanJelentkezve()) {
     $("#vlmg").html("Vélemény írásához jelentkezzen be");
@@ -436,7 +412,7 @@ async function Termek_Mutat(event, termek_id) {
               dark:hover:bg-gray-700 
               dark:hover:-outline-offset-1 
               dark:hover:outline-white/10 
-              flex items-center justify-between p-4 rounded-xl cursor-pointer 
+              d-flex align-items-center justify-content-center p-1  rounded-xl cursor-pointer 
                   transition-all duration-200
                   has-[:checked]:bg-indigo-100 
                   has-[:checked]:border-indigo-400 
@@ -449,7 +425,7 @@ async function Termek_Mutat(event, termek_id) {
 
               <div class="flex items-center gap-3">
               <input type="radio" name="comment" class="form-check-input hidden " id="sajat_velemeny" onchange="SajatVelemenyekMutat(${termek_id})">
-              <span class="font-semibold">Véleményeim</span>
+              <span class="font-semibold"><i class="bi bi-person"></i> Véleményeim</span>
               </div>
 
               <div class="flex flex-col text-right">
