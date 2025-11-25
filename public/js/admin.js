@@ -1,4 +1,8 @@
-function Admin_Velemenykezeles() {
+async function Admin_Velemenykezeles() {
+
+    let varodb = await ajax_post("velemenyek?szelektalas=1", 1);
+    let stimmdb = await ajax_post("velemenyek?szelektalas=0", 1);
+    let decdb = await ajax_post("velemenyek?szelektalas=2", 1);
 
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
@@ -7,10 +11,10 @@ function Admin_Velemenykezeles() {
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
         
-            <div class="row d-flex flex-column flex-xl-row p-1 mx-auto mt-5 space-y-2">
+            <div class="row d-flex flex-column flex-md-row p-1 mx-auto mt-5 space-y-2">
 
                 <!-- OPTION 1 -->
-                <div class="col-12 col-xl-4 mx-auto mt-3">
+                <div class="col-12 col-md-4 mx-auto mt-3">
                     <label 
                         class="bg-zinc-50 
                         text-slate-900 
@@ -35,7 +39,8 @@ function Admin_Velemenykezeles() {
 
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input" id="varo" checked onchange="AdminVelemenyekMutat(this)">
-                        <span class="font-semibold">Jóváhagyásra váró vélemények</span>
+                        <span class="font-semibold">Függőben</span>
+                        <span class="inline-flex items-center rounded-md text-nowrap bg-yellow-400/10 px-2 py-1 font-medium text-yellow-700 inset-ring inset-ring-yellow-400/20"> ${varodb.rows.length}</span>
                         </div>
 
                         <div class="flex flex-col text-right">
@@ -45,7 +50,7 @@ function Admin_Velemenykezeles() {
                 </div>
 
                 <!-- OPTION 2 -->
-                <div class="col-12 col-xl-4 mx-auto mt-3">
+                <div class="col-12 col-md-4 mx-auto mt-3">
                     <label 
                         class="bg-zinc-50 
                         text-slate-900 
@@ -70,7 +75,8 @@ function Admin_Velemenykezeles() {
 
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
-                        <span class="font-semibold">Jóváhagyott vélemények</span>
+                        <span class="font-semibold">Jóváhagyva</span>
+                        <span class="inline-flex items-center text-nowrap rounded-md bg-green-400/10 px-2 py-1 font-medium text-green-400 inset-ring inset-ring-green-500/20"> ${stimmdb.rows.length} </span>
                         </div>
 
                         <div class="flex flex-col text-right">
@@ -80,7 +86,7 @@ function Admin_Velemenykezeles() {
                 </div>
 
                 <!-- OPTION 3 -->
-                <div class="col-12 col-xl-4 mx-auto mt-3">
+                <div class="col-12 col-md-4 mx-auto mt-3">
                     <label 
                         class="bg-zinc-50 
                         text-slate-900 
@@ -106,7 +112,8 @@ function Admin_Velemenykezeles() {
 
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input" id="elutasitott" onchange="AdminVelemenyekMutat(this)">
-                        <span class="font-semibold">Elutasított vélemények</span>
+                        <span class="font-semibold">Elutasítva</span>
+                        <span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-nowrap font-medium text-red-400 inset-ring inset-ring-red-400/20">${decdb.rows.length}</span>
                         </div>
 
                         <div class="flex flex-col text-right">
