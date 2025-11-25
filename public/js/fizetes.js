@@ -1036,7 +1036,7 @@ async function Fizetésclick(li) {
 
     if(mindenjo){
       try{
-        const html = `${emailDesign(li)}`;
+        const html = await emailDesign(li);
         
         ajax_post_SpinnerNelkul("send-email", { // 2 adata egyfajta tömb amit majd a backend fogad
           email: _emil,
@@ -1050,13 +1050,10 @@ async function Fizetésclick(li) {
       }
       
     } 
-    
-
-    
 }
 
 
-function emailDesign(li){
+async function emailDesign(li){
   let rows = "";
   let osszes = 0;
 
@@ -1164,7 +1161,7 @@ function emailDesign(li){
         font-weight:bold;
         color:#047857;
     ">
-      Végösszeg: ${Math.round(osszes * 1.27).toLocaleString()} Ft
+       Végösszeg: ${Math.round(osszes * ((1+(await ajax_post(`afa`, 1)).rows[0].AFA)/100)).toLocaleString()} Ft
     </div>
 
   </div>

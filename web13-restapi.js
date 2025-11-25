@@ -1,39 +1,53 @@
+// === KÖNYVTÁRAK ===
 const util      = require('util');
-const mysql     = require('mysql2/promise');
-const express   = require('express');
-const session   = require('express-session');
+const mysql     = require('mysql2/promise');  // MySQL szinkron/aszinkron kérdezésekhez
+const express   = require('express');         // Express webszerver keretrendszer
+const session   = require('express-session'); // Felhasználói munkamenet kezeléshez
 const { stringify } = require('querystring');
 
-
+// === KONFIGURÁCIÓS FÁJLOK ===
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '.env') }); // <- .env hozzáadva
+require('dotenv').config({ path: path.join(__dirname, '.env') }); // .env fájlból környezeti változók (DB hitelesítési adatok)
 
+// === EXPRESS SZERVER ===
 const app       = express();
-const port      = 9012;
+const port      = 9012; // A szerver ezen a porton hallgat
 
-//email-sender.js 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // emailnek kell, hogy app.postnak legyem bodyja is
+// === MIDDLEWARE BEÁLLÍTÁSOK ===
+// JSON és URL-enkódolt adatok feldolgozásához szükséges middleware-ek
+app.use(express.json());                                           // JSON body feldolgozása
+app.use(express.urlencoded({ extended: true }));                  // URL-enkódolt adatok (form) feldolgozása - email küldéshez szükséges
 
-// Változók a válasz headerhez
+// === HTTP HEADER KONSTANSOK ===
+// Minden JSON válasz ezen header-ekkel fog visszatérni
 const header1 = 'Content-Type';
-const header2 = 'application/json; charset=UTF-8';
+const header2 = 'application/json; charset=UTF-8'; // UTF-8 karakterkódolás magyar karakterekhez
 
-app.use(express.static('public')); // statikus fájlok kiszolgálása (public/index.html a belépő)
-app.use(session({ key:'user_sid', secret:'nagyontitkos', resave:true, saveUninitialized:true }));   /* session beállítások */
+// === STATIKUS FÁJLOK KISZOLGÁLÁSA ===
+app.use(express.static('public')); // A public/ mappa tartalmát direktben kiszolgálja (index.html, CSS, JS)
 
-// Adatbázis kapcsolat pool
-// Megjegyzés: itt a host/user/password/database a DB kapcsolódáshoz szükséges hitelesítési adatok.
+// === FELHASZNÁLÓI MUNKAMENET (SESSION) BEÁLLÍTÁSA ===
+// Session kezelés bejelentkezés után az ID_USER és egyéb adat tárolásához
+app.use(session({
+    key: 'user_sid',
+    secret: 'nagyontitkos',
+    resave: true,
+    saveUninitialized: true       
+}));
+
+// === ADATBÁZIS KAPCSOLAT POOL ===
+// Connection pool: több konkurens kapcsolatot kezel egyidejűleg a MySQL szerverrel
+// A pool újrahasznosítja a kapcsolatokat a teljesítmény javítása érdekében
 const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    port: process.env.DB_PORT,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    multipleStatements: true, // komplex tranzakciókhoz szükséges (START TRANSACTION + több utasítás)
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+    host: process.env.DB_HOST,              // Az adatbázis szerverének IP/hostname (.env-ből)
+    user: process.env.DB_USER,              // Az adatbázis felhasználóneve
+    port: process.env.DB_PORT,              // Az adatbázis portja
+    password: process.env.DB_PASSWORD,      // Az adatbázis jelszava
+    database: process.env.DB_DATABASE,      // Az adatbázis neve
+    multipleStatements: true,               // Több SQL utasítás egymás után (tranzakciókhoz szükséges: START TRANSACTION + több INSERT/UPDATE)
+    waitForConnections: true,               // Várakozzon szabad kapcsolatra, ne dobjon hibát azonnal
+    connectionLimit: 10,                    // Max 10 egyidejű kapcsolat
+    queueLimit: 0                           // Végtelen várakozási sor (ha nincs szabad kapcsolat)
 });
 
 app.post('/afa',(req, res) => {
@@ -43,67 +57,84 @@ app.post('/afa',(req, res) => {
     sendJson_toFrontend(res, sql, []);
 });
 
-// képes csoda
+// === KÉPFELTÖLTÉS KEZELÉSE (MULTER) ===
+// Multer: Express middleware a fájlfeltöltéshez, képek feldolgozásához
 
 const multer = require("multer");
 
+// Memory storage: a feltöltött fájl a memóriában marad (szérveroldali feldolgozáshoz)
+// Alternatíva lenne a disk storage (merevlemezre írás), de itt a base64-ként mentjük az adatbázisba
 const storage = multer.memoryStorage();
+
 const upload = multer({
-  storage,
-  limits: { fileSize: 12 * 1024 * 1024 }, // képméret 10mb
-  fileFilter: fileFilter
+  storage,                                    // A fájlok memóriában vannak tárolva
+  limits: { fileSize: 12 * 1024 * 1024 },    // Max 12 MB méret
+  fileFilter: fileFilter                      // Egyéni szűrő: csak bizonyos típusok engedélyezése
 });
 
-
-// MIME típus ellenőrzés (opcionális, de ajánlott)
+// === MIME TÍPUS ELLENŐRZÉS ===
+// Csak a megadott képformátumok engedélyezése (biztonsági okokból)
 function fileFilter(req, file, cb) {
-  const allowed = ["image/jpeg", "image/png", "image/webp"];
+  const allowed = ["image/jpeg", "image/png", "image/webp"];  // Megengedett MIME típusok
   if (allowed.includes(file.mimetype)) {
-    cb(null, true);
+    cb(null, true);                          // OK, a fájl átmehet
   } else {
-    cb(new Error("Csak képfájl tölthető fel!"), false);
+    cb(new Error("Csak képfájl tölthető fel!"), false);  // Hiba: nem megengedett típus
   }
 }
 
 module.exports = upload;
 
+// === AFA lekérdezése ===
+// GET: /afa
+
+app.post('/afa',(req, res) => {
+    var sql = `
+        SELECT AFA from webbolt_konstansok
+    `;
+    sendJson_toFrontend(res, sql, []);
+});
+
+
 
 //#region kereses
 
-// POST /kategoria
-// Leírás: kategória lista lekérése szűrők alapján.
-// várható req.query paraméterek:
-//  - elfogyott: (int) ha 1 akkor csak elfogyott termékek alapján listáz (MENNYISEG = 0)
-//  - inaktiv: (int) ha 1 akkor inaktív termékek alapján listáz (AKTIV = 'N')
-//  - nev: (string) névre/leírásra szűrés (LIKE)
-// A függvény felépíti a WHERE feltételeket és meghívja sendJson_toFrontend-et a lekérdezéssel.
+// === KATEGÓRIA LISTA ENDPOINT ===
+// GET: /kategoria
+// Paraméterek (req.query):
+//  - elfogyott: (int) 1 = csak elfogyott termékek (MENNYISEG = 0)
+//  - inaktiv: (int) 1 = csak inaktív termékek (AKTIV = 'N')
+//  - nev: (string) szűrés kategória nevére vagy leírásra (LIKE operátor)
+// Működés: dinamikus WHERE feltételeket épít, majd visszaadja a kategóriákat
 app.post('/kategoria',(req, res) => {
     
-    var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)   :   -1);
+    var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)   :   -1);  // -1 = nem szűrünk
     var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)     :   -1);
     var nev = (req.query.nev? req.query.nev              :   "");
     
-    // Feltételek és értékek elkülönítve
+    // Feltételek és értékek elkülönítve (biztonságos paraméterezett lekérdezéshez)
     let whereFeltetelek = [];
     let ertekek = [];
 
+    // Ha van keresési szöveg, keressük a kategória nevén vagy leírásán
     if (nev !== "") {
-        // Keresés név vagy leírás mezőben, paraméterezve
         whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ?)`);
-        ertekek.push(`%${nev}%`);
+        ertekek.push(`%${nev}%`);  // % = tetszőleges karakterek (wildcard)
         ertekek.push(`%${nev}%`);
     }
 
+    // Szűrési logika: elfogyott és/vagy inaktív termékek alapján
     if (elfogyott != -1 && inaktiv == -1) {
-        whereFeltetelek.push(`t.MENNYISEG = 0`);
+        whereFeltetelek.push(`t.MENNYISEG = 0`);  // Csak elfogyott
     } else if (inaktiv != -1 && elfogyott == -1) {
-        whereFeltetelek.push(`t.AKTIV = 'N'`);
+        whereFeltetelek.push(`t.AKTIV = 'N'`);  // Csak inaktív
     } else if (elfogyott != -1 && inaktiv != -1) {
-        whereFeltetelek.push(`(t.AKTIV = 'N' OR t.MENNYISEG = 0)`);
+        whereFeltetelek.push(`(t.AKTIV = 'N' OR t.MENNYISEG = 0)`);  // Mindkettő: inaktív VAGY elfogyott
     } else {
-        whereFeltetelek.push(`(t.AKTIV = 'Y' AND t.MENNYISEG > 0)`);
+        whereFeltetelek.push(`(t.AKTIV = 'Y' AND t.MENNYISEG > 0)`);  // Alapértelmezett: csak aktív és raktáron lévő
     }
     
+    // WHERE zaradék összeállítása (ha vannak feltételek)
     const where = whereFeltetelek.length > 0 ? `WHERE ${whereFeltetelek.join(' AND ')}` : '';
 
     var sql = `
@@ -114,42 +145,47 @@ app.post('/kategoria',(req, res) => {
         ORDER BY k.KATEGORIA
     `;
 
-    // sendJson_toFrontend lefuttatja a runQueries-t, amely először COUNT-olja majd ha >0 akkor lekérdezi az adatokat
+    // sendJson_toFrontend: biztonságosan futtatja a lekérdezést és JSON-ként küldi vissza
     sendJson_toFrontend (res, sql, ertekek);
 });
 
 
-// POST /keres
-// Leírás: termék keresés összetett paraméterekkel. A gen_SQL_kereses() építi az SQL-t és a values tömböt.
-// req.query paraméterek (fontosabbak):
-//  - order: (int) rendezés típusa (1: ár, 2: név, 3: mennyiség), negatív előjel DESC
-//  - offset: (int) lapozáshoz offset
+// === TERMÉK KERESÉS ENDPOINT ===
+// POST: /keres
+// Paraméterek (req.query):
+//  - order: (int) 1=ár, 2=név, 3=mennyiség; negatív = DESC
+//  - offset: (int) lapozáshoz (0, 51, 102...)
 //  - elfogyott, inaktiv: (int) szűrők
-//  - kategoria: (string) ID-k kötőjellel elválasztva, pl "1-3-5"
-//  - nev: (string) névre/leírásra szűrés
-//  - maxar, minar: (int) ár szűrés
-//  - maxmin_arkell: (int) ha != -1 akkor csak MAX/MIN ár lekérése
+//  - kategoria: (string) ID-k kötőjellel: "1-3-5"
+//  - nev: (string) szűrés
+//  - maxar, minar: (int) ár tartomány
+//  - maxmin_arkell: (int) ha != -1, csak MAX/MIN ár lekérés
+// Működés: gen_SQL_kereses() összeállítja az SQL-t és paramétereket
 app.post('/keres', (req, res) => {  
     var { sql, values } = gen_SQL_kereses(req); 
-    sendJson_toFrontend (res, sql, values); // A visszatérési objektumban meghagyjuk a 'values' nevet
+    sendJson_toFrontend (res, sql, values);
 });
 
+// === SQL KERESÉSI LEKÉRDEZÉS ÖSSZEÁLLÍTÁSA ===
+// Segéd függvény az /keres endpointhoz
+// Megépíti a dinamikus SQL WHERE feltételeket a paraméterekből
 function gen_SQL_kereses(req) {
     let ertekek = [];
     let whereFeltetelek = []; 
 
-    // ---------------- sql tokenizer ... ---------------
-    var order     = (req.query.order? parseInt(req.query.order)            :   0);
-    var offset = (req.query.offset? parseInt(req.query.offset)           :   0);
+    // === QUERY PARAMÉTEREK KIOLVASÁSA ===
+    var order     = (req.query.order? parseInt(req.query.order)            :   0);  // Rendezés típusa
+    var offset = (req.query.offset? parseInt(req.query.offset)           :   0);  // Lapozás kezdőpontja
     var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)       :   -1);
     var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)         :   -1);
-    var kategoriaSzoveg = (req.query.kategoria ? req.query.kategoria : "");
+    var kategoriaSzoveg = (req.query.kategoria ? req.query.kategoria : "");      // "1-3-5" formátum
     var nev       = (req.query.nev? req.query.nev :   "");
     var maxarkeres = (req.query.maxar? parseInt(req.query.maxar) : 0);
     var minarkeres = (req.query.minar? parseInt(req.query.minar) : 0);
     var maxmin_arkell = (req.query.maxmin_arkell? parseInt(req.query.maxmin_arkell) : -1);
 
-    // Eredeti logikát követő szűrési feltételek
+    // === ALAPÉRTELMEZETT SZŰRÉSI FELTÉTELEK ===
+    // Aktív termékek, melyek raktáron vannak (vagy a megadott szűrők)
     if (elfogyott != -1 && inaktiv != -1) {
         whereFeltetelek = [`(t.AKTIV = 'N' OR t.MENNYISEG = 0)`];
     } else if (elfogyott != -1) {
@@ -160,27 +196,28 @@ function gen_SQL_kereses(req) {
         whereFeltetelek = [`(t.AKTIV = 'Y' AND t.MENNYISEG > 0)`];
     }
 
-    // Név vagy leírás szűrés
+    // === SZÖVEG SZŰRÉS (NÉV/LEÍRÁS) ===
     if (nev.length > 0) {
         whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ?)`);
         ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
     }
 
-    // Kategória szűrés (A kategória ID-kat '-' karakterrel elválasztva kapjuk)
+    // === KATEGÓRIA SZŰRÉS ===
+    // Paraméter: "1-3-5" -> szétválasztunk, majd IN feltételbe tesszük
     let kategoriaAzonositok = [];
     if (kategoriaSzoveg.length > 0) {
         kategoriaAzonositok = kategoriaSzoveg.split("-").map(id => parseInt(id));
         
         if (kategoriaAzonositok.length > 0) {
-            // A WHERE IN feltételt helyőrzőkkel (placeholders)
+            // Helyőrzőkkel (?) parancsolt: k.ID_KATEGORIA IN (?, ?, ?)
             const helyorzok = kategoriaAzonositok.map(() => '?').join(', ');
             whereFeltetelek.push(`k.ID_KATEGORIA IN (${helyorzok})`);
-            ertekek.push(...kategoriaAzonositok); // ... mivel több érték van
+            ertekek.push(...kategoriaAzonositok);  // ... = spread operátor (tömb elemeit szórja szét)(nem [1,[2,2,3]] hanem [1,2,2,3])
         }
     }
 
-    // Ár szűrés
+    // === ÁR SZŰRÉS ===
     if (maxarkeres !== 0) {
         whereFeltetelek.push(`t.AR <= ?`);
         ertekek.push(maxarkeres);
@@ -192,8 +229,8 @@ function gen_SQL_kereses(req) {
     
     const where = whereFeltetelek.length > 0 ? `WHERE ${whereFeltetelek.join(' AND ')}` : '';
 
-
-    // MAXAR/MINAR lekérdezés (ha maxmin_arkell != -1)
+    // === MAXIMÁLIS/MINIMÁLIS ÁR LEKÉRDEZÉS ===
+    // Ha csak a Min/Max árat akarjuk (pl. szűrő csúszka feltöltéséhez), ezt a ágat követjük
     if(maxmin_arkell != -1){
         var sql = 
         `
@@ -204,7 +241,8 @@ function gen_SQL_kereses(req) {
         return { sql, values: ertekek };
     }
     else {
-        // Rendezési feltétel beállítása
+        // === TELJES TERMÉK LISTA LEKÉRDEZÉS ===
+        // Rendezés beállítása (1=ár, 2=név, 3=mennyiség)
         var order_van = "";
         switch (Math.abs(order)) {
             case 1: order_van = "ORDER BY AR";      break;
@@ -217,16 +255,18 @@ function gen_SQL_kereses(req) {
         var sql = 
         `
         SELECT 
-            t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, CASE WHEN t.FOTOLINK IS NOT NULL THEN t.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, t.LEIRAS, 
+            t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, 
+            CASE WHEN t.FOTOLINK IS NOT NULL THEN t.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, 
+            t.LEIRAS, 
             k.KATEGORIA AS KATEGORIA
-            FROM webbolt_termekek as t INNER JOIN webbolt_kategoriak as k 
-            ON t.ID_KATEGORIA = k.ID_KATEGORIA
+            FROM webbolt_termekek as t 
+            INNER JOIN webbolt_kategoriak as k ON t.ID_KATEGORIA = k.ID_KATEGORIA
             left join webbolt_fotok ON t.ID_TERMEK = webbolt_fotok.ID_TERMEK
             ${where}
             ${order_van} ${order<0? "DESC": ""}
             limit 51 offset ?
         `;
-        // Az offset a LIMIT-hez tartozó paraméterként kerül a végére
+        // Az offset paraméter a végére kerül (lapozáshoz)
         ertekek.push(offset); 
         
         return { sql, values: ertekek };
@@ -237,12 +277,13 @@ function gen_SQL_kereses(req) {
 
 //#region vélemények
 
-// POST /velemenyek
-// Leírás: vélemények lekérése. Több módon hívható:
-//  - ID_TERMEK: (int) csak adott termék véleményei
-//  - SAJATVELEMENY: (int) ha 1 akkor a saját (sessiones) véleményeket is lehet kérni
-//  - szelektalas: (int) 0 alapértelmezett, 1: "Jóváhagyásra vár"
-// A függvény felépíti a WHERE feltételeket a fenti paraméterek alapján. sessionből olvas ID_USER-t, ha szükséges.
+// === VÉLEMÉNYEK LEKÉRÉSE ENDPOINT ===
+// POST: /velemenyek
+// Paraméterek (req.query):
+//  - ID_TERMEK: (int) konkrét termék véleményei
+//  - SAJATVELEMENY: (int) 1 = saját véleményt is mutasd (bejelentkezett user)
+//  - szelektalas: (int) 0=jóváhagyva, 1=jóváhagyásra vár, 2=elutasítva
+// Működés: a sessionből olvassa az ID_USER-t, azt használja a bejelentkezetthez
 app.post('/velemenyek',(req, res) => {
     session_data = req.session;
     
@@ -250,34 +291,41 @@ app.post('/velemenyek',(req, res) => {
     var sajatvelemeny = (req.query.SAJATVELEMENY ? parseInt(req.query.SAJATVELEMENY) : 0);
     var szelektalas = (req.query.szelektalas? parseInt(req.query.szelektalas) : 0); 
     
-    // Feltételek és értékek elkülönítve
     let whereFeltetelek = []; 
     let ertekek = [];
     
+    // SQL lekérdezés: a vélemény szövege, szerző neve, és az időpontja (helyi időzóna konvertálva)
     var sql = `
-    SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, CONVERT_TZ(webbolt_velemenyek.datum, '+00:00','${idozona()}') AS DATUM 
+    SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, 
+           CONVERT_TZ(webbolt_velemenyek.datum, '+00:00','${idozona()}') AS DATUM 
     ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
-    FROM webbolt_velemenyek INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
+    FROM webbolt_velemenyek 
+    INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
     `;
     
+    // === SZŰRÉSI LOGIKA ===
     if (szelektalas == 0) {
+        // Alapértelmezett: jóváhagyott vélemények
         if (termekid > 0) {
             whereFeltetelek.push(`webbolt_velemenyek.ID_TERMEK = ?`);
             ertekek.push(termekid);
         }
         if (sajatvelemeny == 0) {
+            // Ha nem a saját véleményt kérjük, csak a jóváhagyottakat mutassuk
             whereFeltetelek.push(`webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'`);
         }
     } 
     else if (szelektalas == 1) {
+        // Jóváhagyásra váró vélemények (admin felület)
         whereFeltetelek.push(`webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'`);
     }
     else if (szelektalas == 2) {
+        // Elutasított vélemények
         whereFeltetelek.push(`webbolt_velemenyek.ALLAPOT = 'Elutasítva'`);
     }
     
+    // Ha a bejelentkezetthez saját véleményt kérjük, szűrj csak erre az userre
     if (sajatvelemeny == 1 && session_data.ID_USER) {
-        // ha kéri a saját véleményeket és be van lépve, csak az ő user-ére szűrünk
         whereFeltetelek.push(`webbolt_velemenyek.ID_USER = ?`);
         ertekek.push(session_data.ID_USER);
     }
@@ -286,20 +334,22 @@ app.post('/velemenyek',(req, res) => {
         sql += `WHERE ${whereFeltetelek.join(' AND ')} `;
     }
 
-    sql += `ORDER BY DATUM DESC`;
+    sql += `ORDER BY DATUM DESC`;  // Legújabbtól a legrégebbiig
 
     sendJson_toFrontend (res, sql, ertekek);
 });
 
-// POST /velemeny_add
-// Leírás: vélemény létrehozása. Paraméterek:
-//  - ID_TERMEK: (int) termék azonosító
-//  - SZOVEG: (string) vélemény szövege
-// A függvény session alapján állítja az ALLAPOT mezőt (adminoknál "Jóváhagyva")
+// === VÉLEMÉNY HOZZÁADÁSA ===
+// POST: /velemeny_add
+// Paraméterek (req.query):
+//  - ID_TERMEK: (int) melyik termékhez
+//  - SZOVEG: (string) a vélemény szövege
+// Működés: sessionből veszi az ID_USER-t, admin véleményt azonnal jóváhagyva, felhasználóé várakozásra kerül
 app.post('/velemeny_add', async (req, res) => {
     try {
         var termekid = parseInt(req.query.ID_TERMEK);
         var szoveg = req.query.SZOVEG;
+        // Ha admin a bejelentkezett user, azonnal jóváhagyva lesz, különben várakozásra
         var allapot = (req.session.WEBBOLT_ADMIN == "Y" || req.session.ADMIN == "Y") ? "Jóváhagyva" : "Jóváhagyásra vár";
         
         var sql = `
@@ -315,9 +365,9 @@ app.post('/velemeny_add', async (req, res) => {
     } catch (err) { console.log(err) }      
 });
 
-// POST /velemeny_del
-// Leírás: vélemény törlése. Paraméter:
-//  - ID_VELEMENY: (int) törlendő vélemény azonosító
+// === VÉLEMÉNY TÖRLÉSE ===
+// POST: /velemeny_del
+// Paraméter: ID_VELEMENY (int)
 app.post('/velemeny_del', async (req, res) => {
     try {
         var velemenyid = parseInt(req.query.ID_VELEMENY);
@@ -335,7 +385,10 @@ app.post('/velemeny_del', async (req, res) => {
     } catch (err) { console.log(err) }      
 });
 
-
+// === VÉLEMÉNY JÓVÁHAGYÁSA ===
+// POST: /velemeny_elfogad
+// Paraméter: ID_VELEMENY (int)
+// Működés: az allapot 'Jóváhagyva'-ra változik, megjelenik az oldalon
 app.post('/velemeny_elfogad', async (req, res) => {
     try {
         var velemenyid = parseInt(req.query.ID_VELEMENY);
@@ -354,7 +407,10 @@ app.post('/velemeny_elfogad', async (req, res) => {
     } catch (err) { console.log(err) }      
 });
 
-
+// === VÉLEMÉNY ELUTASÍTÁSA ===
+// POST: /velemeny_elutasit
+// Paraméter: ID_VELEMENY (int)
+// Működés: az allapot 'Elutasítva'-ra változik
 app.post('/velemeny_elutasit', async (req, res) => {
     try {
         var velemenyid = parseInt(req.query.ID_VELEMENY);
@@ -377,17 +433,20 @@ app.post('/velemeny_elutasit', async (req, res) => {
 
 //#region login/logoff
 
-// POST /login
-// Leírás: bejelentkezés. Paraméterek:
-//  - login_nev: (string) email / felhasználónév
-//  - login_passwd: (string) jelszó (itt md5-el hashelve ellenőrzésre kerül)
-// VISSZATÉRÉS: JSON string, tartalmazza message, maxcount, rows (users adatai ha sikeres)
+// === BEJELENTKEZÉS ===
+// POST: /login
+// Paraméterek (req.query):
+//  - login_nev: (string) email vagy felhasználónév
+//  - login_passwd: (string) jelszó (MD5 hashelve ellenőrizve)
+// Működés: az adatbázisból ellenőrzi az adatokat, majd session-be mentette a user adatait
+// Visszatér: {message, maxcount, rows} - maxcount=1 ha sikeres bejelentkezés
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
-    var user= (req.query.login_nev? req.query.login_nev: "");
-    var psw = (req.query.login_passwd? req.query.login_passwd  : "");
+    var user = (req.query.login_nev? req.query.login_nev: "");
+    var psw = (req.query.login_passwd? req.query.login_passwd : "");
     
+    // Az MD5 hash az adatbázisban van tárolva biztonság miatt (bár MD5 elavult, jobb lenne bcrypt)
     var sql = `SELECT ID_USER, NEV, EMAIL, ADMIN, WEBBOLT_ADMIN, CSOPORT FROM users WHERE EMAIL=? AND PASSWORD=md5(?)`;
     let ertekek = [user, psw]; 
     
@@ -395,14 +454,14 @@ async function login_toFrontend (req, res) {
     let data;
     try {
         conn = await pool.getConnection();
-        // Közvetlen execute a runQueries nélkül!
         const [rows] = await conn.execute(sql, ertekek); 
         
         let msg = "ok";
         let maxcount = rows.length;
 
+        // Ha pontosan 1 felhasználót talál, az bejelentkezés sikeres
         if (maxcount == 1) {                          
-            // session feltöltése a belépett user adataival
+            // Felhasználó adatainak tárolása a session-ben
             session_data              = req.session;
             session_data.ID_USER        = rows[0].ID_USER;
             session_data.EMAIL          = rows[0].EMAIL;
@@ -410,7 +469,8 @@ async function login_toFrontend (req, res) {
             session_data.ADMIN          = rows[0].ADMIN;
             session_data.WEBBOLT_ADMIN  = rows[0].WEBBOLT_ADMIN;
             session_data.CSOPORT        = rows[0].CSOPORT;
-            console.log("Session data:username=%s id_user=%s admin=%s webbolt_admin=%s csoport=%s", session_data.NEV, session_data.ID_USER, session_data.ADMIN, session_data.WEBBOLT_ADMIN, session_data.CSOPORT);
+            console.log("Session data:username=%s id_user=%s admin=%s webbolt_admin=%s csoport=%s", 
+                        session_data.NEV, session_data.ID_USER, session_data.ADMIN, session_data.WEBBOLT_ADMIN, session_data.CSOPORT);
         } else if (maxcount === 0) {
             msg = "Hibás felhasználónév vagy jelszó.";
         }
@@ -429,12 +489,15 @@ async function login_toFrontend (req, res) {
     res.end();
 }
 
-// POST /logout
-// Leírás: session megszüntetése. Kinyeri az ID_USER-t a sessionből a loghoz, majd destroy.
+// === KIJELENTKEZÉS ===
+// POST: /logout
+// Működés: a session adatai törlődnek, így az user nem lesz bejelentkezve
 app.post('/logout', (req, res) => {  
     session_data = req.session;
-    const uid = session_data.ID_USER; // annak a usernek az ID-ja aki kijelentkezett
+    const uid = session_data.ID_USER; // ki a kijelentkezettnek az ID-ja (logging-hoz)
     console.log("kilogolt felhasznalo: " + uid);
+    
+    // A session megsemmisítése
     session_data.destroy(function(err) {
         if (err) {
             console.error('Session destroy failed', err);
@@ -452,37 +515,39 @@ app.post('/logout', (req, res) => {
 
 //#region kosar
 
-// POST /kosar_add
-// Leírás: kosár tételeinek hozzáadása vagy mennyiség módosítása. Komplex tranzakciót használ.
-// Várható query paraméterek:
-//  - ID_TERMEK: (int) termék azonosító (kötelező)
-//  - MENNYIT: (int) változtatás mértéke (alap: 1) -- mennyiség hozzáadás/levonás
-//  - ERTEK: (int) ha != 0 akkor explicit értékre állít (pl. pontos szám), más esetben mennyit-szerű művelet
-// Működés röviden:
-//  - ha ERTEK != 0 -> SET logika: ha az új érték kisebb mint a raktárban lévő akkor alkalmazzuk
-//  - különben beszúrja a kosarat ha nincs, beállít @elsoadd jelzőt, inserteket végez, majd UPDATE a kosár tételein
+// === KOSÁR TÉTEL HOZZÁADÁSA / MÓDOSÍTÁSA ===
+// POST: /kosar_add
+// Paraméterek (req.query):
+//  - ID_TERMEK: (int) melyik termék
+//  - MENNYIT: (int) mennyit adjunk hozzá/vonjon le (alap: 1)
+//  - ERTEK: (int) ha != 0, akkor erre az értékre állítsd a mennyiséget (nem additív)
+// Működés: komplex SQL tranzakció (START TRANSACTION...COMMIT):
+//   1. Ha nincs kosár az userhez, létrehozza
+//   2. Ha nincs tétel, beszúrja
+//   3. Frissíti a mennyiséget (raktárkészlettel konzisztensen)
 app.post('/kosar_add', async (req, res) => {
     try {
         session_data = req.session;
 
         var termekid = parseInt(req.query.ID_TERMEK);
-        var mennyit  = (req.query.MENNYIT? parseInt(req.query.MENNYIT)  :   1);
-        var mennyire = (req.query.ERTEK ? parseInt(req.query.ERTEK) : 0);
+        var mennyit  = (req.query.MENNYIT? parseInt(req.query.MENNYIT)  :   1);  // Mennyit adjunk hozzá/vonjunk le
+        var mennyire = (req.query.ERTEK ? parseInt(req.query.ERTEK) : 0);       // Pontos érték beállítás (ha != 0)
         
         let ertekek = [];
         
-        let mennyisegSzuro; // Új magyar változó (was megszuro)
+        // === MENNYISÉG SZŰRŐ LOGIKA ===
+        let mennyisegSzuro;
         if (mennyire != 0) {
-            // SET k.MENNYISEG = CASE WHEN ? < t.MENNYISEG THEN ? ELSE t.MENNYISEG END
-            // Ha explicit értéket adunk, akkor azt paraméterezve illesztjük be
+            // Ha pontos érték beállítás: MAX(?, raktár_mennyiség) logika
+            // (nem tudjuk meghaladni a raktárkészletet)
             mennyisegSzuro = `WHEN ? < t.MENNYISEG then ? ELSE t.MENNYISEG `; 
             ertekek.push(mennyire, mennyire);
         } else {
-            // A mennyitElőjel (pl. "+ 1" vagy "- 1") használatával kiszámoljuk az új értéket.
+            // Additív: kosár_mennyiség + mennyit
             let mennyitElőjel = mennyit > 0 ? `+ ${mennyit}` : `${mennyit}`;
             const ujMennyisegSzamitva = `k.MENNYISEG ${mennyitElőjel}`;
 
-            // Feltétel: új mennyiség nem haladja meg a raktárban lévő mennyiséget és legalább 1
+            // Feltételek: az új mennyiség nem haladja meg a raktárt ÉS >= 1
             const feltetel = `
                 @elsoadd = FALSE 
                 AND ${ujMennyisegSzamitva} <= t.MENNYISEG 
@@ -491,14 +556,14 @@ app.post('/kosar_add', async (req, res) => {
             mennyisegSzuro = `WHEN ${feltetel} THEN ${ujMennyisegSzamitva} ELSE k.MENNYISEG`;
         }
         
-        let tranzakcioMag; // tranzakció belső vezérlő stringje
+        // === TRANZAKCIÓ MAGJA ===
+        let tranzakcioMag;
         if (mennyire != 0) {
-            // ha csak módosítunk meglévő kosár tételt, nem hozunk létre új kosarat
+            // Szimpla módosítás: már létezik a kosár és a tétel
             tranzakcioMag = 
             `SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ${session_data.ID_USER});`;
         } else {
-            // beszúrási logika: ha nincs kosár user-nek, létrehozzuk, majd beállítjuk @elsoadd-et,
-            // és ha első hozzáadás, akkor INSERT a kosár tételei közé.
+            // Komplex: kosár létrehozás, @elsoadd jelző, insert ha szükséges
             tranzakcioMag = 
             `INSERT INTO webbolt_kosar (ID_USER)
             SELECT ?
@@ -509,8 +574,7 @@ app.post('/kosar_add', async (req, res) => {
             SET @elsoadd = (
             SELECT CASE
                     WHEN EXISTS (SELECT 1 FROM webbolt_kosar_tetelei WHERE webbolt_kosar_tetelei.ID_KOSAR = @kosarid AND webbolt_kosar_tetelei.ID_TERMEK = ?)
-                    THEN
-                    FALSE
+                    THEN FALSE
                     ELSE TRUE
                     END
             );
@@ -518,10 +582,10 @@ app.post('/kosar_add', async (req, res) => {
             INSERT INTO webbolt_kosar_tetelei (ID_KOSAR, ID_TERMEK, MENNYISEG)
             SELECT @kosarid, ?, 1
             WHERE @elsoadd = TRUE;`;
-            // Az ertekek sorrendje: session_id háromszor, majd termekid kétszer (a fenti utasítások paraméterei)
             ertekek.push(session_data.ID_USER, session_data.ID_USER, session_data.ID_USER, termekid, termekid);
         }
 
+        // === TELJES TRANZAKCIÓ ===
         var sql = 
         `
         START TRANSACTION;
@@ -543,12 +607,13 @@ app.post('/kosar_add', async (req, res) => {
     } catch (err) { console.log(err) }      
 });
 
-// POST /kosar_del
-// Leírás: egy kosár tétel törlése. Paraméterek:
-//  - ID_TERMEK: (int) törlendő termék azonosító
+// === KOSÁR TÉTEL TÖRLÉSE ===
+// POST: /kosar_del
+// Paraméter: ID_TERMEK (int)
+// Működés: kitöröl egy tételt a kosárból (SQL tranzakcióban)
 app.post('/kosar_del',async (req, res) => {
     session_data = req.session;
-    var termekid  = parseInt(req.query.ID_TERMEK)
+    var termekid  = parseInt(req.query.ID_TERMEK);
     
     var sql = `
         START TRANSACTION;
@@ -565,9 +630,10 @@ app.post('/kosar_del',async (req, res) => {
     res.end();
 });
 
-// POST /kosarteteldb
-// Leírás: a kosár tételeinek összesített darabszáma (összes mennyiség)
-// Nem vár extra paramétert, a sessionből veszi az ID_USER-t
+// === KOSÁR TÉTEL DARABSZÁM ===
+// POST: /kosarteteldb
+// Működés: az összes tétel mennyiségét összeadja (SUM)
+// Visszatér: {kdb: szám}
 app.post('/kosarteteldb',(req, res) => {
     session_data = req.session;
     
@@ -583,15 +649,15 @@ app.post('/kosarteteldb',(req, res) => {
     sendJson_toFrontend(res, sql, ertekek);
 });
 
-
-// POST /tetelek
-// Leírás: kosár tételeinek lekérése. Paraméter:
-//  - ID_TERMEK (opcionális): ha megadva, csak annak a terméknek lekérdezése (menny és ár)
-// Visszatérő mezők: MENNYISEG, AR, NEV, FOTOLINK, ID_TERMEK stb.
+// === KOSÁR TÉTELEK LEKÉRÉSE ===
+// POST: /tetelek
+// Paraméter: ID_TERMEK (opcionális) - ha megadva, csak annak 1 terméknek az árát és mennyiségét
+// Működés: attól függően, hogy szeretnénk egy tételről részleteket vagy az egész kosárat
 app.post('/tetelek',(req, res) => {
     session_data = req.session;
     var termekid  = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK)  :   -1)
 
+    // Feltételes SELECT: ha van konkrét termék ID, kevesebb oszlop
     let selectFields = termekid > (-1) 
         ? "webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR" 
         : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
@@ -620,18 +686,19 @@ app.post('/tetelek',(req, res) => {
 
 //#region rendeles
 
-// POST /rendeles
-// Leírás: a felhasználó kosarának alapján rendelést hoz létre.
+// === RENDELÉS LÉTREHOZÁSA ===
+// POST: /rendeles
 // Paraméterek (req.query):
 //  - FIZMOD: (string) fizetési mód
 //  - SZALLMOD: (string) szállítási mód
-//  - MEGJEGYZES: (string) rendelés megjegyzés
+//  - MEGJEGYZES: (string) speciális kívánságok
 //  - SZALLCIM: (string) szállítási cím
 //  - NEV: (string) vevő neve
 //  - EMAIL: (string) vevő email
-// Működés lépései:
-// 1) lekéri a kosár tételeit (termekek listája) runQueries segítségével
-// 2) összeállít egy tranzakciós SQL blokkot: beszúrja a rendelést, a tételeket, majd kitörli a kosár tételeit
+// Működés (komplex):
+//   1. Lekérdezi a kosár tételeit
+//   2. Ellenőrzi, hogy van-e mit rendelni
+//   3. Tranzakcióban: beszúrja a rendelést, majd az összes tételt, végül kitörli a kosár tételeit
 app.post('/rendeles',async (req, res) => {
     try{
     session_data = req.session;
@@ -643,10 +710,11 @@ app.post('/rendeles',async (req, res) => {
     var email = req.query.EMAIL;
     var afa = req.query.AFA;
 
-    // 1. Kosár tételek lekérdezése (Termékek listája)
+    // 1. === KOSÁR TÉTELEK LEKÉRÉSE ===
     var termemekek_sql = 
     `
-    SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, CASE WHEN t.FOTOLINK IS NOT NULL THEN t.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK
+    SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, 
+           CASE WHEN t.FOTOLINK IS NOT NULL THEN t.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK
     FROM webbolt_kosar_tetelei ct
     INNER JOIN webbolt_kosar k ON ct.ID_KOSAR = k.ID_KOSAR
     INNER JOIN webbolt_termekek t ON ct.ID_TERMEK = t.ID_TERMEK
@@ -655,7 +723,9 @@ app.post('/rendeles',async (req, res) => {
     `;
     var termekek_ertekek = [session_data.ID_USER];
     
-    var json_termekek =JSON.parse(await runQueries(termemekek_sql, termekek_ertekek));
+    var json_termekek = JSON.parse(await runQueries(termemekek_sql, termekek_ertekek));
+    
+    // Hiba: nincs tétel vagy nem volt meg a lekérdezés
     if (json_termekek.message != "ok" || json_termekek.maxcount == 0) {
         res.set(header1, header2);
         res.send(JSON.stringify({ message: "nagy baj történt" }));
@@ -663,27 +733,26 @@ app.post('/rendeles',async (req, res) => {
         return;
     } 
 
-    // 2. Rendelés rögzítése (Tranzakciós blokk) - Paraméterezve
-    let sqlParancsok = []; // utasítások sorban
-    let sqlErtekek = [];    // hozzájuk tartozó paraméterek
+    // 2. === RENDELÉS SQL ÖSSZEÁLLÍTÁSA (TRANZAKCIÓ) ===
+    let sqlParancsok = [];  // SQL utasítások sorszámozottva
+    let sqlErtekek = [];    // Hozzájuk tartozó paraméterek
 
-    // SET @kosarid
+    // Lépés 1: kosár ID lekérése
     sqlParancsok.push(`SET @kosarid = (SELECT ID_KOSAR FROM webbolt_kosar WHERE ID_USER = ?);`);
     sqlErtekek.push(session_data.ID_USER);
 
-    // INSERT INTO webbolt_rendeles
+    // Lépés 2: fő rendelés rekordjának beszúrása
     sqlParancsok.push(`
         INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES, SZALLCIM, NEV, EMAIL, AFA)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     `);
     sqlErtekek.push(session_data.ID_USER, fizmod, szallmod, megjegyzes, szallcim, nev, email, afa);
 
-    // SET @rendeles_id
+    // Lépés 3: az új rendelés ID-jét mentjük el
     sqlParancsok.push(`SET @rendeles_id = LAST_INSERT_ID();`);
 
-    // INSERT INTO webbolt_rendeles_tetelei (loopban)
+    // Lépés 4: minden tételhez INSERT a rendelés_tételei táblába
     for (var termek of json_termekek.rows) {
-        // minden tételhez paraméterezett INSERT
         sqlParancsok.push(`
             INSERT INTO webbolt_rendeles_tetelei (ID_RENDELES, MENNYISEG, NEV, AR, FOTOLINK, ID_TERMEK)
             VALUES (@rendeles_id, ?, ?, ?, ?, ?);
@@ -697,10 +766,10 @@ app.post('/rendeles',async (req, res) => {
         );
     }
 
-    // DELETE FROM webbolt_kosar_tetelei
+    // Lépés 5: a kosár tételeinek törlése (új rendeléstől kezdve új kosár lesz)
     sqlParancsok.push(`DELETE FROM webbolt_kosar_tetelei WHERE ID_KOSAR = @kosarid;`);
 
-    // A teljes tranzakció string összeállítása
+    // === TELJES TRANZAKCIÓ ÖSSZEÁLLÍTÁSA ===
     var sql = 
     `
     START TRANSACTION;
@@ -718,11 +787,12 @@ app.post('/rendeles',async (req, res) => {
     }
 });
 
-// POST /rendeles_ellenorzes
-// Leírás: rendelés előtti ellenőrzés, hogy a kívánt mennyiség rendelkezésre áll-e.
+// === RENDELÉS ELLENŐRZÉS ===
+// POST: /rendeles_ellenorzes
 // Paraméterek:
-//  - ID_TERMEK: (int) termék azonosító
+//  - ID_TERMEK: (int) termék ID
 //  - MENNYISEG: (int) kívánt mennyiség
+// Működés: ellenőrzi, hogy van-e elég raktárkészlet és aktív-e a termék
 app.post('/rendeles_ellenorzes',async (req, res) => {
     try{
     var termekid = parseInt(req.query.ID_TERMEK);
@@ -746,9 +816,9 @@ app.post('/rendeles_ellenorzes',async (req, res) => {
     }
 });
 
-// POST /rendelesek
-// Leírás: felhasználó korábbi rendeléseinek listázása (összeggel).
-// session-ből veszi az ID_USER-t
+// === FELHASZNÁLÓ RENDELÉSEINEK LISTÁZÁSA ===
+// POST: /rendelesek
+// Működés: az összes bejelentkezetthez tartozó rendelést összesítéssel visszaadja
 app.post('/rendelesek',async (req, res) => {
     try{
     session_data = req.session;
@@ -775,10 +845,10 @@ app.post('/rendelesek',async (req, res) => {
     }
 });
 
-// POST /rendelesek_tetelei
-// Leírás: egy rendelés tételeinek lekérdezése.
-// Paraméter:
-//  - ID_RENDELES: (int) rendelés azonosító
+// === KONKRÉT RENDELÉS TÉTELEI ===
+// POST: /rendelesek_tetelei
+// Paraméter: ID_RENDELES (int)
+// Működés: egy rendelés összes tételét visszaadja
 app.post('/rendelesek_tetelei',async (req, res) => {
     try{
     var rendelesid = parseInt(req.query.ID_RENDELES);
@@ -806,33 +876,30 @@ app.post('/rendelesek_tetelei',async (req, res) => {
 
 //#region termek
 
-// POST /termek_edit
-// Leírás: termék szerkesztése vagy beszúrása (admin funkció).
-// Várható input: multipart/form-data vagy application/x-www-form-urlencoded (mezők a request body-ban).
-//  - insert: (int) 0 = update, 1 = insert (ha új terméket akarunk létrehozni)
-//  - mod_kat: (int) meglévő kategória ID (opcionális, ha nincs: használható 'uj_kat')
-//  - uj_kat: (string) új kategória neve (ha meg van adva, azt létrehozzuk és használjuk)
-//  - mod_nev: (string) termék neve
-//  - mod_azon: (string) azonosító / cikkszám
-//  - mod_ar: (int) ár
-//  - mod_db: (int) mennyiség
-//  - mod_meegys: (string) mértékegység
-//  - mod_leiras: (string) leírás
-//  - mod_aktiv: ('NO' vagy más) -> 'N' vagy 'Y'
-//  - mod_fotolink: (string) ha a kép linkként van megadva (feltöltött fájl prioritást élvez)
-//  - ID_TERMEK: (int) a módosítandó termék azonosító (update esetén kötelező)
-//  - feltöltött fájl: mező neve 'mod_foto' (multer memoryStorage használata)
-// Viselkedés: ha 'insert' = 1, új rekordot hoz létre; ha 0, meglévőt frissít. Fájl esetén a kép tartalmát
-//            base64-ként a 'webbolt_fotok.IMG' oszlopba mentjük, fotolink automatikusan nullázódik.
-// Visszatérés: JSON; hibák esetén megfelelő 4xx/5xx státuszkódok és részletes üzenet.
+// === TERMÉK SZERKESZTÉS / BESZÚRÁS (ADMIN) ===
+// POST: /termek_edit
+// Multipart form-data (feltöltés) vagy URL-enkódolt adat
+// Paraméterek:
+//  - insert: (int) 0=UPDATE, 1=INSERT új termékhez
+//  - mod_kat: (int) kategória ID (ha nem új kategóriát szeretnénk)
+//  - uj_kat: (string) új kategória neve (ha kell)
+//  - mod_nev, mod_azon, mod_ar, mod_db, mod_meegys, mod_leiras: termék adatai
+//  - mod_aktiv: 'NO' = inaktív ('N'), egyéb = aktív ('Y')
+//  - mod_fotolink: (string) ha kép linkként van (feltöltött fájl prioritást élvez)
+//  - ID_TERMEK: (int) UPDATE esetén kötelező
+//  - mod_foto: (file) a feltöltendő képfájl
+// Működés:
+//   1. Kategória kezelés: ha új, létrehozza; ha meglévő, ID-t vesz
+//   2. UPDATE ág: meglévő terméket módosít, képet is lehet cserélni
+//   3. INSERT ág: új terméket hoz létre
 app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
     try {
-
         var insert = parseInt(req.query.insert) || 0;
 
         var kategoria = req.body.mod_kat;
         var uj_kategoria = (req.body.uj_kat || '').trim();
 
+        // Termék adatok
         var nev       = req.body.mod_nev;
         var azon      = req.body.mod_azon;
         var ar        = parseInt(req.body.mod_ar) || 0;
@@ -843,13 +910,13 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         var aktiv     = (req.body.mod_aktiv == "NO" ? "N" : "Y");
 
         var fotolink = req.body.mod_fotolink || null;
-        var fajl = req.file || null;
+        var fajl = req.file || null;  // A multer által feldolgozott fájl
 
-        // KATEGÓRIA KEZELÉSE
+        // === KATEGÓRIA KEZELÉS ===
         var ID_KATEGORIA = null;
 
         if (uj_kategoria !== "") {
-
+            // Új kategória: előbb ellenőrizze, hogy létezik-e már
             var q1 = JSON.parse(
                 await runQueries(
                     "SELECT ID_KATEGORIA FROM webbolt_kategoriak WHERE KATEGORIA = ?",
@@ -858,8 +925,10 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
             );
 
             if (q1.maxcount > 0) {
+                // Már létezik, vegyük az ID-t
                 ID_KATEGORIA = q1.rows[0].ID_KATEGORIA;
             } else {
+                // Nem létezik, hozzunk létre
                 var ins = await runExecute(
                     "INSERT INTO webbolt_kategoriak (KATEGORIA) VALUES (?)",
                     req,
@@ -872,6 +941,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
             }
         } 
         else {
+            // Meglévő kategória ID-ja
             ID_KATEGORIA = parseInt(kategoria);
         }
 
@@ -879,19 +949,18 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
             return res.status(400).json({ message: "Kategória hiányzik." });
         }
 
-        // UPDATE ÁG
+        // === UPDATE ÁG ===
         if (insert == 0) {
 
             if (!termekid) {
                 return res.status(400).json({ message: "ID_TERMEK hiányzik az update-hez." });
             }
 
-            // KÉP UPDATE
+            // Kép frissítés (ha új fájl feltöltve)
             if (fajl) {
+                var base64img = `data:${fajl.mimetype};base64,${fajl.buffer.toString('base64')}`;
 
-                var base64img =
-                    `data:${fajl.mimetype};base64,${fajl.buffer.toString('base64')}`;
-
+                // Ellenőrizze, van-e már fénykép
                 var qsel = JSON.parse(
                     await runQueries(
                         "SELECT ID_TERMEK FROM webbolt_fotok WHERE ID_TERMEK = ?",
@@ -900,6 +969,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                 );
 
                 if (qsel.maxcount > 0) {
+                    // Meglévő fénykép: frissítés
                     await runExecute(
                         "UPDATE webbolt_fotok SET FILENAME = ?, IMG = ? WHERE ID_TERMEK = ?",
                         req,
@@ -907,6 +977,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                         true
                     );
                 } else {
+                    // Nincs még fénykép: beszúrás
                     await runExecute(
                         "INSERT INTO webbolt_fotok (ID_TERMEK, FILENAME, IMG) VALUES (?, ?, ?)",
                         req,
@@ -915,10 +986,10 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                     );
                 }
 
-                fotolink = null;
+                fotolink = null;  // Ha base64 van, fotolink nullázódik
             }
             else{
-                //kép lekérdezése 
+                // Nincs új fájl, de kell ellenőrizni a link validitást
                 var qkep = JSON.parse(
                     await runQueries(
                         "SELECT FILENAME, IMG FROM webbolt_fotok WHERE ID_TERMEK = ?",
@@ -926,12 +997,11 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                     )
                 );
                 if(qkep.maxcount>0 && fotolink == qkep.rows[0].FILENAME){
-                    fotolink = null;
+                    fotolink = null;  // Ha a link a meglévő filename-el egyezik, nullázd
                 }
             }
             
-
-
+            // UPDATE utasítás: termék adatainak frissítése
             var sql = `
                 UPDATE webbolt_termekek SET
                     ID_KATEGORIA = ?, 
@@ -957,7 +1027,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
             return;
         }
 
-        // INSERT ÁG
+        // === INSERT ÁG (Új termék) ===
         if (insert == 1) {
 
             if (fotolink === "") fotolink = null;
@@ -978,10 +1048,9 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 
             termekid = obj.rows.insertId;
 
+            // Ha fájl volt feltöltve, szúrja be a képtáblába
             if (fajl) {
-
-                var base64img =
-                    `data:${fajl.mimetype};base64,${fajl.buffer.toString('base64')}`;
+                var base64img = `data:${fajl.mimetype};base64,${fajl.buffer.toString('base64')}`;
 
                 await runExecute(
                     "INSERT INTO webbolt_fotok (ID_TERMEK, FILENAME, IMG) VALUES (?, ?, ?)",
@@ -1004,16 +1073,20 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 });
 
 
-// POST /termek_adatok
-// Leírás: egy termék részletes adatainak lekérése.
-// Paraméter:
-//  - ID_TERMEK: (int) lekérdezendő termék azonosító
+// === TERMÉK ADATAINAK LEKÉRÉSE ===
+// POST: /termek_adatok
+// Paraméter: ID_TERMEK (int)
+// Működés: egy konkrét termék összes adatát visszaadja (beleértve a kategóriát és képet)
 app.post('/termek_adatok',async (req, res) => {
     
-    let termekid  = parseInt(req.query.ID_TERMEK);
+    let termekid = parseInt(req.query.ID_TERMEK);
 
     let sql = `
-        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, webbolt_termekek.AR, webbolt_termekek.MENNYISEG, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILENAME END AS FOTONEV, webbolt_termekek.MEEGYS, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
+        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, 
+               webbolt_termekek.AR, webbolt_termekek.MENNYISEG, 
+               CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
+               CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILENAME END AS FOTONEV, 
+               webbolt_termekek.MEEGYS, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
         FROM webbolt_termekek 
         INNER JOIN webbolt_kategoriak ON webbolt_termekek.ID_KATEGORIA = webbolt_kategoriak.ID_KATEGORIA
         left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
@@ -1024,12 +1097,12 @@ app.post('/termek_adatok',async (req, res) => {
     sendJson_toFrontend(res, sql, ertekek);
 });
 
-// POST /termek_del
-// Leírás: termék törlése (admin). Paraméter:
-//  - ID_TERMEK: (int) törlendő termék
+// === TERMÉK TÖRLÉSE (ADMIN) ===
+// POST: /termek_del
+// Paraméter: ID_TERMEK (int)
 app.post('/termek_del',async (req, res) => {
-    console.log("törlendő termék ID: " + termekid);
-    var termekid  = parseInt(req.query.ID_TERMEK);
+    console.log("törlendő termék ID: " + req.query.ID_TERMEK);  // Log: mi törlődik
+    var termekid = parseInt(req.query.ID_TERMEK);
 
     var sql = `DELETE FROM webbolt_termekek WHERE ID_TERMEK = ?`;
     let ertekek = [termekid];
@@ -1044,44 +1117,34 @@ app.post('/termek_del',async (req, res) => {
 
 //#region sql lekerdezesek html
 
+// === HTML-BÓL SQL LEKÉRDEZÉSEK (ADMIN PANELHEZ) ===
+// POST: /html_sql
+// Paraméter: SQL (string) - az admin által begépelt SQL parancs
+// Működés:
+//   - SELECT: biztonságosan futtatható
+//   - Tiltott parancsok: INSERT, UPDATE, DELETE, DROP, ALTER, CREATE stb. (biztonsági okokból)
+//   - Base64 képadatok maszkálásra kerülnek (-- BINARY DATA --)
 app.post('/html_sql', async (req, res) => {
 try {
-        // A lekérdezés normalizálása (kisbetűssé tétel és szóközök eltávolítása)
-        //html enter kezelése
-          if (!req.query || typeof req.query.SQL === 'undefined' || req.query.SQL === null) {;
+        // Query normalizálása
+        if (!req.query || typeof req.query.SQL === 'undefined' || req.query.SQL === null) {
             return;
         }
         const sql = req.query.SQL.toString().trim();
 
-        // Tiltott parancsok listája
+        // === TILTOTT PARANCSOK LISTÁJA ===
         const nem_select_parancsok = [
-            "insert",
-            "update",
-            "delete",
-            "drop",
-            "alter",
-            "create",
-            "truncate",
-            "grant",
-            "revoke",
-            "commit",
-            "rollback",
-            "exec",
-            "execute",
-            // A UNION veszélyes lehet az SQL Injection-re nézve
-            "union" ,
-            "transaction"
+            "insert", "update", "delete", "drop", "alter", "create", 
+            "truncate", "grant", "revoke", "commit", "rollback", "exec", 
+            "execute", "union", "transaction"  // UNION is veszélyes (SQL Injection)
         ];
 
-        // Ellenőrzés, hogy tartalmaz-e tiltott parancsot
-        const nem_select = nem_select_parancsok.some(cucci => sql.toLowerCase().includes(cucci));
+        // Ellenőrzés: tartalmaz-e tiltott parancsot
+        const nem_select = nem_select_parancsok.some(parancs => sql.toLowerCase().includes(parancs));
 
-
-        // Engedélyezzük a SELECT-et, de csak akkor, ha nem tartalmaz tiltott parancsot
-        if (!nem_select) 
-        {
-            // runQueries visszaad egy JSON stringet: parse-oljuk, és küldjük vissza objektumként
-            var asd =  await runQueries(sql, []);
+        // === SELECT LEKÉRDEZÉSEK ===
+        if (!nem_select) {
+            var asd = await runQueries(sql, []);
             let parsed;
             try { parsed = JSON.parse(asd); } catch (e) { parsed = asd; }
 
@@ -1089,31 +1152,24 @@ try {
                 throw new Error(parsed.message);
             }
 
-            // Rekurzív függvény, ami bejár egy értéket (objektum/tömb/érték) és minden
-            // 'data:' prefixel kezdődő stringet maszkol '-- BINARY DATA --' szövegre.
+            // === BINÁRIS ADATOK MASZKÁLÁSA ===
+            // Rekurzív függvény: minden 'data:' prefixel kezdődő stringet '-- BINARY DATA --'-ra cserél
+            // (képek base64 adatainak elrejtése)
             function maskBinaryValues(value) {
-                // Ha null vagy undefined, marad változatlanul (nincs mit maszkolni)
                 if (value === null || typeof value === 'undefined') return value;
 
-                // Ha sima string, ellenőrizzük a prefixet:
-                // - ha 'data:'-val kezdődik (data-URI / base64 kép), visszaadjuk a maszkolt szöveget
-                // - különben visszaadjuk az eredeti stringet változatlanul
                 if (typeof value === 'string') {
                     return value.startsWith('data:') ? '-- BINARY DATA --' : value;
                 }
 
-                // Ha tömböt kaptunk, minden elemre rekurzívan meghívjuk ugyanazt a függvényt
                 if (Array.isArray(value)) return value.map(maskBinaryValues);
 
-                // Ha objektumot kaptunk, egyesével az összes kulcsára/értékére
-                // rekurzívan maszkolunk (módosítás inplace - az eredeti objektumot változtatja)
                 if (typeof value === 'object') {
                     for (const k of Object.keys(value)) value[k] = maskBinaryValues(value[k]);
                     return value;
                 }
 
-                // Más típusok (szám, boolean, stb.) változatlanul visszakerülnek
-                return value;
+                return value;  // Szám, boolean stb. változatlan
             }
 
             parsed = maskBinaryValues(parsed);
@@ -1122,10 +1178,9 @@ try {
             res.json({ adat: parsed, select: true });
             res.end();
         }
-        else 
-        {
-            // nem select: futtassuk runExecute-et és alakítsuk objektummá a visszatérést
-            var asd =  await runExecute(sql, req, [], true);
+        // === MÓDOSÍTÓ PARANCSOK (INSERT/UPDATE/DELETE) ===
+        else {
+            var asd = await runExecute(sql, req, [], true);
             let parsed;
             try { parsed = JSON.parse(asd); } catch (e) { parsed = asd; }
             
@@ -1139,8 +1194,7 @@ try {
         }
 
     } 
-    catch (err) 
-    { 
+    catch (err) {
         res.set(header1, header2);
         res.send("Hiba a lekérdezés végrehajtásakor: " + err.message);
         res.end();
@@ -1153,144 +1207,175 @@ try {
 
 //#region függvények
 
-// runExecute() - paraméterezve
-// - sql: (string) SQL parancs (több utasítás is lehet, ha multipleStatements: true)
-// - req: express request (session-hez szükség lehet)
-// - ertekek: (array) az SQL paraméterei, sorrendben
-// - naplozas: (bool) ha true, akkor naplózza az SQL-t egy napló táblába
-// Visszatérési érték: JSON string { message:..., rows: ... } vagy hibaüzenet
+// === SZERVER FÜGGVÉNYEK ===
+
+// === runExecute() - MODIFY PARANCSOKHOZ (INSERT/UPDATE/DELETE) ===
+// Paraméterek:
+//  - sql: (string) SQL parancs (lehet több is ha multipleStatements: true)
+//  - req: Express request (session-hez)
+//  - ertekek: (array) paraméterek (biztonságos helyőrzőkkel)
+//  - naplozas: (bool) ha true, akkor naplózza az SQL-t a napló táblába
+// Visszatérés: JSON string {message, rows} vagy hibaszöveg
+// Működés:
+//   1. Kapcsolatot kér a pool-ból
+//   2. Futtatja a paraméterezett SQL-t
+//   3. Ha naplozas=true és volt affect, beírja a napló táblába
+//   4. JSON-ként visszaadja az eredményt
 async function runExecute(sql, req, ertekek = [], naplozas) {
     session_data = req.session;
     var msg = "ok";
     var json_data, res1, jrn;
-    session_data = req.session;
     
-    let conn; // Kapcsolat változó deklarálása a try-on kívül
+    let conn;  // Kapcsolat deklarációja
     try {
         conn = await pool.getConnection(); 
-        [res1] = await conn.query(sql, ertekek); // execute a paraméterezett SQL-lel
+        [res1] = await conn.query(sql, ertekek);  // Paraméterezett lekérdezés
 
-        // Napló bejegyzés (csak ha naplozas = true)
+        // === NAPLÓZÁS ===
+        // Ha módosítás történt (INSERT/UPDATE/DELETE), naplózza azt
         if (naplozas) {
-            // logoljunk, ha volt affect (INSERT/UPDATE/DELETE)
             const affected = res1.affectedRows || res1.changedRows || 0;
             if (affected > 0) {
-            var naplozasraKeszSql = osszeallitottSqlNaplozasra(sql, ertekek);
-            jrn  = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház, (vegrehajto neve: ${session_data.NEV})","${req.socket.remoteAddress}","${naplozasraKeszSql.replaceAll("\"","'")}");`;
-            await conn.execute(jrn);
+                // Az SQL-t olvasható formátumba konvertálja (paraméterek behelyettesítésével)
+                var naplozasraKeszSql = osszeallitottSqlNaplozasra(sql, ertekek);
+                jrn = `insert into naplo (ID_USER, COMMENT, URL, SQLX) values (${session_data.ID_USER},"SZ1-B-Iskolai-Webáruház, (vegrehajto neve: ${session_data.NEV})","${req.socket.remoteAddress}","${naplozasraKeszSql.replaceAll("\"","'")}");`;
+                await conn.execute(jrn);
+            }
         }
-}
         
     } catch (err) {
-        msg = err.sqlMessage; console.error('Hiba:', err); 
+        msg = err.sqlMessage;  // MySQL hibaszöveg
+        console.error('Hiba:', err); 
     } finally {
-        if (conn) conn.release(); 
-        json_data = JSON.stringify({"message":msg, "rows":res1 });   // rest-api formátum
+        if (conn) conn.release();  // Kapcsolat felszabadítása
+        json_data = JSON.stringify({"message": msg, "rows": res1});  // REST API formátum
     }
     return json_data;
 }
 
-// runQueries() - Támogatja a paraméterezve
-// - sql: (string) SELECT lekérdezés (limit/offest lehet)
-// - ertekek: (array) paraméterek
-// Viselkedés: először COUNT-olja a lekérdezést (biztonságos oldalazás), majd ha van találat,
-// akkor lefuttatja a fő lekérdezést és visszaadja {message, maxcount, rows}
+// === runQueries() - SELECT LEKÉRDEZÉSEKHEZ ===
+// Paraméterek:
+//  - sql: (string) SELECT lekérdezés (lehet LIMIT/OFFSET)
+//  - ertekek: (array) paraméterek (biztonságos)
+// Visszatérés: JSON string {message, maxcount, rows}
+// Működés:
+//   1. Előbb COUNT-olja a lekérdezés eredményeit (biztonságos lapozáshoz)
+//   2. Ha maxcount > 0, futtatja a fő lekérdezést
+//   3. Visszaadja: {message: ok/hiba, maxcount: rekordszám, rows: tömb}
 async function runQueries(sql, ertekek = []) {
-    var maxcount = 0;                                 // rekordszám
+    var maxcount = 0;
     var msg = "ok";
+    
+    // Az ORDER BY pozíciót megkeresi (ha van), mert azzal nem tudjuk COUNT-olni
     var poz = sql.toUpperCase().lastIndexOf("ORDER BY ");  
-    poz == -1? poz = sql.length : poz;                 // nincs "order by"
-    var json_data, res1, res2=[];
+    poz == -1 ? poz = sql.length : poz;  // Ha nincs ORDER BY, az egész SQL-t számolja
+    
+    var json_data, res1, res2 = [];
 
-    let conn; // Kapcsolat változó deklarálása a try-on kívül
+    let conn;
     try {
         conn = await pool.getConnection();
         
-        // A COUNT al-lekérdezéshez nem kellenek a LIMIT/OFFSET paraméterek
+        // === PARAMÉTERKEZELÉS A COUNT-hoz ===
+        // Ha van LIMIT/OFFSET, azokat nem akarjuk a COUNT-ba, csak az előző paramétereket
         let szamlaloErtekek = sql.toUpperCase().includes('LIMIT') && ertekek.length > 0 ? ertekek.slice(0, -1) : ertekek;
 
-        // BIZTONSÁGOS VÉGREHAJTÁS (COUNT)
+        // === LÉPÉS 1: SOROK SZÁMA ===
+        // Al-lekérdezésként számolja a sorok számát (ORDER BY nélkül)
         [res1] = await conn.execute(`select count(*) as db from (${sql.substring(0, poz)}) as tabla;`, szamlaloErtekek); 
-        maxcount = res1[0].db | 0;                    
-        if (maxcount > 0) {  
-            // BIZTONSÁGOS VÉGREHAJTÁS (Fő lekérdezés)
-            [res2] = await conn.execute(sql, ertekek); 
+        maxcount = res1[0].db | 0;  // Bitwise OR 0 = int konverálás
+        
+        // === LÉPÉS 2: ADATOK LEKÉRÉSE (HA VAN) ===
+        if (maxcount > 0) {
+            [res2] = await conn.execute(sql, ertekek);  // A teljes SQL az ORDER BY-val
         }
     } catch (err) {
-        msg = err.sqlMessage; maxcount = -1; console.error('Hiba:', err); 
+        msg = err.sqlMessage;
+        maxcount = -1;  // Hiba: -1
+        console.error('Hiba:', err); 
     } finally {
         if (conn) conn.release();   
-        json_data = JSON.stringify({ "message":msg, "maxcount":maxcount, "rows":res2 });    // rest-api
+        json_data = JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": res2 });  // REST API
     }
     return json_data;
 }
 
-// sendJson_toFrontend() - paraméterezve
-// egyszerű wrapper, amely lefuttatja a runQueries-t, majd beállítja a header-t és visszaküldi a JSON-t.
+// === sendJson_toFrontend() - EGYSZERŰ WRAPPER ===
+// Rövidítés a runQueries + response header + send-hez
 async function sendJson_toFrontend (res, sql, ertekek = []) {
     var json_data = await runQueries(sql, ertekek);
-    res.set(header1, header2);
+    res.set(header1, header2);  // Content-Type: application/json; charset=UTF-8
     res.send(json_data);
     res.end(); 
 }
 
-// idozona()
-// Segít a CONVERT_TZ paraméterhez szükséges időzóna string előállításában (pl "+02:00")
-// Visszatér egy "+HH:MM" vagy "-HH:MM" formátummal.
+// === IDŐZÓNA KONVERZIÓ ===
+// Segéd függvény a CONVERT_TZ MySQL függvényhez
+// Kiolvassa az aktuális gép időzónáját és "+HH:MM" vagy "-HH:MM" formátumban adja vissza
+// Például: ha UTC+2, akkor "+02:00" lesz
+// Működés:
+//   1. getTimezoneOffset() percekben adja meg az eltolást, de FORDÍTOTT előjellel
+//      (pl. UTC+2 = -120 perc)
+//   2. Abszolút értéket vesz, majd osztva 60 = órák, maradék = percek
+//   3. Az előjelet fordítja (negatív offset = pozitív UTC eltolás)
+//   4. Formázás padStart-tal (2 számjegyűre)
 function idozona() {
-    const date = new Date();
+    const datum = new Date();
     
-    // 1. A .getTimezoneOffset() percekben adja vissza az eltolást,
-    //    de FORDÍTOTT előjellel.
-    //    Például a magyar UTC+2 időzónára -120 értéket ad.
-    const offsetInMinutes = date.getTimezoneOffset();
+    // 1. Az eltolás percekben, de fordított előjellel
+    const eltolasPercben = datum.getTimezoneOffset();
 
-    // 2. Megfordítjuk az előjelet, hogy helyes legyen
-    const offsetHours = Math.floor(Math.abs(offsetInMinutes) / 60);
-    const offsetMinutes = Math.abs(offsetInMinutes) % 60;
+    // 2. Órákra és percekre konvertálás
+    const eltolasOra = Math.floor(Math.abs(eltolasPercben) / 60);
+    const eltolasPerc = Math.abs(eltolasPercben) % 60;
 
-    // 3. Meghatározzuk az előjelet (a + vagy -)
-    // Ha az eredeti offset negatív (-120), akkor az + eltolás (UTC+2)
-    const sign = offsetInMinutes < 0 ? "+" : "-";
+    // 3. Az előjel meghatározása (ha negatív az eredeti offset, akkor + UTC)
+    const elojel = eltolasPercben < 0 ? "+" : "-";
 
-    // 4. Összerakjuk a stringet, 2 számjegyűre formázva
-    //    a 'padStart'-tal (pl. "2" -> "02")
-    const hoursString = String(offsetHours).padStart(2, '0');
-    const minutesString = String(offsetMinutes).padStart(2, '0');
+    // 4. Formázás: "02" helyett "2"
+    const oraString = String(eltolasOra).padStart(2, '0');
+    const percString = String(eltolasPerc).padStart(2, '0');
 
-    return `${sign}${hoursString}:${minutesString}`;
+    return `${elojel}${oraString}:${percString}`;
 }
 
-// osszeallitottSqlNaplozasra()
-// Segéd a naplózáshoz: a paramétereket behelyettesíti a SQL stringbe olvasható formában.
-// FIGYELEM: ez csak napló célra, NEM futtatásra. A futtatás paraméterezve történik a runExecute/runQueries segítségével.
+// === SQL NAPLÓZÁSRA ELŐKÉSZÍTÉS ===
+// Segéd függvény: a paraméterezve futtatott SQL-t olvasható formátumúra konvertálja
+// FIGYELEM: ez csak naplózáshoz, NEM futtatásra! Az alkalmazás SQL-je paraméterezhető marad.
+// Működés:
+//   1. Végigmegy a "?" helyőrzőkön
+//   2. Minden helyőrző helyére behelyettesíti az ertekek[] tömb elemeit
+//   3. Stringeket idézőjelbe rakja, szám/null/boolean marad egyszerűen
+//   4. Base64 képadatok maszkálódnak ('-- BINARY DATA --')
 function osszeallitottSqlNaplozasra(sql, ertekek) {
     let i = 0;
     
-    // String (szöveg) literálok biztonságos beszúrása
+    // Helyőrzők (?) cseréje valós értékekre
     const finalSql = sql.replace(/\?/g, () => {
+        // Hiba: elfogyott a paraméter
         if (i >= ertekek.length) {
             return '<<HIÁNYZÓ ÉRTÉK>>';
         }
         
         let ertek = ertekek[i++];
 
+        // Base64 képadatok maszkálása
         if(typeof ertek === "string" && ertek.substring(0,5) === "data:") {
             return "'-- BINARY DATA --'";
         }
         
-        // Ha null vagy undefined, térjen vissza 'NULL' értékkel (idezőjelek nélkül)
+        // NULL értékek (idézőjel nélkül)
         if (ertek === null || typeof ertek === 'undefined') {
             return 'NULL';
         }
 
-        // Ha szám, boolean vagy bigint, ne használjunk idézőjelet.
+        // Számok, boolean értékek (idézőjel nélkül)
         if (typeof ertek === 'number' || typeof ertek === 'boolean' || typeof ertek === 'bigint') {
             return ertek.toString();
         }
 
-        // Minden más (string, dátum, stb.) esetén tegyünk idézőjelet.
-        // CSERÉLJÜK a beágyazott idézőjeleket escapelt idézőjelekre (pl. ' -> '' a MySQL szabvány szerint)
+        // Stringek: idézőjelbe rakva, belső idézőjelek escapelve
+        // MySQL mód: ' -> '' (duplicate aposztróf)
         ertek = ertek.toString().replace(/'/g, "''");
         return `'${ertek}'`;
     });
@@ -1303,13 +1388,21 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
 
 //#region email_kuldes
 
-const { sendEmail } = require('./email-sender');  // email küldő
+// === EMAIL KÜLDÉS ===
+// Az email-sender.js modul importálása
+const { sendEmail } = require('./email-sender');
 
+// POST: /send-email
+// Paraméterek (req.body - JSON):
+//  - email: (string) a fogadó email cím
+//  - subject: (string) az email tárgya
+//  - html: (string) az email HTML tartalma
+// Működés: az email-sender modulon keresztül küldi az e-mail-t (SMTP)
 app.post('/send-email', async (req, res) => {
     try {
-        const { email, subject, html } = req.body; // lekérjük a body-ból az adatokat
+        const { email, subject, html } = req.body;
 
-            console.log("email küldése: ", email,);
+        console.log("email küldése: ", email);
         await sendEmail(email, subject, html); 
 
         res.json({ message: 'Email sikeresen elküldve' });
@@ -1322,4 +1415,8 @@ app.post('/send-email', async (req, res) => {
 //#endregion
 
 
-app.listen(port, function () { console.log(`megy a szero http://localhost:${port}`); });
+// === SZERVER INDÍTÁSA ===
+// Az Express szerver elkezd hallgatni a megadott porton
+app.listen(port, function () { 
+    console.log(`megy a szero http://localhost:${port}`); 
+});
