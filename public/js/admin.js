@@ -194,7 +194,10 @@ async function AdminVelemenyekMutat(asd) {
                                     minute: '2-digit',
                                     hour12: false
                                 })}</span></p>
-                    <p class="d-flex justify-content-start">${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                    <p class="d-flex p-2 justify-content-start"><i>${element.SZOVEG.toString().replaceAll("\n","<br>")}</i></p>
+                    <p class="p-2 text-start">
+                        <a class="underline decoration-sky-500 hover:text-sky-500 hover:cursor-pointer" onclick="Termek_Mutat(event, ${element.ID_TERMEK})">Ehhez a termékhez</a>
+                    </p>
                     <div class="d-flex justify-content-end gap-2 mt-2">
                         <button 
                         class="
@@ -290,7 +293,7 @@ async function AdminVelemenyekMutat(asd) {
                                     minute: '2-digit',
                                     hour12: false
                                 })}</span></p>
-                    <p class="d-flex justify-content-start">${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
+                    <p class="text-start p-2 "><i>${element.SZOVEG.toString().replaceAll("\n","<br>")}</i></p>
                 </div>`;
                 }
 
