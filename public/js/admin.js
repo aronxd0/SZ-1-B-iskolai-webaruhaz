@@ -200,7 +200,7 @@ async function AdminVelemenyekMutat(asd) {
                         class="
                         btn 
                         
-                        bi bi-x-lg 
+                        
                         bg-zinc-600 
                         text-zinc-200 
                         rounded-4 
@@ -211,13 +211,15 @@ async function AdminVelemenyekMutat(asd) {
                         dark:hover:bg-slate-950 
                         dark:hover:text-red-600
                         transition-hover duration-300 ease-in-out 
-                            w-auto" onclick="Velemeny_Elutasit(${element.ID_VELEMENY})"> Elutasítás </button>
+                            w-auto" onclick="Velemeny_Elutasit(${element.ID_VELEMENY})"> 
+                            <i class="bi bi-x-lg"></i>
+                            <span class="d-none d-sm-inline"> Elutasítás</span>
+                        </button>
 
                         <button 
                         class="
                         btn 
-                        
-                        bi bi-check2  
+                         
                         bg-zinc-600 
                         text-zinc-200 
                         rounded-4 
@@ -228,7 +230,10 @@ async function AdminVelemenyekMutat(asd) {
                         dark:hover:bg-slate-950 
                         dark:hover:text-emerald-600
                         transition-hover duration-300 ease-in-out 
-                            w-auto" onclick="Velemeny_Elfogad(${element.ID_VELEMENY})"> Jóváhagyás </button>
+                            w-auto" onclick="Velemeny_Elfogad(${element.ID_VELEMENY})"> 
+                            <i class="bi bi-check2"></i>
+                             <span class="d-none d-sm-inline"> Jóváhagyás</span> 
+                        </button>
                     </div>
                 </div>`;
                 }
