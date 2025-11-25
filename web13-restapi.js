@@ -80,6 +80,17 @@ function fileFilter(req, file, cb) {
 
 module.exports = upload;
 
+// === AFA lekérdezése ===
+// GET /afa
+
+app.post('/afa',(req, res) => {
+    var sql = `
+        SELECT AFA from webbolt_konstansok
+    `;
+    sendJson_toFrontend(res, sql, []);
+});
+
+
 
 //#region kereses
 
@@ -692,6 +703,7 @@ app.post('/rendeles',async (req, res) => {
     var szallcim = req.query.SZALLCIM;
     var nev = req.query.NEV;
     var email = req.query.EMAIL;
+    var afa = req.query.AFA;
 
     // 1. === KOSÁR TÉTELEK LEKÉRÉSE ===
     var termemekek_sql = 
@@ -726,10 +738,10 @@ app.post('/rendeles',async (req, res) => {
 
     // Lépés 2: fő rendelés rekordjának beszúrása
     sqlParancsok.push(`
-        INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES, SZALLCIM, NEV, EMAIL)
-        VALUES (?, ?, ?, ?, ?, ?, ?);
+        INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES, SZALLCIM, NEV, EMAIL, AFA)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     `);
-    sqlErtekek.push(session_data.ID_USER, fizmod, szallmod, megjegyzes, szallcim, nev, email);
+    sqlErtekek.push(session_data.ID_USER, fizmod, szallmod, megjegyzes, szallcim, nev, email, afa);
 
     // Lépés 3: az új rendelés ID-jét mentjük el
     sqlParancsok.push(`SET @rendeles_id = LAST_INSERT_ID();`);
@@ -808,8 +820,8 @@ app.post('/rendelesek',async (req, res) => {
 
     var sql = 
     `
-    SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, 
-           round(SUM(rt.AR * rt.MENNYISEG)*1.27) AS RENDELES_VEGOSSZEGE
+    SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, r.AFA, 
+           round(SUM(rt.AR * rt.MENNYISEG)*(1+r.AFA/100)) AS RENDELES_VEGOSSZEGE
     FROM webbolt_rendeles AS r
     JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
     WHERE r.ID_USER = ?
