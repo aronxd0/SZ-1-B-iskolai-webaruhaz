@@ -636,6 +636,7 @@ app.post('/rendeles',async (req, res) => {
     var szallcim = req.query.SZALLCIM;
     var nev = req.query.NEV;
     var email = req.query.EMAIL;
+    var afa = req.query.AFA;
 
     // 1. Kosár tételek lekérdezése (Termékek listája)
     var termemekek_sql = 
@@ -667,8 +668,8 @@ app.post('/rendeles',async (req, res) => {
 
     // INSERT INTO webbolt_rendeles
     sqlParancsok.push(`
-        INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES, SZALLCIM, NEV, EMAIL)
-        VALUES (?, ?, ?, ?, ?, ?, ?);
+        INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES, SZALLCIM, NEV, EMAIL, AFA)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     `);
     sqlErtekek.push(session_data.ID_USER, fizmod, szallmod, megjegyzes, szallcim, nev, email);
 

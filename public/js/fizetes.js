@@ -1012,7 +1012,7 @@ async function Fizetésclick(li) {
       
        // ha minden jó akkor elküldjük a rendelést
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
-        await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}`, 1);
+        await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}}`, 1);
 
         //email küldés a backendnek
         
