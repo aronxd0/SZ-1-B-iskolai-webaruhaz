@@ -50,12 +50,12 @@ async function SajatVelemenyekMutat(id_termek) {
         let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
         for (const element of sajat_velemeny_lista.rows) {
 
-            if (element.ALLAPOT == "Jóváhagyva") { allapot_style = "alert alert-success"; ikon = "✅" }
-            else if (element.ALLAPOT == "Jóváhagyásra vár") { allapot_style = "alert alert-warning"; ikon = "🔄️" }
-            else if (element.ALLAPOT == "Elutasítva") { allapot_style = "alert alert-danger"; ikon = "❌" }
+            if (element.ALLAPOT == "Jóváhagyva") { allapot_style = `bg-emerald-200 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-400 `; ikon = "✅" }
+            else if (element.ALLAPOT == "Jóváhagyásra vár") { allapot_style = `bg-amber-200 text-amber-500 dark:bg-amber-700 dark:text-amber-300 `; ikon = "🔄️" }
+            else if (element.ALLAPOT == "Elutasítva") { allapot_style = "bg-red-200 text-red-700 dark:bg-red-950 dark:text-red-400"; ikon = "❌" }
 
             sv += `
-            <div class="w-100 p-2 border rounded mt-3 mb-3 comment ${allapot_style}">
+            <div role="alert" class="w-100 p-3 rounded-4 mt-3 mb-3 comment ${allapot_style}">
                 <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
                                                                                                                                                                             year: 'numeric',
                                                                                                                                                                             month: '2-digit',
@@ -65,7 +65,7 @@ async function SajatVelemenyekMutat(id_termek) {
                                                                                                                                                                             hour12: false
                                                                                                                                                                         })}</span></p>
                 <p class="break-all">${element.SZOVEG.toString()}</p>
-                <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> 
+                <p class="d-flex align-self-center justify-content-between"><span><strong>${element.ALLAPOT} ${ikon}</strong></span> 
                     <div class="dropup">
                         <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
                          <i class="bi bi-trash"></i>
