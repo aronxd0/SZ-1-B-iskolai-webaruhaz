@@ -50,9 +50,9 @@ async function SajatVelemenyekMutat(id_termek) {
         let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
         for (const element of sajat_velemeny_lista.rows) {
 
-            if (element.ALLAPOT == "Jóváhagyva") { allapot_style = `bg-emerald-200 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-400 `; ikon = "✅" }
-            else if (element.ALLAPOT == "Jóváhagyásra vár") { allapot_style = `bg-amber-200 text-amber-500 dark:bg-amber-700 dark:text-amber-300 `; ikon = "🔄️" }
-            else if (element.ALLAPOT == "Elutasítva") { allapot_style = "bg-red-200 text-red-700 dark:bg-red-950 dark:text-red-400"; ikon = "❌" }
+            if (element.ALLAPOT == "Jóváhagyva") { allapot_style = `bg-emerald-200/30 !border !border-t-emerald-300/50 !border-b-emerald-300/50 !border-r-emerald-300/50 !border-l-emerald-300/50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border border-t-emerald-800/50 border-b-emerald-800/50 border-r-emerald-800/50 border-l-emerald-800/50`; ikon = "✅" }
+            else if (element.ALLAPOT == "Jóváhagyásra vár") { allapot_style = `bg-yellow-200/30 !border !border-t-yellow-500/50 !border-b-yellow-500/50 !border-r-yellow-500/50 !border-l-yellow-500/50 text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-100 dark:border border-t-yellow-500/50 border-b-yellow-500/50 border-l-yellow-500/50 border-r-yellow-500/50`; ikon = "🔄️" }
+            else if (element.ALLAPOT == "Elutasítva") { allapot_style = "bg-red-200/30 !border !border-t-red-400/50 !border-b-red-400/50 !border-r-red-400/50 !border-l-red-400/50 text-red-700 dark:bg-red-950/20 dark:text-red-400 dark:border border-t-red-900/50 border-b-red-900/50 border-r-red-900/50 border-l-red-900/50"; ikon = "❌" }
 
             sv += `
             <div role="alert" class="w-100 p-3 rounded-4 mt-3 mb-3 comment ${allapot_style}">
