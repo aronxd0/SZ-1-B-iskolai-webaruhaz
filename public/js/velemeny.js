@@ -64,7 +64,7 @@ async function SajatVelemenyekMutat(id_termek) {
                                                                                                                                                                             minute: '2-digit',
                                                                                                                                                                             hour12: false
                                                                                                                                                                         })}</span></p>
-                <p class="break-all">${element.SZOVEG.toString()}</p>
+                <p class="text-pretty">${element.SZOVEG.toString()}</p>
 
                  <div class="d-flex justify-content-between align-items-center">
                     <div class="w-auto">
@@ -131,7 +131,7 @@ async function VelemenyekMutat(id_termek) {
                                     minute: '2-digit',
                                     hour12: false
                                 })}</span></p>
-                    <p class="break-all">${element.SZOVEG.toString()}</p>
+                    <p class="text-pretty">${element.SZOVEG.toString()}</p>
                 </div>`;
             }
             console.log(vv);

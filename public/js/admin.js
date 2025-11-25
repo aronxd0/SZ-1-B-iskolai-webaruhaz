@@ -159,9 +159,9 @@ async function AdminVelemenyekMutat(asd) {
                         text-blue-800 
                         dark:bg-blue-900/20 
                         dark:text-blue-200 
-                        w-auto 
-                        
-                        px-4 py-3 rounded-4">
+                        w-auto
+                        mx-3 
+                        px-2 py-3 rounded-4">
                             <i class="bi bi-info-circle-fill"></i>
                             <strong class="font-bold">${varo.maxcount} db</strong>
                             <span> vélemény vár jóváhagyásra</span>
