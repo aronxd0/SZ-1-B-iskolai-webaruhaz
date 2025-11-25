@@ -50,12 +50,12 @@ async function SajatVelemenyekMutat(id_termek) {
         let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
         for (const element of sajat_velemeny_lista.rows) {
 
-            if (element.ALLAPOT == "Jóváhagyva") { allapot_style = "alert alert-success"; ikon = "✅" }
-            else if (element.ALLAPOT == "Jóváhagyásra vár") { allapot_style = "alert alert-warning"; ikon = "🔄️" }
-            else if (element.ALLAPOT == "Elutasítva") { allapot_style = "alert alert-danger"; ikon = "❌" }
+            if (element.ALLAPOT == "Jóváhagyva") { allapot_style = `bg-emerald-200/30 !border !border-t-emerald-300/50 !border-b-emerald-300/50 !border-r-emerald-300/50 !border-l-emerald-300/50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border border-t-emerald-800/50 border-b-emerald-800/50 border-r-emerald-800/50 border-l-emerald-800/50`; ikon = "✅" }
+            else if (element.ALLAPOT == "Jóváhagyásra vár") { allapot_style = `bg-yellow-200/30 !border !border-t-yellow-500/50 !border-b-yellow-500/50 !border-r-yellow-500/50 !border-l-yellow-500/50 text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-100 dark:border border-t-yellow-500/50 border-b-yellow-500/50 border-l-yellow-500/50 border-r-yellow-500/50`; ikon = "🔄️" }
+            else if (element.ALLAPOT == "Elutasítva") { allapot_style = "bg-red-200/30 !border !border-t-red-400/50 !border-b-red-400/50 !border-r-red-400/50 !border-l-red-400/50 text-red-700 dark:bg-red-950/20 dark:text-red-400 dark:border border-t-red-900/50 border-b-red-900/50 border-r-red-900/50 border-l-red-900/50"; ikon = "❌" }
 
             sv += `
-            <div class="w-100 p-2 border rounded mt-3 mb-3 comment ${allapot_style}">
+            <div role="alert" class="w-100 p-3 rounded-4 mt-3 mb-3 comment ${allapot_style}">
                 <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
                                                                                                                                                                             year: 'numeric',
                                                                                                                                                                             month: '2-digit',
@@ -64,19 +64,29 @@ async function SajatVelemenyekMutat(id_termek) {
                                                                                                                                                                             minute: '2-digit',
                                                                                                                                                                             hour12: false
                                                                                                                                                                         })}</span></p>
-                <p class="break-all">${element.SZOVEG.toString()}</p>
-                <p class="d-flex align-self-center justify-content-between"><span>${element.ALLAPOT} ${ikon}</span> 
+                <p class="text-pretty">${element.SZOVEG.toString()}</p>
+
+                 <div class="d-flex justify-content-between align-items-center">
+                    <div class="w-auto">
+                       <span><strong>${element.ALLAPOT} ${ikon}</strong></span>                                                                                                                                                     
+                    </div>
+
                     <div class="dropup">
                         <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
-                         <i class="bi bi-trash"></i>
+                            <i class="bi bi-trash"></i>
                         </button>
-                        <ul class="dropdown-menu p-2">
+                        <ul class="dropdown-menu p-2 w-100">
                             <li><span class="dropdown-item-text">Biztosan törlöd a véleményt?</span></li>
                             <li class="d-flex justify-content-end p-3"><button class="btn btn-danger bi bi-trash" type="button" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> Törlés</button></li>
                         </ul>
-                    </div>
+                    </div>                                                                                                                                                     
+                 
+                 </div>                                                                                                                                                       
+
+                <p class="d-flex align-self-center justify-content-between"> </p>
+                
                      
-                </p>
+                
             </div>`;
         }
         console.log(sv);
@@ -121,7 +131,7 @@ async function VelemenyekMutat(id_termek) {
                                     minute: '2-digit',
                                     hour12: false
                                 })}</span></p>
-                    <p class="break-all">${element.SZOVEG.toString()}</p>
+                    <p class="text-pretty">${element.SZOVEG.toString()}</p>
                 </div>`;
             }
             console.log(vv);

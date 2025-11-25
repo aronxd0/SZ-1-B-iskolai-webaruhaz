@@ -150,20 +150,24 @@ async function AdminVelemenyekMutat(asd) {
             else {
 
                 ss += `
-                    <div role="alert" 
-                    class="
-                    bg-blue-100 
-                    text-blue-700 
-                    dark:bg-blue-900 
-                    dark:text-blue-500 
-                    
-                    px-4 py-3 rounded-4" style="border: none;">
-                        <i class="bi bi-info-circle-fill"></i>
-                        <strong class="font-bold">${varo.maxcount} db</strong>
-                        <span> vélemény vár jóváhagyásra</span>
-                        
+                    <div class="row d-flex justify-content-center">
+                        <div role="alert" 
+                        class="
+                        col-12 col-lg-4
+                        !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50
+                        bg-blue-200/30 
+                        text-blue-800 
+                        dark:bg-blue-900/20 
+                        dark:text-blue-200 
+                        w-auto
+                        mx-3 
+                        px-2 py-3 rounded-4">
+                            <i class="bi bi-info-circle-fill"></i>
+                            <strong class="font-bold">${varo.maxcount} db</strong>
+                            <span> vélemény vár jóváhagyásra</span>
+                            
+                        </div>
                     </div>
-                
                 
                 `;
 
@@ -196,7 +200,7 @@ async function AdminVelemenyekMutat(asd) {
                         class="
                         btn 
                         
-                        bi bi-x-lg 
+                        
                         bg-zinc-600 
                         text-zinc-200 
                         rounded-4 
@@ -207,13 +211,15 @@ async function AdminVelemenyekMutat(asd) {
                         dark:hover:bg-slate-950 
                         dark:hover:text-red-600
                         transition-hover duration-300 ease-in-out 
-                            w-auto" onclick="Velemeny_Elutasit(${element.ID_VELEMENY})"> Elutasítás </button>
+                            w-auto" onclick="Velemeny_Elutasit(${element.ID_VELEMENY})"> 
+                            <i class="bi bi-x-lg"></i>
+                            <span class="d-none d-sm-inline"> Elutasítás</span>
+                        </button>
 
                         <button 
                         class="
                         btn 
-                        
-                        bi bi-check2  
+                         
                         bg-zinc-600 
                         text-zinc-200 
                         rounded-4 
@@ -224,7 +230,10 @@ async function AdminVelemenyekMutat(asd) {
                         dark:hover:bg-slate-950 
                         dark:hover:text-emerald-600
                         transition-hover duration-300 ease-in-out 
-                            w-auto" onclick="Velemeny_Elfogad(${element.ID_VELEMENY})"> Jóváhagyás </button>
+                            w-auto" onclick="Velemeny_Elfogad(${element.ID_VELEMENY})"> 
+                            <i class="bi bi-check2"></i>
+                             <span class="d-none d-sm-inline"> Jóváhagyás</span> 
+                        </button>
                     </div>
                 </div>`;
                 }
@@ -416,23 +425,107 @@ function UjTermek() {
 
     $("#save_button").html(`<i class="bi bi-plus-lg"></i>&nbsp;Új termék létrehozása`);
 }
+//#region Statisztika
 
 function Statisztikak() {
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     
+    $("#welcome_section").fadeOut(300);
 
-    $("#content_hely").fadeOut(300, function() {
-        $("#content_hely").html(`
-        <div class="row">
-            <div class="col-12 text-center p-2 mt-3">
-                <span class="text-xl">statisztikak</span>
+    var html = `
+      <div class="text-center fs-1 mt-4">Statisztikák</div>
+
+     <div class="container p-3 mt-2">
+        <div class="row justify-content-center g-3">
+
+            <!-- BAL OLDAL (mobilon teljes szélesség, nagyobb képernyőn 4/12) -->
+            <div class="col-12 col-md-4 bg-gray-400 border border-dark rounded-4 p-2">
+                <div class="mt-2">
+
+                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                        <input type="radio" name="cucc" id="_01" onclick="Diagrammok(this)" checked>
+                        Darab vásárlás
+                    </label>
+
+                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                        <input type="radio" name="cucc" id="_02" onclick="Diagrammok(this)">
+                        Jövedelem
+                    </label>
+
+                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                        <input type="radio" name="cucc" id="_03" onclick="Diagrammok(this)">
+                        Népszerű áruk
+                    </label>
+
+                </div>
             </div>
+
+            <!-- JOBB OLDAL (mobilon teljes szélesség, nagyobb képernyőn 8/12) -->
+            <div class="col-12 col-md-8 bg-slate-500 p-5 rounded-4 border border-dark">
+                
+                <div class="row mb-2">
+                    <div class="col-12 bg-danger text-center fs-3 py-2 rounded-2" id="cim"></div>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-12 col-lg-7 bg-warning d-flex justify-content-center py-5 rounded-2"> diaagram helye</div>
+                    <div class="col-12 col-lg-5 bg-info d-flex justify-content-center py-5 rounded-2">
+                        leirása
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-md-4">                
+                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                            <input type="radio" name="hatar" id="_03">
+                            1 hónap
+                        </label>
+                    </div>
+                      <div class="col-md-4">                
+                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                            <input type="radio" name="hatar" id="_03" >
+                            3 hónap
+                        </label>
+                    </div>
+                      <div class="col-md-4">                
+                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                            <input type="radio" name="hatar" id="_03" >
+                            1 év
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-        `).fadeIn(300);
+    </div>
+            `;
+            
+
+
+
+     $("#content_hely").fadeOut(300,  function() {
+         $("#content_hely").html(html).fadeIn(300); 
         $("#pagi").html("");
+        document.getElementById("_01").click(); 
     });
+
 }
+
+function Diagrammok(id){
+        if(id.id == "_01"){
+            document.getElementById("cim").innerHTML ="Darab áru let megvásárolva:    "
+        }
+        if(id.id == "_02"){
+            document.getElementById("cim").innerHTML ="Jövedelem"
+        }
+        if(id.id == "_03"){
+            document.getElementById("cim").innerHTML ="Legnépszerübb áru"
+        }
+        
+}
+//#endregion
+//#region SQl input 
 
 function SQLinput() {
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
@@ -582,3 +675,4 @@ async function KER_CLICk(){
 
 
 }
+//#endregion
