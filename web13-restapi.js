@@ -36,7 +36,12 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-
+app.post('/afa',(req, res) => {
+    var sql = `
+        SELECT AFA from webbolt_konstansok
+    `;
+    sendJson_toFrontend(res, sql, []);
+});
 
 // képes csoda
 
@@ -671,7 +676,7 @@ app.post('/rendeles',async (req, res) => {
         INSERT INTO webbolt_rendeles (ID_USER, FIZMOD, SZALLMOD, MEGJEGYZES, SZALLCIM, NEV, EMAIL, AFA)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     `);
-    sqlErtekek.push(session_data.ID_USER, fizmod, szallmod, megjegyzes, szallcim, nev, email);
+    sqlErtekek.push(session_data.ID_USER, fizmod, szallmod, megjegyzes, szallcim, nev, email, afa);
 
     // SET @rendeles_id
     sqlParancsok.push(`SET @rendeles_id = LAST_INSERT_ID();`);
@@ -750,7 +755,8 @@ app.post('/rendelesek',async (req, res) => {
 
     var sql = 
     `
-    SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, round(SUM(rt.AR * rt.MENNYISEG)*1.27) AS RENDELES_VEGOSSZEGE
+    SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, r.AFA,
+    round(SUM(rt.AR * rt.MENNYISEG)*(1+(r.AFA/100))) AS RENDELES_VEGOSSZEGE
     FROM webbolt_rendeles AS r
     JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
     WHERE r.ID_USER = ?
