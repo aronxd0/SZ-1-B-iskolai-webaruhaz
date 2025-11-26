@@ -523,7 +523,7 @@ function Statisztikak() {
         <div class="container">
             <div class="row">
             <div class="col-md-2"></div>
-                <div class="top-select-box col-12 col-md-8 d-felx justify-content-center">
+                <div class="top-select-box col-12 col-md-8 d-flex justify-content-center">
                     <span class="chart-title">Top 5 termék eladás szerint</span>
                 </div>
                 
@@ -539,7 +539,7 @@ function Statisztikak() {
 
         </div>
         `
-
+        // ezekhez tartozik css is (style.css 440-458 sor)
 
 
      $("#content_hely").fadeOut(300,  function() {

@@ -438,8 +438,6 @@ body.offcanvas-open {
 */
 
 .top-select-box {
-    display:flex;
-    justify-content:space-between;
     align-items:center;
     padding:10px 20px;
     font-size:26px;
