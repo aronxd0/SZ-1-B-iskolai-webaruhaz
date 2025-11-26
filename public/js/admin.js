@@ -26,7 +26,7 @@ async function Admin_Velemenykezeles() {
                         dark:hover:bg-gray-700 
                         dark:hover:-outline-offset-1 
                         dark:hover:outline-white/10 
-                        flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                        flex items-center justify-between p-3 rounded-xl cursor-pointer 
                             transition-all duration-200
                             has-[:checked]:bg-indigo-100 
                             has-[:checked]:border-indigo-400 
@@ -38,7 +38,7 @@ async function Admin_Velemenykezeles() {
                             dark:has-[:checked]:border ">
 
                         <div class="flex items-center gap-3">
-                        <input type="radio" name="plan" class="form-check-input" id="varo" checked onchange="AdminVelemenyekMutat(this)">
+                        <input type="radio" name="plan" class="form-check-input hidden" id="varo" checked onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Függőben</span>
                         <span class="inline-flex items-center rounded-md text-nowrap bg-yellow-400/10 px-2 py-1 font-medium text-yellow-700 inset-ring inset-ring-yellow-400/20"> ${varodb.rows.length}</span>
                         </div>
@@ -62,7 +62,7 @@ async function Admin_Velemenykezeles() {
                         dark:hover:bg-gray-700 
                         dark:hover:-outline-offset-1 
                         dark:hover:outline-white/10 
-                        flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                        flex items-center justify-between p-3 rounded-xl cursor-pointer 
                             transition-all duration-200
                             has-[:checked]:bg-indigo-100 
                             has-[:checked]:border-indigo-400 
@@ -74,7 +74,7 @@ async function Admin_Velemenykezeles() {
                             dark:has-[:checked]:border ">
 
                         <div class="flex items-center gap-3">
-                        <input type="radio" name="plan" class="form-check-input" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
+                        <input type="radio" name="plan" class="form-check-input hidden" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Jóváhagyva</span>
                         <span class="inline-flex items-center text-nowrap rounded-md bg-green-400/10 px-2 py-1 font-medium text-green-400 inset-ring inset-ring-green-500/20"> ${stimmdb.rows.length} </span>
                         </div>
@@ -98,7 +98,7 @@ async function Admin_Velemenykezeles() {
                         dark:hover:bg-gray-700 
                         dark:hover:-outline-offset-1 
                         dark:hover:outline-white/10 
-                        flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                        flex items-center justify-between p-3 rounded-xl cursor-pointer 
                             transition-all duration-200
                             has-[:checked]:bg-indigo-100 
                             has-[:checked]:border-indigo-400 
@@ -111,7 +111,7 @@ async function Admin_Velemenykezeles() {
                                         ">
 
                         <div class="flex items-center gap-3">
-                        <input type="radio" name="plan" class="form-check-input" id="elutasitott" onchange="AdminVelemenyekMutat(this)">
+                        <input type="radio" name="plan" class="form-check-input hidden" id="elutasitott" onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Elutasítva</span>
                         <span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-nowrap font-medium text-red-400 inset-ring inset-ring-red-400/20">${decdb.rows.length}</span>
                         </div>
@@ -444,7 +444,7 @@ function Statisztikak() {
     $("#welcome_section").fadeOut(300);
 
     var html = `
-      <div class="text-center fs-1 mt-4">Statisztikák</div>
+      <div class="text-center fs-1 mt-5">Statisztikák</div>
 
      <div class="container p-3 mt-2">
         <div class="row justify-content-center g-3">
