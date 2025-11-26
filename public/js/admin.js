@@ -519,7 +519,31 @@ function Statisztikak() {
     </div>
             `;*/
             
-        html = `<div id="_Top5" style="min-width: 310px; height: 400px; margin-top: 30px"></div>`
+        html = `
+        <div class="container">
+            <div class="row d-felx align-items-center">
+                <div class="col-12  col-md-10" id="_Top5" style="min-width: 310px; height: 400px; margin-top: 30px"></div>
+                <div class="col-12 col-md-2  bg-slate-500 p-4 rounded-4">
+
+                     <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 mt-2 rounded-2">
+                        <input type="radio" name="cucc" id="_01" onclick="Diagrammok(this)" checked>
+                        1 Honap
+                    </label>
+
+                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                        <input type="radio" name="cucc" id="_02" onclick="Diagrammok(this)">
+                        3 hónap
+                    </label>
+
+                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
+                        <input type="radio" name="cucc" id="_03" onclick="Diagrammok(this)">
+                        All time
+                    </label>
+
+                </div>
+            </div>
+        </div>
+        `
 
 
 
