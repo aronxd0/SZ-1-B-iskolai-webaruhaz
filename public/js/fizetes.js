@@ -157,7 +157,7 @@ function Attekintes(li) {
         dark:hover:text-red-700 
         dark:hover:shadow-gray-700/80  
         bi bi-x-lg
-        " data-bs-dismiss="modal" onclick="KosarTeteleiFrissit()"> Mégse</button>
+        " data-bs-dismiss="modal" > Mégse</button>
 
         <button type="button" 
         class="

@@ -144,7 +144,7 @@ $(document).ready(function() {
     });
 
 
-    $("#fizetes").on("hidden.bs.modal", function () {
+    $("#fizetes").off("hidden.bs.modal").on("hidden.bs.modal", function () {
         KosarTeteleiFrissit();
     });
 
