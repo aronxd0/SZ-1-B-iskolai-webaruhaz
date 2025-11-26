@@ -15,6 +15,8 @@
     <link href="style.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> 
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
     
     
   </head>
@@ -473,7 +475,7 @@
                       d-flex" type="button" id="admin_uj_termek" onclick="UjTermek()" data-bs-dismiss="offcanvas">
                       
                         <i class="bi bi-plus"></i>
-                         <span>&nbsp;Új termék</span
+                         <span>&nbsp;Új termék</span>
                       </button>
 
                       <button type="button" 
@@ -624,8 +626,8 @@
     
     
       <div class="container-fluid mt-5" id="content">
-        <div class="row">
-          <div class="col-12 d-flex justify-content-center">
+        <div class="row mt-5">
+          <div class="col-12 d-flex justify-content-center mt-2">
             <div class="w-auto p-2" id="keresett_kifejezes"></div>  
             <div class="w-auto align-self-center" id="débé"></div>
           </div>
@@ -633,10 +635,10 @@
         
         
 
-        <div class="row">
+        <div class="row ">
           <div class="col-0 col-xxl-1"></div>
           <div class="col-12 col-xxl-10 p-xxl-5">
-            <div class="row" id="content_hely"></div>  
+            <div class="row p-2" id="content_hely"></div>  
             <div class="row mt-3 mb-5" id="pagi"></div>
           </div>
           <div class="col-0 col-xxl-1"></div>
@@ -697,9 +699,13 @@
       text-slate-900 
       dark:bg-slate-700 
       dark:text-zinc-200 
+      d-flex 
+      justify-content-start 
+      gap-3 
       ">
+      <button type="button" class="btn btn-lg text-slate-900 hover:text-slate-900 dark:text-zinc-200 dark:hover:text-zinc-200" data-bs-dismiss="offcanvas"><i class="bi bi-arrow-left"></i></button>
       <span class="offcanvas-title text-xl"><i class="bi bi-gear"></i> Szűrési beállítások</span>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+      
     </div>
 
     <div 
@@ -1005,9 +1011,11 @@
           dark:bg-slate-800 
           dark:text-zinc-200 
           shadow-bottom 
+          d-flex justify-content-start gap-3 
           ">
-          <span class="modal-title text-2xl" id="termeknev"></span>
-          <button type="button" class="btn text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+          <button type="button" class="btn btn-lg text-slate-900 hover:text-slate-900 dark:text-zinc-200 dark:hover:text-zinc-200" data-bs-dismiss="modal"><i class="bi bi-arrow-left"></i></button>
+          <span class="modal-title text-xl text-center" id="termeknev"></span>
+          
         </div>
 
         
@@ -1510,9 +1518,11 @@
             text-slate-900 
             dark:bg-slate-800 
             dark:text-zinc-200 
+            d-flex justify-content-start gap-3 
             ">
+              <button type="button" class="btn btn-lg text-slate-900 hover:text-slate-900 dark:text-zinc-200 dark:hover:text-zinc-200" data-bs-dismiss="modal"><i class="bi bi-arrow-left"></i></button>
               <span class="modal-title text-xl">Rendelés véglegesítése</span>
-              <button type="button" class="btn text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+              
             </div>
 
             

@@ -26,7 +26,7 @@ async function Admin_Velemenykezeles() {
                         dark:hover:bg-gray-700 
                         dark:hover:-outline-offset-1 
                         dark:hover:outline-white/10 
-                        flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                        flex items-center justify-between p-3 rounded-xl cursor-pointer 
                             transition-all duration-200
                             has-[:checked]:bg-indigo-100 
                             has-[:checked]:border-indigo-400 
@@ -38,7 +38,7 @@ async function Admin_Velemenykezeles() {
                             dark:has-[:checked]:border ">
 
                         <div class="flex items-center gap-3">
-                        <input type="radio" name="plan" class="form-check-input" id="varo" checked onchange="AdminVelemenyekMutat(this)">
+                        <input type="radio" name="plan" class="form-check-input hidden" id="varo" checked onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Függőben</span>
                         <span class="inline-flex items-center rounded-md text-nowrap bg-yellow-400/10 px-2 py-1 font-medium text-yellow-700 inset-ring inset-ring-yellow-400/20"> ${varodb.rows.length}</span>
                         </div>
@@ -62,7 +62,7 @@ async function Admin_Velemenykezeles() {
                         dark:hover:bg-gray-700 
                         dark:hover:-outline-offset-1 
                         dark:hover:outline-white/10 
-                        flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                        flex items-center justify-between p-3 rounded-xl cursor-pointer 
                             transition-all duration-200
                             has-[:checked]:bg-indigo-100 
                             has-[:checked]:border-indigo-400 
@@ -74,7 +74,7 @@ async function Admin_Velemenykezeles() {
                             dark:has-[:checked]:border ">
 
                         <div class="flex items-center gap-3">
-                        <input type="radio" name="plan" class="form-check-input" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
+                        <input type="radio" name="plan" class="form-check-input hidden" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Jóváhagyva</span>
                         <span class="inline-flex items-center text-nowrap rounded-md bg-green-400/10 px-2 py-1 font-medium text-green-400 inset-ring inset-ring-green-500/20"> ${stimmdb.rows.length} </span>
                         </div>
@@ -98,7 +98,7 @@ async function Admin_Velemenykezeles() {
                         dark:hover:bg-gray-700 
                         dark:hover:-outline-offset-1 
                         dark:hover:outline-white/10 
-                        flex items-center justify-between p-4 rounded-xl cursor-pointer 
+                        flex items-center justify-between p-3 rounded-xl cursor-pointer 
                             transition-all duration-200
                             has-[:checked]:bg-indigo-100 
                             has-[:checked]:border-indigo-400 
@@ -111,7 +111,7 @@ async function Admin_Velemenykezeles() {
                                         ">
 
                         <div class="flex items-center gap-3">
-                        <input type="radio" name="plan" class="form-check-input" id="elutasitott" onchange="AdminVelemenyekMutat(this)">
+                        <input type="radio" name="plan" class="form-check-input hidden" id="elutasitott" onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Elutasítva</span>
                         <span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-nowrap font-medium text-red-400 inset-ring inset-ring-red-400/20">${decdb.rows.length}</span>
                         </div>
@@ -437,14 +437,22 @@ function UjTermek() {
 }
 //#region Statisztika
 
+ window.addEventListener('resize', function(event) {
+
+    if(this.document.querySelector("#width") < 600){
+        drawChart();
+    }
+},true);
+
 function Statisztikak() {
+
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     
     $("#welcome_section").fadeOut(300);
 
-    var html = `
-      <div class="text-center fs-1 mt-4">Statisztikák</div>
+    /*var html = `
+      <div class="text-center fs-1 mt-5">Statisztikák</div>
 
      <div class="container p-3 mt-2">
         <div class="row justify-content-center g-3">
@@ -509,18 +517,156 @@ function Statisztikak() {
 
         </div>
     </div>
-            `;
+            `;*/
             
+        html = `<div id="_Top5" style="min-width: 310px; height: 400px; margin-top: 30px"></div>`
 
 
 
      $("#content_hely").fadeOut(300,  function() {
          $("#content_hely").html(html).fadeIn(300); 
         $("#pagi").html("");
-        document.getElementById("_01").click(); 
+        drawChart();
     });
 
 }
+function drawChart() {
+
+    function shorten(name) {
+      return name.length > 12 ? name.substring(0, 12) + "..." : name;
+    }
+  
+    const data = [
+      { name: "hosszen név pl almsaslemaspite", y: 30, img: "https://i.imgur.com/abcd1.png" },
+      { name: "hosszen név pl almsaslemaspite", y: 60, img: "https://i.imgur.com/abcd2.png" },
+      { name: "SB", y: 100, img: "https://i.imgur.com/abcd3.png" },
+      { name: "JB", y: 70, img: "https://i.imgur.com/abcd4.png" },
+      { name: "TB", y: 50, img: "https://i.imgur.com/abcd5.png" }
+    ];
+  
+    // MOBIL nézet – 3 középső
+    let visibleData = data;
+    if (window.innerWidth < 600) {
+      visibleData = data.slice(1, 4);
+    }
+  
+    // rangsor
+    const sortedUnique = [...new Set(visibleData.map(d => d.y))].sort((a, b) => b - a);
+  
+    function getRankByValue(v) {
+      return sortedUnique.indexOf(v) + 1;
+    }
+  
+    function getColorByRank(value) {
+      const rank = getRankByValue(value);
+      if (rank === 1) return "#FFD700";
+      if (rank === 2) return "#C0C0C0";
+      if (rank === 3) return "#CD7F32";
+      return "#4db8ff";
+    }
+  
+    $('#_Top5').highcharts({
+  
+      chart: {
+        type: 'column',
+        spacingTop: 10
+      },
+  
+      title: {
+        text: 'Top 5 termék eladás',
+        margin: 180
+      },
+  
+      xAxis: {
+        categories: visibleData.map(d => shorten(d.name)),
+        labels: {
+          useHTML: true,
+          formatter: function () {
+            const original = visibleData[this.pos];
+            return `
+              <div style="text-align:center;">
+                <div style="font-size:20px; font-weight:bold;">${shorten(original.name)}</div>
+                <div style="font-size:18px; color:#666;">${original.y}</div>
+              </div>`;
+          },
+          y: 25
+        },
+        lineWidth: 0,
+        tickLength: 0
+      },
+  
+      yAxis: { min: 0, visible: false },
+  
+      tooltip: { // ráhuzom az egeret az oszlopra
+        useHTML: true,
+        outside: true,
+        borderWidth: 0,
+        backgroundColor: "rgba(255,255,255,0.95)",
+        shadow: false,
+        padding: 8,
+  
+        positioner: function (width, height, point) {
+          const imgHeight = 70;
+          const offset = imgHeight + 60;
+  
+          return {
+            x: point.plotX + this.chart.plotLeft - width / 2,
+            y: point.plotY + this.chart.plotTop - height - offset
+          };
+        }
+      },
+  
+  
+      legend: { enabled: false },
+  
+      plotOptions: {
+        column: {
+          borderWidth: 0,
+          colorByPoint: true,
+          colors: visibleData.map(d => getColorByRank(d.y)),
+          dataLabels: {
+            enabled: true,
+            useHTML: true,
+            formatter: function () {
+              const place = getRankByValue(this.y);
+              const isWinner = place === 1;
+  
+              return `
+                <div style="text-align:center; margin-top:-140px; position:relative; width:100px">
+                  
+                  <!-- Korona, ha 1. hely -->
+                  ${isWinner ? `
+                    <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25d45014-8cc3-4c98-b02c-5a0cf3a55ddd/dclmy10-72419003-8e69-41e8-a9f3-b7df637b74f8.png/v1/fill/w_900%2Ch_633/gold_crown_on_a_transparent_background__by_prussiaart_dclmy10-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjMzIiwicGF0aCI6Ii9mLzI1ZDQ1MDE0LThjYzMtNGM5OC1iMDJjLTVhMGNmM2E1NWRkZC9kY2xteTEwLTcyNDE5MDAzLThlNjktNDFlOC1hOWYzLWI3ZGY2MzdiNzRmOC5wbmciLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.-1xQwTm0xcpa2ZJ_vvNA5hTKxUAe78z6H679BjudfZs   "
+                         style="width:90px; position:absolute; top:-70px; left:50%; transform:translateX(-50%);">
+                  ` : ''}
+  
+                  <!-- Termék kép -->
+                  <img src="${this.point.img}" style="height:100px;">
+  
+                  <!-- Sorszám az oszlop FÖLÖTT -->
+                  <div style="
+                    font-size:40px;
+                    font-weight:bold;
+                    color:white;
+                    text-shadow:0 0 5px black;
+                    margin-top:5px;
+                  ">${place}</div>
+  
+                </div>`;
+            }
+          }
+        }
+      },
+  
+      series: [{ data: visibleData }]
+    });
+  
+  }
+  
+
+      
+
+
 
 function Diagrammok(id){
         if(id.id == "_01"){
