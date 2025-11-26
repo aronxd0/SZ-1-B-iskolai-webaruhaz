@@ -569,7 +569,8 @@ function drawChart() {
   
       chart: {
         type: 'column',
-        spacingTop: 10
+        spacingTop: 10,
+        backgroundColor: '#ffffff' /// majd itt lehet szinezni
       },
   
       title: {
@@ -601,7 +602,7 @@ function drawChart() {
         useHTML: true,
         outside: true,
         borderWidth: 0,
-        backgroundColor: "rgba(255,255,255,0.95)",
+        backgroundColor: "rgba(124, 124, 124, 0.95)",
         shadow: false,
         padding: 8,
   
@@ -611,7 +612,7 @@ function drawChart() {
   
           return {
             x: point.plotX + this.chart.plotLeft - width / 2,
-            y: point.plotY + this.chart.plotTop - height - offset
+            y: point.plotY + this.chart.plotTop - height - offset 
           };
         }
       },
