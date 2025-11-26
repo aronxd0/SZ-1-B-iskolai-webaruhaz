@@ -50,13 +50,6 @@ const pool = mysql.createPool({
     queueLimit: 0                           // Végtelen várakozási sor (ha nincs szabad kapcsolat)
 });
 
-app.post('/afa',(req, res) => {
-    var sql = `
-        SELECT AFA from webbolt_konstansok
-    `;
-    sendJson_toFrontend(res, sql, []);
-});
-
 // === KÉPFELTÖLTÉS KEZELÉSE (MULTER) ===
 // Multer: Express middleware a fájlfeltöltéshez, képek feldolgozásához
 
@@ -604,7 +597,13 @@ app.post('/kosar_add', async (req, res) => {
         res.send(eredmeny);
         res.end();
 
-    } catch (err) { console.log(err) }      
+    } catch (err) {
+        console.error("kosar_add HIBA:", err);
+        res.status(500).json({
+            message: "Hiba a kosár tétel hozzáadásakor.",
+            error: err.message
+        });
+    }    
 });
 
 // === KOSÁR TÉTEL TÖRLÉSE ===
@@ -612,22 +611,31 @@ app.post('/kosar_add', async (req, res) => {
 // Paraméter: ID_TERMEK (int)
 // Működés: kitöröl egy tételt a kosárból (SQL tranzakcióban)
 app.post('/kosar_del',async (req, res) => {
-    session_data = req.session;
-    var termekid  = parseInt(req.query.ID_TERMEK);
-    
-    var sql = `
-        START TRANSACTION;
-          SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ?);
-                
-          DELETE FROM webbolt_kosar_tetelei
-          WHERE webbolt_kosar_tetelei.ID_KOSAR = @kosarid AND webbolt_kosar_tetelei.ID_TERMEK = ?;
-        COMMIT;
-    `;
-    let ertekek = [session_data.ID_USER, termekid];
+    try{
+        session_data = req.session;
+        var termekid  = parseInt(req.query.ID_TERMEK);
+        
+        var sql = `
+            START TRANSACTION;
+            SET @kosarid = (SELECT webbolt_kosar.ID_KOSAR FROM webbolt_kosar WHERE webbolt_kosar.ID_USER = ?);
+                    
+            DELETE FROM webbolt_kosar_tetelei
+            WHERE webbolt_kosar_tetelei.ID_KOSAR = @kosarid AND webbolt_kosar_tetelei.ID_TERMEK = ?;
+            COMMIT;
+        `;
+        let ertekek = [session_data.ID_USER, termekid];
 
-    const eredmeny = await runExecute(sql, req, ertekek, false);
-    res.send(eredmeny);
-    res.end();
+        const eredmeny = await runExecute(sql, req, ertekek, false);
+        res.send(eredmeny);
+        res.end();
+    }
+    catch (err) {
+        console.error("kosar_del HIBA:", err);
+        res.status(500).json({
+            message: "Hiba a kosár tétel törlésekor.",
+            error: err.message
+        });
+    }
 });
 
 // === KOSÁR TÉTEL DARABSZÁM ===
@@ -635,18 +643,30 @@ app.post('/kosar_del',async (req, res) => {
 // Működés: az összes tétel mennyiségét összeadja (SUM)
 // Visszatér: {kdb: szám}
 app.post('/kosarteteldb',(req, res) => {
-    session_data = req.session;
-    
-    var sql = `
-        SELECT SUM(webbolt_kosar_tetelei.MENNYISEG) as kdb
-        FROM webbolt_kosar_tetelei
-        INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
-        INNER JOIN users ON webbolt_kosar.ID_USER = users.ID_USER
-        WHERE users.ID_USER = ?
-    `;
-    let ertekek = [session_data.ID_USER];
+    try {
+        session_data = req.session;
+        
+        var sql = `
+            SELECT SUM(webbolt_kosar_tetelei.MENNYISEG) as kdb
+            FROM webbolt_kosar_tetelei
+            INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
+            INNER JOIN users ON webbolt_kosar.ID_USER = users.ID_USER
+            WHERE users.ID_USER = ?
+        `;
+        let ertekek = [session_data.ID_USER];
 
-    sendJson_toFrontend(res, sql, ertekek);
+        sendJson_toFrontend(res, sql, ertekek);
+
+    }
+    catch (err) {
+        console.error("/kosarteteldb HIBA:", err);
+        res.status(500).json({
+            message: "Hiba a kosár tétel darabszám lekérésekor.",
+            error: err.message
+        });
+    }
+    
+    
 });
 
 // === KOSÁR TÉTELEK LEKÉRÉSE ===
@@ -654,31 +674,40 @@ app.post('/kosarteteldb',(req, res) => {
 // Paraméter: ID_TERMEK (opcionális) - ha megadva, csak annak 1 terméknek az árát és mennyiségét
 // Működés: attól függően, hogy szeretnénk egy tételről részleteket vagy az egész kosárat
 app.post('/tetelek',(req, res) => {
-    session_data = req.session;
-    var termekid  = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK)  :   -1)
+    try{
+         session_data = req.session;
+        var termekid  = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK)  :   -1)
 
-    // Feltételes SELECT: ha van konkrét termék ID, kevesebb oszlop
-    let selectFields = termekid > (-1) 
-        ? "webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR" 
-        : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
+        // Feltételes SELECT: ha van konkrét termék ID, kevesebb oszlop
+        let selectFields = termekid > (-1) 
+            ? "webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR" 
+            : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
 
-    let whereClause = `WHERE webbolt_kosar.ID_USER = ?`;
-    let ertekek = [session_data.ID_USER];
+        let whereClause = `WHERE webbolt_kosar.ID_USER = ?`;
+        let ertekek = [session_data.ID_USER];
 
-    if (termekid > (-1)) {
-        whereClause += ` AND webbolt_kosar_tetelei.ID_TERMEK = ?`;
-        ertekek.push(termekid);
+        if (termekid > (-1)) {
+            whereClause += ` AND webbolt_kosar_tetelei.ID_TERMEK = ?`;
+            ertekek.push(termekid);
+        }
+
+        var sql = `
+            SELECT ${selectFields} 
+            FROM webbolt_kosar_tetelei
+            INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
+            INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
+            left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
+            ${whereClause}
+        `;
+        sendJson_toFrontend(res, sql, ertekek);
     }
-
-    var sql = `
-        SELECT ${selectFields} 
-        FROM webbolt_kosar_tetelei
-        INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
-        INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
-        left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
-        ${whereClause}
-    `;
-    sendJson_toFrontend(res, sql, ertekek);
+    catch (err) {
+        console.error("/tetelek HIBA:", err);
+        res.status(500).json({
+            message: "Szerver hiba a kosár tételek lekérésekor.",
+            error: err.message
+        });
+    }
 });
 
 
@@ -727,9 +756,10 @@ app.post('/rendeles',async (req, res) => {
     
     // Hiba: nincs tétel vagy nem volt meg a lekérdezés
     if (json_termekek.message != "ok" || json_termekek.maxcount == 0) {
-        res.set(header1, header2);
-        res.send(JSON.stringify({ message: "nagy baj történt" }));
-        res.end();
+        res.status(500).json({
+            message: "Szörnyű hiba történt a rendelés során: nincs mit rendelni.",
+            error: null
+        });
         return;
     } 
 
@@ -782,8 +812,11 @@ app.post('/rendeles',async (req, res) => {
     res.send(eredmeny);
     res.end();
     } catch (err) {
-        console.error(err);
-        res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
+        console.error("/rendeles HIBA:", err);
+        res.status(500).json({
+            message: "Hiba a rendelés létrehozásakor.",
+            error: err.message
+        });
     }
 });
 
@@ -811,8 +844,11 @@ app.post('/rendeles_ellenorzes',async (req, res) => {
     res.send(eredmeny);
     res.end();
     } catch (err) {
-        console.error(err);
-        res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
+        console.error("/rendeles_ellenorzes HIBA:", err);
+        res.status(500).json({
+            message: "Hiba a rendelés ellenőrzésekor.",
+            error: err.message
+        });
     }
 });
 
@@ -840,8 +876,11 @@ app.post('/rendelesek',async (req, res) => {
     res.send(eredmeny);
     res.end();
     } catch (err) {
-        console.error(err);
-        res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
+        console.error("/rendelesek HIBA:", err);
+        res.status(500).json({
+            message: "Hiba a rendelések lekérésekor.",
+            error: err.message
+        });
     }
 });
 
@@ -866,8 +905,11 @@ app.post('/rendelesek_tetelei',async (req, res) => {
     res.send(eredmeny);
     res.end();
     } catch (err) {
-        console.error(err);
-        res.set(header1, header2).send(JSON.stringify({ message: "nagyon nagy baj történt", error: err.message }));
+        console.error("/rendelesek_tetelei HIBA:", err);
+        res.status(500).json({
+            message: "Hiba a rendelések lekérésekor.",
+            error: err.message
+        });
     }
 });
 
@@ -893,7 +935,10 @@ app.post('/rendelesek_tetelei',async (req, res) => {
 //   2. UPDATE ág: meglévő terméket módosít, képet is lehet cserélni
 //   3. INSERT ág: új terméket hoz létre
 app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
+    conn = await pool.getConnection();
     try {
+        await conn.query("START TRANSACTION;");
+
         var insert = parseInt(req.query.insert) || 0;
 
         var kategoria = req.body.mod_kat;
@@ -910,13 +955,13 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         var aktiv     = (req.body.mod_aktiv == "NO" ? "N" : "Y");
 
         var fotolink = req.body.mod_fotolink || null;
-        var fajl = req.file || null;  // A multer által feldolgozott fájl
+        var fajl = req.file || null;  
 
-        // === KATEGÓRIA KEZELÉS ===
+        // ----------- KATEGÓRIA KEZELÉS (TRANZAKCIÓBAN!) -------------
         var ID_KATEGORIA = null;
 
         if (uj_kategoria !== "") {
-            // Új kategória: előbb ellenőrizze, hogy létezik-e már
+            // Megnézzük, létezik-e már
             var q1 = JSON.parse(
                 await runQueries(
                     "SELECT ID_KATEGORIA FROM webbolt_kategoriak WHERE KATEGORIA = ?",
@@ -925,42 +970,37 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
             );
 
             if (q1.maxcount > 0) {
-                // Már létezik, vegyük az ID-t
                 ID_KATEGORIA = q1.rows[0].ID_KATEGORIA;
             } else {
-                // Nem létezik, hozzunk létre
+                // Új kategória
                 var ins = await runExecute(
                     "INSERT INTO webbolt_kategoriak (KATEGORIA) VALUES (?)",
                     req,
                     [uj_kategoria],
                     true
                 );
-
                 var obj = JSON.parse(ins);
                 ID_KATEGORIA = obj.rows.insertId;
             }
-        } 
-        else {
-            // Meglévő kategória ID-ja
+        } else {
             ID_KATEGORIA = parseInt(kategoria);
         }
 
         if (!ID_KATEGORIA) {
-            return res.status(400).json({ message: "Kategória hiányzik." });
+            throw new Error("Kategória ID nem állapítható meg.");
         }
 
-        // === UPDATE ÁG ===
+        // ---------------------------- UPDATE ÁG ---------------------------
         if (insert == 0) {
 
             if (!termekid) {
-                return res.status(400).json({ message: "ID_TERMEK hiányzik az update-hez." });
+                throw new Error("Hiányzó ID_TERMEK az update művelethez.");
             }
 
-            // Kép frissítés (ha új fájl feltöltve)
+            // --------- KÉPFELDOLGOZÁS TRANZAKCIÓBAN ---------
             if (fajl) {
                 var base64img = `data:${fajl.mimetype};base64,${fajl.buffer.toString('base64')}`;
 
-                // Ellenőrizze, van-e már fénykép
                 var qsel = JSON.parse(
                     await runQueries(
                         "SELECT ID_TERMEK FROM webbolt_fotok WHERE ID_TERMEK = ?",
@@ -969,7 +1009,6 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                 );
 
                 if (qsel.maxcount > 0) {
-                    // Meglévő fénykép: frissítés
                     await runExecute(
                         "UPDATE webbolt_fotok SET FILENAME = ?, IMG = ? WHERE ID_TERMEK = ?",
                         req,
@@ -977,7 +1016,6 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                         true
                     );
                 } else {
-                    // Nincs még fénykép: beszúrás
                     await runExecute(
                         "INSERT INTO webbolt_fotok (ID_TERMEK, FILENAME, IMG) VALUES (?, ?, ?)",
                         req,
@@ -985,23 +1023,23 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                         true
                     );
                 }
-
-                fotolink = null;  // Ha base64 van, fotolink nullázódik
+                fotolink = null;
             }
-            else{
-                // Nincs új fájl, de kell ellenőrizni a link validitást
+            else {
+                // Ha nincs új fájl, akkor esetleg töröljük a fotolinket ha egyezik
                 var qkep = JSON.parse(
                     await runQueries(
-                        "SELECT FILENAME, IMG FROM webbolt_fotok WHERE ID_TERMEK = ?",
+                        "SELECT FILENAME FROM webbolt_fotok WHERE ID_TERMEK = ?",
                         [termekid]
                     )
                 );
-                if(qkep.maxcount>0 && fotolink == qkep.rows[0].FILENAME){
-                    fotolink = null;  // Ha a link a meglévő filename-el egyezik, nullázd
+
+                if (qkep.maxcount > 0 && fotolink == qkep.rows[0].FILENAME) {
+                    fotolink = null;
                 }
             }
-            
-            // UPDATE utasítás: termék adatainak frissítése
+
+            // --------- TERMÉK UPDATE TRANZAKCIÓBAN ---------
             var sql = `
                 UPDATE webbolt_termekek SET
                     ID_KATEGORIA = ?, 
@@ -1022,16 +1060,18 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                 termekid
             ];
 
-            var eredmeny = await runExecute(sql, req, vals, true);
-            res.set("Content-Type", "application/json; charset=UTF-8").send(eredmeny);
-            return;
+            await runExecute(sql, req, vals, true);
+
+            await conn.query("COMMIT;");
+            return res.json({ message: "ok" });
         }
 
-        // === INSERT ÁG (Új termék) ===
+        // ---------------------------- INSERT ÁG ---------------------------
         if (insert == 1) {
 
             if (fotolink === "") fotolink = null;
 
+            // Termék létrehozása
             var sql = `
                 INSERT INTO webbolt_termekek 
                 (ID_KATEGORIA, NEV, AZON, AR, MENNYISEG, MEEGYS, LEIRAS, AKTIV, FOTOLINK)
@@ -1045,10 +1085,9 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 
             var raw = await runExecute(sql, req, vals, true);
             var obj = JSON.parse(raw);
-
             termekid = obj.rows.insertId;
 
-            // Ha fájl volt feltöltve, szúrja be a képtáblába
+            // Ha van új fotó, azt is beszúrjuk
             if (fajl) {
                 var base64img = `data:${fajl.mimetype};base64,${fajl.buffer.toString('base64')}`;
 
@@ -1060,15 +1099,28 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                 );
             }
 
+            await conn.query("COMMIT;");
             return res.json({ message: "ok", insertId: termekid });
         }
 
+        throw new Error("Érvénytelen 'insert' paraméter.");
+
     } catch (err) {
-        console.error("termek_edit HIBA:", err);
+        console.error("termek_edit TRANZAKCIÓ HIBA:", err);
+
+        try {
+            await conn.query("ROLLBACK;");
+        } catch (e2) {
+            console.error("ROLLBACK hiba:", e2);
+        }
+
         res.status(500).json({
-            message: "Hiba a termék szerkesztésekor.",
+            message: "Hiba a termék művelet során.",
             error: err.message
         });
+    }
+    finally {
+    if (conn) conn.release();
     }
 });
 
@@ -1078,38 +1130,57 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 // Paraméter: ID_TERMEK (int)
 // Működés: egy konkrét termék összes adatát visszaadja (beleértve a kategóriát és képet)
 app.post('/termek_adatok',async (req, res) => {
-    
-    let termekid = parseInt(req.query.ID_TERMEK);
+    try{
+        let termekid = parseInt(req.query.ID_TERMEK);
 
-    let sql = `
-        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, 
-               webbolt_termekek.AR, webbolt_termekek.MENNYISEG, 
-               CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
-               CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILENAME END AS FOTONEV, 
-               webbolt_termekek.MEEGYS, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
-        FROM webbolt_termekek 
-        INNER JOIN webbolt_kategoriak ON webbolt_termekek.ID_KATEGORIA = webbolt_kategoriak.ID_KATEGORIA
-        left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
-        WHERE webbolt_termekek.ID_TERMEK = ?
-    `;
-    let ertekek = [termekid];
+        let sql = `
+            SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, 
+                webbolt_termekek.AR, webbolt_termekek.MENNYISEG, 
+                CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
+                CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILENAME END AS FOTONEV, 
+                webbolt_termekek.MEEGYS, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
+            FROM webbolt_termekek 
+            INNER JOIN webbolt_kategoriak ON webbolt_termekek.ID_KATEGORIA = webbolt_kategoriak.ID_KATEGORIA
+            left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
+            WHERE webbolt_termekek.ID_TERMEK = ?
+        `;
+        let ertekek = [termekid];
 
-    sendJson_toFrontend(res, sql, ertekek);
+        sendJson_toFrontend(res, sql, ertekek);
+
+    }
+    catch (err) {
+        console.error("/termek_adatok HIBA:", err);
+        res.status(500).json({
+            message: "Hiba a termék adatainak lekérésekor.",
+            error: err.message
+        });
+    }
 });
 
 // === TERMÉK TÖRLÉSE (ADMIN) ===
 // POST: /termek_del
 // Paraméter: ID_TERMEK (int)
 app.post('/termek_del',async (req, res) => {
-    console.log("törlendő termék ID: " + req.query.ID_TERMEK);  // Log: mi törlődik
-    var termekid = parseInt(req.query.ID_TERMEK);
+    try{
+        console.log("törlendő termék ID: " + req.query.ID_TERMEK);  // Log: mi törlődik
+        var termekid = parseInt(req.query.ID_TERMEK);
 
-    var sql = `DELETE FROM webbolt_termekek WHERE ID_TERMEK = ?`;
-    let ertekek = [termekid];
+        var sql = `DELETE FROM webbolt_termekek WHERE ID_TERMEK = ?`;
+        let ertekek = [termekid];
 
-    const eredmeny = await runExecute(sql, req, ertekek, true);
-    res.send(eredmeny);
-    res.end();
+        const eredmeny = await runExecute(sql, req, ertekek, true);
+        res.send(eredmeny);
+        res.end();
+
+    }
+    catch (err) {
+        console.error("/termek_del HIBA:", err);
+        res.status(500).json({
+            message: "Hiba a termék törlésekor.",
+            error: err.message
+        });
+    }
 });
 
 
@@ -1195,10 +1266,12 @@ try {
 
     } 
     catch (err) {
-        res.set(header1, header2);
-        res.send("Hiba a lekérdezés végrehajtásakor: " + err.message);
-        res.end();
-    }    
+        console.error("/html_sql HIBA:", err);
+        res.status(500).json({
+            message: "Szörnyű hiba az sql parancs végrehajtásakor.",
+            error: err.message
+        });
+    }   
 });
 
 
@@ -1407,7 +1480,7 @@ app.post('/send-email', async (req, res) => {
 
         res.json({ message: 'Email sikeresen elküldve' });
     } catch (err) {
-        console.error('Email hiba:', err);
+        console.error('/send-email hiba:', err);
         res.json({ message: 'Email hiba: ' + err.message });
     }
 });
