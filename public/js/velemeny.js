@@ -72,12 +72,33 @@ async function SajatVelemenyekMutat(id_termek) {
                     </div>
 
                     <div class="dropup">
-                        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                        <ul class="dropdown-menu p-2 w-100">
-                            <li><span class="dropdown-item-text">Biztosan törlöd a véleményt?</span></li>
-                            <li class="d-flex justify-content-end p-3"><button class="btn btn-danger bi bi-trash" type="button" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> Törlés</button></li>
+                        <button type="button" 
+                                class="
+                                    btn btn-lg 
+                                    bg-transparent 
+                                    text-slate-900 
+                                    hover:text-red-700 
+                                    dark:text-zinc-200 
+                                    dark:hover:text-red-700 
+                                    transition-all duration-150 ease-in-out 
+                                    dropdown-toggle
+                                    " 
+
+                                aria-label="teteltorol" data-bs-toggle="dropdown" style="border:none;"><i class="bi bi-trash"></i></button>
+                        <ul 
+                        class="
+                        dropdown-menu 
+                        p-2 
+                        bg-zinc-100 text-slate-900 dark:bg-slate-700 dark:text-zinc-200
+                        " style="min-width: 300px;">
+                            <li><span class="dropdown-item-text text-start text-slate-900 dark:text-zinc-200">Biztos vagy benne?</span></li>
+                            <li><span class="dropdown-item-text text-start text-slate-900 dark:text-zinc-200">A vélemény örökre el fog veszni (ami hosszú idő)</span></li>
+                            <li class="d-flex justify-content-end gap-2 p-3">
+                                 <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200 bi bi-x-lg" onclick="document.querySelector('#myToggle').click()"> Mégse</button>
+                                 <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-red-500 dark:hover:bg-slate-900 dark:hover:text-red-500 bi bi-trash" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})' > Törlés</button>                                                                                                                                        
+                                
+                                <!--<button class="btn btn-danger bi bi-trash" type="button" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> Törlés</button>-->
+                            </li>
                         </ul>
                     </div>                                                                                                                                                     
                  
