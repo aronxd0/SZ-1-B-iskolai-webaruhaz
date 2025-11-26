@@ -370,6 +370,8 @@ html.dark ::-webkit-scrollbar-thumb {
 @media (max-width: 1400px) {
   #top-navbar.offcanvas-start {
     width: 270px !important;
+    overflow-y: auto;
+    max-height: 100vh;
   }
 }
 
