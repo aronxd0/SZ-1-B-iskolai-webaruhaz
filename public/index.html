@@ -636,7 +636,7 @@
         <div class="row">
           <div class="col-0 col-xxl-1"></div>
           <div class="col-12 col-xxl-10 p-xxl-5">
-            <div class="row" id="content_hely"></div>  
+            <div class="row p-2" id="content_hely"></div>  
             <div class="row mt-3 mb-5" id="pagi"></div>
           </div>
           <div class="col-0 col-xxl-1"></div>
@@ -697,9 +697,13 @@
       text-slate-900 
       dark:bg-slate-700 
       dark:text-zinc-200 
+      d-flex 
+      justify-content-start 
+      gap-3 
       ">
+      <button type="button" class="btn btn-lg text-slate-900 hover:text-slate-900 dark:text-zinc-200 dark:hover:text-zinc-200" data-bs-dismiss="offcanvas"><i class="bi bi-arrow-left"></i></button>
       <span class="offcanvas-title text-xl"><i class="bi bi-gear"></i> Szűrési beállítások</span>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+      
     </div>
 
     <div 
@@ -1007,7 +1011,7 @@
           shadow-bottom 
           d-flex justify-content-start gap-3 
           ">
-          <button type="button" class="btn btn-lg text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-arrow-left"></i></button>
+          <button type="button" class="btn btn-lg text-slate-900 hover:text-slate-900 dark:text-zinc-200 dark:hover:text-zinc-200" data-bs-dismiss="modal"><i class="bi bi-arrow-left"></i></button>
           <span class="modal-title text-xl text-center" id="termeknev"></span>
           
         </div>

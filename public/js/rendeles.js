@@ -23,10 +23,12 @@ $("#rend_button").click(async function () {
           
             s += `
 
-                <div class="col-0 col-lg-2"></div>
+            <div class="p-3 d-flex justify-content-center">
+                <!-- <div class="col-0 col-lg-2"></div> -->
 
                 <div 
                     class="
+                    
                         col-12 
                         col-lg-8   
                         d-flex 
@@ -44,10 +46,11 @@ $("#rend_button").click(async function () {
                         dark:hover:bg-gray-800 
                         dark:hover:-outline-offset-1 
                         dark:hover:outline-white/10 
-                        mt-4 
+                        my-1  
                         p-3 
+                        
                         p-xxl-none" 
-                        card
+                        
 
                     id="rendeles_${elemek.ID_RENDELES}" 
 
@@ -84,6 +87,7 @@ $("#rend_button").click(async function () {
                     flex-lg-column 
                     justify-content-between 
                     py-3 p-lg-1 
+                    
                     border-t border-gray-300 
                     border-b border-gray-300 
                     lg:border-t-0 
@@ -111,7 +115,8 @@ $("#rend_button").click(async function () {
                     flex-lg-column 
                     justify-content-between 
                     align-items-lg-end 
-                    py-3 p-lg-1
+                    py-3 p-lg-1 
+                    
                     ">
                         <span><i class="bi bi-cash"></i> Bruttó végösszeg</span>
                         <span>(áfatartalom: ${elemek.AFA}%)</span>
@@ -120,36 +125,12 @@ $("#rend_button").click(async function () {
                         </span>
                     </div>      
                     
-                    <!--
-                    <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
-                        <button 
-                            type="button"
-                            class="
-                            btn btn-lg 
-                            bg-transparent 
-                            text-slate-900 
-                            hover:text-red-700 
-                                   
-                            dark:text-zinc-200 
-                            dark:hover:text-red-700 
-                            transition-all 
-                            duration-150 
-                            ease-in-out"
-
-                            data-bs-toggle="collapse"
-                            data-bs-target="#${collapseId}"
-                            aria-expanded="false"
-                            aria-controls="${collapseId}"
-                        >
-                        onclick="toggleRendeles(${elemek.ID_RENDELES})"
-                            <i class="bi bi-three-dots"></i>
-                        </button>
-                    </div>
-                        -->
+                    
                     
 
                 </div>
-                <div class="col-0 col-lg-2"></div>
+                <!-- <div class="col-0 col-lg-2"></div> -->
+               </div>
 
                 <!-- Itt jelenik meg az összehajtható rész -->
 
