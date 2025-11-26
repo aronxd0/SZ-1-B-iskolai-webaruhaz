@@ -521,27 +521,22 @@ function Statisztikak() {
             
         html = `
         <div class="container">
-            <div class="row d-felx align-items-center">
-                <div class="col-12  col-md-10" id="_Top5" style="min-width: 310px; height: 400px; margin-top: 30px"></div>
-                <div class="col-12 col-md-2  bg-slate-500 p-4 rounded-4">
-
-                     <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 mt-2 rounded-2">
-                        <input type="radio" name="cucc" id="_01" onclick="Diagrammok(this)" checked>
-                        1 Honap
-                    </label>
-
-                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
-                        <input type="radio" name="cucc" id="_02" onclick="Diagrammok(this)">
-                        3 hónap
-                    </label>
-
-                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
-                        <input type="radio" name="cucc" id="_03" onclick="Diagrammok(this)">
-                        All time
-                    </label>
-
+            <div class="row">
+            <div class="col-md-2"></div>
+                <div class="top-select-box col-12 col-md-8 d-felx justify-content-center">
+                    <span class="chart-title">Top 5 termék eladás szerint</span>
                 </div>
+                
+                <div class="col-12 col-md-2 mt-10 d-flex justify-content-center">
+                    <select id="honapValaszto" onchange="DiagrammokSelect(this)" class="select-box ">
+                        <option value="1">1 hónap</option>
+                        <option value="3">3 hónap</option>
+                        <option value="all">All time</option>
+                    </select>
+                 </div>
             </div>
+            <div id="_Top5" style="min-width: 310px; height: 400px; margin-top: 30px"></div>
+
         </div>
         `
 
@@ -563,7 +558,7 @@ function drawChart() {
     const data = [
       { name: "hosszen név pl almsaslemaspite", y: 30, img: "https://i.imgur.com/abcd1.png" },
       { name: "hosszen név pl almsaslemaspite", y: 60, img: "https://i.imgur.com/abcd2.png" },
-      { name: "SB", y: 100, img: "https://i.imgur.com/abcd3.png" },
+      { name: "SB", y: 10110, img: "https://i.imgur.com/abcd3.png" },
       { name: "JB", y: 70, img: "https://i.imgur.com/abcd4.png" },
       { name: "TB", y: 50, img: "https://i.imgur.com/abcd5.png" }
     ];
@@ -598,9 +593,10 @@ function drawChart() {
       },
   
       title: {
-        text: 'Top 5 termék eladás',
-        margin: 180
-      },
+    useHTML: true,
+    text: "<div style='height:6px; padding: 5px;'></div>",
+    margin: 180
+},
   
       xAxis: {
         categories: visibleData.map(d => shorten(d.name)),
@@ -662,7 +658,7 @@ function drawChart() {
                   <!-- Korona, ha 1. hely -->
                   ${isWinner ? `
                     <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25d45014-8cc3-4c98-b02c-5a0cf3a55ddd/dclmy10-72419003-8e69-41e8-a9f3-b7df637b74f8.png/v1/fill/w_900%2Ch_633/gold_crown_on_a_transparent_background__by_prussiaart_dclmy10-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjMzIiwicGF0aCI6Ii9mLzI1ZDQ1MDE0LThjYzMtNGM5OC1iMDJjLTVhMGNmM2E1NWRkZC9kY2xteTEwLTcyNDE5MDAzLThlNjktNDFlOC1hOWYzLWI3ZGY2MzdiNzRmOC5wbmciLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.-1xQwTm0xcpa2ZJ_vvNA5hTKxUAe78z6H679BjudfZs   "
-                         style="width:90px; position:absolute; top:-70px; left:50%; transform:translateX(-50%);">
+                         style="width:90px; margin-top:5px; position:absolute; top:-70px; left:50%; transform:translateX(-50%);">
                   ` : ''}
   
                   <!-- Termék kép -->

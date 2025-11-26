@@ -436,3 +436,25 @@ body.offcanvas-open {
   
 }
 */
+
+.top-select-box {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 20px;
+    font-size:26px;
+    font-weight:700;
+    margin-bottom:-30px; 
+}
+
+.chart-title {
+    font-weight:900;
+}
+
+.select-box {
+    padding:8px 15px;
+    border-radius:15px;
+    border:2px solid #333;
+    font-size:17px;
+    background:white;
+}
