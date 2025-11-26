@@ -12,6 +12,7 @@ let ureskosar = `
 $("#cart_button").click(async function () {
     tetelekli = [];
     //$("#content_hely").html("");
+    console.log("cart_button click xd");
 
     $("#welcome_section").fadeOut(300);
 
@@ -50,7 +51,7 @@ $("#cart_button").click(async function () {
 
                     cnt += `
                         
-
+                    <div class="p-3 d-flex justify-content-center">
                         <div 
                          class="
                             col-12 
@@ -70,7 +71,7 @@ $("#cart_button").click(async function () {
                          id="${element.ID_TERMEK}NAGY">
                             
                             <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center">
-                                <img src="${element.FOTOLINK}" class="img img-fluid img-thumbnail w-20 h-20" style="object-fit:cover;" alt="kep">
+                                <img src="${element.FOTOLINK}" class="img img-fluid img-thumbnail w-10 h-10" style="object-fit:cover;" alt="kep">
                             </div>
                             <div class="col-12 col-lg-4 d-flex align-self-center justify-content-center p-3">
                                 <p>${element.NEV}</p>
@@ -147,7 +148,7 @@ $("#cart_button").click(async function () {
                         </div> 
                         
                         
-                    
+                    </div>
             
                     `;
        
@@ -202,6 +203,11 @@ $("#cart_button").click(async function () {
 });
 
 
+
+function KosarTeteleiFrissit() {
+    $("#cart_button").trigger("click");
+    KosarTetelDB();
+}
 
 
 
