@@ -60,7 +60,6 @@ $(document).ready(function() {
 
     $("#termekview").on("hidden.bs.modal", function() {
         console.log("bezarva");
-        window.history.replaceState(null, null, window.location.pathname); // az url vegen ne maradjon bent a #velemenyek es a #sajatok
         $("#velemeny_input").val("");
     });
 
@@ -145,15 +144,9 @@ $(document).ready(function() {
     });
 
 
-    // admin oldal
-
-    /*
-    $("#admin_button").click(function() {
-        $("#content_hely").html("");
-        $("#content_hely").html("ide jon az admin resz");
-        $("#pagi").html("");
+    $("#fizetes").on("hidden.bs.modal", function () {
+        KosarTeteleiFrissit();
     });
-    */
 
     $("#szurogomb").click(function () {
         KERESOBAR();
