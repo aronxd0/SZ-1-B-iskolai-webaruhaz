@@ -42,15 +42,11 @@ app.use(session({
 
 app.post('/check_session', (req, res) => {
   const active = !!req.session.ID_USER;
-  let iduzer = "";
-  if (req.session.ID_USER == undefined) { iduzer = "NULL"; }
-  else { iduzer = req.session.ID_USER; }
-  console.log(active + ", " + serverBoot + ", " + iduzer + " anyád");
   
   res.json({
     active,
     serverBoot,         
-    id_user: iduzer
+    id_user: req.session.ID_USER || null
   });
   
   
