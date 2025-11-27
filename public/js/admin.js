@@ -546,6 +546,7 @@ function Statisztikak() {
          $("#content_hely").html(html).fadeIn(300); 
         $("#pagi").html("");
         drawChart();
+        DiagrammokSelect("kezdes");
     });
 
 }
@@ -558,7 +559,7 @@ function drawChart() {
     const data = [
       { name: "hosszen név pl almsaslemaspite", y: 30, img: "https://i.imgur.com/abcd1.png" },
       { name: "hosszen név pl almsaslemaspite", y: 60, img: "https://i.imgur.com/abcd2.png" },
-      { name: "SB", y: 10110, img: "https://i.imgur.com/abcd3.png" },
+      { name: "SB", y: 110, img: "https://i.imgur.com/abcd3.png" },
       { name: "JB", y: 70, img: "https://i.imgur.com/abcd4.png" },
       { name: "TB", y: 50, img: "https://i.imgur.com/abcd5.png" }
     ];
@@ -683,24 +684,24 @@ function drawChart() {
     });
   
   }
+
+  function DiagrammokSelect(innen){
+
+    if(innen != "kezdes"){
+        var kivalasztott = innen.value; // 1 == 1 honap || 3 == 3 hónap  || all  = összes hónap
+        alert(kivalasztott)
+    }
+    else{
+        alert("kezdes")
+    }
+    
+  }
   
 
       
 
 
 
-function Diagrammok(id){
-        if(id.id == "_01"){
-            document.getElementById("cim").innerHTML ="Darab áru let megvásárolva:    "
-        }
-        if(id.id == "_02"){
-            document.getElementById("cim").innerHTML ="Jövedelem"
-        }
-        if(id.id == "_03"){
-            document.getElementById("cim").innerHTML ="Legnépszerübb áru"
-        }
-        
-}
 //#endregion
 //#region SQl input 
 
