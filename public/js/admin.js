@@ -440,7 +440,7 @@ function UjTermek() {
  window.addEventListener('resize', function(event) {
 
     if(this.document.querySelector("#width") < 600){
-        DiagrammokSelect("kezdes")
+        drawChart();
     }
 },true);
 
@@ -520,7 +520,7 @@ function Statisztikak() {
             `;*/
             
         html = `
-        <div class="container bg-white">
+        <div class="container">
             <div class="row">
             <div class="col-md-2"></div>
                 <div class="top-select-box col-12 col-md-8 d-flex justify-content-center">
@@ -528,14 +528,14 @@ function Statisztikak() {
                 </div>
                 
                 <div class="col-12 col-md-2 mt-10 d-flex justify-content-center">
-                    <select id="honapValaszto" onchange="DiagrammokSelect(this)" class="select-box px-2">
+                    <select id="honapValaszto" onchange="DiagrammokSelect(this)" class="select-box ">
                         <option value="1">1 hónap</option>
                         <option value="3">3 hónap</option>
-                        <option value="5">All time</option>
+                        <option value="all">All time</option>
                     </select>
                  </div>
             </div>
-            <div id="_Top5" style="min-width: 310px; height: 400px;"></div>
+            <div id="_Top5" style="min-width: 310px; height: 400px; margin-top: 30px"></div>
 
         </div>
         `
@@ -545,28 +545,23 @@ function Statisztikak() {
      $("#content_hely").fadeOut(300,  function() {
          $("#content_hely").html(html).fadeIn(300); 
         $("#pagi").html("");
-        //drawChart();
+        drawChart();
         DiagrammokSelect("kezdes");
     });
 
 }
-
-
-function drawChart(rang) {
-
-   console.log(rang.rows[1].FOTOLINK + " fotokink dsléal")
+function drawChart() {
 
     function shorten(name) {
       return name.length > 12 ? name.substring(0, 12) + "..." : name;
     }
-    var kep1 = rang.rows[1].FOTOLINK 
   
-     data = [
-      { name: rang.rows[3].NEV, y:parseInt( rang.rows[3].DB), img: rang.rows[3].FOTOLINK },
-      { name: rang.rows[1].NEV, y:parseInt( rang.rows[1].DB), img: kep1 },
-      { name: rang.rows[0].NEV, y:parseInt(rang.rows[0].DB), img: rang.rows[0].FOTOLINK },
-      { name: rang.rows[2].NEV, y:parseInt(rang.rows[2].DB), img: rang.rows[2].FOTOLINK },
-      { name: rang.rows[4].NEV, y:parseInt(rang.rows[4].DB), img: rang.rows[4].FOTOLINK }
+    const data = [
+      { name: "hosszen név pl almsaslemaspite", y: 30, img: "https://i.imgur.com/abcd1.png" },
+      { name: "hosszen név pl almsaslemaspite", y: 60, img: "https://i.imgur.com/abcd2.png" },
+      { name: "SB", y: 110, img: "https://i.imgur.com/abcd3.png" },
+      { name: "JB", y: 70, img: "https://i.imgur.com/abcd4.png" },
+      { name: "TB", y: 50, img: "https://i.imgur.com/abcd5.png" }
     ];
   
     // MOBIL nézet – 3 középső
@@ -659,37 +654,27 @@ function drawChart(rang) {
               const isWinner = place === 1;
   
               return `
-                <div style="
-                        margin-top:-140px;
-                        position:relative;
-                        width:100px;
-                        display:flex;
-                        flex-direction:column;
-                        align-items:center;
-                        justify-content:center;
-                        text-align:center;
-                        ">
-
-                    ${isWinner ? `
-                        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25d45014-8cc3-4c98-b02c-5a0cf3a55ddd/dclmy10-72419003-8e69-41e8-a9f3-b7df637b74f8.png/v1/fill/w_900%2Ch_633/gold_crown_on_a_transparent_background__by_prussiaart_dclmy10-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjMzIiwicGF0aCI6Ii9mLzI1ZDQ1MDE0LThjYzMtNGM5OC1iMDJjLTVhMGNmM2E1NWRkZC9kY2xteTEwLTcyNDE5MDAzLThlNjktNDFlOC1hOWYzLWI3ZGY2MzdiNzRmOC5wbmciLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.-1xQwTm0xcpa2ZJ_vvNA5hTKxUAe78z6H679BjudfZs"
-                            style="width:90px; position:absolute; top:-70px; left:50%; transform:translateX(-50%);">
-                    ` : ''}
-
-                        <img ${'src'}="${this.point.img}" style="height:100px;">
-
-
-                        <div style="
-                            font-size:40px;
-                            font-weight:bold;
-                            color:white;
-                            text-shadow:0 0 5px black;
-                            margin-top:5px;
-                        ">
-                        ${place}
-                        </div>
-                </div>
-
-                `;
+                <div style="text-align:center; margin-top:-140px; position:relative; width:100px">
+                  
+                  <!-- Korona, ha 1. hely -->
+                  ${isWinner ? `
+                    <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25d45014-8cc3-4c98-b02c-5a0cf3a55ddd/dclmy10-72419003-8e69-41e8-a9f3-b7df637b74f8.png/v1/fill/w_900%2Ch_633/gold_crown_on_a_transparent_background__by_prussiaart_dclmy10-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjMzIiwicGF0aCI6Ii9mLzI1ZDQ1MDE0LThjYzMtNGM5OC1iMDJjLTVhMGNmM2E1NWRkZC9kY2xteTEwLTcyNDE5MDAzLThlNjktNDFlOC1hOWYzLWI3ZGY2MzdiNzRmOC5wbmciLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.-1xQwTm0xcpa2ZJ_vvNA5hTKxUAe78z6H679BjudfZs   "
+                         style="width:90px; margin-top:5px; position:absolute; top:-70px; left:50%; transform:translateX(-50%);">
+                  ` : ''}
+  
+                  <!-- Termék kép -->
+                  <img src="${this.point.img}" style="height:100px;">
+  
+                  <!-- Sorszám az oszlop FÖLÖTT -->
+                  <div style="
+                    font-size:40px;
+                    font-weight:bold;
+                    color:white;
+                    text-shadow:0 0 5px black;
+                    margin-top:5px;
+                  ">${place}</div>
+  
+                </div>`;
             }
           }
         }
@@ -700,17 +685,14 @@ function drawChart(rang) {
   
   }
 
-  async function DiagrammokSelect(innen){
+  function DiagrammokSelect(innen){
 
     if(innen != "kezdes"){
-        var kivalasztott = innen.value; // 1 == 1 honap || 3 == 3 hónap  || 5  = összes hónap
-        var eredmeny = await ajax_post(`Top5?INTERVALLUM='${kivalasztott}'`,1);
-        drawChart(eredmeny);
+        var kivalasztott = innen.value; // 1 == 1 honap || 3 == 3 hónap  || all  = összes hónap
+        alert(kivalasztott)
     }
     else{
-        //alert("kezdes")
-        var eredmeny = await ajax_post("Top5?INTERVALLUM='1'",1);
-        drawChart(eredmeny);
+        alert("kezdes")
     }
     
   }
