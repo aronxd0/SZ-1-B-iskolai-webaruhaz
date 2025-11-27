@@ -1300,14 +1300,12 @@ app.post('/top5',(req, res) => {
     JOIN webbolt_rendeles r 
     ON r.ID_RENDELES = t.ID_RENDELES
     ${idocucc}
-    GROUP BY t.NEV, t.FOTOLINK
+    GROUP BY t.ID_TERMEK    
     ORDER BY DB DESC
     LIMIT 5;
     `
     sendJson_toFrontend (res, sql, []);
 });
-
-
 
 //#endregion
 
