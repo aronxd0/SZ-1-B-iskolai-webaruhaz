@@ -1304,7 +1304,7 @@ app.post('/top5',(req, res) => {
     ORDER BY DB DESC
     LIMIT 5;
     `
-    sendJson_toFrontend (res, sql, ertekek);
+    sendJson_toFrontend (res, sql, []);
 });
 
 
