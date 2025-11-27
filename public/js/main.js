@@ -81,6 +81,40 @@ async function AR_SUM(osztaly, hova, vegossszeg) {
 
 
 
+
+async function SESSION() {
+    if (localStorage.getItem("loggedIn") !== "1") { return; }
+
+        try {
+
+            const js = await ajax_post('/check_session', 1);
+            //const js = await session_check.json();
+
+            const localBoot = localStorage.getItem('serverBoot') || '';
+            if (!js.active || (localBoot && String(js.serverBoot) !== String(localBoot))) {
+                // Biztonságos logout: törölj minden user-infót
+                localStorage.removeItem('loggedIn');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem("userGroup");
+                localStorage.removeItem('serverBoot');
+                localStorage.removeItem('isAdmin');
+                localStorage.removeItem('isWebAdmin');
+
+                alert('A munkamenet lejárt vagy a szerver újraindult. Kérlek jelentkezz be újra.');
+                location.reload(); // frissít, így a UI vendég módra vált
+            }
+
+        } catch (err) {
+            console.error('Session check hiba', err);
+            // Ha a szerver teljesen down, nem muszáj azonnal logoutolni; várj a következő tickre
+    }
+}
+
+
+
+
+
 function SUM(lista) {
     let sum = 0;
     for (const element of lista) {
