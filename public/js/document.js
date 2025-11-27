@@ -17,8 +17,22 @@ $(document).ready(function() {
     });
 
 
-    update_gombok(0);
-    $('#login_modal').modal('show');                
+    
+    if (localStorage.getItem("loggedIn")) { 
+        
+        bejelentkezett_usernev = localStorage.getItem("userName") || "";
+        bejelentkezett_useremail = localStorage.getItem("userEmail") || "";
+        csoport = localStorage.getItem("userGroup") || "";
+        admin = localStorage.getItem("isAdmin") === "1";
+        webbolt_admin = localStorage.getItem("isWebAdmin") === "1";
+
+        BevaneJelentkezve();
+        Kezdolap();
+    }
+    else {
+        $('#login_modal').modal('show');
+    };
+                   
         
 
 
@@ -170,6 +184,16 @@ $(document).ready(function() {
         }
     });
 
+
+    setInterval(async () => {
+        if (!localStorage.getItem("loggedIn")) { return; }
+        let session_check = await ajax_post('/check_session', 1);
+        if (!session_check.active) {
+            alert("🔥 Lejárt a munkamenet!");
+            localStorage.removeItem("loggedIn");
+            location.reload();
+        }
+    }, 30000);
 
 
 });

@@ -31,9 +31,17 @@ app.use(express.static('public')); // A public/ mappa tartalmát direktben kiszo
 app.use(session({
     key: 'user_sid',
     secret: 'nagyontitkos',
-    resave: true,
-    saveUninitialized: true       
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60000, // 1 perc
+        sameSite: 'lax'
+    }
 }));
+
+app.post('/check_session', (req, res) => {
+    res.json({ active: !!req.session.ID_USER });
+});
 
 // === ADATBÁZIS KAPCSOLAT POOL ===
 // Connection pool: több konkurens kapcsolatot kezel egyidejűleg a MySQL szerverrel

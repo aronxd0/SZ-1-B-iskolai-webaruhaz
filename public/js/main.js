@@ -539,7 +539,7 @@ function Kezdolap() {
     bepipaltID = "";
     KERESOBAR();
 
-    if (!BevanJelentkezve()) { update_gombok(0); }
+    if (!localStorage.getItem("loggedIn")) { update_gombok(0); }
     
     
       // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!

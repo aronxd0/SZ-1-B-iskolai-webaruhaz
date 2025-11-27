@@ -266,7 +266,7 @@ async function Termek_Mutat(event, termek_id) {
     const leiras = termekadatok.rows[0].LEIRAS;
 
 
-    if ($("#loginspan").html() == " Bejelentkezés" || aktiv == "N" || mennyiseg == 0) {
+    if (localStorage.getItem("loggedIn") !== "1" || aktiv == "N" || mennyiseg == 0) {
     ks = "";
     } else
     ks = `<button 
@@ -372,7 +372,7 @@ async function Termek_Mutat(event, termek_id) {
 
   
 
-  if (!BevanJelentkezve()) {
+  if (localStorage.getItem("loggedIn") !== "1") {
     $("#vlmg").html("Vélemény írásához jelentkezzen be");
     cls.hide();
     $("#sajatvlm").html("");
@@ -536,7 +536,8 @@ function VeletlenszeruVelemeny() {
 //region CARDBETOLT
 function CARD_BETOLT(adatok) {
    
-  
+  console.log(`card betolt: kezdődik: ${localStorage.getItem("loggedIn")}`);
+
   let ks = "";
   let s = "";
   let el = "";
@@ -578,7 +579,7 @@ function CARD_BETOLT(adatok) {
       `${element.ID_KATEGORIA}`
     );
 
-    if (!BevanJelentkezve() || element.AKTIV == "N" || element.MENNYISEG == 0) {
+    if (localStorage.getItem("loggedIn") !== "1" || element.AKTIV == "N" || element.MENNYISEG == 0) {
       ks = "";
     } else {
       ks = `<button 
@@ -595,7 +596,7 @@ function CARD_BETOLT(adatok) {
     }
 
 
-    if (BevanJelentkezve() && (webbolt_admin || admin)) {
+    if (localStorage.getItem("loggedIn") === "1" && (webbolt_admin || admin)) {
       gg = "<div class='row d-flex justify-content-center p-3'>";
       gg += `<button type="button" 
       class="btn btn-lg 
@@ -668,10 +669,10 @@ function CARD_BETOLT(adatok) {
     } else {
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
-      console.log("card betolt: üres a kereső");
+      
     }
 
-    
+    console.log(`card betolt: ${localStorage.getItem("loggedIn")}`);
 
     var pp = `
             <ul class="pagination justify-content-center">
