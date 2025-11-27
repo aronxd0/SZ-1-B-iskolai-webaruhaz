@@ -42,11 +42,18 @@ app.use(session({
 
 app.post('/check_session', (req, res) => {
   const active = !!req.session.ID_USER;
+  let iduzer = "";
+  if (req.session.ID_USER == undefined) { iduzer = "NULL"; }
+  else { iduzer = req.session.ID_USER; }
+  console.log(active + ", " + serverBoot + ", " + iduzer + " anyád");
+  
   res.json({
     active,
-    serverBoot,          // millis azonosító
-    id_user: req.session.ID_USER || null
+    serverBoot,         
+    id_user: iduzer
   });
+  
+  
 });
 
 // === ADATBÁZIS KAPCSOLAT POOL ===
@@ -665,9 +672,18 @@ app.post('/kosar_del',async (req, res) => {
 // POST: /kosarteteldb
 // Működés: az összes tétel mennyiségét összeadja (SUM)
 // Visszatér: {kdb: szám}
-app.post('/kosarteteldb',(req, res) => {
+app.post('/kosarteteldb',(req, res) => {    
+
+    session_data = req.session;
+
+    if (!session_data.ID_USER) {
+        res.set(header1, header2);
+        // Visszaadhat egy üres kosarat, vagy egy jelzést, hogy nincs session
+        return res.json({ message: "session expired", maxcount: 0, rows: [] });
+    }
+
     try {
-        session_data = req.session;
+        
         
         
         var sql = `
@@ -698,8 +714,18 @@ app.post('/kosarteteldb',(req, res) => {
 // Paraméter: ID_TERMEK (opcionális) - ha megadva, csak annak 1 terméknek az árát és mennyiségét
 // Működés: attól függően, hogy szeretnénk egy tételről részleteket vagy az egész kosárat
 app.post('/tetelek',(req, res) => {
+
+    session_data = req.session;
+
+    if (!session_data.ID_USER) {
+        res.set(header1, header2);
+        // Visszaadhat egy üres kosarat, vagy egy jelzést, hogy nincs session
+        return res.json({ message: "session expired", maxcount: 0, rows: [] });
+    }
     try{
-        session_data = req.session;
+        
+
+
         
         var termekid  = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK)  :   -1)
 
@@ -1394,6 +1420,8 @@ async function runQueries(sql, ertekek = []) {
         [res1] = await conn.execute(`select count(*) as db from (${sql.substring(0, poz)}) as tabla;`, szamlaloErtekek); 
         maxcount = res1[0].db | 0;  // Bitwise OR 0 = int konverálás
         
+        
+
         // === LÉPÉS 2: ADATOK LEKÉRÉSE (HA VAN) ===
         if (maxcount > 0) {
             [res2] = await conn.execute(sql, ertekek);  // A teljes SQL az ORDER BY-val
@@ -1405,7 +1433,9 @@ async function runQueries(sql, ertekek = []) {
     } finally {
         if (conn) conn.release();   
         json_data = JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": res2 });  // REST API
+        //console.log(json_data);
     }
+    
     return json_data;
 }
 

@@ -40,6 +40,8 @@ $(document).ready(function() {
     //ArFeltolt();
     KategoriaFeltolt("kategoria_section", "check", "");
 
+    console.log("xd");
+
     var input = document.getElementById("nev1");
 
     // enterrel keresés
@@ -79,7 +81,7 @@ $(document).ready(function() {
     });
 
     $('#bezar').on('click', function () {
-        if (!BevanJelentkezve()) {
+        if (localStorage.getItem("loggedIn") !== "1") {
             ajax_post("logout", 1,).then(logoutt => {});
             Kezdolap();
         }

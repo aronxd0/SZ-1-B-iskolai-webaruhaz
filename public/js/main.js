@@ -100,6 +100,7 @@ async function SESSION() {
                 localStorage.removeItem('serverBoot');
                 localStorage.removeItem('isAdmin');
                 localStorage.removeItem('isWebAdmin');
+                console.log(js);
 
                 alert('A munkamenet lejárt vagy a szerver újraindult. Kérlek jelentkezz be újra.');
                 location.reload(); // frissít, így a UI vendég módra vált
@@ -108,7 +109,7 @@ async function SESSION() {
         } catch (err) {
             console.error('Session check hiba', err);
             // Ha a szerver teljesen down, nem muszáj azonnal logoutolni; várj a következő tickre
-    }
+         }
 }
 
 
