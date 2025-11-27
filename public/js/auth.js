@@ -70,7 +70,7 @@ function BevaneJelentkezve() {
         $("home_button").trigger("click");
         ADMINVAGYE();
         KosarTetelDB();
-        KosarTeteleiFrissit();
+        
 
         //return true; 
     }
@@ -120,6 +120,7 @@ $("#login_oksi_button").click(function() {
             localStorage.setItem("userGroup", csoport);
             localStorage.setItem("isAdmin", admin ? "1" : "0");
             localStorage.setItem("isWebAdmin", webbolt_admin ? "1" : "0");
+            localStorage.setItem("serverBoot", l_json.serverBoot || "");
             BevaneJelentkezve();
             /*
             localStorage.setItem("loggedIn", "1");
@@ -147,7 +148,7 @@ $("#login_oksi_button").click(function() {
     });
 
 
-$("#kijelentkezik").click(function() {
+$("#kijelentkezik").click( async function() {
     ajax_post("logout", 1).then(logout_json => {
         /*
         console.log(logout_json);

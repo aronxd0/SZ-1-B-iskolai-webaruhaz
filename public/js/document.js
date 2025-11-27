@@ -16,6 +16,7 @@ $(document).ready(function() {
         document.documentElement.style.overflow = '';
     });
 
+    SESSION();
 
     
     if (localStorage.getItem("loggedIn")) { 
@@ -38,6 +39,8 @@ $(document).ready(function() {
 
     //ArFeltolt();
     KategoriaFeltolt("kategoria_section", "check", "");
+
+    console.log("xd");
 
     var input = document.getElementById("nev1");
 
@@ -78,7 +81,7 @@ $(document).ready(function() {
     });
 
     $('#bezar').on('click', function () {
-        if (!BevanJelentkezve()) {
+        if (localStorage.getItem("loggedIn") !== "1") {
             ajax_post("logout", 1,).then(logoutt => {});
             Kezdolap();
         }
@@ -184,15 +187,42 @@ $(document).ready(function() {
         }
     });
 
+    
+
 
     setInterval(async () => {
-        if (!localStorage.getItem("loggedIn")) { return; }
-        let session_check = await ajax_post('/check_session', 1);
-        if (!session_check.active) {
-            alert("🔥 Lejárt a munkamenet!");
-            localStorage.removeItem("loggedIn");
-            location.reload();
+
+        SESSION();
+
+        /*
+        if (localStorage.getItem("loggedIn") !== "1") { return; }
+
+        try {
+
+            const js = await ajax_post('/check_session', 1);
+            //const js = await session_check.json();
+
+            const localBoot = localStorage.getItem('serverBoot') || '';
+            if (!js.active || (localBoot && String(js.serverBoot) !== String(localBoot))) {
+                // Biztonságos logout: törölj minden user-infót
+                localStorage.removeItem('loggedIn');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem("userGroup");
+                localStorage.removeItem('serverBoot');
+                localStorage.removeItem('isAdmin');
+                localStorage.removeItem('isWebAdmin');
+
+                alert('A munkamenet lejárt vagy a szerver újraindult. Kérlek jelentkezz be újra.');
+                location.reload(); // frissít, így a UI vendég módra vált
+            }
+
+        } catch (err) {
+            console.error('Session check hiba', err);
+            // Ha a szerver teljesen down, nem muszáj azonnal logoutolni; várj a következő tickre
         }
+        */
+        
     }, 30000);
 
 

@@ -4,6 +4,7 @@ const mysql     = require('mysql2/promise');  // MySQL szinkron/aszinkron kérde
 const express   = require('express');         // Express webszerver keretrendszer
 const session   = require('express-session'); // Felhasználói munkamenet kezeléshez
 const { stringify } = require('querystring');
+const serverBoot = Date.now();
 
 // === KONFIGURÁCIÓS FÁJLOK ===
 const path = require('path');
@@ -28,19 +29,28 @@ app.use(express.static('public')); // A public/ mappa tartalmát direktben kiszo
 
 // === FELHASZNÁLÓI MUNKAMENET (SESSION) BEÁLLÍTÁSA ===
 // Session kezelés bejelentkezés után az ID_USER és egyéb adat tárolásához
+
 app.use(session({
     key: 'user_sid',
-    secret: 'nagyontitkos',
-    resave: false,
-    saveUninitialized: false,
+    secret: Date.now().toString(),  // session azonosito (minden inditaskor mas legyen)
+    resave: false,                  // ne mentse ujra a session-t minden keresnel, ha nem valtozott semmi
+    saveUninitialized: false,       // csak akkor hoz letre sessiont a backend ha tenyleg rakunk bele valamit 
     cookie: {
-        maxAge: 60000, // 1 perc
-        sameSite: 'lax'
+        maxAge: 300000,             // mennyi ideig maradjon bejelentkezve (5 perc) {ms}
+        
     }
 }));
 
 app.post('/check_session', (req, res) => {
-    res.json({ active: !!req.session.ID_USER });
+  const active = !!req.session.ID_USER;
+  
+  res.json({
+    active,
+    serverBoot,         
+    id_user: req.session.ID_USER || null
+  });
+  
+  
 });
 
 // === ADATBÁZIS KAPCSOLAT POOL ===
@@ -287,6 +297,8 @@ function gen_SQL_kereses(req) {
 // Működés: a sessionből olvassa az ID_USER-t, azt használja a bejelentkezetthez
 app.post('/velemenyek',(req, res) => {
     session_data = req.session;
+
+    
     
     var termekid = (req.query.ID_TERMEK ? parseInt(req.query.ID_TERMEK) : 0);
     var sajatvelemeny = (req.query.SAJATVELEMENY ? parseInt(req.query.SAJATVELEMENY) : 0);
@@ -347,6 +359,7 @@ app.post('/velemenyek',(req, res) => {
 //  - SZOVEG: (string) a vélemény szövege
 // Működés: sessionből veszi az ID_USER-t, admin véleményt azonnal jóváhagyva, felhasználóé várakozásra kerül
 app.post('/velemeny_add', async (req, res) => {
+    
     try {
         var termekid = parseInt(req.query.ID_TERMEK);
         var szoveg = req.query.SZOVEG;
@@ -370,6 +383,7 @@ app.post('/velemeny_add', async (req, res) => {
 // POST: /velemeny_del
 // Paraméter: ID_VELEMENY (int)
 app.post('/velemeny_del', async (req, res) => {
+    
     try {
         var velemenyid = parseInt(req.query.ID_VELEMENY);
         
@@ -391,6 +405,7 @@ app.post('/velemeny_del', async (req, res) => {
 // Paraméter: ID_VELEMENY (int)
 // Működés: az allapot 'Jóváhagyva'-ra változik, megjelenik az oldalon
 app.post('/velemeny_elfogad', async (req, res) => {
+    
     try {
         var velemenyid = parseInt(req.query.ID_VELEMENY);
         
@@ -413,6 +428,7 @@ app.post('/velemeny_elfogad', async (req, res) => {
 // Paraméter: ID_VELEMENY (int)
 // Működés: az allapot 'Elutasítva'-ra változik
 app.post('/velemeny_elutasit', async (req, res) => {
+    
     try {
         var velemenyid = parseInt(req.query.ID_VELEMENY);
         
@@ -480,7 +496,7 @@ async function login_toFrontend (req, res) {
         
     } catch (err) {
         console.error('Login hiba:', err);
-        data = JSON.stringify({ "message": err.sqlMessage || "Adatbázis hiba", "maxcount": -1, "rows": [] });
+        data = JSON.stringify({ "message": err.sqlMessage || "Adatbázis hiba", "maxcount": -1, "rows": [], "serverBoot": serverBoot });
     } finally {
         if (conn) conn.release();
     }
@@ -529,6 +545,8 @@ app.post('/logout', (req, res) => {
 app.post('/kosar_add', async (req, res) => {
     try {
         session_data = req.session;
+
+        
 
         var termekid = parseInt(req.query.ID_TERMEK);
         var mennyit  = (req.query.MENNYIT? parseInt(req.query.MENNYIT)  :   1);  // Mennyit adjunk hozzá/vonjunk le
@@ -621,6 +639,7 @@ app.post('/kosar_add', async (req, res) => {
 app.post('/kosar_del',async (req, res) => {
     try{
         session_data = req.session;
+        
         var termekid  = parseInt(req.query.ID_TERMEK);
         
         var sql = `
@@ -650,9 +669,19 @@ app.post('/kosar_del',async (req, res) => {
 // POST: /kosarteteldb
 // Működés: az összes tétel mennyiségét összeadja (SUM)
 // Visszatér: {kdb: szám}
-app.post('/kosarteteldb',(req, res) => {
+app.post('/kosarteteldb',(req, res) => {    
+
+    session_data = req.session;
+
+    if (!session_data.ID_USER) {
+        res.set(header1, header2);
+        // Visszaadhat egy üres kosarat, vagy egy jelzést, hogy nincs session
+        return res.json({ message: "session expired", maxcount: 0, rows: [] });
+    }
+
     try {
-        session_data = req.session;
+        
+        
         
         var sql = `
             SELECT SUM(webbolt_kosar_tetelei.MENNYISEG) as kdb
@@ -682,8 +711,19 @@ app.post('/kosarteteldb',(req, res) => {
 // Paraméter: ID_TERMEK (opcionális) - ha megadva, csak annak 1 terméknek az árát és mennyiségét
 // Működés: attól függően, hogy szeretnénk egy tételről részleteket vagy az egész kosárat
 app.post('/tetelek',(req, res) => {
+
+    session_data = req.session;
+
+    if (!session_data.ID_USER) {
+        res.set(header1, header2);
+        // Visszaadhat egy üres kosarat, vagy egy jelzést, hogy nincs session
+        return res.json({ message: "session expired", maxcount: 0, rows: [] });
+    }
     try{
-         session_data = req.session;
+        
+
+
+        
         var termekid  = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK)  :   -1)
 
         // Feltételes SELECT: ha van konkrét termék ID, kevesebb oszlop
@@ -739,6 +779,9 @@ app.post('/tetelek',(req, res) => {
 app.post('/rendeles',async (req, res) => {
     try{
     session_data = req.session;
+
+    
+
     var fizmod = req.query.FIZMOD;
     var szallmod = req.query.SZALLMOD;
     var megjegyzes = req.query.MEGJEGYZES;
@@ -866,6 +909,8 @@ app.post('/rendeles_ellenorzes',async (req, res) => {
 app.post('/rendelesek',async (req, res) => {
     try{
     session_data = req.session;
+
+    
 
     var sql = 
     `
@@ -1336,6 +1381,12 @@ app.post('/top5',(req, res) => {
 //   4. JSON-ként visszaadja az eredményt
 async function runExecute(sql, req, ertekek = [], naplozas) {
     session_data = req.session;
+     if (!req.session || !req.session.ID_USER) {
+        return JSON.stringify({ 
+            message: "session expired",
+            rows: []
+        });
+    }
     var msg = "ok";
     var json_data, res1, jrn;
     
@@ -1398,6 +1449,8 @@ async function runQueries(sql, ertekek = []) {
         [res1] = await conn.execute(`select count(*) as db from (${sql.substring(0, poz)}) as tabla;`, szamlaloErtekek); 
         maxcount = res1[0].db | 0;  // Bitwise OR 0 = int konverálás
         
+        
+
         // === LÉPÉS 2: ADATOK LEKÉRÉSE (HA VAN) ===
         if (maxcount > 0) {
             [res2] = await conn.execute(sql, ertekek);  // A teljes SQL az ORDER BY-val
@@ -1409,7 +1462,9 @@ async function runQueries(sql, ertekek = []) {
     } finally {
         if (conn) conn.release();   
         json_data = JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": res2 });  // REST API
+        //console.log(json_data);
     }
+    
     return json_data;
 }
 
