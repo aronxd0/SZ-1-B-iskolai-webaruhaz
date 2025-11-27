@@ -29,13 +29,14 @@ app.use(express.static('public')); // A public/ mappa tartalmát direktben kiszo
 
 // === FELHASZNÁLÓI MUNKAMENET (SESSION) BEÁLLÍTÁSA ===
 // Session kezelés bejelentkezés után az ID_USER és egyéb adat tárolásához
+
 app.use(session({
     key: 'user_sid',
-    secret: Date.now().toString(),
-    resave: false,
-    saveUninitialized: false,
+    secret: Date.now().toString(),  // session azonosito (minden inditaskor mas legyen)
+    resave: false,                  // ne mentse ujra a session-t minden keresnel, ha nem valtozott semmi
+    saveUninitialized: false,       // csak akkor hoz letre sessiont a backend ha tenyleg rakunk bele valamit 
     cookie: {
-        maxAge: 300000, // 5 perc
+        maxAge: 300000,             // mennyi ideig maradjon bejelentkezve (5 perc) {ms}
         
     }
 }));
