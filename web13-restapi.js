@@ -82,10 +82,10 @@ module.exports = upload;
 // GET: /afa
 
 app.post('/afa',(req, res) => {
-    var sql = `
+        var sql = `
         SELECT AFA from webbolt_konstansok
     `;
-    sendJson_toFrontend(res, sql, []);
+    sendJson_toFrontend(res, sql, []); 
 });
 
 
@@ -1278,6 +1278,40 @@ try {
 
 //#endregion
 
+//#region statisztika
+
+app.post('/top5',(req, res) => {
+    
+    var ido = req.query.INTERVALLUM.toString() // 1-3-5
+    var idocucc = null;
+
+    switch(ido){
+        case '1': idocucc = `WHERE r.DATUM > (SELECT NOW() - INTERVAL 1 month)`; break;
+        case '3': idocucc = `WHERE r.DATUM > (SELECT NOW() - INTERVAL 3 month)`; break;
+        default: idocucc = ``; break; // teljes idősáv
+    }
+
+    var sql = `
+    SELECT 
+    SUM(t.MENNYISEG) AS DB,
+    t.FOTOLINK,
+    t.NEV
+    FROM webbolt_rendeles_tetelei t
+    JOIN webbolt_rendeles r 
+    ON r.ID_RENDELES = t.ID_RENDELES
+    ${idocucc}
+    GROUP BY t.NEV, t.FOTOLINK
+    ORDER BY DB DESC
+    LIMIT 5;
+    `
+    sendJson_toFrontend (res, sql, ertekek);
+});
+
+
+
+//#endregion
+
+
 //#region függvények
 
 // === SZERVER FÜGGVÉNYEK ===
@@ -1363,7 +1397,7 @@ async function runQueries(sql, ertekek = []) {
             [res2] = await conn.execute(sql, ertekek);  // A teljes SQL az ORDER BY-val
         }
     } catch (err) {
-        msg = err.sqlMessage;
+        msg = "Hiba történt";
         maxcount = -1;  // Hiba: -1
         console.error('Hiba:', err); 
     } finally {
