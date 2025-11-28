@@ -2,6 +2,8 @@
 
 $(document).ready(function() {
     
+    
+
     document.addEventListener('show.bs.offcanvas', () => {
         document.documentElement.classList.add('offcanvas-open');
     });
@@ -225,7 +227,7 @@ $(document).ready(function() {
         
     }, 30000);
 
-
+    FelaTetore();
 });
 
 
