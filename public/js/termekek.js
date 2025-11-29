@@ -282,7 +282,7 @@ async function Termek_Mutat(event, termek_id) {
           kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba</button>`;
 
   let bal = ` 
-                    <img class="img-fluid img-thumbnail rounded-4 mx-auto m-5 d-block kepp2" src="${fotolink}" alt="${nev}">
+                    <img class="img-fluid rounded-4 kepp2" src="${fotolink}" alt="${nev}">
                 
                 
     `;
@@ -557,7 +557,7 @@ function CARD_BETOLT(adatok) {
 
       ee = "nem-elerheto";
     } else {
-      el = `<p class=" d-flex justify-content-start align-items-center align-self-center"><span class="text-emerald-600 me-2 anton-regular">${element.AR.toLocaleString()} Ft</span><span class="text-xs">(Nettó)</span></p>`;
+      el = `<p class="w-full py-2 d-flex justify-content-start align-items-center align-self-center"><span class="text-emerald-600 me-2 anton-regular">${element.AR.toLocaleString()} Ft</span><span class="text-xs">(Nettó)</span></p>`;
       ee = "";
     } //Ár kiiras
 
@@ -593,7 +593,7 @@ function CARD_BETOLT(adatok) {
           transition-all duration-150 ease-in-out
           rounded-xl 
           kosar bi bi-plus  
-          mt-4 w-full p-2 
+          mt-auto w-full p-2 
           " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
     }
 
@@ -648,6 +648,7 @@ function CARD_BETOLT(adatok) {
         dark:hover:bg-gray-800 
         dark:hover:-outline-offset-1 
         dark:hover:outline-white/10 
+        d-flex flex-column 
         transition-hover duration-150 ease-in-out 
         " id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
 
@@ -662,9 +663,9 @@ function CARD_BETOLT(adatok) {
 
           <h3 class="mt-4 font-semibold text-md">${element.NEV}</h3>
           <p class="text-sm text-neutral-400">${element.KATEGORIA}</p>
-          <p class="absolute top-3 right-3 bg-neutral-800 px-3 py-1 rounded-lg text-sm">
-              ${el}
-          </p>
+          
+          ${el}
+          
 
           ${ks}
           <!--
