@@ -437,12 +437,22 @@ function UjTermek() {
 }
 //#region Statisztika
 
- window.addEventListener('resize', function(event) {
+// nem biztos hogy jó
+let voltNagy = window.innerWidth > 600;  
 
-    if(this.document.querySelector("#width") < 600){
-        DiagrammokSelect("kezdes")
+window.addEventListener("resize", () => {
+    let mostNagy = window.innerWidth > 600;
+
+    // Ha átlépted a 600px határt
+    if (mostNagy !== voltNagy && document.getElementById("NagyCIM") != null)  {
+
+        // console.log("Átlépted a 600px-t, újrarajzolom...");
+        DiagrammokSelect("kezdes");
+        
+        // állapot frissítése
+        voltNagy = mostNagy;
     }
-},true);
+});
 
 function Statisztikak() {
 
@@ -450,81 +460,13 @@ function Statisztikak() {
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     
     $("#welcome_section").fadeOut(300);
-
-    /*var html = `
-      <div class="text-center fs-1 mt-5">Statisztikák</div>
-
-     <div class="container p-3 mt-2">
-        <div class="row justify-content-center g-3">
-
-            <!-- BAL OLDAL (mobilon teljes szélesség, nagyobb képernyőn 4/12) -->
-            <div class="col-12 col-md-4 bg-gray-400 border border-dark rounded-4 p-2">
-                <div class="mt-2">
-
-                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
-                        <input type="radio" name="cucc" id="_01" onclick="Diagrammok(this)" checked>
-                        Darab vásárlás
-                    </label>
-
-                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
-                        <input type="radio" name="cucc" id="_02" onclick="Diagrammok(this)">
-                        Jövedelem
-                    </label>
-
-                    <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
-                        <input type="radio" name="cucc" id="_03" onclick="Diagrammok(this)">
-                        Népszerű áruk
-                    </label>
-
-                </div>
-            </div>
-
-            <!-- JOBB OLDAL (mobilon teljes szélesség, nagyobb képernyőn 8/12) -->
-            <div class="col-12 col-md-8 bg-slate-500 p-5 rounded-4 border border-dark">
-                
-                <div class="row mb-2">
-                    <div class="col-12 bg-danger text-center fs-3 py-2 rounded-2" id="cim"></div>
-                </div>
-
-                <div class="row g-2">
-                    <div class="col-12 col-lg-7 bg-warning d-flex justify-content-center py-5 rounded-2"> diaagram helye</div>
-                    <div class="col-12 col-lg-5 bg-info d-flex justify-content-center py-5 rounded-2">
-                        leirása
-                    </div>
-                </div>
-                <div class="row ">
-                    <div class="col-md-4">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
-                            <input type="radio" name="hatar" id="_03">
-                            1 hónap
-                        </label>
-                    </div>
-                      <div class="col-md-4">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
-                            <input type="radio" name="hatar" id="_03" >
-                            3 hónap
-                        </label>
-                    </div>
-                      <div class="col-md-4">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2">
-                            <input type="radio" name="hatar" id="_03" >
-                            1 év
-                        </label>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-            `;*/
             
         html = `
         <div class="container bg-white">
             <div class="row">
             <div class="col-md-2"></div>
                 <div class="top-select-box col-12 col-md-8 d-flex justify-content-center">
-                    <span class="chart-title">Top 5 termék eladás szerint</span>
+                    <span class="chart-title" id="NagyCIM">Top 5 termék eladás szerint</span>
                 </div>
                 
                 <div class="col-12 col-md-2 mt-10 d-flex justify-content-center">
@@ -553,20 +495,16 @@ function Statisztikak() {
 
 
 function drawChart(rang) {
-
-   console.log(rang.rows[1].FOTOLINK + " fotokink dsléal")
-
-    function shorten(name) {
+    function shorten(name) { // ha túl hosszú a neve, akkor lent ... lesz
       return name.length > 12 ? name.substring(0, 12) + "..." : name;
     }
-    var kep1 = rang.rows[1].FOTOLINK 
-  
+    // data előkészítés
      data = [
-      { name: rang.rows[3].NEV, y:parseInt( rang.rows[3].DB), img: rang.rows[3].FOTOLINK },
-      { name: rang.rows[1].NEV, y:parseInt( rang.rows[1].DB), img: kep1 },
-      { name: rang.rows[0].NEV, y:parseInt(rang.rows[0].DB), img: rang.rows[0].FOTOLINK },
-      { name: rang.rows[2].NEV, y:parseInt(rang.rows[2].DB), img: rang.rows[2].FOTOLINK },
-      { name: rang.rows[4].NEV, y:parseInt(rang.rows[4].DB), img: rang.rows[4].FOTOLINK }
+      { name: rang.rows[3].NEV, y:parseInt(rang.rows[3].DB)},
+      { name: rang.rows[1].NEV, y:parseInt(rang.rows[1].DB)},
+      { name: rang.rows[0].NEV, y:parseInt(rang.rows[0].DB)},
+      { name: rang.rows[2].NEV, y:parseInt(rang.rows[2].DB)},
+      { name: rang.rows[4].NEV, y:parseInt(rang.rows[4].DB)}
     ];
   
     // MOBIL nézet – 3 középső
@@ -577,11 +515,11 @@ function drawChart(rang) {
   
     // rangsor
     const sortedUnique = [...new Set(visibleData.map(d => d.y))].sort((a, b) => b - a);
-  
+  // rang meghatározása érték alapján
     function getRankByValue(v) {
       return sortedUnique.indexOf(v) + 1;
     }
-  
+   // a színek meghatározása rang alapján
     function getColorByRank(value) {
       const rank = getRankByValue(value);
       if (rank === 1) return "#FFD700";
@@ -589,7 +527,8 @@ function drawChart(rang) {
       if (rank === 3) return "#CD7F32";
       return "#4db8ff";
     }
-  
+
+    // diagram rajzolás
     $('#_Top5').highcharts({
   
       chart: {
@@ -598,13 +537,13 @@ function drawChart(rang) {
         backgroundColor: '#ffffff' /// majd itt lehet szinezni
       },
   
-      title: {
-    useHTML: true,
-    text: "<div style='height:6px; padding: 5px;'></div>",
-    margin: 180
-},
+      title: { // semmi nincs benne, de itt  kell lennie, hogy a korona jól pozícionálva legyen
+                useHTML: true, 
+                text: "<div style='height:6px; padding: 5px;'></div>",
+                margin: 180
+            },
   
-      xAxis: {
+      xAxis: { // ez a oszlop alatti rész, kiirja a neveket, és a darabszámokat / értéket
         categories: visibleData.map(d => shorten(d.name)),
         labels: {
           useHTML: true,
@@ -646,7 +585,7 @@ function drawChart(rang) {
   
       legend: { enabled: false },
   
-      plotOptions: {
+      plotOptions: { // a korona rész, meg a számok
         column: {
           borderWidth: 0,
           colorByPoint: true,
@@ -675,8 +614,9 @@ function drawChart(rang) {
                             style="width:90px; position:absolute; top:-70px; left:50%; transform:translateX(-50%);">
                     ` : ''}
 
-                        <img ${'src'}="${this.point.img}" style="height:100px;">
-
+                        <div id="${this.point.name}">
+                            
+                        </div>
 
                         <div style="
                             font-size:40px;
@@ -690,6 +630,12 @@ function drawChart(rang) {
                 </div>
 
                 `;
+                        // megnézzük a pont nevét, és ahová kell, oda berakjuk a képet is
+                        // a div id="${this.point.name}" lesz a kép helye
+                        // is Winner pedig az 1. helyezettre teszi a koronát, több is lehet első helyezett esetén töre is felteszi
+                        // az oszlop felé meg kiirjük a helyezést pl 1. 2. 3. ... 
+
+
             }
           }
         }
@@ -702,23 +648,31 @@ function drawChart(rang) {
 
   async function DiagrammokSelect(innen){
 
-    if(innen != "kezdes"){
-        var kivalasztott = innen.value; // 1 == 1 honap || 3 == 3 hónap  || 5  = összes hónap
-        var eredmeny = await ajax_post(`Top5?INTERVALLUM='${kivalasztott}'`,1);
-        drawChart(eredmeny);
+   let kivalasztott = "1";
+    // ha nem kezdes, akkor dropdownból jön
+    if (innen !== "kezdes") {
+        kivalasztott = innen.value;
     }
-    else{
-        //alert("kezdes")
-        var eredmeny = await ajax_post("Top5?INTERVALLUM='1'",1);
-        drawChart(eredmeny);
+    // adat lekérés
+    const eredmeny = await ajax_post(`Top5?INTERVALLUM='${kivalasztott}'`, 1);
+
+    // diagram rarajzolás
+    await drawChart(eredmeny);
+
+    // aktuális képernyőméret
+    const mobil = window.innerWidth < 600;
+
+    // 600px alatt: 3 darab (a highchart is a első 3-at mutatja)
+    // 600px fölött: az összes bejön
+    const lista = mobil ? eredmeny.rows.slice(0, 3) : eredmeny.rows;
+
+    // képek berakása
+    for (const item of lista) {
+        document.getElementById(item.NEV).innerHTML =
+            `<img src="${item.FOTOLINK}" style="height:100px;">`;
     }
-    
-  }
+}
   
-
-      
-
-
 
 //#endregion
 //#region SQl input 
