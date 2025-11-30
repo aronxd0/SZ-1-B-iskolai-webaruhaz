@@ -563,25 +563,48 @@ function drawChart(rang) {
   
       yAxis: { min: 0, visible: false },
   
-      tooltip: { // ráhuzom az egeret az oszlopra
-        useHTML: true,
-        outside: true,
-        borderWidth: 0,
-        backgroundColor: "rgba(124, 124, 124, 0.95)",
-        shadow: false,
-        padding: 8,
-  
-        positioner: function (width, height, point) {
-          const imgHeight = 70;
-          const offset = imgHeight + 60;
-  
-          return {
-            x: point.plotX + this.chart.plotLeft - width / 2,
-            y: point.plotY + this.chart.plotTop - height - offset 
-          };
-        }
-      },
-  
+     tooltip: { // ez akkor jön elő, ha ráviszed az oszlopra az egeret
+    useHTML: true,
+    outside: true,
+    borderWidth: 0,
+    backgroundColor: "rgba(124,124,124,0.95)",
+    shadow: false,
+    padding: 8,
+
+    positioner: function (tooltipWidth, tooltipHeight, point) {
+
+        // azért ilyen bonyolult mert meg kellett nézni hogy hova fér el a tooltip
+        // és aszerint pozícionálni
+
+        let chart = this.chart;
+        let chartWidth = chart.chartWidth;
+
+        const offset = 160;  // Egyivel feljebb van a tooltip mint az oszlop teteje
+
+        let x = point.plotX + chart.plotLeft - (tooltipWidth / 2);       
+        //point.plotX: a konkrét oszlop vízszintes pozíciója
+        //chart.plotLeft: mennyivel tolta arrébb a chart a bal margó miat
+        //mínusz (tooltipWidth / 2): hogy középre rakja a tooltipet a bar fölött
+
+        let y = point.plotY + chart.plotTop - tooltipHeight - offset;
+        //point.plotY: az oszlop csúcsa, ahol a tooltipnek kapcsolódnia kell
+        //chart.plotTop: a felső margó
+        //tooltipHeight: hogy ne a bar tetejére rajzolódjon rá, hanem fölé
+        //offset: megyivel legyen az oszlop felett
+
+
+
+
+        // Oldalsó keretek
+        if (x < 0) x = 0;
+        if (x + tooltipWidth > chartWidth) x = chartWidth - tooltipWidth;
+
+        // HA FELFELÉ NEM FÉR EL → RAKD LEFELÉ
+
+        return { x, y };
+    }
+},
+
   
       legend: { enabled: false },
   
