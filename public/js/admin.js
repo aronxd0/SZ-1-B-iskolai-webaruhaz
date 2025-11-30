@@ -570,32 +570,32 @@ function drawChart(rang) {
             backgroundColor: "rgba(124,124,124,0.95)",
             shadow: false,
             padding: 8,
-            formatter: function () {
-        return `
-         <div style="
-    width: 180px; 
-    padding: 10px; 
-    text-align: center; 
-    white-space: normal; 
-    overflow-wrap: break-word;
-">
-    <div style="
-        font-size:14px;
-        font-weight:bold;
-        margin-bottom:5px;
-    ">
-        ${this.point.name}
-    </div>
+            formatter: function () { // ez  a tooltip tartalma azért van így megcsinálva mert html kell bele és eltörhető legyen a szöveg
+                                return `
+                                <div style="
+                            width: 180px; 
+                            padding: 10px; 
+                            text-align: center; 
+                            white-space: normal; 
+                            overflow-wrap: break-word;
+                        ">
+                            <div style="
+                                font-size:14px;
+                                font-weight:bold;
+                                margin-bottom:5px;
+                            ">
+                                ${this.point.name}
+                            </div>
 
-    <div style="font-size:12px; color:#f0f0f0;">
-        ${this.point.y} db
-    </div>
-</div>
+                            <div style="font-size:12px; color:#f0f0f0;">
+                                ${this.point.y} db
+                            </div>
+                        </div>
 
-        `;
-    },
+                                `;
+     },
 
-            positioner: function (tooltipWidth, tooltipHeight, point) {
+            positioner: function (tooltipWidth, tooltipHeight, point) { // ez a tooltip pozíciója 
 
                 // azért ilyen bonyolult mert meg kellett nézni hogy hova fér el a tooltip
                 // és aszerint pozícionálni
