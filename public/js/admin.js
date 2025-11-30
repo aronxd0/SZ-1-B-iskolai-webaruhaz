@@ -564,45 +564,69 @@ function drawChart(rang) {
       yAxis: { min: 0, visible: false },
   
      tooltip: { // ez akkor jön elő, ha ráviszed az oszlopra az egeret
-    useHTML: true,
-    outside: true,
-    borderWidth: 0,
-    backgroundColor: "rgba(124,124,124,0.95)",
-    shadow: false,
-    padding: 8,
+            useHTML: true,
+            outside: true,
+            borderWidth: 0,
+            backgroundColor: "rgba(124,124,124,0.95)",
+            shadow: false,
+            padding: 8,
+            formatter: function () {
+        return `
+         <div style="
+    width: 180px; 
+    padding: 10px; 
+    text-align: center; 
+    white-space: normal; 
+    overflow-wrap: break-word;
+">
+    <div style="
+        font-size:14px;
+        font-weight:bold;
+        margin-bottom:5px;
+    ">
+        ${this.point.name}
+    </div>
 
-    positioner: function (tooltipWidth, tooltipHeight, point) {
+    <div style="font-size:12px; color:#f0f0f0;">
+        ${this.point.y} db
+    </div>
+</div>
 
-        // azért ilyen bonyolult mert meg kellett nézni hogy hova fér el a tooltip
-        // és aszerint pozícionálni
+        `;
+    },
 
-        let chart = this.chart;
-        let chartWidth = chart.chartWidth;
+            positioner: function (tooltipWidth, tooltipHeight, point) {
 
-        const offset = 160;  // Egyivel feljebb van a tooltip mint az oszlop teteje
+                // azért ilyen bonyolult mert meg kellett nézni hogy hova fér el a tooltip
+                // és aszerint pozícionálni
 
-        let x = point.plotX + chart.plotLeft - (tooltipWidth / 2);       
-        //point.plotX: a konkrét oszlop vízszintes pozíciója
-        //chart.plotLeft: mennyivel tolta arrébb a chart a bal margó miat
-        //mínusz (tooltipWidth / 2): hogy középre rakja a tooltipet a bar fölött
+                let chart = this.chart;
+                let chartWidth = chart.chartWidth;
 
-        let y = point.plotY + chart.plotTop - tooltipHeight - offset;
-        //point.plotY: az oszlop csúcsa, ahol a tooltipnek kapcsolódnia kell
-        //chart.plotTop: a felső margó
-        //tooltipHeight: hogy ne a bar tetejére rajzolódjon rá, hanem fölé
-        //offset: megyivel legyen az oszlop felett
+                const offset = 160;  // Egyivel feljebb van a tooltip mint az oszlop teteje
+
+                let x = point.plotX + chart.plotLeft - (tooltipWidth / 2);       
+                //point.plotX: a konkrét oszlop vízszintes pozíciója
+                //chart.plotLeft: mennyivel tolta arrébb a chart a bal margó miat
+                //mínusz (tooltipWidth / 2): hogy középre rakja a tooltipet a bar fölött
+
+                let y = point.plotY + chart.plotTop - tooltipHeight - offset;
+                //point.plotY: az oszlop csúcsa, ahol a tooltipnek kapcsolódnia kell
+                //chart.plotTop: a felső margó
+                //tooltipHeight: hogy ne a bar tetejére rajzolódjon rá, hanem fölé
+                //offset: megyivel legyen az oszlop felett
 
 
 
 
-        // Oldalsó keretek
-        if (x < 0) x = 0;
-        if (x + tooltipWidth > chartWidth) x = chartWidth - tooltipWidth;
+                // Oldalsó keretek
+                if (x < 0) x = 0;
+                if (x + tooltipWidth > chartWidth) x = chartWidth - tooltipWidth;
 
-        // HA FELFELÉ NEM FÉR EL → RAKD LEFELÉ
+                // HA FELFELÉ NEM FÉR EL → RAKD LEFELÉ
 
-        return { x, y };
-    }
+                return { x, y };
+            }
 },
 
   
