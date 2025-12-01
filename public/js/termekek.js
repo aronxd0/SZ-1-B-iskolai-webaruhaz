@@ -590,7 +590,7 @@ function CARD_BETOLT(adatok) {
           hover:text-zinc-200 
           dark:bg-zinc-800 
           dark:hover:bg-zinc-700 
-          transition-all duration-150 ease-in-out
+          transition-all duration-150 ease-in-out 
           rounded-xl 
           kosar bi bi-plus  
            w-full p-2 
@@ -607,7 +607,7 @@ function CARD_BETOLT(adatok) {
         hover:text-blue-400 
         dark:text-zinc-200 
         dark:hover:text-blue-400 
-        transition-all duration-150 ease-in-out
+        transition-all duration-150 ease-in-out 
         
         me-1" aria-label="modositas" onclick='Termek_Edit(event, ${element.ID_TERMEK}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
      
@@ -619,7 +619,7 @@ function CARD_BETOLT(adatok) {
         hover:text-red-700 
         dark:text-zinc-200 
         dark:hover:text-red-700 
-        transition-all duration-150 ease-in-out
+        transition-all duration-150 ease-in-out 
         " aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
       
       gg += "";
