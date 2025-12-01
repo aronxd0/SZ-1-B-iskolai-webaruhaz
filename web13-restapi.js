@@ -1317,21 +1317,21 @@ app.post('/top5',(req, res) => {
     }
 
     var sql = `
-SELECT 
-    SUM(t.MENNYISEG) AS DB,
-    CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
-    webbolt_termekek.NEV
-FROM webbolt_rendeles_tetelei t
-INNER JOIN webbolt_rendeles r 
-    ON r.ID_RENDELES = t.ID_RENDELES
-INNER JOIN webbolt_termekek 
-    ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
-LEFT JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
-WHERE t.ID_TERMEK IS NOT NULL
-${idocucc}
-GROUP BY t.ID_TERMEK
-ORDER BY DB DESC
-LIMIT 5;
+        SELECT 
+            SUM(t.MENNYISEG) AS DB,
+            CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
+            webbolt_termekek.NEV
+        FROM webbolt_rendeles_tetelei t
+        INNER JOIN webbolt_rendeles r 
+            ON r.ID_RENDELES = t.ID_RENDELES
+        INNER JOIN webbolt_termekek 
+            ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
+        LEFT JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
+        WHERE t.ID_TERMEK IS NOT NULL
+        ${idocucc}
+        GROUP BY t.ID_TERMEK
+        ORDER BY DB DESC
+        LIMIT 5;
     `
     sendJson_toFrontend (res, sql, []);
 });

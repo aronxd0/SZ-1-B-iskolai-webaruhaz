@@ -703,7 +703,20 @@ function drawChart(rang) {
     // adat lekérés
     const eredmeny = await ajax_post(`Top5?INTERVALLUM='${kivalasztott}'`, 1);
 
+    if (eredmeny.rows.length == 0) {
+        $('#_Top5').html("<div class='col-12 text-xl text-center p-3'>Nincs elég adat a diagram megjelenítéséhez.</div>");
+        return;
+    }
+    if(eredmeny.rows.length < 5){
+        var db = 0;
+        while(eredmeny.rows.length < 5){
+            db++;
+            eredmeny.rows.push({NEV: "Nincs termék" + db , DB: 0, FOTOLINK: "img/Noimage.png"});
+        }
+    }
+
     // diagram rarajzolás
+
     await drawChart(eredmeny);
 
     // aktuális képernyőméret
