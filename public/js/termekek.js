@@ -282,7 +282,7 @@ async function Termek_Mutat(event, termek_id) {
           kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba</button>`;
 
   let bal = ` 
-                    <img class="img-fluid img-thumbnail rounded-4 mx-auto m-5 d-block kepp2" src="${fotolink}" alt="${nev}">
+                    <img class="img-fluid rounded-4 kepp2" src="${fotolink}" alt="${nev}">
                 
                 
     `;
@@ -557,7 +557,7 @@ function CARD_BETOLT(adatok) {
 
       ee = "nem-elerheto";
     } else {
-      el = `<p class="p-3 d-flex flex-column justify-content-center align-items-center align-self-center"><span class="text-2xl text-emerald-600 me-2 anton-regular">${element.AR.toLocaleString()} Ft</span><span class="text-sm">(Nettó ár)</span></p>`;
+      el = `<p class="w-full py-2 d-flex justify-content-start align-items-center align-self-center"><span class="text-emerald-600 me-2 anton-regular">${element.AR.toLocaleString()} Ft</span><span class="text-xs">(Nettó)</span></p>`;
       ee = "";
     } //Ár kiiras
 
@@ -583,49 +583,109 @@ function CARD_BETOLT(adatok) {
       ks = "";
     } else {
       ks = `<button 
-        class="btn btn-lg 
-          bg-emerald-800 
+        class="btn 
+          bg-gray-900 
           text-zinc-200 
-          hover:bg-emerald-700 
+          hover:bg-gray-700 
           hover:text-zinc-200 
-          hover:shadow-lg 
-          hover:shadow-emerald-700/70 
+          dark:bg-zinc-800 
+          dark:hover:bg-zinc-700 
           transition-all duration-150 ease-in-out
-          rounded-3xl 
-          kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
+          rounded-xl 
+          kosar bi bi-plus  
+           w-full p-2 
+          " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
     }
 
 
     if (localStorage.getItem("loggedIn") === "1" && (webbolt_admin || admin)) {
-      gg = "<div class='row d-flex justify-content-center p-3'>";
+      gg = "";
       gg += `<button type="button" 
-      class="btn btn-lg 
+      class="btn  
         bg-transparent 
         text-slate-900 
         hover:text-blue-400 
         dark:text-zinc-200 
         dark:hover:text-blue-400 
         transition-all duration-150 ease-in-out
-        w-auto 
-        me-2" aria-label="modositas" onclick='Termek_Edit(event, ${element.ID_TERMEK}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
+        
+        me-1" aria-label="modositas" onclick='Termek_Edit(event, ${element.ID_TERMEK}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
      
      
       gg += `<button type="button" 
-      class="btn btn-lg 
+      class="btn  
         bg-transparent 
         text-slate-900 
         hover:text-red-700 
         dark:text-zinc-200 
         dark:hover:text-red-700 
         transition-all duration-150 ease-in-out
-        w-auto" aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
+        " aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
       
-      gg += "</div>";
+      gg += "";
     } else gg = "";
 
     //var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
 
     s += `
+
+      <div class="col-12 col-sm-6 col-lg-4 col-xxl-3 p-3 d-flex justify-content-center  ">
+        <div 
+        class="
+        rounded-xl 
+        p-4 
+        w-72 
+        shadow-lg
+        
+        bg-zinc-100 
+        hover:bg-gray-200 
+        hover:outline outline-black/10 
+        hover:cursor-pointer 
+        dark:!border 
+        dark:!border-zinc-200/20 
+        dark:bg-slate-950 
+        dark:text-zinc-200 
+        dark:hover:bg-gray-800 
+        dark:hover:-outline-offset-1 
+        dark:hover:outline-white/10 
+        d-flex flex-column 
+        transition-hover duration-150 ease-in-out 
+        " id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
+
+          <div class="relative">
+            <img 
+              src="${element.FOTOLINK}"
+              class="rounded-lg w-full h-60 object-cover"
+            >
+            
+            
+          </div>
+
+          <h3 class="mt-4 font-semibold text-md">${element.NEV}</h3>
+          <p class="text-sm text-neutral-400">${element.KATEGORIA}</p>
+          
+          ${el}
+          
+          <div class="d-flex align-items-center mt-auto">
+          ${ks} ${gg}
+          </div>
+          <!--
+          <button
+            class="w-full mt-4 bg-neutral-800 hover:bg-neutral-700 transition rounded-lg py-3 text-center"
+          >
+            Add to bag
+          </button>
+          -->
+
+        </div>
+
+      </div>
+
+
+
+
+
+      <!--
          <div class="col-12 col-md-6 col-xxl-4">
             <div 
             class="card 
@@ -652,6 +712,7 @@ function CARD_BETOLT(adatok) {
                 </div>
             </div>
          </div>
+         -->
          `; // card feltőltése "s" sztingbe ami kébbőb be lesz szurva a html-be
   }
 

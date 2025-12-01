@@ -4,7 +4,7 @@ const mysql     = require('mysql2/promise');  // MySQL szinkron/aszinkron kérde
 const express   = require('express');         // Express webszerver keretrendszer
 const session   = require('express-session'); // Felhasználói munkamenet kezeléshez
 const { stringify } = require('querystring');
-const serverBoot = Date.now();
+
 
 // === KONFIGURÁCIÓS FÁJLOK ===
 const path = require('path');
@@ -29,6 +29,8 @@ app.use(express.static('public')); // A public/ mappa tartalmát direktben kiszo
 
 // === FELHASZNÁLÓI MUNKAMENET (SESSION) BEÁLLÍTÁSA ===
 // Session kezelés bejelentkezés után az ID_USER és egyéb adat tárolásához
+
+const serverBoot = Date.now();
 
 app.use(session({
     key: 'user_sid',
