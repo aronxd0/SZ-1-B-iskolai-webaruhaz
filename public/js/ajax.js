@@ -29,7 +29,7 @@ function ajax_post(urlsor, tipus) {
         resolve(data); // promise megoldva, a “return” a sikeres aszinkron hivasnal.
       },
       error: function(jqXHR) {
-        üzen(jqXHR.responseText, "danger");
+        üzen(JSON.parse(jqXHR.responseText).message, "danger");
         reject(jqXHR.responseText); // promise elutasitva
       },
       complete: function() {

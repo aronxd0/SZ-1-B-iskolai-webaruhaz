@@ -1432,7 +1432,7 @@ async function runQueries(sql, ertekek = []) {
             [res2] = await conn.execute(sql, ertekek);  // A teljes SQL az ORDER BY-val
         }
     } catch (err) {
-        msg = "Hiba történt";
+        msg = err.sqlMessage;
         maxcount = -1;  // Hiba: -1
         console.error('Hiba:', err); 
     } finally {

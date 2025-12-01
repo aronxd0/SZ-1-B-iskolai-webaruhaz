@@ -861,7 +861,7 @@ async function KER_CLICk(){
                         <i class="bi bi-exclamation-triangle-fill"></i>
                         <strong class="font-bold">Hiba: </strong>
                         &nbsp;
-                        <span> ${errmsg.message}</span>
+                        <span> ${errmsg.error}</span>
                         
                     </div> `
 
