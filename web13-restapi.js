@@ -679,31 +679,18 @@ app.post('/kosarteteldb',(req, res) => {
         return res.json({ message: "session expired", maxcount: 0, rows: [] });
     }
 
-    try {
-        
-        
-        
-        var sql = `
-            SELECT SUM(webbolt_kosar_tetelei.MENNYISEG) as kdb
-            FROM webbolt_kosar_tetelei
-            INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
-            INNER JOIN users ON webbolt_kosar.ID_USER = users.ID_USER
-            WHERE users.ID_USER = ?
-        `;
-        let ertekek = [session_data.ID_USER];
 
-        sendJson_toFrontend(res, sql, ertekek);
+    var sql = `
+        SELECT SUM(webbolt_kosar_tetelei.MENNYISEG) as kdb
+        FROM webbolt_kosar_tetelei
+        INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
+        INNER JOIN users ON webbolt_kosar.ID_USER = users.ID_USER
+        WHERE users.ID_USER = ?
+    `;
+    let ertekek = [session_data.ID_USER];
 
-    }
-    catch (err) {
-        console.error("/kosarteteldb HIBA:", err);
-        res.status(500).json({
-            message: "Hiba a kosár tétel darabszám lekérésekor.",
-            error: err.message
-        });
-    }
-    
-    
+    sendJson_toFrontend(res, sql, ertekek);
+
 });
 
 // === KOSÁR TÉTELEK LEKÉRÉSE ===
@@ -718,44 +705,32 @@ app.post('/tetelek',(req, res) => {
         res.set(header1, header2);
         // Visszaadhat egy üres kosarat, vagy egy jelzést, hogy nincs session
         return res.json({ message: "session expired", maxcount: 0, rows: [] });
+    }        
+ 
+    var termekid  = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK)  :   -1)
+
+    // Feltételes SELECT: ha van konkrét termék ID, kevesebb oszlop
+    let selectFields = termekid > (-1) 
+        ? "webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR" 
+        : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
+
+    let whereClause = `WHERE webbolt_kosar.ID_USER = ?`;
+    let ertekek = [session_data.ID_USER];
+
+    if (termekid > (-1)) {
+        whereClause += ` AND webbolt_kosar_tetelei.ID_TERMEK = ?`;
+        ertekek.push(termekid);
     }
-    try{
-        
 
-
-        
-        var termekid  = (req.query.ID_TERMEK? parseInt(req.query.ID_TERMEK)  :   -1)
-
-        // Feltételes SELECT: ha van konkrét termék ID, kevesebb oszlop
-        let selectFields = termekid > (-1) 
-            ? "webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR" 
-            : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
-
-        let whereClause = `WHERE webbolt_kosar.ID_USER = ?`;
-        let ertekek = [session_data.ID_USER];
-
-        if (termekid > (-1)) {
-            whereClause += ` AND webbolt_kosar_tetelei.ID_TERMEK = ?`;
-            ertekek.push(termekid);
-        }
-
-        var sql = `
-            SELECT ${selectFields} 
-            FROM webbolt_kosar_tetelei
-            INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
-            INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
-            left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
-            ${whereClause}
-        `;
-        sendJson_toFrontend(res, sql, ertekek);
-    }
-    catch (err) {
-        console.error("/tetelek HIBA:", err);
-        res.status(500).json({
-            message: "Szerver hiba a kosár tételek lekérésekor.",
-            error: err.message
-        });
-    }
+    var sql = `
+        SELECT ${selectFields} 
+        FROM webbolt_kosar_tetelei
+        INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
+        INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
+        left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
+        ${whereClause}
+    `;
+    sendJson_toFrontend(res, sql, ertekek);
 });
 
 
@@ -1183,32 +1158,25 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 // Paraméter: ID_TERMEK (int)
 // Működés: egy konkrét termék összes adatát visszaadja (beleértve a kategóriát és képet)
 app.post('/termek_adatok',async (req, res) => {
-    try{
-        let termekid = parseInt(req.query.ID_TERMEK);
 
-        let sql = `
-            SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, 
-                webbolt_termekek.AR, webbolt_termekek.MENNYISEG, 
-                CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
-                CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILENAME END AS FOTONEV, 
-                webbolt_termekek.MEEGYS, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
-            FROM webbolt_termekek 
-            INNER JOIN webbolt_kategoriak ON webbolt_termekek.ID_KATEGORIA = webbolt_kategoriak.ID_KATEGORIA
-            left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
-            WHERE webbolt_termekek.ID_TERMEK = ?
-        `;
-        let ertekek = [termekid];
+    let termekid = parseInt(req.query.ID_TERMEK);
 
-        sendJson_toFrontend(res, sql, ertekek);
+    let sql = `
+        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, 
+            webbolt_termekek.AR, webbolt_termekek.MENNYISEG, 
+            CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
+            CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILENAME END AS FOTONEV, 
+            webbolt_termekek.MEEGYS, webbolt_termekek.LEIRAS, webbolt_termekek.AKTIV, webbolt_kategoriak.KATEGORIA
+        FROM webbolt_termekek 
+        INNER JOIN webbolt_kategoriak ON webbolt_termekek.ID_KATEGORIA = webbolt_kategoriak.ID_KATEGORIA
+        left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
+        WHERE webbolt_termekek.ID_TERMEK = ?
+    `;
+    let ertekek = [termekid];
 
-    }
-    catch (err) {
-        console.error("/termek_adatok HIBA:", err);
-        res.status(500).json({
-            message: "Hiba a termék adatainak lekérésekor.",
-            error: err.message
-        });
-    }
+    sendJson_toFrontend(res, sql, ertekek);
+
+    
 });
 
 // === TERMÉK TÖRLÉSE (ADMIN) ===
@@ -1333,29 +1301,35 @@ try {
 
 //#region statisztika
 
+// === TOP 5 lekérdezése ===
+
 app.post('/top5',(req, res) => {
     
     var ido = req.query.INTERVALLUM.toString() // 1-3-5
     var idocucc = null;
 
     switch(ido){
-        case '1': idocucc = `WHERE r.DATUM > (SELECT NOW() - INTERVAL 1 month)`; break;
-        case '3': idocucc = `WHERE r.DATUM > (SELECT NOW() - INTERVAL 3 month)`; break;
+        case '1': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 1 month)`; break;
+        case '3': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 3 month)`; break;
         default: idocucc = ``; break; // teljes idősáv
     }
 
     var sql = `
-    SELECT 
+SELECT 
     SUM(t.MENNYISEG) AS DB,
-    t.FOTOLINK,
-    t.NEV
-    FROM webbolt_rendeles_tetelei t
-    JOIN webbolt_rendeles r 
+    CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
+    webbolt_termekek.NEV
+FROM webbolt_rendeles_tetelei t
+INNER JOIN webbolt_rendeles r 
     ON r.ID_RENDELES = t.ID_RENDELES
-    ${idocucc}
-    GROUP BY t.ID_TERMEK    
-    ORDER BY DB DESC
-    LIMIT 5;
+INNER JOIN webbolt_termekek 
+    ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
+LEFT JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
+WHERE t.ID_TERMEK IS NOT NULL
+${idocucc}
+GROUP BY t.ID_TERMEK
+ORDER BY DB DESC
+LIMIT 5;
     `
     sendJson_toFrontend (res, sql, []);
 });
