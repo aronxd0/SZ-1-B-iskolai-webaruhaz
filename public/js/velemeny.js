@@ -81,7 +81,7 @@ async function SajatVelemenyekMutat(id_termek) {
                                     dark:text-zinc-200 
                                     dark:hover:text-red-700 
                                     transition-all duration-150 ease-in-out 
-                                    dropdown-toggle
+                                    dropdown-toggle velemenykuka
                                     " 
 
                                 aria-label="teteltorol" data-bs-toggle="dropdown" style="border:none;"><i class="bi bi-trash"></i></button>
@@ -94,7 +94,7 @@ async function SajatVelemenyekMutat(id_termek) {
                             <li><span class="dropdown-item-text text-start text-slate-900 dark:text-zinc-200">Biztos vagy benne?</span></li>
                             <li><span class="dropdown-item-text text-start text-slate-900 dark:text-zinc-200">A vélemény örökre el fog veszni (ami hosszú idő)</span></li>
                             <li class="d-flex justify-content-end gap-2 p-3">
-                                 <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200 bi bi-x-lg" onclick="document.querySelector('#myToggle').click()"> Mégse</button>
+                                 <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200 bi bi-x-lg" > Mégse</button>
                                  <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-red-500 dark:hover:bg-slate-900 dark:hover:text-red-500 bi bi-trash" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})' > Törlés</button>                                                                                                                                        
                                 
                                 <!--<button class="btn btn-danger bi bi-trash" type="button" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> Törlés</button>-->
