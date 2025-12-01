@@ -593,36 +593,36 @@ function CARD_BETOLT(adatok) {
           transition-all duration-150 ease-in-out
           rounded-xl 
           kosar bi bi-plus  
-          mt-auto w-full p-2 
+           w-full p-2 
           " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
     }
 
 
     if (localStorage.getItem("loggedIn") === "1" && (webbolt_admin || admin)) {
-      gg = "<div class='row d-flex justify-content-center p-3'>";
+      gg = "";
       gg += `<button type="button" 
-      class="btn btn-lg 
+      class="btn  
         bg-transparent 
         text-slate-900 
         hover:text-blue-400 
         dark:text-zinc-200 
         dark:hover:text-blue-400 
         transition-all duration-150 ease-in-out
-        w-auto 
-        me-2" aria-label="modositas" onclick='Termek_Edit(event, ${element.ID_TERMEK}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
+        
+        me-1" aria-label="modositas" onclick='Termek_Edit(event, ${element.ID_TERMEK}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
      
      
       gg += `<button type="button" 
-      class="btn btn-lg 
+      class="btn  
         bg-transparent 
         text-slate-900 
         hover:text-red-700 
         dark:text-zinc-200 
         dark:hover:text-red-700 
         transition-all duration-150 ease-in-out
-        w-auto" aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
+        " aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
       
-      gg += "</div>";
+      gg += "";
     } else gg = "";
 
     //var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
@@ -657,7 +657,7 @@ function CARD_BETOLT(adatok) {
               src="${element.FOTOLINK}"
               class="rounded-lg w-full h-60 object-cover"
             >
-
+            
             
           </div>
 
@@ -666,8 +666,9 @@ function CARD_BETOLT(adatok) {
           
           ${el}
           
-
-          ${ks}
+          <div class="d-flex align-items-center mt-auto">
+          ${ks} ${gg}
+          </div>
           <!--
           <button
             class="w-full mt-4 bg-neutral-800 hover:bg-neutral-700 transition rounded-lg py-3 text-center"
