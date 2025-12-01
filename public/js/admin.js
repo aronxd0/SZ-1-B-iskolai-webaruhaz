@@ -848,7 +848,7 @@ async function KER_CLICk(){
         }
     }
     catch(e){
-    
+        let errmsg = JSON.parse(e);
         var sad = ` 
                 <div role="alert" 
                     class="
@@ -861,7 +861,8 @@ async function KER_CLICk(){
                         <i class="bi bi-exclamation-triangle-fill"></i>
                         <strong class="font-bold">Hiba: </strong>
                         &nbsp;
-                        <span> ${e}</span>
+                        <span> ${errmsg.message}</span>
+                        
                     </div> `
 
         document.getElementById("SQL_hiba").innerHTML =sad ;
