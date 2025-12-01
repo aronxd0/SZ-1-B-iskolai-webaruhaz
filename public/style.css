@@ -71,8 +71,8 @@ html.dark .welcome {
 }
 
 .kepp2 {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   object-fit: contain;
 }
 
@@ -102,7 +102,7 @@ html.dark .welcome {
 
 
 .offcanvas-backdrop {
-  transition: backdrop-filter 0.4s ease, background-color 0.4s ease, opacity 0.4s ease;
+  transition: backdrop-filter 0.8s ease, background-color 0.8s ease, opacity 0.8s ease;
   backdrop-filter: blur(0px);
   background-color: rgba(0, 0, 0, 0);
   opacity: 0;
