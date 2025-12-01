@@ -466,7 +466,7 @@ function Statisztikak() {
             <div class="row">
             <div class="col-md-2"></div>
                 <div class="top-select-box col-12 col-md-8 d-flex justify-content-center">
-                    <span class="chart-title" id="NagyCIM">Top 5 termék eladás szerint</span>
+                    <span class="chart-title" id="NagyCIM">Top 5 termék</span>
                 </div>
                 
                 <div class="col-12 col-md-2 mt-10 d-flex justify-content-center">
@@ -794,7 +794,7 @@ function SQLinput() {
 
 async function KER_CLICk(){
     try{
-        if(sql_input_area.value.replaceAll(/\n/g, " ").trim() =="") throw "Üres a lekérdezés mező";
+        if(sql_input_area.value.replaceAll(/\n/g, " ").trim() =="") throw '{"error" : "Üres a lekérdezés mező"}';
 
          
         var adat = await ajax_post(`html_sql?SQL=${sql_input_area.value.replaceAll(/\n/g, " ")}`,1)    
@@ -848,6 +848,7 @@ async function KER_CLICk(){
         }
     }
     catch(e){
+        
         let errmsg = JSON.parse(e);
         var sad = ` 
                 <div role="alert" 

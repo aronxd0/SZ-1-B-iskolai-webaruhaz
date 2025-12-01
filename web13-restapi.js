@@ -519,7 +519,7 @@ app.post('/logout', (req, res) => {
     // A session megsemmisítése
     session_data.destroy(function(err) {
         if (err) {
-            console.error('Session destroy failed', err);
+            console.error('Session destroy failed');
             res.status(500).json({ message: 'Session destroy failed' });
             return;
         }
@@ -626,7 +626,7 @@ app.post('/kosar_add', async (req, res) => {
         res.end();
 
     } catch (err) {
-        console.error("kosar_add HIBA:", err);
+        console.error("kosar_add HIBA");
         res.status(500).json({
             message: "Hiba a kosár tétel hozzáadásakor.",
             error: err.message
@@ -659,7 +659,7 @@ app.post('/kosar_del',async (req, res) => {
         res.end();
     }
     catch (err) {
-        console.error("kosar_del HIBA:", err);
+        console.error("kosar_del HIBA");
         res.status(500).json({
             message: "Hiba a kosár tétel törlésekor.",
             error: err.message
@@ -840,7 +840,7 @@ app.post('/rendeles',async (req, res) => {
     res.send(eredmeny);
     res.end();
     } catch (err) {
-        console.error("/rendeles HIBA:", err);
+        console.error("/rendeles HIBA");
         res.status(500).json({
             message: "Hiba a rendelés létrehozásakor.",
             error: err.message
@@ -872,7 +872,7 @@ app.post('/rendeles_ellenorzes',async (req, res) => {
     res.send(eredmeny);
     res.end();
     } catch (err) {
-        console.error("/rendeles_ellenorzes HIBA:", err);
+        console.error("/rendeles_ellenorzes HIBA");
         res.status(500).json({
             message: "Hiba a rendelés ellenőrzésekor.",
             error: err.message
@@ -906,7 +906,7 @@ app.post('/rendelesek',async (req, res) => {
     res.send(eredmeny);
     res.end();
     } catch (err) {
-        console.error("/rendelesek HIBA:", err);
+        console.error("/rendelesek HIBA");
         res.status(500).json({
             message: "Hiba a rendelések lekérésekor.",
             error: err.message
@@ -935,7 +935,7 @@ app.post('/rendelesek_tetelei',async (req, res) => {
     res.send(eredmeny);
     res.end();
     } catch (err) {
-        console.error("/rendelesek_tetelei HIBA:", err);
+        console.error("/rendelesek_tetelei HIBA");
         res.status(500).json({
             message: "Hiba a rendelések lekérésekor.",
             error: err.message
@@ -1198,7 +1198,7 @@ app.post('/termek_del',async (req, res) => {
 
     }
     catch (err) {
-        console.error("/termek_del HIBA:", err);
+        console.error("/termek_del HIBA");
         res.status(500).json({
             message: "Hiba a termék törlésekor.",
             error: err.message
@@ -1289,7 +1289,7 @@ try {
 
     } 
     catch (err) {
-        console.error("/html_sql HIBA:", err);
+        console.error("/html_sql HIBA");
         res.status(500).json({
             message: "Szörnyű hiba az sql parancs végrehajtásakor.",
             error: err.message
