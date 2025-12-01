@@ -38,7 +38,7 @@ app.use(session({
     resave: false,                  // ne mentse ujra a session-t minden keresnel, ha nem valtozott semmi
     saveUninitialized: false,       // csak akkor hoz letre sessiont a backend ha tenyleg rakunk bele valamit 
     cookie: {
-        maxAge: 300000,             // mennyi ideig maradjon bejelentkezve (5 perc) {ms}
+        maxAge: 2700000,             // mennyi ideig maradjon bejelentkezve (45 perc) {ms}
         
     }
 }));
