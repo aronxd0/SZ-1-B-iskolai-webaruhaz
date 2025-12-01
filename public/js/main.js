@@ -249,7 +249,7 @@ async function KERESOBAR() {
     sqleddig = elküld2;
     // ha megváltozott a lekérdezés akkor az oldal újra 1-re állitása
 
-    elküld2 += `&offset=${(Joldal-1)*51}`
+    elküld2 += `&offset=${(Joldal-1)}`
     console.log("elküld2: "+ elküld2);
     try {
         var adatok = await ajax_post(elküld2 , 1);
@@ -277,7 +277,7 @@ async function KERESOBAR() {
 //endregion
 //#region OLdelkezelés
 function OLDALFELTOTL(darab){
-    oldalszam = Math.ceil( darab /51); // oldalszám kiszámolása
+    oldalszam = Math.ceil( darab /52); // oldalszám kiszámolása
     if(oldalszam == 0) oldalszam = 1; // ha 0 akkor 1-re állitom
     DBoldal.innerHTML = oldalszam ;
     Mostoldal.innerHTML = Joldal;

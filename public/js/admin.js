@@ -862,7 +862,6 @@ async function KER_CLICk(){
                         <strong class="font-bold">Hiba: </strong>
                         &nbsp;
                         <span> ${e}</span>
-                        
                     </div> `
 
         document.getElementById("SQL_hiba").innerHTML =sad ;

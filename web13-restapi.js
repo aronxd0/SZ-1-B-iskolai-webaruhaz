@@ -277,10 +277,10 @@ function gen_SQL_kereses(req) {
             left join webbolt_fotok ON t.ID_TERMEK = webbolt_fotok.ID_TERMEK
             ${where}
             ${order_van} ${order<0? "DESC": ""}
-            limit 51 offset ?
+            limit 52 offset ?
         `;
         // Az offset paraméter a végére kerül (lapozáshoz)
-        ertekek.push(offset); 
+        ertekek.push(offset * 52); 
         
         return { sql, values: ertekek };
     }
