@@ -1,18 +1,28 @@
 <!DOCTYPE html> 
+<!--
+  index.html — Iskolai webáruház főoldal
+  Rövid leírás: Ez a fájl tartalmazza a felhasználói felület teljes HTML szerkezetét (fejléc, tartalom, lábléc, modálok).
+  A következő kommentek segítenek megérteni, melyik rész miért felel.
+-->
 <html lang="hu" class="transition-color duration-700"> 
   <head> 
     <title>Iskolai Webáruház</title> 
     <meta charset="UTF-8"> 
     <link rel="icon" type="image/x-icon" href="/img/logoz.png"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <!-- Bootstrap CSS: rács, komponensek és alap stílusok -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <!-- Bootstrap Icons: könnyű, beépített ikonok használatához -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> 
+    <!-- Tailwind CSS (utility-first framework) + dark mode beállítás -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script> tailwind.config = { darkMode: 'class', } </script>
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"> 
+    <!-- Saját stíluslap: projekt-specifikus CSS (custom overrides, theme) -->
     <link href="style.css" rel="stylesheet">
+    <!-- JS függőségek: jQuery (AJAX), Bootstrap JS (komponensek működtetése), Highcharts (grafikonok) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> 
     <script src="http://code.highcharts.com/highcharts.js"></script>
@@ -23,6 +33,11 @@
 <body>
 
   <!-- fő div  -->
+  <!--
+    Fő alkalmazás konténer: itt található a teljes oldal struktúrája.
+    - Tartalmazza a fejlécet (fix-top), a dinamikusan feltöltődő tartalmat és a láblécet.
+    - A konténer flex osztállyal dolgozik, így a lábléc alul marad (mt-auto) még rövid tartalom esetén is.
+  -->
   <div 
     class="container-fluid 
       bg-zinc-200 
@@ -38,26 +53,16 @@
       flex-col">
 
     <!--#region fejlec-->
+    <!--
+      Fejléc (navigáció): fixen felfüggesztve a felső részen, tartalmazza:
+      - Offcanvas vezérlőpult / menü (mobilbarát)
+      - Fiók / bejelentkezés kezelése
+      - Keresősáv és szűrők
+      - Kosár és admin lehetőségek
+      A megjelenést a dark/light class váltások és transzformációk vezérlik.
+    -->
     
         
-      <!--
-        <div 
-          class="row 
-            bg-zinc-300 
-            text-slate-900 
-            dark:bg-slate-900 
-            dark:text-zinc-200  
-            transition-all duration-700 ease-in-out " id="fejlec1">
-          <div class="col-12"> 
-                                                           
-            <div class="col-12 p-1 d-flex flex-column flex-lg-row align-items-center justify-content-center "> 
-              <img class="img-fluid m-2 hidden dark:block transition-all duration-300 w-15 h-10"   src="img/logo2.png">
-              <img class="img-fluid m-2 block dark:hidden transition-all duration-300 w-15 h-10"   src="img/logo-fekete.png">
-              <span class="text-center text-2xl text-lg-start align-self-center flex-nowrap ms-2 cim">Iskolai Webáruház</span>
-            </div>
-          </div>
-          <div class="col-12 col-lg-6"></div>
-        </div>-->
        
       
         <div 
@@ -78,6 +83,7 @@
         <div class="navbar navbar-expand-xxl ">
           <div class="container-fluid d-flex flex-nowrap">
 
+            <!-- Bal oldali gomb: offcanvas menü megnyitása (mobil/összecsukható menü) -->
             <button 
             class="
             navbar-toggler 
@@ -113,6 +119,7 @@
               <button class="navbar-toggler border-0" type="button"
                   data-bs-toggle="offcanvas"
                   data-bs-target="#top-navbar" aria-controls="top-navbar">
+                  <!-- Offcanvas fejléc: vezérlőpult felirat és bezáró ikon -->
                   <div class="offcanvas-header d-flex justify-content-between p-3">
                     
                     
@@ -138,6 +145,7 @@
               <ul class="navbar-nav p-4 p-xxl-0">
 
 
+                <!-- Logó és márkajelzés (sötét / világos variánsok) -->
                 <li class="nav-item py-2">
                   <img class="img-fluid m-2 hidden dark:block transition-all duration-300 w-20 h-15"   src="img/logo2.png">
                   <img class="img-fluid m-2 block dark:hidden transition-all duration-300 w-20 h-15"   src="img/logo-fekete.png">
@@ -146,6 +154,7 @@
 
                 
 
+                <!-- Fiók / profil menü: bejelentkezés, felhasználói adatok, gyorsgombok -->
                 <li class="nav-item d-flex align-items-center dropdown">
                   <div 
                   class="
@@ -186,6 +195,7 @@
                       <span> Fiók</span>
                     </button>
 
+                    <!-- Dropdown tartalma: felhasználói állapot, jogosultságok, gyorsgombok (rendelések, téma váltás, bejelentkezés) -->
                     <div 
                     class="
                       dropdown-menu 
@@ -215,6 +225,7 @@
                       
                       
 
+                      <!-- Rendeléseim gomb: belépett felhasználó rendeléseinek gyors elérése -->
                       <div class="d-flex justify-content-center mt-2" id="rendeles-gombdiv">
                         <button id="rend_button"  type="button" 
                           class="btn 
@@ -241,6 +252,7 @@
                         </button>
                       </div>
                       
+                      <!-- Téma és Bejelentkezés gombok: felhasználó állapotának és témának gyors váltása -->
                       <div class="d-flex flex-column align-items-center mb-3" >
                         <button type="button" aria-label="Téma" 
                         class="
@@ -302,6 +314,7 @@
 
 
 
+                <!-- Kezdőlap gomb: vissza a főoldalra -->
                 <li class="nav-item d-flex align-items-center">
                   <div 
                   class="
@@ -341,6 +354,7 @@
                   </div>
                 </li>
 
+                <!-- Kosár gomb: kosár megnyitása, dinamikus számláló a badge-ben -->
                 <li class="nav-item d-flex align-items-center">
                   <div 
                   class="
@@ -382,6 +396,7 @@
                 </li>
 
 
+                <!-- Admin menü: csak admin feladatok gyors elérésére (vélemények, új termék, statisztika, SQL) -->
                 <li class="nav-item d-flex align-items-center">
 
 
@@ -538,6 +553,7 @@
             <div class="flex-grow-1">
                <div class="d-flex flex-nowrap w-100 align-self-center p-1"> 
                   
+                  <!-- Keresőmező: a felhasználó beírhatja a keresett terméket; a JS kezeli a keresést ('nev1' id) -->
                   <input class="form-control rounded-4 
                                 bg-zinc-50 
                                 text-slate-900 placeholder-slate-900 
@@ -550,6 +566,7 @@
                                 transition-all duration-700 ease-in-out shadow-lg" id="nev1" name="nev" value="" type="text" placeholder="🔍 Keresés...">
                   
                   
+                  <!-- Keresés gomb: meghívja a KERESOBAR() függvényt, ami végrehajtja a keresést -->
                   <button type="button" aria-label="Keresés" 
                     class="btn btn-lg 
                     bg-zinc-400 
@@ -565,6 +582,7 @@
 
                     <i class="bi bi-search"></i>
                   </button>
+                  <!-- Szűrők gomb: megnyitja a jobb oldali offcanvas paneleket a rendezéshez/szűréshez -->
                   <button type="button" aria-label="Szűrők" 
                   class="btn btn-lg
                    bg-zinc-400 
@@ -597,6 +615,7 @@
     <!--#region main-->
 
         
+      <!-- Üdvözlő (hero) rész: rövid bemutatkozás, motiváló szöveg és logó -->
       <div class="w-100 p-0 mt-4" id="welcome_section">
         <div class="welcome transition-all duration-700">
           <div class="row" style="height: 700px;">
@@ -621,6 +640,7 @@
       </div>
     
     
+      <!-- Fő tartalom: ide töltődnek be a termékek és a lapozás (dinamikus JS vezérlés) -->
       <div class="container-fluid mt-5" id="content">
         <div class="row mt-5">
           <div class="col-12 d-flex justify-content-center mt-2">
@@ -647,6 +667,10 @@
 
 
     <!--#region lablec-->
+    <!--
+      Lábléc: tartalmazza a közösségi linkeket, szerzői jogi információkat és az oldal ismételt logóját.
+      Statikus információk, amelyek mindig láthatóak a lap alján.
+    -->
       <div 
       class="
         row 
@@ -688,7 +712,11 @@
 
   <!-- #region offcanvas -->
   
-  <!-- szures menu -->
+  <!-- szures menu (Offcanvas) -->
+  <!--
+    Termékek szűrési panelje: rendezés, kategória választás, ár intervallum, és egyéb szűrők.
+    A felhasználó ezeken keresztül módosíthatja, hogyan jelenjenek meg a találatok.
+  -->
   <div class="offcanvas offcanvas-end" id="szurok">
     <div 
       class="
@@ -716,6 +744,7 @@
       ">
 
       <div class="row col-12 d-flex justify-content-center text-center mb-4 ">
+          <!-- Rendezés (sorting) választó: különböző rendezési opciók a megjelenítendő termékekhez -->
           <label for="rend"><span class="text-lg"><i class="bi bi-list-ol"></i> Rendezés</span></label>
           <select id="rend" 
           class="
@@ -738,6 +767,7 @@
         </div>
       <div id="szurokk" class="row mx-auto" style="width: 90%;">
         <label for="kategoria_section"><span class="text-lg"><i class="bi bi-grid"></i> Termékkategóriák</span></label> 
+        <!-- Kategória szekció: ide töltődnek a kategóriák (checkbox-ok) a dinamikus feltöltéshez -->
         <div 
         class="
         p-3 
@@ -764,6 +794,7 @@
           dark:bg-slate-800 
           dark:text-zinc-200 
           ">  
+          <!-- Minimum ár beviteli mező és slider: a felhasználó itt adhat meg alsó árhatárt -->
           <div class="col-lg-3 text-center"> Minimum ár: </div> 
           <div class="col-lg-7"> 
             <input type="number" onchange="Sliderninput(this)" 
@@ -806,6 +837,7 @@
           dark:bg-slate-800 
           dark:text-slate-200 
           "> 
+          <!-- Maximum ár beviteli mező és slider: a felhasználó itt adhat meg felső árhatárt -->
           <div class="col-lg-3 text-center"> Maximum ár </div> 
           <div class="col-lg-7"> 
             <input type="number" onchange="Sliderninput(this)" 
@@ -833,6 +865,7 @@
         <div class="row mt-3" id="Elfogyott_gomb"></div>
         <div class="row" id="NEM_AKTIV"></div>
 
+        <!-- Szűrő alkalmazása gomb: frissíti a terméklista a kiválasztott szűrők szerint -->
         <div class="row d-flex justify-content-center">
           <button type="button" 
           class="
@@ -863,7 +896,7 @@
   <!-- #region Modal Ablakok -->
 
 
-  <!-- login ablak -->
+  <!-- login ablak (modal): bejelentkezési űrlap — e-mail és jelszó mezők, vendég mód és bejelentkezés gombok -->
   <div class="modal fade " id="login_modal">
     <div class="modal-dialog modal-md modal-dialog-centered " >
       <div class="modal-content">
@@ -967,7 +1000,7 @@
 
 
 
-  <!-- logout modal -->
+  <!-- logout modal: egyszerű megerősítő ablak a kijelentkezéshez -->
   <div class="modal fade" id="logout_modal">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -995,7 +1028,7 @@
 
 
 
-  <!-- termék nagyban -->
+  <!-- termék nagyban (részletes termék nézet): tartalmaz fotót, leírást, véleményeket és vélemény írási lehetőséget -->
   <div class="modal fade" id="termekview">
     <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
       <div class="modal-content">
@@ -1166,7 +1199,7 @@
 
 
 
-  <!-- kosarba gomb utani modal -->
+  <!-- kosarba gomb utáni modal: visszajelzés a sikeres kosárba helyezésről, gyors folytatás és kosár megtekintése gombokkal -->
   <div class="modal fade" id="kosarba_bele">
   <div class="modal-dialog modal-dialog-centered modal-md">
     <div class="modal-content">
@@ -1244,7 +1277,7 @@
 
 
 
-      <!----------------- modal adatbevitel ablak ----------------------->
+      <!-- Új/szerkesztés modal (admin): termék adatbeviteli űrlap (kategória, név, azonosító, fotó, ár, darabszám, egység, leírás, aktív státusz) -->
       <div class="modal fade" id="termek_edit">
         <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
           <div class="modal-content">
@@ -1478,7 +1511,7 @@
         </div>
       </div>
 
-      <!-- toast mysend -->
+      <!-- Toast (értesítések): felugró, rövid értesítések a jobb alsó sarokban -->
       <div id= "toast1" class="toast bg-success text-white hide" style="position:fixed; right:10px; bottom:10px;">
         <div class="toast-header">
             <strong class="me-auto"><i class="bi-gift-fill"></i> Infó...</strong>
@@ -1487,7 +1520,7 @@
         <div class="toast-body"></div>
       </div>
 
-      <!-- torles megerosito ablak -->
+      <!-- Törlés megerősítése modal: admin/kezelői feladatoknál használatos, megerősíti a törlési műveletet -->
       <div class="modal fade" id="delete_modal">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -1503,7 +1536,7 @@
 
 
 
-      <!-- rendeles veglegesito ablak -->
+      <!-- Rendelés véglegesítése modal: összegzés, fizetési információk és a vásárlás feltételeinek elfogadása -->
       <div class="modal fade" id="fizetes">
         <div class="modal-dialog modal-fullscreen-xl-down modal-xl modal-dialog-scrollable modal-dialog-centered">
           <div class="modal-content">
