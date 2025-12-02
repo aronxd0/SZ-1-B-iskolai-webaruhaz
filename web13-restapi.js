@@ -905,11 +905,7 @@ app.post('/rendeles_ellenorzes',async (req, res) => {
 // Működés: az összes bejelentkezetthez tartozó rendelést összesítéssel visszaadja
 app.post('/rendelesek',async (req, res) => {
     try{
-    session_data = req.session;
-
-    var off = parseInt(req.query.OFFSET);
-
-    
+    session_data = req.session; 
 
     var sql = 
     `
@@ -920,9 +916,8 @@ app.post('/rendelesek',async (req, res) => {
     WHERE r.ID_USER = ?
     GROUP BY r.ID_RENDELES
     ORDER BY r.ID_RENDELES DESC
-    LIMIT 10 OFFSET ?;
     `;
-    let ertekek = [session_data.ID_USER, off];
+    let ertekek = [session_data.ID_USER];
 
     var eredmeny = await runQueries(sql, ertekek);
     res.set(header1, header2);

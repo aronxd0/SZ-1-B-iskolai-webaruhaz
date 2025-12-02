@@ -1,7 +1,3 @@
-var osszesoldal = 0;
-var aktuoldal = 1;
-
-
 $("#rend_button").click(async function () {
     $("#welcome_section").fadeOut(300);
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
@@ -9,29 +5,29 @@ $("#rend_button").click(async function () {
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
 
     var s = `
+    
         <div class="col-12 text-center p-2 mt-5">
             <span class="text-xl">Rendeléseim</span>
         </div>
     `;
-
-    rendelesmegjelenites();
-    disable_valt();
-});
-
-async function rendelesmegjelenites() {
-    var itemek = await ajax_post(`rendelesek?OFFSET=${(aktuoldal - 1) * 10}`, 1);
-    var s = "";
-
+    
+    
+    var itemek = await ajax_post("rendelesek", 1);
+    
     if (itemek.maxcount != 0) {
-        osszesoldal = Math.ceil(itemek.maxcount / 10);
-
         for (const elemek of itemek.rows) {
-            const collapseId = `collapse_${elemek.ID_RENDELES}`;
 
+            // Egyedi azonosító a collapse részhez
+            const collapseId = `collapse_${elemek.ID_RENDELES}`;
+          
             s += `
+
             <div class="p-3 d-flex justify-content-center">
+                <!-- <div class="col-0 col-lg-2"></div> -->
+
                 <div 
                     class="
+                    
                         col-12 
                         col-lg-8   
                         d-flex 
@@ -51,153 +47,107 @@ async function rendelesmegjelenites() {
                         dark:hover:outline-white/10 
                         my-1  
                         p-3 
+                        
                         p-xxl-none" 
+                        
+
                     id="rendeles_${elemek.ID_RENDELES}" 
+
                     role="button"
                     onclick="toggleRendeles(${elemek.ID_RENDELES})"
+
                     data-bs-toggle="collapse"
                     data-bs-target="#${collapseId}"
                     aria-expanded="false"
                     aria-controls="${collapseId}"
                 >
+
+                    
+
                     <div 
-                        class="
-                        col-12 
-                        col-lg-4 
-                        d-flex 
-                        flex-lg-column 
-                        justify-content-between 
-                        py-3 p-lg-1">
+                    class="
+                    col-12 
+                    col-lg-4 
+                    d-flex 
+                    flex-lg-column 
+                    justify-content-between 
+                    py-3 p-lg-1
+                    
+                    ">
                         <span><i class="bi bi-hash"></i> Rendelés Azonosító</span>
                         <span>${elemek.ID_RENDELES}</span>
                     </div>
 
                     <div 
-                        class="
-                        col-12 
-                        col-lg-4 
-                        d-flex 
-                        flex-lg-column 
-                        justify-content-between 
-                        py-3 p-lg-1 
-                        border-t border-gray-300 
-                        border-b border-gray-300 
-                        lg:border-t-0 
-                        lg:border-b-0">
+                    class="
+                    col-12 
+                    col-lg-4 
+                    d-flex 
+                    flex-lg-column 
+                    justify-content-between 
+                    py-3 p-lg-1 
+                    
+                    border-t border-gray-300 
+                    border-b border-gray-300 
+                    lg:border-t-0 
+                    lg:border-b-0 
+                    ">
                         <span><i class="bi bi-calendar"></i> Dátum</span>
                         <time class="text-gray-400">
-                            <i>${new Date(elemek.DATUM).toLocaleString('hu-HU', {
-                                year: 'numeric',
-                                month: '2-digit',
-                                day: '2-digit',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                hour12: false
-                            })}</i>
-                        </time>
+                        
+                        
+                         <i>${new Date(elemek.DATUM).toLocaleString('hu-HU', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                })}</i></time>
                     </div>
 
                     <div 
-                        class="
-                        col-12 
-                        col-lg-4 
-                        d-flex 
-                        flex-lg-column 
-                        justify-content-between 
-                        align-items-lg-end 
-                        py-3 p-lg-1">
+                    class="
+                    col-12 
+                    col-lg-4 
+                    d-flex 
+                    flex-lg-column 
+                    justify-content-between 
+                    align-items-lg-end 
+                    py-3 p-lg-1 
+                    
+                    ">
                         <span><i class="bi bi-cash"></i> Bruttó végösszeg</span>
                         <span>(áfatartalom: ${elemek.AFA}%)</span>
                         <span class="anton-regular text-success termek_ar">
                             ${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft
                         </span>
                     </div>      
-                </div>
-            </div>
+                    
+                    
+                    
 
-            <div class="collapse !visible mt-2 mb-5" id="${collapseId}">
-                <div class="row" id="tetelek_${elemek.ID_RENDELES}"></div>
-            </div>
+                </div>
+                <!-- <div class="col-0 col-lg-2"></div> -->
+               </div>
+
+                <!-- Itt jelenik meg az összehajtható rész -->
+
+                <div class="collapse !visible mt-2 mb-5" id="${collapseId}">
+
+                   
+                <!-- card card-body  || p-3 mind a kettő jó-->
+
+
+                    
+                        <div class="row" id="tetelek_${elemek.ID_RENDELES}">
+                            
+                        </div>
+                    
+                </div>
+
             `;
         }
-
-        s += `
-            <ul class="pagination justify-content-center">
-                <li class="page-item  shadow-xl" style="border: none;">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="Vissza2" onclick="Kovi(this)"> << </a></li>
-                <li class="page-item  shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="vissza1" onclick="Kovi(this)">Előző</a></li>
-                <li class="page-item shadow-xl">
-                    <a class="
-                        page-link 
-                        d-flex 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        "><b id="Mostoldal">${aktuoldal}</b> / <span id="DBoldal">${osszesoldal}</span></a></li>
-                
-                <li class="page-item  shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="Kovi1" onclick="Kovi(this)">Következő</a></li>
-
-                <li class="page-item shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="Kovi2" onclick="Kovi(this)"> >> </a></li>
-            </ul>
-        `;
     } else {
         s = `
             <div class="col-12">
@@ -208,6 +158,7 @@ async function rendelesmegjelenites() {
         `;
     }
 
+    // Tisztítás + megjelenítés
     $("#keresett_kifejezes").html("");
     $("#débé").html("");
     $("#nev1").val("");
@@ -215,84 +166,84 @@ async function rendelesmegjelenites() {
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(s).fadeIn(300);
-        disable_valt();
     });
-}
+});
 
+
+// ?? Ha a gombot lenyitják, akkor betöltjük a rendelés tételeit
 async function toggleRendeles(rendelId) {
+    // AJAX hívás, hogy lekérd a rendelés tételeit
+    
     const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
 
-    let html = `
-        <div class="col-0 col-lg-2"></div>
-        <div class="col-12 col-lg-8 text-center p-2 mt-3 border-b">A rendelés tartalma:</div>
-        <div class="col-0 col-lg-2"></div>`;
+    let html =`     <div class="col-0 col-lg-2"></div>
 
+                    <div 
+                    class="
+                    col-12 
+                    col-lg-8 
+                    text-center 
+                    p-2 
+                    mt-3 
+                    border-b 
+                    border-gray-300 
+                    dark:border-b 
+                    dark:border-gray-600 
+                    ">
+                        A rendelés tartalma:
+                    </div>
+                    <div class="col-0 col-lg-2"></div>`; 
+    
     for (const elem of tetelek.rows) {
         html += `
         <div class="col-0 col-lg-2"></div>
-        <div class="col-12 col-lg-8 d-flex flex-column flex-sm-row border-b p-xxl-none">
-            <div class="col-12 col-sm-3 d-flex justify-content-center p-1">
-                <img src="${elem.FOTOLINK}" class="img img-fluid img-thumbnail w-10 h-10">
-            </div>
-            <div class="col-12 col-sm-3 d-flex justify-content-center p-1">
-                <p>${elem.NEV}</p>
-            </div>
-            <div class="col-12 col-sm-3 d-flex justify-content-center p-1">
-                <p>${elem.MENNYISEG} db</p>
-            </div>
-            <div class="col-12 col-sm-3 d-flex flex-column align-items-center justify-content-center p-1">
-                <span class="anton-regular text-success text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span>
-                <span><i>(Nettó)</i></span>
-            </div>
+        <div class="col-12 
+            col-lg-8 
+            d-flex 
+            flex-column 
+            flex-sm-row 
+    
+            text-slate-900
+            dark:text-zinc-200 
+
+            border-b
+            border-gray-300 
+            dark:border-b 
+            dark:border-gray-600 
+
+        
+            
+            
+             
+            p-xxl-none">
+            
+                    
+
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
+                        <img src="${elem.FOTOLINK}" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
+                    </div>
+
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
+                        <p>${elem.NEV}</p>
+                    </div>
+                    
+                        <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
+                        <p>${elem.MENNYISEG} db</p>
+                    </div>
+
+                    
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-1">
+                        <span class="anton-regular text-success text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span> <span> <i> (Nettó)</i></span> 
+                    
+                    </div>
+            
+
         </div>
-        <div class="col-0 col-lg-2"></div>`;
+        <div class="col-0 col-lg-2"></div>
+        `;
     }
+
 
     $(`#tetelek_${rendelId}`).html(html);
-<<<<<<< HEAD
-}
-
-function Kovi(keri) {
-    FelaTetore();
-    switch (keri.id) {
-        case "Kovi1":
-            if (aktuoldal < osszesoldal) aktuoldal++;
-            break;
-        case "Kovi2":
-            aktuoldal = osszesoldal;
-            break;
-        case "vissza1":
-            if (aktuoldal > 1) aktuoldal--;
-            break;
-        case "Vissza2":
-            aktuoldal = 1;
-            break;
-    }
-    rendelesmegjelenites();
-}
-
-
-function disable_valt() {
-    if (aktuoldal === 1) {
-        $("#vissza1").addClass("disabled");
-        $("#Vissza2").addClass("disabled");
-    } else {
-        $("#vissza1").removeClass("disabled");
-        $("#Vissza2").removeClass("disabled");
-    }
-
-    if (aktuoldal === osszesoldal) {
-        $("#Kovi1").addClass("disabled");
-        $("#Kovi2").addClass("disabled");
-    } else {
-        $("#Kovi1").removeClass("disabled");
-        $("#Kovi2").removeClass("disabled");
-    }
-}
-=======
     
 }
-
-
-
->>>>>>> parent of 6a3f151 (Merge branch 'munka' of https://github.com/aronxd0/SZ-1-B-iskolai-webaruhaz into munka)
