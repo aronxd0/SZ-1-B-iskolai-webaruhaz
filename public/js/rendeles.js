@@ -248,6 +248,3 @@ async function toggleRendeles(rendelId) {
     $(`#tetelek_${rendelId}`).html(html);
     
 }
-
-
-

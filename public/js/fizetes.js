@@ -1152,7 +1152,7 @@ async function emailDesign(li){
         font-size:15px;
         color:#047857;
     ">
-       Összesen: ${osszes.toLocaleString() } Ft + Áfa
+       Összesen: ${osszes.toLocaleString() } Ft + (+${(await ajax_post(`afa`, 1)).rows[0].AFA}% áfa)
     </div>
 
     <div style="
