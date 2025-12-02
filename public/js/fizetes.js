@@ -1144,9 +1144,15 @@ async function emailDesign(li) {
         margin-top:25px;
         font-size:15px;
         color:#047857;
+<<<<<<< HEAD
       ">
         Összesen: ${osszes.toLocaleString()} Ft + ${afa}% áfa
       </div>
+=======
+    ">
+       Összesen: ${osszes.toLocaleString() } Ft + Áfa
+    </div>
+>>>>>>> parent of 6a3f151 (Merge branch 'munka' of https://github.com/aronxd0/SZ-1-B-iskolai-webaruhaz into munka)
 
       <div style="
         text-align:right; 
