@@ -374,7 +374,7 @@ app.post('/velemeny_add', async (req, res) => {
         `;
         let ertekek = [termekid, req.session.ID_USER, szoveg, allapot];
 
-        const eredmeny = await runExecute(sql, req, ertekek, false);
+        const eredmeny = await runExecute(sql, req, ertekek, true);
         res.send(eredmeny);
         res.end();
 
@@ -400,7 +400,7 @@ app.post('/velemeny_del', async (req, res) => {
         `;
         let ertekek = [velemenyid];
 
-        const eredmeny = await runExecute(sql, req, ertekek, false);
+        const eredmeny = await runExecute(sql, req, ertekek, true);
         res.send(eredmeny);
         res.end();
 
@@ -428,7 +428,7 @@ app.post('/velemeny_elfogad', async (req, res) => {
         `;
         let ertekek = [velemenyid];
 
-        const eredmeny = await runExecute(sql, req, ertekek, false);
+        const eredmeny = await runExecute(sql, req, ertekek, true);
         res.send(eredmeny);
         res.end();
 
@@ -456,7 +456,7 @@ app.post('/velemeny_elutasit', async (req, res) => {
         `;
         let ertekek = [velemenyid];
 
-        const eredmeny = await runExecute(sql, req, ertekek, false);
+        const eredmeny = await runExecute(sql, req, ertekek, true);
         res.send(eredmeny);
         res.end();
 

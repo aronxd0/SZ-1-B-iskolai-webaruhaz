@@ -747,6 +747,8 @@ function drawChart(rang) {
   
 
 //#endregion
+
+
 //#region SQl input 
 
 function SQLinput() {
