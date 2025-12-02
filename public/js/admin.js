@@ -413,7 +413,7 @@ async function Velemeny_Elutasit(id_velemeny) {
 
     } catch (err) { console.log("hiba:", err); }
 
-    AdminVelemenyekMutat($("#varo")[0]);
+    
     await Admin_Velemenykezeles();
 }
 
@@ -432,7 +432,7 @@ async function Velemeny_Elfogad(id_velemeny) {
 
     } catch (err) { console.log("hiba:", err); }
 
-    AdminVelemenyekMutat($("#varo")[0]);
+    
     await Admin_Velemenykezeles();
 }
 
