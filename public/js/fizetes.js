@@ -1021,7 +1021,7 @@ async function Fizetésclick(li) {
 
         üzen("A terméket sikeresen megvásároltad.","success");
         $("#fizetes").modal("hide");
-        //$("#home_button").trigger("click"); //document.getElementById("home_button").click(); // visszairányítjuk a főoldalra
+        PAUSE(); // a fizetes modal bezárása után várunk egy kicsit hogy betoltse a kezdolapot
         console.log("ide jut el xd");
         
         
@@ -1046,8 +1046,6 @@ async function Fizetésclick(li) {
           subject: "Rendelés visszaigazolása",
           html: html
       });
-      FizetesUtan();
-      console.log("Ez a minden jo xd");
   
       }
       catch{

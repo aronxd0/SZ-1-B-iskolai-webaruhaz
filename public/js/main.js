@@ -588,17 +588,19 @@ function FelaTetore() {
 }
 
 
-
-
-function FizetesUtan() {
-    console.log("FizetesUtan lefutott");
-    $("#home_button").trigger("click");
-    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
-    $("#admin_button").closest(".gombdiv").removeClass("aktiv");
-    $("#home_button").closest(".gombdiv").addClass("aktiv");
-    $("#udv").html(`<b>Köszönjük, hogy nálunk vásárolt!</b>`);
-    $("#welcome_section").fadeOut(300).fadeIn(300);
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
+async function PAUSE() {
+    console.log("várunk...");
+    await sleep(2000);
+    Kezdolap();
+    console.log("ennyi volt");
+}
+
+
 
 
 
