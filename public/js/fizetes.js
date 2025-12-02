@@ -1017,10 +1017,13 @@ async function Fizetésclick(li) {
         //email küldés a backendnek
         
         KosarTetelDB(); // frissítjük a kosár db-t
-        document.getElementById("home_button").click(); // visszairányítjuk a főoldalra
+        
 
         üzen("A terméket sikeresen megvásároltad.","success");
         $("#fizetes").modal("hide");
+        PAUSE(); // a fizetes modal bezárása után várunk egy kicsit hogy betoltse a kezdolapot
+        console.log("ide jut el xd");
+        
         
     }
     catch(e){

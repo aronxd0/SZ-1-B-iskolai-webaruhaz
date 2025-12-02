@@ -208,6 +208,7 @@ function KeresonekSQLCraft(){
 
 
 async function KERESOBAR() {
+    console.log("keresobar lefutott");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
     $("#home_button").closest(".gombdiv").addClass("aktiv");
@@ -568,6 +569,7 @@ function Elfogyott(alma){
 }
 
 function Kezdolap() {
+    console.log("Kezdolap lefutott");
     $("#keresett_kifejezes").html();
     $("#welcome_section").fadeIn(300);
     nev1.value = "";
@@ -584,6 +586,20 @@ function Kezdolap() {
 function FelaTetore() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+async function PAUSE() {
+    console.log("várunk...");
+    await sleep(2000);
+    Kezdolap();
+    console.log("ennyi volt");
+}
+
 
 
 

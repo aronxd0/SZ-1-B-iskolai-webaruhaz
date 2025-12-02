@@ -1,8 +1,18 @@
-async function Admin_Velemenykezeles() {
 
+async function VelemenyDB() {
     let varodb = await ajax_post("velemenyek?szelektalas=1", 1);
     let stimmdb = await ajax_post("velemenyek?szelektalas=0", 1);
     let decdb = await ajax_post("velemenyek?szelektalas=2", 1);
+
+    $("#fuggodb").text(varodb.rows.length); 
+    $("#jovahagyvadb").text(stimmdb.rows.length); 
+    $("#elutasitvadb").text(decdb.rows.length); 
+}
+
+
+async function Admin_Velemenykezeles() {
+
+    
 
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
@@ -42,7 +52,7 @@ async function Admin_Velemenykezeles() {
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input hidden" id="varo" checked onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Függőben</span>
-                        <span class="inline-flex items-center rounded-md text-nowrap bg-yellow-400/10 px-2 py-1 font-medium text-yellow-700 inset-ring inset-ring-yellow-400/20"> ${varodb.rows.length}</span>
+                        <span id="fuggodb" class="inline-flex items-center rounded-md text-nowrap bg-yellow-400/10 px-2 py-1 font-medium text-yellow-700 inset-ring inset-ring-yellow-400/20"> </span>
                         </div>
 
                         <div class="flex flex-col text-right">
@@ -80,7 +90,7 @@ async function Admin_Velemenykezeles() {
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input hidden" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Jóváhagyva</span>
-                        <span class="inline-flex items-center text-nowrap rounded-md bg-green-400/10 px-2 py-1 font-medium text-green-400 inset-ring inset-ring-green-500/20"> ${stimmdb.rows.length} </span>
+                        <span id="jovahagyvadb" class="inline-flex items-center text-nowrap rounded-md bg-green-400/10 px-2 py-1 font-medium text-green-400 inset-ring inset-ring-green-500/20">  </span>
                         </div>
 
                         <div class="flex flex-col text-right">
@@ -119,7 +129,7 @@ async function Admin_Velemenykezeles() {
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input hidden" id="elutasitott" onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Elutasítva</span>
-                        <span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-nowrap font-medium text-red-400 inset-ring inset-ring-red-400/20">${decdb.rows.length}</span>
+                        <span id="elutasitvadb" class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-nowrap font-medium text-red-400 inset-ring inset-ring-red-400/20"></span>
                         </div>
 
                         <div class="flex flex-col text-right">
@@ -138,6 +148,7 @@ async function Admin_Velemenykezeles() {
         
         `).fadeIn(300);
         AdminVelemenyekMutat($("#varo")[0]);
+        VelemenyDB();
         $("#pagi").html("");
         
     });
@@ -259,6 +270,7 @@ async function AdminVelemenyekMutat(asd) {
                 $("#velemenyek_hely").fadeOut(300, function() {
                     $("#velemenyek_hely").html(ss).fadeIn(300);
                 });
+                VelemenyDB();
             }
 
             
@@ -317,6 +329,7 @@ async function AdminVelemenyekMutat(asd) {
                 $("#velemenyek_hely").fadeOut(300, function() {
                     $("#velemenyek_hely").html(sv).fadeIn(300);
                 });
+                VelemenyDB();
             }
 
             
@@ -370,6 +383,7 @@ async function AdminVelemenyekMutat(asd) {
                 $("#velemenyek_hely").fadeOut(300, function() {
                     $("#velemenyek_hely").html(ssg).fadeIn(300);
                 });
+                VelemenyDB();
             }
 
             
