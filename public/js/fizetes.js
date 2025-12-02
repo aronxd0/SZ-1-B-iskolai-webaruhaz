@@ -1017,10 +1017,13 @@ async function Fizetésclick(li) {
         //email küldés a backendnek
         
         KosarTetelDB(); // frissítjük a kosár db-t
-        document.getElementById("home_button").click(); // visszairányítjuk a főoldalra
+        
 
         üzen("A terméket sikeresen megvásároltad.","success");
         $("#fizetes").modal("hide");
+        //$("#home_button").trigger("click"); //document.getElementById("home_button").click(); // visszairányítjuk a főoldalra
+        console.log("ide jut el xd");
+        
         
     }
     catch(e){
@@ -1043,6 +1046,8 @@ async function Fizetésclick(li) {
           subject: "Rendelés visszaigazolása",
           html: html
       });
+      FizetesUtan();
+      console.log("Ez a minden jo xd");
   
       }
       catch{

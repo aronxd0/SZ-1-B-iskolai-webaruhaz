@@ -208,6 +208,7 @@ function KeresonekSQLCraft(){
 
 
 async function KERESOBAR() {
+    console.log("keresobar lefutott");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
     $("#home_button").closest(".gombdiv").addClass("aktiv");
@@ -568,6 +569,7 @@ function Elfogyott(alma){
 }
 
 function Kezdolap() {
+    console.log("Kezdolap lefutott");
     $("#keresett_kifejezes").html();
     $("#welcome_section").fadeIn(300);
     nev1.value = "";
@@ -585,6 +587,18 @@ function FelaTetore() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+
+
+
+function FizetesUtan() {
+    console.log("FizetesUtan lefutott");
+    $("#home_button").trigger("click");
+    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
+    $("#admin_button").closest(".gombdiv").removeClass("aktiv");
+    $("#home_button").closest(".gombdiv").addClass("aktiv");
+    $("#udv").html(`<b>Köszönjük, hogy nálunk vásárolt!</b>`);
+    $("#welcome_section").fadeOut(300).fadeIn(300);
+}
 
 
 

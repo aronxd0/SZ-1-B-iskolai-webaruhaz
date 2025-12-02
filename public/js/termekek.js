@@ -536,7 +536,7 @@ function VeletlenszeruVelemeny() {
 //region CARDBETOLT
 function CARD_BETOLT(adatok) {
    
-  console.log(`card betolt: kezdődik: ${localStorage.getItem("loggedIn")}`);
+  
 
   let ks = "";
   let s = "";
