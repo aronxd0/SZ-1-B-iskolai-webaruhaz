@@ -1,17 +1,10 @@
 
-async function VelemenyDB() {
+
+async function Admin_Velemenykezeles() {
+    console.log("Admin_Velemenykezeles meghivva");
     let varodb = await ajax_post("velemenyek?szelektalas=1", 1);
     let stimmdb = await ajax_post("velemenyek?szelektalas=0", 1);
     let decdb = await ajax_post("velemenyek?szelektalas=2", 1);
-
-    $("#fuggodb").text(varodb.rows.length); 
-    $("#jovahagyvadb").text(stimmdb.rows.length); 
-    $("#elutasitvadb").text(decdb.rows.length); 
-}
-
-
-async function Admin_Velemenykezeles() {
-
     
 
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
@@ -52,7 +45,7 @@ async function Admin_Velemenykezeles() {
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input hidden" id="varo" checked onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Függőben</span>
-                        <span id="fuggodb" class="inline-flex items-center rounded-md text-nowrap bg-yellow-400/10 px-2 py-1 font-medium text-yellow-700 inset-ring inset-ring-yellow-400/20"> </span>
+                        <span id="fuggodb" class="inline-flex items-center rounded-md text-nowrap bg-yellow-400/10 px-2 py-1 font-medium text-yellow-700 inset-ring inset-ring-yellow-400/20"> ${varodb.rows.length} </span>
                         </div>
 
                         <div class="flex flex-col text-right">
@@ -90,7 +83,7 @@ async function Admin_Velemenykezeles() {
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input hidden" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Jóváhagyva</span>
-                        <span id="jovahagyvadb" class="inline-flex items-center text-nowrap rounded-md bg-green-400/10 px-2 py-1 font-medium text-green-400 inset-ring inset-ring-green-500/20">  </span>
+                        <span id="jovahagyvadb" class="inline-flex items-center text-nowrap rounded-md bg-green-400/10 px-2 py-1 font-medium text-green-400 inset-ring inset-ring-green-500/20"> ${stimmdb.rows.length} </span>
                         </div>
 
                         <div class="flex flex-col text-right">
@@ -129,7 +122,7 @@ async function Admin_Velemenykezeles() {
                         <div class="flex items-center gap-3">
                         <input type="radio" name="plan" class="form-check-input hidden" id="elutasitott" onchange="AdminVelemenyekMutat(this)">
                         <span class="font-semibold">Elutasítva</span>
-                        <span id="elutasitvadb" class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-nowrap font-medium text-red-400 inset-ring inset-ring-red-400/20"></span>
+                        <span id="elutasitvadb" class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-nowrap font-medium text-red-400 inset-ring inset-ring-red-400/20"> ${decdb.rows.length} </span>
                         </div>
 
                         <div class="flex flex-col text-right">
@@ -148,11 +141,13 @@ async function Admin_Velemenykezeles() {
         
         `).fadeIn(300);
         AdminVelemenyekMutat($("#varo")[0]);
-        VelemenyDB();
+        
         $("#pagi").html("");
         
     });
 }
+
+
 
 
 async function AdminVelemenyekMutat(asd) {
@@ -270,13 +265,15 @@ async function AdminVelemenyekMutat(asd) {
                 $("#velemenyek_hely").fadeOut(300, function() {
                     $("#velemenyek_hely").html(ss).fadeIn(300);
                 });
-                VelemenyDB();
+                
             }
 
             
 
 
         } catch (err) { console.log("hiba:", err);}
+
+        
 
 
         //$("#velemenyek_hely").html("ide a jovahagyasra varo velemenyek");
@@ -329,13 +326,15 @@ async function AdminVelemenyekMutat(asd) {
                 $("#velemenyek_hely").fadeOut(300, function() {
                     $("#velemenyek_hely").html(sv).fadeIn(300);
                 });
-                VelemenyDB();
+                
             }
 
             
 
 
         } catch (err) { console.log("hiba:", err);}
+
+        
     }
     else if (asd.id == "elutasitott") {
         try {
@@ -383,13 +382,15 @@ async function AdminVelemenyekMutat(asd) {
                 $("#velemenyek_hely").fadeOut(300, function() {
                     $("#velemenyek_hely").html(ssg).fadeIn(300);
                 });
-                VelemenyDB();
             }
 
             
 
 
         } catch (err) { console.log("hiba:", err);}
+
+        
+        
     }
 }
 
@@ -408,9 +409,12 @@ async function Velemeny_Elutasit(id_velemeny) {
         else { üzen(elutasit.message, "danger"); }
 
 
-        AdminVelemenyekMutat($("#varo")[0]);
+        
 
     } catch (err) { console.log("hiba:", err); }
+
+    AdminVelemenyekMutat($("#varo")[0]);
+    await Admin_Velemenykezeles();
 }
 
 async function Velemeny_Elfogad(id_velemeny) {
@@ -423,10 +427,13 @@ async function Velemeny_Elfogad(id_velemeny) {
         }
         else { üzen(elfogad.message, "danger"); }
 
-        AdminVelemenyekMutat($("#varo")[0]);
+        
 
 
     } catch (err) { console.log("hiba:", err); }
+
+    AdminVelemenyekMutat($("#varo")[0]);
+    await Admin_Velemenykezeles();
 }
 
 
