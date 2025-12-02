@@ -513,23 +513,32 @@ function Statisztikak() {
             <div id="_Top5" style="min-width: 310px; height: 400px;" ></div>
         </div>
 
-       <div class="container mt-5 mb-5 bg-white border border-black rounded-4">
+
+
+       <div class="container mt-5 mb-5 rounded-4  shadow-xl 
+                    bg-zinc-50 
+                    text-slate-900 
+                    dark:bg-slate-950 
+                    dark:!border 
+                    dark:!border-zinc-200/20  
+                    dark:text-zinc-200  ">
     <div class="row">
         <div class="col-12 d-flex justify-content-center fs-2">
             Egyéb statisztikák
         </div>
     </div>
 
-    <div class="row p-4 border-top border-black">
+    <div class="row p-4">
 
         <!-- 1. oszlop -->
-        <div class="col-12 col-md-6  mb-4 d-flex flex-column justify-content-between border border-black bg-info rounded-4" id="_1_STAT">
+        <div class="col-12 col-md-6 mb-4" ><!-- azért van dupla div hogy legyen rés a 2 oszlop között -->
+        <div class="col-12 justify-content-between border border-black bg-info rounded-4">
             <div class="d-felx content-center" style="height:300px;">
-                <canvas id="STAT_PENZ_GRAF" style="width:95%;"></canvas>
+                <canvas id="STAT_PENZ_GRAF"></canvas>
             </div>
 
-            <div class="row mt-auto " style="  font-size: 10px;">
-               <div class="col-md-4 col-12">                
+            <div class="row mt-auto p-2" style="font-size: 10px;">
+                <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar" id="_01" value="1" checked  onchange="STAT_Penz(this)" >
                             1 hónap
@@ -549,40 +558,42 @@ function Statisztikak() {
                     </div>
             </div>
         </div>
-
+        </div>
 
         <!-- 2. oszlop -->
-        <div class="col-12 col-md-6  mb-4 d-flex flex-column justify-content-between  border border-black bg-success rounded-4 " id="_2_STAT">
+        <div class="col-12 col-md-6 mb-4" id="_2_STAT">
+        <div class="col-12  border border-black bg-success rounded-4 ">
+
             <div class="text-center d-felx" style="height:300px;">
                  <canvas id="STAT_VMI_GRAF"></canvas>
             </div>
 
-             <div class="row mt-auto d-felx" style="  font-size: 10px;">
+             <div class="row mt-auto d-felx p-2" style="  font-size: 10px;">
                <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar2" id="_03" checked  onchange="STAT_Penz()">
+                            <input type="radio" name="hatar2" id="_03" checked  onchange="STAT_ELAD(this)">
                             1 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar2" id="_03"   onchange="STAT_Penz()">
+                            <input type="radio" name="hatar2" id="_03"   onchange="STAT_ELAD(this)">
                             3 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar2" id="_03"  onchange="STAT_Penz()" >
+                            <input type="radio" name="hatar2" id="_03"  onchange="STAT_ELAD(this)" >
                             1 év
                         </label>
                     </div>
             </div>
         </div>
-
+        </div>
 
         <div class="col-md-3"></div>
         <!-- 3. oszlop -->
-        <div class="col-12 col-md-6 mb-4 d-flex flex-column justify-content-between  border border-black bg-warning rounded-4" id="_3_STAT">
+        <div class="col-12 col-md-6 mb-4 d-flex flex-column justify-content-between  border border-black bg-warning rounded-4 p-2" id="_3_STAT">
             <div class="text-center d-felx content-center" style ="max-height:300px;">
                 <canvas id="STAT_KOR_GRAF"></canvas>
             </div>
@@ -590,26 +601,26 @@ function Statisztikak() {
               <div class="row mt-auto " style="  font-size: 10px;">
                <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar3" id="_03" checked >
+                            <input type="radio" name="hatar3" id="_03" checked   onchange="STAT_KATEG(this)">
                             1 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar3" id="_03" >
+                            <input type="radio" name="hatar3" id="_03" onchange="STAT_KATEG(this)"> 
                             3 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">  
-                            <input type="radio" name="hatar3" id="_03" >
+                            <input type="radio" name="hatar3" id="_03" onchange="STAT_KATEG(this)"> >
                             1 év
                         </label>
                     </div>
             </div>
         </div>
         <div class="col-md-3"></div>
-    </div>
+    </div>  
 </div>
 
         `
@@ -622,6 +633,8 @@ function Statisztikak() {
         //drawChart();
         DiagrammokSelect("kezdes");
         STAT_Penz();
+        STAT_ELAD();
+        STAT_KATEG();
         /// suska
         // eladások száma || rendelések darabs száma
         // vett aruk kategória szerint
@@ -912,8 +925,74 @@ function STAT_Penz(innen){
   }
  
 });
+ // cancva divének legyen fix magassága
+  // resposnive true           !! FONOTOS
+  // maintainAspectRatio false !! FONTOS
+  //
+  // ezzekkel a paraméterekkel lehet  responzivvá tenni a chartot
 
-  new Chart("STAT_VMI_GRAF", {
+}
+let VLM_chart = null;
+
+function STAT_KATEG(innen){
+    var intervallum = "1";
+    if(innen != null){
+        intervallum = innen.value;
+    }
+    if(VLM_chart != null){
+        VLM_chart.destroy();
+    }
+
+     // ajax_post(`Statisztika_Penz?HATAR=${innen.value}`, 1);
+    
+
+    const xValues = ["1", "2", "3", "USA", "Argentina" ];
+    const yValues = [55, 49, 44, 24, 15];
+    const barColors = ["red", "green","blue",];
+
+
+  VLM_chart =  new Chart("STAT_KOR_GRAF", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {display: true, position: 'right'},
+    },
+    title: {
+      display: true,
+      text: "World Wide Wine Production"
+    }
+  }
+});
+}
+  
+let kAT_CHART = null;
+function STAT_ELAD(innen){
+    var intervallum = "1";
+    if(innen != null){
+        intervallum = innen.value;
+    }
+    if(kAT_CHART != null){
+        kAT_CHART.destroy();
+    }
+
+     // ajax_post(`Statisztika_Penz?HATAR=${innen.value}`, 1);
+    
+
+    const xValues = ["1", "2", "3", "USA", "Argentina" ];
+    const yValues = [55, 49, 44, 24, 15];
+    const barColors = ["red", "green","blue",];
+
+
+  kAT_CHART = new Chart("STAT_VMI_GRAF", {
     type: "bar",
     data: {
       labels: xValues,
@@ -929,42 +1008,13 @@ function STAT_Penz(innen){
         legend: {display: false},
         title: {
           display: true,
-          text: "Jövedelem alakulása",
+          text: "Kategoria szerint eladott termékek",
           font: {size: 16}
         }
       }
     }
    
   });
-  new Chart("STAT_KOR_GRAF", {
-    type: "pie",
-    data: {
-      labels: xValues,
-      datasets: [{
-        backgroundColor: barColors,
-        data: yValues
-      }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-      plugins: {
-        legend: {display:true},
-        title: {
-          display: true,
-          text: "World Wine Production 2018",
-          font: {size:16}
-        }
-      }
-    }
-  });
-
-
- // cancva divének legyen fix magassága
-  // resposnive true           !! FONOTOS
-  // maintainAspectRatio false !! FONTOS
-  //
-  // ezzekkel a paraméterekkel lehet  responzivvá tenni a chartot
 }
   
 
