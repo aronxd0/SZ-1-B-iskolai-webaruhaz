@@ -374,11 +374,16 @@ app.post('/velemeny_add', async (req, res) => {
         `;
         let ertekek = [termekid, req.session.ID_USER, szoveg, allapot];
 
-        const eredmeny = await runExecute(sql, req, ertekek, false);
+        const eredmeny = await runExecute(sql, req, ertekek, true);
         res.send(eredmeny);
         res.end();
 
-    } catch (err) { console.log(err) }      
+    } catch (err) {
+        console.error("/velemeny_add HIBA");
+        return res.status(400).json({
+            message: "Nem sikerült hozzáadni a véleményt.",
+        });
+    }      
 });
 
 // === VÉLEMÉNY TÖRLÉSE ===
@@ -395,11 +400,16 @@ app.post('/velemeny_del', async (req, res) => {
         `;
         let ertekek = [velemenyid];
 
-        const eredmeny = await runExecute(sql, req, ertekek, false);
+        const eredmeny = await runExecute(sql, req, ertekek, true);
         res.send(eredmeny);
         res.end();
 
-    } catch (err) { console.log(err) }      
+    } catch (err) {
+        console.error("/velemeny_del HIBA");
+        return res.status(400).json({
+            message: "Nem sikerült törölni a véleményt.",
+        });
+    }   
 });
 
 // === VÉLEMÉNY JÓVÁHAGYÁSA ===
@@ -418,11 +428,16 @@ app.post('/velemeny_elfogad', async (req, res) => {
         `;
         let ertekek = [velemenyid];
 
-        const eredmeny = await runExecute(sql, req, ertekek, false);
+        const eredmeny = await runExecute(sql, req, ertekek, true);
         res.send(eredmeny);
         res.end();
 
-    } catch (err) { console.log(err) }      
+    } catch (err) {
+        console.error("/velemeny_elfogad HIBA");
+        return res.status(400).json({
+            message: "Nem sikerült jóváhagyni a véleményt.",
+        });
+    }       
 });
 
 // === VÉLEMÉNY ELUTASÍTÁSA ===
@@ -441,11 +456,16 @@ app.post('/velemeny_elutasit', async (req, res) => {
         `;
         let ertekek = [velemenyid];
 
-        const eredmeny = await runExecute(sql, req, ertekek, false);
+        const eredmeny = await runExecute(sql, req, ertekek, true);
         res.send(eredmeny);
         res.end();
 
-    } catch (err) { console.log(err) }      
+    } catch (err) {
+        console.error("/velemeny_elutasit HIBA");
+        return res.status(400).json({
+            message: "Nem sikerült elutasítani a véleményt.",
+        });
+    }       
 });
 
 //#endregion
@@ -887,6 +907,8 @@ app.post('/rendelesek',async (req, res) => {
     try{
     session_data = req.session;
 
+    var off = parseInt(req.query.OFFSET);
+
     
 
     var sql = 
@@ -897,9 +919,10 @@ app.post('/rendelesek',async (req, res) => {
     JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
     WHERE r.ID_USER = ?
     GROUP BY r.ID_RENDELES
-    ORDER BY r.ID_RENDELES DESC;
+    ORDER BY r.ID_RENDELES DESC
+    LIMIT 10 OFFSET ?;
     `;
-    let ertekek = [session_data.ID_USER];
+    let ertekek = [session_data.ID_USER, off];
 
     var eredmeny = await runQueries(sql, ertekek);
     res.set(header1, header2);
@@ -1226,6 +1249,13 @@ try {
         }
         const sql = req.query.SQL.toString().trim();
 
+       if (/drop\s+table\s+\*/.test(sql.toLowerCase())) {
+        return res.status(500).json({
+            message: "Ne nézzük egymást hülyének!",
+            error: "A 'DROP TABLE *' parancs nem engedélyezett."
+        });
+}
+
         // === TILTOTT PARANCSOK LISTÁJA ===
         const nem_select_parancsok = [
             "insert", "update", "delete", "drop", "alter", "create", 
@@ -1289,7 +1319,7 @@ try {
 
     } 
     catch (err) {
-        console.error("/html_sql HIBA");
+        console.error(`/html_sql: ${session_data.NEV} elrontotta az admin lekérdezést. (${new Date().toISOString()})`);
         res.status(500).json({
             message: "Szörnyű hiba az sql parancs végrehajtásakor.",
             error: err.message
@@ -1438,7 +1468,6 @@ async function runQueries(sql, ertekek = []) {
     } finally {
         if (conn) conn.release();   
         json_data = JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": res2 });  // REST API
-        //console.log(json_data);
     }
     
     return json_data;

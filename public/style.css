@@ -405,6 +405,35 @@ body.offcanvas-open {
 
 
 
+.dropdown-panel {
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.hover-wrapper:hover .dropdown-panel {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.hover-wrapper:hover #admin_button { color: oklch(37.2% 0.044 257.287); /* slate-700 */ }
+
+html.dark .hover-wrapper:hover #admin_button { color: oklch(92% 0.004 286.32) /* zinc-200 */ }
+
+
+
+.admin-gear {
+    display: inline-block;
+    line-height: 1;
+    transition: transform 0.4s ease;
+}
+
+.group:hover .admin-gear {
+    transform: rotate(90deg);
+}
+
 
 
 
