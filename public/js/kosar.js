@@ -51,7 +51,7 @@ $("#cart_button").click(async function () {
 
                     cnt += `
                         
-                    <div class="p-3 d-flex justify-content-center">
+                    <div class="p-3 d-flex justify-content-center kosartetelcucc">
                         <div 
                          class="
                             col-12 
@@ -219,7 +219,9 @@ function KosarTeteleiFrissit() {
 function KosarItemDelete(id){
     ajax_post(`/kosar_del?ID_TERMEK=${id.id}`)
     .then(() => {
-        $(`#${id.id}NAGY`).remove();
+        $(`#${id.id}NAGY`).closest('.kosartetelcucc').fadeOut(300, function() {
+            $(this).remove();
+        });
 
         console.log(id.id);
 

@@ -281,7 +281,7 @@ async function Termek_Mutat(event, termek_id) {
           rounded-xl 
           kosar bi bi-plus  
            w-auto p-2 
-          " onclick='Kosarba_Bele(event, ${termek_id}'> Kosárba</button>`;
+          " onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba</button>`;
 
   let bal = ` 
                     <img class="img-fluid rounded-4 kepp2" src="${fotolink}" alt="${nev}">
