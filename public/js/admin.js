@@ -19,7 +19,9 @@ async function Admin_Velemenykezeles() {
                         class="bg-zinc-50 
                         text-slate-900 
                         shadow-xl 
-                        dark:bg-slate-900 
+                        dark:bg-slate-950 
+                        dark:!border 
+                        dark:!border-zinc-200/20 
                         dark:text-zinc-200 
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
@@ -55,7 +57,9 @@ async function Admin_Velemenykezeles() {
                         class="bg-zinc-50 
                         text-slate-900 
                         shadow-xl 
-                        dark:bg-slate-900 
+                        dark:bg-slate-950 
+                        dark:!border 
+                        dark:!border-zinc-200/20  
                         dark:text-zinc-200 
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
@@ -91,7 +95,9 @@ async function Admin_Velemenykezeles() {
                         class="bg-zinc-50 
                         text-slate-900 
                         shadow-xl 
-                        dark:bg-slate-900 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
                         dark:text-zinc-200 
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
@@ -188,7 +194,9 @@ async function AdminVelemenyekMutat(asd) {
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-900 
+                    dark:bg-slate-950 
+                    dark:!border 
+                    dark:!border-zinc-200/20 
                     dark:text-zinc-200 
                     mt-3 
                     mb-3 
@@ -287,7 +295,9 @@ async function AdminVelemenyekMutat(asd) {
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-900 
+                    dark:bg-slate-950 
+                    dark:!border 
+                    dark:!border-zinc-200/20  
                     dark:text-zinc-200 
                     mt-3 
                     mb-3 
@@ -338,7 +348,9 @@ async function AdminVelemenyekMutat(asd) {
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-900 
+                    dark:bg-slate-950 
+                    dark:!border 
+                    dark:!border-zinc-200/20  
                     dark:text-zinc-200 
                     mt-3 
                     mb-3 

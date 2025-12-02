@@ -47,7 +47,7 @@
     class="container-fluid 
       bg-zinc-200 
       text-slate-900 
-      dark:bg-slate-800 
+      dark:bg-gray-900     
       dark:text-zinc-200  
       transition-all 
       duration-700 
@@ -75,7 +75,7 @@
         fixed-top 
         bg-zinc-300 
         text-slate-900 
-        dark:bg-slate-900 
+        dark:bg-slate-950 
         dark:text-zinc-200  
         transition-all duration-700 ease-in-out 
         shadow-bottom  
@@ -160,7 +160,7 @@
                 
 
                 <!-- Fiók / profil menü: bejelentkezés, felhasználói adatok, gyorsgombok -->
-                <li class="nav-item d-flex align-items-center dropdown">
+                <li class="nav-item py-2 py-xxl-0 d-flex align-items-center dropdown">
                   <div 
                   class="
                   me-2 
@@ -320,7 +320,7 @@
 
 
                 <!-- Kezdőlap gomb: vissza a főoldalra -->
-                <li class="nav-item d-flex align-items-center">
+                <li class="nav-item py-2 py-xxl-0 d-flex align-items-center">
                   <div 
                   class="
                   gombdiv 
@@ -360,7 +360,7 @@
                 </li>
 
                 <!-- Kosár gomb: kosár megnyitása, dinamikus számláló a badge-ben -->
-                <li class="nav-item d-flex align-items-center">
+                <li class="nav-item py-2 py-xxl-0 d-flex align-items-center">
                   <div 
                   class="
                   gombdiv 
@@ -402,10 +402,10 @@
 
 
                 <!-- Admin menü: csak admin feladatok gyors elérésére (vélemények, új termék, statisztika, SQL) -->
-                <li class="nav-item d-flex align-items-center">
+                <li class="nav-item py-2 py-xxl-0 d-flex align-items-center">
 
 
-                  <div class="relative group d-inline-block" id="admin-gombdiv">
+                  <div class="relative group d-inline-block hover-wrapper" id="admin-gombdiv">
 
                     <button id="admin_button" type="button" 
                       class="btn  
@@ -424,9 +424,12 @@
                       
                       gomb 
                       rounded-3 
-                      d-flex"> 
+                      d-flex">
 
-                      <i class="bi bi-gear"></i>
+                      <div class="gear-wrap d-flex justify-content-center align-items-center align-self-center w-5 h-5"> 
+                        <i class="bi bi-gear admin-gear"></i>
+                      </div>
+                      
                       <span>&nbsp;Admin&nbsp;</span>
                       <i class="bi bi-caret-down-fill text-sm align-self-center"></i>
                     </button>
@@ -440,11 +443,10 @@
                     dark:bg-slate-900 
                     dark:text-zinc-200 
                     p-3 
-                    hidden 
-                    group-hover:block 
+                    
                     transition-all duration-700 
                     z-50 
-                   
+                    dropdown-panel
                     ">
                     
                     <button id="vlm_button" type="button" 

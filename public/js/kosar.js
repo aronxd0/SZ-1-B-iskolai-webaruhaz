@@ -60,7 +60,9 @@ $("#cart_button").click(async function () {
                             flex-lg-row 
                             bg-zinc-100 
                             text-slate-900 
-                            dark:bg-slate-900 
+                            dark:bg-slate-950 
+                            dark:!border 
+                            dark:!border-zinc-200/20 
                             dark:text-zinc-200 
                             shadow-lg  
                             rounded-4 
