@@ -1053,29 +1053,37 @@ async function Fizetésclick(li) {
 }
 
 
-async function emailDesign(li){
+async function emailDesign(li) {
   let rows = "";
   let osszes = 0;
 
-  for(const e of li){
-      rows += `
-          <tr>
-              <td style="padding:10px;border-bottom:1px solid #eee;">
-                  ${e.MENNYISEG} db
-              </td>
-              <td style="padding:10px;border-bottom:1px solid #eee;">
-                  ${e.NEV}
-              </td>
-              <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;color:#059669;">
-                  ${e.PENZ.toLocaleString()} Ft
-              </td>
-          </tr>
-      `;
-      osszes += e.PENZ;
+  // Összeg + sorok
+  for (const e of li) {
+    rows += `
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid #eee;">
+          ${e.MENNYISEG} db
+        </td>
+        <td style="padding:10px;border-bottom:1px solid #eee;">
+          ${e.NEV}
+        </td>
+        <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;color:#059669;">
+          ${e.PENZ.toLocaleString()} Ft
+        </td>
+      </tr>
+    `;
+    osszes += e.PENZ;
   }
 
-  return `<div style="background:#f6f2e8; padding:20px 0;">
-  <div style="
+  // ÁFA-t csak egyszer kérjük le
+  const afaAdat = await ajax_post(`afa`, 1);
+  const afa = afaAdat.rows[0].AFA;
+
+  const vegosszeg = Math.round(osszes * (1 + afa / 100)).toLocaleString();
+
+  return `
+  <div style="background:#f6f2e8; padding:20px 0;">
+    <div style="
       font-family:Arial, Helvetica, sans-serif;
       max-width:700px;
       margin:auto;
@@ -1083,91 +1091,71 @@ async function emailDesign(li){
       border-radius:12px;
       padding:25px 30px;
       border:1px solid #e2e2e2;
-  ">
-    <div style="
+    ">
+
+      <div style="
         text-align:center;
         margin-bottom:25px;
         background:#91ffbd;
         padding:20px 0;
         border-radius:10px;
         box-shadow:0 2px 4px rgba(0,0,0,0.08);
-    ">
-    <div style="text-align:center; margin-bottom:15px;">
-        <a href="#_" style="text-decoration:none; cursor:default;">
-            <img src="cid:logo2@example.com" style="width:200px; height:auto;" />
-        </a>
-    </div>
+      ">
+        <div style="text-align:center; margin-bottom:15px;">
+          <img src="cid:logo2@example.com" style="width:200px; height:auto;" />
+        </div>
+
+        <h2 style="margin:0;font-size:24px;color:#064e3b;">
+          Hurrá! A rendelésed sikeresen beérkezett hozzánk!
+        </h2>
+
+        <h6 style="font-size:16px;color:#064e3b;font-weight:400;margin-top:12px;line-height:1.5;">
+          Kedves ${_nev}!<br>
+          Köszönjük, hogy nálunk vásároltál!<br>
+          Az alábbiakban összefoglaltuk a rendelés tartalmát.
+        </h6>
+      </div>
+
       <h2 style="
-          margin:0;
-          font-size:24px;
-          color:#064e3b;
-      ">
-        Hurrá! A rendelésed sikeresen beérkezett hozzánk!
-      </h2>
-
-      <h6 style="
-          font-size:16px;
-          color:#064e3b;
-          font-weight:400;
-          margin-top:12px;
-          line-height:1.5;
-      ">
-        Kedves ${_nev}!<br>
-        Köszönjük, hogy nálunk vásároltál!  
-        Ha bármilyen kérdésed van, fordulj hozzánk bizalommal.  
-        Az email további részében összefoglaltuk a rendelésed adatait. <br>
-        <strong>Üdvözlettel, a Csany Webáruház csapata</strong>
-      </h6>
-    </div>
-
-    
-    <h2 style="
         margin-top:0;
         font-size:22px;
         color:#065f46;
         text-align:center;
-    ">
-      Rendelésed tartalma
-    </h2>
+      ">Rendelésed tartalma</h2>
 
-    <!-- TABLE -->
-    <table style="width:100%;border-collapse:collapse;margin-top:20px;font-size:15px;">
-      <thead>
-        <tr style="background:#e0f7d7;color:#064e3b;">
-          <th style="padding:12px;border-bottom:2px solid #cceccc;">Mennyiség</th>
-          <th style="padding:12px;border-bottom:2px solid #cceccc;">Termék</th>
-          <th style="padding:12px;border-bottom:2px solid #cceccc;">Ár</th>
-        </tr>
-      </thead>
+      <table style="width:100%;border-collapse:collapse;margin-top:20px;font-size:15px;">
+        <thead>
+          <tr style="background:#e0f7d7;color:#064e3b;">
+            <th style="padding:12px;border-bottom:2px solid #cceccc;">Mennyiség</th>
+            <th style="padding:12px;border-bottom:2px solid #cceccc;">Termék</th>
+            <th style="padding:12px;border-bottom:2px solid #cceccc;">Ár</th>
+          </tr>
+        </thead>
+        <tbody style="text-align:center; background:#ffffff;">
+          ${rows}
+        </tbody>
+      </table>
 
-      <tbody style="text-align:center; background:#ffffff;">
-        ${rows}
-      </tbody>
-    </table>
-
-    <!-- TOTALS -->
-    <div style="
+      <div style="
         text-align:right;
         margin-top:25px;
         font-size:15px;
         color:#047857;
-    ">
-       Összesen: ${osszes.toLocaleString() } Ft + (+${(await ajax_post(`afa`, 1)).rows[0].AFA}% áfa)
-    </div>
+      ">
+        Összesen: ${osszes.toLocaleString()} Ft + ${afa}% áfa
+      </div>
 
-    <div style="
+      <div style="
         text-align:right; 
         font-size:22px;
         font-weight:bold;
         color:#047857;
-    ">
-       Végösszeg: ${Math.round(osszes * ((1+(await ajax_post(`afa`, 1)).rows[0].AFA)/100)).toLocaleString()} Ft
+      ">
+        Végösszeg: ${vegosszeg} Ft
+      </div>
+
     </div>
-
-  </div>
-
-
-  `
+  </div>`;
 }
 
 

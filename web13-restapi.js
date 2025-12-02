@@ -907,6 +907,8 @@ app.post('/rendelesek',async (req, res) => {
     try{
     session_data = req.session;
 
+    var off = parseInt(req.query.OFFSET);
+
     
 
     var sql = 
@@ -917,9 +919,10 @@ app.post('/rendelesek',async (req, res) => {
     JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
     WHERE r.ID_USER = ?
     GROUP BY r.ID_RENDELES
-    ORDER BY r.ID_RENDELES DESC;
+    ORDER BY r.ID_RENDELES DESC
+    LIMIT 10 OFFSET ?;
     `;
-    let ertekek = [session_data.ID_USER];
+    let ertekek = [session_data.ID_USER, off];
 
     var eredmeny = await runQueries(sql, ertekek);
     res.set(header1, header2);
