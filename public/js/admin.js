@@ -583,7 +583,9 @@ function Statisztikak() {
         <div class="col-md-3"></div>
         <!-- 3. oszlop -->
         <div class="col-12 col-md-6 mb-4 d-flex flex-column justify-content-between  border border-black bg-warning rounded-4" id="_3_STAT">
-            <div class="text-center">3</div>
+            <div class="text-center d-felx content-center" style ="max-height:300px;">
+                <canvas id="STAT_KOR_GRAF"></canvas>
+            </div>
 
               <div class="row mt-auto " style="  font-size: 10px;">
                <div class="col-md-4 col-12">                
@@ -934,6 +936,30 @@ function STAT_Penz(innen){
     }
    
   });
+  new Chart("STAT_KOR_GRAF", {
+    type: "pie",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+      }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      plugins: {
+        legend: {display:true},
+        title: {
+          display: true,
+          text: "World Wine Production 2018",
+          font: {size:16}
+        }
+      }
+    }
+  });
+
+
  // cancva divének legyen fix magassága
   // resposnive true           !! FONOTOS
   // maintainAspectRatio false !! FONTOS

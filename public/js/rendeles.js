@@ -249,6 +249,7 @@ async function toggleRendeles(rendelId) {
     }
 
     $(`#tetelek_${rendelId}`).html(html);
+<<<<<<< HEAD
 }
 
 function Kovi(keri) {
@@ -288,3 +289,10 @@ function disable_valt() {
         $("#Kovi2").removeClass("disabled");
     }
 }
+=======
+    
+}
+
+
+
+>>>>>>> parent of 6a3f151 (Merge branch 'munka' of https://github.com/aronxd0/SZ-1-B-iskolai-webaruhaz into munka)
