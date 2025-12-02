@@ -271,15 +271,17 @@ async function Termek_Mutat(event, termek_id) {
     } else
     ks = `<button 
         class="btn btn-lg 
-          bg-emerald-800 
+          bg-gray-900 
           text-zinc-200 
-          hover:bg-emerald-700 
+          hover:bg-gray-700 
           hover:text-zinc-200 
-          hover:shadow-lg 
-          hover:shadow-emerald-700/70 
-          transition-all duration-150 ease-in-out
-          rounded-3xl 
-          kosar bi bi-cart2" onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba</button>`;
+          dark:bg-zinc-800 
+          dark:hover:bg-zinc-700 
+          transition-all duration-150 ease-in-out 
+          rounded-xl 
+          kosar bi bi-plus  
+           w-auto p-2 
+          " onclick='Kosarba_Bele(event, ${termek_id}'> Kosárba</button>`;
 
   let bal = ` 
                     <img class="img-fluid rounded-4 kepp2" src="${fotolink}" alt="${nev}">
