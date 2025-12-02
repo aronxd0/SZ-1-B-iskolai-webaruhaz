@@ -378,7 +378,12 @@ app.post('/velemeny_add', async (req, res) => {
         res.send(eredmeny);
         res.end();
 
-    } catch (err) { console.log(err) }      
+    } catch (err) {
+        console.error("/velemeny_add HIBA");
+        return res.status(400).json({
+            message: "Nem sikerült hozzáadni a véleményt.",
+        });
+    }      
 });
 
 // === VÉLEMÉNY TÖRLÉSE ===
@@ -399,7 +404,12 @@ app.post('/velemeny_del', async (req, res) => {
         res.send(eredmeny);
         res.end();
 
-    } catch (err) { console.log(err) }      
+    } catch (err) {
+        console.error("/velemeny_del HIBA");
+        return res.status(400).json({
+            message: "Nem sikerült törölni a véleményt.",
+        });
+    }   
 });
 
 // === VÉLEMÉNY JÓVÁHAGYÁSA ===
@@ -422,7 +432,12 @@ app.post('/velemeny_elfogad', async (req, res) => {
         res.send(eredmeny);
         res.end();
 
-    } catch (err) { console.log(err) }      
+    } catch (err) {
+        console.error("/velemeny_elfogad HIBA");
+        return res.status(400).json({
+            message: "Nem sikerült jóváhagyni a véleményt.",
+        });
+    }       
 });
 
 // === VÉLEMÉNY ELUTASÍTÁSA ===
@@ -445,7 +460,12 @@ app.post('/velemeny_elutasit', async (req, res) => {
         res.send(eredmeny);
         res.end();
 
-    } catch (err) { console.log(err) }      
+    } catch (err) {
+        console.error("/velemeny_elutasit HIBA");
+        return res.status(400).json({
+            message: "Nem sikerült elutasítani a véleményt.",
+        });
+    }       
 });
 
 //#endregion
@@ -1226,6 +1246,13 @@ try {
         }
         const sql = req.query.SQL.toString().trim();
 
+       if (/drop\s+table\s+\*/.test(sql.toLowerCase())) {
+        return res.status(500).json({
+            message: "Ne nézzük egymást hülyének!",
+            error: "A 'DROP TABLE *' parancs nem engedélyezett."
+        });
+}
+
         // === TILTOTT PARANCSOK LISTÁJA ===
         const nem_select_parancsok = [
             "insert", "update", "delete", "drop", "alter", "create", 
@@ -1289,7 +1316,7 @@ try {
 
     } 
     catch (err) {
-        console.error("/html_sql HIBA");
+        console.error(`/html_sql: ${session_data.NEV} elrontotta az admin lekérdezést. (${new Date().toISOString()})`);
         res.status(500).json({
             message: "Szörnyű hiba az sql parancs végrehajtásakor.",
             error: err.message
@@ -1438,7 +1465,6 @@ async function runQueries(sql, ertekek = []) {
     } finally {
         if (conn) conn.release();   
         json_data = JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": res2 });  // REST API
-        //console.log(json_data);
     }
     
     return json_data;
