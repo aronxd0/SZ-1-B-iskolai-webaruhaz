@@ -584,19 +584,19 @@ function Statisztikak() {
 
              <div class="row mt-auto d-felx p-2" style="  font-size: 10px;">
                <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar2" id="_03" checked  onchange="STAT_ELAD(this)">
                             1 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar2" id="_03"   onchange="STAT_ELAD(this)">
                             3 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar2" id="_03"  onchange="STAT_ELAD(this)" >
                             1 év
                         </label>
@@ -605,9 +605,12 @@ function Statisztikak() {
         </div>
         </div>
 
-        <div class="col-md-3"></div>
+
+
+       
         <!-- 3. oszlop -->
-        <div class="col-12 col-md-6 mb-4 d-flex flex-column justify-content-between  border border-black bg-zinc-50 
+        <div class="col-12 col-md-6 mb-4" id="_2_STAT">
+        <div class="col-12 d-flex flex-column justify-content-between  border border-black bg-zinc-50 
                         text-slate-900 
                         shadow-xl 
                         dark:bg-slate-950 
@@ -618,28 +621,66 @@ function Statisztikak() {
                 <canvas id="STAT_KOR_GRAF"></canvas>
             </div>
 
-              <div class="row mt-auto " style="  font-size: 10px;">
+              <div class="row mt-auto p-2" style="  font-size: 10px;">
                <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-100 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar3" id="_03" checked   onchange="STAT_KATEG(this)">
                             1 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-100 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar3" id="_03" onchange="STAT_KATEG(this)"> 
                             3 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-10 p-3 mb-2 rounded-2 text-center justify-content-center">  
-                            <input type="radio" name="hatar3" id="_03" onchange="STAT_KATEG(this)"> >
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">  
+                            <input type="radio" name="hatar3" id="_03" onchange="STAT_KATEG(this)"> 
                             1 év
                         </label>
                     </div>
             </div>
         </div>
-        <div class="col-md-3"></div>
+        </div>
+
+        <!-- 4.oszlop -->
+        <div class="col-12 col-md-6 mb-4" id="_2_STAT">
+         <div class="col-12d-flex flex-column justify-content-between  border border-black bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200  rounded-4 p-2" id="_3_STAT">
+
+            <div class="text-center d-felx content-center" style ="max-height:300px;">
+                <canvas id="STAT_COMMENT"></canvas> 
+            </div>
+
+              <div class="row mt-auto p-2 " style="  font-size: 10px;">
+               <div class="col-md-4 col-12 ">                
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
+                            <input type="radio" name="hatar4" id="_03" checked   onchange="STAT_COM(this)">
+                            1 hónap
+                        </label>
+                    </div>
+                      <div class="col-md-4 col-12">                
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
+                            <input type="radio" name="hatar4" id="_03" onchange="STAT_COM(this)"> 
+                            3 hónap
+                        </label>
+                    </div>
+                      <div class="col-md-4 col-12">                
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">  
+                            <input type="radio" name="hatar4" id="_03" onchange="STAT_COM(this)"> 
+                            1 év
+                        </label>
+                    </div>
+            </div>
+        </div>
+        </div>
+
     </div>  
 </div>
 
@@ -655,6 +696,7 @@ function Statisztikak() {
         STAT_Penz();
         STAT_ELAD();
         STAT_KATEG();
+        STAT_COM();
         /// suska
         // eladások száma || rendelések darabs száma
         // vett aruk kategória szerint
@@ -984,13 +1026,19 @@ function STAT_KATEG(innen){
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: {display: true, position: 'right'},
-    },
-    title: {
-      display: true,
-      text: "World Wide Wine Production"
+      legend: {
+        display: true,
+        position: 'right'
+      },
+      title: {
+        display: true,
+        text: "Vásárlások kategóriákra bontva",
+        position: "top",
+        font: {size: 16}
+      }
     }
   }
+  
 });
 }
   
@@ -1028,7 +1076,7 @@ function STAT_ELAD(innen){
         legend: {display: false},
         title: {
           display: true,
-          text: "Kategoria szerint eladott termékek",
+          text: "Rendelések száma napra bontva",
           font: {size: 16}
         }
       }
@@ -1036,7 +1084,55 @@ function STAT_ELAD(innen){
    
   });
 }
+ 
+
+let COMM_chart = null;
+
+function STAT_COM(innen){
+    var intervallum = "1";
+    if(innen != null){
+        intervallum = innen.value;
+    }
+    if(COMM_chart != null){
+        COMM_chart.destroy();
+    }
+
+     // ajax_post(`Statisztika_Penz?HATAR=${innen.value}`, 1);
+    
+
+    const xValues = ["1", "2", "3", "USA", "Argentina" ];
+    const yValues = [55, 49, 44, 24, 15];
+    const barColors = ["red", "green","blue",];
+
+
+COMM_chart =  new Chart("STAT_COMMENT", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'right'
+      },
+      title: {
+        display: true,
+        text: "Commentek eloszlása",
+        position: "top",
+        font: {size: 16}
+      }
+    }
+  }
   
+});
+}
 
 //#endregion
 
