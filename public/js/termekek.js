@@ -284,7 +284,26 @@ async function Termek_Mutat(event, termek_id) {
           " onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba</button>`;
 
   let bal = ` 
-                    <img class="img-fluid rounded-4 kepp2" src="${fotolink}" alt="${nev}">
+
+          <div 
+          class="
+            relative
+            d-flex 
+            align-items-center 
+            
+            
+            ">
+
+
+      
+            <img 
+              src="${fotolink}"
+              class="rounded-lg w-full h-60 object-cover hover:outline outline-black/10 hover:cursor-pointer dark:hover:-outline-offset-1 dark:hover:outline-white/10 "
+            >
+          
+            
+          </div>
+                    
                 
                 
     `;
@@ -319,9 +338,21 @@ async function Termek_Mutat(event, termek_id) {
     
     `;
 
-  $("#bal").html(bal);
-  $("#jobb").html(kozep);
+  //$("#bal").html(bal);
+  //$("#jobb").html(kozep);
   $("#alul").html(ks);
+
+  $("#termek_content").html(`
+
+    <div class="col-lg-6 d-flex justify-content-center p-1" id="bal">
+      ${bal}
+    </div>
+    <div class="col-lg-6 p-2" id="jobb">
+      ${kozep}
+    </div>  
+    
+    
+  `);
 
   $("#termeknev").html(nev);
 
