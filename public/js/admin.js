@@ -516,7 +516,7 @@ function Statisztikak() {
 
 
        <div class="container mt-5 mb-5 rounded-4  shadow-xl 
-                    bg-zinc-50 
+                    bg-zinc-100 
                     text-slate-900 
                     dark:bg-slate-950 
                     dark:!border 
@@ -532,26 +532,34 @@ function Statisztikak() {
 
         <!-- 1. oszlop -->
         <div class="col-12 col-md-6 mb-4" ><!-- azért van dupla div hogy legyen rés a 2 oszlop között -->
-        <div class="col-12 justify-content-between border border-black bg-info rounded-4">
+        <div class="col-12 justify-content-between border border-black bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                         rounded-4">
+
             <div class="d-felx content-center" style="height:300px;">
                 <canvas id="STAT_PENZ_GRAF"></canvas>
             </div>
 
             <div class="row mt-auto p-2" style="font-size: 10px;">
                 <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2 shadow-xl  bg-zinc-50 border border-dark  p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar" id="_01" value="1" checked  onchange="STAT_Penz(this)" >
                             1 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  shadow-xl  border border-dark bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar" id="_02" value="2"  onchange="STAT_Penz(this)">
                             3 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  shadow-xl  bg-zinc-50 border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar" id="_03"  value="3" onchange="STAT_Penz(this)">
                             1 év
                         </label>
@@ -562,7 +570,13 @@ function Statisztikak() {
 
         <!-- 2. oszlop -->
         <div class="col-12 col-md-6 mb-4" id="_2_STAT">
-        <div class="col-12  border border-black bg-success rounded-4 ">
+        <div class="col-12  border border-black bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 rounded-4 ">
 
             <div class="text-center d-felx" style="height:300px;">
                  <canvas id="STAT_VMI_GRAF"></canvas>
@@ -570,19 +584,19 @@ function Statisztikak() {
 
              <div class="row mt-auto d-felx p-2" style="  font-size: 10px;">
                <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar2" id="_03" checked  onchange="STAT_ELAD(this)">
                             1 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar2" id="_03"   onchange="STAT_ELAD(this)">
                             3 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar2" id="_03"  onchange="STAT_ELAD(this)" >
                             1 év
                         </label>
@@ -593,26 +607,32 @@ function Statisztikak() {
 
         <div class="col-md-3"></div>
         <!-- 3. oszlop -->
-        <div class="col-12 col-md-6 mb-4 d-flex flex-column justify-content-between  border border-black bg-warning rounded-4 p-2" id="_3_STAT">
+        <div class="col-12 col-md-6 mb-4 d-flex flex-column justify-content-between  border border-black bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200  rounded-4 p-2" id="_3_STAT">
             <div class="text-center d-felx content-center" style ="max-height:300px;">
                 <canvas id="STAT_KOR_GRAF"></canvas>
             </div>
 
               <div class="row mt-auto " style="  font-size: 10px;">
                <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  bg-zinc-100 p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar3" id="_03" checked   onchange="STAT_KATEG(this)">
                             1 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
+                        <label class="d-flex align-items-center gap-2  bg-zinc-100 p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar3" id="_03" onchange="STAT_KATEG(this)"> 
                             3 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">  
+                        <label class="d-flex align-items-center gap-2  bg-zinc-10 p-3 mb-2 rounded-2 text-center justify-content-center">  
                             <input type="radio" name="hatar3" id="_03" onchange="STAT_KATEG(this)"> >
                             1 év
                         </label>
@@ -904,7 +924,7 @@ function STAT_Penz(innen){
      // ajax_post(`Statisztika_Penz?HATAR=${innen.value}`, 1);
     
 
-    const xValues = ["1", "2", "3", "USA", "Argentina" ];
+    const xValues = ["1", "2", "3", "USA", "Argentina"];
     const yValues = [55, 49, 44, 24, 15];
     const barColors = ["red", "green","blue",];
 
