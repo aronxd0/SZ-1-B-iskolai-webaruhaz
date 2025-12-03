@@ -1331,34 +1331,43 @@ try {
 // === TOP 5 lekérdezése ===
 
 app.post('/top5',(req, res) => {
-    
-    var ido = req.query.INTERVALLUM.toString() // 1-3-5
-    var idocucc = null;
 
-    switch(ido){
-        case '1': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 1 month)`; break;
-        case '3': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 3 month)`; break;
-        default: idocucc = ``; break; // teljes idősáv
+    try{
+        var ido = req.query.INTERVALLUM.toString() // 1-3-5
+        var idocucc = null;
+
+        switch(ido){
+            case '1': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 1 month)`; break;
+            case '3': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 3 month)`; break;
+            default: idocucc = ``; break; // teljes idősáv
+        }
+
+        var sql = `
+            SELECT 
+                SUM(t.MENNYISEG) AS DB,
+                CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
+                webbolt_termekek.NEV
+            FROM webbolt_rendeles_tetelei t
+            INNER JOIN webbolt_rendeles r 
+                ON r.ID_RENDELES = t.ID_RENDELES
+            INNER JOIN webbolt_termekek 
+                ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
+            LEFT JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
+            WHERE t.ID_TERMEK IS NOT NULL
+            ${idocucc}
+            GROUP BY t.ID_TERMEK
+            ORDER BY DB DESC
+            LIMIT 5;
+        `
+        sendJson_toFrontend (res, sql, []);
+
     }
-
-    var sql = `
-        SELECT 
-            SUM(t.MENNYISEG) AS DB,
-            CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
-            webbolt_termekek.NEV
-        FROM webbolt_rendeles_tetelei t
-        INNER JOIN webbolt_rendeles r 
-            ON r.ID_RENDELES = t.ID_RENDELES
-        INNER JOIN webbolt_termekek 
-            ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
-        LEFT JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
-        WHERE t.ID_TERMEK IS NOT NULL
-        ${idocucc}
-        GROUP BY t.ID_TERMEK
-        ORDER BY DB DESC
-        LIMIT 5;
-    `
-    sendJson_toFrontend (res, sql, []);
+    catch (err) {
+        console.err("/Top5 hiba")
+        return JSON.stringify({ "message": "nemok", "maxcount": 0, "rows": "" });  // REST API
+    }
+    
+    
 });
 
 //#endregion
