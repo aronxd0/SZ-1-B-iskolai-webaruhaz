@@ -254,11 +254,30 @@ function KepNagyban(termek_id, fotolink) {
 
 function openImage(src) {
   document.getElementById("fsImg").src = src;
-  document.getElementById("imgFullscreen").classList.remove("hidden");
+  $("#imgFullscreen").removeClass("hidden");
+
+
+  // fade + scale animáció
+  requestAnimationFrame(() => {
+    $("#imgFullscreen").addClass("opacity-100");
+    $("#fsImg").removeClass("scale-95");
+    $("#fsImg").addClass("scale-100");
+  });
 }
 
 function closeImage() {
-  document.getElementById("imgFullscreen").classList.add("hidden");
+  
+  requestAnimationFrame(() => {
+    $("#imgFullscreen").removeClass("opacity-100");
+    $("#fsImg").removeClass("scale-100");
+    $("#fsImg").addClass("scale-95");
+
+  });
+  
+
+  setTimeout(() => {
+    $("#imgFullscreen").addClass("hidden");
+  }, 250);
 }
 
 
@@ -340,12 +359,12 @@ async function Termek_Mutat(event, termek_id) {
           onclick="openImage(this.src)">
     </div>
           
-      <!-- Fullscreen overlay -->
+      <!-- kep teljes kepernyo overlay -->
       <div id="imgFullscreen" 
-          class="fixed inset-0 bg-black/80 hidden z-50 ">
+          class="fixed inset-0 bg-black/80 hidden z-50 transition-opacity duration-300 opacity-0">
       
         <div class="d-flex justify-content-center align-items-center h-full w-full">
-          <img id="fsImg" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl">
+          <img id="fsImg" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl transition-all duration-300">
         </div>
         
         <button onclick="closeImage()" 
