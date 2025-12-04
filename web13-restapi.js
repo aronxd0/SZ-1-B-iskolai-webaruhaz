@@ -1332,42 +1332,102 @@ try {
 
 app.post('/top5',(req, res) => {
 
-    try{
-        var ido = req.query.INTERVALLUM.toString() // 1-3-5
-        var idocucc = null;
+    var ido = req.query.INTERVALLUM.toString() // 1-3-5
+    var idocucc = null;
 
-        switch(ido){
-            case '1': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 1 month)`; break;
-            case '3': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 3 month)`; break;
-            default: idocucc = ``; break; // teljes idősáv
-        }
-
-        var sql = `
-            SELECT 
-                SUM(t.MENNYISEG) AS DB,
-                CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
-                webbolt_termekek.NEV
-            FROM webbolt_rendeles_tetelei t
-            INNER JOIN webbolt_rendeles r 
-                ON r.ID_RENDELES = t.ID_RENDELES
-            INNER JOIN webbolt_termekek 
-                ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
-            LEFT JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
-            WHERE t.ID_TERMEK IS NOT NULL
-            ${idocucc}
-            GROUP BY t.ID_TERMEK
-            ORDER BY DB DESC
-            LIMIT 5;
-        `
-        sendJson_toFrontend (res, sql, []);
-
+    switch(ido){
+        case '1': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 1 month)`; break;
+        case '3': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 3 month)`; break;
+        default: idocucc = ``; break; // teljes idősáv
     }
-    catch (err) {
-        console.err("/Top5 hiba")
-        return JSON.stringify({ "message": "nemok", "maxcount": 0, "rows": "" });  // REST API
-    }
-    
-    
+
+    var sql = `
+        SELECT 
+            SUM(t.MENNYISEG) AS DB,
+            CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
+            webbolt_termekek.NEV
+        FROM webbolt_rendeles_tetelei t
+        INNER JOIN webbolt_rendeles r 
+            ON r.ID_RENDELES = t.ID_RENDELES
+        INNER JOIN webbolt_termekek 
+            ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
+        LEFT JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
+        WHERE t.ID_TERMEK IS NOT NULL
+        ${idocucc}
+        GROUP BY t.ID_TERMEK
+        ORDER BY DB DESC
+        LIMIT 5;
+    `
+    sendJson_toFrontend (res, sql, []);
+});
+
+
+app.post('/jovedelem',(req, res) => {
+
+    var ido = req.query.INTERVALLUM.toString() // 1-6-12
+    var sql = null;
+
+    switch(ido){
+        case '1': sql = `WITH RECURSIVE napok AS (
+                            SELECT DATE(CONVERT_TZ(NOW() - INTERVAL 1 MONTH, '+00:00','${idozona()}')) AS IDO
+                            UNION ALL
+                            SELECT DATE(IDO + INTERVAL 1 DAY)
+                            FROM napok
+                            WHERE IDO + INTERVAL 1 DAY <= DATE(CONVERT_TZ(NOW(), '+00:00','${idozona()}'))
+                        )
+                        SELECT 
+                            n.IDO,
+                            COALESCE(SUM(t.AR * t.MENNYISEG), 0) AS BEVETEL
+                        FROM napok n
+                        LEFT JOIN webbolt_rendeles r 
+                            ON DATE(CONVERT_TZ(r.DATUM, '+00:00','${idozona()}')) = n.IDO
+                        LEFT JOIN webbolt_rendeles_tetelei t 
+                            ON t.ID_RENDELES = r.ID_RENDELES
+                        GROUP BY n.IDO
+                        ORDER BY n.IDO;`; break;
+        case '6': sql = `
+                            WITH RECURSIVE honapok AS (
+                                SELECT DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS IDO
+                                UNION ALL
+                                SELECT DATE_FORMAT(DATE_ADD(IDO, INTERVAL 1 MONTH), '%Y-%m-01')
+                                FROM honapok
+                                WHERE IDO < DATE_FORMAT(CURDATE(), '%Y-%m-01')
+                            )
+                            SELECT 
+                                h.IDO,
+                                    COALESCE(SUM(t.AR * t.MENNYISEG), 0) AS BEVETEL
+                            FROM honapok h
+                            LEFT JOIN webbolt_rendeles r 
+                                ON DATE_FORMAT(r.DATUM, '%Y-%m') = DATE_FORMAT(h.IDO, '%Y-%m')
+                            LEFT JOIN webbolt_rendeles_tetelei t 
+                                ON t.ID_RENDELES = r.ID_RENDELES
+                            GROUP BY h.IDO
+                            ORDER BY h.IDO;`; break;
+        default: sql = `SELECT 
+                                DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL n.n MONTH), '%Y-%m') AS IDO,
+                                COALESCE(SUM(t.AR * t.MENNYISEG), 0) AS BEVETEL
+                            FROM (
+                                SELECT 0 AS n UNION ALL
+                                SELECT 1 UNION ALL
+                                SELECT 2 UNION ALL
+                                SELECT 3 UNION ALL
+                                SELECT 4 UNION ALL
+                                SELECT 5 UNION ALL
+                                SELECT 6 UNION ALL
+                                SELECT 7 UNION ALL
+                                SELECT 8 UNION ALL
+                                SELECT 9 UNION ALL
+                                SELECT 10 UNION ALL
+                                SELECT 11 
+                            ) n
+                            LEFT JOIN webbolt_rendeles r
+                                ON DATE_FORMAT(r.DATUM, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL n.n MONTH), '%Y-%m')
+                            LEFT JOIN webbolt_rendeles_tetelei t
+                                ON t.ID_RENDELES = r.ID_RENDELES
+                            GROUP BY IDO
+                            ORDER BY IDO;`; break;
+    };
+    sendJson_toFrontend (res, sql, []);
 });
 
 //#endregion

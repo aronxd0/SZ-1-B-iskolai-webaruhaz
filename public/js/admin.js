@@ -530,8 +530,8 @@ function Statisztikak() {
 
     <div class="row p-4">
 
-        <!-- 1. oszlop -->
-        <div class="col-12 col-md-6 mb-4" ><!-- azért van dupla div hogy legyen rés a 2 oszlop között -->
+        <!-- 1. oszlop  col-md-6 mb-4-->
+        <div class="col-12 " ><!-- azért van dupla div hogy legyen rés a 2 oszlop között -->
         <div class="col-12 justify-content-between border border-black bg-zinc-50 
                         text-slate-900 
                         shadow-xl 
@@ -554,13 +554,13 @@ function Statisztikak() {
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  shadow-xl  border border-dark bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar" id="_02" value="2"  onchange="STAT_Penz(this)">
+                            <input type="radio" name="hatar" id="_02" value="6"  onchange="STAT_Penz(this)">
                             6 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  shadow-xl  bg-zinc-50 border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar" id="_03"  value="3" onchange="STAT_Penz(this)">
+                            <input type="radio" name="hatar" id="_03"  value="12" onchange="STAT_Penz(this)">
                             1 év
                         </label>
                     </div>
@@ -569,7 +569,7 @@ function Statisztikak() {
         </div>
 
         <!-- 2. oszlop -->
-        <div class="col-12 col-md-6 mb-4" id="_2_STAT">
+        <div class="col-12 " id="_2_STAT">
         <div class="col-12  border border-black bg-zinc-50 
                         text-slate-900 
                         shadow-xl 
@@ -954,7 +954,7 @@ function drawChart(rang) {
 }
 
 let penzChart = null;
-function STAT_Penz(innen){
+async function STAT_Penz(innen){
     var intervallum = "1";
     if(innen != null){
         intervallum = innen.value;
@@ -963,19 +963,28 @@ function STAT_Penz(innen){
         penzChart.destroy();
     }
 
-     // ajax_post(`Statisztika_Penz?HATAR=${innen.value}`, 1);
+    var adat = await ajax_post(`jovedelem?INTERVALLUM=${intervallum}`, 1);
+    
+    const xValues = [];
+    const yValues = [];
+    const barColors = ["light-green"];
+
+    for (var item of adat.rows){
+        xValues.push(new Date(item.IDO).toLocaleString("hu-HU", {month: "2-digit",day: "2-digit"}))
+        console.log(item.IDO)
+        yValues.push(item.BEVETEL)
+       
+    }
+
     
 
-    const xValues = ["1", "2", "3", "USA", "Argentina"];
-    const yValues = [55, 49, 44, 24, 15];
-    const barColors = ["red", "green","blue",];
 
     penzChart =  new Chart("STAT_PENZ_GRAF", {
   type: "bar",
   data: {
     labels: xValues,
     datasets: [{
-      backgroundColor: barColors,
+      backgroundColor: "green",
       data: yValues
     }]
   },
