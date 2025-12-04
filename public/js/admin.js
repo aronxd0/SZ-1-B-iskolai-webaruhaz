@@ -555,7 +555,7 @@ function Statisztikak() {
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  shadow-xl  border border-dark bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
                             <input type="radio" name="hatar" id="_02" value="2"  onchange="STAT_Penz(this)">
-                            3 hónap
+                            6 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
