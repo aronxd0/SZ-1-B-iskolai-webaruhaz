@@ -98,6 +98,9 @@ function fileFilter(req, file, cb) {
 
 module.exports = upload;
 
+
+//#region konstans kérdezés
+
 // === AFA lekérdezése ===
 // GET: /afa
 
@@ -109,6 +112,7 @@ app.post('/afa',(req, res) => {
 });
 
 
+//#endregion
 
 //#region kereses
 
@@ -1361,77 +1365,192 @@ app.post('/top5',(req, res) => {
     sendJson_toFrontend (res, sql, []);
 });
 
+app.post('/bevetel_stat',(req, res) => {
 
-app.post('/jovedelem',(req, res) => {
-
-    var ido = req.query.INTERVALLUM.toString() // 1-6-12
-    var sql = null;
+    var ido = req.query.INTERVALLUM ? parseInt(req.query.INTERVALLUM) : 12; // 1-6-12
+    var sql = "";
 
     switch(ido){
-        case '1': sql = `WITH RECURSIVE napok AS (
-                            SELECT DATE(CONVERT_TZ(NOW() - INTERVAL 1 MONTH, '+00:00','${idozona()}')) AS IDO
-                            UNION ALL
-                            SELECT DATE(IDO + INTERVAL 1 DAY)
-                            FROM napok
-                            WHERE IDO + INTERVAL 1 DAY <= DATE(CONVERT_TZ(NOW(), '+00:00','${idozona()}'))
-                        )
-                        SELECT 
-                            n.IDO,
-                            COALESCE(SUM(t.AR * t.MENNYISEG), 0) AS BEVETEL
-                        FROM napok n
-                        LEFT JOIN webbolt_rendeles r 
-                            ON DATE(CONVERT_TZ(r.DATUM, '+00:00','${idozona()}')) = n.IDO
-                        LEFT JOIN webbolt_rendeles_tetelei t 
-                            ON t.ID_RENDELES = r.ID_RENDELES
-                        GROUP BY n.IDO
-                        ORDER BY n.IDO;`; break;
-        case '6': sql = `
-                            WITH RECURSIVE honapok AS (
-                                SELECT DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m-01') AS IDO
-                                UNION ALL
-                                SELECT DATE_FORMAT(DATE_ADD(IDO, INTERVAL 1 MONTH), '%Y-%m-01')
-                                FROM honapok
-                                WHERE IDO < DATE_FORMAT(CURDATE(), '%Y-%m-01')
-                            )
-                            SELECT 
-                                h.IDO,
-                                    COALESCE(SUM(t.AR * t.MENNYISEG), 0) AS BEVETEL
-                            FROM honapok h
-                            LEFT JOIN webbolt_rendeles r 
-                                ON DATE_FORMAT(r.DATUM, '%Y-%m') = DATE_FORMAT(h.IDO, '%Y-%m')
-                            LEFT JOIN webbolt_rendeles_tetelei t 
-                                ON t.ID_RENDELES = r.ID_RENDELES
-                            GROUP BY h.IDO
-                            ORDER BY h.IDO;`; break;
-        default: sql = `SELECT 
-                                DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL n.n MONTH), '%Y-%m') AS IDO,
-                                COALESCE(SUM(t.AR * t.MENNYISEG), 0) AS BEVETEL
-                            FROM (
-                                SELECT 0 AS n UNION ALL
-                                SELECT 1 UNION ALL
-                                SELECT 2 UNION ALL
-                                SELECT 3 UNION ALL
-                                SELECT 4 UNION ALL
-                                SELECT 5 UNION ALL
-                                SELECT 6 UNION ALL
-                                SELECT 7 UNION ALL
-                                SELECT 8 UNION ALL
-                                SELECT 9 UNION ALL
-                                SELECT 10 UNION ALL
-                                SELECT 11 
-                            ) n
-                            LEFT JOIN webbolt_rendeles r
-                                ON DATE_FORMAT(r.DATUM, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL n.n MONTH), '%Y-%m')
-                            LEFT JOIN webbolt_rendeles_tetelei t
-                                ON t.ID_RENDELES = r.ID_RENDELES
-                            GROUP BY IDO
-                            ORDER BY IDO;`; break;
+        case 1: 
+            sql = `
+                WITH RECURSIVE napok AS (
+                    SELECT DATE(CONVERT_TZ(NOW() - INTERVAL ? MONTH, '+00:00','${idozona()}')) AS IDO
+                    UNION ALL
+                    SELECT DATE(IDO + INTERVAL 1 DAY)
+                    FROM napok
+                    WHERE IDO + INTERVAL 1 DAY <= DATE(CONVERT_TZ(NOW(), '+00:00','${idozona()}'))
+                )
+                SELECT 
+                    n.IDO,
+                    COALESCE(SUM(t.AR * t.MENNYISEG), 0) AS BEVETEL
+                FROM napok n
+                LEFT JOIN webbolt_rendeles r 
+                    ON DATE(CONVERT_TZ(r.DATUM, '+00:00','${idozona()}')) = n.IDO
+                LEFT JOIN webbolt_rendeles_tetelei t 
+                    ON t.ID_RENDELES = r.ID_RENDELES
+                GROUP BY n.IDO
+                ORDER BY n.IDO;
+            `;
+            break;
+
+        default : 
+            sql = `
+                WITH RECURSIVE honapok AS (
+                    SELECT DATE_FORMAT(CONVERT_TZ(DATE_SUB(CURDATE(), INTERVAL ? MONTH), '+00:00','${idozona()}'), '%Y-%m-01') AS IDO
+                    UNION ALL
+                    SELECT DATE_FORMAT(DATE_ADD(IDO, INTERVAL 1 MONTH), '%Y-%m-01')
+                    FROM honapok
+                    WHERE IDO < DATE_FORMAT(CONVERT_TZ(CURDATE(), '+00:00','${idozona()}'), '%Y-%m-01')
+                )
+                SELECT 
+                    h.IDO,
+                    COALESCE(SUM(t.AR * t.MENNYISEG), 0) AS BEVETEL
+                FROM honapok h
+                LEFT JOIN webbolt_rendeles r 
+                    ON DATE_FORMAT(CONVERT_TZ(r.DATUM, '+00:00','${idozona()}'), '%Y-%m') = DATE_FORMAT(h.IDO, '%Y-%m')
+                LEFT JOIN webbolt_rendeles_tetelei t 
+                    ON t.ID_RENDELES = r.ID_RENDELES
+                GROUP BY h.IDO
+                ORDER BY h.IDO;
+            `;
+            break;
     };
-    sendJson_toFrontend (res, sql, []);
+
+    sendJson_toFrontend(res, sql, [ido == 1 ? 1 : ido-1]);
+});
+
+app.post('/rendelesek_stat', (req, res) => {
+
+    const ido = req.query.INTERVALLUM ? parseInt(req.query.INTERVALLUM) : 12;
+    let sql = null;
+
+    switch(ido){
+
+        case 1:
+            sql = `
+                WITH RECURSIVE napok AS (
+                    SELECT DATE(CONVERT_TZ(NOW() - INTERVAL ? MONTH, '+00:00','${idozona()}')) AS IDO
+                    UNION ALL
+                    SELECT DATE(IDO + INTERVAL 1 DAY)
+                    FROM napok
+                    WHERE IDO + INTERVAL 1 DAY <= DATE(CONVERT_TZ(NOW(), '+00:00','${idozona()}'))
+                )
+                SELECT 
+                    n.IDO,
+                    COUNT(r.ID_RENDELES) AS DARAB
+                FROM napok n
+                LEFT JOIN webbolt_rendeles r
+                    ON DATE(CONVERT_TZ(r.DATUM, '+00:00','${idozona()}')) = n.IDO
+                GROUP BY n.IDO
+                ORDER BY n.IDO;
+            `;
+            break;
+
+        default:
+            sql = `
+                WITH RECURSIVE honapok AS (
+                    SELECT DATE_FORMAT(CONVERT_TZ(DATE_SUB(CURDATE(), INTERVAL ? MONTH), '+00:00','${idozona()}'), '%Y-%m-01') AS IDO
+                    UNION ALL
+                    SELECT DATE_FORMAT(DATE_ADD(IDO, INTERVAL 1 MONTH), '%Y-%m-01')
+                    FROM honapok
+                    WHERE IDO < DATE_FORMAT(CONVERT_TZ(CURDATE(), '+00:00','${idozona()}'), '%Y-%m-01')
+                )
+                SELECT 
+                    h.IDO,
+                    COUNT(r.ID_RENDELES) AS DARAB
+                FROM honapok h
+                LEFT JOIN webbolt_rendeles r
+                    ON DATE_FORMAT(CONVERT_TZ(r.DATUM, '+00:00','${idozona()}'), '%Y-%m') = DATE_FORMAT(h.IDO, '%Y-%m')
+                GROUP BY h.IDO
+                ORDER BY h.IDO;
+            `;
+            break;
+    };
+
+    sendJson_toFrontend(res, sql, [ido == 1 ? 1 : ido-1]);
+});
+
+app.post('/kategoriak_stat', (req, res) => {
+
+    const ido = req.query.INTERVALLUM ? parseInt(req.query.INTERVALLUM) : 12;
+
+    const sql = `
+        WITH alap AS (
+            SELECT 
+                k.KATEGORIA,
+                SUM(t.MENNYISEG) AS DARAB
+            FROM webbolt_rendeles r
+            JOIN webbolt_rendeles_tetelei t 
+                ON t.ID_RENDELES = r.ID_RENDELES
+            JOIN webbolt_termekek p 
+                ON p.ID_TERMEK = t.ID_TERMEK
+            JOIN webbolt_kategoriak k
+                ON k.ID_KATEGORIA = p.ID_KATEGORIA
+            WHERE CONVERT_TZ(r.DATUM, '+00:00','${idozona()}')
+                >= CONVERT_TZ(NOW() - INTERVAL ${ido} MONTH, '+00:00','${idozona()}')
+            GROUP BY k.ID_KATEGORIA
+        ),
+
+        top5 AS (
+            SELECT *
+            FROM alap
+            ORDER BY DARAB DESC
+            LIMIT 5
+        ),
+
+        egyeb AS (
+            SELECT 
+                'Egyéb' AS KAT,
+                SUM(DARAB) AS DARAB,
+                COUNT(*) AS KAT_DB
+            FROM alap
+            WHERE KATEGORIA NOT IN (SELECT KATEGORIA FROM top5)
+        )
+
+        SELECT 
+            KATEGORIA,
+            DARAB
+        FROM top5
+
+        UNION ALL
+
+        SELECT 
+            CONCAT('Egyéb (', KAT_DB, ' kategoria)') AS KATEGORIA,
+            DARAB
+        FROM egyeb
+        HAVING DARAB IS NOT NULL
+
+        ORDER BY DARAB DESC;
+    `;
+
+    sendJson_toFrontend(res, sql, []);
+});
+
+app.post('/velemeny_stat', (req, res) => {
+
+    const ido = req.query.INTERVALLUM ? parseInt(req.query.INTERVALLUM) : 12;
+
+    var idocucc = "";
+    switch(ido){
+        case 1: idocucc = `WHERE CONVERT_TZ(webbolt_velemenyek.DATUM, '+00:00','${idozona()}')
+            >= CONVERT_TZ(NOW() - INTERVAL 1 MONTH, '+00:00','${idozona()}')`; break;
+        case 6: idocucc = `WHERE CONVERT_TZ(webbolt_velemenyek.DATUM, '+00:00','${idozona()}')
+            >= CONVERT_TZ(NOW() - INTERVAL 6 MONTH, '+00:00','${idozona()}')`; break;
+        default: idocucc = ``; break; // teljes idősáv
+    }
+
+    const sql = `
+        SELECT webbolt_velemenyek.ALLAPOT, COUNT(*) AS DARAB
+        FROM webbolt_velemenyek
+        ${idocucc}
+        GROUP BY webbolt_velemenyek.ALLAPOT
+        ORDER BY DARAB DESC
+    `;
+
+    sendJson_toFrontend(res, sql, []);
 });
 
 //#endregion
-
 
 //#region függvények
 

@@ -585,19 +585,19 @@ function Statisztikak() {
              <div class="row mt-auto d-felx p-2" style="  font-size: 10px;">
                <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar2" id="_03" checked  onchange="STAT_ELAD(this)">
+                            <input type="radio" name="hatar2" id="_03" value="1" checked  onchange="STAT_ELAD(this)">
                             1 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar2" id="_03"   onchange="STAT_ELAD(this)">
+                            <input type="radio" name="hatar2" id="_03" value="6"   onchange="STAT_ELAD(this)">
                             3 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar2" id="_03"  onchange="STAT_ELAD(this)" >
+                            <input type="radio" name="hatar2" id="_03" value="12"  onchange="STAT_ELAD(this)" >
                             1 év
                         </label>
                     </div>
@@ -624,20 +624,20 @@ function Statisztikak() {
               <div class="row mt-auto p-2" style="  font-size: 10px;">
                <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar3" id="_03" checked   onchange="STAT_KATEG(this)">
+                            <input type="radio" name="hatar3" id="_03" value="1" checked   onchange="STAT_KATEG(this)">
                             1 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar3" id="_03" onchange="STAT_KATEG(this)"> 
-                            3 hónap
+                            <input type="radio" name="hatar3" id="_03" value="6" onchange="STAT_KATEG(this)"> 
+                            6 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">  
-                            <input type="radio" name="hatar3" id="_03" onchange="STAT_KATEG(this)"> 
-                            1 év
+                            <input type="radio" name="hatar3" id="_03" value="12" onchange="STAT_KATEG(this)"> 
+                            All time
                         </label>
                     </div>
             </div>
@@ -661,20 +661,20 @@ function Statisztikak() {
               <div class="row mt-auto p-2 " style="  font-size: 10px;">
                <div class="col-md-4 col-12 ">                
                         <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar4" id="_03" checked   onchange="STAT_COM(this)">
+                            <input type="radio" name="hatar4" id="_03" value="1" checked   onchange="STAT_COM(this)">
                             1 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar4" id="_03" onchange="STAT_COM(this)"> 
-                            3 hónap
+                            <input type="radio" name="hatar4" id="_03" value="6" onchange="STAT_COM(this)"> 
+                            6 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
                         <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">  
-                            <input type="radio" name="hatar4" id="_03" onchange="STAT_COM(this)"> 
-                            1 év
+                            <input type="radio" name="hatar4" id="_03" value="12" onchange="STAT_COM(this)"> 
+                            All time
                         </label>
                     </div>
             </div>
@@ -963,22 +963,18 @@ async function STAT_Penz(innen){
         penzChart.destroy();
     }
 
-    var adat = await ajax_post(`jovedelem?INTERVALLUM=${intervallum}`, 1);
+    var adat = await ajax_post(`bevetel_stat?INTERVALLUM=${intervallum}`, 1);
     
     const xValues = [];
     const yValues = [];
-    const barColors = ["light-green"];
+    //const barColors = [];
 
     for (var item of adat.rows){
         xValues.push(new Date(item.IDO).toLocaleString("hu-HU", {month: "2-digit",day: "2-digit"}))
-        console.log(item.IDO)
         yValues.push(item.BEVETEL)
-       
     }
 
     
-
-
     penzChart =  new Chart("STAT_PENZ_GRAF", {
   type: "bar",
   data: {
@@ -995,7 +991,7 @@ async function STAT_Penz(innen){
       legend: {display: false},
       title: {
         display: true,
-        text: "Jövedelem alakulása",
+        text: "Bevétel alakulása",
         font: {size: 16}
       }
     }
@@ -1009,9 +1005,57 @@ async function STAT_Penz(innen){
   // ezzekkel a paraméterekkel lehet  responzivvá tenni a chartot
 
 }
-let VLM_chart = null;
 
-function STAT_KATEG(innen){
+let kAT_CHART = null;
+async function STAT_ELAD(innen){
+    var intervallum = "1";
+    if(innen != null){
+        intervallum = innen.value;
+    }
+    if(kAT_CHART != null){
+        kAT_CHART.destroy();
+    }
+
+    var adat = await ajax_post(`rendelesek_stat?INTERVALLUM=${intervallum}`, 1);
+    
+
+    const xValues = [];
+    const yValues = [];
+    //const barColors = [];
+
+    for (var item of adat.rows){
+        xValues.push(new Date(item.IDO).toLocaleString("hu-HU", {month: "2-digit",day: "2-digit"}))
+        yValues.push(item.DARAB)
+    }
+
+
+  kAT_CHART = new Chart("STAT_VMI_GRAF", {
+    type: "bar",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: "Lightblue",
+        data: yValues
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {display: false},
+        title: {
+          display: true,
+          text: "Rendelések száma",
+          font: {size: 16}
+        }
+      }
+    }
+   
+  });
+}
+
+let VLM_chart = null;
+async function STAT_KATEG(innen){
     var intervallum = "1";
     if(innen != null){
         intervallum = innen.value;
@@ -1020,12 +1064,18 @@ function STAT_KATEG(innen){
         VLM_chart.destroy();
     }
 
-     // ajax_post(`Statisztika_Penz?HATAR=${innen.value}`, 1);
+    var adat = await ajax_post(`kategoriak_stat?INTERVALLUM=${intervallum}`, 1);
     
 
-    const xValues = ["1", "2", "3", "USA", "Argentina" ];
-    const yValues = [55, 49, 44, 24, 15];
-    const barColors = ["red", "green","blue",];
+    const xValues = [];
+    const yValues = [];
+    //const barColors = [];
+
+    for (var item of adat.rows){
+        xValues.push(item.KATEGORIA)
+        yValues.push(item.DARAB)
+        
+    }
 
 
   VLM_chart =  new Chart("STAT_KOR_GRAF", {
@@ -1033,7 +1083,7 @@ function STAT_KATEG(innen){
   data: {
     labels: xValues,
     datasets: [{
-      backgroundColor: barColors,
+      backgroundColor: "green",
       data: yValues
     }]
   },
@@ -1047,7 +1097,7 @@ function STAT_KATEG(innen){
       },
       title: {
         display: true,
-        text: "Vásárlások kategóriákra bontva",
+        text: "Rendelések kategóriákra bontva",
         position: "top",
         font: {size: 16}
       }
@@ -1056,54 +1106,9 @@ function STAT_KATEG(innen){
   
 });
 }
-  
-let kAT_CHART = null;
-function STAT_ELAD(innen){
-    var intervallum = "1";
-    if(innen != null){
-        intervallum = innen.value;
-    }
-    if(kAT_CHART != null){
-        kAT_CHART.destroy();
-    }
-
-     // ajax_post(`Statisztika_Penz?HATAR=${innen.value}`, 1);
-    
-
-    const xValues = ["1", "2", "3", "USA", "Argentina" ];
-    const yValues = [55, 49, 44, 24, 15];
-    const barColors = ["red", "green","blue",];
-
-
-  kAT_CHART = new Chart("STAT_VMI_GRAF", {
-    type: "bar",
-    data: {
-      labels: xValues,
-      datasets: [{
-        backgroundColor: barColors,
-        data: yValues
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {display: false},
-        title: {
-          display: true,
-          text: "Rendelések száma napra bontva",
-          font: {size: 16}
-        }
-      }
-    }
-   
-  });
-}
- 
 
 let COMM_chart = null;
-
-function STAT_COM(innen){
+async function STAT_COM(innen){
     var intervallum = "1";
     if(innen != null){
         intervallum = innen.value;
@@ -1112,12 +1117,23 @@ function STAT_COM(innen){
         COMM_chart.destroy();
     }
 
-     // ajax_post(`Statisztika_Penz?HATAR=${innen.value}`, 1);
+    var adat = await ajax_post(`velemeny_stat?INTERVALLUM=${intervallum}`, 1);
     
 
-    const xValues = ["1", "2", "3", "USA", "Argentina" ];
-    const yValues = [55, 49, 44, 24, 15];
-    const barColors = ["red", "green","blue",];
+    const xValues = [];
+    const yValues = [];
+    const barColors = [];
+
+    for (var item of adat.rows){
+        xValues.push(item.ALLAPOT)
+        yValues.push(item.DARAB)
+
+        switch(item.ALLAPOT){
+            case "Jóváhagyva" : barColors.push("Green"); break;
+            case "Jóváhagyásra vár" : barColors.push("Orange"); break;
+            case "Elutasítva" : barColors.push("Red"); break;
+        }
+    }
 
 
 COMM_chart =  new Chart("STAT_COMMENT", {
