@@ -1,42 +1,44 @@
+/* #region GLOBÁLIS BEÁLLÍTÁSOK */
+
+/* Betűtípusok importálása */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap');
 
-html, body {
-  overflow-x: hidden;
-  max-width: 100%;
+
+/* Az oldalon használt főbb színek változóba lementve hogy több helyen egyszerűen lehessen rájuk hivatkozni */
+:root {
+  --zinc-200: oklch(92% 0.004 286.32);
+  --slate-900: oklch(20.8% 0.042 265.755);
+  --slate-800: oklch(27.9% 0.041 260.031);
+  --zinc-50: oklch(98.5% 0 0);
+  --slate-700: oklch(37.2% 0.044 257.287);
+  --gray-200: oklch(92.8% 0.006 264.531);
+  --gray-400: oklch(70.7% 0.022 261.325);
+  --gray-900: oklch(21% 0.034 264.665);
+  --gray-600: oklch(44.6% 0.03 256.802);
 }
 
-.anton-regular {
-  /*
-  font-family: "Anton", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  */
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-}
+/* Az oldalon minden szöveg ezzel a betűtípussal jelenjen meg */
+* { font-family: 'Poppins', sans-serif; }
 
-#sql_input_area {
-  font-family: "Google Sans Code", monospace;
-  
-}
+/* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
+html, body { overflow-x: hidden; max-width: 100%; }
 
+/* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
+.container-fluid { padding-left: 0 !important; padding-right: 0 !important; }
+
+/* #endregion */
+
+
+/* #region FEJLÉC */
+.iemge { max-width: 150px; width: 100%; }
+
+.navbar-toggler:focus { box-shadow: none; }
+/* #endregion */
+
+
+/* #region HERO */
 .welcome {
-
-  /* box-shadow: tipus x-offset y-offset blur spread szin */
-
-  /*box-shadow: inset 0 0 15px 30px oklch(92% 0.004 286.32);*/
-  background-image: url('img/welcome.jpg'); 
-  background-size: cover; 
-  background-position: center; 
-  width: 100%; 
-  height: 700px;
-
-  
-}
-
-html.dark .welcome {
-  /*box-shadow: inset 0 0 15px 30px oklch(27.9% 0.041 260.031);*/
   background-image: url('img/welcome.jpg'); 
   background-size: cover; 
   background-position: center; 
@@ -44,21 +46,8 @@ html.dark .welcome {
   height: 700px;
 }
 
-/*
-@media (min-width:992px) {
-  .welcome {
-    box-shadow: inset 0 0 35px 50px oklch(92% 0.004 286.32);
-  }
-
-  html.dark .welcome {
-    box-shadow: inset 0 0 35px 50px oklch(27.9% 0.041 260.031);
-  }
-}
-*/
-
-.cim {
-  font-size: 35px;
-}
+.cim { font-size: 35px; }
+/* #endregion */
 
 
 
@@ -97,7 +86,24 @@ html.dark .welcome {
   backdrop-filter: blur(20px);
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 1 !important;
+  
 }
+
+
+
+.modal.fade .modal-dialog {
+  opacity: 0;
+  transform: translateY(0) scale(0.92);
+  transition:
+    opacity .28s ease,
+    transform .28s cubic-bezier(.19,1,.22,1);
+}
+
+.modal.fade.show .modal-dialog {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
 
 
 
@@ -138,24 +144,24 @@ label::after { content: none !important; }
 
 /* vilagos modban */
 .gombdiv.aktiv { 
-  border-bottom: 1px solid oklch(20.8% 0.042 265.755);
-  color: oklch(20.8% 0.042 265.755);
+  border-bottom: 1px solid var(--slate-900);
+  color: var(--slate-900);
 
 } 
 
 .gombdiv.aktiv button {
-  color: oklch(20.8% 0.042 265.755);
+  color: var(--slate-900);
   font-weight: bold;
 }
 
 /* sotet modban */
 html.dark .gombdiv.aktiv { 
-  border-bottom: 1px solid oklch(92% 0.004 286.32);
-  color: oklch(92% 0.004 286.32);
+  border-bottom: 1px solid var(--zinc-200);
+  color: var(--zinc-200);
 } 
 
 html.dark .gombdiv.aktiv button {
-  color: oklch(92% 0.004 286.32);
+  color: var(--zinc-200);
   font-weight: bold;
 }
 
@@ -269,25 +275,25 @@ input::-webkit-inner-spin-button {
 
 
 ::-webkit-slider-runnable-track {
-  background: oklch(98.5% 0 0); /* zinc-50 */
+  background: var(--zinc-50); 
 }
 
 html.dark ::-webkit-slider-runnable-track {
-  background: oklch(37.2% 0.044 257.287);
+  background: var(--slate-700);
 }
 
 
 .nav-link.active {
-  background-color: oklch(92% 0.004 286.32) !important; /* zinc-200 */
+  background-color: var(--zinc-200) !important; /* zinc-200 */
   border: none;
-  border-bottom: 1px solid oklch(20.8% 0.042 265.755);
+  border-bottom: 1px solid var(--slate-900);
 }
 
 html.dark .nav-link.active {
-  background-color: oklch(27.9% 0.041 260.031) !important; /* slate-800 */
-  color: oklch(92% 0.004 286.32) !important;
+  background-color: var(--slate-800) !important; /* slate-800 */
+  color: var(--zinc-200) !important;
   border: none;
-  border-bottom: 1px solid oklch(92% 0.004 286.32);
+  border-bottom: 1px solid var(--zinc-200);
 }
 
 
@@ -298,23 +304,32 @@ html.dark .nav-link.active {
 
 /* az egesz */
 ::-webkit-scrollbar-track {
-  background: oklch(92.8% 0.006 264.531); /* gray-200 */
+  background: var(--gray-200); /* gray-200 */
 }
 
 /* a cucc ami benne van amit lehet huzni */
 ::-webkit-scrollbar-thumb {
-  background: oklch(70.7% 0.022 261.325); /* gray-400 */
+  background: var(--gray-400); /* gray-400 */
   border-radius: 9999px;
 }
 
 /* sotetben */
 html.dark ::-webkit-scrollbar-track {
-  background: oklch(21% 0.034 264.665); /* gray-900 */
+  background: var(--gray-900); /* gray-900 */
 }
 
 html.dark ::-webkit-scrollbar-thumb {
-  background: oklch(44.6% 0.03 256.802); /* gray-600 */
+  background: var(--gray-600); /* gray-600 */
 }
+
+
+
+#sql_input_area {
+  font-family: "Google Sans Code", monospace;
+  
+}
+
+
 
 /* Autocomplete styling (összhangban az example-lel) */
 .autocomplete { position: relative; display: inline-block; }
@@ -344,34 +359,12 @@ html.dark ::-webkit-scrollbar-thumb {
 
 /* uj navbar css */
 
-.iemge {
-  max-width: 150px;
-  width: 100%;
-}
 
-.nav-link {
-  font-weight: bold;
-  color: #000;
-  font-size: small;
-}
 
-.navbar-toggler:focus {
-  box-shadow: none;
 
-}
 
-.container-fluid {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
 
-* {
-  font-family: 'Poppins', sans-serif;
-}
 
-.navbar, .cim {
-  font-family: 'Poppins', sans-serif;
-}
 
 
 @media (max-width: 1400px) {
@@ -390,8 +383,8 @@ html.dark ::-webkit-scrollbar-thumb {
   position: sticky;
   top: 0; 
   z-index: 10; 
-  background-color: oklch(20.8% 0.042 265.755); /* slate-900 */
-  color: oklch(92% 0.004 286.32); /* zinc-200 */
+  background-color: var(--slate-900); 
+  color: var(--zinc-200); 
 }
 
 
@@ -418,9 +411,9 @@ body.offcanvas-open {
     visibility: visible;
 }
 
-.hover-wrapper:hover #admin_button { color: oklch(37.2% 0.044 257.287); /* slate-700 */ }
+.hover-wrapper:hover #admin_button { color: var(--slate-700); }
 
-html.dark .hover-wrapper:hover #admin_button { color: oklch(92% 0.004 286.32) /* zinc-200 */ }
+html.dark .hover-wrapper:hover #admin_button { color: var(--zinc-200);  }
 
 
 
@@ -435,36 +428,6 @@ html.dark .hover-wrapper:hover #admin_button { color: oklch(92% 0.004 286.32) /*
 }
 
 
-
-
-
-/*
-.dropdown.dropdown-menu {
-  background-color: #fff;
-  border: none;
-  border-radius: 0;
-}
-
-@media (min-width:992px) {
-  .dropdown.dropdown-menu {
-    visibility: hidden;
-    opacity: 0;
-    top: 100%;
-    display: block;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .dropdown:hover.dropdown.dropdown-menu {
-    padding: 20px 0;
-    display: block;
-    visibility: visible;
-    opacity: 1;
-    transition: all 0.3s ease-in-out;
-  }
-
-  
-}
-*/
 
 .top-select-box {
     align-items:center;
