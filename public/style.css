@@ -97,7 +97,24 @@ html.dark .welcome {
   backdrop-filter: blur(20px);
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 1 !important;
+  
 }
+
+
+
+.modal.fade .modal-dialog {
+  opacity: 0;
+  transform: translateY(0) scale(0.92);
+  transition:
+    opacity .28s ease,
+    transform .28s cubic-bezier(.19,1,.22,1);
+}
+
+.modal.fade.show .modal-dialog {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
 
 
 

@@ -1036,6 +1036,9 @@
 
 
 
+  
+
+
   <!-- termék nagyban (részletes termék nézet): tartalmaz fotót, leírást, véleményeket és vélemény írási lehetőséget -->
   <div class="modal fade" id="termekview">
     <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
@@ -1610,6 +1613,19 @@
 
     <!-- #endregion -->
 
+    <!-- kep teljes kepernyo overlay -->
+  <div id="imgFullscreen" 
+      class="fixed inset-0 bg-black/80 hidden transition-opacity duration-300 opacity-0" style="z-index: 999999;">
+  
+    <div class="d-flex justify-content-center align-items-center h-full w-full">
+      <img id="fsImg" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl transition-all duration-300">
+    </div>
+    
+    <button onclick="closeImage()" 
+            class="absolute top-6 right-6 text-white text-3xl font-bold">
+      ✕
+    </button>
+  </div>
 
 
 

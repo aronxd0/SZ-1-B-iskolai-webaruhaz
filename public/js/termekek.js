@@ -359,19 +359,7 @@ async function Termek_Mutat(event, termek_id) {
           onclick="openImage(this.src)">
     </div>
           
-      <!-- kep teljes kepernyo overlay -->
-      <div id="imgFullscreen" 
-          class="fixed inset-0 bg-black/80 hidden z-50 transition-opacity duration-300 opacity-0">
       
-        <div class="d-flex justify-content-center align-items-center h-full w-full">
-          <img id="fsImg" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl transition-all duration-300">
-        </div>
-        
-        <button onclick="closeImage()" 
-                class="absolute top-6 right-6 text-white text-3xl font-bold">
-          ✕
-        </button>
-      </div>
 
 
 
