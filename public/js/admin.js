@@ -81,9 +81,9 @@ async function Admin_Velemenykezeles() {
                             dark:has-[:checked]:border ">
 
                         <div class="flex items-center gap-3">
-                        <input type="radio" name="plan" class="form-check-input hidden" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
-                        <span class="font-semibold">Jóváhagyva</span>
-                        <span id="jovahagyvadb" class="inline-flex items-center text-nowrap rounded-md bg-green-400/10 px-2 py-1 font-medium text-green-400 inset-ring inset-ring-green-500/20"> ${stimmdb.rows.length} </span>
+                            <input type="radio" name="plan" class="form-check-input hidden" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
+                            <span class="font-semibold">Jóváhagyva</span>
+                            <span id="jovahagyvadb" class="inline-flex items-center text-nowrap rounded-md bg-green-400/10 px-2 py-1 font-medium text-green-400 inset-ring inset-ring-green-500/20"> ${stimmdb.rows.length} </span>
                         </div>
 
                         <div class="flex flex-col text-right">
@@ -495,28 +495,47 @@ function Statisztikak() {
     $("#welcome_section").fadeOut(300);
             
         html = `
-        <div class="container bg-white">
-            <div class="row ">
-            <div class="col-md-2"></div>
-                <div class="top-select-box col-12 col-md-8 d-flex justify-content-center">
-                    <span class="chart-title" id="NagyCIM">Legkelendőbb termékek</span>
+        <div 
+        class="
+        container 
+        bg-zinc-50 
+        rounded-4  
+        shadow-xl 
+        text-slate-900 
+        dark:bg-slate-950 
+        dark:!border 
+        dark:!border-zinc-200/20  
+        dark:text-zinc-200  
+        p-3 ">
+            <div class="row d-flex flex-column flex-md-row justify-content-between align-items-center gap-y-5">
+                <div class="col-0 col-md-3"></div>
+                <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+                    <span class="chart-title text-2xl" id="NagyCIM">Legkelendőbb termékek</span>
                 </div>
                 
-                <div class="col-12 col-md-2 mt-10 d-flex justify-content-center">
-                    <select id="honapValaszto" onchange="DiagrammokSelect(this)" class="select-box px-2">
+                <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+                    <select id="honapValaszto" onchange="DiagrammokSelect(this)" 
+
+                    class="form-select 
+                    shadow-xl 
+                    bg-zinc-100 
+                    text-slate-900 
+                    dark:bg-slate-800 
+                    dark:text-zinc-200 " style="border: none;">
+
                         <option value="1">1 hónap</option>
                         <option value="3">3 hónap</option>
                         <option value="5">All time</option>
                     </select>
                  </div>
             </div>
-            <div id="_Top5" style="min-width: 310px; height: 400px;" ></div>
+            <div class="row mt-5" id="_Top5" style="min-width: 310px; height: 400px;" ></div>
         </div>
 
 
 
        <div class="container mt-5 mb-5 rounded-4  shadow-xl 
-                    bg-zinc-100 
+                    bg-zinc-50 
                     text-slate-900 
                     dark:bg-slate-950 
                     dark:!border 
@@ -532,35 +551,103 @@ function Statisztikak() {
 
         <!-- 1. oszlop  col-md-6 mb-4-->
         <div class="col-12 " ><!-- azért van dupla div hogy legyen rés a 2 oszlop között -->
-        <div class="col-12 justify-content-between border border-black bg-zinc-50 
+        <div class="col-12 justify-content-between bg-zinc-100 
                         text-slate-900 
                         shadow-xl 
                         dark:bg-slate-950 
                         dark:!border  
                         dark:!border-zinc-200/20 
                         dark:text-zinc-200 
-                         rounded-4">
+                         rounded-4 mb-5 p-3">
 
             <div class="d-felx content-center" style="height:300px;">
                 <canvas id="STAT_PENZ_GRAF"></canvas>
             </div>
 
-            <div class="row mt-auto p-2" style="font-size: 10px;">
+            <div class="row mt-auto p-0 p-md-5">
                 <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2 shadow-xl  bg-zinc-50 border border-dark  p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar" id="_01" value="1" checked  onchange="STAT_Penz(this)" >
-                            1 hónap
+                        <label 
+                        class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">
+
+                            <input type="radio" class="form-check-input hidden" name="hatar" id="_01" value="1" checked  onchange="STAT_Penz(this)" >
+                            <span>1 hónap</span>
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  shadow-xl  border border-dark bg-zinc-50 p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar" id="_02" value="6"  onchange="STAT_Penz(this)">
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">
+                            <input type="radio" class="form-check-input hidden" name="hatar" id="_02" value="6"  onchange="STAT_Penz(this)">
                             6 hónap
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  shadow-xl  bg-zinc-50 border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar" id="_03"  value="12" onchange="STAT_Penz(this)">
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">
+                            <input type="radio" class="form-check-input hidden" name="hatar" id="_03"  value="12" onchange="STAT_Penz(this)">
                             1 év
                         </label>
                     </div>
@@ -570,35 +657,101 @@ function Statisztikak() {
 
         <!-- 2. oszlop -->
         <div class="col-12 " id="_2_STAT">
-        <div class="col-12  border border-black bg-zinc-50 
+        <div class="col-12  bg-zinc-100 
                         text-slate-900 
                         shadow-xl 
                         dark:bg-slate-950 
                         dark:!border  
                         dark:!border-zinc-200/20 
-                        dark:text-zinc-200 rounded-4 ">
+                        dark:text-zinc-200 rounded-4 mb-5 p-3">
 
-            <div class="text-center d-felx" style="height:300px;">
+            <div class="text-center d-flex" style="height:300px;">
                  <canvas id="STAT_VMI_GRAF"></canvas>
             </div>
 
-             <div class="row mt-auto d-felx p-2" style="  font-size: 10px;">
+             <div class="row mt-auto d-flex p-0 p-md-5">
                <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar2" id="_03" value="1" checked  onchange="STAT_ELAD(this)">
-                            1 hónap
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">
+                            <input type="radio" name="hatar2" class="form-check-input hidden" id="_03" value="1" checked  onchange="STAT_ELAD(this)">
+                            <span>1 hónap<span>
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar2" id="_03" value="6"   onchange="STAT_ELAD(this)">
-                            3 hónap
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">
+                            <input type="radio" name="hatar2" class="form-check-input hidden" id="_03" value="6"   onchange="STAT_ELAD(this)">
+                            <span>3 hónap</span>
                         </label>
                     </div>
                       <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar2" id="_03" value="12"  onchange="STAT_ELAD(this)" >
-                            1 év
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">
+                            <input type="radio" name="hatar2" class="form-check-input hidden" id="_03" value="12"  onchange="STAT_ELAD(this)" >
+                            <span>1 év</span>
                         </label>
                     </div>
             </div>
@@ -610,33 +763,99 @@ function Statisztikak() {
        
         <!-- 3. oszlop -->
         <div class="col-12 col-md-6 mb-4" id="_2_STAT">
-        <div class="col-12 d-flex flex-column justify-content-between  border border-black bg-zinc-50 
+        <div class="col-12 d-flex flex-column justify-content-between  bg-zinc-100 
                         text-slate-900 
                         shadow-xl 
                         dark:bg-slate-950 
                         dark:!border  
                         dark:!border-zinc-200/20 
-                        dark:text-zinc-200  rounded-4 p-2" id="_3_STAT">
+                        dark:text-zinc-200  rounded-4 mb-5 p-3" id="_3_STAT">
             <div class="text-center d-felx content-center" style ="max-height:300px;">
                 <canvas id="STAT_KOR_GRAF"></canvas>
             </div>
 
-              <div class="row mt-auto p-2" style="  font-size: 10px;">
-               <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar3" id="_03" value="1" checked   onchange="STAT_KATEG(this)">
+              <div class="row mt-auto p-2">
+               <div class="col-xl-4 col-12">                
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">
+                            <input type="radio" name="hatar3" class="form-check-input hidden" id="_03" value="1" checked   onchange="STAT_KATEG(this)">
                             1 hónap
                         </label>
                     </div>
-                      <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar3" id="_03" value="6" onchange="STAT_KATEG(this)"> 
+                      <div class="col-xl-4 col-12">                
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">
+                            <input type="radio" name="hatar3" class="form-check-input hidden" id="_03" value="6" onchange="STAT_KATEG(this)"> 
                             6 hónap
                         </label>
                     </div>
-                      <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">  
-                            <input type="radio" name="hatar3" id="_03" value="12" onchange="STAT_KATEG(this)"> 
+                      <div class="col-xl-4 col-12">                
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">  
+                            <input type="radio" name="hatar3" class="form-check-input hidden" id="_03" value="12" onchange="STAT_KATEG(this)"> 
                             All time
                         </label>
                     </div>
@@ -646,34 +865,100 @@ function Statisztikak() {
 
         <!-- 4.oszlop -->
         <div class="col-12 col-md-6 mb-4" id="_2_STAT">
-         <div class="col-12d-flex flex-column justify-content-between  border border-black bg-zinc-50 
+         <div class="col-12 d-flex flex-column justify-content-between bg-zinc-100 
                         text-slate-900 
                         shadow-xl 
                         dark:bg-slate-950 
                         dark:!border  
                         dark:!border-zinc-200/20 
-                        dark:text-zinc-200  rounded-4 p-2" id="_3_STAT">
+                        dark:text-zinc-200  rounded-4 mb-5 p-3" id="_3_STAT">
 
             <div class="text-center d-felx content-center" style ="max-height:300px;">
                 <canvas id="STAT_COMMENT"></canvas> 
             </div>
 
-              <div class="row mt-auto p-2 " style="  font-size: 10px;">
-               <div class="col-md-4 col-12 ">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar4" id="_03" value="1" checked   onchange="STAT_COM(this)">
+              <div class="row mt-auto p-2 " >
+               <div class="col-xl-4 col-12 ">                
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">
+                            <input type="radio" name="hatar4" class="form-check-input hidden" id="_03" value="1" checked   onchange="STAT_COM(this)">
                             1 hónap
                         </label>
                     </div>
-                      <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">
-                            <input type="radio" name="hatar4" id="_03" value="6" onchange="STAT_COM(this)"> 
+                      <div class="col-xl-4 col-12">                
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">
+                            <input type="radio" name="hatar4" class="form-check-input hidden" id="_03" value="6" onchange="STAT_COM(this)"> 
                             6 hónap
                         </label>
                     </div>
-                      <div class="col-md-4 col-12">                
-                        <label class="d-flex align-items-center gap-2  bg-zinc-50 shadow-xl  border border-dark p-3 mb-2 rounded-2 text-center justify-content-center">  
-                            <input type="radio" name="hatar4" id="_03" value="12" onchange="STAT_COM(this)"> 
+                      <div class="col-xl-4 col-12">                
+                        <label class="
+                        bg-zinc-50 
+                        text-slate-900 
+                        shadow-xl 
+                        dark:bg-slate-950 
+                        dark:!border  
+                        dark:!border-zinc-200/20 
+                        dark:text-zinc-200 
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        dark:hover:bg-gray-700 
+                        dark:hover:-outline-offset-1 
+                        dark:hover:outline-white/10 
+                        d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer 
+                            transition-all duration-200
+                            has-[:checked]:bg-indigo-100 
+                            has-[:checked]:border-indigo-400 
+                            has-[:checked]:border 
+                            has-[:checked]:shadow-md
+
+                            dark:has-[:checked]:bg-sky-950
+                            dark:has-[:checked]:border-sky-700
+                            dark:has-[:checked]:border">  
+                            <input type="radio" name="hatar4" class="form-check-input hidden" id="_03" value="12" onchange="STAT_COM(this)"> 
                             All time
                         </label>
                     </div>
@@ -745,8 +1030,11 @@ function drawChart(rang) {
       chart: {
         type: 'column',
         spacingTop: 10,
-        backgroundColor: '#ffffff' /// majd itt lehet szinezni
+        backgroundColor: '' /// majd itt lehet szinezni
       },
+
+      exporting: { enabled: false },
+      credits: { enabled: false },
   
       title: { // semmi nincs benne, de itt  kell lennie, hogy a korona jól pozícionálva legyen
                 useHTML: true, 
@@ -762,8 +1050,8 @@ function drawChart(rang) {
             const original = visibleData[this.pos];
             return `
               <div style="text-align:center;">
-                <div style="font-size:20px; font-weight:bold;">${shorten(original.name)}</div>
-                <div style="font-size:18px; color:#666;">${original.y}</div>
+                <div class="text-slate-900 dark:text-zinc-200" style="font-size:20px; font-weight:bold;">${shorten(original.name)}</div>
+                <div class="text-slate-900 dark:text-zinc-200" style="font-size:18px;">${original.y}</div>
               </div>`;
           },
           y: 25
@@ -778,19 +1066,19 @@ function drawChart(rang) {
             useHTML: true,
             outside: true,
             borderWidth: 0,
-            backgroundColor: "rgba(124,124,124,0.95)",
+            backgroundColor: "",
             shadow: false,
             padding: 8,
             formatter: function () { // ez  a tooltip tartalma azért van így megcsinálva mert html kell bele és eltörhető legyen a szöveg
                                 return `
-                                <div style="
+                                <div class="bg-zinc-200 text-slate-900 rounded-3 shadow-lg" style="
                             width: 180px; 
                             padding: 10px; 
                             text-align: center; 
                             white-space: normal; 
                             overflow-wrap: break-word;
                         ">
-                            <div style="
+                            <div class="bg-zinc-200 text-slate-900" style="
                                 font-size:14px;
                                 font-weight:bold;
                                 margin-bottom:5px;
@@ -798,7 +1086,7 @@ function drawChart(rang) {
                                 ${this.point.name}
                             </div>
 
-                            <div style="font-size:12px; color:#f0f0f0;">
+                            <div class="bg-zinc-200 text-slate-900" style="font-size:12px;">
                                 ${this.point.y} db
                             </div>
                         </div>
@@ -949,7 +1237,7 @@ function drawChart(rang) {
     // képek berakása
     for (const item of lista) {
         document.getElementById(item.NEV).innerHTML =
-            `<img src="${item.FOTOLINK}" style="height:100px;">`;
+            `<img class="img-fluid rounded-3 object-cover" src="${item.FOTOLINK}" style="height:100px;">`;
     }
 }
 
