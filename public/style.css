@@ -10,6 +10,7 @@
   --zinc-200: oklch(92% 0.004 286.32);
   --slate-900: oklch(20.8% 0.042 265.755);
   --slate-800: oklch(27.9% 0.041 260.031);
+  --slate-950: oklch(12.9% 0.042 264.695);
   --zinc-50: oklch(98.5% 0 0);
   --slate-700: oklch(37.2% 0.044 257.287);
   --gray-200: oklch(92.8% 0.006 264.531);
@@ -429,23 +430,28 @@ html.dark .hover-wrapper:hover #admin_button { color: var(--zinc-200);  }
 
 
 
-.top-select-box {
-    align-items:center;
-    padding:10px 20px;
-    font-size:26px;
-    font-weight:700;
-    margin-bottom:-30px; 
-}
+
 
 .chart-title {
     font-weight:900;
 }
 
-.select-box {
-    padding:8px 15px;
-    border-radius:15px;
-    border:2px solid #333;
-    font-size:17px;
-    background:white;
+
+
+
+.highcharts-background {
+  fill: var(--zinc-50) !important;
+}
+
+html.dark .highcharts-background {
+  fill: var(--slate-950) !important;
+  
+}
+
+.highcharts-title,
+.highcharts-xaxis-labels text,
+.highcharts-yaxis-labels text,
+.highcharts-tooltip text {
+  fill: var(--slate-900) !important;
 }
 
