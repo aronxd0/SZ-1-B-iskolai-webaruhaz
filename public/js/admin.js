@@ -1069,6 +1069,7 @@ async function STAT_KATEG(innen){
 
     const xValues = [];
     const yValues = [];
+    const szinek  = ["red", "green", "blue", "orenge", "cyan","pink"]
     //const barColors = [];
 
     for (var item of adat.rows){
@@ -1083,7 +1084,7 @@ async function STAT_KATEG(innen){
   data: {
     labels: xValues,
     datasets: [{
-      backgroundColor: "green",
+      backgroundColor: szinek,
       data: yValues
     }]
   },
