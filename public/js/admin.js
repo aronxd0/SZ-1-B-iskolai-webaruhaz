@@ -495,7 +495,18 @@ function Statisztikak() {
     $("#welcome_section").fadeOut(300);
             
         html = `
-        <div class="container bg-white">
+        <div 
+        class="
+        container 
+        bg-zinc-50 
+        rounded-4  
+        shadow-xl 
+        text-slate-900 
+        dark:bg-slate-950 
+        dark:!border 
+        dark:!border-zinc-200/20  
+        dark:text-zinc-200  
+        p-3 ">
             <div class="row ">
             <div class="col-md-2"></div>
                 <div class="top-select-box col-12 col-md-8 d-flex justify-content-center">
@@ -745,8 +756,11 @@ function drawChart(rang) {
       chart: {
         type: 'column',
         spacingTop: 10,
-        backgroundColor: '#ffffff' /// majd itt lehet szinezni
+        backgroundColor: '' /// majd itt lehet szinezni
       },
+
+      exporting: { enabled: false },
+      credits: { enabled: false },
   
       title: { // semmi nincs benne, de itt  kell lennie, hogy a korona jól pozícionálva legyen
                 useHTML: true, 
@@ -762,8 +776,8 @@ function drawChart(rang) {
             const original = visibleData[this.pos];
             return `
               <div style="text-align:center;">
-                <div style="font-size:20px; font-weight:bold;">${shorten(original.name)}</div>
-                <div style="font-size:18px; color:#666;">${original.y}</div>
+                <div class="text-slate-900 dark:text-zinc-200" style="font-size:20px; font-weight:bold;">${shorten(original.name)}</div>
+                <div class="text-slate-900 dark:text-zinc-200" style="font-size:18px;">${original.y}</div>
               </div>`;
           },
           y: 25
@@ -778,19 +792,19 @@ function drawChart(rang) {
             useHTML: true,
             outside: true,
             borderWidth: 0,
-            backgroundColor: "rgba(124,124,124,0.95)",
+            backgroundColor: "",
             shadow: false,
             padding: 8,
             formatter: function () { // ez  a tooltip tartalma azért van így megcsinálva mert html kell bele és eltörhető legyen a szöveg
                                 return `
-                                <div style="
+                                <div class="bg-zinc-200 text-slate-900 rounded-3 shadow-lg" style="
                             width: 180px; 
                             padding: 10px; 
                             text-align: center; 
                             white-space: normal; 
                             overflow-wrap: break-word;
                         ">
-                            <div style="
+                            <div class="bg-zinc-200 text-slate-900" style="
                                 font-size:14px;
                                 font-weight:bold;
                                 margin-bottom:5px;
@@ -798,7 +812,7 @@ function drawChart(rang) {
                                 ${this.point.name}
                             </div>
 
-                            <div style="font-size:12px; color:#f0f0f0;">
+                            <div class="bg-zinc-200 text-slate-900" style="font-size:12px;">
                                 ${this.point.y} db
                             </div>
                         </div>
@@ -949,7 +963,7 @@ function drawChart(rang) {
     // képek berakása
     for (const item of lista) {
         document.getElementById(item.NEV).innerHTML =
-            `<img src="${item.FOTOLINK}" style="height:100px;">`;
+            `<img class="img-fluid rounded-3 object-cover" src="${item.FOTOLINK}" style="height:100px;">`;
     }
 }
 
