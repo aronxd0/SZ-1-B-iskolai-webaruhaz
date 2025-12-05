@@ -90,7 +90,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 12 * 1024 * 1024 },
+  limits: { fileSize: 25 * 1024 * 1024 }, //25mb 
   fileFilter: fileFilter
 });
 // === MIME TÍPUS ELLENŐRZÉS ===
