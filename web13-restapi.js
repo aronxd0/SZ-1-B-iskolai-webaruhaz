@@ -1,3 +1,5 @@
+// runqueries and runexecute ECONERROR correction was made 12.05, ezért session beállítás változtatás
+
 // === KÖNYVTÁRAK ===
 const util      = require('util');
 const mysql     = require('mysql2/promise');  // MySQL szinkron/aszinkron kérdezésekhez
@@ -1020,11 +1022,11 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         // ----------- KATEGÓRIA KEZELÉS -------------
         var ID_KATEGORIA = null;
         if (uj_kategoria !== "") {
-            var q1 = JSON.parse(await runQueries("SELECT ID_KATEGORIA FROM webbolt_kategoriak WHERE KATEGORIA = ?", [uj_kategoria]));
+            var q1 = JSON.parse(await runQueries("SELECT ID_KATEGORIA FROM webbolt_kategoriak WHERE KATEGORIA = ?", [uj_kategoria], conn));
             if (q1.maxcount > 0) {
                 ID_KATEGORIA = q1.rows[0].ID_KATEGORIA;
             } else {
-                var ins = await runExecute("INSERT INTO webbolt_kategoriak (KATEGORIA) VALUES (?)", req, [uj_kategoria], true);
+                var ins = await runExecute("INSERT INTO webbolt_kategoriak (KATEGORIA) VALUES (?)", req, [uj_kategoria], true, conn);
                 ID_KATEGORIA = JSON.parse(ins).rows.insertId;
             }
         } else {
@@ -1045,7 +1047,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                 const webPath = `/img/uploads/${fajl.filename}`; // <-- JAVÍTVA
 
                 // 1. Lekérjük a régi képet, hogy törölni tudjuk
-                var qsel = JSON.parse(await runQueries("SELECT IMG FROM webbolt_fotok WHERE ID_TERMEK = ?", [termekid]));
+                var qsel = JSON.parse(await runQueries("SELECT IMG FROM webbolt_fotok WHERE ID_TERMEK = ?", [termekid], conn));
 
                 if (qsel.maxcount > 0) {
                     var regiKepUtvonal = qsel.rows[0].IMG;
@@ -1053,7 +1055,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                     // Frissítjük az újra
                     await runExecute(
                         "UPDATE webbolt_fotok SET FILENAME = ?, IMG = ? WHERE ID_TERMEK = ?",
-                        req, [fajl.originalname, webPath, termekid], true
+                        req, [fajl.originalname, webPath, termekid], true, conn
                     );
 
                     // 2. A RÉGI képet megpróbáljuk törölni, ha nem kell már
@@ -1065,14 +1067,14 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                     // Ha nincs régi rekord, beszúrjuk az újat
                     await runExecute(
                         "INSERT INTO webbolt_fotok (ID_TERMEK, FILENAME, IMG) VALUES (?, ?, ?)",
-                        req, [termekid, fajl.originalname, webPath], true
+                        req, [termekid, fajl.originalname, webPath], true, conn
                     );
                 }
                 fotolink = null; // Töröljük a FOTOLINK-et, ha feltöltöttünk fájlt
             }
             else {
                 // Ha nincs új fájl, de a user esetleg törölte a képet vagy URL-t írt be
-                var qkep = JSON.parse(await runQueries("SELECT FILENAME FROM webbolt_fotok WHERE ID_TERMEK = ?", [termekid]));
+                var qkep = JSON.parse(await runQueries("SELECT FILENAME FROM webbolt_fotok WHERE ID_TERMEK = ?", [termekid], conn));
                 if (qkep.maxcount > 0 && fotolink == qkep.rows[0].FILENAME) {
                     fotolink = null;
                 }
@@ -1080,7 +1082,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 
             // Termék adatainak frissítése
             var sql = `UPDATE webbolt_termekek SET ID_KATEGORIA=?, NEV=?, AZON=?, AR=?, MENNYISEG=?, MEEGYS=?, LEIRAS=?, AKTIV=?, FOTOLINK=? WHERE ID_TERMEK=?`;
-            await runExecute(sql, req, [ID_KATEGORIA, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, fotolink, termekid], true);
+            await runExecute(sql, req, [ID_KATEGORIA, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, fotolink, termekid], true, conn);
 
             await conn.query("COMMIT;");
             return res.json({ message: "ok" });
@@ -1092,7 +1094,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 
             // Termék létrehozása
             var sql = `INSERT INTO webbolt_termekek (ID_KATEGORIA, NEV, AZON, AR, MENNYISEG, MEEGYS, LEIRAS, AKTIV, FOTOLINK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-            var raw = await runExecute(sql, req, [ID_KATEGORIA, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, fotolink], true);
+            var raw = await runExecute(sql, req, [ID_KATEGORIA, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, fotolink], true, conn);
             termekid = JSON.parse(raw).rows.insertId;
 
             // HA VAN ÚJ KÉP FELTÖLTVE
@@ -1103,7 +1105,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                 // Beszúrás a fotók táblába
                 await runExecute( 
                     "INSERT INTO webbolt_fotok (ID_TERMEK, FILENAME, IMG) VALUES (?, ?, ?)", 
-                    req, [termekid, fajl.originalname, webPath], true 
+                    req, [termekid, fajl.originalname, webPath], true, conn
                 );
             }
             await conn.query("COMMIT;");
@@ -1505,7 +1507,7 @@ app.post('/velemeny_stat', (req, res) => {
 //   2. Futtatja a paraméterezett SQL-t
 //   3. Ha naplozas=true és volt affect, beírja a napló táblába
 //   4. JSON-ként visszaadja az eredményt
-async function runExecute(sql, req, ertekek = [], naplozas) {
+async function runExecute(sql, req, ertekek = [], naplozas, connection) {
     session_data = req.session;
      if (!req.session || !req.session.ID_USER) {
         return JSON.stringify({ 
@@ -1518,7 +1520,7 @@ async function runExecute(sql, req, ertekek = [], naplozas) {
     
     let conn;  // Kapcsolat deklarációja
     try {
-        conn = await pool.getConnection(); 
+        conn = connection ? connection : await pool.getConnection(); 
         [res1] = await conn.query(sql, ertekek);  // Paraméterezett lekérdezés
 
         // === NAPLÓZÁS ===
@@ -1537,7 +1539,7 @@ async function runExecute(sql, req, ertekek = [], naplozas) {
         msg = err.sqlMessage;  // MySQL hibaszöveg
         console.error('Hiba:', err); 
     } finally {
-        if (conn) conn.release();  // Kapcsolat felszabadítása
+        if (!connection) conn.release();  // Kapcsolat felszabadítása
         json_data = JSON.stringify({"message": msg, "rows": res1});  // REST API formátum
     }
     return json_data;
@@ -1552,7 +1554,7 @@ async function runExecute(sql, req, ertekek = [], naplozas) {
 //   1. Előbb COUNT-olja a lekérdezés eredményeit (biztonságos lapozáshoz)
 //   2. Ha maxcount > 0, futtatja a fő lekérdezést
 //   3. Visszaadja: {message: ok/hiba, maxcount: rekordszám, rows: tömb}
-async function runQueries(sql, ertekek = []) {
+async function runQueries(sql, ertekek = [], connection) {
     var maxcount = 0;
     var msg = "ok";
     
@@ -1564,7 +1566,7 @@ async function runQueries(sql, ertekek = []) {
 
     let conn;
     try {
-        conn = await pool.getConnection();
+        conn = connection ? connection : await pool.getConnection(); 
         
         // === PARAMÉTERKEZELÉS A COUNT-hoz ===
         // Ha van LIMIT/OFFSET, azokat nem akarjuk a COUNT-ba, csak az előző paramétereket
@@ -1586,7 +1588,7 @@ async function runQueries(sql, ertekek = []) {
         maxcount = -1;  // Hiba: -1
         console.error('Hiba:', err); 
     } finally {
-        if (conn) conn.release();   
+        if (!connection) conn.release();  // Kapcsolat felszabadítása  
         json_data = JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": res2 });  // REST API
     }
     
@@ -1715,6 +1717,7 @@ async function kepTorlesHaNincsRendelesben(webPath) {
 // === EMAIL KÜLDÉS ===
 // Az email-sender.js modul importálása
 const { sendEmail } = require('./email-sender');
+const { connect } = require('http2');
 
 // POST: /send-email
 // Paraméterek (req.body - JSON):
