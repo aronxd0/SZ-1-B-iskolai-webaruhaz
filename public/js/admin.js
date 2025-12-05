@@ -507,21 +507,29 @@ function Statisztikak() {
         dark:!border-zinc-200/20  
         dark:text-zinc-200  
         p-3 ">
-            <div class="row ">
-            <div class="col-md-2"></div>
-                <div class="top-select-box col-12 col-md-8 d-flex justify-content-center">
-                    <span class="chart-title" id="NagyCIM">Legkelendőbb termékek</span>
+            <div class="row d-flex flex-column flex-md-row justify-content-between align-items-center gap-y-5">
+                <div class="col-0 col-md-2"></div>
+                <div class="col-12 col-md-8 d-flex justify-content-center align-items-center">
+                    <span class="chart-title text-2xl" id="NagyCIM">Legkelendőbb termékek</span>
                 </div>
                 
-                <div class="col-12 col-md-2 mt-10 d-flex justify-content-center">
-                    <select id="honapValaszto" onchange="DiagrammokSelect(this)" class="select-box px-2">
+                <div class="col-12 col-md-2 d-flex justify-content-center align-items-center">
+                    <select id="honapValaszto" onchange="DiagrammokSelect(this)" 
+
+                    class="form-select 
+                    shadow-xl 
+                    bg-zinc-100 
+                    text-slate-900 
+                    dark:bg-slate-800 
+                    dark:text-zinc-200 " style="border: none;">
+
                         <option value="1">1 hónap</option>
                         <option value="3">3 hónap</option>
                         <option value="5">All time</option>
                     </select>
                  </div>
             </div>
-            <div id="_Top5" style="min-width: 310px; height: 400px;" ></div>
+            <div class="row mt-5" id="_Top5" style="min-width: 310px; height: 400px;" ></div>
         </div>
 
 
