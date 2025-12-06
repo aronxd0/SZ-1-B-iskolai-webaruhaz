@@ -601,7 +601,7 @@ async function KategoriaKezdolap(id_kategoria) {
     console.log(ker);
     CARD_BETOLT(keresve);
     OLDALFELTOTL(keresve.maxcount);
-    $("#keresett_kifejezes").html(`Kategória: <strong>${document.getElementById(id_kategoria).innerText}</strong>`);
+    $("#keresett_kifejezes").html(`A legmenőbb <strong>${document.getElementById(id_kategoria).innerText}</strong> termékek`);
 }
 
 function FelaTetore() {
