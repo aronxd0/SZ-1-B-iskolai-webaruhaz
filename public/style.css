@@ -39,6 +39,8 @@ html, body { overflow-x: hidden; max-width: 100%; }
 
 
 /* #region HERO */
+
+/*
 .welcome {
   background-image: url('img/welcome.jpg'); 
   background-size: cover; 
@@ -46,9 +48,11 @@ html, body { overflow-x: hidden; max-width: 100%; }
   width: 100%; 
   height: 700px;
 }
+  */
 
 .cim { font-size: 35px; }
 /* #endregion */
+
 
 
 .no-scrollbar::-webkit-scrollbar { display: none; }

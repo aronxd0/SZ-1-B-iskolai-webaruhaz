@@ -840,6 +840,8 @@ function CARD_BETOLT(adatok) {
       $("#keresett_kifejezes").fadeOut(300, function() {
         $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`).fadeIn(300);
       });
+      $("#felsosor").addClass("mt-[100px]");
+      $("#kateogoria-carousel").fadeOut(300);
 
       $("#débé").fadeOut(300, function() {
         $("#débé").html(` (${adatok.maxcount} db)`).fadeIn(300);

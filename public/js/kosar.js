@@ -15,8 +15,10 @@ $("#cart_button").click(async function () {
     console.log("cart_button click xd");
 
     $("#welcome_section").fadeOut(300);
+    $("#kateogoria-carousel").fadeOut(300);
 
     $("#keresett_kifejezes").html("");
+    $("#felsosor").removeClass("mt-[100px]");
     $("#débé").html("");
     $("#nev1").val("");
 

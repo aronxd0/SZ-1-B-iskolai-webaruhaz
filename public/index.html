@@ -624,30 +624,38 @@
 
         
       <!-- Üdvözlő (hero) rész: rövid bemutatkozás, motiváló szöveg és logó -->
-      <div class="w-100 p-0 mt-4" id="welcome_section">
-        <div class="welcome transition-all duration-700">
-          <div class="row" style="height: 700px;">
-            <div class="col-12 col-xxl-6 d-flex justify-content-center align-items-center flex-column">
-              <!--<span class="text-3xl text-center" style=" font-size: 60px; text-shadow: 2px 2px 5px oklch(96.7% 0.001 286.375);"><b>Üdvözlünk a Csány Webáruházban!</b></span>-->
-              
-                <span class="cim text-center  text-zinc-50 dark:text-zinc-50 py-3 px-5 underline decoration-emerald-500" id="udv"><b>Üdvözlünk a Csány webáruházban!</b></span>
-                
-              
-              
-              <p class="text-zinc-50 dark:text-zinc-50 text-lg py-3 px-5 text-center">
-                Vásárolj kedvedre a legmenőbb termékek közül! 
-              </p>
 
-            </div>
-            <div class="col-12 col-xxl-6 d-flex justify-content-center align-items-top align-items-xxl-center">
-              <img class="img-fluid m-2 w-30 h-20" src="img/logo2.png" alt="welcomepic">
+      <div id="welcome_section">
+
+      
+        <div class="w-full h-[700px] bg-[url('img/welcome.jpg')] bg-cover bg-center bg-fixed"></div>
+
+        <!-- CONTENT réteg (előttér), ami ráül a fix képre -->
+        <div class="relative -mt-[700px] z-10">
+          <div class="container mx-auto">
+            <div class="row h-[700px]">
+              
+              <div class="col-12 col-xxl-6 d-flex justify-content-center align-items-center flex-column">
+                <span class="cim text-center text-zinc-50 dark:text-zinc-50 py-4 px-5 underline decoration-emerald-500" id="udv">
+                  <b>Üdvözlünk a Csány webáruházban!</b>
+                </span>
+        
+                <p class="text-zinc-50 dark:text-zinc-50 text-lg py-3 px-5 text-center">
+                  Vásárolj kedvedre a legmenőbb termékek közül!
+                </p>
+              </div>
+        
+              <div class="col-12 col-xxl-6 d-flex justify-content-center align-items-top align-items-xxl-center">
+                <img class="img-fluid m-2 w-30 h-20" src="img/logo2.png" alt="">
+              </div>
+        
             </div>
           </div>
-          
         </div>
       </div>
 
-      <div class="relative w-full flex items-center overflow-hidden">
+      
+      <div class="relative w-full flex items-center overflow-hidden" id="kateogoria-carousel">
 
         <!-- LEFT BUTTON -->
         <button 
@@ -682,7 +690,7 @@
     
       <!-- Fő tartalom: ide töltődnek be a termékek és a lapozás (dinamikus JS vezérlés) -->
       <div class="container-fluid" id="content">
-        <div class="row mt-1">
+        <div class="row" id="felsosor">
           <div class="col-12 d-flex justify-content-center mt-2">
             <div class="w-auto p-2" id="keresett_kifejezes"></div>  
             <div class="w-auto align-self-center" id="débé"></div>

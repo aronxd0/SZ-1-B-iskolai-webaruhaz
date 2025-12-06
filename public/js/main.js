@@ -572,6 +572,8 @@ async function Kezdolap() {
     console.log("Kezdolap lefutott");
     $("#keresett_kifejezes").html();
     $("#welcome_section").fadeIn(300);
+    $("#kateogoria-carousel").fadeIn(300);
+    $("#felsosor").removeClass("mt-[100px]");
     nev1.value = "";
     bepipaltID = "";
     KERESOBAR();
