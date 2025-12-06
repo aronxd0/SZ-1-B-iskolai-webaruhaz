@@ -646,11 +646,43 @@
           
         </div>
       </div>
+
+      <div class="relative w-full flex items-center overflow-hidden">
+
+        <!-- LEFT BUTTON -->
+        <button 
+          id="carousel-left" 
+          class="btn btn-dark absolute left-0 z-20 opacity-70 hover:opacity-100">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <div 
+          id="carousel-track"
+          class="flex gap-4 overflow-x-scroll scroll-smooth no-scrollbar w-full px-12 py-4">
+          
+          <!--
+          <a href="#" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap">Elem 1</a>
+          <a href="#" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap">Elem 2</a>
+          <a href="#" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap">Elem 3</a>
+          <a href="#" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap">Elem 4</a>
+          <a href="#" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap">Elem 5</a>
+          <a href="#" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap">Elem 6</a>
+          -->
+
+        </div>
+
+        <!-- RIGHT BUTTON -->
+        <button 
+          id="carousel-right" 
+          class="btn btn-dark absolute right-0 z-20 opacity-70 hover:opacity-100">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
     
     
       <!-- Fő tartalom: ide töltődnek be a termékek és a lapozás (dinamikus JS vezérlés) -->
-      <div class="container-fluid mt-5" id="content">
-        <div class="row mt-5">
+      <div class="container-fluid" id="content">
+        <div class="row mt-1">
           <div class="col-12 d-flex justify-content-center mt-2">
             <div class="w-auto p-2" id="keresett_kifejezes"></div>  
             <div class="w-auto align-self-center" id="débé"></div>
@@ -659,7 +691,7 @@
         
         
 
-        <div class="row ">
+        <div class="row">
           <div class="col-0 col-xxl-1"></div>
           <div class="col-12 col-xxl-10 p-xxl-5">
             <div class="row p-2" id="content_hely"></div>  

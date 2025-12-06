@@ -568,7 +568,7 @@ function Elfogyott(alma){
     KategoriaFeltolt("kategoria_section", "check", "");
 }
 
-function Kezdolap() {
+async function Kezdolap() {
     console.log("Kezdolap lefutott");
     $("#keresett_kifejezes").html();
     $("#welcome_section").fadeIn(300);
@@ -576,11 +576,30 @@ function Kezdolap() {
     bepipaltID = "";
     KERESOBAR();
 
+    let kategoriacuccos = await ajax_post(`kategoria`, 1);
+    let k = "";
+    if (kategoriacuccos.rows.length > 0) {
+        for (const element of kategoriacuccos.rows) {
+            k += `<a id="${element.ID_KATEGORIA}" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap hover:cursor-pointer" onclick="KategoriaKezdolap(${element.ID_KATEGORIA})">${element.KATEGORIA}</a>`;
+        }
+        $("#carousel-track").html(k);
+    }
+    else { return; }
+
     if (!localStorage.getItem("loggedIn")) { update_gombok(0); }
     
     
       // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
     
+}
+
+async function KategoriaKezdolap(id_kategoria) {
+    let ker = KeresonekSQLCraft() + `${id_kategoria}&offset=0&order=-1`;
+    let keresve = await ajax_post(ker, 1);
+    console.log(ker);
+    CARD_BETOLT(keresve);
+    OLDALFELTOTL(keresve.maxcount);
+    $("#keresett_kifejezes").html(`Kategória: <strong>${document.getElementById(id_kategoria).innerText}</strong>`);
 }
 
 function FelaTetore() {

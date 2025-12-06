@@ -189,41 +189,37 @@ $(document).ready(function() {
         }
     });
 
+
+    const track = document.getElementById("carousel-track");
+    const btnLeft = document.getElementById("carousel-left");
+    const btnRight = document.getElementById("carousel-right");
+
+    const step = 500; // ennyit scrolloz egy kattintásra (px)
+
+    btnRight.addEventListener("click", () => {
+        // ha a végén vagy → vissza az elejére
+        if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 5) {
+        track.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+        track.scrollBy({ left: step, behavior: "smooth" });
+        }
+    });
+
+    btnLeft.addEventListener("click", () => {
+        // ha az elején vagy → ugorj a legvégére
+        if (track.scrollLeft <= 5) {
+        track.scrollTo({ left: track.scrollWidth, behavior: "smooth" });
+        } else {
+        track.scrollBy({ left: -step, behavior: "smooth" });
+        }
+    });
+
     
 
 
     setInterval(async () => {
 
         SESSION();
-
-        /*
-        if (localStorage.getItem("loggedIn") !== "1") { return; }
-
-        try {
-
-            const js = await ajax_post('/check_session', 1);
-            //const js = await session_check.json();
-
-            const localBoot = localStorage.getItem('serverBoot') || '';
-            if (!js.active || (localBoot && String(js.serverBoot) !== String(localBoot))) {
-                // Biztonságos logout: törölj minden user-infót
-                localStorage.removeItem('loggedIn');
-                localStorage.removeItem('userName');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem("userGroup");
-                localStorage.removeItem('serverBoot');
-                localStorage.removeItem('isAdmin');
-                localStorage.removeItem('isWebAdmin');
-
-                alert('A munkamenet lejárt vagy a szerver újraindult. Kérlek jelentkezz be újra.');
-                location.reload(); // frissít, így a UI vendég módra vált
-            }
-
-        } catch (err) {
-            console.error('Session check hiba', err);
-            // Ha a szerver teljesen down, nem muszáj azonnal logoutolni; várj a következő tickre
-        }
-        */
         
     }, 30000);
 

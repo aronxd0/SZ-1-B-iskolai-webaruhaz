@@ -51,6 +51,8 @@ html, body { overflow-x: hidden; max-width: 100%; }
 /* #endregion */
 
 
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 
 /* termekeknel a kep lekicsinyitese */
