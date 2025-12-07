@@ -1215,7 +1215,7 @@ function drawChart(rang) {
             return;
         }
         else{
-            $('#_Top5').html("<div class='col-12 text-xl text-center p-3'>Nincs elég adat a diagram megjelenítéséhez.</div>");
+            $('#_Top5').html("<div class='col-12 text-xl text-center p-3'>Nincs elég adat a diagram megjelenítéséhez a kijelölt időszakban.</div>");
             return;
         }
     }
@@ -1261,9 +1261,27 @@ async function STAT_Penz(innen){
     const yValues = [];
     //const barColors = [];
 
+    var idok = [];
+
+    // Évek kigyűjtése rendesen
     for (var item of adat.rows){
-        xValues.push(new Date(item.IDO).toLocaleString("hu-HU", {month: "2-digit",day: "2-digit"}))
-        yValues.push(item.BEVETEL)
+        let ev = new Date(item.IDO).getFullYear();
+        if (!idok.includes(ev)) {
+            idok.push(ev);
+        }
+    }
+
+    var tobbEv = idok.length > 1;
+
+    for (var item of adat.rows){
+        let d = new Date(item.IDO);
+
+        let text = tobbEv 
+            ? d.toLocaleDateString("hu-HU", {year: "numeric", month: "2-digit", day: "2-digit"})
+            : d.toLocaleDateString("hu-HU", {month: "2-digit", day: "2-digit"});
+
+        xValues.push(text);
+        yValues.push(item.BEVETEL);
     }
 
     
@@ -1315,9 +1333,27 @@ async function STAT_ELAD(innen){
     const yValues = [];
     //const barColors = [];
 
+    var idok = [];
+
+    // Évek kigyűjtése rendesen
     for (var item of adat.rows){
-        xValues.push(new Date(item.IDO).toLocaleString("hu-HU", {month: "2-digit",day: "2-digit"}))
-        yValues.push(item.DARAB)
+        let ev = new Date(item.IDO).getFullYear();
+        if (!idok.includes(ev)) {
+            idok.push(ev);
+        }
+    }
+
+    var tobbEv = idok.length > 1;
+
+    for (var item of adat.rows){
+        let d = new Date(item.IDO);
+
+        let text = tobbEv 
+            ? d.toLocaleDateString("hu-HU", {year: "numeric", month: "2-digit", day: "2-digit"})
+            : d.toLocaleDateString("hu-HU", {month: "2-digit", day: "2-digit"});
+
+        xValues.push(text);
+        yValues.push(item.BEVETEL);
     }
 
 
@@ -1348,115 +1384,171 @@ async function STAT_ELAD(innen){
 
 let VLM_chart = null;
 async function STAT_KATEG(innen){
-    var intervallum = "1";
-    if(innen != null){
-        intervallum = innen.value;
-    }
-    if(VLM_chart != null){
+    var intervallum = innen ? innen.value : "1";
+
+    if (VLM_chart) {
         VLM_chart.destroy();
+        VLM_chart = null;
     }
 
     var adat = await ajax_post(`kategoriak_stat?INTERVALLUM=${intervallum}`, 1);
-    
 
+    // === NINCS ADAT ===
+    if (adat.maxcount == 0) {
+        VLM_chart = new Chart("STAT_KOR_GRAF", {
+            type: "pie",
+            data: {
+                datasets: [{
+                    backgroundColor: ["#ccc"],
+                    data: [1]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    },
+                    title: {
+                        display: true,
+                        text: ["Nincs adat ebben az időszakban, hogy", "kategóriák  ra bontva lássa", "a rendeléseket."],
+                        color: "#777",
+                        font: { size: 16 }
+                    }
+                }
+            }
+        });
+        return;
+    }
+
+    // ==== VAN ADAT ====
     const xValues = [];
     const yValues = [];
-    const szinek  = ["red", "green", "blue", "orenge", "cyan","pink"]
-    //const barColors = [];
+    const szinek = ["red", "green", "blue", "orange", "cyan", "pink"];
 
     for (var item of adat.rows){
-        xValues.push(item.KATEGORIA)
-        yValues.push(item.DARAB)
-        
+        xValues.push(item.KATEGORIA);
+        yValues.push(item.DARAB);
     }
 
-
-  VLM_chart =  new Chart("STAT_KOR_GRAF", {
-  type: "pie",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: szinek,
-      data: yValues
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: true,
-        position: 'right'
-      },
-      title: {
-        display: true,
-        text: "Rendelések kategóriákra bontva",
-        position: "top",
-        font: {size: 16}
-      }
-    }
-  }
-  
-});
+    VLM_chart = new Chart("STAT_KOR_GRAF", {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: szinek,
+                data: yValues
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: true, position: 'right' },
+                title: {
+                    display: true,
+                    text: "Rendelések kategóriákra bontva",
+                    font: { size: 16 }
+                }
+            }
+        }
+    });
 }
 
-let COMM_chart = null;
-async function STAT_COM(innen){
-    var intervallum = "1";
-    if(innen != null){
-        intervallum = innen.value;
-    }
-    if(COMM_chart != null){
-        COMM_chart.destroy();
-    }
-
-    var adat = await ajax_post(`velemeny_stat?INTERVALLUM=${intervallum}`, 1);
     
 
+let COMM_chart = null;
+
+async function STAT_COM(innen){
+    var intervallum = innen ? innen.value : "1";
+
+    if (COMM_chart) {
+        COMM_chart.destroy();
+        COMM_chart = null;
+    }
+    var adat = await ajax_post(`velemeny_stat?INTERVALLUM=${intervallum}`, 1);
+
+    // === NINCS ADAT ===
+    if (adat.maxcount == 0) {
+        COMM_chart = new Chart("STAT_COMMENT", {
+            type: "pie",
+            data: {
+                datasets: [{
+                    backgroundColor: ["#ccc"],
+                    data: [1]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    },
+                    title: {
+                        display: true,
+                        text: ["Nincs adat ebben az időszakban, hogy", "lássa a kommentek eloszlását."],
+                        position: "top",
+                        font: { size: 16 },
+                        color: "#777"
+                    }
+                }
+            }
+        });
+        return;
+    }
+
+    // === VAN ADAT ===
     const xValues = [];
     const yValues = [];
     const barColors = [];
 
     for (var item of adat.rows){
-        xValues.push(item.ALLAPOT)
-        yValues.push(item.DARAB)
+        xValues.push(item.ALLAPOT);
+        yValues.push(item.DARAB);
 
         switch(item.ALLAPOT){
-            case "Jóváhagyva" : barColors.push("Green"); break;
-            case "Jóváhagyásra vár" : barColors.push("Orange"); break;
-            case "Elutasítva" : barColors.push("Red"); break;
+            case "Jóváhagyva": barColors.push("green"); break;
+            case "Jóváhagyásra vár": barColors.push("orange"); break;
+            case "Elutasítva": barColors.push("red"); break;
         }
     }
 
-
-COMM_chart =  new Chart("STAT_COMMENT", {
-  type: "pie",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: true,
-        position: 'right'
-      },
-      title: {
-        display: true,
-        text: "Commentek eloszlása",
-        position: "top",
-        font: {size: 16}
-      }
-    }
-  }
-  
-});
+    COMM_chart = new Chart("STAT_COMMENT", {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'right'
+                },
+                title: {
+                    display: true,
+                    text: "Commentek eloszlása",
+                    position: "top",
+                    font: { size: 16 }
+                }
+            }
+        }
+    });
 }
+
 
 //#endregion
 

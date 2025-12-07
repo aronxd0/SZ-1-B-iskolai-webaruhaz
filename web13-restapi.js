@@ -791,8 +791,6 @@ app.post('/rendeles',async (req, res) => {
     try{
     session_data = req.session;
 
-    
-
     var fizmod = req.query.FIZMOD;
     var szallmod = req.query.SZALLMOD;
     var megjegyzes = req.query.MEGJEGYZES;
@@ -804,11 +802,12 @@ app.post('/rendeles',async (req, res) => {
     // 1. === KOSÁR TÉTELEK LEKÉRÉSE ===
     var termemekek_sql = 
     `
-    SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, 
+    SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, kat.KATEGORIA,
            CASE WHEN t.FOTOLINK IS NOT NULL THEN t.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK
     FROM webbolt_kosar_tetelei ct
     INNER JOIN webbolt_kosar k ON ct.ID_KOSAR = k.ID_KOSAR
     INNER JOIN webbolt_termekek t ON ct.ID_TERMEK = t.ID_TERMEK
+    INNER JOIN webbolt_kategoriak kat on t.ID_KATEGORIA = kat.ID_KATEGORIA
     left join webbolt_fotok ON t.ID_TERMEK = webbolt_fotok.ID_TERMEK
     WHERE k.ID_USER = ?
     `;
@@ -846,15 +845,16 @@ app.post('/rendeles',async (req, res) => {
     // Lépés 4: minden tételhez INSERT a rendelés_tételei táblába
     for (var termek of json_termekek.rows) {
         sqlParancsok.push(`
-            INSERT INTO webbolt_rendeles_tetelei (ID_RENDELES, MENNYISEG, NEV, AR, FOTOLINK, ID_TERMEK)
-            VALUES (@rendeles_id, ?, ?, ?, ?, ?);
+            INSERT INTO webbolt_rendeles_tetelei (ID_RENDELES, MENNYISEG, NEV, AR, FOTOLINK, ID_TERMEK, KATEGORIA)
+            VALUES (@rendeles_id, ?, ?, ?, ?, ?, ?);
         `);
         sqlErtekek.push(
             parseInt(termek.MENNYISEG), 
             termek.NEV, 
             parseInt(termek.AR), 
             termek.FOTOLINK, 
-            parseInt(termek.ID_TERMEK)
+            parseInt(termek.ID_TERMEK),
+            termek.KATEGORIA
         );
     }
 
@@ -1271,7 +1271,6 @@ try {
 
 //#region statisztika
 
-// === TOP 5 lekérdezése ===
 
 app.post('/top5',(req, res) => {
 
@@ -1285,22 +1284,29 @@ app.post('/top5',(req, res) => {
     }
 
     var sql = `
-        SELECT 
-            SUM(t.MENNYISEG) AS DB,
-            CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
-            webbolt_termekek.NEV
-        FROM webbolt_rendeles_tetelei t
-        INNER JOIN webbolt_rendeles r 
-            ON r.ID_RENDELES = t.ID_RENDELES
-        INNER JOIN webbolt_termekek 
-            ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
-        LEFT JOIN webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
-        WHERE t.ID_TERMEK IS NOT NULL
-        ${idocucc}
-        GROUP BY t.ID_TERMEK
-        ORDER BY DB DESC
-        LIMIT 5;
-    `
+    SELECT 
+        SUM(t.MENNYISEG) AS DB,
+        SUM(t.MENNYISEG * webbolt_termekek.AR) AS BEVETEL,
+        CASE 
+            WHEN webbolt_termekek.FOTOLINK IS NOT NULL 
+                THEN webbolt_termekek.FOTOLINK 
+                ELSE webbolt_fotok.IMG 
+        END AS FOTOLINK,
+        webbolt_termekek.NEV
+    FROM webbolt_rendeles_tetelei t
+    INNER JOIN webbolt_rendeles r 
+        ON r.ID_RENDELES = t.ID_RENDELES
+    INNER JOIN webbolt_termekek 
+        ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
+    LEFT JOIN webbolt_fotok 
+        ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
+    WHERE t.ID_TERMEK IS NOT NULL
+    ${idocucc}
+    GROUP BY t.ID_TERMEK
+    ORDER BY DB DESC, BEVETEL DESC
+    LIMIT 5;
+`;
+
     sendJson_toFrontend (res, sql, []);
 });
 
@@ -1415,51 +1421,43 @@ app.post('/kategoriak_stat', (req, res) => {
 
     const sql = `
         WITH alap AS (
-            SELECT 
-                k.KATEGORIA,
-                SUM(t.MENNYISEG) AS DARAB
-            FROM webbolt_rendeles r
-            JOIN webbolt_rendeles_tetelei t 
-                ON t.ID_RENDELES = r.ID_RENDELES
-            JOIN webbolt_termekek p 
-                ON p.ID_TERMEK = t.ID_TERMEK
-            JOIN webbolt_kategoriak k
-                ON k.ID_KATEGORIA = p.ID_KATEGORIA
-            WHERE CONVERT_TZ(r.DATUM, '+00:00','${idozona()}')
-                >= CONVERT_TZ(NOW() - INTERVAL ${ido} MONTH, '+00:00','${idozona()}')
-            GROUP BY k.ID_KATEGORIA
-        ),
+    SELECT 
+        KATEGORIA,
+        SUM(MENNYISEG) AS DARAB,
+        SUM(MENNYISEG * AR) AS BEVETEL
+    FROM webbolt_rendeles_tetelei t
+    JOIN webbolt_rendeles r ON r.ID_RENDELES = t.ID_RENDELES
+    WHERE CONVERT_TZ(r.DATUM, '+00:00','${idozona()}')
+        >= CONVERT_TZ(NOW() - INTERVAL ${ido} MONTH, '+00:00','${idozona()}')
+    GROUP BY KATEGORIA
+    ),
 
-        top5 AS (
-            SELECT *
-            FROM alap
-            ORDER BY DARAB DESC
-            LIMIT 5
-        ),
+    top5 AS (
+        SELECT *
+        FROM alap
+        ORDER BY DARAB DESC, BEVETEL DESC
+        LIMIT 5
+    ),
 
-        egyeb AS (
-            SELECT 
-                'Egyéb' AS KAT,
-                SUM(DARAB) AS DARAB,
-                COUNT(*) AS KAT_DB
-            FROM alap
-            WHERE KATEGORIA NOT IN (SELECT KATEGORIA FROM top5)
-        )
-
+    egyeb AS (
         SELECT 
-            KATEGORIA,
-            DARAB
-        FROM top5
+            SUM(DARAB) AS DARAB,
+            COUNT(*) AS KAT_DB
+        FROM alap
+        WHERE KATEGORIA NOT IN (SELECT KATEGORIA FROM top5)
+    )
 
-        UNION ALL
+    SELECT KATEGORIA, DARAB
+    FROM top5
 
-        SELECT 
-            CONCAT('Egyéb (', KAT_DB, ' kategoria)') AS KATEGORIA,
-            DARAB
-        FROM egyeb
-        HAVING DARAB IS NOT NULL
+    UNION ALL
 
-        ORDER BY DARAB DESC;
+    SELECT CONCAT('Egyéb (', KAT_DB, ' kategória)'), DARAB
+    FROM egyeb
+    WHERE KAT_DB > 0
+
+    ORDER BY DARAB DESC;
+
     `;
 
     sendJson_toFrontend(res, sql, []);
@@ -1672,14 +1670,14 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
     return finalSql;
 }
 
-async function kepTorlesHaNincsRendelesben(webPath) {
-    if (!webPath || webPath === "") return;
+async function kepTorlesHaNincsRendelesben(img) {
+    if (!img || img === "") return;
 
     try {
         // 1. Ellenőrizzük, hogy szerepel-e bármilyen rendelésben ez a kép
         // A webbolt_rendeles_tetelei táblában a FOTOLINK oszlop tárolja az útvonalat
         var sql = `SELECT COUNT(*) as db FROM webbolt_rendeles_tetelei WHERE FOTOLINK = ?`;
-        var result = JSON.parse(await runQueries(sql, [webPath]));
+        var result = JSON.parse(await runQueries(sql, [img]));
         
         var benneVanRendelesben = false;
         if (result.maxcount > 0 && result.rows[0].db > 0) {
@@ -1689,7 +1687,7 @@ async function kepTorlesHaNincsRendelesben(webPath) {
         // 2. Ha NINCS benne rendelésben, akkor törölhetjük a fájlt
         if (!benneVanRendelesben) {
             // webPath pl: "/img/uploads/123.jpg" -> filename: "123.jpg"
-            const filename = path.basename(webPath); 
+            const filename = path.basename(img); 
             // Fizikai útvonal: '.../public/img/uploads/123.jpg'
             const fullPath = path.join(__dirname, 'public', 'img', 'uploads', filename); 
 
@@ -1701,7 +1699,7 @@ async function kepTorlesHaNincsRendelesben(webPath) {
                 });
             }
         } else {
-            console.log(`A fájl NEM törölhető, mert rendelés hivatkozik rá: ${webPath}`);
+            console.log(`A fájl NEM törölhető, mert rendelés hivatkozik rá: ${img}`);
         }
 
     } catch (err) {
