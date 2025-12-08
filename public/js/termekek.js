@@ -39,7 +39,12 @@ async function TermekModosit(url) {
     console.log("az t kapod inser/ update: "  + `termek_edit?insert=${upd}}`, fd)
     let termekmod = await ajax_post_formdata(`termek_edit?insert=${upd}}`, fd); 
     if (termekmod.message == "ok") {
-      üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success");
+      
+      if (upd == 1) { 
+        üzen("Új termék sikeresen hozzáadva!", "success");
+      }
+      else { üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success"); }
+      
     } else {
       üzen(termekmod.message, "danger");
     }
