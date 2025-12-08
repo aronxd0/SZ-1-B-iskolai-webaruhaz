@@ -145,8 +145,9 @@ app.post('/kategoria',(req, res) => {
 
     // Ha van keresési szöveg, keressük a kategória nevén vagy leírásán
     if (nev !== "") {
-        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ?)`);
-        ertekek.push(`%${nev}%`);  // % = tetszőleges karakterek (wildcard)
+        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ? OR t.AZON LIKE ?)`);
+        ertekek.push(`%${nev}%`);
+        ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
     }
 
@@ -225,7 +226,8 @@ function gen_SQL_kereses(req) {
 
     // === SZÖVEG SZŰRÉS (NÉV/LEÍRÁS) ===
     if (nev.length > 0) {
-        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ?)`);
+        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ? OR t.AZON LIKE ?)`);
+        ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
     }
