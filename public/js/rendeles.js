@@ -96,7 +96,7 @@ async function Kovi_rendeles(keri){
             jelenlegi = osszesoldal;
             break;
 
-        case "vissza1_rend": // előző oldal
+        case "Vissza1_rend": // előző oldal
             if(jelenlegi > 1){
                 jelenlegi--;
             }
@@ -107,7 +107,7 @@ async function Kovi_rendeles(keri){
             break;
     }
 
-    await rendelesekmegtolt();
+    rendelesekmegtolt();
 }
 
 
@@ -274,7 +274,8 @@ async function rendelesekmegtolt(){
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
                         hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
+                        transition-hover duration-300 ease-in-out
+                        ${jelenlegi == 1 ? "disabled" : ""}
                         " id="Vissza2_rend" onclick="Kovi_rendeles(this)"> << </a></li>
                 <li class="page-item  shadow-xl">
                     <a class="
@@ -284,12 +285,13 @@ async function rendelesekmegtolt(){
                          dark:bg-slate-900 
                         dark:text-zinc-200 
                         dark:hover:bg-gray-800 
-                        
+
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
                         hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="vissza1_rend" onclick="Kovi_rendeles(this)">Előző</a></li>
+                        transition-hover duration-300 ease-in-out
+                        ${jelenlegi == 1 ? "disabled" : ""}
+                        " id="Vissza1_rend" onclick="Kovi_rendeles(this)">Előző</a></li>
                 <li class="page-item shadow-xl">
                     <a class="
                         page-link 
@@ -299,12 +301,12 @@ async function rendelesekmegtolt(){
                          dark:bg-slate-900 
                         dark:text-zinc-200 
                         dark:hover:bg-gray-800 
-                        
+
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
                         hover:text-slate-900 
                         transition-hover duration-300 ease-in-out 
-                        "><b id="Mostoldal_rend">${jelenlegi}</b> / <span id="DBoldal">${osszesoldal}</span></a></li>
+                        "><b>${jelenlegi}</b> / <span id="DBoldal">${osszesoldal}</span></a></li>
                 
                 <li class="page-item  shadow-xl">
                     <a class="
@@ -318,7 +320,8 @@ async function rendelesekmegtolt(){
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
                         hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
+                        transition-hover duration-300 ease-in-out
+                        ${jelenlegi == osszesoldal ? "disabled" : ""}
                         " id="Kovi1_rend" onclick="Kovi_rendeles(this)">Következő</a></li>
 
                 <li class="page-item shadow-xl">
@@ -333,7 +336,8 @@ async function rendelesekmegtolt(){
                         hover:bg-gray-200 
                         hover:outline outline-black/10 
                         hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
+                        transition-hover duration-300 ease-in-out
+                        ${jelenlegi == osszesoldal ? "disabled" : ""}
                         " id="Kovi2_rend" onclick="Kovi_rendeles(this)"> >> </a></li>
             </ul>`
         }
