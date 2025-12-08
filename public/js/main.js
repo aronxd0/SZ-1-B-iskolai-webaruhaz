@@ -244,7 +244,7 @@ async function KERESOBAR() {
     //lekérdezes az új max és min árat
     
     var elküld2 = KeresonekSQLCraft()+order+"&minar="+ min +"&maxar="+ max;
-    if(sqleddig != elküld2){
+    if(sqleddig != elküld2){ // ha változik a lekérdezés akkor az oldal újra 1-re állitása
         Joldal = 1;
     }
     sqleddig = elküld2;
@@ -277,6 +277,7 @@ async function KERESOBAR() {
 }
 //endregion
 //#region OLdelkezelés
+
 function OLDALFELTOTL(darab){
     oldalszam = Math.ceil( darab /52); // oldalszám kiszámolása
     if(oldalszam == 0) oldalszam = 1; // ha 0 akkor 1-re állitom
@@ -297,30 +298,30 @@ function OLDALFELTOTL(darab){
 function Kovi(keri){
     FelaTetore();
     switch(keri.id){
-        case("Kovi1"):{ // következő oldal
+        case("Kovi1"): // következő oldal
             if(Joldal < oldalszam){
                 Joldal++;
                 KERESOBAR();
-                return;}
-        }
-        case("Kovi2"):{ // utolsó oldal
+                return;
+            }
+        case("Kovi2"): // utolsó oldal
                 console.log("oldalszam: "+ oldalszam);
                 Joldal = oldalszam;
                 console.log("Joldal: "+ Joldal + " old szam: "+ oldalszam);
                 KERESOBAR();
                 return;
-        }
-        case("vissza1"):{// előző oldal
+        
+        case("vissza1"):// előző oldal
             if(Joldal > 1){
                 Joldal--;
                 KERESOBAR();
                 return;
-            }}
-        case("Vissza2"):{// első oldal
+            }
+        case("Vissza2"):// első oldal
             Joldal = 1;
             KERESOBAR();
             return
-        }
+        
    
     }
 }
