@@ -1353,9 +1353,8 @@ async function STAT_ELAD(innen){
             : d.toLocaleDateString("hu-HU", {month: "2-digit", day: "2-digit"});
 
         xValues.push(text);
-        yValues.push(item.BEVETEL);
+        yValues.push(item.DARAB);
     }
-
 
   kAT_CHART = new Chart("STAT_VMI_GRAF", {
     type: "bar",
@@ -1470,7 +1469,7 @@ async function STAT_COM(innen){
         COMM_chart.destroy();
         COMM_chart = null;
     }
-    var adat = await ajax_post(`velemeny_stat?INTERVALLUM=${intervallum}`, 1);
+    var adat = await ajax_post(`velemeny_stat?INTERVALLUM=${intervallum}`, 1); 
 
     // === NINCS ADAT ===
     if (adat.maxcount == 0) {
