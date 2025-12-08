@@ -178,9 +178,9 @@ function Attekintes(li) {
     `;
     $("#lab").html(navigacio);
 
-    $("#cc").animate( { opacity: 0, left: "-30px" }, 300, function() {
+    $("#cc").animate( { opacity: 0, left: "-300px" }, 300, function() {
         $("#cc").html(htmtoback);
-        $("#cc").css({ left: "30px" });
+        $("#cc").css({ left: "300px" });
         $("#cc").animate( { opacity: 1, left: "0px" }, 300 );
     });
 
@@ -853,9 +853,9 @@ function Fizetes(li) {
 
 
 
-    $("#cc").animate( { opacity: 0, left: "-30px" }, 300, function() {
+    $("#cc").animate( { opacity: 0, left: "-300px" }, 300, function() {
         $("#cc").html(form);
-        $("#cc").css({ left: "30px" });
+        $("#cc").css({ left: "300px" });
         $("#cc").animate( { opacity: 1, left: "0px" }, 300 );
     });
 

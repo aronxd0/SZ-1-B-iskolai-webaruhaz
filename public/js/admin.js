@@ -19,34 +19,46 @@ async function Admin_Velemenykezeles() {
             <div class="row d-flex flex-column flex-md-row p-1 mx-auto mt-5 space-y-2">
 
                 <!-- OPTION 1 -->
-                <div class="col-12 col-md-4 mx-auto mt-3">
-                    <label 
-                        class="bg-zinc-50 
-                        text-slate-900 
-                        shadow-xl 
-                        dark:bg-slate-950 
-                        dark:!border 
-                        dark:!border-zinc-200/20 
-                        dark:text-zinc-200 
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        dark:hover:bg-gray-700 
-                        dark:hover:-outline-offset-1 
-                        dark:hover:outline-white/10 
-                        flex items-center justify-between p-3 rounded-xl cursor-pointer 
-                            transition-all duration-200
-                            has-[:checked]:bg-indigo-100 
-                            has-[:checked]:border-indigo-400 
-                            has-[:checked]:border 
-                            has-[:checked]:shadow-md
 
-                            dark:has-[:checked]:bg-sky-950
-                            dark:has-[:checked]:border-sky-700
-                            dark:has-[:checked]:border ">
+                <div class="col-12 col-md-4 mx-auto mt-3">
+
+                    <div class="row d-flex justify-content-center">
+                        <div role="alert" 
+                        class="
+                        col-12 col-lg-4
+                        !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50
+                        bg-blue-200/30 
+                        text-blue-800 
+                        dark:bg-blue-900/20 
+                        dark:text-blue-200 
+                        w-auto
+                        mx-3 
+                        px-2 py-3 rounded-4">
+                            <i class="bi bi-info-circle-fill"></i>
+                            <strong class="font-bold">${varodb.rows.length} db</strong>
+                            <span> vélemény vár jóváhagyásra</span>
+                            
+                        </div>
+                        <input type="radio" name="plan" class="form-check-input hidden" id="varo" checked onchange="AdminVelemenyekMutat(this)">
+                    </div>
+
+                    <!--
+                    <label 
+                        class="bg-transparent  
+                        text-slate-900 
+                        
+                        dark:bg-transparent  
+                        
+                        dark:text-zinc-200 
+                        
+                        
+                        d-flex align-items-center justify-content-center p-2 rounded-xl 
+                            transition-all duration-200
+                             ">
 
                         <div class="flex items-center gap-3">
-                        <input type="radio" name="plan" class="form-check-input hidden" id="varo" checked onchange="AdminVelemenyekMutat(this)">
-                        <span class="font-semibold">Függőben</span>
+                        
+                        <span class="font-semibold">Függőben lévő vélemények</span>
                         <span id="fuggodb" class="inline-flex items-center rounded-md text-nowrap bg-yellow-400/10 px-2 py-1 font-medium text-yellow-700 inset-ring inset-ring-yellow-400/20"> ${varodb.rows.length} </span>
                         </div>
 
@@ -54,9 +66,10 @@ async function Admin_Velemenykezeles() {
                         
                         </div>
                     </label>
+                    -->
                 </div>
 
-                <!-- OPTION 2 -->
+                <!--
                 <div class="col-12 col-md-4 mx-auto mt-3">
                     <label 
                         class="bg-zinc-50 
@@ -94,7 +107,7 @@ async function Admin_Velemenykezeles() {
                     </label>
                 </div>
 
-                <!-- OPTION 3 -->
+                
                 <div class="col-12 col-md-4 mx-auto mt-3">
                     <label 
                         class="bg-zinc-50 
@@ -133,6 +146,7 @@ async function Admin_Velemenykezeles() {
                     </label>
                 </div>
 
+                -->
                 </div>
 
                 <div class="col-12 text-center mt-5" id="velemenyek_hely">
@@ -170,27 +184,7 @@ async function AdminVelemenyekMutat(asd) {
              }
             else {
 
-                ss += `
-                    <div class="row d-flex justify-content-center">
-                        <div role="alert" 
-                        class="
-                        col-12 col-lg-4
-                        !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50
-                        bg-blue-200/30 
-                        text-blue-800 
-                        dark:bg-blue-900/20 
-                        dark:text-blue-200 
-                        w-auto
-                        mx-3 
-                        px-2 py-3 rounded-4">
-                            <i class="bi bi-info-circle-fill"></i>
-                            <strong class="font-bold">${varo.maxcount} db</strong>
-                            <span> vélemény vár jóváhagyásra</span>
-                            
-                        </div>
-                    </div>
-                
-                `;
+               
 
                 for (const element of varo.rows) {
                     ss += `
