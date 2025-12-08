@@ -208,7 +208,7 @@ async function rendelesekmegtolt(){
                         <time class="text-gray-400">
                         
                         
-                         <i>${new Date(elemek.DATUM).toLocaleString('hu-HU', {
+                         <i>${new Date(elemek.DATUM).toLocaleString(navigator.language, {
                                     year: 'numeric',
                                     month: '2-digit',
                                     day: '2-digit',

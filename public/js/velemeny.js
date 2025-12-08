@@ -56,7 +56,7 @@ async function SajatVelemenyekMutat(id_termek) {
 
             sv += `
             <div role="alert" class="w-100 p-3 rounded-4 mt-3 mb-3 comment ${allapot_style}">
-                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString(navigator.language, {
                                                                                                                                                                             year: 'numeric',
                                                                                                                                                                             month: '2-digit',
                                                                                                                                                                             day: '2-digit',
@@ -144,7 +144,7 @@ async function VelemenyekMutat(id_termek) {
                     mt-3 
                     mb-3 
                     comment">
-                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString(navigator.language, {
                                     year: 'numeric',
                                     month: '2-digit',
                                     day: '2-digit',

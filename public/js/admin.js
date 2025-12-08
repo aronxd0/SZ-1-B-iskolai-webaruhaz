@@ -209,7 +209,7 @@ async function AdminVelemenyekMutat(asd) {
                     mt-3 
                     mb-3 
                     comment">
-                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString(navigator.language, {
                                     year: 'numeric',
                                     month: '2-digit',
                                     day: '2-digit',
@@ -313,7 +313,7 @@ async function AdminVelemenyekMutat(asd) {
                     mt-3 
                     mb-3 
                     comment">
-                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString(navigator.language, {
                                     year: 'numeric',
                                     month: '2-digit',
                                     day: '2-digit',
@@ -369,7 +369,7 @@ async function AdminVelemenyekMutat(asd) {
                     mt-3 
                     mb-3 
                     comment">
-                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString('hu-HU', {
+                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString(navigator.language, {
                                     year: 'numeric',
                                     month: '2-digit',
                                     day: '2-digit',
@@ -1277,8 +1277,8 @@ async function STAT_Penz(innen){
         let d = new Date(item.IDO);
 
         let text = tobbEv 
-            ? d.toLocaleDateString("hu-HU", {year: "numeric", month: "long"})
-            : d.toLocaleDateString("hu-HU", {month: "2-digit", day: "2-digit"});
+            ? d.toLocaleDateString(navigator.language, {year: "numeric", month: "long"})
+            : d.toLocaleDateString(navigator.language, {month: "2-digit", day: "2-digit"});
 
         xValues.push(text);
         yValues.push(item.BEVETEL);
@@ -1349,8 +1349,8 @@ async function STAT_ELAD(innen){
         let d = new Date(item.IDO);
 
         let text = tobbEv 
-            ? d.toLocaleDateString("hu-HU", {year: "numeric", month: "long"})
-            : d.toLocaleDateString("hu-HU", {month: "2-digit", day: "2-digit"});
+            ? d.toLocaleDateString(navigator.language, {year: "numeric", month: "long"})
+            : d.toLocaleDateString(navigator.language, {month: "2-digit", day: "2-digit"});
 
         xValues.push(text);
         yValues.push(item.DARAB);
