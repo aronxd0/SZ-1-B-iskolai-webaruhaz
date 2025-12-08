@@ -850,6 +850,7 @@ function CARD_BETOLT(adatok) {
     } else {
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
+      $("#welcome_section").fadeIn(300);
       
     }
 
