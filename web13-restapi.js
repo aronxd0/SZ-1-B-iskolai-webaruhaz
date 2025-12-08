@@ -931,7 +931,7 @@ app.post('/rendelesek',async (req, res) => {
     WHERE r.ID_USER = ?
     GROUP BY r.ID_RENDELES
     ORDER BY r.ID_RENDELES DESC
-    limit 1 offset ?
+    limit 10 offset ?
     `;
     let ertekek = [session_data.ID_USER, off];
 

@@ -56,7 +56,7 @@ async function toggleRendeles(rendelId) {
                     
 
                     <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
-                        <img src="${elem.FOTOLINK}" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
+                        <img src="${elem.FOTOLINK}" onclick="openImage(this.src)" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
                     </div>
 
                     <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
@@ -123,9 +123,9 @@ async function rendelesekmegtolt(){
         </div>
     `;
 
-    const itemek = await ajax_post(`rendelesek?OFFSET=${(jelenlegi-1)}`, 1);
+    const itemek = await ajax_post(`rendelesek?OFFSET=${(jelenlegi-1)*10}`, 1);
 
-    osszesoldal = Math.ceil(itemek.maxcount / 1);
+    osszesoldal = Math.ceil(itemek.maxcount / 10);
     
     if (itemek.maxcount != 0) {
         for (const elemek of itemek.rows) {
@@ -260,7 +260,8 @@ async function rendelesekmegtolt(){
             `;
             
         }
-        s+= `<ul class="pagination justify-content-center">
+        if(osszesoldal > 1) {
+            s+= `<ul class="pagination justify-content-center">
                 <li class="page-item  shadow-xl" style="border: none;">
                     <a class="
                         page-link 
@@ -335,6 +336,8 @@ async function rendelesekmegtolt(){
                         transition-hover duration-300 ease-in-out 
                         " id="Kovi2_rend" onclick="Kovi_rendeles(this)"> >> </a></li>
             </ul>`
+        }
+        
     } else {
         s = `
             <div class="col-12">
