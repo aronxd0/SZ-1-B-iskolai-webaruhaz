@@ -123,6 +123,9 @@ $(document).ready(function() {
 
 
     $(".gombdiv button").click(function() {
+        Joldal = 1;
+        oldalszam = 0;
+        sqleddig = "";
         $(".gombdiv").removeClass("aktiv");
         $(this).closest(".gombdiv").addClass("aktiv");
     });

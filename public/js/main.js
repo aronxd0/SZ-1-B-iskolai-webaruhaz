@@ -258,7 +258,7 @@ async function KERESOBAR() {
             ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
             Joldal = 1;
         } 
-        CARD_BETOLT(adatok);
+        await CARD_BETOLT(adatok);
         OLDALFELTOTL(adatok.maxcount);
         KategoriaFeltolt("kategoria_section", "check", "");    
     } catch (err) { console.log("hiba:", err); }
@@ -278,10 +278,96 @@ async function KERESOBAR() {
 //endregion
 //#region OLdelkezelés
 function OLDALFELTOTL(darab){
-    oldalszam = Math.ceil( darab /52); // oldalszám kiszámolása
-    if(oldalszam == 0) oldalszam = 1; // ha 0 akkor 1-re állitom
-    DBoldal.innerHTML = oldalszam ;
-    Mostoldal.innerHTML = Joldal;
+
+
+     oldalszam = Math.ceil( darab /52); // oldalszám kiszámolása
+      if(oldalszam == 0) oldalszam = 1; // ha 0 akkor 1-re állitom
+
+     var pp = 
+
+
+    
+    `
+            <ul class="pagination justify-content-center">
+                <li class="page-item  shadow-xl" style="border: none;">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="Vissza2" onclick="Kovi(this)"> << </a></li>
+                <li class="page-item  shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="vissza1" onclick="Kovi(this)">Előző</a></li>
+                <li class="page-item shadow-xl">
+                    <a class="
+                        page-link 
+                        d-flex 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        "><b id="Mostoldal">${Joldal}</b> / <span id="DBoldal">${oldalszam}</span></a></li>
+                
+                <li class="page-item  shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="Kovi1" onclick="Kovi(this)">Következő</a></li>
+
+                <li class="page-item shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="Kovi2" onclick="Kovi(this)"> >> </a></li>
+            </ul>`;
+    // alul a lapválastó feltöltése
+
+
+    
+    $("#pagi").html(pp);
 
     if(Joldal == 1){ // ha az 1. oldalon van akkor a vissza gombok inaktívak
         document.querySelector(".page-item:nth-child(2)").classList.add("disabled");
@@ -409,7 +495,7 @@ async function ArFeltolt(sql, min ,max){
                     </a>
                 </div>`).fadeIn(300);
         });
-        $("#pagi").html(``);
+        
         $("#fejlec1").fadeOut(300);
         $("#fejlec2").fadeOut(300);
         $('#login_modal').modal('hide');
@@ -599,7 +685,7 @@ async function KategoriaKezdolap(id_kategoria) {
     let ker = KeresonekSQLCraft() + `${id_kategoria}&offset=0&order=-1`;
     let keresve = await ajax_post(ker, 1);
     console.log(ker);
-    CARD_BETOLT(keresve);
+    await CARD_BETOLT(keresve);
     OLDALFELTOTL(keresve.maxcount);
     $("#keresett_kifejezes").html(`A legmenőbb <strong>${document.getElementById(id_kategoria).innerText}</strong> termékek`);
 }

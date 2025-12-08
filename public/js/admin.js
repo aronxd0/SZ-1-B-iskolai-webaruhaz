@@ -1271,13 +1271,13 @@ async function STAT_Penz(innen){
         }
     }
 
-    var tobbEv = idok.length > 1;
+    var tobbEv = idok.length > 1 || intervallum != 1;
 
     for (var item of adat.rows){
         let d = new Date(item.IDO);
 
         let text = tobbEv 
-            ? d.toLocaleDateString("hu-HU", {year: "numeric", month: "2-digit", day: "2-digit"})
+            ? d.toLocaleDateString("hu-HU", {year: "numeric", month: "long"})
             : d.toLocaleDateString("hu-HU", {month: "2-digit", day: "2-digit"});
 
         xValues.push(text);
@@ -1343,18 +1343,19 @@ async function STAT_ELAD(innen){
         }
     }
 
-    var tobbEv = idok.length > 1;
+     var tobbEv = idok.length > 1 || intervallum != 1;
 
     for (var item of adat.rows){
         let d = new Date(item.IDO);
 
         let text = tobbEv 
-            ? d.toLocaleDateString("hu-HU", {year: "numeric", month: "2-digit", day: "2-digit"})
+            ? d.toLocaleDateString("hu-HU", {year: "numeric", month: "long"})
             : d.toLocaleDateString("hu-HU", {month: "2-digit", day: "2-digit"});
 
         xValues.push(text);
         yValues.push(item.DARAB);
     }
+
 
   kAT_CHART = new Chart("STAT_VMI_GRAF", {
     type: "bar",

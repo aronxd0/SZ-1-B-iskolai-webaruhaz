@@ -920,6 +920,7 @@ app.post('/rendeles_ellenorzes',async (req, res) => {
 app.post('/rendelesek',async (req, res) => {
     try{
     session_data = req.session; 
+    var off = req.query.OFFSET
 
     var sql = 
     `
@@ -930,8 +931,9 @@ app.post('/rendelesek',async (req, res) => {
     WHERE r.ID_USER = ?
     GROUP BY r.ID_RENDELES
     ORDER BY r.ID_RENDELES DESC
+    limit 1 offset ?
     `;
-    let ertekek = [session_data.ID_USER];
+    let ertekek = [session_data.ID_USER, off];
 
     var eredmeny = await runQueries(sql, ertekek);
     res.set(header1, header2);

@@ -1,28 +1,138 @@
+let jelenlegi = 1;
+let osszesoldal = 0;
+
 $("#rend_button").click(async function () {
+    rendelesekmegtolt();
+});
+
+
+// ?? Ha a gombot lenyitják, akkor betöltjük a rendelés tételeit
+async function toggleRendeles(rendelId) {
+    // AJAX hívás, hogy lekérd a rendelés tételeit
+    
+    const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
+
+    let html =`     <div class="col-0 col-lg-2"></div>
+
+                    <div 
+                    class="
+                    col-12 
+                    col-lg-8 
+                    text-center 
+                    p-2 
+                    mt-3 
+                    border-b 
+                    border-gray-300 
+                    dark:border-b 
+                    dark:border-gray-600 
+                    ">
+                        A rendelés tartalma:
+                    </div>
+                    <div class="col-0 col-lg-2"></div>`; 
+    
+    for (const elem of tetelek.rows) {
+        html += `
+        <div class="col-0 col-lg-2"></div>
+        <div class="col-12 
+            col-lg-8 
+            d-flex 
+            flex-column 
+            flex-sm-row 
+    
+            text-slate-900
+            dark:text-zinc-200 
+
+            border-b
+            border-gray-300 
+            dark:border-b 
+            dark:border-gray-600 
+
+        
+            
+            
+             
+            p-xxl-none">
+            
+                    
+
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
+                        <img src="${elem.FOTOLINK}" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
+                    </div>
+
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
+                        <p>${elem.NEV}</p>
+                    </div>
+                    
+                        <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
+                        <p>${elem.MENNYISEG} db</p>
+                    </div>
+
+                    
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-1">
+                        <span class="anton-regular text-success text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span> <span> <i> (Nettó)</i></span> 
+                    
+                    </div>
+            
+
+        </div>
+        <div class="col-0 col-lg-2"></div>
+        `;
+    }
+
+
+    $(`#tetelek_${rendelId}`).html(html);
+    
+}
+
+async function Kovi_rendeles(keri){
+    switch(keri.id){
+        case "Kovi1_rend": // következő oldal
+            if(jelenlegi < osszesoldal){
+                jelenlegi++;
+            }
+            break;
+
+        case "Kovi2_rend": // utolsó oldal
+            jelenlegi = osszesoldal;
+            break;
+
+        case "vissza1_rend": // előző oldal
+            if(jelenlegi > 1){
+                jelenlegi--;
+            }
+            break;
+
+        case "Vissza2_rend": // első oldal
+            jelenlegi = 1;
+            break;
+    }
+
+    await rendelesekmegtolt();
+}
+
+
+async function rendelesekmegtolt(){
     $("#welcome_section").fadeOut(300);
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
 
     var s = `
-    
         <div class="col-12 text-center p-2 mt-5">
             <span class="text-xl">Rendeléseim</span>
         </div>
     `;
-    
-    
-    var itemek = await ajax_post("rendelesek", 1);
+
+    const itemek = await ajax_post(`rendelesek?OFFSET=${(jelenlegi-1)}`, 1);
+
+    osszesoldal = Math.ceil(itemek.maxcount / 1);
     
     if (itemek.maxcount != 0) {
         for (const elemek of itemek.rows) {
 
-            // Egyedi azonosító a collapse részhez
             const collapseId = `collapse_${elemek.ID_RENDELES}`;
-          
-            s += `
 
-            <div class="p-3 d-flex justify-content-center">
+            s += `<div class="p-3 d-flex justify-content-center">
                 <!-- <div class="col-0 col-lg-2"></div> -->
 
                 <div 
@@ -147,9 +257,84 @@ $("#rend_button").click(async function () {
                         </div>
                     
                 </div>
-
             `;
+            
         }
+        s+= `<ul class="pagination justify-content-center">
+                <li class="page-item  shadow-xl" style="border: none;">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="Vissza2_rend" onclick="Kovi_rendeles(this)"> << </a></li>
+                <li class="page-item  shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="vissza1_rend" onclick="Kovi_rendeles(this)">Előző</a></li>
+                <li class="page-item shadow-xl">
+                    <a class="
+                        page-link 
+                        d-flex 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        "><b id="Mostoldal_rend">${jelenlegi}</b> / <span id="DBoldal">${osszesoldal}</span></a></li>
+                
+                <li class="page-item  shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="Kovi1_rend" onclick="Kovi_rendeles(this)">Következő</a></li>
+
+                <li class="page-item shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        " id="Kovi2_rend" onclick="Kovi_rendeles(this)"> >> </a></li>
+            </ul>`
     } else {
         s = `
             <div class="col-12">
@@ -159,6 +344,7 @@ $("#rend_button").click(async function () {
             </div>
         `;
     }
+    
 
     // Tisztítás + megjelenítés
     $("#keresett_kifejezes").html("");
@@ -169,83 +355,4 @@ $("#rend_button").click(async function () {
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(s).fadeIn(300);
     });
-});
-
-
-// ?? Ha a gombot lenyitják, akkor betöltjük a rendelés tételeit
-async function toggleRendeles(rendelId) {
-    // AJAX hívás, hogy lekérd a rendelés tételeit
-    
-    const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
-
-    let html =`     <div class="col-0 col-lg-2"></div>
-
-                    <div 
-                    class="
-                    col-12 
-                    col-lg-8 
-                    text-center 
-                    p-2 
-                    mt-3 
-                    border-b 
-                    border-gray-300 
-                    dark:border-b 
-                    dark:border-gray-600 
-                    ">
-                        A rendelés tartalma:
-                    </div>
-                    <div class="col-0 col-lg-2"></div>`; 
-    
-    for (const elem of tetelek.rows) {
-        html += `
-        <div class="col-0 col-lg-2"></div>
-        <div class="col-12 
-            col-lg-8 
-            d-flex 
-            flex-column 
-            flex-sm-row 
-    
-            text-slate-900
-            dark:text-zinc-200 
-
-            border-b
-            border-gray-300 
-            dark:border-b 
-            dark:border-gray-600 
-
-        
-            
-            
-             
-            p-xxl-none">
-            
-                    
-
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
-                        <img src="${elem.FOTOLINK}" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
-                    </div>
-
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
-                        <p>${elem.NEV}</p>
-                    </div>
-                    
-                        <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
-                        <p>${elem.MENNYISEG} db</p>
-                    </div>
-
-                    
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-1">
-                        <span class="anton-regular text-success text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span> <span> <i> (Nettó)</i></span> 
-                    
-                    </div>
-            
-
-        </div>
-        <div class="col-0 col-lg-2"></div>
-        `;
-    }
-
-
-    $(`#tetelek_${rendelId}`).html(html);
-    
 }
