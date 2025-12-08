@@ -800,38 +800,7 @@ function CARD_BETOLT(adatok) {
       </div>
 
 
-
-
-
-      <!--
-         <div class="col-12 col-md-6 col-xxl-4">
-            <div 
-            class="card 
-              bg-zinc-100 
-              hover:bg-gray-200 
-              hover:outline outline-black/10 
-              dark:bg-slate-900 
-              dark:text-zinc-200 
-              dark:hover:bg-gray-800 
-              dark:hover:-outline-offset-1 
-              dark:hover:outline-white/10 
-              transition-hover duration-150 ease-in-out 
-              
-              shadow-lg 
-              m-3 p-3 rounded-4 text-center ${ee}" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
-                <img class="card-img-top img-fluid img-thumbnail mx-auto d-block kepp" src="${element.FOTOLINK}" alt="Card image" style="width:100%">
-                <div class="card-body">
-                    <span class="card-title text-lg">${element.NEV} </span> <br> <span class="text-sm">(${element.KATEGORIA})</span>
-                    <p class="card-text">
-                        ${el}
-                    </p>
-                    ${ks}
-                    ${gg}
-                </div>
-            </div>
-         </div>
-         -->
-         `; // card feltőltése "s" sztingbe ami kébbőb be lesz szurva a html-be
+    `;
   }
 
   if (!$("#nev1").val().includes("<")) {
@@ -850,6 +819,7 @@ function CARD_BETOLT(adatok) {
     } else {
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
+      $("#welcome_section").fadeIn(300);
       
     }
 

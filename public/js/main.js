@@ -682,7 +682,9 @@ async function Kezdolap() {
 }
 
 async function KategoriaKezdolap(id_kategoria) {
-    let ker = KeresonekSQLCraft() + `${id_kategoria}&offset=0&order=-1`;
+    bepipaltID += `${id_kategoria}-`;
+    console.log("kategória kezdőlapból: " + bepipaltID);
+    let ker = `keres?nev=&kategoria=${bepipaltID}&offset=0&order=-1`;
     let keresve = await ajax_post(ker, 1);
     console.log(ker);
     await CARD_BETOLT(keresve);
