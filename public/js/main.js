@@ -260,7 +260,7 @@ async function KERESOBAR() {
         } 
         CARD_BETOLT(adatok);
         OLDALFELTOTL(adatok.maxcount);
-        KategoriaFeltolt("kategoria_section", "check", "");    
+        KategoriaFeltolt("kategoria_section", "check", "",true);    
     } catch (err) { console.log("hiba:", err); }
     
     
@@ -467,16 +467,22 @@ function SliderELL(item){
 
 
 
-async function KategoriaFeltolt(hova, type, kivalasztott) {
+async function KategoriaFeltolt(hova, type, kivalasztott,mindenkipipal) {
+// hova =  id ahova be akarom tenni a kategóriákat
+//type = check vagy select
+// kivalasztott = selectnél a kiválasztott kategória id-je
+// mindenkipipal = ha true akkor a bepipalt kategoriak a fügyvény lefutása után is bepipálva lesznek.
+
 
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = ""; //reset bepipalt kategória
-    for(var elem of inputok){
-        if(elem.checked) {
-            bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
+    if(mindenkipipal){// ha mindenkipipal == false  ==> akkor ne frissítse a bepipált kategóriákat, mindenlegyen kikattintva, üres
+        for(var elem of inputok){
+            if(elem.checked) {
+                bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
+            }
         }
     }
-    
    
    
     $(`#${hova}`).empty("");
@@ -566,7 +572,7 @@ function Elfogyott(alma){
         
        
     }
-    KategoriaFeltolt("kategoria_section", "check", "");
+    KategoriaFeltolt("kategoria_section", "check", "",true);
 }
 
 async function Kezdolap() {
@@ -597,14 +603,14 @@ async function Kezdolap() {
 }
 
 async function KategoriaKezdolap(id_kategoria) {
-    bepipaltID += `${id_kategoria}-`;
-    console.log("kategória kezdőlapból: " + bepipaltID);
-    let ker = `keres?nev=&kategoria=${bepipaltID}&offset=0&order=-1`;
-    let keresve = await ajax_post(ker, 1);
-    console.log(ker);
-    CARD_BETOLT(keresve);
-    OLDALFELTOTL(keresve.maxcount);
-    $("#keresett_kifejezes").html(`A legmenőbb <strong>${document.getElementById(id_kategoria).innerText}</strong> termékek`);
+    bepipaltID = "";
+    await KategoriaFeltolt("kategoria_section", "check", "",false); // minden bepipalt kategoriat kiveszünk
+   
+document
+  .getElementById('kategoria_section')
+  .querySelector('[id="' + id_kategoria + '"]').checked = true;
+    KERESOBAR();
+    
 }
 
 function FelaTetore() {
