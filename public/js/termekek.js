@@ -218,40 +218,6 @@ function Termek_Torol(event, cuccok) {
 }
 
 
-
-
-
-function KepNagyban(termek_id, fotolink) {
-  $("#termek_content").fadeOut(300, function() {
-    $("#lenti").fadeOut(300);
-    $("#termek_content").html(`
-      <button class="btn bg-zinc-200 text-slate-900 dark:bg-slate-800 dark:text-zinc-200 p-2 "><i class="bi bi-arrow-left"></i></button>
-      <div 
-          class="
-            relative
-            d-flex 
-            align-items-center 
-            justify-content-center 
-            p-5 
-            w-100 
-            ">
-
-
-      
-            <img 
-              src="${fotolink}"
-              class="rounded-lg w-full h-full hover:outline outline-black/10 hover:cursor-pointer dark:hover:-outline-offset-1 dark:hover:outline-white/10 "
-             
-              >
-          
-            
-          </div>`);
-      
-  }).fadeIn(300);
-}
-
-
-
 function openImage(src) {
   document.getElementById("fsImg").src = src;
   $("#imgFullscreen").removeClass("hidden");
@@ -358,39 +324,7 @@ async function Termek_Mutat(event, termek_id) {
           class="w-full h-60 rounded-xl object-cover cursor-pointer hover:opacity-90 transition"
           onclick="openImage(this.src)">
     </div>
-          
-      
-
-
-
-
-
-
-        <!--
-
-          <div 
-          class="
-            relative
-            d-flex 
-            align-items-center 
-            
-            
-            ">
-
-
-      
-            <img 
-              src="${fotolink}"
-              class="rounded-lg w-full h-60 object-cover hover:outline outline-black/10 hover:cursor-pointer dark:hover:-outline-offset-1 dark:hover:outline-white/10 "
-             onclick="KepNagyban(${termek_id}, '${fotolink}')"
-              >
-          
-            
-          </div>
-              
-          -->
-                
-                
+               
     `;
 
   let kozep = `   <div class="row mt-2">
