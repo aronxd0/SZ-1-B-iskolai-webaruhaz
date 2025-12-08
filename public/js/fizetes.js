@@ -178,8 +178,10 @@ function Attekintes(li) {
     `;
     $("#lab").html(navigacio);
 
-    $("#cc").fadeOut(300, function() {
-        $("#cc").html(htmtoback).fadeIn(300);
+    $("#cc").animate( { opacity: 0, left: "-30px" }, 300, function() {
+        $("#cc").html(htmtoback);
+        $("#cc").css({ left: "30px" });
+        $("#cc").animate( { opacity: 1, left: "0px" }, 300 );
     });
 
     
@@ -390,13 +392,17 @@ function Adatok(li) {
     
     `;
 
-    $("#cc").fadeOut(300, function() {
-        $("#cc").html(form).fadeIn(300, function() {
-          // inicializáljuk az autocomplete-et miután a DOM-ba került a mező
-          const countryInput = document.getElementById("country");
-          if (countryInput) autocomplete(countryInput, countries);
-        });
+
+    $("#cc").animate( { opacity: 0, left: "-300px" }, 300, function() {
+        $("#cc").html(form);
+        $("#cc").css({ left: "300px" });
+        // inicializáljuk az autocomplete-et miután a DOM-ba került a mező
+        const countryInput = document.getElementById("country");
+        if (countryInput) autocomplete(countryInput, countries);
+        $("#cc").animate( { opacity: 1, left: "0px" }, 300 );
     });
+
+    
 
     console.log(document.getElementById("user").querySelector('h5').textContent.trim());
     
@@ -847,8 +853,10 @@ function Fizetes(li) {
 
 
 
-    $("#cc").fadeOut(300, function() {
-        $("#cc").html(form).fadeIn(300);
+    $("#cc").animate( { opacity: 0, left: "-30px" }, 300, function() {
+        $("#cc").html(form);
+        $("#cc").css({ left: "30px" });
+        $("#cc").animate( { opacity: 1, left: "0px" }, 300 );
     });
 
 

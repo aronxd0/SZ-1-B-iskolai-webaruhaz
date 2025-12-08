@@ -1054,20 +1054,19 @@
       <div class="modal-content">
 
       
-        <div class="modal-header">
+        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-700 dark:text-zinc-200 d-flex justify-content-center">
           <h4 class="modal-title">Kijelentkezés</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         
-        <div class="modal-body">
+        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-700 dark:text-zinc-200 text-center">
           Biztosan ki szeretnél jelentkezni?
         </div>
 
         
-        <div class="modal-footer justify-content-center">
-          <button type="button" class="btn btn-danger bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
-          <button type="button" class="btn btn-secondary bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
+        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-700 dark:text-zinc-200 d-flex justify-content-center">
+          <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200 bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
+          <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200 bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
         </div>
 
       </div>
@@ -1620,7 +1619,10 @@
                 <div class="col-12 text-center" id="aktualis"></div>
               </div>
               
-              <div id="cc"></div>
+              <div id="cc-container" class="relative overflow-hidden">
+                <div id="cc" class="relative"></div>
+              </div>
+              
              
               <div class="row mt-2">
                 <div class="col-12 text-center">A vásárlással elfogadja a <span class="text-primary">felhasználási feltételeket</span> és az <span class="text-primary">adatvédelmi tájékoztatót</span></div>
