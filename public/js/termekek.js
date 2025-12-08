@@ -39,7 +39,7 @@ async function TermekModosit(url) {
     console.log("az t kapod inser/ update: "  + `termek_edit?insert=${upd}}`, fd)
     let termekmod = await ajax_post_formdata(`termek_edit?insert=${upd}}`, fd); 
     if (termekmod.message == "ok") {
-      
+
       if (upd == 1) { 
         üzen("Új termék sikeresen hozzáadva!", "success");
       }
@@ -759,6 +759,7 @@ function CARD_BETOLT(adatok) {
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
       $("#welcome_section").fadeIn(300);
+      $("#kateogoria-carousel").fadeIn(300);
       
     }
 
