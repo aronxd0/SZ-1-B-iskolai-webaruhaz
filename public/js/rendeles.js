@@ -24,7 +24,7 @@ async function toggleRendeles(rendelId) {
                     border-b 
                     border-gray-300 
                     dark:border-b 
-                    dark:border-gray-600 
+                    dark:border-gray-800 
                     ">
                         A rendelés tartalma:
                     </div>
@@ -45,7 +45,7 @@ async function toggleRendeles(rendelId) {
             border-b
             border-gray-300 
             dark:border-b 
-            dark:border-gray-600 
+            dark:border-gray-800 
 
         
             
@@ -55,20 +55,20 @@ async function toggleRendeles(rendelId) {
             
                     
 
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-2">
                         <img src="${elem.FOTOLINK}" onclick="openImage(this.src)" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
                     </div>
 
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-2">
                         <p>${elem.NEV}</p>
                     </div>
                     
-                        <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-1">
+                        <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-2">
                         <p>${elem.MENNYISEG} db</p>
                     </div>
 
                     
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-1">
+                    <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-2">
                         <span class="text-slate-900 dark:text-zinc-200 font-semibold text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span> <span> <i> (Nettó)</i></span> 
                     
                     </div>
@@ -201,8 +201,12 @@ async function rendelesekmegtolt(){
                     
                     border-t border-gray-300 
                     border-b border-gray-300 
+                    dark:border-t border-gray-800 
+                    dark:border-b border-gray-800 
                     lg:border-t-0 
                     lg:border-b-0 
+                    lg:dark:border-t-0 
+                    lg:dark:border-b-0 
                     ">
                         <span><i class="bi bi-calendar"></i> Dátum</span>
                         <time class="text-gray-400">
