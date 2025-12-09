@@ -44,7 +44,8 @@ async function SajatVelemenyekMutat(id_termek) {
     let allapot_style = "";
     let ikon = "";
     //$("#sajatok").html("");
-
+    $("#velemeny").prop("checked", false);
+    $("#sajat_velemeny").prop("checked", true);
     try {
         
         let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
@@ -123,7 +124,8 @@ async function SajatVelemenyekMutat(id_termek) {
 async function VelemenyekMutat(id_termek) {
     let vv = "";
     //$("#velemenyek").html("");
-
+    $("#velemeny").prop("checked", true);
+    $("#sajat_velemeny").prop("checked", false);
     try {
         
         let velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}`, 1);
