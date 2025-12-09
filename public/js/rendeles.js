@@ -84,7 +84,7 @@ async function toggleRendeles(rendelId) {
     
 }
 
-async function Kovi_rendeles(keri){
+function Kovi_rendeles(keri){
     switch(keri.id){
         case "Kovi1_rend": // következő oldal
             if(jelenlegi < osszesoldal){

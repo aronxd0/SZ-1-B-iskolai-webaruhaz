@@ -321,6 +321,8 @@ app.post('/velemenyek',(req, res) => {
     var termekid = (req.query.ID_TERMEK ? parseInt(req.query.ID_TERMEK) : 0);
     var sajatvelemeny = (req.query.SAJATVELEMENY ? parseInt(req.query.SAJATVELEMENY) : 0);
     var szelektalas = (req.query.szelektalas? parseInt(req.query.szelektalas) : 0); 
+
+    var offset = parseInt(req.query.OFFSET)
     
     let whereFeltetelek = []; 
     let ertekek = [];
@@ -365,7 +367,21 @@ app.post('/velemenyek',(req, res) => {
         sql += `WHERE ${whereFeltetelek.join(' AND ')} `;
     }
 
-    sql += `ORDER BY DATUM DESC`;  // Legújabbtól a legrégebbiig
+    if(szelektalas == 1){
+        sql += `ORDER BY DATUM `;  // Legújabbtól a legrégebbiig
+    }
+    else{
+        sql += `ORDER BY DATUM DESC `;  // Legújabbtól a legrégebbiig
+    }
+    
+    
+    
+    
+    if(sajatvelemeny == 0){
+            sql += `limit 10 offset ?`
+            ertekek.push(offset)
+    }
+
 
     sendJson_toFrontend (res, sql, ertekek);
 });
@@ -1720,6 +1736,7 @@ async function kepTorlesHaNincsRendelesben(img) {
 // Az email-sender.js modul importálása
 const { sendEmail } = require('./email-sender');
 const { connect } = require('http2');
+const { off } = require('process');
 
 // POST: /send-email
 // Paraméterek (req.body - JSON):

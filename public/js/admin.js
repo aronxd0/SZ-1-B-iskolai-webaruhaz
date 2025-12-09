@@ -1,10 +1,18 @@
+var velemeny_osszes;
+var velemeny_jelenlegi = 1;
 
 
 async function Admin_Velemenykezeles() {
     console.log("Admin_Velemenykezeles meghivva");
-    let varodb = await ajax_post("velemenyek?szelektalas=1", 1);
-    let stimmdb = await ajax_post("velemenyek?szelektalas=0", 1);
-    let decdb = await ajax_post("velemenyek?szelektalas=2", 1);
+    let varodb = await ajax_post(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)*10}`, 1);
+
+    console.log("macxount: " + Math.ceil(varodb.maxcount / 10))
+    
+    velemeny_osszes = Math.ceil(varodb.maxcount / 10)
+    
+    if(velemeny_jelenlegi > velemeny_osszes){
+        velemeny_jelenlegi = velemeny_osszes
+    }
     
 
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
@@ -17,8 +25,6 @@ async function Admin_Velemenykezeles() {
         $("#content_hely").html(`
         
             <div class="row d-flex flex-column flex-md-row p-1 mx-auto mt-5 space-y-2">
-
-                <!-- OPTION 1 -->
 
                 <div class="col-12 col-md-4 mx-auto mt-3">
 
@@ -35,128 +41,23 @@ async function Admin_Velemenykezeles() {
                         mx-3 
                         px-2 py-3 rounded-4">
                             <i class="bi bi-info-circle-fill"></i>
-                            <strong class="font-bold">${varodb.rows.length} db</strong>
+                            <strong class="font-bold">${varodb.maxcount} db</strong>
                             <span> vélemény vár jóváhagyásra</span>
                             
                         </div>
                         <input type="radio" name="plan" class="form-check-input hidden" id="varo" checked onchange="AdminVelemenyekMutat(this)">
                     </div>
 
-                    <!--
-                    <label 
-                        class="bg-transparent  
-                        text-slate-900 
-                        
-                        dark:bg-transparent  
-                        
-                        dark:text-zinc-200 
-                        
-                        
-                        d-flex align-items-center justify-content-center p-2 rounded-xl 
-                            transition-all duration-200
-                             ">
-
-                        <div class="flex items-center gap-3">
-                        
-                        <span class="font-semibold">Függőben lévő vélemények</span>
-                        <span id="fuggodb" class="inline-flex items-center rounded-md text-nowrap bg-yellow-400/10 px-2 py-1 font-medium text-yellow-700 inset-ring inset-ring-yellow-400/20"> ${varodb.rows.length} </span>
-                        </div>
-
-                        <div class="flex flex-col text-right">
-                        
-                        </div>
-                    </label>
-                    -->
                 </div>
 
-                <!--
-                <div class="col-12 col-md-4 mx-auto mt-3">
-                    <label 
-                        class="bg-zinc-50 
-                        text-slate-900 
-                        shadow-xl 
-                        dark:bg-slate-950 
-                        dark:!border 
-                        dark:!border-zinc-200/20  
-                        dark:text-zinc-200 
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        dark:hover:bg-gray-700 
-                        dark:hover:-outline-offset-1 
-                        dark:hover:outline-white/10 
-                        flex items-center justify-between p-3 rounded-xl cursor-pointer 
-                            transition-all duration-200
-                            has-[:checked]:bg-indigo-100 
-                            has-[:checked]:border-indigo-400 
-                            has-[:checked]:border 
-                            has-[:checked]:shadow-md
-
-                            dark:has-[:checked]:bg-sky-950
-                            dark:has-[:checked]:border-sky-700
-                            dark:has-[:checked]:border ">
-
-                        <div class="flex items-center gap-3">
-                            <input type="radio" name="plan" class="form-check-input hidden" id="jovahagyott" onchange="AdminVelemenyekMutat(this)">
-                            <span class="font-semibold">Jóváhagyva</span>
-                            <span id="jovahagyvadb" class="inline-flex items-center text-nowrap rounded-md bg-green-400/10 px-2 py-1 font-medium text-green-400 inset-ring inset-ring-green-500/20"> ${stimmdb.rows.length} </span>
-                        </div>
-
-                        <div class="flex flex-col text-right">
-                       
-                        </div>
-                    </label>
-                </div>
-
-                
-                <div class="col-12 col-md-4 mx-auto mt-3">
-                    <label 
-                        class="bg-zinc-50 
-                        text-slate-900 
-                        shadow-xl 
-                        dark:bg-slate-950 
-                        dark:!border  
-                        dark:!border-zinc-200/20 
-                        dark:text-zinc-200 
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        dark:hover:bg-gray-700 
-                        dark:hover:-outline-offset-1 
-                        dark:hover:outline-white/10 
-                        flex items-center justify-between p-3 rounded-xl cursor-pointer 
-                            transition-all duration-200
-                            has-[:checked]:bg-indigo-100 
-                            has-[:checked]:border-indigo-400 
-                            has-[:checked]:border 
-                            has-[:checked]:shadow-md
-
-                            dark:has-[:checked]:bg-sky-950
-                            dark:has-[:checked]:border-sky-700
-                            dark:has-[:checked]:border
-                                        ">
-
-                        <div class="flex items-center gap-3">
-                        <input type="radio" name="plan" class="form-check-input hidden" id="elutasitott" onchange="AdminVelemenyekMutat(this)">
-                        <span class="font-semibold">Elutasítva</span>
-                        <span id="elutasitvadb" class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-nowrap font-medium text-red-400 inset-ring inset-ring-red-400/20"> ${decdb.rows.length} </span>
-                        </div>
-
-                        <div class="flex flex-col text-right">
-                        
-                        </div>
-                    </label>
-                </div>
-
-                -->
                 </div>
 
                 <div class="col-12 text-center mt-5" id="velemenyek_hely">
 
                 </div>
-
-            
-        
         `).fadeIn(300);
-        AdminVelemenyekMutat($("#varo")[0]);
+
+        AdminVelemenyekMutat();
         
         $("#pagi").html("");
         
@@ -166,14 +67,12 @@ async function Admin_Velemenykezeles() {
 
 
 
-async function AdminVelemenyekMutat(asd) {
-    if (asd.id == "varo") {
-
+async function AdminVelemenyekMutat() {
         try {
 
             let ss = ``;
 
-            let varo = await ajax_post("velemenyek?szelektalas=1", 1);
+            let varo = await ajax_post(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)*10}`, 1);
 
             if (varo.rows.length == 0) { 
                 $("#velemenyek_hely").fadeOut(300, function() {
@@ -184,7 +83,6 @@ async function AdminVelemenyekMutat(asd) {
              }
             else {
 
-               
 
                 for (const element of varo.rows) {
                     ss += `
@@ -258,140 +156,123 @@ async function AdminVelemenyekMutat(asd) {
                 </div>`;
                 }
 
+                if(velemeny_osszes > 1) {
+                    ss+= `<ul class="pagination justify-content-center">
+                <li class="page-item  shadow-xl" style="border: none;">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out
+                        ${velemeny_jelenlegi == 1 ? "disabled" : ""}
+                        " id="Vissza2_vel" onclick="Kovi_vel(this)"> << </a></li>
+                <li class="page-item  shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out
+                        ${velemeny_jelenlegi == 1 ? "disabled" : ""}
+                        " id="Vissza1_vel" onclick="Kovi_vel(this)">Előző</a></li>
+                <li class="page-item shadow-xl">
+                    <a class="
+                        page-link 
+                        d-flex 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out 
+                        "><b>${velemeny_jelenlegi}</b> / <span id="DBoldal">${velemeny_osszes}</span></a></li>
+                
+                <li class="page-item  shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out
+                        ${velemeny_jelenlegi == velemeny_osszes ? "disabled" : ""}
+                        " id="Kovi1_vel" onclick="Kovi_vel(this)">Következő</a></li>
+
+                <li class="page-item shadow-xl">
+                    <a class="
+                        page-link 
+                        bg-zinc-300 
+                        text-slate-900 
+                         dark:bg-slate-900 
+                        dark:text-zinc-200 
+                        dark:hover:bg-gray-800 
+                        
+                        hover:bg-gray-200 
+                        hover:outline outline-black/10 
+                        hover:text-slate-900 
+                        transition-hover duration-300 ease-in-out
+                        ${velemeny_jelenlegi == velemeny_osszes ? "disabled" : ""}
+                        " id="Kovi2_vel" onclick="Kovi_vel(this)"> >> </a></li>
+            </ul>`
+                }
+
                 $("#velemenyek_hely").fadeOut(300, function() {
                     $("#velemenyek_hely").html(ss).fadeIn(300);
                 });
                 
             }
 
-            
-
-
         } catch (err) { console.log("hiba:", err);}
 
-        
-
-
-        //$("#velemenyek_hely").html("ide a jovahagyasra varo velemenyek");
     }
-    else if (asd.id == "jovahagyott") {
-        try {
 
-            let sv = ``;
-
-            let stimm = await ajax_post("velemenyek?szelektalas=0", 1);
-
-            if (stimm.rows.length == 0) { 
-               $("#velemenyek_hely").fadeOut(300, function() {
-                    $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek jóváhagyott vélemények.</div>");
-
-                }).fadeIn(300);
+function Kovi_vel(keri){
+    switch(keri.id){
+        case "Kovi1_vel": // következő oldal
+            if(velemeny_jelenlegi < velemeny_osszes){
+                velemeny_jelenlegi++;
             }
-            else {
-                for (const element of stimm.rows) {
-                    sv += `
-                <div 
-                class="
-                    w-100 
-                    p-3 
-                    
+            break;
 
-                    rounded-4 
-                    shadow-xl 
-                    bg-zinc-50 
-                    text-slate-900 
-                    dark:bg-slate-950 
-                    dark:!border 
-                    dark:!border-zinc-200/20  
-                    dark:text-zinc-200 
-                    mt-3 
-                    mb-3 
-                    comment">
-                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString(navigator.language, {
-                                    year: 'numeric',
-                                    month: '2-digit',
-                                    day: '2-digit',
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: false
-                                })}</span></p>
-                    <p class="text-start p-2 "><i>${element.SZOVEG.toString().replaceAll("\n","<br>")}</i></p>
-                </div>`;
-                }
+        case "Kovi2_vel": // utolsó oldal
+            velemeny_jelenlegi = velemeny_osszes;
+            break;
 
-                $("#velemenyek_hely").fadeOut(300, function() {
-                    $("#velemenyek_hely").html(sv).fadeIn(300);
-                });
-                
+        case "Vissza1_vel": // előző oldal
+            if(velemeny_jelenlegi > 1){
+                velemeny_jelenlegi--;
             }
+            break;
 
-            
-
-
-        } catch (err) { console.log("hiba:", err);}
-
-        
+        case "Vissza2_vel": // első oldal
+            velemeny_jelenlegi = 1;
+            break;
     }
-    else if (asd.id == "elutasitott") {
-        try {
 
-            let ssg = ``;
-
-            let dec = await ajax_post("velemenyek?szelektalas=2", 1);
-
-            if (dec.rows.length == 0) { 
-                $("#velemenyek_hely").fadeOut(300, function() {
-                    $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek elutasított vélemények.</div>");
-
-                }).fadeIn(300);
-             }
-            else {
-                for (const element of dec.rows) {
-                    ssg += `
-                <div 
-                class="
-                    w-100 
-                    p-3 
-                    rounded-4 
-                    shadow-xl 
-                    bg-zinc-50 
-                    text-slate-900 
-                    dark:bg-slate-950 
-                    dark:!border 
-                    dark:!border-zinc-200/20  
-                    dark:text-zinc-200 
-                    mt-3 
-                    mb-3 
-                    comment">
-                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString(navigator.language, {
-                                    year: 'numeric',
-                                    month: '2-digit',
-                                    day: '2-digit',
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: false
-                                })}</span></p>
-                    <p class="d-flex justify-content-start">${element.SZOVEG.toString().replaceAll("\n","<br>")}</p>
-                </div>`;
-                }
-
-                $("#velemenyek_hely").fadeOut(300, function() {
-                    $("#velemenyek_hely").html(ssg).fadeIn(300);
-                });
-            }
-
-            
-
-
-        } catch (err) { console.log("hiba:", err);}
-
-        
-        
-    }
+    Admin_Velemenykezeles();
 }
-
-
-
 
 
 async function Velemeny_Elutasit(id_velemeny) {
