@@ -117,7 +117,7 @@ function Attekintes(li) {
                     py-3 p-lg-1
                 ">
                   <span class="font-semibold">Ár</span>
-                  <span class="osszegek text-success">${element.PENZ.toLocaleString()} Ft</span>
+                  <span class="osszegek text-slate-900 dark:text-zinc-200 font-semibold">${element.PENZ.toLocaleString()} Ft</span>
                 </div>
                 
               </div>

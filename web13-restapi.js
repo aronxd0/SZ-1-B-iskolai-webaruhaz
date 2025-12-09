@@ -518,8 +518,8 @@ async function login_toFrontend (req, res) {
         var sql = `SELECT ID_USER, NEV, EMAIL, ADMIN, WEBBOLT_ADMIN, CSOPORT FROM users WHERE EMAIL=? AND PASSWORD=md5(?)`;
         let ertekek = [user, psw]; 
         
-        let conn;
-        let data;
+        var conn;
+        var data;
         conn = await pool.getConnection();
         const [rows] = await conn.execute(sql, ertekek); 
         

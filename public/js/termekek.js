@@ -355,7 +355,7 @@ async function Termek_Mutat(event, termek_id) {
                         </p>
                     </div>
                     <div class="row mt-5 mb-3">
-                        <span class="text-success text-4xl anton-regular">${parseInt(ar).toLocaleString()} Ft</span>
+                        <span class="text-slate-900 dark:text-zinc-200 text-2xl font-semibold">${parseInt(ar).toLocaleString()} Ft</span>
                     </div>
 
                     
@@ -614,7 +614,7 @@ function CARD_BETOLT(adatok) {
 
       ee = "nem-elerheto";
     } else {
-      el = `<p class="w-full py-2 d-flex justify-content-start align-items-center align-self-center"><span class="text-emerald-600 me-2 anton-regular">${element.AR.toLocaleString()} Ft</span><span class="text-xs">(Nettó)</span></p>`;
+      el = `<p class="w-full py-2 d-flex justify-content-start align-items-center align-self-center"><span class="text-slate-900 dark:text-zinc-200 me-2 font-semibold">${element.AR.toLocaleString()} Ft</span><span class="text-xs">(Nettó)</span></p>`;
       ee = "";
     } //Ár kiiras
 

@@ -69,7 +69,7 @@ async function toggleRendeles(rendelId) {
 
                     
                     <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-1">
-                        <span class="anton-regular text-success text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span> <span> <i> (Nettó)</i></span> 
+                        <span class="text-slate-900 dark:text-zinc-200 font-semibold text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span> <span> <i> (Nettó)</i></span> 
                     
                     </div>
             
@@ -231,7 +231,7 @@ async function rendelesekmegtolt(){
                     ">
                         <span><i class="bi bi-cash"></i> Bruttó végösszeg</span>
                         <span>(áfatartalom: ${elemek.AFA}%)</span>
-                        <span class="anton-regular text-success termek_ar">
+                        <span class="termek_ar text-slate-900 dark:text-zinc-200 font-semibold">
                             ${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft
                         </span>
                     </div>      

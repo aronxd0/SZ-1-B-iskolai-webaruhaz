@@ -131,7 +131,7 @@ $("#cart_button").click(async function () {
                                 aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                             </div>
                             <div class="col-12 col-lg-2 d-flex align-self-center justify-content-center p-3" id="${element.ID_TERMEK}3">
-                                <h4 class="text-success termek_ar slashed-zero tabular-nums">${pez.toLocaleString()} Ft</h4>
+                                <h4 class="text-slate-900 dark:text-zinc-200 font-semibold termek_ar">${pez.toLocaleString()} Ft</h4>
                             </div>
 
                             <div class="col-12 col-lg-1 d-flex align-self-center justify-content-center">
@@ -161,7 +161,7 @@ $("#cart_button").click(async function () {
                 cnt += `
                     <div class="d-flex flex-column">
                         <div class="col-12 mt-2 p-2 d-flex flex-column flex-lg-row justify-content-center align-self-center">
-                            <span class="align-self-center p-none p-lg-2 text-xl">Összesen: </span>&nbsp;<span id="sumar" class="anton-regular text-success text-xl align-self-center p-none p-lg-2 "></span>&nbsp;<span class="align-self-center text-xl p-none p-lg-2 "> (+ ÁFA)</span>
+                            <span class="align-self-center p-none p-lg-2 text-xl">Összesen: </span>&nbsp;<span id="sumar" class="text-slate-900 dark:text-zinc-200 font-semibold text-xl align-self-center p-none p-lg-2 "></span>&nbsp;<span class="align-self-center text-xl p-none p-lg-2 "> (+ ÁFA)</span>
                         </div>
                         <div class="col-12 d-flex justify-content-center p-3 mb-5" id="pay_button">
                             <button type="button" 
@@ -334,7 +334,7 @@ async function KosarPLUSZ(id) {
     console.log(tetelekli);
     
     document.getElementById(`${idk}2`).value = mennyiseg;
-    document.getElementById(`${idk}3`).innerHTML = `<h4 class="anton-regular text-success termek_ar">${money.toLocaleString()} Ft<h4>` ; // forint firssit
+    document.getElementById(`${idk}3`).innerHTML = `<h4 class="text-slate-900 dark:text-zinc-200 font-semibold termek_ar">${money.toLocaleString()} Ft<h4>` ; // forint firssit
 
     $("#pay_button").html("");
     $("#pay_button").html(`
