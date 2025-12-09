@@ -374,14 +374,10 @@ app.post('/velemenyek',(req, res) => {
         sql += `ORDER BY DATUM DESC `;  // Legújabbtól a legrégebbiig
     }
     
-    
-    
-    
-    if(sajatvelemeny == 0){
+    if(szelektalas == 1){
             sql += `limit 10 offset ?`
             ertekek.push(offset)
     }
-
 
     sendJson_toFrontend (res, sql, ertekek);
 });
