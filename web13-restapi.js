@@ -510,16 +510,16 @@ app.post('/velemeny_elutasit', async (req, res) => {
 app.post('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
-    var user = (req.query.login_nev? req.query.login_nev: "");
-    var psw = (req.query.login_passwd? req.query.login_passwd : "");
-    
-    // Az MD5 hash az adatbázisban van tárolva biztonság miatt (bár MD5 elavult, jobb lenne bcrypt)
-    var sql = `SELECT ID_USER, NEV, EMAIL, ADMIN, WEBBOLT_ADMIN, CSOPORT FROM users WHERE EMAIL=? AND PASSWORD=md5(?)`;
-    let ertekek = [user, psw]; 
-    
-    let conn;
-    let data;
     try {
+        var user = (req.query.login_nev? req.query.login_nev: "");
+        var psw = (req.query.login_passwd? req.query.login_passwd : "");
+        
+        // Az MD5 hash az adatbázisban van tárolva biztonság miatt (bár MD5 elavult, jobb lenne bcrypt)
+        var sql = `SELECT ID_USER, NEV, EMAIL, ADMIN, WEBBOLT_ADMIN, CSOPORT FROM users WHERE EMAIL=? AND PASSWORD=md5(?)`;
+        let ertekek = [user, psw]; 
+        
+        let conn;
+        let data;
         conn = await pool.getConnection();
         const [rows] = await conn.execute(sql, ertekek); 
         
@@ -547,9 +547,9 @@ async function login_toFrontend (req, res) {
     } catch (err) {
         if (conn) conn.release();
         console.error('Login hiba:', err);
-        data = JSON.stringify({ "message": err.sqlMessage || "Adatbázis hiba", "maxcount": -1, "rows": [], "serverBoot": serverBoot });
+        data = JSON.stringify({ "message": "Adatbázis hiba", "maxcount": -1, "rows": []});
     } finally {
-        if (conn) conn.release();
+    if (conn) conn.release();
     }
     
     res.set(header1, header2);
@@ -1555,7 +1555,7 @@ async function runExecute(sql, req, ertekek = [], naplozas, connection) {
         msg = err.sqlMessage;  // MySQL hibaszöveg
         console.error('Hiba:', err); 
     } finally {
-        if (!connection) conn.release();  // Kapcsolat felszabadítása
+        if (!connection && conn) conn.release();  // Kapcsolat felszabadítása
         json_data = JSON.stringify({"message": msg, "rows": res1});  // REST API formátum
     }
     return json_data;
@@ -1604,7 +1604,7 @@ async function runQueries(sql, ertekek = [], connection) {
         maxcount = -1;  // Hiba: -1
         console.error('Hiba:', err); 
     } finally {
-        if (!connection) conn.release();  // Kapcsolat felszabadítása  
+        if (!connection && conn) conn.release();  // Kapcsolat felszabadítása
         json_data = JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": res2 });  // REST API
     }
     
