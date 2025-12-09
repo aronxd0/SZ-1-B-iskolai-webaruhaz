@@ -545,6 +545,7 @@ async function login_toFrontend (req, res) {
         data = JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": rows });
         
     } catch (err) {
+        if (conn) conn.release();
         console.error('Login hiba:', err);
         data = JSON.stringify({ "message": err.sqlMessage || "Adatbázis hiba", "maxcount": -1, "rows": [], "serverBoot": serverBoot });
     } finally {
@@ -1131,6 +1132,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         throw new Error("Érvénytelen 'insert' paraméter.");
 
     } catch (err) {
+        if (conn) conn.release();
         console.error("termek_edit HIBA:", err);
         if (conn) await conn.query("ROLLBACK;");
         res.status(500).json({ message: "Hiba a művelet során.", error: err.message });
