@@ -141,7 +141,8 @@ async function VelemenyekMutat(id_termek) {
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-700 
+                    dark:bg-slate-900 
+                    dark:!border dark:!border-zinc-200/20  
                     dark:text-zinc-200 
                     mt-3 
                     mb-3 
