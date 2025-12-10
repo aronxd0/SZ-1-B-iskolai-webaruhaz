@@ -1,5 +1,3 @@
-// runqueries and runexecute ECONERROR correction was made 12.05, ezért session beállítás változtatás
-
 // === KÖNYVTÁRAK ===
 const util      = require('util');
 const mysql     = require('mysql2/promise');  // MySQL szinkron/aszinkron kérdezésekhez
@@ -71,7 +69,9 @@ const pool = mysql.createPool({
     multipleStatements: true,               // Több SQL utasítás egymás után (tranzakciókhoz szükséges: START TRANSACTION + több INSERT/UPDATE)
     waitForConnections: true,               // Várakozzon szabad kapcsolatra, ne dobjon hibát azonnal
     connectionLimit: 10,                    // Max 10 egyidejű kapcsolat
-    queueLimit: 0                           // Végtelen várakozási sor (ha nincs szabad kapcsolat)
+    queueLimit: 0,                           // Végtelen várakozási sor (ha nincs szabad kapcsolat)
+    enableKeepAlive: true,       // <--- EZT ADD HOZZÁ
+    keepAliveInitialDelay: 0     // <--- ÉS EZT
 });
 
 
@@ -545,7 +545,6 @@ async function login_toFrontend (req, res) {
         data = JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": rows });
         
     } catch (err) {
-        if (conn) conn.release();
         console.error('Login hiba:', err);
         data = JSON.stringify({ "message": "Adatbázis hiba", "maxcount": -1, "rows": []});
     } finally {
@@ -1132,7 +1131,6 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         throw new Error("Érvénytelen 'insert' paraméter.");
 
     } catch (err) {
-        if (conn) conn.release();
         console.error("termek_edit HIBA:", err);
         if (conn) await conn.query("ROLLBACK;");
         res.status(500).json({ message: "Hiba a művelet során.", error: err.message });
