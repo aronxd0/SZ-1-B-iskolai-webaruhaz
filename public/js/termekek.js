@@ -112,7 +112,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       });
 
 
-      $("#mod_nev").on("keyup", function(e) {
+      $("#mod_nev").on("keyup", function() {
         let keres = $(this).val();
         $("#idx1").html(`Új termék: <b>${keres}</b>`);
       });
@@ -121,7 +121,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       $("#uj_kat").val("");
       $("#mod_kat").prop("disabled", false);
       KategoriaFeltolt("mod_kat", "select", id_kategoria);
-      $("#idx1").html(`${termek_id}; ${nev}`);
+      $("#idx1").html(`Termék szerkesztés`);
       $("#mod_nev").val(nev);
       $("#mod_azon").val(azon);
       $("#mod_ar").val(ar);
