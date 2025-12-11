@@ -1,0 +1,7 @@
+C:\Users\user\Documents\code\asd\SZ-1-B-iskolai-webaruhaz\csv\CSV_Import\CSV_Import\bin\Debug\CSV_Import.exe.config
+C:\Users\user\Documents\code\asd\SZ-1-B-iskolai-webaruhaz\csv\CSV_Import\CSV_Import\bin\Debug\CSV_Import.exe
+C:\Users\user\Documents\code\asd\SZ-1-B-iskolai-webaruhaz\csv\CSV_Import\CSV_Import\bin\Debug\CSV_Import.pdb
+C:\Users\user\Documents\code\asd\SZ-1-B-iskolai-webaruhaz\csv\CSV_Import\CSV_Import\obj\Debug\CSV_Import.csproj.AssemblyReference.cache
+C:\Users\user\Documents\code\asd\SZ-1-B-iskolai-webaruhaz\csv\CSV_Import\CSV_Import\obj\Debug\CSV_Import.csproj.CoreCompileInputs.cache
+C:\Users\user\Documents\code\asd\SZ-1-B-iskolai-webaruhaz\csv\CSV_Import\CSV_Import\obj\Debug\CSV_Import.exe
+C:\Users\user\Documents\code\asd\SZ-1-B-iskolai-webaruhaz\csv\CSV_Import\CSV_Import\obj\Debug\CSV_Import.pdb

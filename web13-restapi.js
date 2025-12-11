@@ -106,7 +106,65 @@ function fileFilter(req, file, cb) {
   }
 }
 
-module.exports = upload;
+
+
+
+
+
+// CSV UPLOADER
+const storagecsv = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'csv/CSV_Import/CSV_Import/bin/debug');
+    },
+    filename: (req, file, cb) => {
+        const unique = Date.now() + '-' + crypto.randomBytes(6).toString('hex');
+        cb(null, unique + path.extname(file.originalname));
+    }
+});
+
+const csvFilter = (req, file, cb) => {
+    const allowed = ["csv/text", "text/csv"];
+    allowed.includes(file.mimetype)
+        ? cb(null, true)
+        : cb(new Error("Csak CSV tölthető fel!"), false);
+};
+
+const uploadcsv = multer({
+    storage: storagecsv,
+    fileFilter: csvFilter,
+    limits: { fileSize: 50 * 1024 * 1024 } 
+});
+
+
+module.exports = { upload, uploadcsv };
+
+
+const { execFile } = require("child_process");
+
+
+app.post('/csv', uploadcsv.single("csv_import"), (req, res) => {
+    const filePath = path.resolve(req.file.path);
+    console.log("Feltöltött fájl elérési útja:", filePath);
+
+    // C# exe meghívása
+    execFile("csv/CSV_Import/CSV_Import/bin/debug/CSV_Import.exe", [filePath], (err, stdout, stderr) => {
+        const encoder = new TextEncoder();
+        const bytes = encoder.encode(stdout);
+        const decoder = new TextDecoder('utf-8');
+        console.log("stdout:" + decoder.decode(bytes));
+        
+        if (err) {
+            console.log("ERR: " + err);
+        }
+
+        res.set(header1, header2);
+        res.status(200).send(JSON.stringify(stdout)); // Exe output vissza frontendnek
+        res.end(); 
+        
+    });
+
+});
+
 
 
 //#region konstans kérdezés

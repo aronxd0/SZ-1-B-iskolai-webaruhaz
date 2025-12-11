@@ -86,10 +86,10 @@ async function Termek_Edit(event, termek_id, tipus) {
     
     
 
-    if (tipus == "bevitel") {
+    if (tipus == "bevitel") { // uj termek
 
       $("#idx1").html(`Új termék: `);
-
+      $("#save_button").html(`<i class="bi bi-plus-lg"></i>&nbsp;Új termék létrehozása`);
       $("#uj_kat").val("");
       $("#mod_kat").prop("disabled", false);
       KategoriaFeltolt("mod_kat", "select", 1);
@@ -117,7 +117,7 @@ async function Termek_Edit(event, termek_id, tipus) {
         $("#idx1").html(`Új termék: <b>${keres}</b>`);
       });
 
-    } else {
+    } else { // termek modositasa
       $("#uj_kat").val("");
       $("#mod_kat").prop("disabled", false);
       KategoriaFeltolt("mod_kat", "select", id_kategoria);

@@ -326,25 +326,91 @@ async function Velemeny_Elfogad(id_velemeny) {
 function UjTermek() {
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
+    $("#welcome_section").fadeOut(300);
+    $("#felsosor").addClass("mt-[100px]");
+    $("#kateogoria-carousel").fadeOut(300);
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
         <div class="row">
             <div class="col-12 text-center p-2 mt-3">
-                <span class="text-xl">uj termek letrehozasa</span>
+                <span class="text-xl">Termékek beszállítása</span>
             </div>
         </div>
+
+        <div class="row mt-3 mb-5" id="termek_edit_hely">
+            <div class="col-12 d-flex justify-content-center flex-column align-items-center">
+                <div class="p-3">
+                    <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200 bi bi-plus" onclick="Termek_Edit(event,0,'bevitel')"> Új termék</button>
+                </div>
+                <div class="p-3">vagy</div>
+                <div class="d-flex flex-column justify-content-center p-3">
+                    <span class="w-full text-center p-2"> Importálás CSV fájlból </span>
+                    <input type="file" 
+                        class="block w-full text-gray-500
+                        file:me-4 file:py-2 file:px-4
+                        file:rounded-lg file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-zinc-600 file:text-zinc-200 
+                        hover:file:bg-zinc-700
+                        file:disabled:opacity-50 file:disabled:pointer-events-none
+                        dark:text-zinc-400
+                        dark:file:bg-sky-900
+                        dark:file:text-zinc-200 
+                        dark:hover:file:bg-sky-950 
+                        file:cursor-pointer 
+                        transition-hover duration-300 ease-in-out
+                        " id="csv_import" name="csv_import" style="border: none;">
+                </div>
+
+                <div class="p-1">
+                    <button type="button" class="btn bg-zinc-200 !border !border-zinc-700 dark:!border dark:!border-zinc-200/20 text-zinc-700 rounded-4 dark:bg-slate-900 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-700 dark:hover:text-zinc-200 bi bi-upload" onclick="CSV()"> Importálás</button>
+                </div>
+            </div>
+            
+        </div>
+
         `).fadeIn(300);
-        $("#pagi").html("");
+        $("#pagi").html(""); 
     });
-    Termek_Edit(event,0,"bevitel");
-
     
 
-    
-
-    $("#save_button").html(`<i class="bi bi-plus-lg"></i>&nbsp;Új termék létrehozása`);
 }
+
+
+async function CSV() {
+    const csvf = document.getElementById("csv_import").files[0];
+    if (!csvf) return alert("teso válassz egy fájlt!");
+
+    const formData = new FormData();
+    formData.append("csv_import", csvf);
+
+    try {
+        let csvfeltolt = await ajax_post_formdata("csv", formData);
+
+        let cc = JSON.parse(csvfeltolt);
+
+        
+
+        if (csvfeltolt.length > 0 ) {
+            $("#content_hely").fadeOut(300, function() {
+
+                $("#content_hely").html(`<div class="col-12">${cc}</div>`);
+
+
+    
+            }).fadeIn(300);
+        }
+        
+
+    } catch (err) { console.log("hiba:", err); }
+}
+
+
+
+
+
+
 //#region Statisztika
 
 // nem biztos hogy jó
