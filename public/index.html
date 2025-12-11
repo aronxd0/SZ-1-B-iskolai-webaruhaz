@@ -164,7 +164,7 @@
                 
 
                 <!-- Fiók / profil menü: bejelentkezés, felhasználói adatok, gyorsgombok -->
-                <li class="nav-item py-2 py-xxl-0 d-flex align-items-center dropdown">
+                <li class="nav-item py-2 py-xxl-0 d-flex align-items-center">
                   <div 
                   class="
                   me-2 
@@ -177,7 +177,7 @@
                   transition-hover duration-150 ease-in-out">
 
 
-                    <button type="button" aria-label="Fiók" 
+                    <button type="button" aria-label="Profil" 
                     class="btn  
                       bg-transparent  
                       
@@ -199,12 +199,13 @@
                       dropdown-toggle 
                       rounded-4 
                       " 
-                      data-bs-toggle="dropdown" >
-                      <i class="bi bi-person"></i>
+                      data-bs-toggle="modal" data-bs-target="#profil">
+                      <i class="bi bi-person-circle"></i>
                       <span> Fiók</span>
                     </button>
 
                     <!-- Dropdown tartalma: felhasználói állapot, jogosultságok, gyorsgombok (rendelések, téma váltás, bejelentkezés) -->
+                    <!--
                     <div 
                     class="
                       dropdown-menu 
@@ -234,8 +235,8 @@
                       
                       
 
-                      <!-- Rendeléseim gomb: belépett felhasználó rendeléseinek gyors elérése -->
-                      <div class="d-flex justify-content-center mt-2" id="rendeles-gombdiv">
+                      
+                      <div class="d-flex justify-content-center mt-2">
                         <button id="rend_button"  type="button" 
                           class="btn 
                           bg-zinc-200 
@@ -261,58 +262,12 @@
                         </button>
                       </div>
                       
-                      <!-- Téma és Bejelentkezés gombok: felhasználó állapotának és témának gyors váltása -->
+                      
                       <div class="d-flex flex-column align-items-center mb-3" >
-                        <button type="button" aria-label="Téma" 
-                        class="
-                        btn 
-                        mt-2
-                        bg-zinc-200 
-                        text-slate-900 
-                        hover:bg-zinc-950 
-                        hover:text-zinc-100 
-                        hover:shadow-sm  
-                        hover:shadow-gray-950/60 
-                        dark:hover:shadow-sm  
-                        dark:hover:shadow-slate-600/40 
-                        dark:bg-slate-900 
-                        dark:hover:bg-gray-700 
-                        dark:hover:text-zinc-200 
-                        dark:text-zinc-200 
-                        w-full  
-                        transition-hover duration-150 ease-in-out 
                         
-                        rounded-none" 
-                        
-                        id="switch" data-bs-dismiss="offcanvas">
-                          <i class="bi bi-moon-fill" ></i>
-                           Téma 
-                        </button>
-
-                        <button id="login_button"  type="button" 
-                        class="
-                          btn 
-                          mt-2 
-                          bg-zinc-200 
-                          text-slate-900 
-                          hover:bg-zinc-950 
-                          hover:text-zinc-100 
-                          hover:shadow-sm  
-                          hover:shadow-gray-950/60 
-                          dark:hover:shadow-sm  
-                          dark:hover:shadow-slate-600/40 
-                          dark:bg-slate-900 
-                          dark:hover:bg-gray-700 
-                          dark:hover:text-zinc-200 
-                          dark:text-zinc-200 
-                          transition-hover duration-150 ease-in-out 
-                          rounded-none 
-                          w-full " data-bs-dismiss="offcanvas"> 
-                          <i class="bi bi-box-arrow-in-right" id="loginout"></i>
-                          <span  id="loginspan"> Bejelentkezés</span>
-                        </button>
                       </div>
                    </div>
+                  -->
 
                   </div>
                    
@@ -1591,7 +1546,116 @@
       </div>
 
 
-      
+      <div class="modal fade" id="profil">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content dark:!border dark:!border-zinc-200/20 ">
+            <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-start">
+              <span class="modal-title text-xl"><i class="bi bi-person"></i> Fiók</span>
+            </div>
+            <div class="modal-body bg-zinc-100 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
+              <div class="p-1" id="vendegszoveg">Jelentkezz be a fiókodba</div>
+              <div class="row">
+                <div class="col-12 text-start" id="user"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-12 text-start text-xs" id="user-email"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-12 text-start d-flex justify-content-start" id="rangok"></div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-12 d-flex justify-content-center flex-column flex-lg-row">
+                  <div class="p-1" id="tema_gombdiv">
+                    <button type="button" aria-label="Téma" 
+                        class="
+                        btn 
+                        mt-2 
+                        bg-zinc-200 
+                        text-slate-900 
+                        hover:bg-zinc-950 
+                        hover:text-zinc-100 
+                        hover:shadow-sm  
+                        hover:shadow-gray-950/60 
+                        dark:hover:shadow-sm  
+                        dark:hover:shadow-slate-600/40 
+                        dark:bg-slate-900 
+                        dark:hover:bg-gray-700 
+                        dark:hover:text-zinc-200 
+                        dark:text-zinc-200 
+                        w-full  
+                        transition-hover duration-150 ease-in-out 
+                        
+                        rounded-none bezarmind" 
+                        
+                        id="switch" >
+                          <i class="bi bi-moon-fill" ></i>
+                           Téma 
+                        </button>
+                  </div>
+
+                  <div class="p-1" id="loginout_gombdiv">
+                    <button id="login_button"  type="button" 
+                        class="
+                          btn 
+                          mt-2 
+                          bg-zinc-200 
+                          text-slate-900 
+                          hover:bg-zinc-950 
+                          hover:text-zinc-100 
+                          hover:shadow-sm  
+                          hover:shadow-gray-950/60 
+                          dark:hover:shadow-sm  
+                          dark:hover:shadow-slate-600/40 
+                          dark:bg-slate-900 
+                          dark:hover:bg-gray-700 
+                          dark:hover:text-zinc-200 
+                          dark:text-zinc-200 
+                          transition-hover duration-150 ease-in-out 
+                          rounded-none 
+                          w-full bezarmind" > 
+                          <i class="bi bi-box-arrow-in-right" id="loginout"></i>
+                          <span  id="loginspan"> Bejelentkezés</span>
+                        </button>
+                  </div>
+
+                  <div class="p-1" id="rendeles-gombdiv">
+                    <button id="rend_button"  type="button" 
+                          class="btn 
+                          bg-zinc-200 
+                          text-slate-900 
+                          hover:bg-zinc-950 
+                          hover:text-zinc-100 
+                          hover:shadow-sm  
+                          hover:shadow-gray-950/60 
+                          dark:hover:shadow-sm  
+                          dark:hover:shadow-slate-600/40 
+                          dark:bg-slate-900 
+                          dark:hover:bg-gray-700 
+                          dark:hover:text-zinc-200 
+                          dark:text-zinc-200 
+                          
+                          transition-hover duration-150 ease-in-out 
+                          mt-2 
+                          w-full   
+                          rounded-none bezarmind" > 
+
+                          <i class="bi bi-bag-check" ></i>
+                          <span > Rendeléseim</span>
+                        </button>
+                  </div>
+
+                </div>
+              </div>
+
+
+            </div>
+            <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200"></div>
+          </div>
+        </div>
+      </div>
 
 
       <!-- Rendelés véglegesítése modal: összegzés, fizetési információk és a vásárlás feltételeinek elfogadása -->

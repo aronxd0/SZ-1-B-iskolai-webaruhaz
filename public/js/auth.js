@@ -3,6 +3,7 @@
 let bejelentkezett_usernev = "";
 let bejelentkezett_useremail = "";
 let csoport = "";
+let rang = "";
 
 function BevaneJelentkezve() {
     if (!localStorage.getItem("loggedIn")) { 
@@ -11,10 +12,10 @@ function BevaneJelentkezve() {
         $("#loginout").addClass("bi bi-box-arrow-in-right");
         üzen("Sikeres logout", "success");
             
-        $("#user").html("Jelentkezz be a fiókodba");
+        $("#vendegszoveg").html("Jelentkezz be a fiókodba");
         $("#user-email").html("");
-        $("#csoport").html(``);
-        $("#admin").html("");
+        $("#rangok").html(``);
+        $("#user").html("");
         
         webbolt_admin = false;
         admin = false;
@@ -30,6 +31,7 @@ function BevaneJelentkezve() {
         fizmod = "";
         szallmod = "";
         megjegyzes = "";
+        rang = "";
         
         document.getElementById("rendalap").selected = true;
 
@@ -43,21 +45,28 @@ function BevaneJelentkezve() {
     }
 
     else { 
+        rang = "";
         $("#user").html(`<h5><i class="bi bi-person"></i> ${bejelentkezett_usernev}</h5>`);
         $("#user-email").html(`${bejelentkezett_useremail}`);
-        $("#csoport").html(`${csoport}`);
+        $("#vendegszoveg").html("");
+        
         $("#udv").html(`<b>Üdvözlünk a Csány webáruházban <span>${bejelentkezett_usernev.split(" ")[1]}</span>!</b>`);
 
-        if (admin) { 
-            $("#admin").html("<b>ADMIN</b>");
-            update_gombok(2);
-        }
+        rang += `<span class="inline-flex items-center rounded-md bg-blue-400/10 px-2 py-1 text-sm font-medium text-blue-400 !border !border-blue-400/30">${csoport}</span>`;
+
+        if (admin) {
+            rang += `<span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-sm font-medium text-red-400 !border !border-red-400/20">Admin</span>`;
+            
+            update_gombok(2); 
+        }   
         else if (webbolt_admin) {
-            $("#admin").html("<b>WEBBOLT ADMIN</b>");
-            update_gombok(2);
+            rang += `<span class="inline-flex items-center rounded-md bg-purple-400/10 px-2 py-1 text-xs font-medium text-purple-400 !border !border-purple-400/30>Webbolt Admin</span>`;
+            
+            update_gombok(2); 
         }
         else { update_gombok(1); }
 
+        $("#rangok").html(rang);
         Joldal = 1;
 
         $('#login_modal').modal('hide');
@@ -73,16 +82,22 @@ function BevaneJelentkezve() {
         
 
         //return true; 
-    }
+    }   
 }
 
 $("#login_button").click(function() {   
         if (!localStorage.getItem("loggedIn")) {
-            $('#login_modal').modal('show');
-        } else {   // logout
-            $("#logout_modal").modal("show");
+            document.getElementById("profil").addEventListener('hidden.bs.modal', () => {
+                $('#login_modal').modal('show');
+            }, { once: true });
             
-        }  
+        } else { 
+            document.getElementById("profil").addEventListener('hidden.bs.modal', () => {
+                $("#logout_modal").modal("show");
+            }, { once: true });
+            
+            
+        }
 });
 
 
@@ -91,28 +106,12 @@ $("#login_oksi_button").click(function() {
         if (l_json.message == "ok" && l_json.maxcount == 1) {  
             bejelentkezett_usernev = l_json.rows[0].NEV;
             bejelentkezett_useremail = l_json.rows[0].EMAIL;
+            
+            if (l_json.rows[0].ADMIN == "Y") { admin = true; }
+            else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; }
+
             csoport = l_json.rows[0].CSOPORT;
             
-            
-            /*
-            $("#user").html(`<h5><i class="bi bi-person"></i> ${l_json.rows[0].NEV}</h5>`);
-            $("#user-email").html(`${l_json.rows[0].EMAIL}`);
-            $("#udv").html(`<b>Üdvözlünk a Csány webáruházban <span>${l_json.rows[0].NEV.split(" ")[1]}</span>!</b>`);
-            
-            $("#csoport").html(`${l_json.rows[0].CSOPORT}`);
-            */
-
-            if (l_json.rows[0].ADMIN == "Y") {
-                $("#admin").html("<b>ADMIN</b>");
-                admin = true;
-                update_gombok(2); 
-            }
-            else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") {
-                $("#admin").html("<b>WEBBOLT ADMIN</b>");
-                webbolt_admin = true;
-                update_gombok(2); 
-            }
-            else { update_gombok(1); }
 
             localStorage.setItem("loggedIn", "1");
             localStorage.setItem("userName", bejelentkezett_usernev);
@@ -121,23 +120,8 @@ $("#login_oksi_button").click(function() {
             localStorage.setItem("isAdmin", admin ? "1" : "0");
             localStorage.setItem("isWebAdmin", webbolt_admin ? "1" : "0");
             localStorage.setItem("serverBoot", l_json.serverBoot || "");
-            BevaneJelentkezve();
-            /*
-            localStorage.setItem("loggedIn", "1");
-            
-            Joldal = 1;
 
-            $('#login_modal').modal('hide');
-            üzen(`Vásárolj sokat ${l_json.rows[0].NEV}!`,"success");
-            $("#loginspan").html(' Kijelentkezés');
-            $("#loginout").removeClass("bi bi-box-arrow-in-right");
-            $("#loginout").addClass("bi bi-box-arrow-in-left");
-                
-            //console.log("webbolt_admin: "+ admin);
-            Kezdolap();
-            ADMINVAGYE();
-            KosarTetelDB();
-            */
+            BevaneJelentkezve();
            
 
         } else {    
@@ -150,42 +134,6 @@ $("#login_oksi_button").click(function() {
 
 $("#kijelentkezik").click( async function() {
     ajax_post("logout", 1).then(logout_json => {
-        /*
-        console.log(logout_json);
-        $("#loginspan").html(' Bejelentkezés');
-        $("#loginout").removeClass("bi bi-box-arrow-in-left");
-        $("#loginout").addClass("bi bi-box-arrow-in-right");
-        üzen("Sikeres logout", "success");
-            
-        $("#user").html("Jelentkezz be a fiókodba");
-        $("#user-email").html("");
-        $("#csoport").html(``);
-        $("#admin").html("");
-        
-        webbolt_admin = false;
-        admin = false;
-        elfogyott = false;
-        Nemaktivak = false;
-        Joldal =1;
-        _nev = "" ;
-        _emil = "" ;
-        _cim = ""  ;
-        _city = "" ;
-        _iszam = "";
-        _country = "";
-        fizmod = "";
-        szallmod = "";
-        megjegyzes = "";
-        
-        document.getElementById("rendalap").selected = true;
-
-        document.getElementById("Elfogyott_gomb").innerHTML = ``;
-        document.getElementById("NEM_AKTIV").innerHTML = ``;
-        //Kezdolap();
-        $("#home_button").trigger("click");
-        $("#udv").html(`<b>Üdvözlünk a Csány webáruházban!</b>`);
-        update_gombok(0);
-*/
         localStorage.removeItem("loggedIn");
         localStorage.removeItem("userName");
         localStorage.removeItem("userEmail");

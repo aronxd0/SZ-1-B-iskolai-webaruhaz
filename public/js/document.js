@@ -218,7 +218,15 @@ $(document).ready(function() {
     });
 
     
-
+    $(".bezarmind").click(function() {
+        // Modal bezárása
+        const modal = bootstrap.Modal.getInstance(document.getElementById("profil"));
+        modal?.hide();
+    
+        // Offcanvas bezárása
+        const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById("top-navbar"));
+        offcanvas?.hide();
+    });
 
     setInterval(async () => {
 
