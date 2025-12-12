@@ -70,8 +70,8 @@ const pool = mysql.createPool({
     waitForConnections: true,               // Várakozzon szabad kapcsolatra, ne dobjon hibát azonnal
     connectionLimit: 10,                    // Max 10 egyidejű kapcsolat
     queueLimit: 0,                           // Végtelen várakozási sor (ha nincs szabad kapcsolat)
-    enableKeepAlive: true,       // <--- EZT ADD HOZZÁ
-    keepAliveInitialDelay: 0     // <--- ÉS EZT
+    enableKeepAlive: true,       // <--- ECONNRESET miatt
+    keepAliveInitialDelay: 0     // <--- ECONNRESET miatt
 });
 
 
