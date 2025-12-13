@@ -182,7 +182,7 @@ function KeresonekSQLCraft(){
     bepipaltID = ""; //reset bepipalt kategória
     for(var elem of inputok){
         if(elem.checked) {
-            bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
+            bepipaltID += `${elem.id.replace("katcheck","")}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
         }
     }
     var nemaktiv = "";//reset
@@ -483,25 +483,7 @@ async function ArFeltolt(sql, min ,max){
         document.getElementById("max_ar_input").value =max;
 
 
-    } catch (err) { 
-        console.log("hiba:", err);
-        $("#welcome_section").fadeOut(300);
-        $("#content_hely").fadeOut(300, function() {
-            $("#content_hely").html(`
-                <div class="col-12 d-flex justify-content-center align-items-center flex-column">
-                    <span class="p-3" style="font-size:70px; font-weight:bold;">404</span>
-                    <span class="alert alert-danger">${err}</span>
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=csanywebbolt@gmail.com" target="_blank">
-                        Hiba jelentése
-                    </a>
-                </div>`).fadeIn(300);
-        });
-        
-        $("#fejlec1").fadeOut(300);
-        $("#fejlec2").fadeOut(300);
-        $('#login_modal').modal('hide');
-        
-     }
+    } catch (err) { console.log("hiba:", err); }
 }
 
 function Sliderninput( item ){
@@ -565,7 +547,7 @@ async function KategoriaFeltolt(hova, type, kivalasztott,mindenkipipal) {
     if(mindenkipipal){// ha mindenkipipal == false  ==> akkor ne frissítse a bepipált kategóriákat, mindenlegyen kikattintva, üres
         for(var elem of inputok){
             if(elem.checked) {
-                bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
+                bepipaltID += `${elem.id.replace("katcheck","")}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
             }
         }
     }
@@ -597,18 +579,22 @@ async function KategoriaFeltolt(hova, type, kivalasztott,mindenkipipal) {
                     pipa = "checked";
                 }
 
-                listItems += `<p class="p-2"> <input onchange="KatbolAR()"
+                listItems += `<p class="p-2 !border !border-b-zinc-800/10 dark:!border dark:!border-b-zinc-200/20 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out"> <input onchange="KatbolAR()"
                 class="
                 form-check-input 
-                outline 
-                outline-[1px] 
-                outline-black/10 
+                !border  
+                !border-zinc-800/20 
                 bg-zinc-200 
-                dark:outline 
-                dark:outline-[1px] 
-                dark:outline-zinc-100/5  
+                hover:cursor-pointer 
+                dark:!border  
+                dark:!border-zinc-200/30 
+                dark:checked:!border-sky-600      
                 dark:bg-slate-800 
-                " type="checkbox" id="${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <label class="form-check-label" for="${k_json.rows[i].ID_KATEGORIA}"> ${k_json.rows[i].KATEGORIA} </label> </p>`;
+                focus:outline-none 
+                focus:ring-0
+                focus:ring-offset-0
+                focus:shadow-none
+                " type="checkbox" id="katcheck${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <label class="form-check-label hover:cursor-pointer " for="katcheck${k_json.rows[i].ID_KATEGORIA}"> ${k_json.rows[i].KATEGORIA} </label> </p>`;
             }
             
         }
@@ -692,10 +678,16 @@ async function KategoriaKezdolap(id_kategoria) {
     bepipaltID = "";
     await KategoriaFeltolt("kategoria_section", "check", "",false); // minden bepipalt kategoriat kiveszünk
    
-document
+    /*document
   .getElementById('kategoria_section')
-  .querySelector('[id="' + id_kategoria + '"]').checked = true;
+  .querySelector(`[id="katcheck${id_kategoria}"]`).checked = true; */
+
+    $(`#katcheck${id_kategoria}`).prop("checked", true);
     KERESOBAR();
+
+    console.log(document
+        .getElementById('kategoria_section')
+        .querySelector(`[id="katcheck${id_kategoria}"]`).checked = true);
     
 }
 

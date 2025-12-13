@@ -729,7 +729,7 @@
       offcanvas-header 
       bg-zinc-100 
       text-slate-900 
-      dark:bg-slate-700 
+      dark:bg-slate-900 
       dark:text-zinc-200 
       d-flex 
       justify-content-start 
@@ -746,8 +746,12 @@
       bg-zinc-100 
       text-slate-900 
       dark:text-zinc-200 
-      dark:bg-slate-700 
+      dark:bg-slate-900 
       ">
+
+      <div class="row col-12 d-flex justify-content-center mb-4">
+        <span class="text-xs text-center"><i class="bi bi-info-circle"></i> A szűrés gombra kattintva alkalmazhatja a beállításokat</span>
+      </div>
 
       <div class="row col-12 d-flex justify-content-center text-center mb-4 ">
           <!-- Rendezés (sorting) választó: különböző rendezési opciók a megjelenítendő termékekhez -->
@@ -759,9 +763,10 @@
           shadow-xl 
           bg-zinc-50 
           text-slate-900 
-          dark:bg-slate-800 
+          dark:bg-slate-950  
           dark:text-zinc-200 
-          " style="border: none;"> 
+          dark:!border dark:!border-zinc-200/20  
+          "> 
             
             <option id="rendalap"  selected value="ar_csok">Ár ↓</option> 
             <option value="ar_nov">Ár ↑</option> 
@@ -771,18 +776,19 @@
             <option id="darabfel" value="db_nov">Darab ↑</option> 
           </select>
         </div>
-      <div id="szurokk" class="row mx-auto" style="width: 90%;">
+      <div id="szurokk" class="row mx-4">
         <label for="kategoria_section"><span class="text-lg"><i class="bi bi-grid"></i> Termékkategóriák</span></label> 
         <!-- Kategória szekció: ide töltődnek a kategóriák (checkbox-ok) a dinamikus feltöltéshez -->
         <div 
         class="
         p-3 
         shadow-xl 
-        rounded-2 
+        rounded-3  
         bg-zinc-200 
         text-slate-900 
-        dark:bg-slate-800 
-        dark:text-zinc-200 
+        dark:bg-slate-950  
+        dark:text-zinc-200  
+        dark:!border dark:!border-zinc-200/20  
         " style="overflow-y: scroll; overflow-x: hidden; height: 35vh;" id="kategoria_section"></div>
 
         <div 
@@ -797,8 +803,9 @@
           align-items-center 
           bg-zinc-200 
           text-slate-900 
-          dark:bg-slate-800 
+          dark:bg-slate-950 
           dark:text-zinc-200 
+          dark:!border dark:!border-zinc-200/20  
           ">  
           <!-- Minimum ár beviteli mező és slider: a felhasználó itt adhat meg alsó árhatárt -->
           <div class="col-lg-3 text-center"> Minimum ár: </div> 
@@ -840,8 +847,9 @@
           align-items-center 
           bg-zinc-200 
           text-slate-900 
-          dark:bg-slate-800 
+          dark:bg-slate-950 
           dark:text-slate-200 
+          dark:!border dark:!border-zinc-200/20  
           "> 
           <!-- Maximum ár beviteli mező és slider: a felhasználó itt adhat meg felső árhatárt -->
           <div class="col-lg-3 text-center"> Maximum ár </div> 
@@ -871,25 +879,30 @@
         <div class="row mt-3" id="Elfogyott_gomb"></div>
         <div class="row" id="NEM_AKTIV"></div>
 
-        <!-- Szűrő alkalmazása gomb: frissíti a terméklista a kiválasztott szűrők szerint -->
-        <div class="row d-flex justify-content-center">
+        <!-- Szűrő alkalmazása gomb: frissíti a terméklistát a kiválasztott szűrők szerint -->
+        
+        <div class="p-3 position-sticky bottom-0 bg-transparent 
+        text-slate-900 
+        dark:text-zinc-200 
+        dark:bg-transparent d-flex justify-content-center">
           <button type="button" 
-          class="
-          btn btn-lg 
-          bg-zinc-300 
-          text-slate-900 
-          hover:bg-zinc-200 
-          hover:shadow-xl 
-          hover:shadow-gray-950/80 
-          dark:bg-slate-800 
-          dark:text-zinc-200 
-          dark:hover:shadow-xl 
-          dark:hover:shadow-gray-700/70 
-          dark:hover:text-zinc-200 
-          dark:hover:gb-slate-800 
-          bi bi-funnel 
-          w-auto" id="szurogomb" data-bs-dismiss="offcanvas"> Szűrés</button>
+            class="
+            btn btn-lg 
+            bg-zinc-800 
+            text-zinc-200 
+            rounded-2xl  
+            shadow-xl  
+            hover:bg-zinc-600 
+            hover:text-zinc-200 
+            dark:bg-zinc-300 
+            dark:text-slate-900 
+            dark:hover:text-slate-900 
+            dark:hover:bg-zinc-50  
+            bi bi-funnel 
+            w-auto" id="szurogomb" data-bs-dismiss="offcanvas"> Szűrés</button>
         </div>
+          
+        
 
       </div>
     </div>
