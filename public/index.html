@@ -749,7 +749,7 @@
       dark:bg-slate-900 
       ">
 
-      <div class="row col-12 d-flex justify-content-center mb-4">
+      <div class="col-12 d-flex justify-content-center mb-4">
         <span class="text-xs text-center"><i class="bi bi-info-circle"></i> A szűrés gombra kattintva alkalmazhatja a beállításokat</span>
       </div>
 
@@ -872,22 +872,20 @@
           <div class="col-lg-2 text-center">Ft</div> 
           <input type="range" value="1" onmouseup="KategoriaFeltolt('kategoria_section', 'check', '')"  class="slider form-range w-100 rounded-4" id="max_ar"> 
         </div> 
-        <br><br>
         
-        <br><br>
     
-        <div class="row mt-3" id="Elfogyott_gomb"></div>
-        <div class="row" id="NEM_AKTIV"></div>
+        <div class="row mt-4" id="Elfogyott_gomb"></div>
+        <div class="row mb-5" id="NEM_AKTIV"></div>
 
         <!-- Szűrő alkalmazása gomb: frissíti a terméklistát a kiválasztott szűrők szerint -->
         
         <div class="p-3 position-sticky bottom-0 bg-transparent 
         text-slate-900 
         dark:text-zinc-200 
-        dark:bg-transparent d-flex justify-content-center">
+        dark:bg-transparent d-flex justify-content-center gap-x-3">
           <button type="button" 
             class="
-            btn btn-lg 
+            btn 
             bg-zinc-800 
             text-zinc-200 
             rounded-2xl  
@@ -900,6 +898,23 @@
             dark:hover:bg-zinc-50  
             bi bi-funnel 
             w-auto" id="szurogomb" data-bs-dismiss="offcanvas"> Szűrés</button>
+
+            <button type="button" 
+            class="
+            btn 
+            bg-zinc-800 
+            text-zinc-200 
+            rounded-2xl  
+            shadow-xl  
+            hover:bg-zinc-600 
+            hover:text-red-500 
+            dark:bg-zinc-300 
+            dark:text-slate-900 
+            dark:hover:text-red-700 
+            dark:hover:bg-zinc-50  
+            bi bi-trash  
+            w-auto" id="szuroktorlese" onclick="Szurok_Torlese()"> Szűrők törlése</button>
+        </div>
         </div>
           
         

@@ -579,7 +579,8 @@ async function KategoriaFeltolt(hova, type, kivalasztott,mindenkipipal) {
                     pipa = "checked";
                 }
 
-                listItems += `<p class="p-2 !border !border-b-zinc-800/10 dark:!border dark:!border-b-zinc-200/20 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out"> <input onchange="KatbolAR()"
+                listItems += `<p class="p-2 !border-b !border-b-zinc-800/10 dark:!border-b dark:!border-b-zinc-200/10 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out"> 
+                <input onchange="KatbolAR()"
                 class="
                 form-check-input 
                 !border  
@@ -671,6 +672,19 @@ async function Kezdolap() {
     
     
       // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
+    
+}
+
+async function Szurok_Torlese() {
+    KategoriaFeltolt("kategoria_section", "check", "",false);
+    $("#nev1").val("");
+    elfogyott = false; 
+    $("#elf").prop("checked", false);
+    $("#innaktiv").prop("checked", false);
+    Nemaktivak = false;
+    await ArFeltolt(KeresonekSQLCraft(), "", "");
+    
+    KERESOBAR();
     
 }
 
