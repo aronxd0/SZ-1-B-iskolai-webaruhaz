@@ -158,7 +158,7 @@ app.post('/csv', uploadcsv.single("csv_import"), (req, res) => {
         }
 
         res.set(header1, header2);
-        res.status(200).send(JSON.stringify(stdout)); // Exe output vissza frontendnek
+        res.status(200).send(stdout); // Exe output vissza frontendnek
         res.end(); 
         
     });

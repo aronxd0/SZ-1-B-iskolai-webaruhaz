@@ -388,14 +388,22 @@ async function CSV() {
     try {
         let csvfeltolt = await ajax_post_formdata("csv", formData);
 
-        let cc = JSON.parse(csvfeltolt);
+        //let cc = JSON.parse(JSON.stringify(csvfeltolt));
 
+        for (let i = 0; i < csvfeltolt.length; i++) {
+            console.log(csvfeltolt[i]);
+        }
+
+        for (const sor of csvfeltolt) {
+             const [id, nev, col3, col4] = sor.split(";");
+             console.log(`ID: ${id}, Név: ${nev}, Col3: ${col3}, Col4: ${col4}`);
+        }
         
 
         if (csvfeltolt.length > 0 ) {
             $("#content_hely").fadeOut(300, function() {
 
-                $("#content_hely").html(`<div class="col-12">${cc}</div>`);
+                $("#content_hely").html(`<div class="col-12">${csvfeltolt}</div>`);
 
 
     

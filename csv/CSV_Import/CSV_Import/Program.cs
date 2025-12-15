@@ -10,6 +10,9 @@ using System.Xml.Linq;
 namespace CSV_Import {
     internal class Program {
         static void Main(string[] args) {
+            Console.OutputEncoding = Encoding.UTF8;
+
+
 
             
             if (args.Length == 0) {
@@ -30,7 +33,7 @@ namespace CSV_Import {
 
             try
             {
-                var lines = File.ReadAllLines(filePath, Encoding.UTF8);
+                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding(1250));
                 string json = "[";
 
                 for (int i = 0; i < lines.Length; i++) {
