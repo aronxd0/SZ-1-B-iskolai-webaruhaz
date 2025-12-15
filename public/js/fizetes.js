@@ -1,5 +1,3 @@
-
-
 function RendelesAblak(li) {
 
     Attekintes(li);

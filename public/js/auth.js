@@ -46,7 +46,7 @@ function BevaneJelentkezve() {
 
     else { 
         rang = "";
-        $("#user").html(`<b><i class="bi bi-person"></i></b> ${bejelentkezett_usernev}`);
+        $("#user").html(`<b><i class="bi bi-person"></i></b> <h5>${bejelentkezett_usernev}</h5>`);
         $("#user-email").html(`<b><i class="bi bi-envelope"></i></b> ${bejelentkezett_useremail}`);
         $("#vendegszoveg").html("");
         
