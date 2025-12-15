@@ -394,16 +394,28 @@ async function CSV() {
             console.log(csvfeltolt[i]);
         }
 
-        for (const sor of csvfeltolt) {
-             const [id, nev, col3, col4] = sor.split(";");
-             console.log(`ID: ${id}, Név: ${nev}, Col3: ${col3}, Col4: ${col4}`);
+        let t = "<table class='min-w-full text-sm text-left text-gray-700 dark:text-gray-200'><thead class='bg-gray-100 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-gray-200 text-gray-600 uppercase text-xs tracking-wider'><tr><th class='px-6 py-4'>ID_KATEGORIA</th><th class='px-6 py-4'>NEV</th><th class='px-6 py-4'>AZON</th><th class='px-6 py-4'>AR</th><th class='px-6 py-4'>MENNYISEG</th><th class='px-6 py-4'>MEEGYS</th><th class='px-6 py-4'>AKTIV</th><th class='px-6 py-4'>FOTOLINK</th><th class='px-6 py-4'>LEIRAS</th><th class='px-6 py-4'>DATUMIDO</th></tr></thead><tbody class=''>";
+
+        for (const sor of csvfeltolt.slice(1)) {
+             const [id_kategoria, nev, azon, ar, mennyieg, meegys, aktiv, fotolink, leiras, datumido] = sor.split(";");
+             t += `<tr class="bg-gray-50 dark:bg-slate-950 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-zinc-800 transition"><td class="px-6 py-4">${id_kategoria}</td><td class="px-6 py-4">${nev}</td><td class="px-6 py-4">${azon}</td><td class="px-6 py-4">${ar}</td><td class="px-6 py-4">${mennyieg}</td><td class="px-6 py-4">${meegys}</td><td class="px-6 py-4">${aktiv}</td><td class="px-6 py-4">${fotolink}</td><td class="px-6 py-4">${leiras}</td><td class="px-6 py-4">${datumido}</td></tr>`;
         }
+
+        t += "</tbody></table>";
         
 
         if (csvfeltolt.length > 0 ) {
             $("#content_hely").fadeOut(300, function() {
 
-                $("#content_hely").html(`<div class="col-12">${csvfeltolt}</div>`);
+                $("#content_hely").html(`
+
+                    <div class="col-12">
+                        <div class="overflow-x-auto rounded-2xl shadow-lg bg-zinc-100 dark:bg-slate-950">
+                            ${t}
+                        </div>
+                    </div>
+
+                    `);
 
 
     
