@@ -14,12 +14,8 @@ async function Velemeny_Kozzetesz(id_termek) {
                 $("#velemeny_input").val("");
                 VelemenyekMutat(id_termek);
             }
-            else {
-                üzen(`Hiba: <br> ${velemenyiras.message}`,"danger");
-            }
-
             
-        }  catch (err) { üzen(err, "danger"); }
+        }  catch {}
         
         
     }
@@ -35,7 +31,7 @@ async function Velemeny_Torles(id_velemeny, id_termek) {
             $("#velemeny_input").val("");
             SajatVelemenyekMutat(id_termek);
         }
-    } catch (err) { üzen(err, "danger"); }
+    } catch {}
     
 }
 

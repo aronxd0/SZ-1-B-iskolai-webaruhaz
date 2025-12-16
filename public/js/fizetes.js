@@ -1042,7 +1042,6 @@ async function Fizetésclick(li) {
         document.getElementById("hibauzen").innerHTML = e;
         return;
       } else {
-        //üzen(e,"danger");
         $("#fizetes").modal("hide");
         PAUSE();
         mindenjo = false;
