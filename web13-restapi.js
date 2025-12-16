@@ -373,7 +373,7 @@ app.post('/velemenyek',(req, res) => {
     
     if(szelektalas == 1){
             sql += `limit 10 offset ?`
-            ertekek.push(offset)
+            ertekek.push(offset*10)
     }
 
     sendJson_toFrontend (res, sql, ertekek);
@@ -963,7 +963,7 @@ app.post('/rendelesek',async (req, res) => {
     ORDER BY r.ID_RENDELES DESC
     limit 10 offset ?
     `;
-    let ertekek = [session_data.ID_USER, off];
+    let ertekek = [session_data.ID_USER, off*10];
 
     var eredmeny = await runQueries(sql, ertekek);
     if(eredmeny.message != "ok"){

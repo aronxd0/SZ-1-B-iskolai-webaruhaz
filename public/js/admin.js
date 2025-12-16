@@ -4,10 +4,7 @@ var velemeny_jelenlegi = 1;
 
 async function Admin_Velemenykezeles() {
     console.log("Admin_Velemenykezeles meghivva");
-    let varodb = await ajax_post(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)*10}`, 1);
-
-    console.log("macxount: " + Math.ceil(varodb.maxcount / 10))
-    
+    let varodb = await ajax_post(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, 1);
     velemeny_osszes = Math.ceil(varodb.maxcount / 10)
     
     if(velemeny_jelenlegi > velemeny_osszes){
@@ -72,7 +69,7 @@ async function AdminVelemenyekMutat() {
 
             let ss = ``;
 
-            let varo = await ajax_post(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)*10}`, 1);
+            let varo = await ajax_post(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, 1);
 
             if (varo.rows.length == 0) { 
                 $("#velemenyek_hely").fadeOut(300, function() {

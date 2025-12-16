@@ -124,7 +124,7 @@ async function rendelesekmegtolt(){
         </div>
     `;
 
-    const itemek = await ajax_post(`rendelesek?OFFSET=${(jelenlegi-1)*10}`, 1);
+    const itemek = await ajax_post(`rendelesek?OFFSET=${(jelenlegi-1)}`, 1);
 
     osszesoldal = Math.ceil(itemek.maxcount / 10);
     
