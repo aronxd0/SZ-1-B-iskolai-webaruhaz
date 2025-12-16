@@ -1,6 +1,8 @@
+
 // globalis valtozok, betolto/frissito/modosito fuggvenyek
 
 const alerts = ["success", "info", "warning", "danger"];
+const spinner = `<div id="spinner-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter: blur(10px);opacity: 1;"><div class="spinner-border text-primary"></div></div>`;
 let bepipaltID = "";
 let webbolt_admin = false;
 let admin = false;
@@ -8,34 +10,19 @@ let elfogyott = false;
 let Nemaktivak = false;
 let maxarr = 0;
 let minarr = 0;
-
-// endregion
-let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
+let sqleddig = ""; // változik a lekérdezés akkor újra az 1. oldal aktív
 let oldalszam = 0; // összes oldal darabszáma
 let Joldal = 1; // jelenlegi oldal
 
-const kezdesek = [
-  "Szerintem", "Őszintén szólva", "Én úgy látom", 
-  "Nekem az a véleményem", "Nyilvánvalóan", "Hát megmondom őszintén, hogy"
-];
-const cselekvesek = [
-  "ez a termék", "ez a szolgáltatás", "a funkció", 
-  "ez az app", "ez a funkció", "semmiképpen sem"
-];
-const jelzok = [
-  "nagyon jó", "elég hasznos", "egészen érdekes", 
-  "meglepően hatékony", "egészen korrekt", "használhatatlan"
-];
-const kozospontok = [
-  "és", "de", "ráadásul", "viszont", "ugyanakkor"
-];
+const kezdesek = [ "Szerintem", "Őszintén szólva", "Én úgy látom", "Nekem az a véleményem", "Nyilvánvalóan", "Hát megmondom őszintén, hogy" ];
+const cselekvesek = [ "ez a termék", "ez a szolgáltatás", "a funkció", "ez az app", "ez a funkció", "semmiképpen sem" ];
+const jelzok = [ "nagyon jó", "elég hasznos", "egészen érdekes", "meglepően hatékony", "egészen korrekt", "használhatatlan" ];
+const kozospontok = [ "és", "de", "ráadásul", "viszont", "ugyanakkor" ];
 const zaro = [".", "!", " 😊", " 😎", "."]
-
 
 function randomElem(tomb) {
   return tomb[Math.floor(Math.random() * tomb.length)];
 }
-
 
 function RandomVelemeny() {
   const templateek = [
@@ -57,14 +44,12 @@ function RandomVelemeny() {
 
 async function AR_SUM(osztaly, hova, vegossszeg) {
     let sum = 0;
-    
     $(`.${osztaly}`).each(function () {
-        let osszeg = parseInt($(this).html().replaceAll("&nbsp;", "").replaceAll(" ", ""));
-        
+        let osszeg = parseInt($(this).html().replaceAll("&nbsp;", "").replaceAll(" ", "")); // 1 500 000 -> 1500000
         sum += osszeg;
-        
     });
     
+    // ha vegosszeget akarunk mutatni akkor szamolunk afat
     if (vegossszeg) {
         sum = Math.round(sum * (1 + (await ajax_post(`afa`, 1)).rows[0].AFA / 100));
         $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
@@ -72,48 +57,31 @@ async function AR_SUM(osztaly, hova, vegossszeg) {
     else {
         $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
     }
-    
-    
-    
-    
-    
 }
 
-
-
-
+// Session-t vizsgáló fuggvény, ha lejárt akkor kijelentkeztet
 async function SESSION() {
     if (localStorage.getItem("loggedIn") !== "1") { return; }
-
-        try {
-
-            const js = await ajax_post('/check_session', 1);
-            //const js = await session_check.json();
-
-            const localBoot = localStorage.getItem('serverBoot') || '';
-            if (!js.active || (localBoot && String(js.serverBoot) !== String(localBoot))) {
-                // Biztonságos logout: törölj minden user-infót
-                localStorage.removeItem('loggedIn');
-                localStorage.removeItem('userName');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem("userGroup");
-                localStorage.removeItem('serverBoot');
-                localStorage.removeItem('isAdmin');
-                localStorage.removeItem('isWebAdmin');
-                console.log(js);
-
-                alert('A munkamenet lejárt vagy a szerver újraindult. Kérlek jelentkezz be újra.');
-                location.reload(); // frissít, így a UI vendég módra vált
-            }
-
-        } catch (err) {
-            console.error('Session check hiba', err);
-            // Ha a szerver teljesen down, nem muszáj azonnal logoutolni; várj a következő tickre
-         }
+    try {
+        const js = await ajax_post('/check_session', 1);
+        const localBoot = localStorage.getItem('serverBoot') || '';
+        if (!js.active || (localBoot && String(js.serverBoot) !== String(localBoot))) {
+            // Biztonságos logout: törölj minden user-infót
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem("userGroup");
+            localStorage.removeItem('serverBoot');
+            localStorage.removeItem('isAdmin');
+            localStorage.removeItem('isWebAdmin');
+            console.log(js);
+            alert('A munkamenet lejárt vagy a szerver újraindult. Kérlek jelentkezz be újra.');
+            location.reload(); // frissít, így a UI vendég módra vált
+        }
+    } catch (err) {
+        console.error('Session check hiba', err);
+    }
 }
-
-
-
 
 
 function SUM(lista) {
@@ -170,64 +138,35 @@ function update_gombok (x) {
 }
 
 
-function KeresonekSQLCraft(){
-
-    // ez van használva a KERESOBAR fuggvényben is
-    //                      Árfeltölt fügyvényben is 
-
-
-
-
-    const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
+function KeresonekSQLCraft() {
+    const inputok = kategoria_section.getElementsByTagName("input");
     bepipaltID = ""; //reset bepipalt kategória
-    for(var elem of inputok){
-        if(elem.checked) {
-            bepipaltID += `${elem.id}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
-        }
+    for (var elem of inputok) {
+        if (elem.checked) { bepipaltID += `${elem.id}-`; }// amit be vannak checkelve azt beleteszem a bepipát kategóriákba 
     }
-    var nemaktiv = "";//reset
-    if (Nemaktivak) {
-     nemaktiv = "&inaktiv=1";
-    }
-    var elfogy = ""
-    if (elfogyott){
-        elfogy = "&elfogyott=1";
-    }
-    // elfogyot + nemaktive chechbox bepipálásának megnézése
+    let nemaktiv = "";//reset
+    if (Nemaktivak) { nemaktiv = "&inaktiv=1"; }
 
-    
-  
-    //console.log (document.getElementById("min_ar").value +  "amire szor ")
-   
+    let elfogy = ""
+    if (elfogyott){ elfogy = "&elfogyott=1"; }
 
-    
-    return "keres?nev="+ nev1.value+"&kategoria="+bepipaltID+ elfogy + nemaktiv;
-
-
+    return `keres?nev=${$("#nev1").val()}&kategoria=${bepipaltID}${elfogy}${nemaktiv}`;
 }
 
 
 async function KERESOBAR() {
-    console.log("keresobar lefutott");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
     $("#home_button").closest(".gombdiv").addClass("aktiv");
-  
 
-
-    //console.log("elküld: "+ elküld);
-
-    var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
-    var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
+    var min = document.getElementById("min_ar_input").value == 0 ? "" : document.getElementById("min_ar_input").value; 
+    var max = document.getElementById("max_ar_input").value == 0 ? "" : document.getElementById("max_ar_input").value; 
     var elküld = KeresonekSQLCraft();
 
     //elküldöm az sql-t offset, limit nélkül és az eddig beállított min max árakat
     await ArFeltolt(elküld, min , max);
 
-
-
     var order = "";
-    //console.log(document.getElementById("rend").value);
     switch($("#rend").val()){
         case("ar_nov"): order = "&order=1"; break;
         case("ar_csok"): order = "&order=-1"; break;
@@ -238,136 +177,62 @@ async function KERESOBAR() {
         default: order = "";
     }
 
-
-     min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
-     max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
     //lekérdezes az új max és min árat
+    min = document.getElementById("min_ar_input").value == 0 ? "" : document.getElementById("min_ar_input").value; 
+    max = document.getElementById("max_ar_input").value == 0 ? "" : document.getElementById("max_ar_input").value; 
     
-    var elküld2 = KeresonekSQLCraft()+order+"&minar="+ min +"&maxar="+ max;
-    if(sqleddig != elküld2){ // ha változik a lekérdezés akkor az oldal újra 1-re állitása
-        Joldal = 1;
-    }
-    sqleddig = elküld2;
-    // ha megváltozott a lekérdezés akkor az oldal újra 1-re állitása
+    var elküld2 = `${KeresonekSQLCraft()}${order}&minar=${min}&maxar=${max}`;
 
-    elküld2 += `&offset=${(Joldal-1)}`
-    console.log("elküld2: "+ elküld2);
+    if (sqleddig != elküld2) { Joldal = 1; } // ha változik a lekérdezés akkor az oldal újra 1-re állitása 
+    sqleddig = elküld2;
+
+    elküld2 += `&offset=${(Joldal-1)}`;
     try {
-        var adatok = await ajax_post(elküld2 , 1);
-        if(adatok.rows.length == 0){// ha nincs találat akkor az árakat újra lekérdezem limit nélkül
+        let adatok = await ajax_post(elküld2 , 1);
+        if (adatok.rows.length == 0) {// ha nincs találat akkor az árakat újra lekérdezem limit nélkül
             ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
             Joldal = 1;
         } 
         await CARD_BETOLT(adatok);
-        OLDALFELTOTL(adatok.maxcount);
+        OLDALFELTOLT(adatok.maxcount);
         KategoriaFeltolt("kategoria_section", "check", "",true);    
     } catch (err) { console.log("hiba:", err); }
-    
-    
-
-    /*
-    ajax_post(elküld , 1, function(adatok){ 
-        CARD_BETOLT(adatok);
-    } ); 
-     */
-    
-    
-    
-    console.log("elküldve: "+ elküld);
 }
-//endregion
+
 //#region OLdelkezelés
+function OLDALFELTOLT(darab){
+    oldalszam = Math.ceil(darab / 52); // oldalszám kiszámolása
+    if (oldalszam == 0) oldalszam = 1; // ha 0 akkor 1-re állitom
 
-function OLDALFELTOTL(darab){
-
-
-     oldalszam = Math.ceil( darab /52); // oldalszám kiszámolása
-      if(oldalszam == 0) oldalszam = 1; // ha 0 akkor 1-re állitom
-
-     var pp = 
-
-
-    
-    `
-            <ul class="pagination justify-content-center">
-                <li class="page-item  shadow-xl" style="border: none;">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="Vissza2" onclick="Kovi(this)"> << </a></li>
-                <li class="page-item  shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="vissza1" onclick="Kovi(this)">Előző</a></li>
-                <li class="page-item shadow-xl">
-                    <a class="
-                        page-link 
-                        d-flex 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        "><b id="Mostoldal">${Joldal}</b> / <span id="DBoldal">${oldalszam}</span></a></li>
-                
-                <li class="page-item  shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="Kovi1" onclick="Kovi(this)">Következő</a></li>
-
-                <li class="page-item shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="Kovi2" onclick="Kovi(this)"> >> </a></li>
-            </ul>`;
     // alul a lapválastó feltöltése
+    var pp = `
+        <ul class="pagination justify-content-center">
+            <!-- Első oldalra navigálás -->
+            <li class="page-item  shadow-xl" style="border: none;">
+                <a class="page-link bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 dark:hover:bg-gray-800 hover:bg-gray-200 hover:outline outline-black/10 hover:text-slate-900 transition-hover duration-300 ease-in-out" id="Vissza2" onclick="Kovi(this)"> << </a>
+            </li>
+            
+            <!-- Előző oldalra navigálás -->
+            <li class="page-item shadow-xl">
+                <a class="page-link bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 dark:hover:bg-gray-800 hover:bg-gray-200 hover:outline outline-black/10 hover:text-slate-900 transition-hover duration-300 ease-in-out" id="vissza1" onclick="Kovi(this)">Előző</a>
+            </li>
+            
+            <!-- Jelenlegi oldal és összes oldal száma -->
+            <li class="page-item shadow-xl">
+                <a class="page-link d-flex bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 dark:hover:bg-gray-800 hover:bg-gray-200 hover:outline outline-black/10 hover:text-slate-900 transition-hover duration-300 ease-in-out"><b id="Mostoldal">${Joldal}</b> / <span id="DBoldal">${oldalszam}</span></a>
+            </li>
+            
+            <!-- Következő oldalra navigálás -->
+            <li class="page-item  shadow-xl">
+                <a class="page-link bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 dark:hover:bg-gray-800 hover:bg-gray-200 hover:outline outline-black/10 hover:text-slate-900 transition-hover duration-300 ease-in-out" id="Kovi1" onclick="Kovi(this)">Következő</a>
+            </li>
 
+            <!-- Utolsó oldalra navigálás -->
+            <li class="page-item shadow-xl">
+                <a class="page-link bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 dark:hover:bg-gray-800 hover:bg-gray-200 hover:outline outline-black/10 hover:text-slate-900 transition-hover duration-300 ease-in-out" id="Kovi2" onclick="Kovi(this)"> >> </a>
+            </li>
+        </ul>`;
 
-    
     $("#pagi").html(pp);
 
     if(Joldal == 1){ // ha az 1. oldalon van akkor a vissza gombok inaktívak
@@ -381,41 +246,26 @@ function OLDALFELTOTL(darab){
     }
 }
 
-function Kovi(keri){
+function Kovi(keri) {
     FelaTetore();
     switch(keri.id){
-        case("Kovi1"): // következő oldal
-            if(Joldal < oldalszam){
-                Joldal++;
-                KERESOBAR();
-                return;
-            }
-        case("Kovi2"): // utolsó oldal
-                console.log("oldalszam: "+ oldalszam);
-                Joldal = oldalszam;
-                console.log("Joldal: "+ Joldal + " old szam: "+ oldalszam);
-                KERESOBAR();
-                return;
+
+        // következő oldal
+        case("Kovi1"): if (Joldal < oldalszam) { Joldal++; KERESOBAR(); return; }
+
+        // Jelenlegi oldal
+        case("Kovi2"): Joldal = oldalszam; KERESOBAR(); return;
         
-        case("vissza1"):// előző oldal
-            if(Joldal > 1){
-                Joldal--;
-                KERESOBAR();
-                return;
-            }
-        case("Vissza2"):// első oldal
-            Joldal = 1;
-            KERESOBAR();
-            return
+        // előző oldal
+        case("vissza1"): if (Joldal > 1) { Joldal--; KERESOBAR(); return; }
         
-   
+        // első oldal
+        case("Vissza2"): Joldal = 1; KERESOBAR(); return;
     }
 }
 //endregion
+
 //region Szürés
-
-
-
 async function ArFeltolt(sql, min ,max){
     try {
         var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);//arak lekérdezése limit offset nélkül

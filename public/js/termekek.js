@@ -768,7 +768,7 @@ function CARD_BETOLT(adatok) {
        $("#content_hely").fadeOut(300, function() {
       $("#content_hely").html(s).fadeIn(300);
     });
-    OLDALFELTOTL();
+    OLDALFELTOLT();
     
  
     
