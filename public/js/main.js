@@ -670,6 +670,7 @@ async function Kezdolap() {
 
     if (!localStorage.getItem("loggedIn")) { update_gombok(0); }
     
+    KosarTetelDB();
     
       // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
     

@@ -70,8 +70,6 @@ const pool = mysql.createPool({
     waitForConnections: true,               // Várakozzon szabad kapcsolatra, ne dobjon hibát azonnal
     connectionLimit: 10,                    // Max 10 egyidejű kapcsolat
     queueLimit: 0,                           // Végtelen várakozási sor (ha nincs szabad kapcsolat)
-    enableKeepAlive: true,       // <--- ECONNRESET miatt
-    keepAliveInitialDelay: 0     // <--- ECONNRESET miatt
 });
 
 
@@ -79,7 +77,8 @@ const pool = mysql.createPool({
 const multer = require("multer");
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function (req, file, cb)
+     {
         cb(null, 'public/img/uploads/'); // Ide menti a fájlokat fizikailag
     },
     filename: function (req, file, cb) {
@@ -408,7 +407,7 @@ app.post('/velemeny_add', async (req, res) => {
 
     } catch (err) {
         console.error("/velemeny_add HIBA");
-        return res.status(400).json({
+        return res.status(500).json({
             message: "Nem sikerült hozzáadni a véleményt.",
         });
     }      
@@ -434,7 +433,7 @@ app.post('/velemeny_del', async (req, res) => {
 
     } catch (err) {
         console.error("/velemeny_del HIBA");
-        return res.status(400).json({
+        return res.status(500).json({
             message: "Nem sikerült törölni a véleményt.",
         });
     }   
@@ -462,7 +461,7 @@ app.post('/velemeny_elfogad', async (req, res) => {
 
     } catch (err) {
         console.error("/velemeny_elfogad HIBA");
-        return res.status(400).json({
+        return res.status(500).json({
             message: "Nem sikerült jóváhagyni a véleményt.",
         });
     }       
@@ -490,7 +489,7 @@ app.post('/velemeny_elutasit', async (req, res) => {
 
     } catch (err) {
         console.error("/velemeny_elutasit HIBA");
-        return res.status(400).json({
+        return res.status(500).json({
             message: "Nem sikerült elutasítani a véleményt.",
         });
     }       
@@ -832,8 +831,7 @@ app.post('/rendeles',async (req, res) => {
     // Hiba: nincs tétel vagy nem volt meg a lekérdezés
     if (json_termekek.message != "ok" || json_termekek.maxcount == 0) {
         res.status(500).json({
-            message: "Szörnyű hiba történt a rendelés során: nincs mit rendelni.",
-            error: null
+            message: "Szörnyű hiba történt a rendelés során: nincs mit rendelni."
         });
         return;
     } 
@@ -880,18 +878,21 @@ app.post('/rendeles',async (req, res) => {
     `
     START TRANSACTION;
     ${sqlParancsok.join('\n')}
+    dwadadad select adwuva
     COMMIT;
     `;
 
-    var eredmeny = await runExecute(sql, req, sqlErtekek, false); 
+    var eredmeny = JSON.parse(await runExecute(sql, req, sqlErtekek, false));
+    if (eredmeny.message != "ok") {
+        throw new Error();
+    }
     res.set(header1, header2);
     res.send(eredmeny);
     res.end();
-    } catch (err) {
+    } catch {
         console.error("/rendeles HIBA");
         res.status(500).json({
-            message: "Hiba a rendelés létrehozásakor.",
-            error: err.message
+            message: "Hiba a rendelés létrehozásakor."
         });
     }
 });
