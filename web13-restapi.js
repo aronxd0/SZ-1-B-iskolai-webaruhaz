@@ -79,7 +79,8 @@ const pool = mysql.createPool({
 const multer = require("multer");
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function (req, file, cb)
+     {
         cb(null, 'public/img/uploads/'); // Ide menti a fájlokat fizikailag
     },
     filename: function (req, file, cb) {
@@ -816,14 +817,14 @@ app.post('/rendeles',async (req, res) => {
     // 1. === KOSÁR TÉTELEK LEKÉRÉSE ===
     var termemekek_sql = 
     `
-    SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, kat.KATEGORIA,
+    SELECT ct.ID_KOSAR, ct.ID_TERMEK, ct.MENNYISEG, t.NEV, t.AR, kat.KATEGORIA, (SELECT "AUTO_INCREMENT" FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '${env.DB_DATABASE}' AND TABLE_NAME = 'webbolt_rendeles') AS AZON,
            CASE WHEN t.FOTOLINK IS NOT NULL THEN t.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK
     FROM webbolt_kosar_tetelei ct
     INNER JOIN webbolt_kosar k ON ct.ID_KOSAR = k.ID_KOSAR
     INNER JOIN webbolt_termekek t ON ct.ID_TERMEK = t.ID_TERMEK
     INNER JOIN webbolt_kategoriak kat on t.ID_KATEGORIA = kat.ID_KATEGORIA
     left join webbolt_fotok ON t.ID_TERMEK = webbolt_fotok.ID_TERMEK
-    WHERE k.ID_USER = ?
+    WHERE k.ID_USER = 7
     `;
     var termekek_ertekek = [session_data.ID_USER];
     
