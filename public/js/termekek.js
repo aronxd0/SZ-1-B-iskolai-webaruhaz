@@ -45,9 +45,7 @@ async function TermekModosit(url) {
       }
       else { üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success"); }
       
-    } else {
-      üzen(termekmod.message, "danger");
-    }
+    } 
   } catch (err) {
     console.log("hiba:", err);
   }

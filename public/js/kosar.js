@@ -275,37 +275,37 @@ async function Kosarba_Bele(event, id_termek) {
     event.stopPropagation();
     $("#termekview").modal("hide");
     // Kosár gomb megnyomása után beleteszi a termeket
-    try {
+  
         let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
         if (kosaraddleiras.message == "ok") {
             KosarTetelDB(); // majd a külön le kérdezést kap 
             üzen("Áru bekerült a kosárba","success");   
         }
-        else { üzen(kosaraddleiras.message, "danger"); }         
+               
 
         //$("#idt").html(id_termek);
         $("#kosarba_bele").modal("show");
 
-    } catch (err) { üzen(err, "danger"); }
+    
     
     
 }
 
 async function KosarTetelDB() {
-    try {
-        let kosarteteldb = await ajax_post("kosarteteldb", 1);
-        var db = 0;
-        for (const element of kosarteteldb.rows) {
-            console.log(typeof element.kdb);
-            if (element.kdb == undefined) { 
-                db = 0;
+   
+    let kosarteteldb = await ajax_post("kosarteteldb", 1);
+    var db = 0;
+    for (const element of kosarteteldb.rows) {
+        
+        if (element.kdb == undefined) { 
+            db = 0;
 
-            } 
-            else { db = parseInt(element.kdb); }
-            $("#kosar_content_count").html(`${db}`);
-        }
+        } 
+        else { db = parseInt(element.kdb); }
+        $("#kosar_content_count").html(`${db}`);
+    }
 
-    } catch (err) { üzen(err, "danger"); }
+
 }
 
 async function KosarPLUSZ(id) {

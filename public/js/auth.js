@@ -126,9 +126,7 @@ $("#login_oksi_button").click(function() {
             BevaneJelentkezve();
            
 
-        } else {    
-            üzen(`Hibás felhasználónév, vagy jelszó!`,"danger");
-        }
+        } 
     });  
         
     });

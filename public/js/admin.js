@@ -276,40 +276,25 @@ function Kovi_vel(keri){
 
 
 async function Velemeny_Elutasit(id_velemeny) {
-    try {
+  
 
-        let elutasit = await ajax_post(`velemeny_elutasit?ID_VELEMENY=${id_velemeny}`, 1);
+    let elutasit = await ajax_post(`velemeny_elutasit?ID_VELEMENY=${id_velemeny}`, 1);
 
-        if (elutasit.message == "ok") {
-            üzen("Művelet sikeresen végrehajtva","success");
-        }
-        else { üzen(elutasit.message, "danger"); }
+    if (elutasit.message == "ok") {
+        üzen("Művelet sikeresen végrehajtva","success");
+    }
 
 
-        
-
-    } catch (err) { console.log("hiba:", err); }
-
-    
     await Admin_Velemenykezeles();
 }
 
 async function Velemeny_Elfogad(id_velemeny) {
-    try {
+    let elfogad = await ajax_post(`velemeny_elfogad?ID_VELEMENY=${id_velemeny}`, 1);
 
-        let elfogad = await ajax_post(`velemeny_elfogad?ID_VELEMENY=${id_velemeny}`, 1);
+    if (elfogad.message == "ok") {
+        üzen("Művelet sikeresen végrehajtva","success");
+    }    
 
-        if (elfogad.message == "ok") {
-            üzen("Művelet sikeresen végrehajtva","success");
-        }
-        else { üzen(elfogad.message, "danger"); }
-
-        
-
-
-    } catch (err) { console.log("hiba:", err); }
-
-    
     await Admin_Velemenykezeles();
 }
 
@@ -1075,6 +1060,7 @@ function drawChart(rang) {
 
 
   async function DiagrammokSelect(innen){
+
 
    let kivalasztott = "1";
     // ha nem kezdes, akkor dropdownból jön
