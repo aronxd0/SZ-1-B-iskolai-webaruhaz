@@ -1,3 +1,5 @@
+
+
 function RendelesAblak(li) {
 
     Attekintes(li);
@@ -1005,6 +1007,7 @@ async function Fizetésclick(li) {
   // rákattiontoo a fizetés gombra
   // ellenörizzük, hogy minden rendben van-e
   let mindenjo = true;
+  let Rend_ID = 0;
     try{
       for (const element of li) { // ellenőrizzük, hogy abból a tételből van a még készleten a kivánt darabból
         var ell = await ajax_post(`rendeles_ellenorzes?ID_TERMEK=${element.ID_TERMEK}&MENNYISEG=${element.MENNYISEG}`, 1);
@@ -1018,8 +1021,10 @@ async function Fizetésclick(li) {
       
        // ha minden jó akkor elküldjük a rendelést
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
-        await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}&AFA=${(await ajax_post(`afa`, 1)).rows[0].AFA}`, 1);
-
+        var dsa = await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}&AFA=${(await ajax_post(`afa`, 1)).rows[0].AFA}`, 1);  
+        if(dsa.message != "ok") {
+          throw "Hiba a rendelés leadásakor!";
+        }
         //email küldés a backendnek
         
         KosarTetelDB(); // frissítjük a kosár db-t
@@ -1037,7 +1042,7 @@ async function Fizetésclick(li) {
         document.getElementById("hibauzen").innerHTML = e;
         return;
       } else {
-        üzen(e,"danger");
+        //üzen(e,"danger");
         $("#fizetes").modal("hide");
         PAUSE();
         mindenjo = false;
@@ -1062,22 +1067,21 @@ async function Fizetésclick(li) {
     } 
 }
 
-
-async function emailDesign(li) {
+async function emailDesign(li, rendelId, szallitasiCim) {
   let rows = "";
   let osszes = 0;
 
-  // Összeg + sorok
   for (const e of li) {
     rows += `
       <tr>
-        <td style="padding:10px;border-bottom:1px solid #eee;">
+        <td style="padding:10px;border-bottom:1px solid #eee;text-align:center;">
           ${e.MENNYISEG} db
         </td>
-        <td style="padding:10px;border-bottom:1px solid #eee;">
+        <td style="padding:10px;border-bottom:1px solid #eee;text-align:center;">
           ${e.NEV}
         </td>
-        <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;color:#059669;">
+        <td style="padding:10px;border-bottom:1px solid #eee;
+                   font-weight:bold;color:#047857;text-align:center;">
           ${e.PENZ.toLocaleString()} Ft
         </td>
       </tr>
@@ -1085,82 +1089,109 @@ async function emailDesign(li) {
     osszes += e.PENZ;
   }
 
-  // ÁFA-t csak egyszer kérjük le
   const afaAdat = await ajax_post(`afa`, 1);
   const afa = afaAdat.rows[0].AFA;
-
   const vegosszeg = Math.round(osszes * (1 + afa / 100)).toLocaleString();
 
   return `
-  <div style="background:#f6f2e8; padding:20px 0;">
+  <div style="background:#f5f1e8;padding:30px 0;">
     <div style="
-      font-family:Arial, Helvetica, sans-serif;
-      max-width:700px;
+      max-width:720px;
       margin:auto;
       background:#ffffff;
-      border-radius:12px;
-      padding:25px 30px;
-      border:1px solid #e2e2e2;
+      border-radius:14px;
+      padding:30px;
+      font-family:Arial,Helvetica,sans-serif;
+      border:1px solid #e5e5e5;
     ">
 
       <div style="
+        background:linear-gradient(135deg,#9cffc7,#7ef3b1);
+        padding:30px 20px;
+        border-radius:12px;
         text-align:center;
         margin-bottom:25px;
-        background:#91ffbd;
-        padding:20px 0;
-        border-radius:10px;
-        box-shadow:0 2px 4px rgba(0,0,0,0.08);
       ">
-        <div style="text-align:center; margin-bottom:15px;">
-          <img src="cid:logo2@example.com" style="width:200px; height:auto;" />
-        </div>
+        <img src="cid:logo2@example.com" style="width:180px;margin-bottom:15px;" />
 
-        <h2 style="margin:0;font-size:24px;color:#064e3b;">
-          Hurrá! A rendelésed sikeresen beérkezett hozzánk!
+        <h2 style="margin:0;color:#064e3b;font-size:24px;">
+          Hurrá! A rendelésed megérkezett
         </h2>
 
-        <h6 style="font-size:16px;color:#064e3b;font-weight:400;margin-top:12px;line-height:1.5;">
+        <p style="margin-top:12px;color:#064e3b;font-size:15px;line-height:1.6;">
           Kedves ${_nev}!<br>
-          Köszönjük, hogy nálunk vásároltál!<br>
-          Az alábbiakban összefoglaltuk a rendelés tartalmát.
-        </h6>
+          Köszönjük a vásárlást.<br>
+          Az alábbiakban megtalálod a rendelés részleteit.
+        </p>
       </div>
 
-      <h2 style="
-        margin-top:0;
-        font-size:22px;
-        color:#065f46;
-        text-align:center;
-      ">Rendelésed tartalma</h2>
+      <div style="
+          display:flex;
+            gap:20px;
+           margin-bottom:30px;
+            flex-wrap:wrap;
+      ">
+        <div style="
+          flex:0 0 48%;
+           border:1px solid #e5e7eb;
+            border-radius:12px;
+            padding:20px;
+            box-sizing:border-box;
+        ">
+          <div style="font-size:13px;color:#6b7280;">Rendelési azonosító</div>
+            <div style="font-size:16px;font-weight:bold;color:#065f46;">
+             15
+            </div>
+          </div>
 
-      <table style="width:100%;border-collapse:collapse;margin-top:20px;font-size:15px;">
+        <div style="
+          flex:0 0 48%;
+          border:1px solid #e5e7eb;
+          border-radius:12px;
+          padding:20px;
+          box-sizing:border-box;
+        ">
+          <div style="font-size:13px;color:#6b7280;">Szállítási cím</div>
+            <div style="font-size:15px;color:#065f46;line-height:1.4;">
+              ${_cim} <br />
+             ${_iszam} ${_city} <br />
+              ${_country}
+            </div>
+         </div>
+      </div>
+
+      <h2 style="text-align:center;color:#065f46;margin-bottom:15px;">
+        Rendelésed tartalma
+      </h2>
+
+      <table style="width:100%;border-collapse:collapse;font-size:15px;">
         <thead>
-          <tr style="background:#e0f7d7;color:#064e3b;">
-            <th style="padding:12px;border-bottom:2px solid #cceccc;">Mennyiség</th>
-            <th style="padding:12px;border-bottom:2px solid #cceccc;">Termék</th>
-            <th style="padding:12px;border-bottom:2px solid #cceccc;">Ár</th>
+          <tr style="background:#e6f9ee;color:#064e3b;">
+            <th style="padding:12px;">Mennyiség</th>
+            <th style="padding:12px;">Termék</th>
+            <th style="padding:12px;">Ár</th>
           </tr>
         </thead>
-        <tbody style="text-align:center; background:#ffffff;">
+        <tbody>
           ${rows}
         </tbody>
       </table>
 
       <div style="
-        text-align:right;
         margin-top:25px;
-        font-size:15px;
+        text-align:right;
+        font-size:14px;
         color:#047857;
       ">
         Összesen: ${osszes.toLocaleString()} Ft + ${afa}% áfa
       </div>
 
-
       <div style="
-        text-align:right; 
+        text-align:right;
         font-size:22px;
         font-weight:bold;
         color:#047857;
+        margin-top:5px;
       ">
         Végösszeg: ${vegosszeg} Ft
       </div>
@@ -1168,6 +1199,7 @@ async function emailDesign(li) {
     </div>
   </div>`;
 }
+
 
 
 

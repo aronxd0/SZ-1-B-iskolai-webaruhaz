@@ -52,7 +52,7 @@ function ajax_post_SpinnerNelkul(urlsor, adat) { // emailnek a ajaxposta
         resolve(data);
       },
       error: function(jqXHR) {
-        üzen(jqXHR.responseText, "danger");
+        üzen(JSON.parse(jqXHR.responseText).message, "danger");
         reject(jqXHR.responseText);
       },    
     });
@@ -98,16 +98,6 @@ function ajax_post_formdata(url, formData) {
 
 
 
-
-
-
-
-
-
-
-
-
-
 function ajax_get( urlsor, hova, tipus, aszinkron ) {         // html oldalak beszúrására használjuk
     $.ajax({url: urlsor, type:"get", async:aszinkron, cache:false, dataType:tipus===0?'html':'json',
         beforeSend:function(xhr)   { 
@@ -121,4 +111,3 @@ function ajax_get( urlsor, hova, tipus, aszinkron ) {         // html oldalak be
     });
     return true;
 };
-
