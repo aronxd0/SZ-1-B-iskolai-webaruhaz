@@ -1036,11 +1036,12 @@ async function Fizetésclick(li) {
       if(e == "Válassza ki a fizetési és szállítási módot!"){
         document.getElementById("hibauzen").innerHTML = e;
         return;
-      }
+      } else {
         üzen(e,"danger");
         $("#fizetes").modal("hide");
-        document.getElementById("cart_button").click();
+        PAUSE();
         mindenjo = false;
+      }
     }
 
     if(mindenjo){
