@@ -39,12 +39,12 @@ async function SajatVelemenyekMutat(id_termek) {
     let sv = "";
     let allapot_style = "";
     let ikon = "";
-    //$("#sajatok").html("");
     $("#velemeny").prop("checked", false);
     $("#sajat_velemeny").prop("checked", true);
     try {
         
         let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
+        console.log(sajat_velemeny_lista.rows);
         for (const element of sajat_velemeny_lista.rows) {
 
             if (element.ALLAPOT == "Jóváhagyva") { allapot_style = `bg-emerald-200/30 !border !border-t-emerald-300/50 !border-b-emerald-300/50 !border-r-emerald-300/50 !border-l-emerald-300/50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border border-t-emerald-800/50 border-b-emerald-800/50 border-r-emerald-800/50 border-l-emerald-800/50`; ikon = "✅" }
@@ -129,6 +129,30 @@ async function VelemenyekMutat(id_termek) {
         else {
             for (const element of velemeny_lista.rows) {
                 vv += `
+
+                <div class="!border-b !border-gray-300 pb-4">
+                    <div class="flex items-center gap-3 mb-2">
+                    <i class="bi bi-person-circle text-3xl"></i>
+                    <div>
+                        <p class="font-semibold">${element.NEV}</p>
+                        <p class="text-xs text-zinc-500">${new Date(element.DATUM).toLocaleString(navigator.language, {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        })}</p>
+                    </div>
+                    </div>
+                    <p class="text-zinc-600 dark:text-zinc-400">
+                    ${element.SZOVEG.toString()}
+                    </p>
+                </div>
+
+
+
+                <!--
                 <div 
                 class="
                     w-100 
@@ -152,7 +176,10 @@ async function VelemenyekMutat(id_termek) {
                                     hour12: false
                                 })}</span></p>
                     <p class="text-pretty">${element.SZOVEG.toString()}</p>
-                </div>`;
+                </div>
+                -->
+
+                `;
             }
             console.log(vv);
 

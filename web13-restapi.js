@@ -1197,7 +1197,7 @@ app.post('/termek_adatok',async (req, res) => {
     let termekid = parseInt(req.query.ID_TERMEK);
 
     let sql = `
-        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, 
+        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, webbolt_termekek.DATUMIDO, 
             webbolt_termekek.AR, webbolt_termekek.MENNYISEG, 
             CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
             CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILENAME END AS FOTONEV, 
