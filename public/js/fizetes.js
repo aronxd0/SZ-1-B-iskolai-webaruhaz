@@ -1079,10 +1079,22 @@ async function emailDesign(li, rendelId, szallitasiCim) {
         <td style="padding:10px;border-bottom:1px solid #eee;text-align:center;">
           ${e.NEV}
         </td>
-        <td style="padding:10px;border-bottom:1px solid #eee;
-                   font-weight:bold;color:#047857;text-align:center;">
-          ${e.PENZ.toLocaleString()} Ft
-        </td>
+       <td width="30%" style="
+  padding:8px;
+  border-bottom:1px solid #eee;
+  font-weight:bold;
+  color:#047857;
+  text-align:right;
+  white-space:normal;
+  word-break:break-word;
+  overflow:hidden;
+">
+  <div style="max-width:100%;">
+    ${e.PENZ.toLocaleString()}<br>
+    <span style="font-size:13px;">Ft</span>
+  </div>
+</td>
+
       </tr>
     `;
     osszes += e.PENZ;
@@ -1123,52 +1135,66 @@ async function emailDesign(li, rendelId, szallitasiCim) {
           Az alábbiakban megtalálod a rendelés részleteit.
         </p>
       </div>
+<div style="
+  margin-left:3px;
+  display:flex;
+  margin-bottom:30px;
+  flex-wrap:wrap;
+">
 
-      <div style="
-          display:flex;
-            gap:20px;
-           margin-bottom:30px;
-            flex-wrap:wrap;
-      ">
-        <div style="
-          flex:0 0 48%;
-           border:1px solid #e5e7eb;
-            border-radius:12px;
-            padding:20px;
-            box-sizing:border-box;
-        ">
-          <div style="font-size:13px;color:#6b7280;">Rendelési azonosító</div>
-            <div style="font-size:16px;font-weight:bold;color:#065f46;">
-             15
-            </div>
-          </div>
+  <div style="
+    width:48%;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:20px;
+    box-sizing:border-box;
+    background:#ffffff;
+    margin-right:12px;
+  ">
+    <div style="font-size:13px;color:#6b7280;">
+      Rendelési azonosító
+    </div>
+    <div style="font-size:16px;font-weight:bold;color:#065f46;">
+       111153
+    </div>
+  </div>
 
-        <div style="
-          flex:0 0 48%;
-          border:1px solid #e5e7eb;
-          border-radius:12px;
-          padding:20px;
-          box-sizing:border-box;
-        ">
-          <div style="font-size:13px;color:#6b7280;">Szállítási cím</div>
-            <div style="font-size:15px;color:#065f46;line-height:1.4;">
-              ${_cim} <br />
-             ${_iszam} ${_city} <br />
-              ${_country}
-            </div>
-         </div>
-      </div>
+  <div style="
+    width:48%;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:20px;
+    box-sizing:border-box;
+    background:#ffffff;
+  ">
+    <div style="font-size:13px;color:#6b7280;">
+      Szállítási cím
+    </div>
+    <div style="font-size:15px;color:#065f46;line-height:1.4;">
+      ${_cim}<br>
+      ${_iszam} ${_city}<br>
+      ${_country}
+    </div>
+  </div>
+
+</div>
+
 
       <h2 style="text-align:center;color:#065f46;margin-bottom:15px;">
         Rendelésed tartalma
       </h2>
 
-      <table style="width:100%;border-collapse:collapse;font-size:15px;">
+     <table width="100%" cellpadding="0" cellspacing="0" style="
+  width:100%;
+  table-layout:fixed;
+  border-collapse:collapse;
+  font-size:15px;
+">
         <thead>
           <tr style="background:#e6f9ee;color:#064e3b;">
-            <th style="padding:12px;">Mennyiség</th>
-            <th style="padding:12px;">Termék</th>
-            <th style="padding:12px;">Ár</th>
+            <th width="25%" style="padding:12px;">Mennyiség</th>
+            <th width="45%" style="padding:12px;">Termék</th>
+            <th width="30%" style="padding:12px;">Ár</th>
           </tr>
         </thead>
         <tbody>
@@ -1176,26 +1202,19 @@ async function emailDesign(li, rendelId, szallitasiCim) {
         </tbody>
       </table>
 
-      <div style="
-        margin-top:25px;
-        text-align:right;
-        font-size:14px;
-        color:#047857;
-      ">
-        Összesen: ${osszes.toLocaleString()} Ft + ${afa}% áfa
-      </div>
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;">
+  <tr>
+    <td style="text-align:right; font-size:14px; color:#047857; padding:5px 0;">
+      Összesen: ${osszes.toLocaleString()} Ft + ${afa}% áfa
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align:right; font-size:22px; font-weight:bold; color:#047857; padding:5px 0;">
+      Végösszeg: ${vegosszeg} Ft
+    </td>
+  </tr>
+</table>
 
-      <div style="
-        text-align:right;
-        font-size:22px;
-        font-weight:bold;
-        color:#047857;
-        margin-top:5px;
-      ">
-        Végösszeg: ${vegosszeg} Ft
-      </div>
-
-    </div>
   </div>`;
 }
 
