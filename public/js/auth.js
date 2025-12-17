@@ -103,33 +103,30 @@ $("#login_button").click(function() {
 });
 
 
-$("#login_oksi_button").click(function() { 
-    ajax_post("login?"+$("#form_login").serialize(), 1).then(l_json => {
-        if (l_json.message == "ok" && l_json.maxcount == 1) {  
-            bejelentkezett_usernev = l_json.rows[0].NEV;
-            bejelentkezett_useremail = l_json.rows[0].EMAIL;
-            
-            if (l_json.rows[0].ADMIN == "Y") { admin = true; }
-            else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; }
+$("#login_oksi_button").click(async function() { 
+    let l_json = await ajax_post("login?"+$("#form_login").serialize(), 1);
 
-            csoport = l_json.rows[0].CSOPORT;
-            
-
-            localStorage.setItem("loggedIn", "1");
-            localStorage.setItem("userName", bejelentkezett_usernev);
-            localStorage.setItem("userEmail", bejelentkezett_useremail);
-            localStorage.setItem("userGroup", csoport);
-            localStorage.setItem("isAdmin", admin ? "1" : "0");
-            localStorage.setItem("isWebAdmin", webbolt_admin ? "1" : "0");
-            localStorage.setItem("serverBoot", l_json.serverBoot || "");
-
-            BevaneJelentkezve();
-           
-
-        } 
-    });  
+    if (l_json.message == "ok" && l_json.maxcount == 1) {
+        bejelentkezett_usernev = l_json.rows[0].NEV;
+        bejelentkezett_useremail = l_json.rows[0].EMAIL;
         
-    });
+        if (l_json.rows[0].ADMIN == "Y") { admin = true; }
+        else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; }
+        csoport = l_json.rows[0].CSOPORT;
+        
+        localStorage.setItem("loggedIn", "1");
+        localStorage.setItem("userName", bejelentkezett_usernev);
+        localStorage.setItem("userEmail", bejelentkezett_useremail);
+        localStorage.setItem("userGroup", csoport);
+        localStorage.setItem("isAdmin", admin ? "1" : "0");
+        localStorage.setItem("isWebAdmin", webbolt_admin ? "1" : "0");
+        localStorage.setItem("serverBoot", l_json.serverBoot || "");
+
+        BevaneJelentkezve();
+    } 
+});  
+        
+    
 
 
 $("#kijelentkezik").click( async function() {
