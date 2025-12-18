@@ -53,6 +53,37 @@ async function SajatVelemenyekMutat(id_termek) {
             else if (element.ALLAPOT == "Elutasítva") { allapot_style = "bg-red-200/30 !border !border-t-red-400/50 !border-b-red-400/50 !border-r-red-400/50 !border-l-red-400/50 text-red-700 dark:bg-red-950/20 dark:text-red-400 dark:border border-t-red-900/50 border-b-red-900/50 border-r-red-900/50 border-l-red-900/50"; ikon = "❌" }
 
             sv += `
+
+            <div class="${allapot_style} p-3 rounded-xl">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <i class="bi bi-person-circle text-3xl"></i>
+                    
+                    <div class="col-6">
+                        <p class="font-semibold">${element.NEV}</p>
+                        <p class="text-xs">${new Date(element.DATUM).toLocaleString(navigator.language, {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        })}</p>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end"><p>${element.ALLAPOT}</p></div>
+                    
+                </div>
+                <p class="text-pretty">
+                    ${element.SZOVEG.toString()}
+                </p>
+                
+            </div>
+
+
+
+
+
+
+            <!--
             <div role="alert" class="w-100 p-3 rounded-4 mt-3 mb-3 comment ${allapot_style}">
                 <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString(navigator.language, {
                                                                                                                                                                             year: 'numeric',
@@ -95,8 +126,7 @@ async function SajatVelemenyekMutat(id_termek) {
                                  <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200 bi bi-x-lg" > Mégse</button>
                                  <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-red-500 dark:hover:bg-slate-900 dark:hover:text-red-500 bi bi-trash" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})' > Törlés</button>                                                                                                                                        
                                 
-                                <!--<button class="btn btn-danger bi bi-trash" type="button" onclick='Velemeny_Torles(${element.ID_VELEMENY},${element.ID_TERMEK})'> Törlés</button>-->
-                            </li>
+                                
                         </ul>
                     </div>                                                                                                                                                     
                  
@@ -106,7 +136,9 @@ async function SajatVelemenyekMutat(id_termek) {
                 
                      
                 
-            </div>`;
+            </div>
+            -->
+            `;
         }
         console.log(sv);
         $("#velemenyek").fadeOut(300, function() {
