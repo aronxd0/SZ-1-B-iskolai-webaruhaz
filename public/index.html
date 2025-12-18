@@ -1064,15 +1064,37 @@
     <div class="modal-dialog modal-dialog-centered modal-md">
       <div class="modal-content dark:!border dark:!border-zinc-200/20 ">
         <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-start">
-          <span class="modal-title text-xl"><i class="bi bi-chat-dots"></i> Vélemény írása</span>
+          <span class="modal-title text-xl"><i class="bi bi-plus-lg"></i> Vélemény írása</span>
         </div>
         <div class="modal-body bg-zinc-100 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
           
-            
+          <div class="row">
+            <div class="col-12"><span class="d-flex align-items-center space-x-2" id="ussr"></span></div>
+          </div>
+
+          <div class="row">
+            <div class="mt-3">
+              <textarea 
+              class="
+              resize-none 
+              form-control 
+              shadow-xl 
+              bg-zinc-50 
+              text-slate-900 
+              dark:bg-slate-800 
+              dark:text-zinc-200 
+              placeholder-gray-400 
+              dark:placeholder-gray-400 
+              " 
+              id="velemeny_input" name="vlmny" type="text" placeholder="Mondd el, mit gondolsz erről a termékről..." style="border: none;"></textarea>
+            </div>
+          </div>
 
 
         </div>
-        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200"></div>
+        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
+          <div class="col-12 d-flex justify-content-end align-items-center" id="interakcio"></div>
+        </div>
       </div>
     </div>
   </div>

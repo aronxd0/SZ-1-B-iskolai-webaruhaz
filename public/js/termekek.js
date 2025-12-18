@@ -252,6 +252,64 @@ function closeImage() {
 
 
 
+function Velemeny_Iras(id_termek) {
+  let gombs = `
+        <button type="button" 
+        class="
+        btn 
+        bg-zinc-600 
+      text-zinc-200 
+      rounded-4 
+      dark:bg-slate-900 
+      dark:text-zinc-200 
+      hover:bg-zinc-700 
+      hover:text-zinc-200 
+      dark:hover:bg-slate-950 
+      dark:hover:text-zinc-200
+      transition-hover duration-300 ease-in-out   w-auto " onclick='VeletlenszeruVelemeny()'> 
+      <i class="bi bi-dice-6"></i>
+      <span class="d-none d-lg-inline"> Generálás</span>
+      </button>
+        
+        <button type="button" 
+        class="
+        btn bg-zinc-600 
+      text-zinc-200 
+      rounded-4 
+      dark:bg-slate-900 
+      dark:text-zinc-200 
+      hover:bg-zinc-700 
+      hover:text-zinc-200 
+      dark:hover:bg-slate-950 
+      dark:hover:text-zinc-200
+      transition-hover duration-300 ease-in-out   w-auto ms-2" data-bs-dismiss="modal" data-bs-target="#velemeny_iras" id="mgs">
+      <i class="bi bi-x-lg"></i>
+      <span class="d-none d-lg-inline"> Mégse</span>
+      </button>
+        
+        <button type="button" 
+        class="
+        btn bg-zinc-600 
+      text-zinc-200 
+      rounded-4 
+      dark:bg-slate-900 
+      dark:text-zinc-200 
+      hover:bg-zinc-700 
+      hover:text-zinc-200 
+      dark:hover:bg-slate-950 
+      dark:hover:text-zinc-200
+      transition-hover duration-300 ease-in-out   w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${id_termek})'> 
+      <i class="bi bi-send"></i>
+      <span class="d-none d-lg-inline"> Közzététel</span>
+      </button>
+    
+    `;
+
+    $("#interakcio").html(gombs);
+
+    $("#velemeny_iras").modal("show");
+}
+
 
 
 
@@ -372,92 +430,88 @@ async function Termek_Mutat(event, termek_id) {
 
     let velemenyiras_gomb = `
       <button 
-      class="
-      btn 
-      
-      bi bi-pen 
-      bg-zinc-600 
-      text-zinc-200 
+      class=" 
+      bi bi-plus-lg 
+      bg-transparent  
+      text-slate-900 
       rounded-4 
       dark:bg-slate-900 
       dark:text-zinc-200 
-      hover:bg-zinc-700 
-      hover:text-zinc-200 
+      hover:text-gray-600 
       dark:hover:bg-slate-950 
       dark:hover:text-zinc-200
       transition-hover duration-300 ease-in-out 
-        w-auto" data-bs-toggle="collapse" data-bs-target="#vlm"> Vélemény írása</button>`
+        w-auto" onclick="Velemeny_Iras(${termek_id})"> Vélemény írása</button>`
 
 
 
     let velemenyek_tab = `
           <label 
-          class="bg-zinc-50 
+          class="
+          group 
+          bg-transparent 
           my-2 
           text-slate-900 
-          shadow-xl 
           dark:bg-slate-900 
           dark:text-zinc-200 
-          hover:bg-gray-200 
-          hover:outline outline-black/10 
+          hover:text-gray-600 
           dark:hover:bg-gray-700 
           dark:hover:-outline-offset-1 
           dark:hover:outline-white/10 
-          d-flex align-items-center justify-content-center p-1 text-center rounded-xl cursor-pointer 
+          d-flex align-items-center justify-content-center p-2 text-center cursor-pointer 
               transition-all duration-200
-              has-[:checked]:bg-indigo-100 
-              has-[:checked]:border-indigo-400 
-              has-[:checked]:border 
-              has-[:checked]:shadow-md
+              
+              has-[:checked]:!border-b 
+              has-[:checked]:!border-indigo-400 
+              
 
               dark:has-[:checked]:bg-sky-950
               dark:has-[:checked]:border-sky-700
               dark:has-[:checked]:border ">
 
-          <div class="flex items-center gap-3">
-          <input type="radio" name="comment" class="form-check-input hidden" id="velemeny" checked onchange="VelemenyekMutat(${termek_id})">
-          <span class="font-semibold"><i class="bi bi-chat-dots"></i> Vélemények</span>
+          <div class="flex items-center gap-2">
+            <input type="radio" name="comment" class="form-check-input hidden" id="velemeny" checked onchange="VelemenyekMutat(${termek_id})">
+            <i class="bi bi-chat-dots font-semibold"></i>
+            <span class=" hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold  sm:inline transition-all duration-200">Vélemények</span>
           </div>
 
-          <div class="flex flex-col text-right">
           
-          </div>
       </label>
     
     `
 
     let sajatvelemenyek_tab = `
         <label 
-          class="bg-zinc-50 
+          class="
+          group 
+          bg-transparent 
           my-2 
           text-slate-900 
-          shadow-xl 
+          
           dark:bg-slate-900 
           dark:text-zinc-200 
-          hover:bg-gray-200 
-          hover:outline outline-black/10 
+          hover:text-gray-600 
           dark:hover:bg-gray-700 
           dark:hover:-outline-offset-1 
           dark:hover:outline-white/10 
-          d-flex align-items-center justify-content-center p-1  rounded-xl cursor-pointer 
+          d-flex align-items-center justify-content-center p-2  cursor-pointer 
               transition-all duration-200
-              has-[:checked]:bg-indigo-100 
-              has-[:checked]:border-indigo-400 
-              has-[:checked]:border 
-              has-[:checked]:shadow-md
+              has-[:checked]:!border-b  
+              has-[:checked]:!border-indigo-400 
+              
+              
 
               dark:has-[:checked]:bg-sky-950
               dark:has-[:checked]:border-sky-700
               dark:has-[:checked]:border ">
 
-          <div class="flex items-center gap-3">
-          <input type="radio" name="comment" class="form-check-input hidden " id="sajat_velemeny" onchange="SajatVelemenyekMutat(${termek_id})">
-          <span class="font-semibold"><i class="bi bi-person"></i> Véleményeim</span>
+          <div class="flex items-center gap-2">
+            <input type="radio" name="comment" class="form-check-input hidden " id="sajat_velemeny" onchange="SajatVelemenyekMutat(${termek_id})">
+            <i class="bi bi-person"></i> 
+            <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 ">Véleményeim</span>
           </div>
 
-          <div class="flex flex-col text-right">
           
-          </div>
       </label>`;
 
 
@@ -469,57 +523,7 @@ async function Termek_Mutat(event, termek_id) {
 
   
 
-  let gombs = `
-        <button type="button" 
-        class="
-        btn 
-        bg-zinc-600 
-      text-zinc-200 
-      rounded-4 
-      dark:bg-slate-900 
-      dark:text-zinc-200 
-      hover:bg-zinc-700 
-      hover:text-zinc-200 
-      dark:hover:bg-slate-950 
-      dark:hover:text-zinc-200
-      transition-hover duration-300 ease-in-out   w-auto " onclick='VeletlenszeruVelemeny()'> 
-      <i class="bi bi-dice-6"></i>
-      <span class="d-none d-lg-inline"> Generálás</span>
-      </button>
-        
-        <button type="button" 
-        class="
-        btn bg-zinc-600 
-      text-zinc-200 
-      rounded-4 
-      dark:bg-slate-900 
-      dark:text-zinc-200 
-      hover:bg-zinc-700 
-      hover:text-zinc-200 
-      dark:hover:bg-slate-950 
-      dark:hover:text-zinc-200
-      transition-hover duration-300 ease-in-out   w-auto ms-2" data-bs-toggle="collapse" data-bs-target="#vlm" id="mgs">
-      <i class="bi bi-x-lg"></i>
-      <span class="d-none d-lg-inline"> Mégse</span>
-      </button>
-        
-        <button type="button" 
-        class="
-        btn bg-zinc-600 
-      text-zinc-200 
-      rounded-4 
-      dark:bg-slate-900 
-      dark:text-zinc-200 
-      hover:bg-zinc-700 
-      hover:text-zinc-200 
-      dark:hover:bg-slate-950 
-      dark:hover:text-zinc-200
-      transition-hover duration-300 ease-in-out   w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${termek_id})'> 
-      <i class="bi bi-send"></i>
-      <span class="d-none d-lg-inline"> Közzététel</span>
-      </button>
-    
-    `;
+  
 
 
 
@@ -579,9 +583,10 @@ async function Termek_Mutat(event, termek_id) {
 
           <div class="col-12 mt-3">
 
-            <div class="d-flex flex-column flex-lg-row py-3 gap-x-4">
+            <div class="d-flex py-3 gap-x-5">
               <div id="vvl"></div>
               <div id="sajatvlm"></div>
+              <div id="vlmg" class="d-flex align-items-center"></div>
             </div>
 
             <div class="space-y-6" id="velemenyek">
@@ -651,7 +656,6 @@ async function Termek_Mutat(event, termek_id) {
     else {
       if (event.target.tagName != "button") {
         // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
-        $("#ga").html(gombs);
 
         //$("#termekview").modal("show");
         $("#content_hely").fadeOut(300, function() {

@@ -2,11 +2,12 @@
 
 async function Velemeny_Kozzetesz(id_termek) {
     
-    const cls = new bootstrap.Collapse('#vlm', { toggle: false });
+    //const cls = new bootstrap.Collapse('#vlm', { toggle: false });
     if ($("#velemeny_input").val() != "") {
         try {
             let velemenyiras = await ajax_post(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, 1) 
-            cls.hide();
+            //cls.hide();
+            $("#velemeny_iras").modal("hide");
             console.log(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`);
 
             if (velemenyiras.message == "ok") {
