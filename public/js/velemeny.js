@@ -196,7 +196,7 @@ async function VelemenyekMutat(id_termek) {
             for (const element of velemeny_lista.rows) {
                 vv += `
 
-                <div class="!border-b !border-gray-300 pb-4">
+                <div class="!border-b !border-gray-300 dark:!border-b dark:!border-sky-950 pb-4">
                     <div class="flex items-center gap-3 mb-2">
                     <i class="bi bi-person-circle text-3xl"></i>
                     <div>

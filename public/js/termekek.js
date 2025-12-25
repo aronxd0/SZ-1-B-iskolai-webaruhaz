@@ -480,19 +480,17 @@ async function Termek_Mutat(event, termek_id) {
           dark:bg-slate-900 
           dark:text-zinc-200 
           hover:text-gray-600 
-          dark:hover:bg-gray-700 
-          dark:hover:-outline-offset-1 
-          dark:hover:outline-white/10 
+          dark:hover:text-gray-400 
+          
           d-flex align-items-center justify-content-center p-2 text-center cursor-pointer 
               transition-all duration-200
               
               has-[:checked]:!border-b 
               has-[:checked]:!border-indigo-400 
               
-
-              dark:has-[:checked]:bg-sky-950
-              dark:has-[:checked]:border-sky-700
-              dark:has-[:checked]:border ">
+              
+              dark:has-[:checked]:!border-b
+              dark:has-[:checked]:!border-sky-700 ">
 
           <div class="flex items-center gap-2">
             <input type="radio" name="comment" class="form-check-input hidden" id="velemeny" checked onchange="VelemenyekMutat(${termek_id})">
@@ -516,19 +514,18 @@ async function Termek_Mutat(event, termek_id) {
           dark:bg-slate-900 
           dark:text-zinc-200 
           hover:text-gray-600 
-          dark:hover:bg-gray-700 
-          dark:hover:-outline-offset-1 
-          dark:hover:outline-white/10 
+          dark:hover:text-gray-400 
+          
+          
           d-flex align-items-center justify-content-center p-2  cursor-pointer 
               transition-all duration-200
               has-[:checked]:!border-b  
               has-[:checked]:!border-indigo-400 
-              
-              
 
-              dark:has-[:checked]:bg-sky-950
-              dark:has-[:checked]:border-sky-700
-              dark:has-[:checked]:border ">
+              dark:has-[:checked]:!border-b
+              dark:has-[:checked]:!border-sky-700
+              ">
+              
 
           <div class="flex items-center gap-2">
             <input type="radio" name="comment" class="form-check-input hidden " id="sajat_velemeny" onchange="SajatVelemenyekMutat(${termek_id})">
@@ -559,7 +556,7 @@ async function Termek_Mutat(event, termek_id) {
         <button class="p-2 my-3" onclick="KERESOBAR()"><i class="bi bi-caret-left-fill" ></i> Inkább böngészek tovább</button>
         <div class="row g-5">
           <div class="col-12 col-lg-7">
-            <div onmousemove="zoomMove(event, this)" onmouseleave="zoomReset(this)" class="relative w-full h-[420px] lg:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl overflow-hidden bg-zinc-300">
+            <div onmousemove="zoomMove(event, this)" onmouseleave="zoomReset(this)" class="relative w-full h-[420px] lg:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl overflow-hidden bg-zinc-300 dark:bg-slate-950">
               <img src="${fotolink}" alt="" class="zoom-img h-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-transform duration-300 ease-out" onclick="openImage(this.src)"/>
             </div>
           </div>
