@@ -173,6 +173,13 @@ html.dark .gombdiv.aktiv button {
   font-weight: bold;
 }
 
+.zoom-img {
+  transform: scale(1);
+}
+
+.hovered {
+  aspect-ratio: auto;
+}
 
 .shadow-bottom {
   box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175);

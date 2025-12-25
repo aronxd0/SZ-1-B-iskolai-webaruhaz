@@ -250,6 +250,28 @@ function closeImage() {
 }
 
 
+function zoomMove(e, container) {
+  const img = container.querySelector(".zoom-img");
+  img.classList.remove("aspect-square");
+  
+
+  const rect = container.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+  img.style.transformOrigin = `${x}% ${y}%`;
+  img.style.transform = "scale(3)";
+}
+
+function zoomReset(container) {
+  const img = container.querySelector(".zoom-img");
+  img.classList.add("aspect-square");
+
+  img.style.transformOrigin = "center center";
+  img.style.transform = "scale(1)";
+}
+
+
 
 
 function Velemeny_Iras(id_termek) {
@@ -362,7 +384,7 @@ async function Termek_Mutat(event, termek_id) {
           rounded-xl 
           kosar bi bi-plus  
            w-auto font-semibold 
-          " onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba</button>`;
+          " onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba teszem </button>`;
 
   let bal = ` 
 
@@ -431,7 +453,7 @@ async function Termek_Mutat(event, termek_id) {
     let velemenyiras_gomb = `
       <button 
       class=" 
-      bi bi-plus-lg 
+       
       bg-transparent  
       text-slate-900 
       rounded-4 
@@ -441,7 +463,10 @@ async function Termek_Mutat(event, termek_id) {
       dark:hover:bg-slate-950 
       dark:hover:text-zinc-200
       transition-hover duration-300 ease-in-out 
-        w-auto" onclick="Velemeny_Iras(${termek_id})"> Vélemény írása</button>`
+        w-auto" onclick="Velemeny_Iras(${termek_id})"> 
+        <i class="bi bi-plus-lg"></i>
+        <span class="d-none d-sm-inline">Vélemény írása</span>
+        </button>`
 
 
 
@@ -530,11 +555,12 @@ async function Termek_Mutat(event, termek_id) {
 
     let termek_megtekintes = `
     
-      <div class="container my-12">
+      <div class="container my-1">
+        <button class="p-2 my-3" onclick="KERESOBAR()"><i class="bi bi-caret-left-fill" ></i> Inkább böngészek tovább</button>
         <div class="row g-5">
           <div class="col-12 col-lg-7">
-            <div class="relative w-full h-[420px] lg:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl bg-zinc-300">
-              <img src="${fotolink}" alt="" class="h-full aspect-square object-cover cursor-pointer hover:opacity-90 transition" onclick="openImage(this.src)"/>
+            <div onmousemove="zoomMove(event, this)" onmouseleave="zoomReset(this)" class="relative w-full h-[420px] lg:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl overflow-hidden bg-zinc-300">
+              <img src="${fotolink}" alt="" class="zoom-img h-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-transform duration-300 ease-out" onclick="openImage(this.src)"/>
             </div>
           </div>
 
@@ -656,7 +682,9 @@ async function Termek_Mutat(event, termek_id) {
     else {
       if (event.target.tagName != "button") {
         // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
-
+        $("#welcome_section").fadeOut(300);
+        $("#pagi").html("");
+        $("#kategoria_carousel").fadeOut(300);
         //$("#termekview").modal("show");
         $("#content_hely").fadeOut(300, function() {
           $("#content_hely").html(termek_megtekintes).fadeIn(300);
