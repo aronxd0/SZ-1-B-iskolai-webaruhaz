@@ -22,7 +22,11 @@
 * { font-family: 'Poppins', sans-serif; }
 
 /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
-html, body { overflow-x: hidden; max-width: 100%; }
+html, body { 
+  overflow-x: hidden; 
+  max-width: 100%;
+  color-scheme: light dark;
+}
 
 /* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
 .container-fluid { padding-left: 0 !important; padding-right: 0 !important; }

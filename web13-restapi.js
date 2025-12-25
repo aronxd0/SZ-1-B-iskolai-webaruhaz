@@ -1809,6 +1809,6 @@ app.post('/send-email', async (req, res) => {
 
 // === SZERVER INDÍTÁSA ===
 // Az Express szerver elkezd hallgatni a megadott porton
-app.listen(port, function () { 
+app.listen(port,"0.0.0.0", function () { 
     console.log(`megy a szero http://localhost:${port}`); 
 });
