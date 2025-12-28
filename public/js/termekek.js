@@ -381,10 +381,10 @@ async function Termek_Mutat(event, termek_id) {
           dark:bg-zinc-800 
           dark:hover:bg-zinc-700 
           transition-all duration-150 ease-in-out 
-          rounded-xl 
-          kosar bi bi-plus  
-           w-auto font-semibold 
-          " onclick='Kosarba_Bele(event, ${termek_id})'> Kosárba teszem </button>`;
+          rounded-lg  
+          kosar bi bi-plus-lg  
+           w-auto  tracking-wider 
+          " onclick='Kosarba_Bele(event, ${termek_id})'> KOSÁRBA TESZEM </button>`;
 
   let bal = ` 
 
@@ -566,41 +566,38 @@ async function Termek_Mutat(event, termek_id) {
 
               
 
-              <!-- Title -->
+              
               <h2 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
                 ${nev}
               </h2>
 
               <span class="text-slate-900 dark:text-zinc-200 text-lg">${parseInt(ar).toLocaleString()} Ft</span>
 
-              <!-- Meta -->
+             
               <p class="text-sm text-zinc-500">
                 Utoljára frissítve ${datum.toString().split("T")[0]}
               </p>
 
-              <!-- Description -->
+              
               <p class="text-zinc-600 dark:text-zinc-400">
                 ${leiras}
               </p>
 
-              <!-- Buttons -->
+              
               <div class="flex gap-3 mt-4">
                 ${ks}
                 
-                <!--
-                <button class="px-6 py-2 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition">
-                  Pay $220
-                </button>
-                -->
+                
               </div>
 
-              <!-- Highlights -->
-              <ul class="mt-6 text-sm text-zinc-600 dark:text-zinc-400 space-y-2 list-disc list-inside">
-                <li>Kategória: ${kategoria}</li>
-                <li>Termékazonosító: ${azon}</li>
-                <li>Raktáron: ${mennyiseg} ${meegys}</li>
-              </ul>
-
+              <div class="mt-6">
+                <span class="d-flex align-items-center justify-content-start gap-x-2"><i class="bi bi-info-circle"></i> Egyéb információk:</span>
+                <ul class="text-sm mt-2 text-zinc-600 dark:text-zinc-400 space-y-2 list-disc list-inside">
+                  <li>Kategória: ${kategoria}</li>
+                  <li>Termékazonosító: ${azon}</li>
+                  <li>Raktáron: ${mennyiseg} ${meegys}</li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -789,9 +786,9 @@ function CARD_BETOLT(adatok) {
           dark:hover:bg-zinc-700 
           transition-all duration-150 ease-in-out 
           rounded-xl 
-          kosar bi bi-plus  
-           w-full p-2 
-          " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> Kosárba</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
+          kosar bi bi-plus-lg   
+           w-full p-2 text-sm tracking-wider    
+          " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> KOSÁRBA</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
     }
 
 

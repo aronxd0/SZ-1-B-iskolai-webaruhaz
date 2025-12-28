@@ -19,7 +19,7 @@
 }
 
 /* Az oldalon minden szöveg ezzel a betűtípussal jelenjen meg */
-* { font-family: 'Poppins', sans-serif; }
+* { font-family: 'Poppins', sans-serif; font-weight: 300; }
 
 /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
 html, body { 
