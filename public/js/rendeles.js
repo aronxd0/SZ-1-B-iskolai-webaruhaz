@@ -114,6 +114,8 @@ function Kovi_rendeles(keri){
 
 async function rendelesekmegtolt(){
     $("#welcome_section").fadeOut(300);
+    $("#kateogoria-carousel").fadeOut(300);
+    $("#felsosor").removeClass("mt-[100px]").addClass("mt-[100px]");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
@@ -351,7 +353,7 @@ async function rendelesekmegtolt(){
         s = `
             <div class="col-12">
                 <div class="text-center p-2">
-                    <h5>A boltunkban még nem vásároltál.</h5>
+                    <h5>A boltunkban még nem vásároltál :(</h5>
                 </div>
             </div>
         `;
