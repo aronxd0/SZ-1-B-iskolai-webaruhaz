@@ -9,6 +9,7 @@ let Nemaktivak = false;
 let maxarr = 0;
 let minarr = 0;
 
+
 // endregion
 let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
 let oldalszam = 0; // összes oldal darabszáma
@@ -83,23 +84,17 @@ async function AR_SUM(osztaly, hova, vegossszeg) {
 
 
 async function SESSION() {
-    if (localStorage.getItem("loggedIn") !== "1") { return; }
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { return; }
 
         try {
 
             const js = await ajax_post('/check_session', 1);
             //const js = await session_check.json();
 
-            const localBoot = localStorage.getItem('serverBoot') || '';
+            const localBoot = JSON.parse(localStorage.getItem('user'))?.serverBoot || '';
             if (!js.active || (localBoot && String(js.serverBoot) !== String(localBoot))) {
                 // Biztonságos logout: törölj minden user-infót
-                localStorage.removeItem('loggedIn');
-                localStorage.removeItem('userName');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem("userGroup");
-                localStorage.removeItem('serverBoot');
-                localStorage.removeItem('isAdmin');
-                localStorage.removeItem('isWebAdmin');
+                localStorage.removeItem("user");
                 console.log(js);
 
                 alert('A munkamenet lejárt vagy a szerver újraindult. Kérlek jelentkezz be újra.');
@@ -668,7 +663,7 @@ async function Kezdolap() {
     }
     else { return; }
 
-    if (!localStorage.getItem("loggedIn")) { update_gombok(0); }
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { update_gombok(0); }
     
     KosarTetelDB();
     

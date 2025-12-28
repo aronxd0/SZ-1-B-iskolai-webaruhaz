@@ -6,7 +6,7 @@ let csoport = "";
 let rang = "";
 
 function BevaneJelentkezve() {
-    if (!localStorage.getItem("loggedIn")) { 
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { 
         $("#loginspan").html(' Bejelentkezés');
         $("#loginout").removeClass("bi bi-box-arrow-in-left");
         $("#loginout").addClass("bi bi-box-arrow-in-right");
@@ -88,7 +88,7 @@ function BevaneJelentkezve() {
 }
 
 $("#login_button").click(function() {   
-        if (!localStorage.getItem("loggedIn")) {
+        if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {
             document.getElementById("profil").addEventListener('hidden.bs.modal', () => {
                 $('#login_modal').modal('show');
             }, { once: true });
@@ -114,6 +114,17 @@ $("#login_oksi_button").click(async function() {
         else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; }
         csoport = l_json.rows[0].CSOPORT;
         
+        localStorage.setItem("user", JSON.stringify({
+            loggedIn: true,
+            name: bejelentkezett_usernev,
+            email: bejelentkezett_useremail,
+            group: csoport,
+            isAdmin: admin,
+            isWebAdmin: webbolt_admin,
+            ui: { theme: "light" }
+        }));
+
+        /*
         localStorage.setItem("loggedIn", "1");
         localStorage.setItem("userName", bejelentkezett_usernev);
         localStorage.setItem("userEmail", bejelentkezett_useremail);
@@ -121,6 +132,7 @@ $("#login_oksi_button").click(async function() {
         localStorage.setItem("isAdmin", admin ? "1" : "0");
         localStorage.setItem("isWebAdmin", webbolt_admin ? "1" : "0");
         localStorage.setItem("serverBoot", l_json.serverBoot || "");
+        */
 
         BevaneJelentkezve();
     } 
@@ -130,13 +142,8 @@ $("#login_oksi_button").click(async function() {
 
 
 $("#kijelentkezik").click( async function() {
-    ajax_post("logout", 1).then(logout_json => {
-        localStorage.removeItem("loggedIn");
-        localStorage.removeItem("userName");
-        localStorage.removeItem("userEmail");
-        localStorage.removeItem("userGroup");
-        localStorage.removeItem("isAdmin");
-        localStorage.removeItem("isWebAdmin");
+    ajax_post("logout", 1).then( () => {
+        localStorage.removeItem("user");
         BevaneJelentkezve();
     });  
 });

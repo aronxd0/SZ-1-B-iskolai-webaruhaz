@@ -1,5 +1,6 @@
 // termekek szerkesztese, torlese, uj felvetele + a betolto fuggveny
 
+
 // termek modositasa MENT gombra kattintaskor
 async function TermekModosit(url) {
   try {
@@ -369,7 +370,7 @@ async function Termek_Mutat(event, termek_id) {
     const datum = termekadatok.rows[0].DATUMIDO;
 
 
-    if (localStorage.getItem("loggedIn") !== "1" || aktiv == "N" || mennyiseg == 0) {
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || aktiv == "N" || mennyiseg == 0) {
     ks = "";
     } else
     ks = `<button 
@@ -686,7 +687,7 @@ async function Termek_Mutat(event, termek_id) {
           $("#velemenyek").html("");
           VelemenyekMutat(termek_id);
 
-          if (localStorage.getItem("loggedIn") !== "1") {
+          if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {
             $("#vlmg").html("Vélemény írásához jelentkezzen be");
             $("#sajatvlm").html("");
             $("#sajatvlm").addClass("eltunt");
@@ -773,7 +774,7 @@ function CARD_BETOLT(adatok) {
       `${element.ID_KATEGORIA}`
     );
 
-    if (localStorage.getItem("loggedIn") !== "1" || element.AKTIV == "N" || element.MENNYISEG == 0) {
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || element.AKTIV == "N" || element.MENNYISEG == 0) {
       ks = "";
     } else {
       ks = `<button 
@@ -792,7 +793,7 @@ function CARD_BETOLT(adatok) {
     }
 
 
-    if (localStorage.getItem("loggedIn") === "1" && (webbolt_admin || admin)) {
+    if (JSON.parse(localStorage.getItem("user"))?.loggedIn && (webbolt_admin || admin)) {
       gg = "";
       gg += `<button type="button" 
       class="btn  

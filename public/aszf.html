@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Általános Szerződési Feltételek</title>
+    <!-- Bootstrap CSS: rács, komponensek és alap stílusok -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> 
+
+    <!-- Bootstrap Icons: könnyű, beépített ikonok használatához -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> 
+
+    <!-- Tailwind CSS (utility-first framework) + dark mode beállítás -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> tailwind.config = { darkMode: 'class', } </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"> 
+
+    <!-- Saját stíluslap: projekt-specifikus CSS (custom overrides, theme) -->
+    <link href="style.css" rel="stylesheet">
+    
+    <!-- JS függőségek: jQuery (AJAX), Bootstrap JS (komponensek működtetése), Highcharts (grafikonok) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> 
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script> <!-- Chart.js könyvtár grafikonokhoz -->
+</head>
+<body>
+    <div class="container-fluid bg-zinc-200 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 transition-all duration-700 ease-in-out min-h-screen flex flex-col">
+        <div class="fixed-top bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 transition-all duration-700 ease-in-out shadow-bottom px-1 px-lg-5 py-2 py-lg-0 dark:!border-b dark:!border-zinc-200/20 ">
+            <div class="col-12 text-center text-xl font-semibold p-3">SZ-1-B Iskolai Webáruház - Általános Szerződési Feltételek</div>
+        </div>
+        <div class="container d-flex flex-column mt-[100px] mb-5">
+            <span class="font-semibold text-lg">Általános Szerződési Feltételek (ÁSZF) </span>
+            <span class="mt-2 "><u>1. Bevezetés</u></span>
+            <span>Jelen dokumentum a Csány Webáruház (a továbbiakban: Webáruház) használatára vonatkozó feltételeket tartalmazza. A Webáruház egy iskolai vizsgaremek (záródolgozat) keretében készült projekt, nem minősül éles, kereskedelmi célú szolgáltatásnak, és kizárólag oktatási célokat szolgál. A Webáruház használatával a felhasználó tudomásul veszi és elfogadja a jelen ÁSZF-ben foglalt feltételeket.</span>
+            
+            <span class="mt-2 "><u>2. A Webáruház jellege</u></span>
+            <span>A Webáruház egy szimulált webáruház, amely egy valódi webshop működését modellezi. A Webáruházban megjelenő termékek nem léteznek fizikailag. Nincs raktárkészlet, nincs kiszállítás, a rendelés teljesítése kizárólag technikai demonstráció. A rendelés leadása után a felhasználó automatikus visszaigazoló e-mailt kap, azonban a megrendelt termék nem kerül kézbesítésre.</span>
+            
+            <span class="mt-2 "><u>3. Regisztráció és bejelentkezés</u></span>
+            <span>A Webáruház böngészése regisztráció nélkül is lehetséges. A kosár használata és vélemény írása csak bejelentkezett felhasználók számára érhető el. A regisztráció nem ezen az oldalon történik, hanem egy másik, külön projekt keretében. A Webáruházba kizárólag azok a felhasználók tudnak bejelentkezni, akik a különálló regisztrációs rendszerben már létrehozták fiókjukat.</span>
+
+            <span class="mt-2 "><u>4. Felhasználói fiók és biztonság</u></span>
+            <span>A felhasználói jelszavak titkosítva kerülnek tárolásra. A projekt keretében a jelszavak MD5 algoritmussal kerülnek titkosításra. A Webáruház üzemeltetője tudatában van annak, hogy az MD5 algoritmus nem tekinthető modern, biztonságos megoldásnak, azonban a projekt oktatási jellege és az iskolai követelmények miatt ez az eljárás került alkalmazásra.</span>
+
+            <span class="mt-2 "><u>5. Termékek és árak</u></span>
+            <span>A termékeknél feltüntetett árak nettó árak, nem tartalmazzák az ÁFA-t. Az árak forintban (HUF) értendők. Az alkalmazandó ÁFA mértéke csak a rendelés véglegesítésekor kerül megjelenítésre. A termékek adatai kizárólag demonstrációs célt szolgálnak.</span>
+
+            <span class="mt-2 "><u>6. Rendelés menete</u></span>
+            <span>
+                A felhasználó rendelést adhat le a Webáruházban. A rendelés leadásához az alábbi adatok megadása kötelező:
+                <ul class="list-disc list-inside">
+                    <li>név</li>
+                    <li>e-mail cím</li>
+                    <li>irányítószám</li>
+                    <li>város</li>
+                    <li>ország</li>
+                    <li>szállítási cím</li>
+                </ul>
+                A rendszer csak a nevet, e-mail címet és szállítási címet tárolja a rendelés adatbázisában. Ezek az adatok kizárólag a rendelés rögzítésére és a visszaigazoló e-mail elküldésére szolgálnak.
+            </span>
+            
+            <span class="mt-2 "><u>7. Fizetési és szállítási módok</u></span>
+            <span>
+                A rendelés során kötelező fizetési és szállítási módot választani. <br>
+                Elérhető fizetési módok:
+                <ul class="list-disc list-inside">
+                    <li>Bankkártya</li>
+                    <li>Google Pay</li>
+                    <li>Apple Pay</li>
+                    <li>PayPal</li>
+                </ul>
+                A fizetési mód kiválasztása nem igényel további adatmegadást, tényleges fizetés nem történik. <br>
+                Elérhető szállítási módok:
+                <ul class="list-disc list-inside">
+                    <li>MPL</li>
+                    <li>GLS</li>
+                    <li>Express One</li>
+                </ul>
+                A szállítási mód kiválasztása kizárólag szimuláció, a szállítás nem történik meg.
+            </span>
+            
+            <span class="mt-2 "><u>8. Vélemények kezelése</u></span>
+            <span>Véleményt kizárólag bejelentkezett felhasználók írhatnak. A beküldött vélemények adminisztrátori jóváhagyás után jelennek meg. Trágár, sértő vagy nem megfelelő tartalmú vélemények nem kerülnek jóváhagyásra, így nem jelennek meg nyilvánosan.</span>
+
+            <span class="mt-2 "><u>9. Külső erőforrások és technikai működés</u></span>
+            <span>
+                A Webáruház az alábbi külső könyvtárakat CDN-en keresztül használja:
+                <ul class="list-disc list-inside">
+                    <li>Bootstrap</li>
+                    <li>Tailwind CSS</li>
+                    <li>jQuery</li>
+                    <li>Bootstrap Icons</li>
+                </ul>
+                Amennyiben ezen külső szolgáltatások technikai okok miatt nem elérhetők vagy nem megfelelően működnek, az oldal megjelenése vagy működése is sérülhet. Az ilyen jellegű hibákért a Webáruház üzemeltetője nem vállal felelősséget.
+            </span>
+
+            <span class="mt-2 "><u>10. Felelősség kizárása</u></span>
+            <span>
+                A Webáruház kizárólag oktatási célokat szolgál. Az üzemeltető nem vállal felelősséget:
+                <ul class="list-disc list-inside">
+                    <li>adatvesztésért</li>
+                    <li>technikai hibákért</li>
+                    <li>rendszerleállásért</li>
+                    <li>a Webáruház ideiglenes elérhetetlenségéért</li>
+                </ul>
+                A Webáruház használata saját felelősségre történik.
+            </span>
+
+            <span class="mt-2 "><u>11. Záró rendelkezések</u></span>
+            <span>Jelen ÁSZF bármikor módosítható. A Webáruház használatával a felhasználó kijelenti, hogy megértette a projekt oktatási jellegét, és elfogadja annak korlátait.</span>
+
+        </div>
+
+        <div 
+        class="
+            row 
+            mt-auto 
+            p-5  
+            bg-zinc-300  
+            text-slate-900 
+            dark:bg-slate-950 
+            dark:text-zinc-200 
+            dark:!border-t dark:!border-zinc-200/20
+            ">
+
+            <div class="col-12 p-4 d-flex justify-content-center">
+            <div class="col-12 col-xxl-6 d-flex justify-content-center align-items-center gap-4">
+                <a class="text-2xl text-slate-900 hover:text-blue-500 dark:text-zinc-200 dark:hover:text-blue-500" href="https://www.facebook.com/csanylaszlotechnikum" target="_blank"><i class="bi bi-facebook"></i></a>
+                <a class="text-2xl text-slate-900 hover:text-violet-600 dark:text-zinc-200 dark:hover:text-violet-600" href="https://www.instagram.com/zszc.csanylaszlotechnikum" target="_blank"><i class="bi bi-instagram"></i></a>
+                <a class="text-2xl text-slate-900 hover:text-red-600 dark:text-zinc-200 dark:hover:text-red-600" href="https://www.youtube.com/@csanylaszlotechnikum2970" target="_blank"><i class="bi bi-youtube"></i></a>
+                <a class="text-2xl text-slate-900 hover:text-fuchsia-700 dark:text-zinc-200 dark:hover:text-fuchsia-700" href="https://www.tiktok.com/@zszccsanylaszlotechnikum" target="_blank"><i class="bi bi-tiktok"></i></a>
+                <a class="text-2xl text-slate-900 hover:text-sky-700 dark:text-zinc-200 dark:hover:text-sky-700" href="https://github.com/aronxd0/SZ-1-B-iskolai-webaruhaz" target="_blank"><i class="bi bi-github"></i></a>
+            </div>
+            </div>
+
+
+            <div class="col-12 p-2 text-center">
+            Csány László Technikum - Minden jog fenntartva ©
+            </div>
+
+            <div class="col-12 p-1 d-flex justify-content-center ">
+            <img class="img-fluid m-2 hidden dark:block transition-all duration-300 w-15 h-10"  src="img/logo2.png">
+            <img class="img-fluid m-2 block dark:hidden transition-all duration-300 w-15 h-10"  src="img/logo-fekete.png">
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/ajax.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/kosar.js"></script>
+    <script src="js/velemeny.js"></script>
+    <script src="js/termekek.js"></script>
+    <script src="js/fizetes.js"></script>
+    <script src="js/rendeles.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/document.js"></script>
+</body>
+</html>
