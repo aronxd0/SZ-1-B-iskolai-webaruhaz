@@ -52,23 +52,25 @@ function BevaneJelentkezve() {
         
         $("#udv").html(`<b>Üdvözlünk a Csány webáruházban <span>${bejelentkezett_usernev.split(" ")[1]}</span>!</b>`);
 
-        if (csoport == "Students") rang += `<span class="inline-flex items-center rounded-md bg-blue-400/10 px-2 py-1 text-sm font-medium text-blue-400 !border !border-blue-400/30">${csoport}</span>`;
-        else if (csoport == "Teachers") rang += `<span class="inline-flex items-center rounded-md bg-yellow-400/10 px-2 py-1 text-sm font-medium text-yellow-600 !border !border-yellow-600/40">${csoport}</span>`;
-
+        if (csoport == "Students") rang += `<span class="inline-flex items-center rounded-md bg-blue-400/10 px-2 py-1 text-sm font-medium text-blue-400 !border !border-blue-400/30">● ${csoport}</span>`;
+        else if (csoport == "Teachers") rang += `<span class="inline-flex items-center rounded-md bg-yellow-400/10 px-2 py-1 text-sm font-medium text-yellow-600 !border !border-yellow-600/40">● ${csoport}</span>`;
+        else if (csoport == "Bosses") rang += `<span class="inline-flex items-center rounded-md bg-indigo-400/10 px-2 py-1 text-sm font-medium text-indigo-400 !border !border-indigo-400/30">● ${csoport}</span>`
 
         if (admin) {
-            rang += `<span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-sm font-medium text-red-400 !border !border-red-400/20">Admin</span>`;
+            rang += `<span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-sm font-medium text-red-400 !border !border-red-400/20">● Admin</span>`;
             
             update_gombok(2); 
         }   
-        else if (webbolt_admin) {
-            rang += `<span class="inline-flex items-center rounded-md bg-purple-400/10 px-2 py-1 text-xs font-medium text-purple-400 !border !border-purple-400/30>Webbolt Admin</span>`;
+        if (webbolt_admin) {
+            rang += `<span class="inline-flex items-center rounded-md bg-purple-400/10 px-2 py-1 text-sm font-medium text-purple-400 !border !border-purple-400/30">● Webbolt Admin</span>`;
             
             update_gombok(2); 
         }
-        else { update_gombok(1); }
+        if (!admin && !webbolt_admin) { update_gombok(1); }
 
+        console.log(rang);
         $("#rangok").html(rang);
+        console.log($("#rangok").html());
         Joldal = 1;
 
         $('#login_modal').modal('hide');
@@ -110,8 +112,9 @@ $("#login_oksi_button").click(async function() {
         bejelentkezett_usernev = l_json.rows[0].NEV;
         bejelentkezett_useremail = l_json.rows[0].EMAIL;
         
+        
         if (l_json.rows[0].ADMIN == "Y") { admin = true; }
-        else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; }
+        if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; console.log("bement az ifbe XD"); }
         csoport = l_json.rows[0].CSOPORT;
         
         localStorage.setItem("user", JSON.stringify({
