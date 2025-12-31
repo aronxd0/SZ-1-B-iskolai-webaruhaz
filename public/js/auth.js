@@ -50,7 +50,7 @@ function BevaneJelentkezve() {
         $("#user-email").html(`<i class="bi bi-envelope"></i> <span>${bejelentkezett_useremail}</span>`);
         $("#vendegszoveg").html("");
         
-        $("#udv").html(`<b>Üdvözlünk a Csány webáruházban <span>${bejelentkezett_usernev.split(" ")[1]}</span>!</b>`);
+        $("#udv").html(`Üdvözlünk a Csány webáruházban <span class="font-semibold">${bejelentkezett_usernev.split(" ")[1]}</span>!`);
 
         if (csoport == "Students") rang += `<span class="inline-flex items-center rounded-md bg-blue-400/10 px-2 py-1 text-sm font-medium text-blue-400 !border !border-blue-400/30">● ${csoport}</span>`;
         else if (csoport == "Teachers") rang += `<span class="inline-flex items-center rounded-md bg-yellow-400/10 px-2 py-1 text-sm font-medium text-yellow-600 !border !border-yellow-600/40">● ${csoport}</span>`;
