@@ -65,13 +65,14 @@ function Attekintes(li) {
                         flex-lg-row 
                         bg-zinc-100 
                         text-slate-900 
-                        dark:bg-slate-800 
+                        dark:bg-slate-950 
                         dark:text-zinc-200 
                         shadow-lg  
                         rounded-4 
                         mt-2  
                         p-3 
-                        p-xxl-none
+                        p-xxl-none 
+                        dark:!border dark:!border-zinc-200/20 
                         ">
 
                 <div  
