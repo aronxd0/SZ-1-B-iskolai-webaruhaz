@@ -47,7 +47,7 @@ function BevaneJelentkezve() {
     else { 
         rang = "";
         $("#user").html(`<i class="bi bi-person"></i> <h5>${bejelentkezett_usernev}</h5>`);
-        $("#user-email").html(`<i class="bi bi-envelope"></i> ${bejelentkezett_useremail}`);
+        $("#user-email").html(`<i class="bi bi-envelope"></i> <span>${bejelentkezett_useremail}</span>`);
         $("#vendegszoveg").html("");
         
         $("#udv").html(`<b>Üdvözlünk a Csány webáruházban <span>${bejelentkezett_usernev.split(" ")[1]}</span>!</b>`);
