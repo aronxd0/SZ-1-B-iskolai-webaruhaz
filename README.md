@@ -1,4 +1,4 @@
-SZ-1-B Iskolai Webáruház: Használati útmutató
+Használati útmutató
 
 1. Kattints a jobb oldalt lévő "Code" gombra, majd "Download Zip".
 
