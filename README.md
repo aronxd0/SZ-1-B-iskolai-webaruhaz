@@ -1,4 +1,4 @@
-Használati útmutató
+## Használati útmutató
 
 1. Kattints a jobb oldalt lévő "Code" gombra, majd "Download Zip".
 
@@ -9,3 +9,6 @@ Használati útmutató
 4. Dupla kattintással indítsd el a "start.bat" fájlt
 
 5. Böngésző url sorba írd be: "localhost:9012"
+
+[Download env template](./.env.example)
+
