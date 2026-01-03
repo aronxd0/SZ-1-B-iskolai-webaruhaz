@@ -23,7 +23,18 @@ $(document).ready(function() {
     
     F5();
                    
-        
+    
+    let lgmeret = window.innerWidth >= 992;
+    window.addEventListener("resize", () => {
+        const mostlg = window.innerWidth >= 992;
+
+        if (!lgmeret && mostlg) { // átléptük felfelé
+            document.getElementById("kicsi_nezet").checked = false;
+            document.getElementById("nagy_nezet").checked = true;
+        }
+
+        lgmeret = mostlg;
+    });
 
 
     //ArFeltolt();

@@ -377,6 +377,18 @@ html.dark ::-webkit-scrollbar-thumb {
 
 
 
+#nezetkicsi {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+#nezetnagy {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+
+
 /* uj navbar css */
 
 

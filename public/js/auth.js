@@ -39,7 +39,7 @@ function BevaneJelentkezve() {
         document.getElementById("NEM_AKTIV").innerHTML = ``;
         //Kezdolap();
         $("#home_button").trigger("click");
-        $("#udv").html(`<b>Üdvözlünk a Csány webáruházban!</b>`);
+        $("#udv").html(`Üdvözlünk a Csány webáruházban!`);
         update_gombok(0);
         //return false; 
     }

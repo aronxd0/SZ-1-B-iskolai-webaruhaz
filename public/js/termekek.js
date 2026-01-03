@@ -191,9 +191,8 @@ async function Termek_Edit(event, termek_id, tipus) {
   
 }
 
-function Termek_Torol(event, cuccok) {
+function Termek_Torol(event, termek_id) {
   event.stopPropagation();
-  const termek_id = cuccok[0];
  console.log("bejoszssssssssssssssss" + termek_id)
   $("#delete_modal .modal-body").html(`Biztosan törlöd a(z) <b>${termek_id}.</b> azonosítójú terméket?<br><br>A termék örökre el fog veszni (ami hosszú idő).`);
   $("#delete_modal").off("click");
@@ -686,6 +685,8 @@ async function Termek_Mutat(event, termek_id) {
           $("#vvl").html(velemenyek_tab);
           $("#velemenyek").html("");
           VelemenyekMutat(termek_id);
+          $("#nezetkicsi").addClass("eltunt");
+          $("#nezetnagy").addClass("eltunt");
 
           if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {
             $("#vlmg").html("Vélemény írásához jelentkezzen be");
@@ -738,59 +739,17 @@ function CARD_BETOLT(adatok) {
   let el = "";
   let ee = "";
   let gg = "";
-  let cuccli = [];
+  const kicsinezet = document.getElementById("kicsi_nezet").checked;
+  const nagynezet = document.getElementById("nagy_nezet").checked;
 
   //if (BevanJelentkezve()) { console.log("card betolt: be van jelentkezve"); }
 
   for (const element of adatok.rows) {
-    if (element.AKTIV == "N" || element.MENNYISEG == 0) {
-      //adminoknak a nem aktiv termekek pirossal látszódjanak
-      el = ` <div class="alert alert-danger">
-                        A termék jelenleg nem elérhető
-                    </div>
-            `;
+    
 
-      ee = "nem-elerheto";
-    } else {
-      el = `<p class="w-full py-2 d-flex justify-content-start align-items-center align-self-center"><span class="text-slate-900 dark:text-zinc-200 me-2 font-semibold">${element.AR.toLocaleString()} Ft</span><span class="text-xs">(Nettó)</span></p>`;
-      ee = "";
-    } //Ár kiiras
+  
 
-    cuccli = cuccli.slice(0, 0); //cuccok tömb ürítése
-
-    cuccli.push(
-      `${element.ID_TERMEK}`,
-      `${element.KATEGORIA}`,
-      `${element.NEV}`,
-      `${element.AZON}`,
-      `${element.AR}`,
-      `${element.MENNYISEG}`,
-      `${element.MEEGYS}`,
-      `${element.AKTIV}`,
-      `${element.TERMEKLINK}`,
-      `${element.FOTOLINK}`,
-      `${element.LEIRAS}`,
-      `${element.DATUMIDO}`,
-      `${element.ID_KATEGORIA}`
-    );
-
-    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || element.AKTIV == "N" || element.MENNYISEG == 0) {
-      ks = "";
-    } else {
-      ks = `<button 
-        class="btn 
-          bg-gray-900 
-          text-zinc-200 
-          hover:bg-gray-700 
-          hover:text-zinc-200 
-          dark:bg-zinc-800 
-          dark:hover:bg-zinc-700 
-          transition-all duration-150 ease-in-out 
-          rounded-xl 
-          kosar bi bi-plus-lg   
-           w-full p-2 text-sm tracking-wider    
-          " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> KOSÁRBA</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
-    }
+    
 
 
     if (JSON.parse(localStorage.getItem("user"))?.loggedIn && (webbolt_admin || admin)) {
@@ -815,69 +774,186 @@ function CARD_BETOLT(adatok) {
         dark:text-zinc-200 
         dark:hover:text-red-700 
         transition-all duration-150 ease-in-out 
-        " aria-label="torles" onclick='Termek_Torol(event, ${JSON.stringify(cuccli)})'><i class="bi bi-trash"></i></button>`;
+        " aria-label="torles" onclick='Termek_Torol(event, ${element.ID_TERMEK})'><i class="bi bi-trash"></i></button>`;
       
       gg += "";
     } else gg = "";
 
-    //var cuccok = `${element.ID_TERMEK};${element.KATEGORIA};${element.NEV};${element.AZON};${element.AR};${element.MENNYISEG};${element.MEEGYS};${element.AKTIV};${element.TERMEKLINK};${element.FOTOLINK};${element.LEIRAS};${element.DATUMIDO}`.replace('"','~');
 
-    s += `
 
-      <div class="col-12 col-sm-6 col-lg-4 col-xxl-3 p-3 d-flex justify-content-center  ">
+    
+    var nev_hossz = element.NEV.toString().length;
+    var ppp = "";
+
+    if (nev_hossz > 15) { ppp = "..."; } else { ppp = ""; }
+
+    if (kicsinezet) {
+
+      if (element.AKTIV == "N" || element.MENNYISEG == 0) {
+        //adminoknak a nem aktiv termekek pirossal látszódjanak
+        el = ` <div class="alert alert-danger">
+                          A termék jelenleg nem elérhető
+                      </div>
+              `;
+  
+        ee = "nem-elerheto";
+      } else {
+        el = `<p class="w-full py-2 d-flex justify-content-center align-items-center align-self-center"><span class="text-slate-900 dark:text-zinc-200 text-sm me-2 font-semibold">${element.AR.toLocaleString()} Ft</span></p>`;
+        ee = "";
+      } 
+
+      if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || element.AKTIV == "N" || element.MENNYISEG == 0) {
+        ks = "";
+      } else {
+        ks = `<button 
+          class="btn 
+            bg-gray-900 
+            text-zinc-200 
+            hover:bg-gray-700 
+            hover:text-zinc-200 
+            dark:bg-zinc-800 
+            dark:hover:bg-zinc-700 
+            transition-all duration-150 ease-in-out 
+            rounded-xl 
+            kosar    
+              py-2 px-3 text-sm tracking-wider    
+            " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'><i class="bi bi-plus-lg"></i></button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
+      }
+
+
+      s += `
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 px-0 !border-b !border-slate-900/10 dark:!border-b dark:!border-zinc-200/20 ">
         <div 
         class="
+        py-3 
+        my-2 
+        bg-zinc-200   
+        hover:bg-gray-300 
         rounded-xl 
-        p-4 
-        w-72 
-        shadow-lg
-        
-        bg-zinc-100 
-        hover:bg-gray-200 
-        hover:outline outline-black/10 
         hover:cursor-pointer 
-        dark:!border 
-        dark:!border-zinc-200/20 
-        dark:bg-slate-950 
+        
+        dark:bg-slate-900  
         dark:text-zinc-200 
         dark:hover:bg-gray-800 
-        dark:hover:-outline-offset-1 
-        dark:hover:outline-white/10 
+        
         d-flex flex-column 
         transition-hover duration-150 ease-in-out 
         " id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
 
-          <div class="relative">
+          <div class="d-flex justify-content-center align-items-center p-2">
             <img 
               src="${element.FOTOLINK}"
-              class="rounded-lg w-full h-60 object-cover"
+              class="rounded-lg w-50 h-50 aspect-square object-cover"
             >
             
             
           </div>
 
-          <h3 class="mt-4 font-semibold text-md">${element.NEV}</h3>
-          <p class="text-sm text-neutral-400">${element.KATEGORIA}</p>
+          <span class="mt-4 font-semibold text-sm text-center">${element.NEV.toString().substring(0,15)}${ppp}</span>
           
           ${el}
           
-          <div class="d-flex align-items-center mt-auto">
-          ${ks} ${gg}
+          <div class="d-flex align-items-center justify-content-center">${ks} ${gg}</div>
+          
+          
+
+        </div>
+        </div>
+      `;
+    }
+
+    
+
+    if (nagynezet) {
+
+      if (element.AKTIV == "N" || element.MENNYISEG == 0) {
+        //adminoknak a nem aktiv termekek pirossal látszódjanak
+        el = ` <div class="alert alert-danger">
+                          A termék jelenleg nem elérhető
+                      </div>
+              `;
+  
+        ee = "nem-elerheto";
+      } else {
+        el = `<p class="w-full py-2 d-flex justify-content-start align-items-center align-self-center"><span class="text-slate-900 dark:text-zinc-200 me-2 font-semibold">${element.AR.toLocaleString()} Ft</span><span class="text-xs">(Nettó)</span></p>`;
+        ee = "";
+      } 
+
+      if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || element.AKTIV == "N" || element.MENNYISEG == 0) {
+        ks = "";
+      } else {
+        ks = `<button 
+          class="btn 
+            bg-gray-900 
+            text-zinc-200 
+            hover:bg-gray-700 
+            hover:text-zinc-200 
+            dark:bg-zinc-800 
+            dark:hover:bg-zinc-700 
+            transition-all duration-150 ease-in-out 
+            rounded-xl 
+            kosar bi bi-plus-lg   
+             w-full p-2 text-sm tracking-wider    
+            " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> KOSÁRBA</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
+      }
+
+
+      s += `
+        <div class="col-12 col-sm-6 col-lg-4 col-xxl-3 p-3 d-flex justify-content-center  ">
+          <div 
+          class="
+          rounded-xl 
+          p-4 
+          w-72 
+          shadow-lg
+          
+          bg-zinc-100 
+          hover:bg-gray-200 
+          hover:outline outline-black/10 
+          hover:cursor-pointer 
+          dark:!border 
+          dark:!border-zinc-200/20 
+          dark:bg-slate-950 
+          dark:text-zinc-200 
+          dark:hover:bg-gray-800 
+          dark:hover:-outline-offset-1 
+          dark:hover:outline-white/10 
+          d-flex flex-column 
+          transition-hover duration-150 ease-in-out 
+          " id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
+
+            <div class="relative">
+              <img 
+                src="${element.FOTOLINK}"
+                class="rounded-lg w-full h-60 object-cover"
+              >
+              
+              
+            </div>
+
+            <h3 class="mt-4 font-semibold text-md">${element.NEV}</h3>
+            <p class="text-sm text-neutral-400">${element.KATEGORIA}</p>
+            
+            ${el}
+            
+            <div class="d-flex align-items-center mt-auto">
+            ${ks} ${gg}
+            </div>
+            <!--
+            <button
+              class="w-full mt-4 bg-neutral-800 hover:bg-neutral-700 transition rounded-lg py-3 text-center"
+            >
+              Add to bag
+            </button>
+            -->
+
           </div>
-          <!--
-          <button
-            class="w-full mt-4 bg-neutral-800 hover:bg-neutral-700 transition rounded-lg py-3 text-center"
-          >
-            Add to bag
-          </button>
-          -->
 
         </div>
 
-      </div>
 
-
-    `;
+      `;
+    }
   }
 
   if (!$("#nev1").val().includes("<")) {
@@ -903,7 +979,7 @@ function CARD_BETOLT(adatok) {
 
     console.log(`card betolt: ${localStorage.getItem("loggedIn")}`);
 
-       $("#content_hely").fadeOut(300, function() {
+    $("#content_hely").fadeOut(300, function() {
       $("#content_hely").html(s).fadeIn(300);
     });
     OLDALFELTOTL();

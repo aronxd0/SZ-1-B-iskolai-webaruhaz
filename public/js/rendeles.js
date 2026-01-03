@@ -120,6 +120,9 @@ async function rendelesekmegtolt(){
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
 
+    $("#nezetkicsi").addClass("eltunt");
+    $("#nezetnagy").addClass("eltunt");
+
     var s = `
         <div class="col-12 text-center p-2 mt-5">
             <span class="text-xl">Rendeléseim</span>

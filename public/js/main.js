@@ -256,7 +256,8 @@ async function KERESOBAR() {
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
     $("#home_button").closest(".gombdiv").addClass("aktiv");
   
-
+    $("#nezetkicsi").removeClass("eltunt");
+    $("#nezetnagy").removeClass("eltunt");
 
     //console.log("elküld: "+ elküld);
 
