@@ -565,6 +565,16 @@ async function login_toFrontend (req, res) {
     res.end();
 }
 
+app.post('/admin_check', (req, res) => {
+    session_data = req.session;
+    const admine = session_data.ADMIN === "Y";
+    const webadmine = session_data.WEBBOLT_ADMIN === "Y";
+    
+    res.set(header1, header2);
+    res.json({ admin: admine, webadmin: webadmine });
+    res.end();
+});
+
 // === KIJELENTKEZÉS ===
 // POST: /logout
 // Működés: a session adatai törlődnek, így az user nem lesz bejelentkezve

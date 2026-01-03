@@ -122,8 +122,6 @@ $("#login_oksi_button").click(async function() {
             name: bejelentkezett_usernev,
             email: bejelentkezett_useremail,
             group: csoport,
-            isAdmin: admin,
-            isWebAdmin: webbolt_admin,
             ui: { theme: "light" }
         }));
 

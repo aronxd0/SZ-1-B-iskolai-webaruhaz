@@ -21,32 +21,7 @@ $(document).ready(function() {
     SESSION();
 
     
-    if (JSON.parse(localStorage.getItem("user") || "{}")?.loggedIn) { 
-        
-        bejelentkezett_usernev = JSON.parse(localStorage.getItem("user") || "{}")?.name || "";
-        bejelentkezett_useremail = JSON.parse(localStorage.getItem("user") || "{}")?.email || "";
-        csoport = JSON.parse(localStorage.getItem("user") || "{}")?.group || "";
-        admin = JSON.parse(localStorage.getItem("user") || "{}")?.isAdmin || false;
-        webbolt_admin = JSON.parse(localStorage.getItem("user") || "{}")?.isWebAdmin || false;
-
-        if ((JSON.parse(localStorage.getItem("user") || "{}")?.ui.theme) == "dark") { 
-            $("html").addClass("dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i> Téma`); 
-            user.ui = { ...user.ui, theme: "dark" };
-        }
-        else {
-            $("html").removeClass("dark");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i> Téma`);
-            user.ui = { ...user.ui, theme: "light" };
-        }
-
-
-        BevaneJelentkezve();
-        Kezdolap();
-    }
-    else {
-        $('#login_modal').modal('show');
-    };
+    F5();
                    
         
 

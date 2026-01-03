@@ -107,6 +107,54 @@ async function SESSION() {
          }
 }
 
+async function Admin_ellenorzes() { 
+    let adminell = await ajax_post("admin_check", 1); 
+    return adminell; 
+}
+
+async function F5() {
+
+    if (JSON.parse(localStorage.getItem("user") || "{}")?.loggedIn) { 
+        
+        bejelentkezett_usernev = JSON.parse(localStorage.getItem("user") || "{}")?.name || "";
+        bejelentkezett_useremail = JSON.parse(localStorage.getItem("user") || "{}")?.email || "";
+        csoport = JSON.parse(localStorage.getItem("user") || "{}")?.group || "";
+
+        
+        const ae = await Admin_ellenorzes();
+        
+        if (ae.admin) { admin = true; }
+        if (ae.webadmin) { webbolt_admin = true; }
+
+        console.log(ae);
+
+        /*
+        admin = JSON.parse(localStorage.getItem("user") || "{}")?.isAdmin || false;
+        webbolt_admin = JSON.parse(localStorage.getItem("user") || "{}")?.isWebAdmin || false;
+        */
+
+        if ((JSON.parse(localStorage.getItem("user") || "{}")?.ui.theme) == "dark") { 
+            $("html").addClass("dark");
+            $("#switch").html(`<i class="bi bi-sun-fill"></i> Téma`); 
+            user.ui = { ...user.ui, theme: "dark" };
+        }
+        else {
+            $("html").removeClass("dark");
+            $("#switch").html(`<i class="bi bi-moon-fill"></i> Téma`);
+            user.ui = { ...user.ui, theme: "light" };
+        }
+
+        console.log(admin);
+        console.log(webbolt_admin);
+
+        BevaneJelentkezve();
+        Kezdolap();
+    }
+    else {
+        $('#login_modal').modal('show');
+    };
+}
+
 
 
 
