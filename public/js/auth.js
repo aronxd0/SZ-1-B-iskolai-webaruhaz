@@ -125,16 +125,6 @@ $("#login_oksi_button").click(async function() {
             ui: { theme: "light" }
         }));
 
-        /*
-        localStorage.setItem("loggedIn", "1");
-        localStorage.setItem("userName", bejelentkezett_usernev);
-        localStorage.setItem("userEmail", bejelentkezett_useremail);
-        localStorage.setItem("userGroup", csoport);
-        localStorage.setItem("isAdmin", admin ? "1" : "0");
-        localStorage.setItem("isWebAdmin", webbolt_admin ? "1" : "0");
-        localStorage.setItem("serverBoot", l_json.serverBoot || "");
-        */
-
         BevaneJelentkezve();
     } 
 });  
