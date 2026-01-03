@@ -19,10 +19,14 @@
 }
 
 /* Az oldalon minden szöveg ezzel a betűtípussal jelenjen meg */
-* { font-family: 'Poppins', sans-serif; }
+* { font-family: 'Poppins', sans-serif; font-weight: 300; }
 
 /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
-html, body { overflow-x: hidden; max-width: 100%; }
+html, body { 
+  overflow-x: hidden; 
+  max-width: 100%;
+  color-scheme: light dark;
+}
 
 /* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
 .container-fluid { padding-left: 0 !important; padding-right: 0 !important; }
@@ -173,10 +177,18 @@ html.dark .gombdiv.aktiv button {
   font-weight: bold;
 }
 
+.zoom-img {
+  transform: scale(1);
+}
+
+.hovered {
+  aspect-ratio: auto;
+}
 
 .shadow-bottom {
   box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175);
 }
+
 
 .dropdown-toggle::after { display: none !important; }
 
@@ -365,6 +377,18 @@ html.dark ::-webkit-scrollbar-thumb {
 
 
 
+#nezetkicsi {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+#nezetnagy {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+
+
 /* uj navbar css */
 
 
@@ -461,4 +485,16 @@ html.dark .highcharts-background {
 .highcharts-tooltip text {
   fill: var(--slate-900) !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 

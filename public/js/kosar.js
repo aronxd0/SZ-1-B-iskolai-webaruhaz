@@ -17,8 +17,11 @@ $("#cart_button").click(async function () {
     $("#welcome_section").fadeOut(300);
     $("#kateogoria-carousel").fadeOut(300);
 
+    $("#nezetkicsi").addClass("eltunt");
+    $("#nezetnagy").addClass("eltunt");
+
     $("#keresett_kifejezes").html("");
-    $("#felsosor").removeClass("mt-[100px]");
+    $("#felsosor").addClass("mt-[100px]");
     $("#débé").html("");
     $("#nev1").val("");
 

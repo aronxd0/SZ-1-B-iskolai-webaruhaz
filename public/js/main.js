@@ -9,6 +9,7 @@ let Nemaktivak = false;
 let maxarr = 0;
 let minarr = 0;
 
+
 // endregion
 let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
 let oldalszam = 0; // összes oldal darabszáma
@@ -83,23 +84,17 @@ async function AR_SUM(osztaly, hova, vegossszeg) {
 
 
 async function SESSION() {
-    if (localStorage.getItem("loggedIn") !== "1") { return; }
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { return; }
 
         try {
 
             const js = await ajax_post('/check_session', 1);
             //const js = await session_check.json();
 
-            const localBoot = localStorage.getItem('serverBoot') || '';
+            const localBoot = JSON.parse(localStorage.getItem('user'))?.serverBoot || '';
             if (!js.active || (localBoot && String(js.serverBoot) !== String(localBoot))) {
                 // Biztonságos logout: törölj minden user-infót
-                localStorage.removeItem('loggedIn');
-                localStorage.removeItem('userName');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem("userGroup");
-                localStorage.removeItem('serverBoot');
-                localStorage.removeItem('isAdmin');
-                localStorage.removeItem('isWebAdmin');
+                localStorage.removeItem("user");
                 console.log(js);
 
                 alert('A munkamenet lejárt vagy a szerver újraindult. Kérlek jelentkezz be újra.');
@@ -110,6 +105,54 @@ async function SESSION() {
             console.error('Session check hiba', err);
             // Ha a szerver teljesen down, nem muszáj azonnal logoutolni; várj a következő tickre
          }
+}
+
+async function Admin_ellenorzes() { 
+    let adminell = await ajax_post("admin_check", 1); 
+    return adminell; 
+}
+
+async function F5() {
+
+    if (JSON.parse(localStorage.getItem("user") || "{}")?.loggedIn) { 
+        
+        bejelentkezett_usernev = JSON.parse(localStorage.getItem("user") || "{}")?.name || "";
+        bejelentkezett_useremail = JSON.parse(localStorage.getItem("user") || "{}")?.email || "";
+        csoport = JSON.parse(localStorage.getItem("user") || "{}")?.group || "";
+
+        
+        const ae = await Admin_ellenorzes();
+        
+        if (ae.admin) { admin = true; }
+        if (ae.webadmin) { webbolt_admin = true; }
+
+        console.log(ae);
+
+        /*
+        admin = JSON.parse(localStorage.getItem("user") || "{}")?.isAdmin || false;
+        webbolt_admin = JSON.parse(localStorage.getItem("user") || "{}")?.isWebAdmin || false;
+        */
+
+        if ((JSON.parse(localStorage.getItem("user") || "{}")?.ui.theme) == "dark") { 
+            $("html").addClass("dark");
+            $("#switch").html(`<i class="bi bi-sun-fill"></i> Téma`); 
+            user.ui = { ...user.ui, theme: "dark" };
+        }
+        else {
+            $("html").removeClass("dark");
+            $("#switch").html(`<i class="bi bi-moon-fill"></i> Téma`);
+            user.ui = { ...user.ui, theme: "light" };
+        }
+
+        console.log(admin);
+        console.log(webbolt_admin);
+
+        BevaneJelentkezve();
+        Kezdolap();
+    }
+    else {
+        $('#login_modal').modal('show');
+    };
 }
 
 
@@ -213,7 +256,8 @@ async function KERESOBAR() {
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
     $("#home_button").closest(".gombdiv").addClass("aktiv");
   
-
+    $("#nezetkicsi").removeClass("eltunt");
+    $("#nezetnagy").removeClass("eltunt");
 
     //console.log("elküld: "+ elküld);
 
@@ -668,7 +712,7 @@ async function Kezdolap() {
     }
     else { return; }
 
-    if (!localStorage.getItem("loggedIn")) { update_gombok(0); }
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { update_gombok(0); }
     
     KosarTetelDB();
     

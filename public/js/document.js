@@ -21,22 +21,20 @@ $(document).ready(function() {
     SESSION();
 
     
-    if (localStorage.getItem("loggedIn")) { 
-        
-        bejelentkezett_usernev = localStorage.getItem("userName") || "";
-        bejelentkezett_useremail = localStorage.getItem("userEmail") || "";
-        csoport = localStorage.getItem("userGroup") || "";
-        admin = localStorage.getItem("isAdmin") === "1";
-        webbolt_admin = localStorage.getItem("isWebAdmin") === "1";
-
-        BevaneJelentkezve();
-        Kezdolap();
-    }
-    else {
-        $('#login_modal').modal('show');
-    };
+    F5();
                    
-        
+    
+    let lgmeret = window.innerWidth >= 992;
+    window.addEventListener("resize", () => {
+        const mostlg = window.innerWidth >= 992;
+
+        if (!lgmeret && mostlg) { // átléptük felfelé
+            document.getElementById("kicsi_nezet").checked = false;
+            document.getElementById("nagy_nezet").checked = true;
+        }
+
+        lgmeret = mostlg;
+    });
 
 
     //ArFeltolt();
@@ -83,36 +81,29 @@ $(document).ready(function() {
     });
 
     $('#bezar').on('click', function () {
-        if (localStorage.getItem("loggedIn") !== "1") {
+        if (!JSON.parse(localStorage.getItem("user") || "{}")?.loggedIn) {
             ajax_post("logout", 1,).then(logoutt => {});
             Kezdolap();
         }
     
     });
 
-    // sotet mod - vilagos mod valto
-
-    /*
-    $("#switch").click(function() {
-        if ($("html").attr("data-bs-theme") === "dark") {
-            $("html").removeAttr("data-bs-theme");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
-        }
-        else {
-            $("html").attr("data-bs-theme", "dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i>`);
-        }
-    });
-    */
-
-    $("#switch").click(function() {
-        if ($("html").hasClass("dark")) {
+    $("#switch").click(function () {
+        let user = JSON.parse(localStorage.getItem("user")) || {};
+    
+        const isDark = $("html").hasClass("dark");
+    
+        if (isDark) {
             $("html").removeClass("dark");
             $("#switch").html(`<i class="bi bi-moon-fill"></i> Téma`);
+            user.ui = { ...user.ui, theme: "light" };
         } else {
             $("html").addClass("dark");
             $("#switch").html(`<i class="bi bi-sun-fill"></i> Téma`);
+            user.ui = { ...user.ui, theme: "dark" };
         }
+    
+        localStorage.setItem("user", JSON.stringify(user));
     });
 
     
@@ -234,7 +225,13 @@ $(document).ready(function() {
         
     }, 30000);
 
+
+
+   
+
+
     FelaTetore();
+
 });
 
 

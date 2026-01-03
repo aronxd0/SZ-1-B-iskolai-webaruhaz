@@ -18,6 +18,9 @@ async function Admin_Velemenykezeles() {
     $("#felsosor").removeClass("mt-[100px]");
     $("#kateogoria-carousel").fadeOut(300);
 
+    $("#nezetkicsi").addClass("eltunt");
+    $("#nezetnagy").addClass("eltunt");
+
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
         
@@ -354,6 +357,9 @@ function Statisztikak() {
     $("#welcome_section").fadeOut(300);
      $("#felsosor").addClass("mt-[100px]");
     $("#kateogoria-carousel").fadeOut(300);
+
+    $("#nezetkicsi").addClass("eltunt");
+    $("#nezetnagy").addClass("eltunt");
             
         html = `
         <div 
@@ -1420,6 +1426,9 @@ function SQLinput() {
     $("#welcome_section").fadeOut(300);
     $("#felsosor").removeClass("mt-[100px]");;
     $("#kateogoria-carousel").fadeOut(300);
+
+    $("#nezetkicsi").addClass("eltunt");
+    $("#nezetnagy").addClass("eltunt");
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`

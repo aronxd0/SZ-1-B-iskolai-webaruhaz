@@ -6,7 +6,7 @@ let csoport = "";
 let rang = "";
 
 function BevaneJelentkezve() {
-    if (!localStorage.getItem("loggedIn")) { 
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { 
         $("#loginspan").html(' Bejelentkezés');
         $("#loginout").removeClass("bi bi-box-arrow-in-left");
         $("#loginout").addClass("bi bi-box-arrow-in-right");
@@ -39,36 +39,38 @@ function BevaneJelentkezve() {
         document.getElementById("NEM_AKTIV").innerHTML = ``;
         //Kezdolap();
         $("#home_button").trigger("click");
-        $("#udv").html(`<b>Üdvözlünk a Csány webáruházban!</b>`);
+        $("#udv").html(`Üdvözlünk a Csány webáruházban!`);
         update_gombok(0);
         //return false; 
     }
 
     else { 
         rang = "";
-        $("#user").html(`<b><i class="bi bi-person"></i></b> <h5>${bejelentkezett_usernev}</h5>`);
-        $("#user-email").html(`<b><i class="bi bi-envelope"></i></b> ${bejelentkezett_useremail}`);
+        $("#user").html(`<i class="bi bi-person"></i> <h5>${bejelentkezett_usernev}</h5>`);
+        $("#user-email").html(`<i class="bi bi-envelope"></i> <span>${bejelentkezett_useremail}</span>`);
         $("#vendegszoveg").html("");
         
-        $("#udv").html(`<b>Üdvözlünk a Csány webáruházban <span>${bejelentkezett_usernev.split(" ")[1]}</span>!</b>`);
+        $("#udv").html(`Üdvözlünk a Csány webáruházban <span class="font-semibold">${bejelentkezett_usernev.split(" ")[1]}</span>!`);
 
-        if (csoport == "Students") rang += `<span class="inline-flex items-center rounded-md bg-blue-400/10 px-2 py-1 text-sm font-medium text-blue-400 !border !border-blue-400/30">${csoport}</span>`;
-        else if (csoport == "Teachers") rang += `<span class="inline-flex items-center rounded-md bg-yellow-400/10 px-2 py-1 text-sm font-medium text-yellow-600 !border !border-yellow-600/40">${csoport}</span>`;
-
+        if (csoport == "Students") rang += `<span class="inline-flex items-center rounded-md bg-blue-400/10 px-2 py-1 text-sm font-medium text-blue-400 !border !border-blue-400/30">● ${csoport}</span>`;
+        else if (csoport == "Teachers") rang += `<span class="inline-flex items-center rounded-md bg-yellow-400/10 px-2 py-1 text-sm font-medium text-yellow-600 !border !border-yellow-600/40">● ${csoport}</span>`;
+        else if (csoport == "Bosses") rang += `<span class="inline-flex items-center rounded-md bg-indigo-400/10 px-2 py-1 text-sm font-medium text-indigo-400 !border !border-indigo-400/30">● ${csoport}</span>`
 
         if (admin) {
-            rang += `<span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-sm font-medium text-red-400 !border !border-red-400/20">Admin</span>`;
+            rang += `<span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-sm font-medium text-red-400 !border !border-red-400/20">● Admin</span>`;
             
             update_gombok(2); 
         }   
-        else if (webbolt_admin) {
-            rang += `<span class="inline-flex items-center rounded-md bg-purple-400/10 px-2 py-1 text-xs font-medium text-purple-400 !border !border-purple-400/30>Webbolt Admin</span>`;
+        if (webbolt_admin) {
+            rang += `<span class="inline-flex items-center rounded-md bg-purple-400/10 px-2 py-1 text-sm font-medium text-purple-400 !border !border-purple-400/30">● Webbolt Admin</span>`;
             
             update_gombok(2); 
         }
-        else { update_gombok(1); }
+        if (!admin && !webbolt_admin) { update_gombok(1); }
 
+        console.log(rang);
         $("#rangok").html(rang);
+        console.log($("#rangok").html());
         Joldal = 1;
 
         $('#login_modal').modal('hide');
@@ -88,7 +90,7 @@ function BevaneJelentkezve() {
 }
 
 $("#login_button").click(function() {   
-        if (!localStorage.getItem("loggedIn")) {
+        if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {
             document.getElementById("profil").addEventListener('hidden.bs.modal', () => {
                 $('#login_modal').modal('show');
             }, { once: true });
@@ -110,17 +112,18 @@ $("#login_oksi_button").click(async function() {
         bejelentkezett_usernev = l_json.rows[0].NEV;
         bejelentkezett_useremail = l_json.rows[0].EMAIL;
         
+        
         if (l_json.rows[0].ADMIN == "Y") { admin = true; }
-        else if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; }
+        if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; console.log("bement az ifbe XD"); }
         csoport = l_json.rows[0].CSOPORT;
         
-        localStorage.setItem("loggedIn", "1");
-        localStorage.setItem("userName", bejelentkezett_usernev);
-        localStorage.setItem("userEmail", bejelentkezett_useremail);
-        localStorage.setItem("userGroup", csoport);
-        localStorage.setItem("isAdmin", admin ? "1" : "0");
-        localStorage.setItem("isWebAdmin", webbolt_admin ? "1" : "0");
-        localStorage.setItem("serverBoot", l_json.serverBoot || "");
+        localStorage.setItem("user", JSON.stringify({
+            loggedIn: true,
+            name: bejelentkezett_usernev,
+            email: bejelentkezett_useremail,
+            group: csoport,
+            ui: { theme: "light" }
+        }));
 
         BevaneJelentkezve();
     } 
@@ -130,13 +133,8 @@ $("#login_oksi_button").click(async function() {
 
 
 $("#kijelentkezik").click( async function() {
-    ajax_post("logout", 1).then(logout_json => {
-        localStorage.removeItem("loggedIn");
-        localStorage.removeItem("userName");
-        localStorage.removeItem("userEmail");
-        localStorage.removeItem("userGroup");
-        localStorage.removeItem("isAdmin");
-        localStorage.removeItem("isWebAdmin");
+    ajax_post("logout", 1).then( () => {
+        localStorage.removeItem("user");
         BevaneJelentkezve();
     });  
 });

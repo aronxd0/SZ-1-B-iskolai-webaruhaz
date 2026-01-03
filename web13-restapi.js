@@ -565,6 +565,16 @@ async function login_toFrontend (req, res) {
     res.end();
 }
 
+app.post('/admin_check', (req, res) => {
+    session_data = req.session;
+    const admine = session_data.ADMIN === "Y";
+    const webadmine = session_data.WEBBOLT_ADMIN === "Y";
+    
+    res.set(header1, header2);
+    res.json({ admin: admine, webadmin: webadmine });
+    res.end();
+});
+
 // === KIJELENTKEZÉS ===
 // POST: /logout
 // Működés: a session adatai törlődnek, így az user nem lesz bejelentkezve
@@ -1197,7 +1207,7 @@ app.post('/termek_adatok',async (req, res) => {
     let termekid = parseInt(req.query.ID_TERMEK);
 
     let sql = `
-        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, 
+        SELECT webbolt_termekek.ID_KATEGORIA, webbolt_termekek.NEV, webbolt_termekek.AZON, webbolt_termekek.DATUMIDO, 
             webbolt_termekek.AR, webbolt_termekek.MENNYISEG, 
             CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK,
             CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.FILENAME END AS FOTONEV, 
