@@ -61,7 +61,7 @@ function ajax_post_SpinnerNelkul(urlsor, adat) { // emailnek a ajaxposta
 
 
 
-// masik post fuggveny formdata-hoz (kep feltolteshez stimmeljen minden szar)
+// masik post fuggveny formdata-hoz (kep feltolteshez stimmeljen minden)
 
 function ajax_post_formdata(url, formData) {
   return new Promise((resolve, reject) => {
