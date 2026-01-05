@@ -4,7 +4,7 @@ var velemeny_jelenlegi = 1;
 
 async function Admin_Velemenykezeles() {
     console.log("Admin_Velemenykezeles meghivva");
-    let varodb = await ajax_post(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, 1);
+    let varodb = await ajax_call(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, "GET", null, true);
     velemeny_osszes = Math.ceil(varodb.maxcount / 10)
     
     if(velemeny_jelenlegi > velemeny_osszes){
@@ -72,7 +72,7 @@ async function AdminVelemenyekMutat() {
 
             let ss = ``;
 
-            let varo = await ajax_post(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, 1);
+            let varo = await ajax_call(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, "GET", null, true);
 
             if (varo.rows.length == 0) { 
                 $("#velemenyek_hely").fadeOut(300, function() {
@@ -278,7 +278,7 @@ function Kovi_vel(keri){
 async function Velemeny_Elutasit(id_velemeny) {
   
 
-    let elutasit = await ajax_post(`velemeny_elutasit?ID_VELEMENY=${id_velemeny}`, 1);
+    let elutasit = await ajax_call(`velemeny_elutasit?ID_VELEMENY=${id_velemeny}`, "POST", null, true);
 
     if (elutasit.message == "ok") {
         üzen("Művelet sikeresen végrehajtva","success");
@@ -289,7 +289,7 @@ async function Velemeny_Elutasit(id_velemeny) {
 }
 
 async function Velemeny_Elfogad(id_velemeny) {
-    let elfogad = await ajax_post(`velemeny_elfogad?ID_VELEMENY=${id_velemeny}`, 1);
+    let elfogad = await ajax_call(`velemeny_elfogad?ID_VELEMENY=${id_velemeny}`, "POST", null, true);
 
     if (elfogad.message == "ok") {
         üzen("Művelet sikeresen végrehajtva","success");
@@ -1071,7 +1071,7 @@ function drawChart(rang) {
         kivalasztott = innen.value;
     }
     // adat lekérés
-    const eredmeny = await ajax_post(`Top5?INTERVALLUM='${kivalasztott}'`, 1);
+    const eredmeny = await ajax_call(`Top5?INTERVALLUM='${kivalasztott}'`, "GET", null, true);
 
     if (eredmeny.rows.length == 0) {
         if(eredmeny.message != "ok"){
@@ -1119,7 +1119,7 @@ async function STAT_Penz(innen){
         penzChart.destroy();
     }
 
-    var adat = await ajax_post(`bevetel_stat?INTERVALLUM=${intervallum}`, 1);
+    var adat = await ajax_call(`bevetel_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
     
     const xValues = [];
     const yValues = [];
@@ -1190,7 +1190,7 @@ async function STAT_ELAD(innen){
         kAT_CHART.destroy();
     }
 
-    var adat = await ajax_post(`rendelesek_stat?INTERVALLUM=${intervallum}`, 1);
+    var adat = await ajax_call(`rendelesek_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
     
 
     const xValues = [];
@@ -1255,7 +1255,7 @@ async function STAT_KATEG(innen){
         VLM_chart = null;
     }
 
-    var adat = await ajax_post(`kategoriak_stat?INTERVALLUM=${intervallum}`, 1);
+    var adat = await ajax_call(`kategoriak_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
 
     // === NINCS ADAT ===
     if (adat.maxcount == 0) {
@@ -1334,7 +1334,7 @@ async function STAT_COM(innen){
         COMM_chart.destroy();
         COMM_chart = null;
     }
-    var adat = await ajax_post(`velemeny_stat?INTERVALLUM=${intervallum}`, 1); 
+    var adat = await ajax_call(`velemeny_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
 
     // === NINCS ADAT ===
     if (adat.maxcount == 0) {
@@ -1496,8 +1496,8 @@ async function KER_CLICk(){
     try{
         if(sql_input_area.value.replaceAll(/\n/g, " ").trim() =="") throw '{"error" : "Üres a lekérdezés mező"}';
 
-         
-        var adat = await ajax_post(`html_sql?SQL=${sql_input_area.value.replaceAll(/\n/g, " ")}`,1)    
+
+        var adat = await ajax_call(`html_sql?SQL=${sql_input_area.value.replaceAll(/\n/g, " ")}`, "GET", null, true);
 
         if(adat.select == true){
             if (adat.adat.rows.length > 0) {

@@ -5,7 +5,7 @@ async function Velemeny_Kozzetesz(id_termek) {
     //const cls = new bootstrap.Collapse('#vlm', { toggle: false });
     if ($("#velemeny_input").val() != "") {
         try {
-            let velemenyiras = await ajax_post(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, 1) 
+            let velemenyiras = await ajax_call(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, "POST", null, true);
             //cls.hide();
             $("#velemeny_iras").modal("hide");
             console.log(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`);
@@ -26,7 +26,7 @@ async function Velemeny_Torles(id_velemeny, id_termek) {
     console.log(`gyors teszt xd, ez a velemeny id = ${id_velemeny}, termekid = ${id_termek}`);
 
     try {
-        let velemeny_torles = await ajax_post(`velemeny_del?ID_VELEMENY=${id_velemeny}`, 1);
+        let velemeny_torles = await ajax_call(`velemeny_del?ID_VELEMENY=${id_velemeny}`, "DELETE", null, true);
         if (velemeny_torles.message == "ok") {
             üzen("Vélemény sikeresen törölve!", "success");
             $("#velemeny_input").val("");
@@ -44,7 +44,7 @@ async function SajatVelemenyekMutat(id_termek) {
     $("#sajat_velemeny").prop("checked", true);
     try {
         
-        let sajat_velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, 1);
+        let sajat_velemeny_lista = await ajax_call(`velemenyek?ID_TERMEK=${id_termek}&SAJATVELEMENY=1`, "GET", null, true);
         console.log(sajat_velemeny_lista.rows);
         for (const element of sajat_velemeny_lista.rows) {
 
@@ -190,7 +190,7 @@ async function VelemenyekMutat(id_termek) {
     $("#sajat_velemeny").prop("checked", false);
     try {
         
-        let velemeny_lista = await ajax_post(`velemenyek?ID_TERMEK=${id_termek}`, 1);
+        let velemeny_lista = await ajax_call(`velemenyek?ID_TERMEK=${id_termek}`, "GET", null, true);
         if (velemeny_lista.rows.length == 0) { $("#velemenyek").html("<div class='col-12 text-xl text-center p-3'>Ehhez a termékhez még senki nem írt véleményt :(</div>"); }
         else {
             for (const element of velemeny_lista.rows) {

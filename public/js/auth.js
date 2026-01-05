@@ -106,7 +106,7 @@ $("#login_button").click(function() {
 
 
 $("#login_oksi_button").click(async function() { 
-    let l_json = await ajax_post("login?"+$("#form_login").serialize(), 1);
+    let l_json = await ajax_call("login?"+$("#form_login").serialize(), "GET", null, true);
 
     if (l_json.message == "ok" && l_json.maxcount == 1) {
         bejelentkezett_usernev = l_json.rows[0].NEV;
@@ -133,7 +133,7 @@ $("#login_oksi_button").click(async function() {
 
 
 $("#kijelentkezik").click( async function() {
-    ajax_post("logout", 1).then( () => {
+    ajax_call("logout", "GET", null, true).then( () => {
         localStorage.removeItem("user");
         BevaneJelentkezve();
     });  

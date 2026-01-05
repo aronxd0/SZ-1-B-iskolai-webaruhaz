@@ -18,7 +18,7 @@ const port      = 9012; // A szerver ezen a porton hallgat
 
 // === MIDDLEWARE BEÁLLÍTÁSOK ===
 // JSON és URL-enkódolt adatok feldolgozásához szükséges middleware-ek
-app.use(express.json());                                           // JSON body feldolgozása
+// app.use(express.json());  // KIKOMMENTEZVE: nem szükséges, mert minden hívás query param-okkal működik
 app.use(express.urlencoded({ extended: true }));                  // URL-enkódolt adatok (form) feldolgozása - email küldéshez szükséges
 
 // === HTTP HEADER KONSTANSOK ===
@@ -45,7 +45,7 @@ app.use(session({
     }
 }));
 
-app.post('/check_session', (req, res) => {
+app.get('/check_session', (req, res) => {
   const active = !!req.session.ID_USER;
   
   res.json({
@@ -113,7 +113,7 @@ module.exports = upload;
 // === AFA lekérdezése ===
 // GET: /afa
 
-app.post('/afa',(req, res) => {
+app.get('/afa',(req, res) => {
         var sql = `
         SELECT AFA from webbolt_konstansok
     `;
@@ -132,7 +132,7 @@ app.post('/afa',(req, res) => {
 //  - inaktiv: (int) 1 = csak inaktív termékek (AKTIV = 'N')
 //  - nev: (string) szűrés kategória nevére vagy leírásra (LIKE operátor)
 // Működés: dinamikus WHERE feltételeket épít, majd visszaadja a kategóriákat
-app.post('/kategoria',(req, res) => {
+app.get('/kategoria',(req, res) => {
     
     var elfogyott = (req.query.elfogyott? parseInt(req.query.elfogyott)   :   -1);  // -1 = nem szűrünk
     var inaktiv = (req.query.inaktiv? parseInt(req.query.inaktiv)     :   -1);
@@ -178,7 +178,7 @@ app.post('/kategoria',(req, res) => {
 
 
 // === TERMÉK KERESÉS ENDPOINT ===
-// POST: /keres
+// GET: /keres
 // Paraméterek (req.query):
 //  - order: (int) 1=ár, 2=név, 3=mennyiség; negatív = DESC
 //  - offset: (int) lapozáshoz (0, 51, 102...)
@@ -188,7 +188,7 @@ app.post('/kategoria',(req, res) => {
 //  - maxar, minar: (int) ár tartomány
 //  - maxmin_arkell: (int) ha != -1, csak MAX/MIN ár lekérés
 // Működés: gen_SQL_kereses() összeállítja az SQL-t és paramétereket
-app.post('/keres', (req, res) => {  
+app.get('/keres', (req, res) => {  
     var { sql, values } = gen_SQL_kereses(req); 
     sendJson_toFrontend (res, sql, values);
 });
@@ -306,13 +306,13 @@ function gen_SQL_kereses(req) {
 //#region vélemények
 
 // === VÉLEMÉNYEK LEKÉRÉSE ENDPOINT ===
-// POST: /velemenyek
+// GET: /velemenyek
 // Paraméterek (req.query):
 //  - ID_TERMEK: (int) konkrét termék véleményei
 //  - SAJATVELEMENY: (int) 1 = saját véleményt is mutasd (bejelentkezett user)
 //  - szelektalas: (int) 0=jóváhagyva, 1=jóváhagyásra vár, 2=elutasítva
 // Működés: a sessionből olvassa az ID_USER-t, azt használja a bejelentkezetthez
-app.post('/velemenyek',(req, res) => {
+app.get('/velemenyek',(req, res) => {
     session_data = req.session;
     
     var termekid = (req.query.ID_TERMEK ? parseInt(req.query.ID_TERMEK) : 0);
@@ -415,9 +415,9 @@ app.post('/velemeny_add', async (req, res) => {
 });
 
 // === VÉLEMÉNY TÖRLÉSE ===
-// POST: /velemeny_del
+// DELETE: /velemeny_del
 // Paraméter: ID_VELEMENY (int)
-app.post('/velemeny_del', async (req, res) => {
+app.delete('/velemeny_del', async (req, res) => {
     
     try {
         var velemenyid = parseInt(req.query.ID_VELEMENY);
@@ -510,13 +510,13 @@ app.post('/velemeny_elutasit', async (req, res) => {
 //#region login/logoff
 
 // === BEJELENTKEZÉS ===
-// POST: /login
+// GET: /login
 // Paraméterek (req.query):
 //  - login_nev: (string) email vagy felhasználónév
 //  - login_passwd: (string) jelszó (MD5 hashelve ellenőrizve)
 // Működés: az adatbázisból ellenőrzi az adatokat, majd session-be mentette a user adatait
 // Visszatér: {message, maxcount, rows} - maxcount=1 ha sikeres bejelentkezés
-app.post('/login', (req, res) => { login_toFrontend (req, res); });
+app.get('/login', (req, res) => { login_toFrontend (req, res); });
 
 async function login_toFrontend (req, res) {
     try {
@@ -565,7 +565,7 @@ async function login_toFrontend (req, res) {
     res.end();
 }
 
-app.post('/admin_check', (req, res) => {
+app.get('/admin_check', (req, res) => {
     session_data = req.session;
     const admine = session_data.ADMIN === "Y";
     const webadmine = session_data.WEBBOLT_ADMIN === "Y";
@@ -576,9 +576,9 @@ app.post('/admin_check', (req, res) => {
 });
 
 // === KIJELENTKEZÉS ===
-// POST: /logout
+// GET: /logout
 // Működés: a session adatai törlődnek, így az user nem lesz bejelentkezve
-app.post('/logout', (req, res) => {  
+app.get('/logout', (req, res) => {  
     session_data = req.session;
     const uid = session_data.ID_USER; // ki a kijelentkezettnek az ID-ja (logging-hoz)
     console.log("kilogolt felhasznalo: " + uid);
@@ -704,10 +704,10 @@ app.post('/kosar_add', async (req, res) => {
 });
 
 // === KOSÁR TÉTEL TÖRLÉSE ===
-// POST: /kosar_del
+// DELETE: /kosar_del
 // Paraméter: ID_TERMEK (int)
 // Működés: kitöröl egy tételt a kosárból (SQL tranzakcióban)
-app.post('/kosar_del',async (req, res) => {
+app.delete('/kosar_del',async (req, res) => {
     try{
         session_data = req.session;
         
@@ -739,10 +739,10 @@ app.post('/kosar_del',async (req, res) => {
 });
 
 // === KOSÁR TÉTEL DARABSZÁM ===
-// POST: /kosarteteldb
+// GET: /kosarteteldb
 // Működés: az összes tétel mennyiségét összeadja (SUM)
 // Visszatér: {kdb: szám}
-app.post('/kosarteteldb',(req, res) => {    
+app.get('/kosarteteldb',(req, res) => {    
 
     session_data = req.session;
 
@@ -767,10 +767,10 @@ app.post('/kosarteteldb',(req, res) => {
 });
 
 // === KOSÁR TÉTELEK LEKÉRÉSE ===
-// POST: /tetelek
+// GET: /tetelek
 // Paraméter: ID_TERMEK (opcionális) - ha megadva, csak annak 1 terméknek az árát és mennyiségét
 // Működés: attól függően, hogy szeretnénk egy tételről részleteket vagy az egész kosárat
-app.post('/tetelek',(req, res) => {
+app.get('/tetelek',(req, res) => {
 
     session_data = req.session;
 
@@ -921,12 +921,12 @@ app.post('/rendeles',async (req, res) => {
 });
 
 // === RENDELÉS ELLENŐRZÉS ===
-// POST: /rendeles_ellenorzes
+// GET: /rendeles_ellenorzes
 // Paraméterek:
 //  - ID_TERMEK: (int) termék ID
 //  - MENNYISEG: (int) kívánt mennyiség
 // Működés: ellenőrzi, hogy van-e elég raktárkészlet és aktív-e a termék
-app.post('/rendeles_ellenorzes',async (req, res) => {
+app.get('/rendeles_ellenorzes',async (req, res) => {
     try{
     var termekid = parseInt(req.query.ID_TERMEK);
     var mennyiseg = parseInt(req.query.MENNYISEG);
@@ -955,9 +955,9 @@ app.post('/rendeles_ellenorzes',async (req, res) => {
 });
 
 // === FELHASZNÁLÓ RENDELÉSEINEK LISTÁZÁSA ===
-// POST: /rendelesek
+// GET: /rendelesek
 // Működés: az összes bejelentkezetthez tartozó rendelést összesítéssel visszaadja
-app.post('/rendelesek',async (req, res) => {
+app.get('/rendelesek',async (req, res) => {
     try{
     session_data = req.session; 
     var off = req.query.OFFSET
@@ -992,10 +992,10 @@ app.post('/rendelesek',async (req, res) => {
 });
 
 // === KONKRÉT RENDELÉS TÉTELEI ===
-// POST: /rendelesek_tetelei
+// GET: /rendelesek_tetelei
 // Paraméter: ID_RENDELES (int)
 // Működés: egy rendelés összes tételét visszaadja
-app.post('/rendelesek_tetelei',async (req, res) => {
+app.get('/rendelesek_tetelei',async (req, res) => {
     try{
     var rendelesid = parseInt(req.query.ID_RENDELES);
 
@@ -1202,7 +1202,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 // POST: /termek_adatok
 // Paraméter: ID_TERMEK (int)
 // Működés: egy konkrét termék összes adatát visszaadja (beleértve a kategóriát és képet)
-app.post('/termek_adatok',async (req, res) => {
+app.get('/termek_adatok',async (req, res) => {
 
     let termekid = parseInt(req.query.ID_TERMEK);
 
@@ -1225,9 +1225,9 @@ app.post('/termek_adatok',async (req, res) => {
 });
 
 // === TERMÉK TÖRLÉSE (ADMIN) ===
-// POST: /termek_del
+// DELETE: /termek_del
 // Paraméter: ID_TERMEK (int)
-app.post('/termek_del',async (req, res) => {
+app.delete('/termek_del',async (req, res) => {
     try{
         console.log("törlendő termék ID: " + req.query.ID_TERMEK); 
         var termekid = parseInt(req.query.ID_TERMEK);
@@ -1280,7 +1280,7 @@ app.post('/termek_del',async (req, res) => {
 //   - SELECT: biztonságosan futtatható
 //   - Tiltott parancsok: INSERT, UPDATE, DELETE, DROP, ALTER, CREATE stb. (biztonsági okokból)
 //   - Base64 képadatok maszkálásra kerülnek (-- BINARY DATA --)
-app.post('/html_sql', async (req, res) => {
+app.get('/html_sql', async (req, res) => {
 try {
         // Query normalizálása
         if (!req.query || typeof req.query.SQL === 'undefined' || req.query.SQL === null) {
@@ -1345,7 +1345,7 @@ try {
 //#region statisztika
 
 
-app.post('/top5',(req, res) => {
+app.get('/top5',(req, res) => {
 
     var ido = req.query.INTERVALLUM.toString() // 1-3-5
     var idocucc = null;
@@ -1383,7 +1383,7 @@ app.post('/top5',(req, res) => {
     sendJson_toFrontend (res, sql, []);
 });
 
-app.post('/bevetel_stat',(req, res) => {
+app.get('/bevetel_stat',(req, res) => {
 
     var ido = req.query.INTERVALLUM ? parseInt(req.query.INTERVALLUM) : 12; // 1-6-12
     var sql = "";
@@ -1437,7 +1437,7 @@ app.post('/bevetel_stat',(req, res) => {
     sendJson_toFrontend(res, sql, [ido == 1 ? 1 : ido-1]);
 });
 
-app.post('/rendelesek_stat', (req, res) => {
+app.get('/rendelesek_stat', (req, res) => {
 
     const ido = req.query.INTERVALLUM ? parseInt(req.query.INTERVALLUM) : 12;
     let sql = null;
@@ -1488,7 +1488,7 @@ app.post('/rendelesek_stat', (req, res) => {
     sendJson_toFrontend(res, sql, [ido == 1 ? 1 : ido-1]);
 });
 
-app.post('/kategoriak_stat', (req, res) => {
+app.get('/kategoriak_stat', (req, res) => {
 
     const ido = req.query.INTERVALLUM ? parseInt(req.query.INTERVALLUM) : 12;
 
@@ -1536,7 +1536,7 @@ app.post('/kategoriak_stat', (req, res) => {
     sendJson_toFrontend(res, sql, []);
 });
 
-app.post('/velemeny_stat', (req, res) => {
+app.get('/velemeny_stat', (req, res) => {
 
     const ido = req.query.INTERVALLUM ? parseInt(req.query.INTERVALLUM) : 12;
 
@@ -1606,7 +1606,7 @@ async function runExecute(sql, req, ertekek = [], naplozas, connection) {
             }
         }
         
-    } catch{
+    } catch (err) {
         msg = err.sqlMessage;  // MySQL hibaszöveg
         console.error('Hiba:', err); 
     } finally {
@@ -1800,7 +1800,7 @@ const { off } = require('process');
 //  - subject: (string) az email tárgya
 //  - html: (string) az email HTML tartalma
 // Működés: az email-sender modulon keresztül küldi az e-mail-t (SMTP)
-app.post('/send-email', async (req, res) => {
+app.get('/send-email', async (req, res) => {
     try {
         const { email, subject, html } = req.body;
 
