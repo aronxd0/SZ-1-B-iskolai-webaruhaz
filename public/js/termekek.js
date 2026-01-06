@@ -623,8 +623,8 @@ async function Termek_Mutat(event, termek_id) {
               </p>
 
               
-              <div class="flex gap-3 mt-4">
-                ${ks} ${gg}
+              <div class="d-flex gap-3 mt-4">
+                ${ks} 
                 
                 
               </div>
@@ -637,6 +637,9 @@ async function Termek_Mutat(event, termek_id) {
                   <li>Raktáron: ${mennyiseg} ${meegys}</li>
                 </ul>
               </div>
+
+              <div class="d-flex flex-column flex-lg-row gap-3">${gg}</div>
+
             </div>
           </div>
 
