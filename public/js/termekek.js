@@ -384,7 +384,7 @@ async function Termek_Mutat(event, termek_id) {
           transition-all duration-150 ease-in-out 
           rounded-lg  
           kosar bi bi-plus-lg  
-           w-auto  tracking-wider 
+           w-auto  tracking-[2px]  
           " onclick='Kosarba_Bele(event, ${termek_id})'> KOSÁRBA TESZEM </button>`;
 
   let bal = ` 
@@ -466,7 +466,7 @@ async function Termek_Mutat(event, termek_id) {
           transition-all duration-150 ease-in-out 
           rounded-lg  
            
-           w-full  tracking-wider " aria-label="modositas" onclick='Termek_Edit(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
+           w-full  tracking-[2px] " aria-label="modositas" onclick='Termek_Edit(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
      
      
       gg += `<button type="button" 
@@ -481,7 +481,7 @@ async function Termek_Mutat(event, termek_id) {
           transition-all duration-150 ease-in-out 
           rounded-lg  
             
-           w-full  tracking-wider 
+           w-full  tracking-[2px] 
         " aria-label="torles" onclick='Termek_Torol(event, ${termek_id})'><i class="bi bi-trash"></i> TÖRLÉS</button>`;
       
       gg += "";
