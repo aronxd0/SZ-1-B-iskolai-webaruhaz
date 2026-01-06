@@ -700,6 +700,7 @@ async function Termek_Mutat(event, termek_id) {
         
             $("#sajatvlm").removeClass("eltunt");
           }
+          FelaTetore();
 
         });
 
