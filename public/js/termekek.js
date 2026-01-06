@@ -466,7 +466,7 @@ async function Termek_Mutat(event, termek_id) {
           transition-all duration-150 ease-in-out 
           rounded-lg  
            
-           w-auto  tracking-wider " aria-label="modositas" onclick='Termek_Edit(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
+           w-full  tracking-wider " aria-label="modositas" onclick='Termek_Edit(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
      
      
       gg += `<button type="button" 
@@ -481,7 +481,7 @@ async function Termek_Mutat(event, termek_id) {
           transition-all duration-150 ease-in-out 
           rounded-lg  
             
-           w-auto  tracking-wider 
+           w-full  tracking-wider 
         " aria-label="torles" onclick='Termek_Torol(event, ${termek_id})'><i class="bi bi-trash"></i> TÖRLÉS</button>`;
       
       gg += "";
@@ -594,13 +594,13 @@ async function Termek_Mutat(event, termek_id) {
       <div class="container my-1">
         <button class="p-2 my-3" onclick="KERESOBAR()"><i class="bi bi-caret-left-fill" ></i> Inkább böngészek tovább</button>
         <div class="row g-5">
-          <div class="col-12 col-lg-7">
+          <div class="col-12 col-xl-7">
             <div onmousemove="zoomMove(event, this)" onmouseleave="zoomReset(this)" class="relative w-full h-[420px] lg:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl overflow-hidden bg-zinc-300 dark:bg-slate-950">
               <img src="${fotolink}" alt="" class="zoom-img h-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-transform duration-300 ease-out" onclick="openImage(this.src)"/>
             </div>
           </div>
 
-          <div class="col-12 col-lg-5">
+          <div class="col-12 col-xl-5">
             <div class="flex flex-col gap-4">
 
               
@@ -623,9 +623,9 @@ async function Termek_Mutat(event, termek_id) {
               </p>
 
               
-              <div class="d-flex gap-3 mt-4">
+              <div class="d-flex flex-column gap-3 mt-4">
                 ${ks} 
-                
+                <div class="d-flex flex-column flex-xxl-row gap-3">${gg}</div>
                 
               </div>
 
@@ -638,7 +638,7 @@ async function Termek_Mutat(event, termek_id) {
                 </ul>
               </div>
 
-              <div class="d-flex flex-column flex-lg-row gap-3">${gg}</div>
+              
 
             </div>
           </div>
