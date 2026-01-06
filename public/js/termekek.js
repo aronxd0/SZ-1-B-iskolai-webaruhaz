@@ -347,6 +347,7 @@ async function Termek_Mutat(event, termek_id) {
         $("#termek_content").append(cuccok + "<br>");
         
     }*/
+  let gg = "";
   let ks = "";
 
 
@@ -449,6 +450,44 @@ async function Termek_Mutat(event, termek_id) {
 
   $("#vlmg").html("");
   $("#ussr").html("");
+
+
+
+    if (JSON.parse(localStorage.getItem("user"))?.loggedIn && (webbolt_admin || admin)) {
+      gg = "";
+      gg += `<button type="button" 
+      class="px-6 py-2 rounded-xl 
+          bg-gray-900 
+          text-zinc-200 
+          hover:bg-gray-700 
+          hover:text-zinc-200 
+          dark:bg-zinc-800 
+          dark:hover:bg-zinc-700 
+          transition-all duration-150 ease-in-out 
+          rounded-lg  
+           
+           w-auto  tracking-wider " aria-label="modositas" onclick='Termek_Edit(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
+     
+     
+      gg += `<button type="button" 
+      class="px-6 py-2 rounded-xl 
+          bg-gray-900 
+          text-zinc-200 
+          hover:bg-gray-700 
+          hover:text-red-600 
+          dark:bg-zinc-800 
+          dark:hover:bg-zinc-700 
+          dark:hover:text-red-600 
+          transition-all duration-150 ease-in-out 
+          rounded-lg  
+            
+           w-auto  tracking-wider 
+        " aria-label="torles" onclick='Termek_Torol(event, ${termek_id})'><i class="bi bi-trash"></i> TÖRLÉS</button>`;
+      
+      gg += "";
+    } else gg = "";
+
+
 
     let velemenyiras_gomb = `
       <button 
@@ -585,7 +624,7 @@ async function Termek_Mutat(event, termek_id) {
 
               
               <div class="flex gap-3 mt-4">
-                ${ks}
+                ${ks} ${gg}
                 
                 
               </div>
@@ -753,32 +792,7 @@ function CARD_BETOLT(adatok) {
     
 
 
-    if (JSON.parse(localStorage.getItem("user"))?.loggedIn && (webbolt_admin || admin)) {
-      gg = "";
-      gg += `<button type="button" 
-      class="btn  
-        bg-transparent 
-        text-slate-900 
-        hover:text-blue-400 
-        dark:text-zinc-200 
-        dark:hover:text-blue-400 
-        transition-all duration-150 ease-in-out 
-        
-        me-1" aria-label="modositas" onclick='Termek_Edit(event, ${element.ID_TERMEK}, "modosit")'><i class="bi bi-pencil-square"></i></button>`;
-     
-     
-      gg += `<button type="button" 
-      class="btn  
-        bg-transparent 
-        text-slate-900 
-        hover:text-red-700 
-        dark:text-zinc-200 
-        dark:hover:text-red-700 
-        transition-all duration-150 ease-in-out 
-        " aria-label="torles" onclick='Termek_Torol(event, ${element.ID_TERMEK})'><i class="bi bi-trash"></i></button>`;
-      
-      gg += "";
-    } else gg = "";
+    
 
 
 
