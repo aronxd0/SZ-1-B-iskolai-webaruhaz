@@ -1654,6 +1654,8 @@
       </div>
 
       <!-- Toast (értesítések): felugró, rövid értesítések a jobb alsó sarokban -->
+
+      <!--
       <div id= "toast1" class="toast bg-success text-white hide" style="position:fixed; right:10px; bottom:10px; z-index: 9999999;">
         <div class="toast-header">
             <strong class="me-auto"><i class="bi-gift-fill"></i> Infó...</strong>
@@ -1661,6 +1663,44 @@
         </div>
         <div class="toast-body"></div>
       </div>
+      -->
+
+      <div id= "toast1" class="toast show pointer-events-auto bg-transparent" role="alert" style="position:fixed; right:10px; top:10px; z-index: 9999999;">
+        <div
+            class="
+            d-flex align-items-center justify-content-start gap-3
+            bg-zinc-200 dark:bg-slate-900
+            text-slate-900 dark:text-zinc-200
+            rounded-xl
+            px-4 py-3
+            shadow-xl shadow-black/10
+            !border !border-slate-200/60 dark:!border-zinc-200/30
+            min-w-[320px]
+            "
+        >
+            <!-- ICON -->
+            <div class="flex-shrink-0 mt-0.5 text-2xl" id="icon"></div>
+    
+            <!-- CONTENT -->
+            <div class="flex-1 toast-body"></div>
+    
+            <!-- CLOSE -->
+            <button
+                type="button"
+                data-bs-dismiss="toast"
+                class="
+                text-slate-400 hover:text-slate-600
+                dark:hover:text-zinc-300
+                transition-colors
+                "
+            >
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+    </div>
+    
+
+
 
       <!-- Törlés megerősítése modal: admin/kezelői feladatoknál használatos, megerősíti a törlési műveletet -->
       <div class="modal fade" id="delete_modal">
