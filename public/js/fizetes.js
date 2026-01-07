@@ -1011,7 +1011,7 @@ async function Fizetésclick(li) {
   let Rend_ID = 0;
     try{
       for (const element of li) { // ellenőrizzük, hogy abból a tételből van a még készleten a kivánt darabból
-        var ell = await ajax_post(`rendeles_ellenorzes?ID_TERMEK=${element.ID_TERMEK}&MENNYISEG=${element.MENNYISEG}`, 1);
+        var ell = await ajax_call(`rendeles_ellenorzes?ID_TERMEK=${element.ID_TERMEK}&MENNYISEG=${element.MENNYISEG}`, "GET", null, true);
         if(ell.rows[0].allapot == "karramba") {
             throw `Az egyik termékből nincs elég készleten. A rendelése módosítva lett.`;
         }
@@ -1022,7 +1022,7 @@ async function Fizetésclick(li) {
       
        // ha minden jó akkor elküldjük a rendelést
         let kaki = `${_cim} ${_iszam} ${_city} ${_country}`;            
-        var dsa = await ajax_post(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}&AFA=${(await ajax_post(`afa`, 1)).rows[0].AFA}`, 1);  
+        var dsa = await ajax_call(`rendeles?FIZMOD=${fizmod}&SZALLMOD=${szallmod}&MEGJEGYZES=${megjegyzes}&SZALLCIM=${kaki}&NEV=${_nev}&EMAIL=${_emil}&AFA=${(await ajax_call(`afa`, "GET", null, true)).rows[0].AFA}`, "POST", null, true);  
         if(dsa.message != "ok") {
           throw "Hiba a rendelés leadásakor!";
         }
@@ -1053,11 +1053,11 @@ async function Fizetésclick(li) {
       try{
         const html = await emailDesign(li);
         
-        ajax_post_SpinnerNelkul("send-email", { // 2 adata egyfajta tömb amit majd a backend fogad
+        ajax_call("send-email", { // 2 adata egyfajta tömb amit majd a backend fogad
           email: _emil,
           subject: "Rendelés visszaigazolása",
           html: html
-      });
+      }, "GET", null, false);
   
       }
       catch{
@@ -1101,7 +1101,7 @@ async function emailDesign(li, rendelId, szallitasiCim) {
     osszes += e.PENZ;
   }
 
-  const afaAdat = await ajax_post(`afa`, 1);
+  const afaAdat = await ajax_call(`afa`, "GET", null, true);
   const afa = afaAdat.rows[0].AFA;
   const vegosszeg = Math.round(osszes * (1 + afa / 100)).toLocaleString();
 

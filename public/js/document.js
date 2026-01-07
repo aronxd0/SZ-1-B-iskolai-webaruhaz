@@ -82,7 +82,7 @@ $(document).ready(function() {
 
     $('#bezar').on('click', function () {
         if (!JSON.parse(localStorage.getItem("user") || "{}")?.loggedIn) {
-            ajax_post("logout", 1,).then(logoutt => {});
+            ajax_call("logout", "GET", null, true).then(logoutt => {});
             Kezdolap();
         }
     

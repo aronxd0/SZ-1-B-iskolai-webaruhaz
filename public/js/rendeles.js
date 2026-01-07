@@ -10,7 +10,7 @@ $("#rend_button").click(async function () {
 async function toggleRendeles(rendelId) {
     // AJAX hívás, hogy lekérd a rendelés tételeit
     
-    const tetelek = await ajax_post(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, 1);
+    const tetelek = await ajax_call(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, "GET", null, true);
 
     let html =`     <div class="col-0 col-lg-2"></div>
 
@@ -129,7 +129,7 @@ async function rendelesekmegtolt(){
         </div>
     `;
 
-    const itemek = await ajax_post(`rendelesek?OFFSET=${(jelenlegi-1)}`, 1);
+    const itemek = await ajax_call(`rendelesek?OFFSET=${(jelenlegi-1)}`, "GET", null, true);
 
     osszesoldal = Math.ceil(itemek.maxcount / 10);
     

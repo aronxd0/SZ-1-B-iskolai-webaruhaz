@@ -38,7 +38,7 @@ async function TermekModosit(url) {
 
     //console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
     console.log("az t kapod inser/ update: "  + `termek_edit?insert=${upd}}`, fd)
-    let termekmod = await ajax_post_formdata(`termek_edit?insert=${upd}}`, fd); 
+    let termekmod = await ajax_call(`termek_edit?insert=${upd}}`, "POST", fd, true); 
     if (termekmod.message == "ok") {
 
       if (upd == 1) { 
@@ -68,7 +68,7 @@ async function Termek_Edit(event, termek_id, tipus) {
   try {
 
     if (termek_id != 0) {
-      let ta = await ajax_post(`termek_adatok?ID_TERMEK=${termek_id}`, 1);
+      let ta = await ajax_call(`termek_adatok?ID_TERMEK=${termek_id}`, "GET", null, true);
 
       nev = ta.rows[0].NEV;
       azon = ta.rows[0].AZON;
@@ -200,7 +200,7 @@ function Termek_Torol(event, termek_id) {
     try {
       var s = "";
       var tip = "success";
-      var d_json = await ajax_post(`termek_del?ID_TERMEK=${termek_id}`, 1);
+      var d_json = await ajax_call(`termek_del?ID_TERMEK=${termek_id}`, "DELETE", null, true);
       console.log(d_json);
       if (d_json.message == "ok") {
           s = "Törlés OK...";
@@ -355,7 +355,7 @@ async function Termek_Mutat(event, termek_id) {
 
 
 
-    let termekadatok = await ajax_post(`termek_adatok?ID_TERMEK=${termek_id}`, 1);
+    let termekadatok = await ajax_call(`termek_adatok?ID_TERMEK=${termek_id}`, "GET", null, true);
 
     
     const nev = termekadatok.rows[0].NEV;

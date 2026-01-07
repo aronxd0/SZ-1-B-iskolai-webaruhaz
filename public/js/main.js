@@ -60,23 +60,19 @@ async function AR_SUM(osztaly, hova, vegossszeg) {
     let sum = 0;
     
     $(`.${osztaly}`).each(function () {
-        let osszeg = parseInt($(this).html().replaceAll("&nbsp;", "").replaceAll(" ", ""));
+        let osszeg = parseInt($(this).html().replaceAll("&nbsp;", "").replaceAll(" ", "").replaceAll(",", ""));
         
         sum += osszeg;
         
     });
     
     if (vegossszeg) {
-        sum = Math.round(sum * (1 + (await ajax_post(`afa`, 1)).rows[0].AFA / 100));
+        sum = Math.round(sum * (1 + (await ajax_call(`afa`, "GET", null, true)).rows[0].AFA / 100));
         $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
     }
     else {
         $(`#${hova}`).html(`${sum.toLocaleString()} Ft`);
     }
-    
-    
-    
-    
     
 }
 
@@ -88,7 +84,7 @@ async function SESSION() {
 
         try {
 
-            const js = await ajax_post('/check_session', 1);
+            const js = await ajax_call('/check_session', "GET", null, true);
             //const js = await session_check.json();
 
             const localBoot = JSON.parse(localStorage.getItem('user'))?.serverBoot || '';
@@ -108,7 +104,7 @@ async function SESSION() {
 }
 
 async function Admin_ellenorzes() { 
-    let adminell = await ajax_post("admin_check", 1); 
+    let adminell = await ajax_call("admin_check", "GET", null, true); 
     return adminell; 
 }
 
@@ -297,7 +293,7 @@ async function KERESOBAR() {
     elküld2 += `&offset=${(Joldal-1)}`
     console.log("elküld2: "+ elküld2);
     try {
-        var adatok = await ajax_post(elküld2 , 1);
+        var adatok = await ajax_call(elküld2 , "GET", null, true);
         if(adatok.rows.length == 0){// ha nincs találat akkor az árakat újra lekérdezem limit nélkül
             ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
             Joldal = 1;
@@ -462,7 +458,7 @@ function Kovi(keri){
 
 async function ArFeltolt(sql, min ,max){
     try {
-        var arak = await ajax_post(sql+"&maxmin_arkell=1", 1);//arak lekérdezése limit offset nélkül
+        var arak = await ajax_call(sql+"&maxmin_arkell=1", "GET", null, true);//arak lekérdezése limit offset nélkül
         
       
 
@@ -615,7 +611,7 @@ async function KategoriaFeltolt(hova, type, kivalasztott,mindenkipipal) {
         let listItems  = "";
 
         if (type == "check") {
-             let k_json = await ajax_post(`kategoria?nev=${$("#nev1").val()}${elfogyt}${nemaktivt}`, 1);
+             let k_json = await ajax_call(`kategoria?nev=${$("#nev1").val()}${elfogyt}${nemaktivt}`, "GET", null, true);
             for (let i = 0; i < k_json.rows.length; ++i) {
                 var pipa = ""
               
@@ -645,7 +641,7 @@ async function KategoriaFeltolt(hova, type, kivalasztott,mindenkipipal) {
         }
         else {
             listItems += `<option value="" disabled>-</option>`;
-            let k_json = await ajax_post(`kategoria`, 1);
+            let k_json = await ajax_call(`kategoria`, "GET", null, true);
             for (let index = 0; index < k_json.rows.length; index++) {
                 listItems += `<option value="${k_json.rows[index].ID_KATEGORIA}" ${k_json.rows[index].ID_KATEGORIA == kivalasztott ? "selected" : ""}>${k_json.rows[index].KATEGORIA}</option>`;
                 
@@ -702,7 +698,7 @@ async function Kezdolap() {
     bepipaltID = "";
     KERESOBAR();
 
-    let kategoriacuccos = await ajax_post(`kategoria`, 1);
+    let kategoriacuccos = await ajax_call(`kategoria`, "GET", null, true);
     let k = "";
     if (kategoriacuccos.rows.length > 0) {
         for (const element of kategoriacuccos.rows) {

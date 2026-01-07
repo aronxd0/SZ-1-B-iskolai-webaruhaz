@@ -36,7 +36,7 @@ $("#cart_button").click(async function () {
     
 
     try {
-        await ajax_post("tetelek", 1).then(tetelek => {
+        await ajax_call("tetelek", "GET", null, true).then(tetelek => {
 
              
 
@@ -221,11 +221,14 @@ function KosarTeteleiFrissit() {
 
 
 
-function KosarItemDelete(id){
-    ajax_post(`/kosar_del?ID_TERMEK=${id.id}`)
-    .then(() => {
+async function KosarItemDelete(id){
+    var eredmeny = await ajax_call(`/kosar_del?ID_TERMEK=${id.id}`, "DELETE", null, true)
+    if(eredmeny.message == "ok"){
         $(`#${id.id}NAGY`).closest('.kosartetelcucc').fadeOut(300, function() {
             $(this).remove();
+            
+            // Az ár frissítése UTÁN az elem eltávolítása
+            AR_SUM("termek_ar", "sumar", false);
         });
 
         console.log(id.id);
@@ -235,7 +238,6 @@ function KosarItemDelete(id){
         if (ti != -1) {
             tetelekli.splice(ti, 1);
         }
-
         
 
         KosarTetelDB();
@@ -261,7 +263,7 @@ function KosarItemDelete(id){
                                 
                                 " id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>`);
 
-            AR_SUM("termek_ar", "sumar" , false);
+            
         }
         else {
             $("#content_hely").fadeOut(300, function() {
@@ -271,7 +273,8 @@ function KosarItemDelete(id){
         }
 
         üzen("Tétel törölve a kosárból","success");
-    })
+        
+    }
 }
 
 async function Kosarba_Bele(event, id_termek) {
@@ -279,7 +282,7 @@ async function Kosarba_Bele(event, id_termek) {
     $("#termekview").modal("hide");
     // Kosár gomb megnyomása után beleteszi a termeket
   
-        let kosaraddleiras = await ajax_post(`kosar_add?ID_TERMEK=${id_termek}` ,1);
+        let kosaraddleiras = await ajax_call(`kosar_add?ID_TERMEK=${id_termek}`, "POST", null, true);
         if (kosaraddleiras.message == "ok") {
             KosarTetelDB(); // majd a külön le kérdezést kap 
             üzen("Áru bekerült a kosárba","success");   
@@ -296,7 +299,7 @@ async function Kosarba_Bele(event, id_termek) {
 
 async function KosarTetelDB() {
    
-    let kosarteteldb = await ajax_post("kosarteteldb", 1);
+    let kosarteteldb = await ajax_call("kosarteteldb", "GET", null, true);
     var db = 0;
     for (const element of kosarteteldb.rows) {
         
@@ -317,8 +320,8 @@ async function KosarPLUSZ(id) {
     var ertek = id.id.substring(id.id.length - 1, id.id.length) == "2"? `&ERTEK=${id.value > 0 ? id.value: 1}` : "";// ha 2 akkor az input mező lett változtatva
     var idk = id.id.substring(0, id.id.length - 1);
     
-    await ajax_post(`kosar_add?ID_TERMEK=${idk}&MENNYIT=${PluszVAGYminusz}${ertek}`, 1);
-    var db = await ajax_post("tetelek?ID_TERMEK="+idk, 1); // MEnyiség értéket csak akkor adok át ,a mikor az input mező lett változtatva különben üres string
+    await ajax_call(`kosar_add?ID_TERMEK=${idk}&MENNYIT=${PluszVAGYminusz}${ertek}`, "POST", null, true);
+    var db = await ajax_call("tetelek?ID_TERMEK="+idk, "GET", null, true); // MEnyiség értéket csak akkor adok át ,a mikor az input mező lett változtatva különben üres string
     
     let mennyiseg = parseInt(db.rows[0].MENNYISEG);
     let ar = parseInt(db.rows[0].AR);
