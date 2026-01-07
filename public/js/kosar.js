@@ -319,6 +319,8 @@ async function KosarPLUSZ(id) {
     var PluszVAGYminusz = id.id.substring(id.id.length - 1, id.id.length) == 9? -1 : ""  ;// ha nem 9 akkor - / ha 1 akkor + 
     var ertek = id.id.substring(id.id.length - 1, id.id.length) == "2"? `&ERTEK=${id.value > 0 ? id.value: 1}` : "";// ha 2 akkor az input mező lett változtatva
     var idk = id.id.substring(0, id.id.length - 1);
+
+    
     
     await ajax_call(`kosar_add?ID_TERMEK=${idk}&MENNYIT=${PluszVAGYminusz}${ertek}`, "POST", null, true);
     var db = await ajax_call("tetelek?ID_TERMEK="+idk, "GET", null, true); // MEnyiség értéket csak akkor adok át ,a mikor az input mező lett változtatva különben üres string
@@ -337,10 +339,12 @@ async function KosarPLUSZ(id) {
 
     
 
-    console.log(tetelekli);
     
+    if ($(`#${idk}2`).val() == 1 && PluszVAGYminusz == -1) { üzen("A terméket a törlés gombbal (<i class='bi bi-trash'></i>) tudod eltávolítani a kosárból!", "info"); }
     document.getElementById(`${idk}2`).value = mennyiseg;
     document.getElementById(`${idk}3`).innerHTML = `<h4 class="text-slate-900 dark:text-zinc-200 font-semibold termek_ar">${money.toLocaleString()} Ft<h4>` ; // forint firssit
+
+    
 
     $("#pay_button").html("");
     $("#pay_button").html(`
@@ -362,5 +366,5 @@ async function KosarPLUSZ(id) {
 
     AR_SUM("termek_ar", "sumar" , false);
     KosarTetelDB(); // fönti kosár db frissitése
-
+    
 };
