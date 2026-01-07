@@ -74,7 +74,7 @@ function BevaneJelentkezve() {
         Joldal = 1;
 
         $('#login_modal').modal('hide');
-        üzen(`Vásárolj sokat ${bejelentkezett_usernev}!`,"success");
+        üzen(`Vásárolj sokat ${bejelentkezett_usernev}!`,"info");
         $("#loginspan").html(' Kijelentkezés');
         $("#loginout").removeClass("bi bi-box-arrow-in-right");
         $("#loginout").addClass("bi bi-box-arrow-in-left");
