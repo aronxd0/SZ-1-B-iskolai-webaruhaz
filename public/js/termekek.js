@@ -507,7 +507,7 @@ async function Termek_Mutat(event, termek_id) {
       dark:text-zinc-200 
       hover:text-gray-600 
       dark:hover:bg-slate-950 
-      dark:hover:text-zinc-200
+      dark:hover:text-gray-400
       transition-hover duration-300 ease-in-out 
         w-auto" onclick="Velemeny_Iras(${termek_id})"> 
         <i class="bi bi-plus-lg"></i>
@@ -908,13 +908,15 @@ function CARD_BETOLT(adatok) {
         ks = "";
       } else {
         ks = `<button 
-          class="btn 
-            bg-gray-900 
+          class="btn !border !border-transparent 
+            bg-zinc-950 
             text-zinc-200 
-            hover:bg-gray-700 
+            hover:bg-zinc-800 
             hover:text-zinc-200 
-            dark:bg-zinc-800 
-            dark:hover:bg-zinc-700 
+            dark:bg-zinc-900 
+            dark:hover:bg-zinc-800 
+            dark:!border-zinc-200/10 
+            dark:hover:!border-zinc-200/20 
             transition-all duration-150 ease-in-out 
             rounded-xl 
             kosar bi bi-plus-lg   
@@ -940,7 +942,7 @@ function CARD_BETOLT(adatok) {
           dark:!border-zinc-200/20 
           dark:bg-slate-950 
           dark:text-zinc-200 
-          dark:hover:bg-gray-800 
+          dark:hover:bg-sky-950/10  
           dark:hover:-outline-offset-1 
           dark:hover:outline-white/10 
           d-flex flex-column 
