@@ -1053,11 +1053,11 @@ async function Fizetésclick(li) {
       try{
         const html = await emailDesign(li);
         
-        ajax_call("send-email", { // 2 adata egyfajta tömb amit majd a backend fogad
+        ajax_call("send-email", "POST", { // 2 adata egyfajta tömb amit majd a backend fogad
           email: _emil,
           subject: "Rendelés visszaigazolása",
           html: html
-      }, "GET", null, false);
+      }, false);
   
       }
       catch{

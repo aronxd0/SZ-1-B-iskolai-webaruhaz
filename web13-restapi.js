@@ -19,6 +19,7 @@ const port      = 9012; // A szerver ezen a porton hallgat
 // === MIDDLEWARE BEÁLLÍTÁSOK ===
 // JSON és URL-enkódolt adatok feldolgozásához szükséges middleware-ek
 // app.use(express.json());  // KIKOMMENTEZVE: nem szükséges, mert minden hívás query param-okkal működik
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));                  // URL-enkódolt adatok (form) feldolgozása - email küldéshez szükséges
 
 // === HTTP HEADER KONSTANSOK ===
@@ -1800,7 +1801,7 @@ const { off } = require('process');
 //  - subject: (string) az email tárgya
 //  - html: (string) az email HTML tartalma
 // Működés: az email-sender modulon keresztül küldi az e-mail-t (SMTP)
-app.get('/send-email', async (req, res) => {
+app.post('/send-email', async (req, res) => {
     try {
         const { email, subject, html } = req.body;
 
