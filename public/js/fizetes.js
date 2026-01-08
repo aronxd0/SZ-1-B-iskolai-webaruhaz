@@ -1156,7 +1156,7 @@ async function emailDesign(li, rendelId, szallitasiCim) {
       Rendelési azonosító
     </div>
     <div style="font-size:16px;font-weight:bold;color:#065f46;">
-       ${(await ajax_call("/rendeles_azon", "GET", null, false)).rows[0].RENDELES_AZONOSITO}
+       111153
     </div>
   </div>
 

@@ -1022,45 +1022,6 @@ app.get('/rendelesek_tetelei',async (req, res) => {
     }
 });
 
-app.get('/rendeles_azon', async (req, res) => {
-    try {
-        session_data = req.session;
-        var sql =
-            `
-            SELECT webbolt_rendeles.ID_RENDELES AS RENDELES_AZONOSITO
-            FROM webbolt_rendeles
-            WHERE webbolt_rendeles.ID_USER = ?
-            ORDER BY webbolt_rendeles.DATUM DESC
-            LIMIT 1
-            `;
-        let ertekek = [session_data.ID_USER];
-
-        var eredmeny = await runQueries(sql, ertekek);
-        if (eredmeny.message != "ok") {
-            res.set(header1, header2);
-            
-            // Manuálisan összeállítunk egy "sikeresnek tűnő" választ
-            res.json({
-                message: "ok",
-                maxcount: 1,
-                rows: [
-                    { RENDELES_AZONOSITO: "-" }
-                ]
-            });
-            res.end();
-        }
-        
-        else {
-            res.set(header1, header2);
-            res.json(eredmeny); 
-            res.end();
-        }
-
-    } catch (err) {
-        console.log(err);
-    }
-});
-
 
 //#endregion
 
@@ -1233,7 +1194,6 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
         res.status(500).json({ message: "Hiba a művelet során."});
     } finally {
         if (conn) conn.release();
-        res.end()
     }
 });
 
