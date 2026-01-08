@@ -1101,9 +1101,11 @@ async function emailDesign(li, rendelId, szallitasiCim) {
     osszes += e.PENZ;
   }
 
-  const afaAdat = await ajax_call(`afa`, "GET", null, true);
+  const afaAdat = await ajax_call(`afa`, "GET", null, false);
   const afa = afaAdat.rows[0].AFA;
   const vegosszeg = Math.round(osszes * (1 + afa / 100)).toLocaleString();
+  const rendelesazonAdat = await ajax_call(`rendeles_azon`, "GET", null, false);
+  const rendelesazon = rendelesazonAdat.rows[0].RENDELES_AZONOSITO;
 
   return `
   <div style="background:#f5f1e8;padding:30px 0;">
@@ -1156,7 +1158,7 @@ async function emailDesign(li, rendelId, szallitasiCim) {
       Rendelési azonosító
     </div>
     <div style="font-size:16px;font-weight:bold;color:#065f46;">
-       111153
+       ${rendelesazon}
     </div>
   </div>
 

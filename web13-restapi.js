@@ -1023,6 +1023,70 @@ app.get('/rendelesek_tetelei',async (req, res) => {
     }
 });
 
+app.get('/rendeles_azon', async (req, res) => {
+    let conn; // Létrehozzuk a kapcsolat változót
+
+    try {
+        session_data = req.session;
+
+        // SQL parancs (Itt maradhat a LIMIT 1, mert nem a runQueries futtatja)
+        var sql = `
+            SELECT webbolt_rendeles.ID_RENDELES AS RENDELES_AZONOSITO
+            FROM webbolt_rendeles
+            WHERE webbolt_rendeles.ID_USER = ?
+            ORDER BY webbolt_rendeles.DATUM DESC
+            LIMIT 1
+        `;
+        
+        let ertekek = [session_data.ID_USER];
+
+        // 1. Kapcsolat kérése közvetlenül a pool-ból (KIKERÜLJÜK a runQueries-t)
+        conn = await pool.getConnection();
+
+        // 2. SQL futtatása
+        const [rows] = await conn.execute(sql, ertekek);
+
+        // 3. Kapcsolat elengedése (FONTOS!)
+        conn.release();
+
+        // 4. Eredmény feldolgozása
+        let veglegesAzonosito = "";
+        
+        // Ha van találat
+        if (rows.length > 0) {
+            veglegesAzonosito = rows[0].RENDELES_AZONOSITO;
+        } else {
+            // Ha nincs találat (pl. még nem rendelt)
+            throw new Error("Nincs rendelés");
+        }
+
+        // 5. Sikeres válasz küldése
+        res.set(header1, header2);
+        res.json({
+            message: "ok",
+            maxcount: rows.length,
+            rows: rows
+        });
+
+    } catch (err) {
+        // Hiba esetén is elengedjük a kapcsolatot, ha létezik
+        if (conn) conn.release();
+        
+        // Logoljuk a hibát, hogy lásd a konzolon
+        console.error("/rendeles_azon hiba:", err.message);
+
+        // 6. "Kamu" válasz küldése hiba esetén (hogy ne haljon meg a frontend)
+        res.set(header1, header2);
+        res.json({
+            message: "ok",
+            maxcount: 1,
+            rows: [
+                { RENDELES_AZONOSITO: "Feldolgozás alatt" } // Vagy "Nincs rendelés"
+            ]
+        });
+    }
+});
+
 
 //#endregion
 
