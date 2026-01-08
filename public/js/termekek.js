@@ -130,7 +130,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       var datum = new Date();
       $("#mod_datum").val(datum.toISOString().split("T")[0]);
       $("#mod_leiras").val(leiras);
-      $("#save_button").html(`<i class="bi bi-save2"></i>&nbsp;Módosítások mentése`); 
+      $("#save_button").html(`<i class="bi bi-save2"></i>&nbsp;Mentés`); 
 
       $("#mod_nev").off("keyup");
 
@@ -374,13 +374,15 @@ async function Termek_Mutat(event, termek_id) {
     ks = "";
     } else
     ks = `<button 
-        class="px-6 py-2 rounded-xl 
-          bg-gray-900 
+        class="px-6 py-2 rounded-xl !border !border-transparent 
+          bg-zinc-950 
           text-zinc-200 
-          hover:bg-gray-700 
+          hover:bg-zinc-800 
           hover:text-zinc-200 
-          dark:bg-zinc-800 
-          dark:hover:bg-zinc-700 
+          dark:bg-zinc-950 
+          dark:hover:bg-zinc-900 
+          dark:!border-zinc-200/10 
+          dark:hover:!border-zinc-200/20 
           transition-all duration-150 ease-in-out 
           rounded-lg  
           kosar bi bi-plus-lg  
@@ -457,12 +459,15 @@ async function Termek_Mutat(event, termek_id) {
       gg = "";
       gg += `<button type="button" 
       class="px-6 py-2 rounded-xl 
-          bg-gray-900 
+          !border !border-transparent 
+          bg-zinc-950 
           text-zinc-200 
-          hover:bg-gray-700 
+          hover:bg-zinc-800 
           hover:text-zinc-200 
-          dark:bg-zinc-800 
-          dark:hover:bg-zinc-700 
+          dark:bg-zinc-950 
+          dark:!border-zinc-200/10 
+          dark:hover:bg-zinc-900 
+          dark:hover:!border-zinc-200/20 
           transition-all duration-150 ease-in-out 
           rounded-lg  
            
@@ -470,14 +475,16 @@ async function Termek_Mutat(event, termek_id) {
      
      
       gg += `<button type="button" 
-      class="px-6 py-2 rounded-xl 
-          bg-gray-900 
+      class="px-6 py-2 rounded-xl !border !border-transparent 
+          bg-zinc-950 
           text-zinc-200 
-          hover:bg-gray-700 
+          hover:bg-zinc-800 
           hover:text-red-600 
-          dark:bg-zinc-800 
-          dark:hover:bg-zinc-700 
+          dark:bg-zinc-950 
+          dark:!border-zinc-200/10 
+          dark:hover:bg-zinc-900 
           dark:hover:text-red-600 
+          dark:hover:!border-red-500/20 
           transition-all duration-150 ease-in-out 
           rounded-lg  
             
