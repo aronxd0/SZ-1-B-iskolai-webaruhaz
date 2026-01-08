@@ -1206,8 +1206,9 @@ async function STAT_ELAD(innen){
             idok.push(ev);
         }
     }
+    
 
-     var tobbEv = idok.length > 1 || intervallum != 1;
+    var tobbEv = idok.length > 1 || intervallum != 1;
 
     for (var item of adat.rows){
         let d = new Date(item.IDO);
