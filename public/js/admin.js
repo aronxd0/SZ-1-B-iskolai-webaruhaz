@@ -1447,13 +1447,15 @@ function SQLinput() {
                 shadow-xl 
                 bg-zinc-50 
                 text-slate-900 
-                dark:bg-slate-900 
+                dark:bg-slate-950 
                 dark:text-zinc-200 
+                dark:!border 
+                dark:!border-zinc-200/20 
                 p-3 
                 rounded-4 
                 placeholder-gray-400 
                 dark:placeholder-gray-400 
-                " rows="10" placeholder="Ide írd be az SQL lekérdezést..." style="border:none;"></textarea>
+                " rows="10" placeholder="Ide írd be az SQL lekérdezést..."></textarea>
             </div>
 
             <div class="col-12 d-flex justify-content-center justify-content-lg-end px-0 px-lg-5 py-1">
@@ -1553,9 +1555,9 @@ async function KER_CLICk(){
         var sad = ` 
                 <div role="alert" 
                     class="
-                    bg-red-200 
+                    bg-red-200   
                     text-red-700 
-                    dark:bg-red-950 
+                    dark:bg-red-950/50  
                     dark:text-red-400 
                     
                     px-4 py-3 rounded-4" style="border: none;">
