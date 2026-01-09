@@ -1,8 +1,6 @@
 // itt vannak a backend kommunikációhoz használt függvények
 
-function üzen(mit, tip)  {
-    //alerts.forEach((element) => { $("#toast1").removeClass( "bg-"+element ); });  // előző osztályok nyekk...
-    //$("#toast1").addClass( "bg-"+tip );                                       
+function üzen(mit, tip)  {                                      
     let ikon = "";
     if (tip == "success") ikon = '<i class="bi bi-check-circle-fill text-emerald-500"></i>';
     else if (tip == "danger") ikon = '<i class="bi bi-exclamation-triangle-fill text-red-500"></i>';
