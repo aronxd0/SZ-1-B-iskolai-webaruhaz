@@ -1135,15 +1135,33 @@ async function STAT_Penz(innen){
         }
     }
 
-    var tobbEv = idok.length > 1 || intervallum != 1;
-
     for (var item of adat.rows){
         let d = new Date(item.IDO);
 
-        let text = tobbEv 
-            ? d.toLocaleDateString(navigator.language, {year: "numeric", month: "long"})
-            : d.toLocaleDateString(navigator.language, {month: "2-digit", day: "2-digit"});
+        let text;
 
+        if(idok.length > 1){
+            //több év van
+            if(intervallum == "1"){
+                // napra bontva kell
+                text = d.toLocaleDateString(navigator.language, {year: "numeric", month: "long", day: "2-digit"});
+            }
+            else{
+                // hónapos bontás
+                text = d.toLocaleDateString(navigator.language, {year: "numeric", month: "long"});
+            }
+        }
+        else{
+            //1 évben vannak csak adatok
+            if(intervallum == "1"){
+                // napra bontva kell
+                text = d.toLocaleDateString(navigator.language, {month: "long", day: "2-digit"});
+            }
+            else{
+                // hónapos bontás
+                text = d.toLocaleDateString(navigator.language, {month: "long"});
+            }
+        }
         xValues.push(text);
         yValues.push(item.BEVETEL);
     }
@@ -1212,10 +1230,30 @@ async function STAT_ELAD(innen){
     for (var item of adat.rows){
         let d = new Date(item.IDO);
 
-        let text = tobbEv 
-            ? d.toLocaleDateString(navigator.language, {year: "numeric", month: "long"})
-            : d.toLocaleDateString(navigator.language, {month: "2-digit", day: "2-digit"});
+        let text;
 
+        if(idok.length > 1){
+            //több év van
+            if(intervallum == "1"){
+                // napra bontva kell
+                text = d.toLocaleDateString(navigator.language, {year: "numeric", month: "long", day: "2-digit"});
+            }
+            else{
+                // hónapos bontás
+                text = d.toLocaleDateString(navigator.language, {year: "numeric", month: "long"});
+            }
+        }
+        else{
+            //1 évben vannak csak adatok
+            if(intervallum == "1"){
+                // napra bontva kell
+                text = d.toLocaleDateString(navigator.language, {month: "long", day: "2-digit"});
+            }
+            else{
+                // hónapos bontás
+                text = d.toLocaleDateString(navigator.language, {month: "long"});
+            }
+        }
         xValues.push(text);
         yValues.push(item.DARAB);
     }
