@@ -9,7 +9,6 @@ function üzen(mit, tip)  {
 
     $("#toast1 .toast-body").html(mit);  
     $("#icon").html(ikon);
-
     $("#toast1").toast( { delay: 7500 });
     $("#toast1").toast("show");  
 }
