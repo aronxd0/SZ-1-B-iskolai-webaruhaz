@@ -5,7 +5,10 @@ let bejelentkezett_useremail = "";
 let csoport = "";
 let rang = "";
 
+// Bejelentkezés / Kijelentkezés esetén a változók és a felület frissítése
 function BevaneJelentkezve() {
+
+    // Ez akkor ha nincs bejelentkezve
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { 
         $("#loginspan").html(' Bejelentkezés');
         $("#loginout").removeClass("bi bi-box-arrow-in-left");
@@ -37,19 +40,19 @@ function BevaneJelentkezve() {
 
         document.getElementById("Elfogyott_gomb").innerHTML = ``;
         document.getElementById("NEM_AKTIV").innerHTML = ``;
-        //Kezdolap();
+       
         $("#home_button").trigger("click");
         $("#udv").html(`Üdvözlünk a Csány webáruházban!`);
         update_gombok(0);
-        //return false; 
     }
 
+    // Ez akkor ha be van jelentkezve
     else { 
         rang = "";
+
         $("#user").html(`<i class="bi bi-person"></i> <h5>${bejelentkezett_usernev}</h5>`);
         $("#user-email").html(`<i class="bi bi-envelope"></i> <span>${bejelentkezett_useremail}</span>`);
         $("#vendegszoveg").html("");
-        
         $("#udv").html(`Üdvözlünk a Csány webáruházban <span class="font-semibold">${bejelentkezett_usernev.split(" ")[1]}</span>!`);
 
         if (csoport == "Students") rang += `<span class="inline-flex items-center rounded-md bg-blue-400/10 px-2 py-1 text-sm font-medium text-blue-400 !border !border-blue-400/30">● ${csoport}</span>`;
@@ -58,7 +61,6 @@ function BevaneJelentkezve() {
 
         if (admin) {
             rang += `<span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-sm font-medium text-red-400 !border !border-red-400/20">● Admin</span>`;
-            
             update_gombok(2); 
         }   
         if (webbolt_admin) {
@@ -68,9 +70,8 @@ function BevaneJelentkezve() {
         }
         if (!admin && !webbolt_admin) { update_gombok(1); }
 
-        console.log(rang);
         $("#rangok").html(rang);
-        console.log($("#rangok").html());
+        
         Joldal = 1;
 
         $('#login_modal').modal('hide');
@@ -83,25 +84,23 @@ function BevaneJelentkezve() {
         $("home_button").trigger("click");
         ADMINVAGYE();
         KosarTetelDB();
-        
-
-        //return true; 
     }   
 }
 
+
 $("#login_button").click(function() {   
-        if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {
-            document.getElementById("profil").addEventListener('hidden.bs.modal', () => {
-                $('#login_modal').modal('show');
-            }, { once: true });
-            
-        } else { 
-            document.getElementById("profil").addEventListener('hidden.bs.modal', () => {
-                $("#logout_modal").modal("show");
-            }, { once: true });
-            
-            
-        }
+
+    // Ez azért van, hogy modal ablak után a másik modal normálisan jelenjen meg
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {
+        document.getElementById("profil").addEventListener('hidden.bs.modal', () => {
+            $('#login_modal').modal('show');
+        }, { once: true });
+        
+    } else { 
+        document.getElementById("profil").addEventListener('hidden.bs.modal', () => {
+            $("#logout_modal").modal("show");
+        }, { once: true });
+    }
 });
 
 
@@ -111,7 +110,6 @@ $("#login_oksi_button").click(async function() {
     if (l_json.message == "ok" && l_json.maxcount == 1) {
         bejelentkezett_usernev = l_json.rows[0].NEV;
         bejelentkezett_useremail = l_json.rows[0].EMAIL;
-        
         
         if (l_json.rows[0].ADMIN == "Y") { admin = true; }
         if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; console.log("bement az ifbe XD"); }
@@ -128,9 +126,7 @@ $("#login_oksi_button").click(async function() {
         BevaneJelentkezve();
     } 
 });  
-        
-    
-
+          
 
 $("#kijelentkezik").click( async function() {
     ajax_call("logout", "GET", null, true).then( () => {
@@ -141,46 +137,21 @@ $("#kijelentkezik").click( async function() {
 
 
 function ADMINVAGYE(){
-    if(admin || webbolt_admin){// ha admin akkor a "csakelfogyott " és a "Csak inaktiv" gomb is látszódjon
-        document.getElementById("Elfogyott_gomb").innerHTML = `
+    if (admin || webbolt_admin) {
+        let elfo = `
             <p class="p-2 !border-b !border-b-zinc-800/10 dark:!border-b dark:!border-b-zinc-200/10 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out">
-                <input 
-                class="
-                form-check-input 
-                !border  
-                !border-zinc-800/20 
-                bg-zinc-200 
-                hover:cursor-pointer 
-                dark:!border  
-                dark:!border-zinc-200/30 
-                dark:checked:!border-sky-600      
-                dark:bg-slate-800 
-                focus:outline-none 
-                focus:ring-0
-                focus:ring-offset-0
-                focus:shadow-none" type="checkbox" id="elf" value="Csakelfogyott" onchange="Elfogyott(this)">
+                <input class="form-check-input !border !border-zinc-800/20 bg-zinc-200 hover:cursor-pointer dark:!border dark:!border-zinc-200/30 dark:checked:!border-sky-600 dark:bg-slate-800 focus:outline-none focus:ring-0 focus:ring-offset-0 focus:shadow-none" type="checkbox" id="elf" value="Csakelfogyott" onchange="Elfogyott(this)">
                 <label for="elf" class="form-check-label hover:cursor-pointer "> Az elfogyott áruk mutatása</label>
             </p>
             `;      
-        document.getElementById("NEM_AKTIV").innerHTML = `
+        let nemakt = `
             <p class="p-2 !border-b !border-b-zinc-800/10 dark:!border-b dark:!border-b-zinc-200/10 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out">
-                <input 
-                class="
-                form-check-input 
-                !border  
-                !border-zinc-800/20 
-                bg-zinc-200 
-                hover:cursor-pointer 
-                dark:!border  
-                dark:!border-zinc-200/30 
-                dark:checked:!border-sky-600      
-                dark:bg-slate-800 
-                focus:outline-none 
-                focus:ring-0
-                focus:ring-offset-0
-                focus:shadow-none" type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)">
+                <input class="form-check-input !border !border-zinc-800/20 bg-zinc-200 hover:cursor-pointer dark:!border dark:!border-zinc-200/30 dark:checked:!border-sky-600 dark:bg-slate-800 focus:outline-none focus:ring-0 focus:ring-offset-0 focus:shadow-none" type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)">
                 <label for="innaktiv" class="form-check-label hover:cursor-pointer "> Az inaktiv áruk mutatása</label>
             </p>
             `;
+
+        $("#Elfogyott_gomb").html(elfo);
+        $("#NEM_AKTIV").html(nemakt);
     } 
 }
