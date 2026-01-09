@@ -1,58 +1,34 @@
 // termekek szerkesztese, torlese, uj felvetele + a betolto fuggveny
 
-
-// termek modositasa MENT gombra kattintaskor
+// termek modositasa MENTÉS gombra kattintaskor
 async function TermekModosit(url) {
   try {
-    let ser = url.split("§")[0];
     let id_termek = url.split("§")[1];
-    let aktiv = url.split("§")[2];
-    //let uj_kategoria = url.split("§")[3];
+    
     var upd = document.getElementById("idx1").innerHTML.substring(0,9) == "Új termék" ? 1 : 0;
     const fd = new FormData(document.getElementById("mod1"));
 
     fd.append("ID_TERMEK", id_termek);
-
-
-    // eloszor kitorlom az aktiv erteket akarmi is az
-    fd.delete("mod_aktiv");
-
-    // majd hozzaadom ami van h fixen benne legyen
-    fd.append("mod_aktiv", $("#mySwitch").is(":checked") ? "YES" : "NO");
-
-    
-
-  
-
-    console.log("");
-    console.log("-----------FD------------");
-    for (let [key, value] of fd.entries()) {
-      console.log(key, value);
-    }
-    console.log("-----------FD------------");
-    console.log("");
+    fd.delete("mod_aktiv"); // eloszor kitorlom az aktiv erteket akarmi is az
+    fd.append("mod_aktiv", $("#mySwitch").is(":checked") ? "YES" : "NO"); // majd hozzaadom ami van h fixen benne legyen
     
     if (upd == 1) {
       fd.delete("ID_TERMEK"); // uj termeknel ne legyen ID_TERMEK kuldve
     }
 
-    //console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
-    console.log("az t kapod inser/ update: "  + `termek_edit?insert=${upd}}`, fd)
     let termekmod = await ajax_call(`termek_edit?insert=${upd}}`, "POST", fd, true); 
     if (termekmod.message == "ok") {
-
       if (upd == 1) { 
         üzen("Új termék sikeresen hozzáadva!", "success");
       }
       else { üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success"); }
-      
     } 
   } catch (err) {
     console.log("hiba:", err);
   }
 
   KERESOBAR();
-  KosarTetelDB(); // kosár darab mutatása frissítése
+  KosarTetelDB(); 
 }
 
 // termek szerkeszto ablak
@@ -61,9 +37,7 @@ async function Termek_Edit(event, termek_id, tipus) {
 
   $("#mod_foto").val("");
 
-  //console.log(leiras);
-
-  let nev, azon, ar, mennyiseg, meegys, aktiv, leiras, id_kategoria, fotolink;
+  let nev, azon, ar, mennyiseg, meegys, aktiv, leiras, id_kategoria;
 
   try {
 
@@ -78,17 +52,11 @@ async function Termek_Edit(event, termek_id, tipus) {
       aktiv = ta.rows[0].AKTIV;
       leiras = ta.rows[0].LEIRAS;
       id_kategoria = ta.rows[0].ID_KATEGORIA;
-      fotolink = ta.rows[0].FOTOLINK;
       fotonev = ta.rows[0].FOTONEV;
     }
-    
-    
-    
-
+ 
     if (tipus == "bevitel") {
-
       $("#idx1").html(`Új termék: `);
-
       $("#uj_kat").val("");
       $("#mod_kat").prop("disabled", false);
       KategoriaFeltolt("mod_kat", "select", 1);
