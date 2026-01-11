@@ -1,9 +1,9 @@
+// Az admin felület működése
+
 var velemeny_osszes;
 var velemeny_jelenlegi = 1;
 
-
 async function Admin_Velemenykezeles() {
-    console.log("Admin_Velemenykezeles meghivva");
     let varodb = await ajax_call(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, "GET", null, true);
     velemeny_osszes = Math.ceil(varodb.maxcount / 10)
     
@@ -11,56 +11,33 @@ async function Admin_Velemenykezeles() {
         velemeny_jelenlegi = velemeny_osszes
     }
     
-
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     $("#welcome_section").fadeOut(300);
     $("#felsosor").removeClass("mt-[100px]");
     $("#kateogoria-carousel").fadeOut(300);
-
     $("#nezetkicsi").addClass("eltunt");
     $("#nezetnagy").addClass("eltunt");
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
-        
             <div class="row d-flex flex-column flex-md-row p-1 mx-auto mt-5 space-y-2">
-
                 <div class="col-12 col-md-4 mx-auto mt-3">
-
                     <div class="row d-flex justify-content-center">
-                        <div role="alert" 
-                        class="
-                        col-12 col-lg-4
-                        !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50
-                        bg-blue-200/30 
-                        text-blue-800 
-                        dark:bg-blue-900/20 
-                        dark:text-blue-200 
-                        w-auto
-                        mx-3 
-                        px-2 py-3 rounded-4">
+                        <div role="alert" class="col-12 col-lg-4 !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50 bg-blue-200/30 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200 w-auto mx-3 px-2 py-3 rounded-4">
                             <i class="bi bi-info-circle-fill"></i>
                             <strong class="font-bold">${varodb.maxcount} db</strong>
                             <span> vélemény vár jóváhagyásra</span>
-                            
                         </div>
                         <input type="radio" name="plan" class="form-check-input hidden" id="varo" checked onchange="AdminVelemenyekMutat(this)">
                     </div>
-
                 </div>
-
-                </div>
-
-                <div class="col-12 text-center mt-5" id="velemenyek_hely">
-
-                </div>
+            </div>
+            <div class="col-12 text-center mt-5" id="velemenyek_hely"></div>
         `).fadeIn(300);
 
         AdminVelemenyekMutat();
-        
         $("#pagi").html("");
-        
     });
 }
 
@@ -69,47 +46,25 @@ async function Admin_Velemenykezeles() {
 
 async function AdminVelemenyekMutat() {
         try {
-
             let ss = ``;
-
             let varo = await ajax_call(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, "GET", null, true);
 
             if (varo.rows.length == 0) { 
                 $("#velemenyek_hely").fadeOut(300, function() {
                     $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek jóváhagyásra váró vélemények.</div>");
-
                 }).fadeIn(300);
-                
-             }
+            }
             else {
-
-
                 for (const element of varo.rows) {
                     ss += `
-                <div 
-                class="
-                    w-100 
-                    p-3 
-                    rounded-4 
-                    shadow-xl 
-                    bg-zinc-50 
-                    text-slate-900 
-                    dark:bg-slate-950 
-                    dark:!border 
-                    dark:!border-zinc-200/20 
-                    dark:text-zinc-200 
-                    mt-3 
-                    mb-3 
-                    comment">
-                    <p class="d-flex justify-content-between"><b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString(navigator.language, {
-                                    year: 'numeric',
-                                    month: '2-digit',
-                                    day: '2-digit',
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: false
-                                })}</span></p>
-                    <p class="d-flex p-2 justify-content-start"><i>${element.SZOVEG.toString().replaceAll("\n","<br>")}</i></p>
+                <div class="w-100 p-3 rounded-4 shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 mt-3 mb-3 comment">
+                    <p class="d-flex justify-content-between">
+                        <b><span><i class="bi bi-person"></i> ${element.NEV}</span></b>  
+                        <span><i class="bi bi-calendar4-week"></i> ${new Date(element.DATUM).toLocaleString(navigator.language, {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false })}</span>
+                    </p>
+                    <p class="d-flex p-2 justify-content-start">
+                        <i>${element.SZOVEG.toString().replaceAll("\n","<br>")}</i>
+                    </p>
                     <p class="p-2 text-start">
                         <a class="underline decoration-sky-500 hover:text-sky-500 hover:cursor-pointer" onclick="Termek_Mutat(event, ${element.ID_TERMEK})">Ehhez a termékhez</a>
                     </p>
@@ -117,8 +72,6 @@ async function AdminVelemenyekMutat() {
                         <button 
                         class="
                         btn 
-                        
-                        
                         bg-zinc-600 
                         text-zinc-200 
                         rounded-4 
@@ -1206,8 +1159,9 @@ async function STAT_ELAD(innen){
             idok.push(ev);
         }
     }
+    
 
-     var tobbEv = idok.length > 1 || intervallum != 1;
+    var tobbEv = idok.length > 1 || intervallum != 1;
 
     for (var item of adat.rows){
         let d = new Date(item.IDO);
@@ -1447,13 +1401,15 @@ function SQLinput() {
                 shadow-xl 
                 bg-zinc-50 
                 text-slate-900 
-                dark:bg-slate-900 
+                dark:bg-slate-950 
                 dark:text-zinc-200 
+                dark:!border 
+                dark:!border-zinc-200/20 
                 p-3 
                 rounded-4 
                 placeholder-gray-400 
                 dark:placeholder-gray-400 
-                " rows="10" placeholder="Ide írd be az SQL lekérdezést..." style="border:none;"></textarea>
+                " rows="10" placeholder="Ide írd be az SQL lekérdezést..."></textarea>
             </div>
 
             <div class="col-12 d-flex justify-content-center justify-content-lg-end px-0 px-lg-5 py-1">
@@ -1553,9 +1509,9 @@ async function KER_CLICk(){
         var sad = ` 
                 <div role="alert" 
                     class="
-                    bg-red-200 
+                    bg-red-200   
                     text-red-700 
-                    dark:bg-red-950 
+                    dark:bg-red-950/50  
                     dark:text-red-400 
                     
                     px-4 py-3 rounded-4" style="border: none;">

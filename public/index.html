@@ -1422,13 +1422,13 @@
       <!-- Új/szerkesztés modal (admin): termék adatbeviteli űrlap (kategória, név, azonosító, fotó, ár, darabszám, egység, leírás, aktív státusz) -->
       <div class="modal fade" id="termek_edit">
         <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
-          <div class="modal-content">
+          <div class="modal-content dark:!border dark:!border-zinc-200/20">
             <div 
             class="
             modal-header 
-            bg-zinc-300 
+            bg-zinc-200 
             text-slate-900 
-            dark:bg-slate-800 
+            dark:bg-slate-900 
             dark:text-zinc-200 
             shadow-bottom 
             ">
@@ -1439,9 +1439,9 @@
             <div id="idx0" 
             class="
               modal-body 
-              bg-zinc-100 
+              bg-zinc-200 
               text-slate-900 
-              dark:bg-slate-700 
+              dark:bg-slate-900 
               dark:text-zinc-200 
               ">     
               <form id="mod1" class="row">
@@ -1456,9 +1456,10 @@
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-800 
-                    dark:text-zinc-200 
-                    " id="mod_kat" name="mod_kat" style="border: none;"></select>     
+                    dark:bg-slate-950 
+                    dark:text-zinc-200/50  
+                    dark:!border dark:!border-zinc-200/10 
+                    " id="mod_kat" name="mod_kat" ></select>     
                     
                   
                   </div>
@@ -1471,8 +1472,9 @@
                       shadow-xl 
                       bg-zinc-50 
                       text-slate-900 
-                      dark:bg-slate-800 
-                      dark:text-zinc-200 " id="uj_kat" name="uj_kat" style="border: none;">
+                      dark:bg-slate-950 
+                      dark:text-zinc-200/50  
+                      dark:!border dark:!border-zinc-200/10" id="uj_kat" name="uj_kat" >
 
                   </div>
 
@@ -1489,8 +1491,9 @@
                       shadow-xl 
                       bg-zinc-50 
                       text-slate-900 
-                      dark:bg-slate-800 
-                      dark:text-zinc-200 " id="mod_nev" name="mod_nev" style="border: none;">
+                      dark:bg-slate-950 
+                      dark:text-zinc-200/50  
+                      dark:!border dark:!border-zinc-200/10" id="mod_nev" name="mod_nev" >
                       
                     
                   </div>
@@ -1503,9 +1506,10 @@
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-800 
-                    dark:text-zinc-200 
-                    " id="mod_azon" name="mod_azon" style="border: none;">
+                    dark:bg-slate-950  
+                    dark:text-zinc-200/50  
+                    dark:!border dark:!border-zinc-200/10 
+                    " id="mod_azon" name="mod_azon" >
                     
                   
                 </div>
@@ -1519,9 +1523,10 @@
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-800 
-                    dark:text-zinc-200 
-                    " id="mod_fotolink" name="mod_fotolink" style="border: none;">
+                    dark:bg-slate-950 
+                    dark:text-zinc-200/50 
+                    dark:!border dark:!border-zinc-200/10 
+                    " id="mod_fotolink" name="mod_fotolink">
                     
                   
                 </div>
@@ -1562,9 +1567,10 @@
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-800 
-                    dark:text-zinc-200 
-                    " id="mod_ar" name="mod_ar" style="border: none;">
+                    dark:bg-slate-950 
+                    dark:text-zinc-200/50  
+                    dark:!border dark:!border-zinc-200/10 
+                    " id="mod_ar" name="mod_ar" >
                     
                   </div>
 
@@ -1576,9 +1582,10 @@
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-800 
-                    dark:text-zinc-200 
-                    " min="0" id="mod_db" name="mod_db" style="border: none;">
+                    dark:bg-slate-950  
+                    dark:text-zinc-200/50  
+                    dark:!border dark:!border-zinc-200/10 
+                    " min="0" id="mod_db" name="mod_db" >
                     
                   </div>
 
@@ -1590,9 +1597,10 @@
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-800 
-                    dark:text-zinc-200 
-                    " id="mod_meegys" name="mod_meegys" style="border: none;">
+                    dark:bg-slate-950  
+                    dark:text-zinc-200/50  
+                    dark:!border dark:!border-zinc-200/10 
+                    " id="mod_meegys" name="mod_meegys" >
                     
                   </div>
                 </div>
@@ -1615,9 +1623,10 @@
                     shadow-xl 
                     bg-zinc-50 
                     text-slate-900 
-                    dark:bg-slate-800 
-                    dark:text-zinc-200 
-                    " rows="4" id="mod_leiras" name="mod_leiras" style="border: none;"></textarea>
+                    dark:bg-slate-950  
+                    dark:text-zinc-200/50  
+                    dark:!border dark:!border-zinc-200/10 
+                    " rows="4" id="mod_leiras" name="mod_leiras" ></textarea>
                     
                   </div>
                 </div>
@@ -1629,24 +1638,24 @@
             <div 
             class="
               modal-footer 
-              bg-zinc-300 
+              bg-zinc-200 
               text-slate-900 
-              dark:bg-slate-800 
+              dark:bg-slate-900 
               dark:text-zinc-200 
               d-flex justify-content-center justify-content-lg-end 
             ">
               <button id="save_button" type="button" 
               class="
-              btn btn-lg  
-              bg-emerald-800 
+              px-3 py-2 
+              font-semibold  
+              bg-zinc-950 
               text-zinc-200 
-              hover:bg-emerald-700 
+              hover:bg-zinc-700 
               hover:text-zinc-200 
-              hover:shadow-lg 
-              hover:shadow-emerald-700/70 
+              
               transition-all duration-150 ease-in-out
-              rounded-3xl 
-              "  data-bs-dismiss="modal"> <i class="bi bi-save2"></i> Módosítások mentése</button>
+              rounded-xl   
+              "  data-bs-dismiss="modal"> <i class="bi bi-save2"></i> Mentés</button>
             </div>
 
           </div>
@@ -1654,6 +1663,8 @@
       </div>
 
       <!-- Toast (értesítések): felugró, rövid értesítések a jobb alsó sarokban -->
+
+      <!--
       <div id= "toast1" class="toast bg-success text-white hide" style="position:fixed; right:10px; bottom:10px; z-index: 9999999;">
         <div class="toast-header">
             <strong class="me-auto"><i class="bi-gift-fill"></i> Infó...</strong>
@@ -1661,6 +1672,44 @@
         </div>
         <div class="toast-body"></div>
       </div>
+      -->
+
+      <div id= "toast1" class="toast show pointer-events-auto bg-transparent" role="alert" style="position:fixed; right:10px; top:10px; z-index: 9999999;">
+        <div
+            class="
+            d-flex align-items-center justify-content-start gap-3
+            bg-zinc-200 dark:bg-slate-900
+            text-slate-900 dark:text-zinc-200
+            rounded-xl
+            px-4 py-3
+            shadow-xl shadow-black/10
+            !border !border-slate-200/60 dark:!border-zinc-200/30
+            min-w-[320px]
+            "
+        >
+            <!-- ICON -->
+            <div class="flex-shrink-0 mt-0.5 text-2xl" id="icon"></div>
+    
+            <!-- CONTENT -->
+            <div class="flex-1 toast-body text-md"></div>
+    
+            <!-- CLOSE -->
+            <button
+                type="button"
+                data-bs-dismiss="toast"
+                class="
+                text-slate-400 hover:text-slate-600
+                dark:hover:text-zinc-300
+                transition-colors
+                "
+            >
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+    </div>
+    
+
+
 
       <!-- Törlés megerősítése modal: admin/kezelői feladatoknál használatos, megerősíti a törlési műveletet -->
       <div class="modal fade" id="delete_modal">
@@ -1695,23 +1744,22 @@
               </div>
 
               <div class="row mt-3">
-                <div class="col-12 d-flex justify-content-center flex-column flex-lg-row">
+                <div class="col-12 d-flex justify-content-center flex-column flex-sm-row">
                   <div class="p-1" id="tema_gombdiv">
                     <button type="button" aria-label="Téma" 
                         class="
                         btn 
                         mt-2 
-                        bg-zinc-200 
-                        text-slate-900 
-                        hover:bg-zinc-950 
-                        hover:text-zinc-100 
-                        hover:shadow-sm  
-                        hover:shadow-gray-950/60 
-                        dark:hover:shadow-sm  
-                        dark:hover:shadow-slate-600/40 
-                        dark:bg-slate-900 
-                        dark:hover:bg-gray-700 
+                        !border !border-transparent 
+                        bg-zinc-950 
+                        text-zinc-200 
+                        hover:bg-zinc-800 
+                        hover:text-zinc-200 
+                        dark:bg-zinc-950 
+                        dark:hover:bg-zinc-900  
                         dark:hover:text-zinc-200 
+                        dark:!border-zinc-200/10 
+                        dark:hover:!border-zinc-200/20 
                         dark:text-zinc-200 
                         w-full  
                         transition-hover duration-150 ease-in-out 
@@ -1729,16 +1777,15 @@
                         class="
                           btn 
                           mt-2 
-                          bg-zinc-200 
-                          text-slate-900 
-                          hover:bg-zinc-950 
-                          hover:text-zinc-100 
-                          hover:shadow-sm  
-                          hover:shadow-gray-950/60 
-                          dark:hover:shadow-sm  
-                          dark:hover:shadow-slate-600/40 
-                          dark:bg-slate-900 
-                          dark:hover:bg-gray-700 
+                          bg-zinc-950 
+                          text-zinc-200 
+                          hover:bg-zinc-800 
+                          hover:text-zinc-200 
+                          !border !border-transparent 
+                          dark:!border-zinc-200/10
+                          dark:hover:!border-zinc-200/20 
+                          dark:bg-zinc-950 
+                          dark:hover:bg-zinc-900 
                           dark:hover:text-zinc-200 
                           dark:text-zinc-200 
                           transition-hover duration-150 ease-in-out 
@@ -1752,16 +1799,15 @@
                   <div class="p-1" id="rendeles-gombdiv">
                     <button id="rend_button"  type="button" 
                           class="btn 
-                          bg-zinc-200 
-                          text-slate-900 
-                          hover:bg-zinc-950 
-                          hover:text-zinc-100 
-                          hover:shadow-sm  
-                          hover:shadow-gray-950/60 
-                          dark:hover:shadow-sm  
-                          dark:hover:shadow-slate-600/40 
-                          dark:bg-slate-900 
-                          dark:hover:bg-gray-700 
+                          bg-zinc-950 
+                          text-zinc-200 
+                          hover:bg-zinc-800 
+                          hover:text-zinc-200  
+                          !border !border-transparent 
+                          dark:!border-zinc-200/10
+                          dark:hover:!border-zinc-200/20 
+                          dark:bg-zinc-950  
+                          dark:hover:bg-zinc-900  
                           dark:hover:text-zinc-200 
                           dark:text-zinc-200 
                           

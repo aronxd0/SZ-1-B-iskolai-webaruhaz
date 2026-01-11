@@ -1,58 +1,34 @@
 // termekek szerkesztese, torlese, uj felvetele + a betolto fuggveny
 
-
-// termek modositasa MENT gombra kattintaskor
+// termek modositasa MENTÉS gombra kattintaskor
 async function TermekModosit(url) {
   try {
-    let ser = url.split("§")[0];
     let id_termek = url.split("§")[1];
-    let aktiv = url.split("§")[2];
-    //let uj_kategoria = url.split("§")[3];
+    
     var upd = document.getElementById("idx1").innerHTML.substring(0,9) == "Új termék" ? 1 : 0;
     const fd = new FormData(document.getElementById("mod1"));
 
     fd.append("ID_TERMEK", id_termek);
-
-
-    // eloszor kitorlom az aktiv erteket akarmi is az
-    fd.delete("mod_aktiv");
-
-    // majd hozzaadom ami van h fixen benne legyen
-    fd.append("mod_aktiv", $("#mySwitch").is(":checked") ? "YES" : "NO");
-
-    
-
-  
-
-    console.log("");
-    console.log("-----------FD------------");
-    for (let [key, value] of fd.entries()) {
-      console.log(key, value);
-    }
-    console.log("-----------FD------------");
-    console.log("");
+    fd.delete("mod_aktiv"); // eloszor kitorlom az aktiv erteket akarmi is az
+    fd.append("mod_aktiv", $("#mySwitch").is(":checked") ? "YES" : "NO"); // majd hozzaadom ami van h fixen benne legyen
     
     if (upd == 1) {
       fd.delete("ID_TERMEK"); // uj termeknel ne legyen ID_TERMEK kuldve
     }
 
-    //console.log(`ez megy at: termek_edit?ID_TERMEK=${id_termek}&${ser}&mod_aktiv=${aktiv}`);
-    console.log("az t kapod inser/ update: "  + `termek_edit?insert=${upd}}`, fd)
     let termekmod = await ajax_call(`termek_edit?insert=${upd}}`, "POST", fd, true); 
     if (termekmod.message == "ok") {
-
       if (upd == 1) { 
         üzen("Új termék sikeresen hozzáadva!", "success");
       }
       else { üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success"); }
-      
     } 
   } catch (err) {
     console.log("hiba:", err);
   }
 
   KERESOBAR();
-  KosarTetelDB(); // kosár darab mutatása frissítése
+  KosarTetelDB(); 
 }
 
 // termek szerkeszto ablak
@@ -61,9 +37,7 @@ async function Termek_Edit(event, termek_id, tipus) {
 
   $("#mod_foto").val("");
 
-  //console.log(leiras);
-
-  let nev, azon, ar, mennyiseg, meegys, aktiv, leiras, id_kategoria, fotolink;
+  let nev, azon, ar, mennyiseg, meegys, aktiv, leiras, id_kategoria;
 
   try {
 
@@ -78,17 +52,11 @@ async function Termek_Edit(event, termek_id, tipus) {
       aktiv = ta.rows[0].AKTIV;
       leiras = ta.rows[0].LEIRAS;
       id_kategoria = ta.rows[0].ID_KATEGORIA;
-      fotolink = ta.rows[0].FOTOLINK;
       fotonev = ta.rows[0].FOTONEV;
     }
-    
-    
-    
-
+ 
     if (tipus == "bevitel") {
-
       $("#idx1").html(`Új termék: `);
-
       $("#uj_kat").val("");
       $("#mod_kat").prop("disabled", false);
       KategoriaFeltolt("mod_kat", "select", 1);
@@ -130,7 +98,7 @@ async function Termek_Edit(event, termek_id, tipus) {
       var datum = new Date();
       $("#mod_datum").val(datum.toISOString().split("T")[0]);
       $("#mod_leiras").val(leiras);
-      $("#save_button").html(`<i class="bi bi-save2"></i>&nbsp;Módosítások mentése`); 
+      $("#save_button").html(`<i class="bi bi-save2"></i>&nbsp;Mentés`); 
 
       $("#mod_nev").off("keyup");
 
@@ -374,13 +342,15 @@ async function Termek_Mutat(event, termek_id) {
     ks = "";
     } else
     ks = `<button 
-        class="px-6 py-2 rounded-xl 
-          bg-gray-900 
+        class="px-6 py-2 rounded-xl !border !border-transparent 
+          bg-zinc-950 
           text-zinc-200 
-          hover:bg-gray-700 
+          hover:bg-zinc-800 
           hover:text-zinc-200 
-          dark:bg-zinc-800 
-          dark:hover:bg-zinc-700 
+          dark:bg-zinc-950 
+          dark:hover:bg-zinc-900 
+          dark:!border-zinc-200/10 
+          dark:hover:!border-zinc-200/20 
           transition-all duration-150 ease-in-out 
           rounded-lg  
           kosar bi bi-plus-lg  
@@ -457,12 +427,15 @@ async function Termek_Mutat(event, termek_id) {
       gg = "";
       gg += `<button type="button" 
       class="px-6 py-2 rounded-xl 
-          bg-gray-900 
+          !border !border-transparent 
+          bg-zinc-950 
           text-zinc-200 
-          hover:bg-gray-700 
+          hover:bg-zinc-800 
           hover:text-zinc-200 
-          dark:bg-zinc-800 
-          dark:hover:bg-zinc-700 
+          dark:bg-zinc-950 
+          dark:!border-zinc-200/10 
+          dark:hover:bg-zinc-900 
+          dark:hover:!border-zinc-200/20 
           transition-all duration-150 ease-in-out 
           rounded-lg  
            
@@ -470,14 +443,16 @@ async function Termek_Mutat(event, termek_id) {
      
      
       gg += `<button type="button" 
-      class="px-6 py-2 rounded-xl 
-          bg-gray-900 
+      class="px-6 py-2 rounded-xl !border !border-transparent 
+          bg-zinc-950 
           text-zinc-200 
-          hover:bg-gray-700 
+          hover:bg-zinc-800 
           hover:text-red-600 
-          dark:bg-zinc-800 
-          dark:hover:bg-zinc-700 
+          dark:bg-zinc-950 
+          dark:!border-zinc-200/10 
+          dark:hover:bg-zinc-900 
           dark:hover:text-red-600 
+          dark:hover:!border-red-500/20 
           transition-all duration-150 ease-in-out 
           rounded-lg  
             
@@ -500,7 +475,7 @@ async function Termek_Mutat(event, termek_id) {
       dark:text-zinc-200 
       hover:text-gray-600 
       dark:hover:bg-slate-950 
-      dark:hover:text-zinc-200
+      dark:hover:text-gray-400
       transition-hover duration-300 ease-in-out 
         w-auto" onclick="Velemeny_Iras(${termek_id})"> 
         <i class="bi bi-plus-lg"></i>
@@ -901,13 +876,15 @@ function CARD_BETOLT(adatok) {
         ks = "";
       } else {
         ks = `<button 
-          class="btn 
-            bg-gray-900 
+          class="btn !border !border-transparent 
+            bg-zinc-950 
             text-zinc-200 
-            hover:bg-gray-700 
+            hover:bg-zinc-800 
             hover:text-zinc-200 
-            dark:bg-zinc-800 
-            dark:hover:bg-zinc-700 
+            dark:bg-zinc-900 
+            dark:hover:bg-zinc-800 
+            dark:!border-zinc-200/10 
+            dark:hover:!border-zinc-200/20 
             transition-all duration-150 ease-in-out 
             rounded-xl 
             kosar bi bi-plus-lg   
@@ -933,7 +910,7 @@ function CARD_BETOLT(adatok) {
           dark:!border-zinc-200/20 
           dark:bg-slate-950 
           dark:text-zinc-200 
-          dark:hover:bg-gray-800 
+          dark:hover:bg-sky-950/10  
           dark:hover:-outline-offset-1 
           dark:hover:outline-white/10 
           d-flex flex-column 

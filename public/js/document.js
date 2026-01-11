@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
     
-    
+    $("#toast1").toast("hide");
 
     document.addEventListener('show.bs.offcanvas', () => {
         document.documentElement.classList.add('offcanvas-open');
