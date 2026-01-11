@@ -342,17 +342,19 @@ async function Termek_Mutat(event, termek_id) {
     ks = "";
     } else
     ks = `<button 
-        class="px-6 py-2 rounded-xl !border !border-transparent 
-          bg-zinc-950 
-          text-zinc-200 
-          hover:bg-zinc-800 
-          hover:text-zinc-200 
-          dark:bg-zinc-950 
-          dark:hover:bg-gray-800  
-          dark:!border-zinc-200/10 
-          dark:hover:!border-zinc-200/20 
-          transition-all duration-150 ease-in-out 
-          rounded-lg  
+        class="px-6 py-2 rounded-lg !border !border-transparent 
+        bg-slate-900 
+        text-zinc-200 
+        dark:bg-gray-800   
+        dark:text-zinc-200 
+        hover:text-slate-900  
+        hover:bg-zinc-100 
+        hover:!border-slate-900 
+        dark:hover:bg-gray-700/70  
+        dark:!border-zinc-200/10 
+        dark:hover:!border-zinc-200/20 
+        dark:hover:text-zinc-200 
+        transition-all duration-150 ease-in-out 
           kosar bi bi-plus-lg  
            w-auto  tracking-[2px]  
           " onclick='Kosarba_Bele(event, ${termek_id})'> KOSÁRBA TESZEM </button>`;
@@ -426,35 +428,37 @@ async function Termek_Mutat(event, termek_id) {
     if (JSON.parse(localStorage.getItem("user"))?.loggedIn && (webbolt_admin || admin)) {
       gg = "";
       gg += `<button type="button" 
-      class="px-6 py-2 
-          !border !border-transparent 
-          bg-zinc-950 
-          text-zinc-200 
-          hover:bg-zinc-800 
-          hover:text-zinc-200 
-          dark:bg-zinc-950 
-          dark:!border-zinc-200/10 
-          dark:hover:bg-gray-800 
-          dark:hover:!border-zinc-200/20 
-          transition-all duration-150 ease-in-out 
-          rounded-lg  
+      class="px-6 py-2 rounded-lg !border !border-transparent 
+      bg-slate-900 
+      text-zinc-200 
+      dark:bg-gray-800   
+      dark:text-zinc-200 
+      hover:text-slate-900  
+      hover:bg-zinc-100 
+      hover:!border-slate-900 
+      dark:hover:bg-gray-700/70  
+      dark:!border-zinc-200/10 
+      dark:hover:!border-zinc-200/20 
+      dark:hover:text-zinc-200 
+      transition-all duration-150 ease-in-out  
            
            w-full  tracking-[2px] " aria-label="modositas" onclick='Termek_Edit(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
      
      
       gg += `<button type="button" 
-      class="px-6 py-2 !border !border-transparent 
-          bg-zinc-950 
-          text-zinc-200 
-          hover:bg-zinc-800 
-          hover:text-red-600 
-          dark:bg-zinc-950 
-          dark:!border-zinc-200/10 
-          dark:hover:bg-red-950/50   
-          dark:hover:text-red-600 
-          dark:hover:!border-red-500/20 
-          transition-all duration-150 ease-in-out 
-          rounded-lg  
+      class="px-6 py-2 rounded-lg !border !border-transparent 
+      bg-slate-900 
+      text-zinc-200 
+      dark:bg-gray-800   
+      dark:text-zinc-200 
+      hover:text-slate-900  
+      hover:bg-zinc-100 
+      hover:!border-slate-900 
+      dark:hover:bg-gray-700/70  
+      dark:!border-zinc-200/10 
+      dark:hover:!border-zinc-200/20 
+      dark:hover:text-zinc-200 
+      transition-all duration-150 ease-in-out  
             
            w-full  tracking-[2px] 
         " aria-label="torles" onclick='Termek_Torol(event, ${termek_id})'><i class="bi bi-trash"></i> TÖRLÉS</button>`;
@@ -876,19 +880,21 @@ function CARD_BETOLT(adatok) {
         ks = "";
       } else {
         ks = `<button 
-          class="btn !border !border-transparent 
-            bg-zinc-950 
-            text-zinc-200 
-            hover:bg-zinc-800 
-            hover:text-zinc-200 
-            dark:bg-zinc-900 
-            dark:hover:bg-gray-800 
-            dark:!border-zinc-200/10 
-            dark:hover:!border-zinc-200/20 
-            transition-all duration-150 ease-in-out 
-            rounded-xl 
+          class="px-3 py-2 rounded-lg !border !border-transparent 
+          bg-slate-900 
+          text-zinc-200 
+          dark:bg-gray-800   
+          dark:text-zinc-200 
+          hover:text-slate-900  
+          hover:bg-zinc-100 
+          hover:!border-slate-900 
+          dark:hover:bg-gray-700/70  
+          dark:!border-zinc-200/10 
+          dark:hover:!border-zinc-200/20 
+          dark:hover:text-zinc-200 
+          transition-all duration-150 ease-in-out 
             kosar bi bi-plus-lg   
-             w-full p-2 text-sm tracking-wider    
+             w-full  text-sm tracking-[2px]     
             " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> KOSÁRBA</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
       }
 

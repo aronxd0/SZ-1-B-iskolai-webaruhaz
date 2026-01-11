@@ -182,9 +182,9 @@ $("#cart_button").click(async function () {
                                 dark:hover:text-zinc-200 
                                 transition-all duration-150 ease-in-out 
                                 bi bi-credit-card 
-
+                                tracking-[2px] 
                                 
-                                " id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>
+                                " id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> TOVÁBB A KASSZÁHOZ</button>
                         </div>
                     </div>
                 
@@ -265,9 +265,9 @@ async function KosarItemDelete(id){
                                 dark:hover:text-zinc-200 
                                 transition-all duration-150 ease-in-out 
                                 bi bi-credit-card 
-
+                                tracking-[2px] 
                                 
-                                " id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>`);
+                                " id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> TOVÁBB A KASSZÁHOZ</button>`);
 
             
         }
@@ -369,9 +369,9 @@ async function KosarPLUSZ(id) {
                         dark:hover:text-zinc-200 
                         transition-all duration-150 ease-in-out 
                         bi bi-credit-card 
-
+                        tracking-[2px] 
                         
-                        " id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> Tovább a kasszához</button>`);
+                        " id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})'> TOVÁBB A KASSZÁHOZ</button>`);
 
     AR_SUM("termek_ar", "sumar" , false);
     KosarTetelDB(); // fönti kosár db frissitése
