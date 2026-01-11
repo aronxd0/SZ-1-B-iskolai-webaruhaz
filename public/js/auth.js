@@ -10,7 +10,7 @@ function BevaneJelentkezve() {
 
     // Ez akkor ha nincs bejelentkezve
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { 
-        $("#loginspan").html(' Bejelentkezés');
+        $("#loginspan").html(' BEJELENTKEZÉS');
         $("#loginout").removeClass("bi bi-box-arrow-in-left");
         $("#loginout").addClass("bi bi-box-arrow-in-right");
         üzen("Sikeres logout", "success");
@@ -76,7 +76,7 @@ function BevaneJelentkezve() {
 
         $('#login_modal').modal('hide');
         üzen(`Vásárolj sokat ${bejelentkezett_usernev}!`,"info");
-        $("#loginspan").html(' Kijelentkezés');
+        $("#loginspan").html(' KIJELENTKEZÉS');
         $("#loginout").removeClass("bi bi-box-arrow-in-right");
         $("#loginout").addClass("bi bi-box-arrow-in-left");
 
@@ -112,7 +112,7 @@ $("#login_oksi_button").click(async function() {
         bejelentkezett_useremail = l_json.rows[0].EMAIL;
         
         if (l_json.rows[0].ADMIN == "Y") { admin = true; }
-        if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; console.log("bement az ifbe XD"); }
+        if (l_json.rows[0].WEBBOLT_ADMIN == "Y") { webbolt_admin = true; }
         csoport = l_json.rows[0].CSOPORT;
         
         localStorage.setItem("user", JSON.stringify({

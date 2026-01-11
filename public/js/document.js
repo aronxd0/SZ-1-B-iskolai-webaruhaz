@@ -95,11 +95,11 @@ $(document).ready(function() {
     
         if (isDark) {
             $("html").removeClass("dark");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i> Téma`);
+            $("#switch").html(`<i class="bi bi-moon-fill"></i> TÉMA`);
             user.ui = { ...user.ui, theme: "light" };
         } else {
             $("html").addClass("dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i> Téma`);
+            $("#switch").html(`<i class="bi bi-sun-fill"></i> TÉMA`);
             user.ui = { ...user.ui, theme: "dark" };
         }
     

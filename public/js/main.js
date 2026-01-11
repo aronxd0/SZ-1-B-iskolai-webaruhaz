@@ -124,19 +124,16 @@ async function F5() {
 
         console.log(ae);
 
-        /*
-        admin = JSON.parse(localStorage.getItem("user") || "{}")?.isAdmin || false;
-        webbolt_admin = JSON.parse(localStorage.getItem("user") || "{}")?.isWebAdmin || false;
-        */
+        
 
         if ((JSON.parse(localStorage.getItem("user") || "{}")?.ui.theme) == "dark") { 
             $("html").addClass("dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i> Téma`); 
+            $("#switch").html(`<i class="bi bi-sun-fill"></i> TÉMA`); 
             user.ui = { ...user.ui, theme: "dark" };
         }
         else {
             $("html").removeClass("dark");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i> Téma`);
+            $("#switch").html(`<i class="bi bi-moon-fill"></i> TÉMA`);
             user.ui = { ...user.ui, theme: "light" };
         }
 
