@@ -247,7 +247,7 @@ function KeresonekSQLCraft(){
 
 
 async function KERESOBAR() {
-    console.log("keresobar lefutott");
+    console.log("KERESOBAR lefutott");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
     $("#home_button").closest(".gombdiv").addClass("aktiv");
@@ -255,7 +255,7 @@ async function KERESOBAR() {
     $("#nezetkicsi").removeClass("eltunt");
     $("#nezetnagy").removeClass("eltunt");
 
-    //console.log("elküld: "+ elküld);
+    
 
     var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
@@ -329,81 +329,82 @@ function OLDALFELTOTL(darab){
 
     
     `
-            <ul class="pagination justify-content-center">
-                <li class="page-item  shadow-xl" style="border: none;">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="Vissza2" onclick="Kovi(this)"> << </a></li>
-                <li class="page-item  shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="vissza1" onclick="Kovi(this)">Előző</a></li>
-                <li class="page-item shadow-xl">
-                    <a class="
-                        page-link 
-                        d-flex 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        "><b id="Mostoldal">${Joldal}</b> / <span id="DBoldal">${oldalszam}</span></a></li>
-                
-                <li class="page-item  shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="Kovi1" onclick="Kovi(this)">Következő</a></li>
 
-                <li class="page-item shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        " id="Kovi2" onclick="Kovi(this)"> >> </a></li>
-            </ul>`;
+
+        <ul class="pagination justify-content-center gap-2 select-none">
+
+        <!-- Elejére -->
+        <li class="page-item" >
+            <a id="Vissza2" onclick="Kovi(this)"
+            class="page-link px-3 py-2 rounded-xl !border !border-transparent 
+            bg-zinc-50 text-slate-900
+            dark:bg-zinc-950 dark:text-zinc-200
+            hover:bg-slate-900 hover:text-white
+            dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 
+            transition-all duration-200 shadow-sm cursor-pointer" >
+                «
+            </a>
+        </li>
+
+        <!-- Előző -->
+        <li class="page-item">
+            <a id="vissza1" onclick="Kovi(this)"
+            class="page-link px-3 py-2 rounded-xl !border !border-transparent 
+            bg-zinc-50 text-slate-900
+            dark:bg-zinc-950 dark:text-zinc-200
+            hover:bg-slate-900 hover:text-white
+            dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 
+            transition-all duration-200 shadow-sm cursor-pointer">
+                
+                <i class="bi bi-caret-left-fill"></i>
+                <span class="d-none d-lg-inline">Előző</span>
+            </a>
+        </li>
+
+        <!-- Aktuális oldal -->
+        <li class="page-item">
+            <span
+                class="page-link px-4 py-2 rounded-xl !border !border-transparent 
+                bg-slate-900 text-white font-semibold 
+                hover:bg-slate-900 hover:text-white dark:!border-zinc-200/10 dark:bg-gray-800 
+                shadow-md cursor-default">
+                <b id="Mostoldal">${Joldal}</b>
+                <span class="opacity-70 mx-1">/</span>
+                <span id="DBoldal">${oldalszam}</span>
+            </span>
+        </li>
+
+        <!-- Következő -->
+        <li class="page-item">
+            <a id="Kovi1" onclick="Kovi(this)"
+            class="page-link px-3 py-2 rounded-xl !border !border-transparent 
+            bg-zinc-50 text-slate-900
+            dark:bg-zinc-950 dark:text-zinc-200
+            hover:bg-slate-900 hover:text-white
+            dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 
+            transition-all duration-200 shadow-sm cursor-pointer">
+                <span class="d-none d-lg-inline">Következő</span>
+                <i class="bi bi-caret-right-fill"></i>
+                
+            </a>
+        </li>
+
+        <!-- Végére -->
+        <li class="page-item">
+            <a id="Kovi2" onclick="Kovi(this)"
+            class="page-link px-3 py-2 rounded-xl !border !border-transparent 
+            bg-zinc-50 text-slate-900
+            dark:bg-zinc-950 dark:text-zinc-200
+            hover:bg-slate-900 hover:text-white
+            dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 
+            transition-all duration-200 shadow-sm cursor-pointer">
+                »
+            </a>
+        </li>
+
+    </ul>
+
+            `;
     // alul a lapválastó feltöltése
 
 
@@ -411,18 +412,18 @@ function OLDALFELTOTL(darab){
     $("#pagi").html(pp);
 
     if(Joldal == 1){ // ha az 1. oldalon van akkor a vissza gombok inaktívak
-        document.querySelector(".page-item:nth-child(2)").classList.add("disabled");
-        document.querySelector(".page-item:nth-child(1)").classList.add("disabled");
+        document.querySelector(".page-item:nth-child(2)").classList.add("disabled", "hover:cursor-not-allowed");
+        document.querySelector(".page-item:nth-child(1)").classList.add("disabled", "hover:cursor-not-allowed");
     }
 
     if(Joldal == oldalszam){ // ha az utolsó oldalon van akkor a következő gombok inaktívak
-        document.querySelector(".page-item:nth-child(4)").classList.add("disabled");
-        document.querySelector(".page-item:nth-child(5)").classList.add("disabled");
+        document.querySelector(".page-item:nth-child(4)").classList.add("disabled", "hover:cursor-not-allowed");
+        document.querySelector(".page-item:nth-child(5)").classList.add("disabled", "hover:cursor-not-allowed");
     }
 }
 
 function Kovi(keri){
-    FelaTetore();
+    FelaTetore("felsosor");
     switch(keri.id){
         case("Kovi1"): // következő oldal
             if(Joldal < oldalszam){
@@ -697,6 +698,7 @@ async function Kezdolap() {
     nev1.value = "";
     bepipaltID = "";
     KERESOBAR();
+    
 
     let kategoriacuccos = await ajax_call(`kategoria`, "GET", null, true);
     let k = "";
@@ -746,8 +748,20 @@ async function KategoriaKezdolap(id_kategoria) {
     
 }
 
-function FelaTetore() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+function FelaTetore(target = "top") {
+    console.log("FelaTetore lefutott");
+    if (target === "top") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+    }
+
+    const el = document.getElementById(target);
+    if (!el) return;
+
+    el.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 }
 
 

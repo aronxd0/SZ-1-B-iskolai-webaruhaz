@@ -348,7 +348,7 @@ async function Termek_Mutat(event, termek_id) {
           hover:bg-zinc-800 
           hover:text-zinc-200 
           dark:bg-zinc-950 
-          dark:hover:bg-zinc-900 
+          dark:hover:bg-gray-800  
           dark:!border-zinc-200/10 
           dark:hover:!border-zinc-200/20 
           transition-all duration-150 ease-in-out 
@@ -426,7 +426,7 @@ async function Termek_Mutat(event, termek_id) {
     if (JSON.parse(localStorage.getItem("user"))?.loggedIn && (webbolt_admin || admin)) {
       gg = "";
       gg += `<button type="button" 
-      class="px-6 py-2 rounded-xl 
+      class="px-6 py-2 
           !border !border-transparent 
           bg-zinc-950 
           text-zinc-200 
@@ -434,7 +434,7 @@ async function Termek_Mutat(event, termek_id) {
           hover:text-zinc-200 
           dark:bg-zinc-950 
           dark:!border-zinc-200/10 
-          dark:hover:bg-zinc-900 
+          dark:hover:bg-gray-800 
           dark:hover:!border-zinc-200/20 
           transition-all duration-150 ease-in-out 
           rounded-lg  
@@ -443,14 +443,14 @@ async function Termek_Mutat(event, termek_id) {
      
      
       gg += `<button type="button" 
-      class="px-6 py-2 rounded-xl !border !border-transparent 
+      class="px-6 py-2 !border !border-transparent 
           bg-zinc-950 
           text-zinc-200 
           hover:bg-zinc-800 
           hover:text-red-600 
           dark:bg-zinc-950 
           dark:!border-zinc-200/10 
-          dark:hover:bg-zinc-900 
+          dark:hover:bg-red-950/50   
           dark:hover:text-red-600 
           dark:hover:!border-red-500/20 
           transition-all duration-150 ease-in-out 
@@ -805,7 +805,7 @@ function CARD_BETOLT(adatok) {
             hover:bg-gray-700 
             hover:text-zinc-200 
             dark:bg-zinc-800 
-            dark:hover:bg-zinc-700 
+            dark:hover:bg-gray-800 
             transition-all duration-150 ease-in-out 
             rounded-xl 
             kosar    
@@ -882,7 +882,7 @@ function CARD_BETOLT(adatok) {
             hover:bg-zinc-800 
             hover:text-zinc-200 
             dark:bg-zinc-900 
-            dark:hover:bg-zinc-800 
+            dark:hover:bg-gray-800 
             dark:!border-zinc-200/10 
             dark:hover:!border-zinc-200/20 
             transition-all duration-150 ease-in-out 
@@ -963,6 +963,7 @@ function CARD_BETOLT(adatok) {
       $("#débé").fadeOut(300, function() {
         $("#débé").html(` (${adatok.maxcount} db)`).fadeIn(300);
       });
+      
       
     } else {
       $("#keresett_kifejezes").html("");
