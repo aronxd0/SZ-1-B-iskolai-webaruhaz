@@ -168,16 +168,19 @@ $("#cart_button").click(async function () {
                         </div>
                         <div class="col-12 d-flex justify-content-center p-3 mb-5" id="pay_button">
                             <button type="button" 
-                                class="btn btn-lg 
-                                bg-emerald-700 
+                                class="px-3 py-2 rounded-xl !border !border-transparent 
+                                bg-slate-900 
                                 text-zinc-200 
-                                rounded-5 
-                                shadow-xl 
-                                hover:bg-emerald-600 
-                                hover:shadow-lg  
-                                hover:shadow-emerald-600/70 
-                                hover:text-zinc-200 
-                                transition-hover duration-300 ease-in-out 
+                                dark:bg-gray-800   
+                                dark:text-zinc-200 
+                                hover:text-slate-900  
+                                hover:bg-zinc-100 
+                                hover:!border-slate-900 
+                                dark:hover:bg-gray-700/70  
+                                dark:!border-zinc-200/10 
+                                dark:hover:!border-zinc-200/20 
+                                dark:hover:text-zinc-200 
+                                transition-all duration-150 ease-in-out 
                                 bi bi-credit-card 
 
                                 
@@ -248,16 +251,19 @@ async function KosarItemDelete(id){
             $("#pay_button").html(`
                 
                 <button type="button" 
-                                class="btn btn-lg 
-                                bg-emerald-700 
+                                class="px-3 py-2 rounded-xl !border !border-transparent 
+                                bg-slate-900 
                                 text-zinc-200 
-                                rounded-5 
-                                shadow-xl 
-                                hover:bg-emerald-600 
-                                hover:shadow-lg  
-                                hover:shadow-emerald-600/70 
-                                hover:text-zinc-200 
-                                transition-hover duration-300 ease-in-out 
+                                dark:bg-gray-800   
+                                dark:text-zinc-200 
+                                hover:text-slate-900  
+                                hover:bg-zinc-100 
+                                hover:!border-slate-900 
+                                dark:hover:bg-gray-700/70  
+                                dark:!border-zinc-200/10 
+                                dark:hover:!border-zinc-200/20 
+                                dark:hover:text-zinc-200 
+                                transition-all duration-150 ease-in-out 
                                 bi bi-credit-card 
 
                                 
@@ -349,16 +355,19 @@ async function KosarPLUSZ(id) {
     $("#pay_button").html("");
     $("#pay_button").html(`
                 <button type="button" 
-                        class="btn btn-lg 
-                        bg-emerald-700 
+                        class="px-3 py-2 rounded-xl !border !border-transparent 
+                        bg-slate-900 
                         text-zinc-200 
-                        rounded-5 
-                        shadow-xl 
-                        hover:bg-emerald-600 
-                        hover:shadow-lg  
-                        hover:shadow-emerald-600/70 
-                        hover:text-zinc-200 
-                        transition-hover duration-300 ease-in-out 
+                        dark:bg-gray-800   
+                        dark:text-zinc-200 
+                        hover:text-slate-900  
+                        hover:bg-zinc-100 
+                        hover:!border-slate-900 
+                        dark:hover:bg-gray-700/70  
+                        dark:!border-zinc-200/10 
+                        dark:hover:!border-zinc-200/20 
+                        dark:hover:text-zinc-200 
+                        transition-all duration-150 ease-in-out 
                         bi bi-credit-card 
 
                         
