@@ -828,8 +828,7 @@ function CARD_BETOLT(adatok) {
         hover:bg-gray-300 
         rounded-xl 
         hover:cursor-pointer 
-        
-        dark:bg-slate-900  
+        dark:bg-slate-950/95   
         dark:text-zinc-200 
         dark:hover:bg-gray-800 
         
