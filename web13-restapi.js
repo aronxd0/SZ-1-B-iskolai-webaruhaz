@@ -352,6 +352,210 @@ function gen_SQL_kereses(req) {
 
 //#endregion
 
+//#region vélemények
+
+// === VÉLEMÉNYEK LEKÉRÉSE ENDPOINT ===
+// GET: /velemenyek
+// Paraméterek (req.query):
+//  - ID_TERMEK: (int) konkrét termék véleményei
+//  - SAJATVELEMENY: (int) 1 = saját véleményt is mutasd (bejelentkezett user)
+//  - szelektalas: (int) 0=jóváhagyva, 1=jóváhagyásra vár, 2=elutasítva
+// Működés: a sessionből olvassa az ID_USER-t, azt használja a bejelentkezetthez
+app.get('/velemenyek',(req, res) => {
+    session_data = req.session;
+    
+    var termekid = (req.query.ID_TERMEK ? parseInt(req.query.ID_TERMEK) : 0);
+    var sajatvelemeny = (req.query.SAJATVELEMENY ? parseInt(req.query.SAJATVELEMENY) : 0);
+    var szelektalas = (req.query.szelektalas? parseInt(req.query.szelektalas) : 0); 
+
+    var offset = parseInt(req.query.OFFSET)
+    
+    let whereFeltetelek = []; 
+    let ertekek = [];
+    
+    // SQL lekérdezés: a vélemény szövege, szerző neve, és az időpontja (helyi időzóna konvertálva)
+    var sql = `
+    SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, 
+           CONVERT_TZ(webbolt_velemenyek.datum, '+00:00','${idozona()}') AS DATUM 
+    ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
+    FROM webbolt_velemenyek 
+    INNER JOIN users on users.ID_USER = webbolt_velemenyek.ID_USER
+    `;
+    
+    // === SZŰRÉSI LOGIKA ===
+    if (szelektalas == 0) {
+        // Alapértelmezett: jóváhagyott vélemények
+        if (termekid > 0) {
+            whereFeltetelek.push(`webbolt_velemenyek.ID_TERMEK = ?`);
+            ertekek.push(termekid);
+        }
+        if (sajatvelemeny == 0) {
+            // Ha nem a saját véleményt kérjük, csak a jóváhagyottakat mutassuk
+            whereFeltetelek.push(`webbolt_velemenyek.ALLAPOT = 'Jóváhagyva'`);
+        }
+    } 
+    else if (szelektalas == 1) {
+        // Jóváhagyásra váró vélemények (admin felület)
+        whereFeltetelek.push(`webbolt_velemenyek.ALLAPOT = 'Jóváhagyásra vár'`);
+    }
+    else if (szelektalas == 2) {
+        // Elutasított vélemények
+        whereFeltetelek.push(`webbolt_velemenyek.ALLAPOT = 'Elutasítva'`);
+    }
+    
+    // Ha a bejelentkezetthez saját véleményt kérjük, szűrj csak erre az userre
+    if (sajatvelemeny == 1 && session_data.ID_USER) {
+        whereFeltetelek.push(`webbolt_velemenyek.ID_USER = ?`);
+        ertekek.push(session_data.ID_USER);
+    }
+
+    if (whereFeltetelek.length > 0) {
+        sql += `WHERE ${whereFeltetelek.join(' AND ')} `;
+    }
+
+    if(szelektalas == 1){
+        sql += `ORDER BY DATUM `;  // Legújabbtól a legrégebbiig
+    }
+    else{
+        sql += `ORDER BY DATUM DESC `;  // Legújabbtól a legrégebbiig
+    }
+    
+    if(szelektalas == 1){
+            sql += `limit 10 offset ?`
+            ertekek.push(offset*10)
+    }
+
+    sendJson_toFrontend (res, sql, ertekek);
+});
+
+// === VÉLEMÉNY HOZZÁADÁSA ===
+// POST: /velemeny_add
+// Paraméterek (req.query):
+//  - ID_TERMEK: (int) melyik termékhez
+//  - SZOVEG: (string) a vélemény szövege
+// Működés: sessionből veszi az ID_USER-t, admin véleményt azonnal jóváhagyva, felhasználóé várakozásra kerül
+app.post('/velemeny_add', async (req, res) => {
+    
+    try {
+        var termekid = parseInt(req.query.ID_TERMEK);
+        var szoveg = req.query.SZOVEG;
+        // Ha admin a bejelentkezett user, azonnal jóváhagyva lesz, különben várakozásra
+        var allapot = (req.session.WEBBOLT_ADMIN == "Y" || req.session.ADMIN == "Y") ? "Jóváhagyva" : "Jóváhagyásra vár";
+        
+        var sql = `
+        INSERT INTO webbolt_velemenyek (ID_TERMEK, ID_USER, SZOVEG, ALLAPOT)
+        VALUES (?, ?, ?, ?);
+        `;
+        let ertekek = [termekid, req.session.ID_USER, szoveg, allapot];
+
+        const eredmeny = await runExecute(sql, req, ertekek, true);
+        if(eredmeny.message != "ok"){
+            throw new Error();
+        }
+        res.json(eredmeny);
+        res.end();
+
+    } catch {
+        console.error("/velemeny_add HIBA");
+        return res.status(500).json({
+            message: "Nem sikerült hozzáadni a véleményt."
+        });
+    }      
+});
+
+// === VÉLEMÉNY TÖRLÉSE ===
+// DELETE: /velemeny_del
+// Paraméter: ID_VELEMENY (int)
+app.delete('/velemeny_del', async (req, res) => {
+    
+    try {
+        var velemenyid = parseInt(req.query.ID_VELEMENY);
+        
+        var sql = `
+        DELETE FROM webbolt_velemenyek
+        WHERE ID_VELEMENY = ?
+        `;
+        let ertekek = [velemenyid];
+
+        const eredmeny = await runExecute(sql, req, ertekek, true);
+        if(eredmeny.message != "ok"){
+            throw new Error();
+        }
+        res.json(eredmeny);
+        res.end();
+
+    } catch {
+        console.error("/velemeny_del HIBA");
+        return res.status(500).json({
+            message: "Nem sikerült törölni a véleményt."
+        });
+    }   
+});
+
+// === VÉLEMÉNY JÓVÁHAGYÁSA ===
+// POST: /velemeny_elfogad
+// Paraméter: ID_VELEMENY (int)
+// Működés: az allapot 'Jóváhagyva'-ra változik, megjelenik az oldalon
+app.post('/velemeny_elfogad', async (req, res) => {
+    
+    try {
+        var velemenyid = parseInt(req.query.ID_VELEMENY);
+        
+        var sql = `
+        UPDATE webbolt_velemenyek 
+        SET ALLAPOT = "Jóváhagyva"
+        WHERE ID_VELEMENY = ?
+        `;
+        let ertekek = [velemenyid];
+
+        const eredmeny = await runExecute(sql, req, ertekek, true);
+        if(eredmeny.message != "ok"){
+            throw new Error();
+        }
+        res.json(eredmeny);
+        res.end();
+
+    } catch {
+        console.error("/velemeny_elfogad HIBA");
+        return res.status(500).json({
+            message: "Nem sikerült jóváhagyni a véleményt."
+        });
+    }       
+});
+
+// === VÉLEMÉNY ELUTASÍTÁSA ===
+// POST: /velemeny_elutasit
+// Paraméter: ID_VELEMENY (int)
+// Működés: az allapot 'Elutasítva'-ra változik
+app.post('/velemeny_elutasit', async (req, res) => {
+    
+    try {
+        var velemenyid = parseInt(req.query.ID_VELEMENY);
+        
+        var sql = `
+        UPDATE webbolt_velemenyek 
+        SET ALLAPOT = "Elutasítva"
+        WHERE ID_VELEMENY = ?
+        `;
+        let ertekek = [velemenyid];
+
+        const eredmeny = await runExecute(sql, req, ertekek, true);
+        if(eredmeny.message != "ok"){
+            throw new Error();
+        }
+        res.json(eredmeny);
+        res.end();
+
+    } catch {
+        console.error("/velemeny_elutasit HIBA");
+        return res.status(500).json({
+            message: "Nem sikerült elutasítani a véleményt."
+        });
+    }       
+});
+
+//#endregion
+
 //#region login/logoff
 
 // === BEJELENTKEZÉS ===
