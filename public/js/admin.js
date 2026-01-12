@@ -1306,14 +1306,14 @@ async function STAT_Penz(innen){
 
 }
 
-let kAT_CHART = null;
+let Elad_Chart = null;
 async function STAT_ELAD(innen){
     var intervallum = "1";
     if(innen != null){
         intervallum = innen.value;
     }
-    if(kAT_CHART != null){
-        kAT_CHART.destroy();
+    if(Elad_Chart != null){
+        Elad_Chart.destroy();
     }
 
     var adat = await ajax_call(`rendelesek_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
@@ -1367,7 +1367,7 @@ async function STAT_ELAD(innen){
     }
 
 
-  kAT_CHART = new Chart("STAT_VMI_GRAF", {
+    Elad_Chart = new Chart("STAT_VMI_GRAF", {
     type: "bar",
     data: {
       labels: xValues,
@@ -1392,20 +1392,20 @@ async function STAT_ELAD(innen){
   });
 }
 
-let VLM_chart = null;
+let KAT_chart = null;
 async function STAT_KATEG(innen){
     var intervallum = innen ? innen.value : "1";
 
-    if (VLM_chart) {
-        VLM_chart.destroy();
-        VLM_chart = null;
+    if (KAT_chart) {
+        KAT_chart.destroy();
+        KAT_chart = null;
     }
 
     var adat = await ajax_call(`kategoriak_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
 
     // === NINCS ADAT ===
     if (adat.maxcount == 0) {
-        VLM_chart = new Chart("STAT_KOR_GRAF", {
+        KAT_chart = new Chart("STAT_KOR_GRAF", {
             type: "pie",
             data: {
                 datasets: [{
@@ -1445,7 +1445,7 @@ async function STAT_KATEG(innen){
         yValues.push(item.DARAB);
     }
 
-    VLM_chart = new Chart("STAT_KOR_GRAF", {
+    KAT_chart = new Chart("STAT_KOR_GRAF", {
         type: "pie",
         data: {
             labels: xValues,
