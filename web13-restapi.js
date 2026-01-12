@@ -130,7 +130,6 @@ function fileFilter(req, file, cb) {
 
 module.exports = upload;
 
-
 //#region konstans lekérdezés
 
 // === ÁFA LEKÉRDEZÉSE ===
@@ -1900,7 +1899,6 @@ app.post('/send-email', async (req, res) => {
 });
 
 //#endregion
-
 
 // === SZERVER INDÍTÁSA ===
 // Az Express szerver elkezd hallgatni a megadott porton
