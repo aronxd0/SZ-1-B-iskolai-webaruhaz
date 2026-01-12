@@ -158,7 +158,7 @@ function Attekintes(li) {
         dark:!border-zinc-200/10 
         dark:hover:!border-zinc-200/20 
         dark:hover:text-zinc-200 
-        transition-all duration-150 ease-in-out 
+        transition-all duration-150 ease-in-out w-auto
         bi bi-x-lg
         " data-bs-dismiss="modal"> Mégse</button>
 
@@ -176,7 +176,7 @@ function Attekintes(li) {
         dark:!border-zinc-200/10 
         dark:hover:!border-zinc-200/20 
         dark:hover:text-zinc-200 
-        transition-all duration-150 ease-in-out 
+        transition-all duration-150 ease-in-out w-auto 
         
         bi bi-arrow-right
         " onclick='Adatok(${JSON.stringify(li)})'> Tovább</button>
@@ -428,7 +428,7 @@ function Adatok(li) {
         dark:!border-zinc-200/10 
         dark:hover:!border-zinc-200/20 
         dark:hover:text-zinc-200 
-        transition-all duration-150 ease-in-out 
+        transition-all duration-150 ease-in-out w-auto
          bi bi-backspace
          " onclick='Attekintes(${JSON.stringify(li)})'> Vissza</button>
 
@@ -445,7 +445,7 @@ function Adatok(li) {
         dark:!border-zinc-200/10 
         dark:hover:!border-zinc-200/20 
         dark:hover:text-zinc-200 
-        transition-all duration-150 ease-in-out 
+        transition-all duration-150 ease-in-out w-auto 
         bi bi-arrow-right" onclick='Fizetes(${JSON.stringify(li)})'> Tovább</button>
     `;
     $("#lab").html(navigacio);
@@ -892,7 +892,7 @@ function Fizetes(li) {
         dark:hover:bg-gray-700/70  
         dark:!border-zinc-200/10 
         dark:hover:!border-zinc-200/20 
-        dark:hover:text-zinc-200 
+        dark:hover:text-zinc-200 w-auto 
         transition-all duration-150 ease-in-out bi bi-backspace 
         " onclick='Adatok(${JSON.stringify(li)})'> Vissza</button>
 
@@ -908,7 +908,7 @@ function Fizetes(li) {
         dark:hover:bg-gray-700/70  
         dark:!border-zinc-200/10 
         dark:hover:!border-zinc-200/20 
-        dark:hover:text-zinc-200 
+        dark:hover:text-zinc-200 w-auto 
         transition-all duration-150 ease-in-out 
         bi bi-credit-card" id="FIZ" onclick='Fizetésclick(${JSON.stringify(li)})'> Fizetés</button>
     `;
