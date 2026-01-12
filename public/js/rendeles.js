@@ -86,6 +86,7 @@ async function toggleRendeles(rendelId) {
 }
 
 function Kovi_rendeles(keri){
+    FelaTetore();
     switch(keri.id){
         case "Kovi1_rend": // következő oldal
             if(jelenlegi < osszesoldal){
@@ -271,7 +272,86 @@ async function rendelesekmegtolt(){
             
         }
         if(osszesoldal > 1) {
-            s+= `<ul class="pagination justify-content-center">
+            
+            s+= `
+            
+            <ul class="pagination justify-content-center gap-2 select-none">
+
+        <!-- Elejére -->
+        <li class="page-item ${jelenlegi == 1 ? "disabled hover:cursor-not-allowed" : ""}" >
+            <a id="Vissza2_rend" onclick="Kovi_rendeles(this)"
+            class="page-link px-3 py-2 rounded-xl !border !border-transparent 
+            bg-zinc-50 text-slate-900 
+            dark:bg-zinc-950 dark:text-zinc-200 
+            hover:bg-slate-900 hover:text-white 
+            dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 
+            transition-all duration-200 shadow-sm cursor-pointer " >
+                «
+            </a>
+        </li>
+
+        <!-- Előző -->
+        <li class="page-item ${jelenlegi == 1 ? "disabled hover:cursor-not-allowed" : ""}">
+            <a id="Vissza1_rend" onclick="Kovi_rendeles(this)"
+            class="page-link px-3 py-2 rounded-xl !border !border-transparent 
+            bg-zinc-50 text-slate-900 
+            dark:bg-zinc-950 dark:text-zinc-200 
+            hover:bg-slate-900 hover:text-white 
+            dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 
+            transition-all duration-200 shadow-sm cursor-pointer ">
+                
+                <i class="bi bi-caret-left-fill"></i>
+                <span class="d-none d-lg-inline">Előző</span>
+            </a>
+        </li>
+
+        <!-- Aktuális oldal -->
+        <li class="page-item">
+            <span
+                class="page-link px-4 py-2 rounded-xl !border !border-transparent 
+                bg-slate-900 text-white font-semibold 
+                hover:bg-slate-900 hover:text-white dark:!border-zinc-200/10 dark:bg-gray-800 
+                shadow-md cursor-default">
+                <b id="Mostoldal">${jelenlegi}</b>
+                <span class="opacity-70 mx-1">/</span>
+                <span id="DBoldal">${osszesoldal}</span>
+            </span>
+        </li>
+
+        <!-- Következő -->
+        <li class="page-item ${jelenlegi == osszesoldal ? "disabled hover:cursor-not-allowed" : ""}">
+            <a id="Kovi1_rend" onclick="Kovi_rendeles(this)"
+            class="page-link px-3 py-2 rounded-xl !border !border-transparent 
+            bg-zinc-50 text-slate-900 
+            dark:bg-zinc-950 dark:text-zinc-200 
+            hover:bg-slate-900 hover:text-white 
+            dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 
+            transition-all duration-200 shadow-sm cursor-pointer ">
+                <span class="d-none d-lg-inline">Következő</span>
+                <i class="bi bi-caret-right-fill"></i>
+                
+            </a>
+        </li>
+
+        <!-- Végére -->
+        <li class="page-item ${jelenlegi == osszesoldal ? "disabled hover:cursor-not-allowed" : ""}">
+            <a id="Kovi2_rend" onclick="Kovi_rendeles(this)"
+            class="page-link px-3 py-2 rounded-xl !border !border-transparent 
+            bg-zinc-50 text-slate-900 
+            dark:bg-zinc-950 dark:text-zinc-200 
+            hover:bg-slate-900 hover:text-white 
+            dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 
+            transition-all duration-200 shadow-sm cursor-pointer ">
+                »
+            </a>
+        </li>
+
+    </ul>
+            
+            
+            <!--
+            
+            <ul class="pagination justify-content-center">
                 <li class="page-item  shadow-xl" style="border: none;">
                     <a class="
                         page-link 
@@ -349,7 +429,9 @@ async function rendelesekmegtolt(){
                         transition-hover duration-300 ease-in-out
                         ${jelenlegi == osszesoldal ? "disabled" : ""}
                         " id="Kovi2_rend" onclick="Kovi_rendeles(this)"> >> </a></li>
-            </ul>`
+            </ul>
+            -->
+            `
         }
         
     } else {

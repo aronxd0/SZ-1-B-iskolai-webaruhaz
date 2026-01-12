@@ -408,7 +408,7 @@ function OLDALFELTOTL(darab){
     
     $("#pagi").html(pp);
 
-    if(Joldal == 1){ // ha az 1. oldalon van akkor a vissza gombok inaktívak
+    if(Joldal == 1) { // ha az 1. oldalon van akkor a vissza gombok inaktívak
         document.querySelector(".page-item:nth-child(2)").classList.add("disabled", "hover:cursor-not-allowed");
         document.querySelector(".page-item:nth-child(1)").classList.add("disabled", "hover:cursor-not-allowed");
     }
