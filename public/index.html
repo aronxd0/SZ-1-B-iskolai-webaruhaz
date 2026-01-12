@@ -150,19 +150,23 @@
             </div>
 
             <div class="flex-grow-1">
-               <div class="d-flex flex-nowrap w-100 align-self-center p-1"> 
+               <div class="d-flex flex-nowrap justify-content-end w-100 align-self-center p-1"> 
                   
                   <!-- Keresőmező: a felhasználó beírhatja a keresett terméket; a JS kezeli a keresést ('nev1' id) -->
-                  <input class="form-control rounded-4 
-                                bg-zinc-50 
+
+                  <input id="nev1" type="text" name="keres" placeholder="Keresés..." class="w-full bg-transparent text-slate-900 placeholder:text-gray-500 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 !border !border-b-slate-900/20 focus:!border-b-slate-900 !border-t-0 !border-l-0 !border-r-0 transition-[border-color] duration-300 ease-in-out" />
+
+                  <!--
+                  <input class="rounded-none !border !border-b-slate-900/50 !border-t-0 !border-l-0 !border-r-0  
+                                bg-transparent !focus:outline-none w-full 
                                 text-slate-900 placeholder-slate-900 
-                                focus:outline outline-slate-900/10 
                                 dark:focus:outline outline-white/10  
                                 dark:focus:bg-gray-700 
                                 dark:focus:text-zinc-200 
                                 dark:focus:placeholder-zinc-200 
                                 dark:bg-gray-700 dark:text-zinc-200 dark:placeholder-zinc-200
-                                transition-all duration-700 ease-in-out shadow-lg" id="nev1" name="nev" value="" type="text" placeholder="Keresés...">
+                                transition-all duration-700 ease-in-out " id="nev1" name="nev" value="" type="text" placeholder="Keresés...">
+                                -->
                   
                   
                   <!-- Keresés gomb: meghívja a KERESOBAR() függvényt, ami végrehajtja a keresést -->
