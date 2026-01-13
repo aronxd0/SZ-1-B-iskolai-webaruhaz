@@ -205,11 +205,13 @@ async function rendelesekmegtolt(){
                     flex-lg-column 
                     justify-content-between 
                     py-3 p-lg-1 
-                    
-                    border-t border-gray-300 
-                    border-b border-gray-300 
-                    dark:border-t border-gray-800 
-                    dark:border-b border-gray-800 
+                    !border 
+                    !border-t-gray-300 
+                    !border-b-gray-300 
+                    !border-r-0 
+                    !border-l-0 
+                    dark:!border-t-zinc-200/20 
+                    dark:!border-b-zinc-200/20  
                     lg:border-t-0 
                     lg:border-b-0 
                     lg:dark:border-t-0 

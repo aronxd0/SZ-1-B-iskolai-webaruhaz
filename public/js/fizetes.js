@@ -56,7 +56,7 @@ function Attekintes(li) {
     for (const element of li) {
 
         htmtoback += ` 
-          <div class="row p-2">
+          <div class="row px-4">
             <div class="col-0 col-lg-1"></div>
             <div class=" col-12 
                         col-lg-10   
@@ -65,7 +65,7 @@ function Attekintes(li) {
                         flex-lg-row 
                         bg-zinc-100 
                         text-slate-900 
-                        dark:bg-slate-950/60  
+                        dark:bg-slate-900/50    
                         dark:text-zinc-200 
                         shadow-lg  
                         rounded-4 
@@ -97,10 +97,17 @@ function Attekintes(li) {
                     flex-lg-column 
                     justify-content-between 
                     py-3 p-lg-1 
-                    border-t border-gray-300 
-                    border-b border-gray-300 
-                    lg:border-t-0 
-                    lg:border-b-0 
+                    !border 
+                    !border-t-gray-300 
+                    !border-b-gray-300 
+                    !border-r-0 
+                    !border-l-0 
+                    dark:!border-t-zinc-200/20 
+                    dark:!border-b-zinc-200/20 
+                    lg:!border-t-0 
+                    lg:!border-b-0 
+                    lg:dark:!border-t-0 
+                    lg:dark:!border-b-0 
                 ">
                         <span class="font-semibold">Termék</span>
                         <span class="text-end text-lg-start text-sm">${element.NEV}</span>
