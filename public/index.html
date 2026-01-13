@@ -152,15 +152,15 @@
             <div class="flex-grow-1">
                <div class="d-flex flex-nowrap justify-content-end w-100 align-self-center p-1 "> 
                   <!-- Keresőmező: a felhasználó beírhatja a keresett terméket; a JS kezeli a keresést ('nev1' id) -->
-                  <div class="d-flex w-auto !border !border-b-slate-900/10 !border-t-0 !border-l-0 !border-r-0 transition-[border-color] duration-300 ease-in-out focus-within:!border-b-slate-900">
-                    <input id="nev1" type="text" name="keres" placeholder="Keresés..." class="w-full bg-transparent text-slate-900 placeholder:text-gray-500 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0">
+                  <div class="d-flex w-auto !border !border-b-slate-900/10 dark:!border-b-zinc-200/20 !border-t-0 !border-l-0 !border-r-0 transition-[border-color] duration-300 ease-in-out focus-within:!border-b-slate-900 dark:focus-within:!border-b-zinc-200/50">
+                    <input id="nev1" type="text" name="keres" placeholder="Keresés..." class="w-full bg-transparent text-slate-900 dark:text-zinc-200/70 placeholder:text-gray-500 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0">
                     <!-- Keresés gomb: meghívja a KERESOBAR() függvényt, ami végrehajtja a keresést -->
-                     <button type="button" aria-label="Keresés" class="btn btn-lg rounded-none bg-transparent text-slate-900/50 hover:text-slate-900 dark:bg-sky-950 dark:text-zinc-200 me-2 transition-hover duration-300 ease-in-out" id="kereses_gomb" onclick="KERESOBAR()">
+                     <button type="button" aria-label="Keresés" class="btn btn-lg rounded-none bg-transparent text-slate-900/50 hover:text-slate-900 dark:bg-sky-950 dark:text-zinc-200/50 dark:hover:text-zinc-200 me-2 transition-hover duration-300 ease-in-out" id="kereses_gomb" onclick="KERESOBAR()">
                       <i class="bi bi-search"></i>
                     </button>
                   </div>
                   <!-- Szűrők gomb: megnyitja a jobb oldali offcanvas paneleket a rendezéshez/szűréshez -->
-                  <button type="button" aria-label="Szűrők" class="btn btn-lg bg-transparent text-slate-900/50 hover:text-slate-900 dark:bg-sky-950 dark:text-zinc-200 transition-hover duration-300 ease-in-out rounded-4" data-bs-toggle="offcanvas" data-bs-target="#szurok">
+                  <button type="button" aria-label="Szűrők" class="btn btn-lg bg-transparent text-slate-900/50 dark:text-zinc-200/50 hover:text-slate-900 dark:bg-sky-950 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-4" data-bs-toggle="offcanvas" data-bs-target="#szurok">
                     <i class="bi bi-funnel"></i>
                   </button>
               </div>
@@ -388,7 +388,7 @@
           dark:bg-slate-950 
           dark:text-zinc-200
         modal-footer d-flex justify-content-center">
-          <button id="bezar" type="button" class="px-3 py-2 rounded-4 !border !border-transparent 
+          <button id="bezar" type="button" class="px-3 py-1 rounded-4 !border !border-transparent 
                                 bg-slate-900 
                                 text-zinc-200 
                                 dark:bg-gray-800   
@@ -401,7 +401,7 @@
                                 dark:hover:!border-zinc-200/20 
                                 dark:hover:text-zinc-200 
                                 transition-all duration-150 ease-in-out   w-auto" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>
-          <button id="login_oksi_button" type="button" class="px-3 py-2 rounded-4 !border !border-transparent 
+          <button id="login_oksi_button" type="button" class="px-3 py-1 rounded-4 !border !border-transparent 
                                 bg-slate-900 
                                 text-zinc-200 
                                 dark:bg-gray-800   
