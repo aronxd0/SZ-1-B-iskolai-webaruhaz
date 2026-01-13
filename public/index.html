@@ -347,111 +347,40 @@
           <form id="form_login" class="row d-column was-validated"> 
             <div class="col-12 p-2">
               <label for="login_nev" class="p-1">E-mail cím</label>
-              <input type="email" 
-              class="
-              form-control 
-              shadow-xl 
-              bg-zinc-50 
-              text-slate-900 
-              dark:bg-slate-900 dark:!border dark:!border-zinc-200/20
-                      dark:text-zinc-200 rounded-4 placeholder-gray-400 
-                    dark:placeholder-gray-400 
-              " id="login_nev" name="login_nev"  value='boss@csany-zeg.hu' placeholder="Írd be az e-mail címedet" required>
-              
-              
+              <input type="email" class="form-control shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 dark:placeholder-gray-400" id="login_nev" name="login_nev"  value='boss@csany-zeg.hu' placeholder="Írd be az e-mail címedet" required>
             </div>
-            
 
-            <div class="col-12 p-2 ">
+            <div class="col-12 p-2">
               <label for="login_passwd" class=" p-1">Jelszó</label>
-              <input type="password" 
-              class="form-control 
-                      shadow-xl 
-                      bg-zinc-50 
-                      text-slate-900 
-                      dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 
-                      dark:text-zinc-200 rounded-4 
-                      placeholder-gray-400 
-                    dark:placeholder-gray-400 " id="login_passwd" name="login_passwd" value='pite' placeholder="Írd be a jelszavadat" required>
-              
-              
+              <input type="password" class="form-control shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 dark:placeholder-gray-400 " id="login_passwd" name="login_passwd" value='pite' placeholder="Írd be a jelszavadat" required>  
             </div>
-            
           </form>
         </div>
 
-        <div 
-        class="
-        
-          bg-zinc-300 
-          text-slate-900 
-          dark:bg-slate-950 
-          dark:text-zinc-200
-        modal-footer d-flex justify-content-center">
-          <button id="bezar" type="button" class="px-3 py-1 rounded-4 !border !border-transparent 
-                                bg-slate-900 
-                                text-zinc-200 
-                                dark:bg-gray-800   
-                                dark:text-zinc-200 
-                                hover:text-slate-900  
-                                hover:bg-zinc-100 
-                                hover:!border-slate-900 
-                                dark:hover:bg-gray-700/70  
-                                dark:!border-zinc-200/10 
-                                dark:hover:!border-zinc-200/20 
-                                dark:hover:text-zinc-200 
-                                transition-all duration-150 ease-in-out   w-auto" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>
-          <button id="login_oksi_button" type="button" class="px-3 py-1 rounded-4 !border !border-transparent 
-                                bg-slate-900 
-                                text-zinc-200 
-                                dark:bg-gray-800   
-                                dark:text-zinc-200 
-                                hover:text-slate-900  
-                                hover:bg-zinc-100 
-                                hover:!border-slate-900 
-                                dark:hover:bg-gray-700/70  
-                                dark:!border-zinc-200/10 
-                                dark:hover:!border-zinc-200/20 
-                                dark:hover:text-zinc-200 
-                                transition-all duration-150 ease-in-out  w-auto" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
-        
-
-        
-            
-          
-          
-          
-          
-          
-          
+        <div class="bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 modal-footer d-flex justify-content-center">
+          <button id="bezar" type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out   w-auto" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>
+          <button id="login_oksi_button" type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out  w-auto" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
         </div>
 
       </div>
     </div>
   </div>
 
-
-
-
   <!-- logout modal: egyszerű megerősítő ablak a kijelentkezéshez -->
   <div class="modal fade" id="logout_modal">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content dark:!border dark:!border-zinc-200/20">
-
-      
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-700 dark:text-zinc-200 d-flex justify-content-center">
+        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-center">
           <h4 class="modal-title">Kijelentkezés</h4>
         </div>
 
-        
-        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-700 dark:text-zinc-200 text-center">
+        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 text-center">
           Biztosan ki szeretnél jelentkezni?
         </div>
 
-        
-        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-700 dark:text-zinc-200 d-flex justify-content-center">
-          <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200 bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
-          <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200 bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
+        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-center">
+          <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out  bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
+          <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out  bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
         </div>
 
       </div>
@@ -462,10 +391,10 @@
   <div class="modal fade" id="velemeny_iras">
     <div class="modal-dialog modal-dialog-centered modal-md">
       <div class="modal-content dark:!border dark:!border-zinc-200/20 ">
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-start">
+        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-start">
           <span class="modal-title text-xl"><i class="bi bi-plus-lg"></i> Vélemény írása</span>
         </div>
-        <div class="modal-body bg-zinc-100 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
+        <div class="modal-body bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
           
           <div class="row">
             <div class="col-12"><span class="d-flex align-items-center space-x-2" id="ussr"></span></div>
@@ -480,18 +409,20 @@
               shadow-xl 
               bg-zinc-50 
               text-slate-900 
-              dark:bg-slate-800 
+              dark:bg-slate-900 
               dark:text-zinc-200 
+              dark:!border 
+              dark:!border-zinc-200/20 
               placeholder-gray-400 
               dark:placeholder-gray-400 
               " 
-              id="velemeny_input" name="vlmny" type="text" placeholder="Mondd el, mit gondolsz erről a termékről..." style="border: none;"></textarea>
+              id="velemeny_input" name="vlmny" type="text" placeholder="Mondd el, mit gondolsz erről a termékről..." ></textarea>
             </div>
           </div>
 
 
         </div>
-        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
+        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
           <div class="col-12 d-flex justify-content-end align-items-center" id="interakcio"></div>
         </div>
       </div>
@@ -891,10 +822,10 @@
       <div class="modal fade" id="profil">
         <div class="modal-dialog modal-dialog-centered modal-md">
           <div class="modal-content dark:!border dark:!border-zinc-200/20 ">
-            <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-start">
+            <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-start">
               <span class="modal-title text-xl"><i class="bi bi-person"></i> Fiók adatok</span>
             </div>
-            <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
+            <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
               <div class="p-1" id="vendegszoveg">Jelentkezz be a fiókodba</div>
               <div class="row d-flex flex-column flex-lg-row gap-x-2">
                 <div class="text-start text-sm d-flex gap-2" id="user"></div>
@@ -992,7 +923,7 @@
 
 
             </div>
-            <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200"></div>
+            <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200"></div>
           </div>
         </div>
       </div>

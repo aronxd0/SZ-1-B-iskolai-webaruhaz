@@ -246,49 +246,21 @@ function Velemeny_Iras(id_termek) {
   let gombs = `
         <button type="button" 
         class="
-        btn 
-        bg-zinc-600 
-      text-zinc-200 
-      rounded-4 
-      dark:bg-slate-900 
-      dark:text-zinc-200 
-      hover:bg-zinc-700 
-      hover:text-zinc-200 
-      dark:hover:bg-slate-950 
-      dark:hover:text-zinc-200
-      transition-hover duration-300 ease-in-out   w-auto " onclick='VeletlenszeruVelemeny()'> 
+        px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out   w-auto " onclick='VeletlenszeruVelemeny()'> 
       <i class="bi bi-dice-6"></i>
       <span class="d-none d-lg-inline"> Generálás</span>
       </button>
         
         <button type="button" 
         class="
-        btn bg-zinc-600 
-      text-zinc-200 
-      rounded-4 
-      dark:bg-slate-900 
-      dark:text-zinc-200 
-      hover:bg-zinc-700 
-      hover:text-zinc-200 
-      dark:hover:bg-slate-950 
-      dark:hover:text-zinc-200
-      transition-hover duration-300 ease-in-out   w-auto ms-2" data-bs-dismiss="modal" data-bs-target="#velemeny_iras" id="mgs">
+        px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out    w-auto ms-2" data-bs-dismiss="modal" data-bs-target="#velemeny_iras" id="mgs">
       <i class="bi bi-x-lg"></i>
       <span class="d-none d-lg-inline"> Mégse</span>
       </button>
         
         <button type="button" 
         class="
-        btn bg-zinc-600 
-      text-zinc-200 
-      rounded-4 
-      dark:bg-slate-900 
-      dark:text-zinc-200 
-      hover:bg-zinc-700 
-      hover:text-zinc-200 
-      dark:hover:bg-slate-950 
-      dark:hover:text-zinc-200
-      transition-hover duration-300 ease-in-out   w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${id_termek})'> 
+        px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out   w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${id_termek})'> 
       <i class="bi bi-send"></i>
       <span class="d-none d-lg-inline"> Közzététel</span>
       </button>
