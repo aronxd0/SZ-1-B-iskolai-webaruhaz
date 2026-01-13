@@ -1850,7 +1850,7 @@ async function runExecute(sql, req, ertekek = [], naplozas, connection) {
     } finally {
         // Csak nem tranzakciós módban szabadítjuk fel
         if (!connection && conn) conn.release();  // Adatbázis kapcsolat felszabadítása
-        json_data = JSON.parse(JSON.stringify({"message": msg, "rows": res1}));  // REST API formátum
+        json_data = JSON.parse(JSON.stringify({"message": msg, "rows": res1}));
     }
     return json_data;
 }
@@ -1903,7 +1903,7 @@ async function runQueries(sql, ertekek = [], connection) {
         console.error('Hiba:', err); 
     } finally {
         if (!connection && conn) conn.release();  // Csak nem tranzakciós módban
-        json_data = JSON.parse(JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": res2 }));  // REST API
+        json_data = JSON.parse(JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": res2 }));
     }
     
     return json_data;
