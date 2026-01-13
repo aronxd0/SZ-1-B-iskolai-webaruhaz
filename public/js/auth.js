@@ -10,7 +10,7 @@ function BevaneJelentkezve() {
 
     // Ez akkor ha nincs bejelentkezve
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { 
-        $("#loginspan").html(' BEJELENTKEZÉS');
+        $("#loginspan").html(' Bejelentkezés');
         $("#loginout").removeClass("bi bi-box-arrow-in-left");
         $("#loginout").addClass("bi bi-box-arrow-in-right");
         üzen("Sikeres logout", "success");
@@ -76,7 +76,7 @@ function BevaneJelentkezve() {
 
         $('#login_modal').modal('hide');
         üzen(`Vásárolj sokat ${bejelentkezett_usernev}!`,"info");
-        $("#loginspan").html(' KIJELENTKEZÉS');
+        $("#loginspan").html(' Kijelentkezés');
         $("#loginout").removeClass("bi bi-box-arrow-in-right");
         $("#loginout").addClass("bi bi-box-arrow-in-left");
 
