@@ -1475,26 +1475,24 @@ try {
         }
         const sql = req.query.SQL.toString().trim();
 
-        // === SPECIÁLIS VÉDEKEZÉS: DROP TABLE * PARANCS ===
-        // A legrosszabb szcenárió blokkolása
        if (/drop\s+table\s+\*/.test(sql.toLowerCase())) {
-        return res.json({
+        return res.status(500).json({
             message: "Ne nézzük egymást hülyének!",
             error: "A 'DROP TABLE *' parancs nem engedélyezett."
         });
-        }
+}
 
-        // === NEM SELECT PARANCSOK LISTÁJA ===
+        // === TILTOTT PARANCSOK LISTÁJA ===
         const nem_select_parancsok = [
             "insert", "update", "delete", "drop", "alter", "create", 
             "truncate", "grant", "revoke", "commit", "rollback", "exec", 
-            "execute", "union", "transaction" 
+            "execute", "union", "transaction"  // UNION is veszélyes (SQL Injection)
         ];
 
-        // Ellenőrzés: tartalmaz-e nem select parancsot?
+        // Ellenőrzés: tartalmaz-e tiltott parancsot
         const nem_select = nem_select_parancsok.some(parancs => sql.toLowerCase().includes(parancs));
 
-        // === SELECT LEKÉRDEZÉSEK (BIZTONSÁGOS) ===
+        // === SELECT LEKÉRDEZÉSEK ===
         if (!nem_select) {
             let parsed = await runQueries(sql, []);
             if(parsed.message != "ok"){
@@ -1505,9 +1503,9 @@ try {
             res.json({ adat: parsed, select: true });
             res.end();
         }
-        // === MÓDOSÍTÓ PARANCSOK (INSERT/UPDATE/DELETE) - NAPLÓZVA ===
+        // === MÓDOSÍTÓ PARANCSOK (INSERT/UPDATE/DELETE) ===
         else {
-            let parsed = await runExecute(sql, req, [], true);  // true = naplózva
+            let parsed = await runExecute(sql, req, [], true);
             if(parsed.message != "ok"){
                 throw new Error(parsed.message);
             }
@@ -1519,10 +1517,10 @@ try {
 
     } 
     catch (err) {
-        // Hibanapló: ki és mit próbált
-        console.error(`/html_sql: ${session_data.NEV} elrontotta az admin lekérdezést. (${new Date().toISOString()}) - ${err && err.message ? err.message : err}`);
-        res.json({
-            message: "Szörnyű hiba az sql parancs végrehajtásakor." 
+        console.error(`/html_sql: ${session_data.NEV} elrontotta az admin lekérdezést. (${new Date().toISOString()})`);
+        res.status(400).json({
+            message: "Szörnyű hiba az sql parancs végrehajtásakor.",
+            error: err.message
         });
     }   
 });
