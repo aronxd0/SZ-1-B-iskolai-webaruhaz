@@ -450,14 +450,14 @@ app.post('/velemeny_add', async (req, res) => {
 
         const eredmeny = await runExecute(sql, req, ertekek, true);
         if(eredmeny.message != "ok"){
-            throw new Error();
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
         res.json(eredmeny);
         res.end();
 
-    } catch {
-        console.error("/velemeny_add HIBA");
-        return res.status(500).json({
+    } catch (err) {
+        console.error("/velemeny_add HIBA : " + (err && err.message ? err.message : err));
+        return res.json({
             message: "Nem sikerült hozzáadni a véleményt."
         });
     }      
@@ -479,14 +479,14 @@ app.delete('/velemeny_del', async (req, res) => {
 
         const eredmeny = await runExecute(sql, req, ertekek, true);
         if(eredmeny.message != "ok"){
-            throw new Error();
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
         res.json(eredmeny);
         res.end();
 
-    } catch {
-        console.error("/velemeny_del HIBA");
-        return res.status(500).json({
+    } catch (err) {
+        console.error("/velemeny_del HIBA : " + (err && err.message ? err.message : err));
+        return res.json({
             message: "Nem sikerült törölni a véleményt."
         });
     }   
@@ -510,15 +510,15 @@ app.post('/velemeny_elfogad', async (req, res) => {
 
         const eredmeny = await runExecute(sql, req, ertekek, true);
         if(eredmeny.message != "ok"){
-            throw new Error();
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
         res.json(eredmeny);
         res.end();
 
-    } catch {
-        console.error("/velemeny_elfogad HIBA");
-        return res.status(500).json({
-            message: "Nem sikerült jóváhagyni a véleményt."
+    } catch (err) {
+        console.error("/velemeny_elfogad HIBA : " + (err && err.message ? err.message : err));
+        return res.json({
+            message: "Nem sikerült jóváhagyni a véleményt." 
         });
     }       
 });
@@ -541,15 +541,15 @@ app.post('/velemeny_elutasit', async (req, res) => {
 
         const eredmeny = await runExecute(sql, req, ertekek, true);
         if(eredmeny.message != "ok"){
-            throw new Error();
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
         res.json(eredmeny);
         res.end();
 
-    } catch {
-        console.error("/velemeny_elutasit HIBA");
-        return res.status(500).json({
-            message: "Nem sikerült elutasítani a véleményt."
+    } catch (err) {
+        console.error("/velemeny_elutasit HIBA : " + (err && err.message ? err.message : err));
+        return res.json({
+            message: "Nem sikerült elutasítani a véleményt." 
         });
     }       
 });
@@ -602,8 +602,6 @@ async function login_toFrontend (req, res) {
             session_data.ADMIN          = rows[0].ADMIN;    // Admin (Y/N) - főoldal adminisztrációhoz
             session_data.WEBBOLT_ADMIN  = rows[0].WEBBOLT_ADMIN;  // Webáruház admin (Y/N) - termékkezeléshez
             session_data.CSOPORT        = rows[0].CSOPORT;  // Felhasználó csoportja (szervezeti jellegű)
-            console.log("Session data:username=%s id_user=%s admin=%s webbolt_admin=%s csoport=%s", 
-                        session_data.NEV, session_data.ID_USER, session_data.ADMIN, session_data.WEBBOLT_ADMIN, session_data.CSOPORT);
         } else if (maxcount === 0) {
             // Hibás bejelentkezési adat
             msg = "Hibás felhasználónév vagy jelszó.";
@@ -611,8 +609,8 @@ async function login_toFrontend (req, res) {
 
         data = JSON.parse(JSON.stringify({ "message": msg, "maxcount": maxcount, "rows": rows }));
 
-    } catch {
-        console.error('/login HIBA VAGY felhasználó elrontotta a bejelentkezési adatait');
+    } catch (err) {
+        console.error("/login HIBA : " + (err && err.message ? err.message : err));
         data = JSON.parse(JSON.stringify({ "message": "Adatbázis hiba", "maxcount": -1, "rows": []}));
     } finally {
         if (conn) conn.release();  // Adatbázis kapcsolat felszabadítása
@@ -644,20 +642,18 @@ app.get('/admin_check', (req, res) => {
 // Működés: a session megsemmisítésével az user már nem lesz bejelentkezve
 app.get('/logout', (req, res) => {  
     session_data = req.session;
-    const uid = session_data.ID_USER; // Kijelentkezettnek az ID-ja (debug naplózáshoz)
-    console.log("kilogolt felhasznalo: " + uid);
     
     // === SESSION MEGSEMMISÍTÉSE ===
     // A destroy() függvény végleg törli a session adatokat a szerverről
     session_data.destroy(function(err) {
         if (err) {
-            console.error('Session destroy failed');
-            res.status(500).json({ message: 'Session destroy failed' });
+            console.error('Session destroy failed: ' + (err && err.message ? err.message : err));
+            res.json({ message: 'Session destroy failed', error: err && err.message ? err.message : err });
             return;
         }
         
         res.set(header1, header2);
-        res.json('Session destroyed successfully');
+        res.json({ message: 'Sikeres logout' });
         res.end();
     });
 });
@@ -763,15 +759,15 @@ app.post('/kosar_add', async (req, res) => {
 
         const eredmeny = await runExecute(sql, req, ertekek, false);
         if(eredmeny.message != "ok"){
-            throw new Error();
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
         res.json(eredmeny);
         res.end();
 
-    } catch {
-        console.error("kosar_add HIBA");
-        res.status(500).json({
-            message: "Hiba a kosár tétel hozzáadásakor."
+    } catch (err) {
+        console.error("kosar_add HIBA : " + (err && err.message ? err.message : err));
+        res.json({
+            message: "Hiba a kosár tétel hozzáadásakor." 
         });
     }    
 });
@@ -802,15 +798,15 @@ app.delete('/kosar_del',async (req, res) => {
 
         const eredmeny = await runExecute(sql, req, ertekek, false);
         if(eredmeny.message != "ok"){
-            throw new Error();
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
         res.json(eredmeny);
         res.end();
     }
-    catch {
-        console.error("kosar_del HIBA");
-        res.status(500).json({
-            message: "Hiba a kosár tétel törlésekor."
+    catch (err) {
+        console.error("kosar_del HIBA : " + (err && err.message ? err.message : err));
+        res.json({
+            message: "Hiba a kosár tétel törlésekor." 
         });
     }
 });
@@ -943,8 +939,9 @@ app.post('/rendeles',async (req, res) => {
         
         // === HIBA ELLENŐRZÉS: VAN-E MIT RENDELNI? ===
         if (json_termekek.message != "ok" || json_termekek.maxcount == 0) {
-            res.status(500).json({
-                message: "Szörnyű hiba történt a rendelés során: nincs mit rendelni."
+            res.json({
+                message: "Szörnyű hiba történt a rendelés során: nincs mit rendelni.",
+                error: json_termekek.message || "Nincs termék a kosárban"
             });
             return;
         } 
@@ -997,15 +994,15 @@ app.post('/rendeles',async (req, res) => {
 
         var eredmeny = await runExecute(sql, req, sqlErtekek, false);
         if (eredmeny.message != "ok") {
-            throw new Error();
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
         res.set(header1, header2);
         res.json(eredmeny);
         res.end();
-    } catch {
-        console.error("/rendeles HIBA");
-        res.status(500).json({
-            message: "Hiba a rendelés létrehozásakor."
+    } catch (err) {
+        console.error("/rendeles HIBA : " + (err && err.message ? err.message : err));
+        res.json({
+            message: "Hiba a rendelés létrehozásakor." 
         });
     }
 });
@@ -1035,15 +1032,15 @@ app.get('/rendeles_ellenorzes',async (req, res) => {
 
         var eredmeny = await runQueries(sql, ertekek);
         if(eredmeny.message != "ok"){
-            throw new Error();
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
         res.set(header1, header2);
         res.json(eredmeny);
         res.end();
-    } catch {
-        console.error("/rendeles_ellenorzes HIBA");
-        res.status(500).json({
-            message: "Hiba a rendelés ellenőrzésekor."
+    } catch (err) {
+        console.error("/rendeles_ellenorzes HIBA : " + (err && err.message ? err.message : err));
+        res.json({
+            message: "Hiba a rendelés ellenőrzésekor." 
         });
     }
 });
@@ -1076,16 +1073,16 @@ app.get('/rendelesek',async (req, res) => {
 
         var eredmeny = await runQueries(sql, ertekek);
         if(eredmeny.message != "ok"){
-            throw new Error();
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
         
         res.set(header1, header2);
         res.json(eredmeny);
         res.end();
-    } catch {
-        console.error("/rendelesek HIBA");
-        res.status(500).json({
-            message: "Hiba a rendelések lekérésekor."
+    } catch (err) {
+        console.error("/rendelesek HIBA : " + (err && err.message ? err.message : err));
+        res.json({
+            message: "Hiba a rendelések lekérésekor." 
         });
     }
 });
@@ -1110,15 +1107,15 @@ app.get('/rendelesek_tetelei',async (req, res) => {
 
         var eredmeny = await runQueries(sql, ertekek);
         if(eredmeny.message != "ok"){
-            throw new Error();
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
         res.set(header1, header2);
         res.json(eredmeny);
         res.end();
-    } catch {
-        console.error("/rendelesek_tetelei HIBA");
-        res.status(500).json({
-            message: "Hiba a rendelések lekérésekor."
+    } catch (err) {
+        console.error("/rendelesek_tetelei HIBA : " + (err && err.message ? err.message : err));
+        res.json({
+            message: "Hiba a rendelések lekérésekor." 
         });
     }
 });
@@ -1246,7 +1243,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
             // Ellenőrzés: már létezik-e ilyen kategória
             var q1 = await runQueries("SELECT ID_KATEGORIA FROM webbolt_kategoriak WHERE KATEGORIA = ?", [uj_kategoria], conn);
             if(q1.message != "ok"){
-                throw new Error();
+                throw new Error(q1.message || "Kategória lekérése sikertelen.");
             }
             if (q1.maxcount > 0) {
                 // Meglévő kategória ID
@@ -1255,7 +1252,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                 // Új kategória beszúrása
                 var ins = await runExecute("INSERT INTO webbolt_kategoriak (KATEGORIA) VALUES (?)", req, [uj_kategoria], true, conn);
                 if(ins.message != "ok"){
-                    throw new Error();
+                    throw new Error(ins.message || "Új kategória beszúrása sikertelen.");
                 }
                 ID_KATEGORIA = ins.rows.insertId;
             }
@@ -1278,7 +1275,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                 // 1. Lekérjük a régi képet, hogy törölni tudjuk (ha már nincs rá szükség)
                 var qsel = await runQueries("SELECT IMG FROM webbolt_fotok WHERE ID_TERMEK = ?", [termekid], conn);
                 if(qsel.message != "ok"){
-                    throw new Error();
+                    throw new Error(qsel.message || "Fotó lekérése sikertelen.");
                 }
 
                 if (qsel.maxcount > 0) {
@@ -1290,7 +1287,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                         req, [fajl.originalname, webPath, termekid], true, conn
                     );
                     if(frissites.message != "ok"){
-                        throw new Error();
+                        throw new Error(frissites.message || "Fotó frissítése sikertelen.");
                     }
 
                     // 2. A RÉGI képfájlt megpróbáljuk törölni (csak ha nem használ másik rendelés)
@@ -1305,7 +1302,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                         req, [termekid, fajl.originalname, webPath], true, conn
                     );
                     if(beszuras.message != "ok"){
-                        throw new Error();
+                        throw new Error(beszuras.message || "Fotó beszúrása sikertelen.");
                     }
                 }
                 fotolink = null; // Töröljük a FOTOLINK-et, ha feltöltöttünk fájlt
@@ -1314,7 +1311,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                 // Ha nincs új fájl, de a user esetleg módosította a link-et
                 var qkep = await runQueries("SELECT FILENAME FROM webbolt_fotok WHERE ID_TERMEK = ?", [termekid], conn);
                 if(qkep.message != "ok"){
-                    throw new Error();
+                    throw new Error(qkep.message || "Fotó lekérése sikertelen.");
                 }
                 if (qkep.maxcount > 0 && fotolink == qkep.rows[0].FILENAME) {
                     fotolink = null;
@@ -1325,7 +1322,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
             var sql = `UPDATE webbolt_termekek SET ID_KATEGORIA=?, NEV=?, AZON=?, AR=?, MENNYISEG=?, MEEGYS=?, LEIRAS=?, AKTIV=?, FOTOLINK=? WHERE ID_TERMEK=?`;
             let frissites = await runExecute(sql, req, [ID_KATEGORIA, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, fotolink, termekid], true, conn);
             if(frissites.message != "ok"){
-                throw new Error();
+                throw new Error(frissites.message || "Termék frissítése sikertelen.");
             }
 
             await conn.query("COMMIT;");
@@ -1340,7 +1337,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
             var sql = `INSERT INTO webbolt_termekek (ID_KATEGORIA, NEV, AZON, AR, MENNYISEG, MEEGYS, LEIRAS, AKTIV, FOTOLINK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
             var raw = await runExecute(sql, req, [ID_KATEGORIA, nev, azon, ar, mennyiseg, meegys, leiras, aktiv, fotolink], true, conn);
             if(raw.message != "ok"){
-                throw new Error();
+                throw new Error(raw.message || "Termék beszúrása sikertelen.");
             }
             // Az új termék ID-je az INSERT utáni LAST_INSERT_ID()
             termekid = raw.rows.insertId;
@@ -1356,7 +1353,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
                     req, [termekid, fajl.originalname, webPath], true, conn
                 );
                 if(beszuras.message != "ok"){
-                    throw new Error();
+                    throw new Error(beszuras.message || "Fotó beszúrása sikertelen.");
                 }
             }
             await conn.query("COMMIT;");
@@ -1365,10 +1362,12 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
 
         throw new Error("Érvénytelen 'insert' paraméter.");
 
-    } catch {
-        console.error("/termek_edit HIBA");
+    } catch (err) {
+        console.error("/termek_edit HIBA : " + (err && err.message ? err.message : err));
         if (conn) await conn.query("ROLLBACK;");  // Tranzakció visszavonása hiba esetén
-        res.status(500).json({ message: "Hiba a művelet során."});
+        res.json({ 
+            message: "Hiba a művelet során." 
+        });
     } finally {
         if (conn) conn.release();  // Kapcsolat felszabadítása
     }
@@ -1413,13 +1412,12 @@ app.get('/termek_adatok',async (req, res) => {
 //   3. Ha volt kép, megpróbálja fizikailag is törölni (csak ha nem használ másik rendelés)
 app.delete('/termek_del',async (req, res) => {
     try{
-        console.log("törlendő termék ID: " + req.query.ID_TERMEK); 
         var termekid = parseInt(req.query.ID_TERMEK);
 
         // 1. ELŐSZÖR lekérjük a kép elérési útját, mielőtt kitörölnénk a terméket
         var qFoto = await runQueries("SELECT IMG FROM webbolt_fotok WHERE ID_TERMEK = ?", [termekid]);
         if(qFoto.message != "ok"){
-            throw new Error();
+            throw new Error(qFoto.message || "Fotó lekérése sikertelen.");
         }
         
         var torlendoKep = null;
@@ -1432,7 +1430,7 @@ app.delete('/termek_del',async (req, res) => {
         let ertekek = [termekid];
         const eredmeny = await runExecute(sql, req, ertekek, true);
         if(eredmeny.message != "ok"){
-            throw new Error();
+            throw new Error(eredmeny.message || "Termék törlése sikertelen.");
         }
 
         // 3. Ha volt kép, megpróbáljuk fizikailag is törölni (biztonságos törlés)
@@ -1444,10 +1442,10 @@ app.delete('/termek_del',async (req, res) => {
         res.end();
 
     }
-    catch {
-        console.error("/termek_del HIBA");
-        res.status(500).json({
-            message: "Hiba a termék törlésekor."
+    catch (err) {
+        console.error("/termek_del HIBA : " + (err && err.message ? err.message : err));
+        res.json({
+            message: "Hiba a termék törlésekor." 
         });
     }
 });
@@ -1480,7 +1478,7 @@ try {
         // === SPECIÁLIS VÉDEKEZÉS: DROP TABLE * PARANCS ===
         // A legrosszabb szcenárió blokkolása
        if (/drop\s+table\s+\*/.test(sql.toLowerCase())) {
-        return res.status(500).json({
+        return res.json({
             message: "Ne nézzük egymást hülyének!",
             error: "A 'DROP TABLE *' parancs nem engedélyezett."
         });
@@ -1522,10 +1520,9 @@ try {
     } 
     catch (err) {
         // Hibanapló: ki és mit próbált
-        console.error(`/html_sql: ${session_data.NEV} elrontotta az admin lekérdezést. (${new Date().toISOString()})`);
-        res.status(500).json({
-            message: "Szörnyű hiba az sql parancs végrehajtásakor.",
-            error: err.message
+        console.error(`/html_sql: ${session_data.NEV} elrontotta az admin lekérdezést. (${new Date().toISOString()}) - ${err && err.message ? err.message : err}`);
+        res.json({
+            message: "Szörnyű hiba az sql parancs végrehajtásakor." 
         });
     }   
 });
@@ -2051,12 +2048,8 @@ async function kepTorlesHaNincsRendelesben(img) {
                 // Async unlink: nem blokkolja a szerver futását
                 fs.unlink(fullPath, (err) => {
                     if (err) console.error("Hiba a fájl törlésekor:", err);
-                    else console.log(`Fájl sikeresen törölve (nincs rendelésben): ${filename}`);
                 });
             }
-        } else {
-            // Ha rendelés hivatkozik rá, megtartjuk az adatintegritás miatt
-            console.log(`A fájl NEM törölhető, mert rendelés hivatkozik rá: ${img}`);
         }
 
     } catch (err) {
@@ -2092,13 +2085,12 @@ app.post('/send-email', async (req, res) => {
     try {
         const { email, subject, html } = req.body;  // JSON paraméterek kinyerése
 
-        console.log("email küldése: ", email);
         await sendEmail(email, subject, html);  // Email küldés SMTP-n keresztül
 
         res.json({ message: 'Email sikeresen elküldve' });
     } catch (err) {
         console.error('/send-email hiba:', err);
-        res.json({ message: 'Email hiba: '});
+        res.json({ message: 'Email hiba'});
     }
 });
 
