@@ -1482,14 +1482,14 @@ try {
         });
 }
 
-        // === TILTOTT PARANCSOK LISTÁJA ===
+        // === NEM SELECT PARANCSOK LISTÁJA ===
         const nem_select_parancsok = [
             "insert", "update", "delete", "drop", "alter", "create", 
             "truncate", "grant", "revoke", "commit", "rollback", "exec", 
-            "execute", "union", "transaction"  // UNION is veszélyes (SQL Injection)
+            "execute", "union", "transaction"
         ];
 
-        // Ellenőrzés: tartalmaz-e tiltott parancsot
+        // Ellenőrzés: tartalmaz-e NEM SELECT parancsot
         const nem_select = nem_select_parancsok.some(parancs => sql.toLowerCase().includes(parancs));
 
         // === SELECT LEKÉRDEZÉSEK ===
@@ -1503,7 +1503,7 @@ try {
             res.json({ adat: parsed, select: true });
             res.end();
         }
-        // === MÓDOSÍTÓ PARANCSOK (INSERT/UPDATE/DELETE) ===
+        // === NEM SELECT PARANCSOK ===
         else {
             let parsed = await runExecute(sql, req, [], true);
             if(parsed.message != "ok"){
