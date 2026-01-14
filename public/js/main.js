@@ -152,13 +152,6 @@ async function F5() {
 
 
 
-function SUM(lista) {
-    let sum = 0;
-    for (const element of lista) {
-        sum += element;
-    }
-    return sum;
-}
 
 
 function update_gombok (x) {
