@@ -212,10 +212,10 @@ async function rendelesekmegtolt(){
                     !border-l-0 
                     dark:!border-t-zinc-200/20 
                     dark:!border-b-zinc-200/20  
-                    lg:border-t-0 
-                    lg:border-b-0 
-                    lg:dark:border-t-0 
-                    lg:dark:border-b-0 
+                    lg:!border-t-0 
+                    lg:!border-b-0 
+                    lg:dark:!border-t-0 
+                    lg:dark:!border-b-0 
                     ">
                         <span><i class="bi bi-calendar"></i> Dátum</span>
                         <time class="text-gray-400">

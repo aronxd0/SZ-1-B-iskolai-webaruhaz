@@ -399,7 +399,7 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
 
 
 
-@media (max-width: 1400px) {
+@media (max-width: 1200px) {
   #top-navbar.offcanvas-start {
     width: 270px !important;
     overflow-y: auto;

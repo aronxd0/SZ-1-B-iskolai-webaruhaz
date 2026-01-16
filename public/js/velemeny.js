@@ -199,8 +199,8 @@ async function VelemenyekMutat(id_termek) {
                 <div class="!border-b !border-gray-300 dark:!border-b dark:!border-sky-950 pb-4">
                     <div class="flex items-center gap-3 mb-2">
                     <i class="bi bi-person-circle text-3xl"></i>
-                    <div>
-                        <p class="font-semibold">${element.NEV}</p>
+                    <div class="w-full">
+                        <p class="font-semibold space-x-2">${element.NEV} </p>
                         <p class="text-xs text-zinc-500">${new Date(element.DATUM).toLocaleString(navigator.language, {
                             year: 'numeric',
                             month: '2-digit',

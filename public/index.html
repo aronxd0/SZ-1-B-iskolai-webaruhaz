@@ -24,14 +24,14 @@
   <div class="container-fluid bg-zinc-200 text-slate-900 dark:bg-slate-950/95 dark:text-zinc-200 transition-all duration-700 ease-in-out min-h-screen flex flex-col">
     <!--#region fejlec-->
       <div class="fixed-top bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 transition-all duration-700 ease-in-out shadow-bottom px-1 px-lg-5 py-2 py-lg-0 dark:!border-b dark:!border-zinc-200/20" id="fejlec2">
-        <div class="navbar navbar-expand-xxl ">
+        <div class="navbar navbar-expand-xl ">
           <div class="container-fluid d-flex flex-nowrap">
 
             <button class="navbar-toggler border-0 text-3xl bg-zinc-300 text-gray-500 hover:text-gray-800 dark:bg-slate-950 dark:text-zinc-400 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out" type="button" data-bs-toggle="offcanvas" data-bs-target="#top-navbar" aria-controls="top-navbar">
               <span><i class="bi bi-list"></i></span>
             </button>
 
-            <div class="offcanvas offcanvas-start bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 col-xxl-6 dark:!border-r dark:!border-r-zinc-200/20" tabindex="-1" id="top-navbar" aria-labelledby="top-navbar">
+            <div class="offcanvas offcanvas-start bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 col-xl-6 dark:!border-r dark:!border-r-zinc-200/20" tabindex="-1" id="top-navbar" aria-labelledby="top-navbar">
               <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#top-navbar" aria-controls="top-navbar">
                   <div class="offcanvas-header d-flex justify-content-between p-3"> 
                     <span class="text-xl text-slate-900 dark:text-zinc-200">
@@ -42,13 +42,13 @@
                   </div>
               </button>
 
-              <ul class="navbar-nav p-4 p-xxl-0">
+              <ul class="navbar-nav p-4 p-xl-0">
                 <li class="nav-item py-2">
                   <img class="img-fluid m-2 hidden dark:block transition-all duration-300 w-20 h-15"   src="img/logo2.png">
                   <img class="img-fluid m-2 block dark:hidden transition-all duration-300 w-20 h-15"   src="img/logo-fekete.png">
                 </li>
 
-                <li class="nav-item py-2 py-xxl-0 d-flex align-items-center">
+                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
                   <div class="me-2 d-inline-block border-b border-transparent dark:border-b dark:border-transparent transition-hover duration-150 ease-in-out">
                     <button type="button" aria-label="Profil" class="btn bg-transparent hover:bg-transparent hover:text-slate-900 text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:hover:text-zinc-200 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out gomb rounded-4" data-bs-toggle="modal" data-bs-target="#profil">
                       <i class="bi bi-person-circle"></i>
@@ -57,7 +57,7 @@
                   </div>
                 </li>
 
-                <li class="nav-item py-2 py-xxl-0 d-flex align-items-center">
+                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
                   <div class="gombdiv me-3 d-inline-block border-b border-transparent dark:border-b dark:border-transparent transition-hover duration-150 ease-in-out">
                     <button id="home_button"  type="button" class="btn bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:hover:bg-slate-900 dark:hover:text-zinc-200 dark:text-zinc-400 transition-hover duration-300 ease-in-out gomb rounded-3" data-bs-dismiss="offcanvas"> 
                       <i class="bi bi-house" id="loginout"></i>
@@ -66,7 +66,7 @@
                   </div>
                 </li>
 
-                <li class="nav-item py-2 py-xxl-0 d-flex align-items-center">
+                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
                   <div class="gombdiv me-3 d-inline-block border-b border-transparent dark:border-b dark:border-transparent transition-hover duration-150 ease-in-out" id="kosar-gombdiv">
                     <button id="cart_button" type="button" class="btn bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out gomb rounded-3 d-flex" style="display: block !important;" data-bs-dismiss="offcanvas"> 
                       <i class="bi bi-cart2"></i>
@@ -76,7 +76,7 @@
                   </div>
                 </li>
 
-                <li class="nav-item py-2 py-xxl-0 d-flex align-items-center">
+                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
                   <div class="relative group d-inline-block hover-wrapper" id="admin-gombdiv">
                     <button id="admin_button" type="button" class="btn bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out gomb rounded-3 d-flex">
                       <div class="gear-wrap d-flex justify-content-center align-items-center align-self-center w-5 h-5"> 
@@ -301,8 +301,8 @@
         </div>
 
         <div class="bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 modal-footer d-flex justify-content-center">
-          <button id="bezar" type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out   w-auto" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>
           <button id="login_oksi_button" type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out  w-auto" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
+          <button id="bezar" type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out   w-auto" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>
         </div>
 
       </div>
@@ -315,16 +315,15 @@
         <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-center">
           <h4 class="modal-title">Kijelentkezés</h4>
         </div>
-
         <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 text-center">
           Biztosan ki szeretnél jelentkezni?
         </div>
-
         <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-center">
-          <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out  bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
-          <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out  bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
+          <div class="col-12 d-flex flex-column flex-sm-row w-full gap-2">
+            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full  bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
+            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full  bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
+          </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -365,8 +364,10 @@
           <div class="col-12 text-center" id="idt"></div>
         </div>
         <div class="modal-footer d-flex justify-content-center bg-zinc-300 text-slate-900 dark:bg-slate-800 dark:text-zinc-200">
-            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out bi bi-bag" data-bs-dismiss="modal"> Vásárlás folytatása</button>
-            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out bi bi-cart" data-bs-dismiss="modal" id="kosarmegtekintese"> Kosár megtekintése</button>
+          <div class="col-12 d-flex flex-column flex-sm-row w-full gap-2">
+            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full ease-in-out bi bi-bag" data-bs-dismiss="modal"> Vásárlás folytatása</button>
+            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full ease-in-out bi bi-cart" data-bs-dismiss="modal" id="kosarmegtekintese"> Kosár megtekintése</button>
+          </div>
         </div>
       </div>
     </div>
@@ -469,8 +470,10 @@
         <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center"><span class="modal-title text-xl">Megerősítés</span></div>
         <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 text-center"></div>
         <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center">
-            <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200 bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
-            <button type="button" class="btn bg-zinc-600 text-zinc-200 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-red-500 dark:hover:bg-slate-900 dark:hover:text-red-500 bi bi-trash szemetes" data-bs-dismiss="modal" > Törlés</button>
+          <div class="col-12 gap-2 d-flex flex-column flex-sm-row">
+            <button type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bi bi-trash szemetes" data-bs-dismiss="modal" > Törlés</button>
+            <button type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
+          </div>
         </div>
       </div>
     </div>
