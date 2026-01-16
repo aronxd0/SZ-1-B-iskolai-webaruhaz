@@ -78,12 +78,10 @@ html, body {
 
 .comment { font-size: 14px; }
 
-
 /* vilagos modban */
 .gombdiv.aktiv { 
   border-bottom: 1px solid var(--slate-900);
   color: var(--slate-900);
-
 } 
 
 .gombdiv.aktiv button {
@@ -102,17 +100,11 @@ html.dark .gombdiv.aktiv button {
   font-weight: bold;
 }
 
-.zoom-img {
-  transform: scale(1);
-}
+.zoom-img { transform: scale(1); }
 
-.hovered {
-  aspect-ratio: auto;
-}
+.hovered { aspect-ratio: auto; }
 
-.shadow-bottom {
-  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175);
-}
+.shadow-bottom { box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175); }
 
 
 .dropdown-toggle::after { display: none !important; }
