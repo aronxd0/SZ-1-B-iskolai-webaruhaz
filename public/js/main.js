@@ -149,7 +149,17 @@ async function F5() {
 }
 
 
-
+function RangokHTML(rang) {
+    let ranghtml = "";
+    switch (rang) {
+        case "Students": ranghtml = `<span class="inline-flex items-center rounded-md bg-blue-400/10 px-2 py-1 text-sm font-medium text-blue-400 !border !border-blue-400/30">● ${rang}</span>`; break;
+        case "Teachers": ranghtml = `<span class="inline-flex items-center rounded-md bg-yellow-400/10 px-2 py-1 text-sm font-medium text-yellow-600 !border !border-yellow-600/40">● ${rang}</span>`; break;
+        case "Bosses": ranghtml = `<span class="inline-flex items-center rounded-md bg-indigo-400/10 px-2 py-1 text-sm font-medium text-indigo-400 !border !border-indigo-400/30">● ${rang}</span>`; break;
+        case "Admin": ranghtml = `<span class="inline-flex items-center rounded-md bg-red-400/10 px-2 py-1 text-sm font-medium text-red-400 !border !border-red-400/20">● Admin</span>`; break;
+        case "Webbolt Admin": ranghtml = `<span class="inline-flex items-center rounded-md bg-purple-400/10 px-2 py-1 text-sm font-medium text-purple-400 !border !border-purple-400/30">● Webbolt Admin</span>`; break;
+    }
+    return ranghtml;
+}
 
 
 

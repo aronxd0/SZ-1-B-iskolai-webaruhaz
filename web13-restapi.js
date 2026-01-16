@@ -375,7 +375,7 @@ app.get('/velemenyek',(req, res) => {
     
     // SQL lekérdezés: a vélemény szövege, szerző neve, és az időpontja (helyi időzóna konvertálva)
     var sql = `
-    SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, 
+    SELECT users.NEV, webbolt_velemenyek.SZOVEG, webbolt_velemenyek.ID_VELEMENY, webbolt_velemenyek.ID_TERMEK, users.CSOPORT, users.ADMIN, users.WEBBOLT_ADMIN, 
            CONVERT_TZ(webbolt_velemenyek.datum, '+00:00','${idozona()}') AS DATUM 
     ${sajatvelemeny == 1 ? ", webbolt_velemenyek.ALLAPOT" : ""}
     FROM webbolt_velemenyek 
