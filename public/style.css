@@ -1,5 +1,3 @@
-/* #region GLOBÁLIS BEÁLLÍTÁSOK */
-
 /* Betűtípusok importálása */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap');
@@ -31,77 +29,23 @@ html, body {
 /* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
 .container-fluid { padding-left: 0 !important; padding-right: 0 !important; }
 
-
-
-/* #endregion */
-
-
-/* #region FEJLÉC */
 .iemge { max-width: 150px; width: 100%; }
 
 .navbar-toggler:focus { box-shadow: none; }
-/* #endregion */
-
-
-/* #region HERO */
-
-/*
-.welcome {
-  background-image: url('img/welcome.jpg'); 
-  background-size: cover; 
-  background-position: center; 
-  width: 100%; 
-  height: 700px;
-}
-  */
 
 .cim { font-size: 35px; }
-/* #endregion */
-
-
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-
-/* termekeknel a kep lekicsinyitese */
-.kepp {
-    width: 60px !important;
-    height: 60px;
-    object-fit: cover;
-}
-
-.kepp2 {
-  width: 300px;
-  height: 300px;
-  object-fit: contain;
-}
-
-/* termekeknel a kartya merete */
-.card {
-  min-height: 350px;
-  border: none;
-}
-
-/* ha raviszem az egeret */
-.card:hover {
-  cursor: pointer;
-}
-
-/* az offcanvas menuben kisebb betumeret */
-.offcanvas {
-  font-size: 14px;
-}
+.offcanvas { font-size: 14px; }
 
 /* modal ablakok megnyitasakor blur hatter */
 .modal-open .modal-backdrop {
   backdrop-filter: blur(20px);
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 1 !important;
-  
 }
-
-
 
 .modal.fade .modal-dialog {
   opacity: 0;
@@ -116,9 +60,6 @@ html, body {
   transform: translateY(0) scale(1);
 }
 
-
-
-
 .offcanvas-backdrop {
   transition: backdrop-filter 0.8s ease, background-color 0.8s ease, opacity 0.8s ease;
   backdrop-filter: blur(0px);
@@ -132,27 +73,11 @@ html, body {
   opacity: 1 !important;
 }
 
-
-
-/* modal fejlec-lablec semmi border */
 .modal-header { border-bottom: none; }
 .modal-footer { border-top: none; }
 
-/* velemenyek kisebb betumeret */
 .comment { font-size: 14px; }
 
-/* label korul ne legyen semmi ::after elem mert neha nem jeleniti meg jol */
-label::after { content: none !important; }
-
-
-/* felso menusorban a gomboknak semmi border + atmenet ha raviszem az egeret */
-.gomb { border: none; }
-
-
-/* felso menusor doboz also border (feher csik) */
-.gombdiv button {
-  background-color: transparent;
-}
 
 /* vilagos modban */
 .gombdiv.aktiv { 
