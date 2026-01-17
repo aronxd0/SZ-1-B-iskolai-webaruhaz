@@ -503,25 +503,25 @@ function Kovi(keri){
         case("Kovi1"): // következő oldal
             if(Joldal < oldalszam){
                 Joldal++;
-                KERESOBAR();
+                KERESOBAR(false);
                 return;
             }
         case("Kovi2"): // utolsó oldal
                 console.log("oldalszam: "+ oldalszam);
                 Joldal = oldalszam;
                 console.log("Joldal: "+ Joldal + " old szam: "+ oldalszam);
-                KERESOBAR();
+                KERESOBAR(false);
                 return;
         
         case("vissza1"):// előző oldal
             if(Joldal > 1){
                 Joldal--;
-                KERESOBAR();
+                KERESOBAR(false);
                 return;
             }
         case("Vissza2"):// első oldal
             Joldal = 1;
-            KERESOBAR();
+            KERESOBAR(false);
             return
         
    

@@ -2,7 +2,7 @@ let jelenlegi = 1;
 let osszesoldal = 0;
 
 $("#rend_button").click(async function () {
-    rendelesekmegtolt();
+    rendelesekmegtolt(true);
 });
 
 
@@ -458,15 +458,15 @@ async function rendelesekmegtolt(pushHistory = true) {
     });
 
     if (pushHistory) {
-        SPAState.currentView = 'termek';
-        SPAState.currentData = { id: termek_id };  
+        SPAState.currentView = 'rendelesek';
+        SPAState.currentData = { };  
         history.pushState(
             { 
-                view: 'termek',
-                id: termek_id  
+                view: 'rendelesek'
+                 
             },
-            'Termék',
-            `#termek/${termek_id}`
+            'Rendelések',
+            `#rendelesek`
         );
       }
 }

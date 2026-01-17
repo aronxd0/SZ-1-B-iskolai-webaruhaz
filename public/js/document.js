@@ -8,8 +8,6 @@ window.addEventListener("popstate", (e) => {
         return;
     }
     
-    console.log("popstate event:", e.state);
-    
     // Különböző nézetek kezelése
     switch(e.state.view) {
         case "home":
@@ -22,6 +20,10 @@ window.addEventListener("popstate", (e) => {
             
         case "kosar":
             Kosar_Mutat(false);
+            break;
+        
+        case "rendelesek":
+            rendelesekmegtolt(false); 
             break;
             
         case "search":
@@ -263,11 +265,13 @@ $(document).ready(function() {
         Termek_Mutat(null, parseInt(termekId), false);
     } else if (hash === '#kosar') {
         Kosar_Mutat(false);
-    } else {
+    } else if (hash === '#rendelesek') {
+        rendelesekmegtolt(false); 
+    } 
+    else {
         Kezdolap(false);
     }
     
-    // ✅ EZ IS KELL - History inicializálás
     if (!history.state) {
         history.replaceState({ view: 'home' }, 'Kezdőlap', '#home');
     }
