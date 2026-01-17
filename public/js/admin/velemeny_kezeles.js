@@ -2,7 +2,7 @@
 var velemeny_osszes;
 var velemeny_jelenlegi = 1;
 
-async function Admin_Velemenykezeles() {
+async function Admin_Velemenykezeles(pushHistory = true) {
     let varodb = await ajax_call(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, "GET", null, true);
     velemeny_osszes = Math.ceil(varodb.maxcount / 10)
     
@@ -38,6 +38,16 @@ async function Admin_Velemenykezeles() {
         AdminVelemenyekMutat();
         $("#pagi").html("");
     });
+
+    if (pushHistory) {
+        SPAState.currentView = 'velemeny-kezeles';
+        SPAState.currentData = { };  
+        history.pushState(
+            { view: 'velemeny-kezeles' },
+            'Vélemény kezelés',
+            `#velemenykezeles`
+        );
+    }
 }
 
 
@@ -370,7 +380,7 @@ function Kovi_vel(keri){
             break;
     }
 
-    Admin_Velemenykezeles();
+    Admin_Velemenykezeles(false);
 }
 
 

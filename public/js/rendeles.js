@@ -468,5 +468,5 @@ async function rendelesekmegtolt(pushHistory = true) {
             'Rendelések',
             `#rendelesek`
         );
-      }
+    }
 }

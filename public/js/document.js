@@ -25,11 +25,14 @@ window.addEventListener("popstate", (e) => {
         case "rendelesek":
             rendelesekmegtolt(false); 
             break;
+
+        case "velemeny-kezeles":
+            Admin_Velemenykezeles(false); 
+            break;
             
         case "search":
             if (e.state.data) {
                 $("#nev1").val(e.state.data.searchTerm || '');
-                // További feltételek visszaállítása szükség szerint
                 KERESOBAR();
             }
             break;
@@ -267,7 +270,9 @@ $(document).ready(function() {
         Kosar_Mutat(false);
     } else if (hash === '#rendelesek') {
         rendelesekmegtolt(false); 
-    } 
+    } else if (hash === '#velemenykezeles') {
+        Admin_Velemenykezeles(false);
+    }
     else {
         Kezdolap(false);
     }
