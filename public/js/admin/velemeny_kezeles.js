@@ -84,7 +84,13 @@ async function AdminVelemenyekMutat() {
                             <div class="d-flex align-items-center h-full justify-content-center justify-content-sm-end gap-2 mt-2">
                                 <button 
                                 class="
-                                px-3 py-1 text-sm lg:text-base rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out 
+                                px-3 py-1 text-sm lg:text-base rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 
+                                hover:text-red-700  
+                                hover:bg-red-400/5  
+                                hover:!border-red-700 
+                                dark:hover:bg-red-900/20 
+                                dark:hover:!border-red-600/30 
+                                dark:hover:text-red-600    dark:!border-zinc-200/10  transition-all duration-150 ease-in-out 
                                     w-auto" onclick="Velemeny_Elutasit(${element.ID_VELEMENY})"> 
                                     <i class="bi bi-x-lg "></i> 
                                      Elutasítás
@@ -92,7 +98,13 @@ async function AdminVelemenyekMutat() {
 
                                 <button 
                                 class="
-                                px-3 py-1 text-sm lg:text-base rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out 
+                                px-3 py-1 text-sm lg:text-base rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 
+                                hover:text-emerald-600  
+                                hover:bg-emerald-400/10   
+                                hover:!border-emerald-700 
+                                dark:hover:bg-emerald-900/20 
+                                dark:hover:!border-emerald-600/60 
+                                dark:hover:text-emerald-600  dark:!border-zinc-200/10  transition-all duration-150 ease-in-out 
                                     w-auto" onclick="Velemeny_Elfogad(${element.ID_VELEMENY})"> 
                                     <i class="bi bi-check2 "></i>
                                      Jóváhagyás

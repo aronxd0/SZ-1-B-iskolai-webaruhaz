@@ -423,13 +423,15 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
       text-zinc-200 
       dark:bg-gray-800   
       dark:text-zinc-200 
+      dark:!border-zinc-200/10 
+      
       hover:text-red-700  
       hover:bg-red-400/5  
       hover:!border-red-700 
-      dark:hover:bg-red-900/20  
-      dark:!border-zinc-200/10 
+      dark:hover:bg-red-900/20 
       dark:hover:!border-red-600/30 
       dark:hover:text-red-600 
+
       transition-all duration-150 ease-in-out  
             
            w-full  tracking-[2px] 
