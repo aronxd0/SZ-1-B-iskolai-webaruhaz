@@ -275,7 +275,7 @@ function Velemeny_Iras(id_termek) {
 
 
 
-async function Termek_Mutat(event, termek_id) {
+async function Termek_Mutat(event, termek_id, push = true) {
   $("#lenti").fadeIn(300);
   $("#termekview").modal("hide");
   //console.log(`cuccok: ${cuccok}`);
@@ -697,7 +697,13 @@ async function Termek_Mutat(event, termek_id) {
 
         });
 
-
+        if (push) {
+          history.pushState(
+            { view: "termek", id: termek_id },
+            "",
+            `#termek/${termek_id}`
+          );
+        }
         
 
 

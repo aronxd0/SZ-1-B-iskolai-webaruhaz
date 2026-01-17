@@ -24,16 +24,19 @@ $(document).ready(function() {
     F5();
                    
     
-    let lgmeret = window.innerWidth >= 992;
-    window.addEventListener("resize", () => {
-        const mostlg = window.innerWidth >= 992;
 
-        if (!lgmeret && mostlg) { // átléptük felfelé
-            document.getElementById("kicsi_nezet").checked = false;
-            document.getElementById("nagy_nezet").checked = true;
+
+    window.addEventListener("popstate", (e) => {
+        if (!e.state) return;
+        console.log("popstate event:", e.state);
+      
+        if (e.state.view === "termek") {
+          Termek_Mutat(null, e.state.id, false);
         }
-
-        lgmeret = mostlg;
+      
+        if (e.state.view === "kosar") {
+          Kosar_Mutat(false);
+        }
     });
 
 
