@@ -1,5 +1,43 @@
 // az oldal betoltese utani resz (document ready function)
 
+
+window.addEventListener("popstate", (e) => {
+    if (!e.state) {
+        // Ha nincs state (pl. első betöltés), menj a kezdőlapra
+        Kezdolap(false);
+        return;
+    }
+    
+    console.log("popstate event:", e.state);
+    
+    // Különböző nézetek kezelése
+    switch(e.state.view) {
+        case "home":
+            Kezdolap(false);
+            break;
+            
+        case "termek":
+            Termek_Mutat(null, e.state.id, false);
+            break;
+            
+        case "kosar":
+            Kosar_Mutat(false);
+            break;
+            
+        case "search":
+            if (e.state.data) {
+                $("#nev1").val(e.state.data.searchTerm || '');
+                // További feltételek visszaállítása szükség szerint
+                KERESOBAR();
+            }
+            break;
+            
+        default:
+            Kezdolap(false);
+    }
+});
+
+
 $(document).ready(function() {
     
     $("#toast1").toast("hide");
@@ -26,18 +64,7 @@ $(document).ready(function() {
     
 
 
-    window.addEventListener("popstate", (e) => {
-        if (!e.state) return;
-        console.log("popstate event:", e.state);
-      
-        if (e.state.view === "termek") {
-          Termek_Mutat(null, e.state.id, false);
-        }
-      
-        if (e.state.view === "kosar") {
-          Kosar_Mutat(false);
-        }
-    });
+    
 
 
     //ArFeltolt();
@@ -124,14 +151,14 @@ $(document).ready(function() {
         $(this).closest(".gombdiv").addClass("aktiv");
     });
 
-
-
-    $("#home_button").click(function() {
-        Kezdolap();
-        FelaTetore();
+    $("#cart_button").click(function() {
+        Kosar_Mutat(true);
     });
 
-    $("#home_button").trigger("click");
+    $("#home_button").click(function() {
+        Kezdolap(true);
+        FelaTetore();
+    });
 
 
     // slidernek input mezö , változtatni kell a slider inputokaz as well as  a slider value: Enter után  szürni kell , emouseuot on is .
@@ -228,12 +255,22 @@ $(document).ready(function() {
         
     }, 30000);
 
-
-
-   
-
-
     FelaTetore();
+
+    const hash = window.location.hash;
+    if (hash.startsWith('#termek/')) {
+        const termekId = hash.split('/')[1];
+        Termek_Mutat(null, parseInt(termekId), false);
+    } else if (hash === '#kosar') {
+        Kosar_Mutat(false);
+    } else {
+        Kezdolap(false);
+    }
+    
+    // ✅ EZ IS KELL - History inicializálás
+    if (!history.state) {
+        history.replaceState({ view: 'home' }, 'Kezdőlap', '#home');
+    }
 
 });
 

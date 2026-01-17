@@ -109,11 +109,11 @@ function Kovi_rendeles(keri){
             break;
     }
 
-    rendelesekmegtolt();
+    rendelesekmegtolt(true);
 }
 
 
-async function rendelesekmegtolt(){
+async function rendelesekmegtolt(pushHistory = true) {
     $("#welcome_section").fadeOut(300);
     $("#kateogoria-carousel").fadeOut(300);
     $("#felsosor").removeClass("mt-[100px]").addClass("mt-[100px]");
@@ -456,4 +456,17 @@ async function rendelesekmegtolt(){
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(s).fadeIn(300);
     });
+
+    if (pushHistory) {
+        SPAState.currentView = 'termek';
+        SPAState.currentData = { id: termek_id };  
+        history.pushState(
+            { 
+                view: 'termek',
+                id: termek_id  
+            },
+            'Termék',
+            `#termek/${termek_id}`
+        );
+      }
 }

@@ -9,7 +9,7 @@ let ureskosar = `
                     <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
                 </div>`;
 
-$("#cart_button").click(async function () {
+async function Kosar_Mutat(pushHistory = true) {
     tetelekli = [];
     //$("#content_hely").html("");
     console.log("cart_button click xd");
@@ -209,8 +209,19 @@ $("#cart_button").click(async function () {
             AR_SUM("termek_ar", "sumar", false);
         });
         $("#pagi").html("");
+
+        // History push hozzáadása
+        if (pushHistory) {
+            SPAState.currentView = 'kosar';
+            SPAState.currentData = {};
+            history.pushState(
+                { view: 'kosar' },
+                'Kosár',
+                '#kosar'
+            );
+        }
         
-});
+};
 
 
 

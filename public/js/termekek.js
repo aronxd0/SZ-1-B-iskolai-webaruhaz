@@ -275,7 +275,7 @@ function Velemeny_Iras(id_termek) {
 
 
 
-async function Termek_Mutat(event, termek_id, push = true) {
+async function Termek_Mutat(event, termek_id, pushHistory = true) {
   $("#lenti").fadeIn(300);
   $("#termekview").modal("hide");
   //console.log(`cuccok: ${cuccok}`);
@@ -543,7 +543,6 @@ async function Termek_Mutat(event, termek_id, push = true) {
     let termek_megtekintes = `
     
       <div class="container my-1">
-        <button class="p-2 my-3" onclick="KERESOBAR()"><i class="bi bi-caret-left-fill" ></i> Inkább böngészek tovább</button>
         <div class="row g-5">
           <div class="col-12 col-xl-7">
             <div onmousemove="zoomMove(event, this)" onmouseleave="zoomReset(this)" class="relative w-full h-[420px] lg:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl overflow-hidden bg-zinc-300 dark:bg-slate-950">
@@ -667,7 +666,8 @@ async function Termek_Mutat(event, termek_id, push = true) {
 
     if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
     else {
-      if (event.target.tagName != "button") {
+      const gombraKattintas = event && event.target && event.target.tagName === "BUTTON";
+      if (!gombraKattintas) {
         // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
         $("#welcome_section").fadeOut(300);
         $("#pagi").html("");
@@ -697,11 +697,16 @@ async function Termek_Mutat(event, termek_id, push = true) {
 
         });
 
-        if (push) {
+        if (pushHistory) {
+          SPAState.currentView = 'termek';
+          SPAState.currentData = { id: termek_id };  
           history.pushState(
-            { view: "termek", id: termek_id },
-            "",
-            `#termek/${termek_id}`
+              { 
+                  view: 'termek',
+                  id: termek_id  
+              },
+              'Termék',
+              `#termek/${termek_id}`
           );
         }
         
