@@ -57,69 +57,49 @@ async function AdminVelemenyekMutat() {
                 for (const element of varo.rows) {
                     ss += `
 
-
-                    <div class="!border-b !border-gray-300 dark:!border-b dark:!border-sky-950 pb-4 mt-3">
-                        <div class="flex items-center gap-3 mb-2">
-                        <i class="bi bi-person-circle text-3xl"></i>
-                        <div>
-                            <p class="font-semibold">${element.NEV}</p>
-                            <p class="text-xs text-zinc-500">${new Date(element.DATUM).toLocaleString(navigator.language, {
-                                year: 'numeric',
-                                month: '2-digit',
-                                day: '2-digit',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                hour12: false
-                            })}</p>
+                    <div class="row !border-b !border-gray-300 dark:!border-b dark:!border-sky-950 pb-4 mt-3">
+                        <div class="col-12 col-lg-8">
+                            <div class="">
+                                <div class="flex items-center gap-3 mb-2">
+                                <i class="bi bi-person-circle text-3xl"></i>
+                                <div>
+                                    <p class="font-semibold">${element.NEV}</p>
+                                    <p class="text-xs text-zinc-500">${new Date(element.DATUM).toLocaleString(navigator.language, {
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit',
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        hour12: false
+                                    })}</p>
+                                </div>
+                                </div>
+                                <p class="text-zinc-600 dark:text-zinc-400 text-start">
+                                    ${element.SZOVEG.toString()}
+                                </p>
+                                
+                            </div>
                         </div>
-                        </div>
-                        <p class="text-zinc-600 dark:text-zinc-400 text-start">
-                            ${element.SZOVEG.toString()}
-                        </p>
-                        <div class="d-flex justify-content-end gap-2 mt-2">
-                            <button 
-                            class="
-                            px-6 py-2 rounded-xl !border !border-transparent  
-                            bg-slate-900 
-                            text-zinc-200 
-                            dark:bg-gray-800   
-                            dark:text-zinc-200 
-                            hover:text-slate-900  
-                            hover:bg-zinc-100 
-                            hover:!border-slate-900 
-                            dark:hover:bg-gray-700/70  
-                            dark:!border-zinc-200/10 
-                            dark:hover:!border-zinc-200/20 
-                            dark:hover:text-zinc-200 
-                            
-                            transition-all duration-150 ease-in-out 
-                                w-auto" onclick="Velemeny_Elutasit(${element.ID_VELEMENY})"> 
-                                <i class="bi bi-x-lg font-semibold "></i>
-                                <span class="d-none d-sm-inline font-semibold "> Elutasítás</span>
-                            </button>
+                        <div class="col-12 col-lg-4">
+                            <div class="d-flex align-items-center h-full justify-content-center justify-content-sm-end gap-2 mt-2">
+                                <button 
+                                class="
+                                px-3 py-1 text-sm lg:text-base rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out 
+                                    w-auto" onclick="Velemeny_Elutasit(${element.ID_VELEMENY})"> 
+                                    <i class="bi bi-x-lg "></i> 
+                                     Elutasítás
+                                </button>
 
-                            <button 
-                            class="
-                        px-6 py-2 rounded-xl !border !border-transparent 
-                            bg-slate-900 
-                            text-zinc-200 
-                            dark:bg-gray-800   
-                            dark:text-zinc-200 
-                            hover:text-slate-900  
-                            hover:bg-zinc-100 
-                            hover:!border-slate-900 
-                            dark:hover:bg-gray-700/70  
-                            dark:!border-zinc-200/10 
-                            dark:hover:!border-zinc-200/20 
-                            dark:hover:text-zinc-200 
-                            transition-all duration-150 ease-in-out 
-                                w-auto" onclick="Velemeny_Elfogad(${element.ID_VELEMENY})"> 
-                                <i class="bi bi-check2 font-semibold "></i>
-                                <span class="d-none d-sm-inline font-semibold "> Jóváhagyás</span> 
-                            </button>
+                                <button 
+                                class="
+                                px-3 py-1 text-sm lg:text-base rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out 
+                                    w-auto" onclick="Velemeny_Elfogad(${element.ID_VELEMENY})"> 
+                                    <i class="bi bi-check2 "></i>
+                                     Jóváhagyás
+                                </button>
+                            </div>
                         </div>
                     </div>
-
 
                 <!--
                 <div class="w-100 p-3 rounded-4 shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 mt-3 mb-3 comment">
