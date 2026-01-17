@@ -792,6 +792,7 @@ async function Kezdolap(pushHistory = true) {
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { update_gombok(0); }
     
     KosarTetelDB();
+    Szurok_Torlese();
     
     if (pushHistory) {
         SPAState.currentView = 'home';
@@ -815,7 +816,7 @@ async function Szurok_Torlese() {
     Nemaktivak = false;
     await ArFeltolt(KeresonekSQLCraft(), "", "");
     
-    KERESOBAR();
+    KERESOBAR(false);
     
 }
 

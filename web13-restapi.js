@@ -413,18 +413,15 @@ app.get('/velemenyek',(req, res) => {
         sql += `WHERE ${whereFeltetelek.join(' AND ')} `;
     }
 
-    if(szelektalas == 1){
-        sql += `ORDER BY DATUM `;  // Legújabbtól a legrégebbiig
-    }
-    else{
-        sql += `ORDER BY DATUM DESC `;  // Legújabbtól a legrégebbiig
-    }
+    
+    sql += `ORDER BY DATUM DESC `;  // Legújabbtól a legrégebbiig
+    
+    
     
     if(szelektalas == 1){
             sql += `limit 10 offset ?`
             ertekek.push(offset*10)
     }
-
     sendJson_toFrontend (res, sql, ertekek);
 });
 

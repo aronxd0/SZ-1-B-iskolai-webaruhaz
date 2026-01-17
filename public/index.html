@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
     <script> tailwind.config = { darkMode: 'class', } </script>
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
@@ -68,7 +69,7 @@
 
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
                   <div class="gombdiv me-3 d-inline-block border-b border-transparent dark:border-b dark:border-transparent transition-hover duration-150 ease-in-out" id="kosar-gombdiv">
-                    <button id="cart_button" type="button" class="py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out gomb rounded-3 d-flex" style="display: block !important;" data-bs-dismiss="offcanvas"> 
+                    <button id="cart_button" type="button" class="py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex" style="display: block !important;" data-bs-dismiss="offcanvas"> 
                       <i class="bi bi-cart2"></i>
                       <span> Kosár</span>
                       <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span>
@@ -77,8 +78,47 @@
                 </li>
 
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
+
+                  <div class="dropdown">
+                    <button id="admin_button" type="button" class="dropdown-toggle py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex" data-bs-toggle="dropdown">
+                      <div class="gear-wrap d-flex justify-content-center align-items-center align-self-center w-5 h-5"> 
+                        <i class="bi bi-gear admin-gear"></i>
+                      </div>
+                      <span>&nbsp;Admin&nbsp;</span>
+                      <i class="bi bi-caret-down-fill text-sm align-self-center"></i>
+                    </button>
+                    <ul class="dropdown-menu !border !border-0 shadow-xl bg-zinc-300 dark:bg-slate-950">
+                      <li>
+                        <button id="vlm_button" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" onclick="Admin_Velemenykezeles()" data-bs-dismiss="offcanvas"> 
+                          <i class="bi bi-chat-dots"></i>
+                          <span>&nbsp;Vélemények</span>
+                        </button>
+                      </li>
+                      <li>
+                        <button id="admin_uj_termek" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="UjTermek()" data-bs-dismiss="offcanvas">
+                          <i class="bi bi-plus"></i>
+                          <span>&nbsp;Új termék</span>
+                      </button>
+                      </li>
+                      <li>
+                        <button id="admin_stats" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="Statisztikak()" data-bs-dismiss="offcanvas">
+                          <i class="bi bi-bar-chart"></i>
+                          <span>&nbsp;Statisztikák</span> 
+                        </button>
+                      </li>
+                      <li><hr class="dropdown-divider bg-gray-300 dark:bg-zinc-200/30"></hr></li>
+                      <li>
+                        <button id="admin_sql" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="SQLinput()" data-bs-dismiss="offcanvas">
+                          <i class="bi bi-database"></i>
+                          <span>&nbsp;SQL</span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <!--
                   <div class="relative group d-inline-block hover-wrapper" id="admin-gombdiv">
-                    <button id="admin_button" type="button" class="py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out gomb rounded-3 d-flex">
+                    <button id="admin_button" type="button" class="py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex">
                       <div class="gear-wrap d-flex justify-content-center align-items-center align-self-center w-5 h-5"> 
                         <i class="bi bi-gear admin-gear"></i>
                       </div>
@@ -86,28 +126,29 @@
                       <i class="bi bi-caret-down-fill text-sm align-self-center"></i>
                     </button>
 
-                    <div class="absolute left-0 bg-zinc-300 dark:bg-slate-950 dark:text-zinc-200 p-3 transition-all duration-700 z-50 dropdown-panel">
-                      <button id="vlm_button" type="button" class="py-2 px-1 text-lg bg-zinc-300 text-gray-500 hover:bg-zinc-300 hover:text-slate-700 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-slate-950dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out gomb rounded-none w-full d-flex" onclick="Admin_Velemenykezeles()" data-bs-dismiss="offcanvas"> 
+                    <div class="absolute rounded-lg left-0 bg-zinc-300 dark:bg-slate-950 dark:text-zinc-200 transition-all duration-700 z-50 dropdown-panel">
+                      <button id="vlm_button" type="button" class="py-2 px-3 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-slate-950dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-none w-full d-flex" onclick="Admin_Velemenykezeles()" data-bs-dismiss="offcanvas"> 
                         <i class="bi bi-chat-dots"></i>
                         <span>&nbsp;Vélemények</span>
                       </button>
 
-                      <button id="admin_uj_termek" type="button" class="py-2 px-1 text-lg bg-zinc-300 text-gray-500 hover:bg-zinc-300 hover:text-slate-700 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-slate-950 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out gomb rounded-3 d-flex" type="button"  onclick="UjTermek()" data-bs-dismiss="offcanvas">
+                      <button id="admin_uj_termek" type="button" class="py-2 px-3 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-slate-950 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-none w-full d-flex" type="button"  onclick="UjTermek()" data-bs-dismiss="offcanvas">
                           <i class="bi bi-plus"></i>
                           <span>&nbsp;Új termék</span>
                       </button>
 
-                      <button id="admin_stats" type="button" class="py-2 px-1 text-lg bg-zinc-300 text-gray-500 hover:bg-zinc-300 hover:text-slate-700 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-slate-950 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out gomb rounded-3 d-flex" type="button"  onclick="Statisztikak()" data-bs-dismiss="offcanvas">
+                      <button id="admin_stats" type="button" class="py-2 px-3 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-slate-950 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-none w-full d-flex" type="button"  onclick="Statisztikak()" data-bs-dismiss="offcanvas">
                         <i class="bi bi-bar-chart"></i>
                         <span>&nbsp;Statisztikák</span> 
                       </button>
 
-                      <button id="admin_sql" type="button" class="py-2 px-1 text-lg bg-zinc-300 text-gray-500 hover:bg-zinc-300 hover:text-slate-700 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-slate-950 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out gomb rounded-3 d-flex" type="button"  onclick="SQLinput()" data-bs-dismiss="offcanvas">
+                      <button id="admin_sql" type="button" class="py-2 px-3 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-slate-950 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-none w-full d-flex" type="button"  onclick="SQLinput()" data-bs-dismiss="offcanvas">
                         <i class="bi bi-database"></i>
                         <span>&nbsp;SQL</span>
                       </button>
                    </div>
                   </div>
+                  -->
                 </li>    
               </ul>
             </div>
@@ -169,12 +210,12 @@
           <div class="col-12 col-xxl-10 p-xxl-5">
             <div class="d-flex justify-content-end align-items-center px-5">
               <label class="bg-zinc-50 text-slate-900 shadow-xl dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 d-flex align-items-center justify-content-center px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:border-sky-700 dark:has-[:checked]:border" id="nezetkicsi">  
-                <input type="radio" name="nezet" class="form-check-input hidden" id="kicsi_nezet" value="kicsi" onchange="KERESOBAR()"> 
+                <input type="radio" name="nezet" class="form-check-input hidden" id="kicsi_nezet" value="kicsi" onchange="KERESOBAR(false)"> 
                 <i class="bi bi-grid-3x3"></i>
               </label>
 
               <label class="bg-zinc-50 text-slate-900 shadow-xl dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 d-flex align-items-center justify-content-center px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 has-[:checked]:border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:border-sky-700 dark:has-[:checked]:border" id="nezetnagy">  
-                <input type="radio" name="nezet" class="form-check-input hidden" id="nagy_nezet" value="nagy" checked onchange="KERESOBAR()"> 
+                <input type="radio" name="nezet" class="form-check-input hidden" id="nagy_nezet" value="nagy" checked onchange="KERESOBAR(false)"> 
                 <i class="bi bi-grid"></i>
               </label>
             </div>

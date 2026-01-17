@@ -424,7 +424,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
       dark:bg-gray-800   
       dark:text-zinc-200 
       dark:!border-zinc-200/10 
-      
+
       hover:text-red-700  
       hover:bg-red-400/5  
       hover:!border-red-700 
@@ -784,23 +784,7 @@ function CARD_BETOLT(adatok) {
         ee = "";
       } 
 
-      if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || element.AKTIV == "N" || element.MENNYISEG == 0) {
-        ks = "";
-      } else {
-        ks = `<button 
-          class="btn 
-            bg-gray-900 
-            text-zinc-200 
-            hover:bg-gray-700 
-            hover:text-zinc-200 
-            dark:bg-zinc-800 
-            dark:hover:bg-gray-800 
-            transition-all duration-150 ease-in-out 
-            rounded-xl 
-            kosar    
-              py-2 px-3 text-sm tracking-wider    
-            " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'><i class="bi bi-plus-lg"></i></button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
-      }
+      
 
 
       s += `

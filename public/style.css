@@ -253,14 +253,10 @@ html.dark ::-webkit-scrollbar-thumb {
   background: var(--gray-600); /* gray-600 */
 }
 
-
-
 #sql_input_area {
   font-family: "Google Sans Code", monospace;
   
 }
-
-
 
 /* Autocomplete styling (összhangban az example-lel) */
 .autocomplete { position: relative; display: inline-block; }
@@ -292,8 +288,6 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
 .autocomplete-active { background-color: #0d6efd !important; color: #fff; }
 
 
-
-
 #nezetkicsi {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
@@ -303,15 +297,6 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
-
-
-
-/* uj navbar css */
-
-
-
-
-
 
 
 
@@ -346,20 +331,6 @@ body.offcanvas-open {
 }
 
 
-
-.dropdown-panel {
-    opacity: 0;
-    transform: translateY(-10px);
-    visibility: hidden;
-    transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.hover-wrapper:hover .dropdown-panel {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-}
-
 .hover-wrapper:hover #admin_button { color: var(--slate-700); }
 
 html.dark .hover-wrapper:hover #admin_button { color: var(--zinc-200);  }
@@ -372,7 +343,7 @@ html.dark .hover-wrapper:hover #admin_button { color: var(--zinc-200);  }
     transition: transform 0.4s ease;
 }
 
-.group:hover .admin-gear {
+#admin_button:hover .admin-gear {
     transform: rotate(90deg);
 }
 
