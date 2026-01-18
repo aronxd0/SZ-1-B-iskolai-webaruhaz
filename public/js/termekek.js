@@ -27,7 +27,7 @@ async function TermekModosit(url) {
     console.log("hiba:", err);
   }
 
-  KERESOBAR();
+  Kezdolap(false);
   KosarTetelDB(); 
 }
 
@@ -275,7 +275,7 @@ function Velemeny_Iras(id_termek) {
 
 
 
-async function Termek_Mutat(event, termek_id, push = true) {
+async function Termek_Mutat(event, termek_id, pushHistory = true) {
   $("#lenti").fadeIn(300);
   $("#termekview").modal("hide");
   //console.log(`cuccok: ${cuccok}`);
@@ -423,13 +423,15 @@ async function Termek_Mutat(event, termek_id, push = true) {
       text-zinc-200 
       dark:bg-gray-800   
       dark:text-zinc-200 
+      dark:!border-zinc-200/10 
+
       hover:text-red-700  
       hover:bg-red-400/5  
       hover:!border-red-700 
-      dark:hover:bg-red-900/20  
-      dark:!border-zinc-200/10 
+      dark:hover:bg-red-900/20 
       dark:hover:!border-red-600/30 
       dark:hover:text-red-600 
+
       transition-all duration-150 ease-in-out  
             
            w-full  tracking-[2px] 
@@ -471,6 +473,7 @@ async function Termek_Mutat(event, termek_id, push = true) {
           dark:text-zinc-200 
           hover:text-gray-600 
           dark:hover:text-gray-400 
+          !border-b !border-transparent
           
           d-flex align-items-center justify-content-center p-2 text-center cursor-pointer 
               transition-all duration-200
@@ -505,7 +508,7 @@ async function Termek_Mutat(event, termek_id, push = true) {
           dark:text-zinc-200 
           hover:text-gray-600 
           dark:hover:text-gray-400 
-          
+          !border-b !border-transparent 
           
           d-flex align-items-center justify-content-center p-2  cursor-pointer 
               transition-all duration-200
@@ -543,7 +546,6 @@ async function Termek_Mutat(event, termek_id, push = true) {
     let termek_megtekintes = `
     
       <div class="container my-1">
-        <button class="p-2 my-3" onclick="KERESOBAR()"><i class="bi bi-caret-left-fill" ></i> Inkább böngészek tovább</button>
         <div class="row g-5">
           <div class="col-12 col-xl-7">
             <div onmousemove="zoomMove(event, this)" onmouseleave="zoomReset(this)" class="relative w-full h-[420px] lg:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl overflow-hidden bg-zinc-300 dark:bg-slate-950">
@@ -667,7 +669,8 @@ async function Termek_Mutat(event, termek_id, push = true) {
 
     if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
     else {
-      if (event.target.tagName != "button") {
+      const gombraKattintas = event && event.target && event.target.tagName === "BUTTON";
+      if (!gombraKattintas) {
         // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
         $("#welcome_section").fadeOut(300);
         $("#pagi").html("");
@@ -697,11 +700,16 @@ async function Termek_Mutat(event, termek_id, push = true) {
 
         });
 
-        if (push) {
+        if (pushHistory) {
+          SPAState.currentView = 'termek';
+          SPAState.currentData = { id: termek_id };  
           history.pushState(
-            { view: "termek", id: termek_id },
-            "",
-            `#termek/${termek_id}`
+              { 
+                  view: 'termek',
+                  id: termek_id  
+              },
+              'Termék',
+              `#termek/${termek_id}`
           );
         }
         
@@ -777,23 +785,7 @@ function CARD_BETOLT(adatok) {
         ee = "";
       } 
 
-      if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || element.AKTIV == "N" || element.MENNYISEG == 0) {
-        ks = "";
-      } else {
-        ks = `<button 
-          class="btn 
-            bg-gray-900 
-            text-zinc-200 
-            hover:bg-gray-700 
-            hover:text-zinc-200 
-            dark:bg-zinc-800 
-            dark:hover:bg-gray-800 
-            transition-all duration-150 ease-in-out 
-            rounded-xl 
-            kosar    
-              py-2 px-3 text-sm tracking-wider    
-            " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'><i class="bi bi-plus-lg"></i></button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
-      }
+      
 
 
       s += `

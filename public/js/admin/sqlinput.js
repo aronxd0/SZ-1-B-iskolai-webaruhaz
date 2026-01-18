@@ -1,5 +1,5 @@
 
-function SQLinput() {
+function SQLinput(pushHistory = true) {
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
 
@@ -70,6 +70,16 @@ function SQLinput() {
 
         `).fadeIn(300);
         $("#pagi").html("");
+
+        if (pushHistory) {
+            SPAState.currentView = 'sql';
+            SPAState.currentData = {};
+            history.pushState(
+                { view: 'sql' },
+                'sql',
+                '#sql'
+            );
+        }
         
     })
 }

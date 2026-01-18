@@ -2,7 +2,7 @@ let jelenlegi = 1;
 let osszesoldal = 0;
 
 $("#rend_button").click(async function () {
-    rendelesekmegtolt();
+    rendelesekmegtolt(true);
 });
 
 
@@ -109,11 +109,11 @@ function Kovi_rendeles(keri){
             break;
     }
 
-    rendelesekmegtolt();
+    rendelesekmegtolt(true);
 }
 
 
-async function rendelesekmegtolt(){
+async function rendelesekmegtolt(pushHistory = true) {
     $("#welcome_section").fadeOut(300);
     $("#kateogoria-carousel").fadeOut(300);
     $("#felsosor").removeClass("mt-[100px]").addClass("mt-[100px]");
@@ -456,4 +456,17 @@ async function rendelesekmegtolt(){
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(s).fadeIn(300);
     });
+
+    if (pushHistory) {
+        SPAState.currentView = 'rendelesek';
+        SPAState.currentData = { };  
+        history.pushState(
+            { 
+                view: 'rendelesek'
+                 
+            },
+            'Rendelések',
+            `#rendelesek`
+        );
+    }
 }

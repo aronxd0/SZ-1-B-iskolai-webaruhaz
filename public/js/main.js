@@ -9,6 +9,10 @@ let Nemaktivak = false;
 let maxarr = 0;
 let minarr = 0;
 
+const SPAState = {
+    currentView: 'home',
+    currentData: {}
+};
 
 // endregion
 let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
@@ -246,7 +250,7 @@ function KeresonekSQLCraft(){
 }
 
 
-async function KERESOBAR() {
+async function KERESOBAR(updateHistory = true) {
     console.log("KERESOBAR lefutott");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
     $("#admin_button").closest(".gombdiv").removeClass("aktiv");
@@ -310,12 +314,83 @@ async function KERESOBAR() {
         CARD_BETOLT(adatok);
     } ); 
      */
+
+    if (!updateHistory) return;
+
+    const keresesErtek = $("#nev1").val();
+    const minInput = $("#min_ar_input").val();
+    const maxInput = $("#max_ar_input").val();
+    const arSzuresVan = (minInput != "" && minInput != minarr) || (maxInput != "" && maxInput != maxarr);
     
+    const vanSzures = keresesErtek != "" || bepipaltID != "" || 
+                  arSzuresVan || 
+                  elfogyott || 
+                  Nemaktivak || 
+                  ($("#rend").val() != "" && $("#rend").val() != null);
+    
+    if (vanSzures) {
+        SPAState.currentView = 'search';
+        SPAState.currentData = {
+            searchTerm: keresesErtek,
+            categories: bepipaltID,
+            minPrice: min,
+            maxPrice: max,
+            order: $("#rend").val(),
+            elfogyott: elfogyott,
+            nemaktivak: Nemaktivak
+        };
+        
+        history.pushState(
+            { 
+                view: 'search',
+                data: SPAState.currentData
+            },
+            keresesErtek ? `Keresés: ${keresesErtek}` : 'Szűrés',
+            keresesErtek ? `#search?q=${encodeURIComponent(keresesErtek)}` : '#search'
+        );
+    } else {
+        SPAState.currentView = 'home';
+        SPAState.currentData = {};
+        history.pushState(
+            { view: 'home' },
+            'Kezdőlap',
+            '#home'
+        );
+    }
     
     
     console.log("elküldve: "+ elküld);
 }
 //endregion
+
+/*
+async function KERESOBAR_WithHistory() {
+    await KERESOBAR(); // Eredeti függvény
+    
+    // Ha van keresési feltétel, push to history
+    if ($("#nev1").val() || bepipaltID) {
+        SPAState.currentView = 'search';
+        SPAState.currentData = {
+            searchTerm: $("#nev1").val(),
+            categories: bepipaltID,
+            minPrice: $("#min_ar_input").val(),
+            maxPrice: $("#max_ar_input").val(),
+            order: $("#rend").val()
+        };
+        
+        history.pushState(
+            { 
+                view: 'search',
+                data: SPAState.currentData
+            },
+            'Keresés',
+            `#search?q=${encodeURIComponent($("#nev1").val() || '')}`
+        );
+    }
+}
+*/
+
+
 //#region OLdelkezelés
 
 function OLDALFELTOTL(darab){
@@ -428,25 +503,25 @@ function Kovi(keri){
         case("Kovi1"): // következő oldal
             if(Joldal < oldalszam){
                 Joldal++;
-                KERESOBAR();
+                KERESOBAR(false);
                 return;
             }
         case("Kovi2"): // utolsó oldal
                 console.log("oldalszam: "+ oldalszam);
                 Joldal = oldalszam;
                 console.log("Joldal: "+ Joldal + " old szam: "+ oldalszam);
-                KERESOBAR();
+                KERESOBAR(false);
                 return;
         
         case("vissza1"):// előző oldal
             if(Joldal > 1){
                 Joldal--;
-                KERESOBAR();
+                KERESOBAR(false);
                 return;
             }
         case("Vissza2"):// első oldal
             Joldal = 1;
-            KERESOBAR();
+            KERESOBAR(false);
             return
         
    
@@ -461,7 +536,8 @@ async function ArFeltolt(sql, min ,max){
     try {
         var arak = await ajax_call(sql+"&maxmin_arkell=1", "GET", null, true);//arak lekérdezése limit offset nélkül
         
-      
+        if (minarr === 0) minarr = arak.rows[0].MINAR;
+        if (maxarr === 0) maxarr = arak.rows[0].MAXAR;
 
         if(min == ""){// ha még nem volt minar akkor a minar = legkisebb ár
             min = arak.rows[0].MINAR;
@@ -689,7 +765,7 @@ function Elfogyott(alma){
     KategoriaFeltolt("kategoria_section", "check", "",true);
 }
 
-async function Kezdolap() {
+async function Kezdolap(pushHistory = true) {
     console.log("Kezdolap lefutott");
     $("#keresett_kifejezes").html();
     $("#welcome_section").fadeIn(300);
@@ -697,7 +773,12 @@ async function Kezdolap() {
     $("#felsosor").removeClass("mt-[100px]");
     nev1.value = "";
     bepipaltID = "";
-    KERESOBAR();
+    $("#kosar").prop("checked", false);
+    $("#kezdolap").prop("checked", true);
+    
+    // Itt hívjuk meg a keresőbárt, de jelezzük neki, hogy most ne piszkálja a history-t,
+    // mert mi fogjuk manuálisan beállítani a #home-ot.
+    await KERESOBAR(false);
     
 
     let kategoriacuccos = await ajax_call(`kategoria`, "GET", null, true);
@@ -713,7 +794,17 @@ async function Kezdolap() {
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { update_gombok(0); }
     
     KosarTetelDB();
+    Szurok_Torlese();
     
+    if (pushHistory) {
+        SPAState.currentView = 'home';
+        SPAState.currentData = {};
+        history.pushState(
+            { view: 'home' },
+            'Kezdőlap',
+            '#home'
+        );
+    }
       // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
     
 }
@@ -727,7 +818,7 @@ async function Szurok_Torlese() {
     Nemaktivak = false;
     await ArFeltolt(KeresonekSQLCraft(), "", "");
     
-    KERESOBAR();
+    KERESOBAR(false);
     
 }
 
