@@ -226,7 +226,7 @@ async function Kosar_Mutat(pushHistory = true) {
 
 
 function KosarTeteleiFrissit() {
-    $("#cart_button").trigger("click");
+    Kosar_Mutat(false);
     KosarTetelDB();
 }
 

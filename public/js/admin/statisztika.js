@@ -14,7 +14,7 @@ window.addEventListener("resize", () => {
     }
 });
 
-function Statisztikak() {
+function Statisztikak(pushHistory = true) {
 
     $("#home_button").closest(".gombdiv").removeClass("aktiv");
     $("#cart_button").closest(".gombdiv").removeClass("aktiv");
@@ -518,6 +518,16 @@ function Statisztikak() {
         // eladások száma || rendelések darabs száma
         // vett aruk kategória szerint
     });
+
+    if (pushHistory) {
+        SPAState.currentView = 'statisztika';
+        SPAState.currentData = {};  
+        history.pushState(
+            { view: 'statisztika' },
+            'Statisztika',
+            `#statisztika`
+        );
+      }
 
 }
 

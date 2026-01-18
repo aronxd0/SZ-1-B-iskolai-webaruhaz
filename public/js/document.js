@@ -29,6 +29,14 @@ window.addEventListener("popstate", (e) => {
         case "velemeny-kezeles":
             Admin_Velemenykezeles(false); 
             break;
+        
+        case "statisztika":
+            Statisztikak(false);
+            break;
+
+        case "sql":
+            SQLinput(false);
+            break;
             
         case "search":
             if (e.state.data) {
@@ -272,6 +280,10 @@ $(document).ready(function() {
         rendelesekmegtolt(false); 
     } else if (hash === '#velemenykezeles') {
         Admin_Velemenykezeles(false);
+    } else if (hash === "#statisztika") {
+        Statisztikak(false);
+    } else if (hash === "#sql") {
+        SQLinput(false);
     }
     else {
         Kezdolap(false);
