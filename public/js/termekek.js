@@ -27,7 +27,7 @@ async function TermekModosit(url) {
     console.log("hiba:", err);
   }
 
-  KERESOBAR();
+  Kezdolap(false);
   KosarTetelDB(); 
 }
 
@@ -473,6 +473,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
           dark:text-zinc-200 
           hover:text-gray-600 
           dark:hover:text-gray-400 
+          !border-b !border-transparent
           
           d-flex align-items-center justify-content-center p-2 text-center cursor-pointer 
               transition-all duration-200
@@ -507,7 +508,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
           dark:text-zinc-200 
           hover:text-gray-600 
           dark:hover:text-gray-400 
-          
+          !border-b !border-transparent 
           
           d-flex align-items-center justify-content-center p-2  cursor-pointer 
               transition-all duration-200

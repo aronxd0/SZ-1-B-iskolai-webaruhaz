@@ -25,6 +25,9 @@ async function Kosar_Mutat(pushHistory = true) {
     $("#débé").html("");
     $("#nev1").val("");
 
+    $("#kosar").prop("checked", true);
+    $("#kezdolap").prop("checked", false);
+
     var ts = ``;
 
     let cnt = `

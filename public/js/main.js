@@ -773,6 +773,8 @@ async function Kezdolap(pushHistory = true) {
     $("#felsosor").removeClass("mt-[100px]");
     nev1.value = "";
     bepipaltID = "";
+    $("#kosar").prop("checked", false);
+    $("#kezdolap").prop("checked", true);
     
     // Itt hívjuk meg a keresőbárt, de jelezzük neki, hogy most ne piszkálja a history-t,
     // mert mi fogjuk manuálisan beállítani a #home-ot.

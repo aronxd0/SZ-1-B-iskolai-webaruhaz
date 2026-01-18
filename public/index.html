@@ -59,15 +59,82 @@
                 </li>
 
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
+                  <label 
+                class="
+                group 
+                bg-transparent 
+                me-2 
+                text-slate-900 
+                
+                dark:bg-slate-900 
+                dark:text-zinc-400 
+                hover:text-gray-600 
+                dark:hover:text-zinc-200 
+                !border-b !border-transparent 
+                
+                d-flex align-items-center justify-content-center p-2  cursor-pointer 
+                    transition-all duration-200
+                    has-[:checked]:!border-b  
+                    has-[:checked]:!border-slate-900 
+
+                    dark:has-[:checked]:!border-b 
+                    dark:has-[:checked]:!border-zinc-200 
+                    ">
+                    
+
+                <div class="flex items-center gap-2 text-lg">
+                  <input type="radio" name="homepage" class="form-check-input hidden " id="kezdolap" onchange="Kezdolap()" data-bs-dismiss="offcanvas">
+                  <i class="bi bi-house"></i> 
+                  <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 ">Kezdőlap</span>
+                </div>
+
+                
+            </label>
+                  <!--
                   <div class="gombdiv me-3 d-inline-block border-b border-transparent dark:border-b dark:border-transparent transition-hover duration-150 ease-in-out">
+                    
                     <button id="home_button"  type="button" class="py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:hover:bg-slate-900 dark:hover:text-zinc-200 dark:text-zinc-400 transition-hover duration-300 ease-in-out gomb rounded-3" data-bs-dismiss="offcanvas"> 
                       <i class="bi bi-house" id="loginout"></i>
                       <span > Kezdőlap</span>
                     </button>
+                    
                   </div>
+                  -->
                 </li>
 
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
+                  <label 
+                    class="
+                    group 
+                    bg-transparent 
+                    me-2 
+                    text-slate-900 
+                    
+                    dark:bg-slate-900 
+                    dark:text-zinc-400 
+                    hover:text-gray-600 
+                    dark:hover:text-zinc-200 
+                    !border-b !border-transparent 
+                    
+                    d-flex align-items-center justify-content-center p-2  cursor-pointer 
+                        transition-all duration-200 
+                        has-[:checked]:!border-b  
+                        has-[:checked]:!border-slate-900 
+
+                        dark:has-[:checked]:!border-b 
+                        dark:has-[:checked]:!border-zinc-200 
+                        ">
+                        
+
+                    <div class="flex items-center gap-2 text-lg">
+                      <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
+                      <i class="bi bi-cart2"></i> 
+                      <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
+                    </div>
+
+                    
+                </label>
+                  <!--
                   <div class="gombdiv me-3 d-inline-block border-b border-transparent dark:border-b dark:border-transparent transition-hover duration-150 ease-in-out" id="kosar-gombdiv">
                     <button id="cart_button" type="button" class="py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex" style="display: block !important;" data-bs-dismiss="offcanvas"> 
                       <i class="bi bi-cart2"></i>
@@ -75,6 +142,7 @@
                       <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span>
                     </button>
                   </div>
+                  -->
                 </li>
 
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
