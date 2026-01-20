@@ -1,10 +1,10 @@
 {
-  "name": "web13-restapi",
+  "name": "anyahajo",
   "version": "1.0.0",
-  "main": "web13-restapi.js",
+  "main": "anyahajo.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node web13-restapi.js",
+    "start": "node anyahajo.js",
     "default": "npm start"
   },
   "keywords": [],
