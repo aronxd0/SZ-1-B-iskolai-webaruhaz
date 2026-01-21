@@ -44,6 +44,7 @@ function BevaneJelentkezve() {
         $("#home_button").trigger("click");
         $("#udv").html(`Üdvözlünk a Csány webáruházban!`);
         update_gombok(0);
+        Kezdolap();
     }
 
     // Ez akkor ha be van jelentkezve

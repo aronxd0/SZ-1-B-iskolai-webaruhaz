@@ -170,44 +170,71 @@ function RangokHTML(rang, szovegmeret) {
 
 function update_gombok (x) {
 
-    // a "d-inline-block" class-t ha leveszem akkor eltunik ha hozzaadom akkor megjelenik
-
     if (x == 0) { // vendeg
        
         
-        $("#kosar-gombdiv").removeClass("d-inline-block").addClass("eltunt");
-
-        $("#sql-gombdiv").removeClass("d-inline-block").addClass("eltunt");
-        $("#stat-gombdiv").removeClass("d-inline-block").addClass("eltunt");
-        $("#ujtermek-gombdiv").removeClass("d-inline-block").addClass("eltunt");
-        $("#velemeny-gombdiv").removeClass("d-inline-block").addClass("eltunt");
-
-        
-        $("#admin-gombdiv").removeClass("d-inline-block").addClass("eltunt");
-        $("#rendeles-gombdiv").removeClass("d-inline-block").addClass("eltunt");
+        $("#kosar-menupont").html("");
+        $("#admin-menupont").html("");
         
     }
     if (x == 1) { // sima user
         
-        $("#kosar-gombdiv").addClass("d-inline-block").removeClass("eltunt");
-        $("#rendeles-gombdiv").addClass("d-inline-block").removeClass("eltunt");
-        $("#sql-gombdiv").removeClass("d-inline-block").addClass("eltunt");
-        $("#stat-gombdiv").removeClass("d-inline-block").addClass("eltunt");
-        $("#ujtermek-gombdiv").removeClass("d-inline-block").addClass("eltunt");
-        $("#velemeny-gombdiv").removeClass("d-inline-block").addClass("eltunt");
-       
-        $("#admin-gombdiv").removeClass("d-inline-block").addClass("eltunt"); 
+        $("#kosar-menupont").html(`
+            <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
+                <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
+                <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
+                <i class="bi bi-cart2"></i> 
+                <span class="group-has-[:checked]:font-semibold  transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
+                </div>
+            </label>`);
+        $("#admin-menupont").html("");
     }
     if (x == 2) { // admin
         
-        $("#kosar-gombdiv").addClass("d-inline-block").removeClass("eltunt");
-        $("#rendeles-gombdiv").addClass("d-inline-block").removeClass("eltunt");
-        
-        $("#admin-gombdiv").addClass("d-inline-block").removeClass("eltunt");
-        $("#sql-gombdiv").addClass("d-inline-block").removeClass("eltunt");
-        $("#stat-gombdiv").addClass("d-inline-block").removeClass("eltunt");
-        $("#ujtermek-gombdiv").addClass("d-inline-block").removeClass("eltunt");
-        $("#velemeny-gombdiv").addClass("d-inline-block").removeClass("eltunt");
+        $("#kosar-menupont").html(`
+            <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2 cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
+                <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
+                <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
+                <i class="bi bi-cart2"></i> 
+                <span class="group-has-[:checked]:font-semibold  transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
+                </div>
+            </label>`);
+
+        $("#admin-menupont").html(`
+            <div class="dropdown">
+                <button id="admin_button" type="button" class="dropdown-toggle py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex" data-bs-toggle="dropdown">
+                    <div class="gear-wrap d-flex justify-content-center align-items-center align-self-center w-5 h-5"> <i class="bi bi-gear admin-gear"></i></div>
+                    <span>&nbsp;Admin&nbsp;</span>
+                    <i class="bi bi-caret-down-fill text-sm align-self-center"></i>
+                </button>
+                <ul class="dropdown-menu !border !border-0 shadow-xl bg-zinc-300 dark:bg-slate-950">
+                    <li>
+                        <button id="vlm_button" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" onclick="Admin_Velemenykezeles(true)" data-bs-dismiss="offcanvas"> 
+                            <i class="bi bi-chat-dots"></i>
+                            <span>&nbsp;Vélemények</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="admin_uj_termek" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="UjTermek()" data-bs-dismiss="offcanvas">
+                            <i class="bi bi-plus"></i>
+                            <span>&nbsp;Új termék</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="admin_stats" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="Statisztikak()" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-bar-chart"></i>
+                        <span>&nbsp;Statisztikák</span> 
+                        </button>
+                    </li>
+                    <li><hr class="dropdown-divider bg-gray-300 dark:bg-zinc-200/30"></hr></li>
+                    <li>
+                        <button id="admin_sql" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="SQLinput()" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-database"></i>
+                        <span>&nbsp;SQL</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>`);
     }
     
 }
