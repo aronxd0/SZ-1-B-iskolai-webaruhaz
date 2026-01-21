@@ -209,9 +209,7 @@ $(document).ready(function() {
     });
 
 
-    $("#kosarmegtekintese").click(function() {
-        $("#cart_button").trigger("click");
-    });
+    
 
 
     
