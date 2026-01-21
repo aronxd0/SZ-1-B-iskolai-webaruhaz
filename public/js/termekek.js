@@ -1,10 +1,8 @@
 // termekek szerkesztese, torlese, uj felvetele + a betolto fuggveny
 
 // termek modositasa MENTÉS gombra kattintaskor
-async function TermekModosit(url) {
+async function TermekModosit(id_termek) {
   try {
-    let id_termek = url.split("§")[1];
-    
     var upd = document.getElementById("idx1").innerHTML.substring(0,9) == "Új termék" ? 1 : 0;
     const fd = new FormData(document.getElementById("mod1"));
 
@@ -143,13 +141,9 @@ async function Termek_Edit(event, termek_id, tipus) {
       }
     }
 
-    $("#save_button")
-      .off()
-      .one("click", function () {
-        
-        const aktiv = $("#mySwitch").is(":checked") ? "YES" : "NO"; // Itt olvassuk ki az értéket
-        TermekModosit(`${$("#mod1").serialize()}§${termek_id}§${aktiv}§${$("#uj_kat").val()}`);
-      });
+    $("#save_button").off().one("click", function () {
+        TermekModosit(termek_id);
+    });
 
     $("#termek_edit").modal("show");
 
@@ -276,17 +270,6 @@ function Velemeny_Iras(id_termek) {
 
 
 async function Termek_Mutat(event, termek_id, pushHistory = true) {
-  $("#lenti").fadeIn(300);
-  $("#termekview").modal("hide");
-  //console.log(`cuccok: ${cuccok}`);
-
-
-  $("#ga").html("");
-  /*
-    for (let index = 0; index < 100; index++) {
-        $("#termek_content").append(cuccok + "<br>");
-        
-    }*/
   let gg = "";
   let ks = "";
 
@@ -331,64 +314,13 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
            w-auto  tracking-[2px]  
           " onclick='Kosarba_Bele(event, ${termek_id})'> KOSÁRBA TESZEM </button>`;
 
-  let bal = ` 
+  
 
+  
 
-    <div class="relative d-flex align-items-center justify-content-center p-5">
-      <img src="${fotolink}" 
-          class="w-full h-60 rounded-xl object-cover cursor-pointer hover:opacity-90 transition"
-          onclick="openImage(this.src)">
-    </div>
-               
-    `;
+  
 
-  let kozep = `   <div class="row mt-2">
-                        <b class="text-lg"><i class="bi bi-card-list"></i> Termékleírás:</b>
-                        <br>
-                        <p>${leiras}</p>
-                    </div>
-    
-                    <div class="row mt-3">
-                        <p>
-                            <b class="text-lg"><i class="bi bi-grid"></i> Kategória: </b> ${kategoria}
-                        </p>
-                    </div>
-    
-                    <div class="row mt-3">
-                        <p>
-                            <b class="text-lg"><i class="bi bi-hash"></i> Termékazonosító: </b> <span class="tracking-4">${azon}</span>
-                        </p>
-                    </div>
-                    <div class="row mt-3">
-                        <p> 
-                            <b class="text-lg"><i class="bi bi-box-seam"></i> Raktáron: </b> ${mennyiseg} ${meegys}
-                        </p>
-                    </div>
-                    <div class="row mt-5 mb-3">
-                        <span class="text-slate-900 dark:text-zinc-200 text-2xl font-semibold">${parseInt(ar).toLocaleString()} Ft</span>
-                    </div>
-
-                    
-    
-    `;
-
-  //$("#bal").html(bal);
-  //$("#jobb").html(kozep);
-  $("#alul").html(ks);
-
-  $("#termek_content").html(`
-
-    <div class="col-lg-6 d-flex justify-content-center p-1" id="bal">
-      ${bal}
-    </div>
-    <div class="col-lg-6 p-2" id="jobb">
-      ${kozep}
-    </div>  
-    
-    
-  `);
-
-  $("#termeknev").html(nev);
+  
 
   //const cls = new bootstrap.Collapse("#vlm", { toggle: false });
 
@@ -545,7 +477,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
 
     let termek_megtekintes = `
     
-      <div class="container my-1">
+      <div class="container">
         <div class="row g-5">
           <div class="col-12 col-xl-7">
             <div onmousemove="zoomMove(event, this)" onmouseleave="zoomReset(this)" class="relative w-full h-[420px] lg:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl overflow-hidden bg-zinc-300 dark:bg-slate-950">
@@ -599,41 +531,14 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
           <div class="col-12 mt-3">
 
             <div class="d-flex py-3 gap-x-5">
-              <div id="vvl"></div>
-              <div id="sajatvlm"></div>
-              <div id="vlmg" class="d-flex align-items-center"></div>
+              <div id="velemenyek-menupont"></div>
+              <div id="sajatvelemenyek-menupont"></div>
+              <div id="velemeny-irasa" class="d-flex align-items-center"></div>
             </div>
 
             <div class="space-y-6" id="velemenyek">
 
-              <!-- 
-              <div class="!border-b !border-gray-300 pb-4">
-                <div class="flex items-center gap-3 mb-2">
-                  <i class="bi bi-person-circle text-3xl"></i>
-                  <div>
-                    <p class="font-semibold">Emily Selman</p>
-                    <p class="text-xs text-zinc-500">July 16, 2021</p>
-                  </div>
-                </div>
-                <p class="text-zinc-600 dark:text-zinc-400">
-                  Love the playful look! Exactly what I needed for my project.
-                </p>
-              </div>
-
-              
-              <div class="!border-b !border-gray-300 pb-4">
-                <div class="flex items-center gap-3 mb-2">
-                  <i class="bi bi-person-circle text-3xl"></i>
-                  <div>
-                    <p class="font-semibold">Hector Gibbons</p>
-                    <p class="text-xs text-zinc-500">July 12, 2021</p>
-                  </div>
-                </div>
-                <p class="text-zinc-600 dark:text-zinc-400">
-                  Super polished icons, worth every cent.
-                </p>
-              </div>
-              -->
+             
 
             </div>
           </div>
@@ -672,33 +577,33 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
       const gombraKattintas = event && event.target && event.target.tagName === "BUTTON";
       if (!gombraKattintas) {
         // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
-        $("#welcome_section").fadeOut(300);
-        $("#pagi").html("");
-        $("#kategoria_carousel").fadeOut(300);
-        //$("#termekview").modal("show");
+        
         $("#content_hely").fadeOut(300, function() {
           $("#content_hely").html(termek_megtekintes).fadeIn(300);
-          $("#vvl").html(velemenyek_tab);
+          $("#velemenyek-menupont").html(velemenyek_tab);
           $("#velemenyek").html("");
           VelemenyekMutat(termek_id);
-          $("#nezetkicsi").addClass("eltunt");
-          $("#nezetnagy").addClass("eltunt");
 
           if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {
-            $("#vlmg").html("Vélemény írásához jelentkezzen be");
-            $("#sajatvlm").html("");
-            $("#sajatvlm").addClass("eltunt");
+            $("#velemeny-irasa").html("Vélemény írásához jelentkezzen be");
+            $("#sajatvelemenyek-menupont").html("");
+            $("#sajatvelemenyek-menupont").hide();
           } else {
-            $("#vlmg").html(velemenyiras_gomb);
+            $("#velemeny-irasa").html(velemenyiras_gomb);
             $("#ussr").html(`${$("#user").html()}`);
         
-            $("#sajatvlm").html(sajatvelemenyek_tab);
+            $("#sajatvelemenyek-menupont").html(sajatvelemenyek_tab);
         
-            $("#sajatvlm").removeClass("eltunt");
+            $("#sajatvelemenyek-menupont").show();
           }
           FelaTetore();
 
         });
+
+        NezetValtas("ki");
+
+        $("#kosar").prop("checked", false);
+        $("#kezdolap").prop("checked", false);
 
         if (pushHistory) {
           SPAState.currentView = 'termek';
@@ -928,28 +833,25 @@ function CARD_BETOLT(adatok) {
 
   if (!$("#nev1").val().includes("<")) {
     if ($("#nev1").val() != "") {
-      $("#welcome_section").fadeOut(300);
-      $("#keresett_kifejezes").fadeOut(300, function() {
-        $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`).fadeIn(300);
-      });
-      $("#felsosor").addClass("mt-[100px]");
-      $("#kateogoria-carousel").fadeOut(300);
+      NezetValtas("ki");
+      
+      $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`).fadeIn(300);
+     
 
-      $("#débé").fadeOut(300, function() {
-        $("#débé").html(` (${adatok.maxcount} db)`).fadeIn(300);
-      });
       
+      $("#débé").html(` (${adatok.maxcount} db)`).fadeIn(300);
       
+
+      $("#kosar").prop("checked", false);
+      $("#kezdolap").prop("checked", false);
     } else {
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
-      $("#welcome_section").fadeIn(300);
-      $("#kateogoria-carousel").fadeIn(300);
+      NezetValtas("be");
+
+      $("#kosar").prop("checked", false);
       
     }
-
-    console.log(`card betolt: ${localStorage.getItem("loggedIn")}`);
-
     $("#content_hely").fadeOut(300, function() {
       $("#content_hely").html(s).fadeIn(300);
     });

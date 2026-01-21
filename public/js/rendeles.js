@@ -114,18 +114,8 @@ function Kovi_rendeles(keri){
 
 
 async function rendelesekmegtolt(pushHistory = true) {
-    $("#welcome_section").fadeOut(300);
-    $("#kateogoria-carousel").fadeOut(300);
-    $("#felsosor").removeClass("mt-[100px]").addClass("mt-[100px]");
-    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
-    $("#admin_button").closest(".gombdiv").removeClass("aktiv");
-    $("#home_button").closest(".gombdiv").removeClass("aktiv");
-
-    $("#nezetkicsi").addClass("eltunt");
-    $("#nezetnagy").addClass("eltunt");
-
     var s = `
-        <div class="col-12 text-center p-2 mt-5">
+        <div class="col-12 text-center p-2">
             <span class="text-xl">Rendeléseim</span>
         </div>
     `;
@@ -273,7 +263,7 @@ async function rendelesekmegtolt(pushHistory = true) {
             `;
             
         }
-        if(osszesoldal > 1) {
+        if (osszesoldal > 1) {
             
             s+= `
             
@@ -351,88 +341,7 @@ async function rendelesekmegtolt(pushHistory = true) {
     </ul>
             
             
-            <!--
             
-            <ul class="pagination justify-content-center">
-                <li class="page-item  shadow-xl" style="border: none;">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out
-                        ${jelenlegi == 1 ? "disabled" : ""}
-                        " id="Vissza2_rend" onclick="Kovi_rendeles(this)"> << </a></li>
-                <li class="page-item  shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out
-                        ${jelenlegi == 1 ? "disabled" : ""}
-                        " id="Vissza1_rend" onclick="Kovi_rendeles(this)">Előző</a></li>
-                <li class="page-item shadow-xl">
-                    <a class="
-                        page-link 
-                        d-flex 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out 
-                        "><b>${jelenlegi}</b> / <span id="DBoldal">${osszesoldal}</span></a></li>
-                
-                <li class="page-item  shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out
-                        ${jelenlegi == osszesoldal ? "disabled" : ""}
-                        " id="Kovi1_rend" onclick="Kovi_rendeles(this)">Következő</a></li>
-
-                <li class="page-item shadow-xl">
-                    <a class="
-                        page-link 
-                        bg-zinc-300 
-                        text-slate-900 
-                         dark:bg-slate-900 
-                        dark:text-zinc-200 
-                        dark:hover:bg-gray-800 
-                        
-                        hover:bg-gray-200 
-                        hover:outline outline-black/10 
-                        hover:text-slate-900 
-                        transition-hover duration-300 ease-in-out
-                        ${jelenlegi == osszesoldal ? "disabled" : ""}
-                        " id="Kovi2_rend" onclick="Kovi_rendeles(this)"> >> </a></li>
-            </ul>
-            -->
             `
         }
         
@@ -448,14 +357,16 @@ async function rendelesekmegtolt(pushHistory = true) {
     
 
     // Tisztítás + megjelenítés
-    $("#keresett_kifejezes").html("");
-    $("#débé").html("");
-    $("#nev1").val("");
-    $("#pagi").html("");
+    
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(s).fadeIn(300);
     });
+
+    NezetValtas("ki");
+
+    $("#kosar").prop("checked", false);
+    $("#kezdolap").prop("checked", false);
 
     if (pushHistory) {
         SPAState.currentView = 'rendelesek';

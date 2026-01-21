@@ -1,18 +1,9 @@
 
 function SQLinput(pushHistory = true) {
-    $("#home_button").closest(".gombdiv").removeClass("aktiv");
-    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
-
-    $("#welcome_section").fadeOut(300);
-    $("#felsosor").removeClass("mt-[100px]");;
-    $("#kateogoria-carousel").fadeOut(300);
-
-    $("#nezetkicsi").addClass("eltunt");
-    $("#nezetnagy").addClass("eltunt");
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
-        <div class="row mt-5">
+        <div class="row">
             <div class="col-12 text-center p-2 mt-3">
                 <span class="text-xl">SQL Input</span>
             </div>
@@ -69,7 +60,10 @@ function SQLinput(pushHistory = true) {
 
 
         `).fadeIn(300);
-        $("#pagi").html("");
+        
+        NezetValtas("ki");
+        $("#kosar").prop("checked", false);
+        $("#kezdolap").prop("checked", false);
 
         if (pushHistory) {
             SPAState.currentView = 'sql';

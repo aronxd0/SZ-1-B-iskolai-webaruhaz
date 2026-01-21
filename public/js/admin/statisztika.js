@@ -15,17 +15,6 @@ window.addEventListener("resize", () => {
 });
 
 function Statisztikak(pushHistory = true) {
-
-    $("#home_button").closest(".gombdiv").removeClass("aktiv");
-    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
-    
-    $("#welcome_section").fadeOut(300);
-     $("#felsosor").addClass("mt-[100px]");
-    $("#kateogoria-carousel").fadeOut(300);
-
-    $("#nezetkicsi").addClass("eltunt");
-    $("#nezetnagy").addClass("eltunt");
-            
         html = `
         <div 
         class="
@@ -507,7 +496,6 @@ function Statisztikak(pushHistory = true) {
 
      $("#content_hely").fadeOut(300, async function() {
          await $("#content_hely").html(html).fadeIn(300); 
-        $("#pagi").html("");
         //drawChart();
         DiagrammokSelect("kezdes");
         STAT_Penz();
@@ -518,6 +506,11 @@ function Statisztikak(pushHistory = true) {
         // eladások száma || rendelések darabs száma
         // vett aruk kategória szerint
     });
+
+    NezetValtas("ki");
+
+    $("#kosar").prop("checked", false);
+    $("#kezdolap").prop("checked", false);
 
     if (pushHistory) {
         SPAState.currentView = 'statisztika';

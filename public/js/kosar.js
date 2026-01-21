@@ -5,33 +5,17 @@ let tetelekli = [];
 
 
 let ureskosar = `
-                <div class="col-12 mt-5">
+                <div class="col-12">
                     <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
                 </div>`;
 
 async function Kosar_Mutat(pushHistory = true) {
     tetelekli = [];
-    //$("#content_hely").html("");
-    console.log("cart_button click xd");
 
-    $("#welcome_section").fadeOut(300);
-    $("#kateogoria-carousel").fadeOut(300);
-
-    $("#nezetkicsi").addClass("eltunt");
-    $("#nezetnagy").addClass("eltunt");
-
-    $("#keresett_kifejezes").html("");
-    $("#felsosor").addClass("mt-[100px]");
-    $("#débé").html("");
-    $("#nev1").val("");
-
-    $("#kosar").prop("checked", true);
-    $("#kezdolap").prop("checked", false);
-
-    var ts = ``;
+    
 
     let cnt = `
-        <div class="col-12 mt-5">
+        <div class="col-12">
             <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad tartalma</h5></div>
         </div>
         `;
@@ -211,7 +195,11 @@ async function Kosar_Mutat(pushHistory = true) {
             $("#content_hely").html(cnt).fadeIn(300);
             AR_SUM("termek_ar", "sumar", false);
         });
-        $("#pagi").html("");
+
+        NezetValtas("ki");
+
+        $("#kosar").prop("checked", true);
+        $("#kezdolap").prop("checked", false);
 
         // History push hozzáadása
         if (pushHistory) {

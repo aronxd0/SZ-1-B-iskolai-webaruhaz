@@ -765,16 +765,31 @@ function Elfogyott(alma){
     KategoriaFeltolt("kategoria_section", "check", "",true);
 }
 
+function NezetValtas(mod) {
+    if (mod == "be") {
+        $("#welcome_section").fadeIn(300);
+        $("#kateogoria-carousel").fadeIn(300);
+        $("#nezetkicsi").removeClass("eltunt");
+        $("#nezetnagy").removeClass("eltunt");
+        $("#tutorial").fadeIn(300);
+    }
+    else {
+        $("#welcome_section").fadeOut(300);
+        $("#kateogoria-carousel").fadeOut(300);
+        $("#nezetkicsi").addClass("eltunt");
+        $("#nezetnagy").addClass("eltunt");
+        $("#tutorial").fadeOut(300);
+        $("#keresett_kifejezes").html("");
+        $("#débé").html("");
+        $("#pagi").html("");
+    }
+}
+
 async function Kezdolap(pushHistory = true) {
-    console.log("Kezdolap lefutott");
-    $("#keresett_kifejezes").html();
-    $("#welcome_section").fadeIn(300);
-    $("#kateogoria-carousel").fadeIn(300);
-    $("#felsosor").removeClass("mt-[100px]");
+    $("#keresett_kifejezes").html("");
     nev1.value = "";
     bepipaltID = "";
-    $("#kosar").prop("checked", false);
-    $("#kezdolap").prop("checked", true);
+    
     
     // Itt hívjuk meg a keresőbárt, de jelezzük neki, hogy most ne piszkálja a history-t,
     // mert mi fogjuk manuálisan beállítani a #home-ot.
@@ -795,6 +810,10 @@ async function Kezdolap(pushHistory = true) {
     
     KosarTetelDB();
     Szurok_Torlese();
+    NezetValtas("be");
+
+    $("#kosar").prop("checked", false);
+    $("#kezdolap").prop("checked", true);
     
     if (pushHistory) {
         SPAState.currentView = 'home';

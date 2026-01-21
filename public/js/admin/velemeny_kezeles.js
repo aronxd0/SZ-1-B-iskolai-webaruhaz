@@ -10,17 +10,11 @@ async function Admin_Velemenykezeles(pushHistory = true) {
         velemeny_jelenlegi = velemeny_osszes
     }
     
-    $("#home_button").closest(".gombdiv").removeClass("aktiv");
-    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
-    $("#welcome_section").fadeOut(300);
-    $("#felsosor").removeClass("mt-[100px]");
-    $("#kateogoria-carousel").fadeOut(300);
-    $("#nezetkicsi").addClass("eltunt");
-    $("#nezetnagy").addClass("eltunt");
+    
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
-            <div class="row d-flex flex-column flex-md-row p-1 mx-auto mt-5 space-y-2">
+            <div class="row d-flex flex-column flex-md-row p-1 mx-auto space-y-2">
                 <div class="col-12 col-md-4 mx-auto mt-3">
                     <div class="row d-flex justify-content-center">
                         <div role="alert" class="col-12 col-lg-4 !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50 bg-blue-200/30 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200 w-auto mx-3 px-2 py-3 rounded-4">
@@ -38,6 +32,10 @@ async function Admin_Velemenykezeles(pushHistory = true) {
         AdminVelemenyekMutat();
         $("#pagi").html("");
     });
+
+    NezetValtas("ki");
+    $("#kosar").prop("checked", false);
+    $("#kezdolap").prop("checked", false);
 
     if (pushHistory) {
         SPAState.currentView = 'velemeny-kezeles';
