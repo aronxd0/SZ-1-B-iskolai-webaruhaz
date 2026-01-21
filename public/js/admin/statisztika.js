@@ -16,8 +16,8 @@ window.addEventListener("resize", () => {
 
 function Statisztikak(pushHistory = true) {
 
-    $("#home_button").closest(".gombdiv").removeClass("aktiv");
-    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
+    $("#kosar").prop("checked", false);
+    $("#kezdolap").prop("checked", false);
     
     $("#welcome_section").fadeOut(300);
      $("#felsosor").addClass("mt-[100px]");
