@@ -56,7 +56,7 @@ function Attekintes(li) {
     for (const element of li) {
 
         htmtoback += ` 
-          <div class="row px-4">
+          <div class="row p-2">
             <div class="col-0 col-lg-1"></div>
             <div class=" col-12 
                         col-lg-10   
@@ -65,7 +65,7 @@ function Attekintes(li) {
                         flex-lg-row 
                         bg-zinc-100 
                         text-slate-900 
-                        dark:bg-slate-900/50    
+                        dark:bg-slate-950 
                         dark:text-zinc-200 
                         shadow-lg  
                         rounded-4 
@@ -97,17 +97,10 @@ function Attekintes(li) {
                     flex-lg-column 
                     justify-content-between 
                     py-3 p-lg-1 
-                    !border 
-                    !border-t-gray-300 
-                    !border-b-gray-300 
-                    !border-r-0 
-                    !border-l-0 
-                    dark:!border-t-zinc-200/20 
-                    dark:!border-b-zinc-200/20 
-                    lg:!border-t-0 
-                    lg:!border-b-0 
-                    lg:dark:!border-t-0 
-                    lg:dark:!border-b-0 
+                    border-t border-gray-300 
+                    border-b border-gray-300 
+                    lg:border-t-0 
+                    lg:border-b-0 
                 ">
                         <span class="font-semibold">Termék</span>
                         <span class="text-end text-lg-start text-sm">${element.NEV}</span>
@@ -153,37 +146,33 @@ function Attekintes(li) {
     let navigacio = `
         <button type="button" 
         class="
-        px-3 py-2 rounded-lg !border !border-transparent 
-        bg-slate-900 
-        text-zinc-200 
-        dark:bg-gray-800   
-        dark:text-zinc-200 
-        hover:text-slate-900  
-        hover:bg-zinc-100 
-        hover:!border-slate-900 
-        dark:hover:bg-gray-700/70  
-        dark:!border-zinc-200/10 
-        dark:hover:!border-zinc-200/20 
-        dark:hover:text-zinc-200 
-        transition-all duration-150 ease-in-out w-auto
+        btn btn-lg 
+        bg-zinc-300 
+        text-red-700 
+        dark:bg-slate-800 
+        dark:text-red-700 
+        hover:shadow-xl 
+        hover:shadow-gray-950/70 
+        hover:text-red-700 
+        dark:hover:shadow-xl 
+        dark:hover:text-red-700 
+        dark:hover:shadow-gray-700/80  
         bi bi-x-lg
         " data-bs-dismiss="modal"> Mégse</button>
 
         <button type="button" 
         class="
-        px-3 py-2 rounded-lg !border !border-transparent 
-        bg-slate-900 
-        text-zinc-200 
-        dark:bg-gray-800   
-        dark:text-zinc-200 
-        hover:text-slate-900  
-        hover:bg-zinc-100 
-        hover:!border-slate-900 
-        dark:hover:bg-gray-700/70  
-        dark:!border-zinc-200/10 
-        dark:hover:!border-zinc-200/20 
-        dark:hover:text-zinc-200 
-        transition-all duration-150 ease-in-out w-auto 
+        btn btn-lg 
+        bg-zinc-300 
+        text-emerald-600 
+        dark:bg-slate-800 
+        dark:text-emerald-600 
+        hover:shadow-xl 
+        hover:shadow-gray-950/70 
+        hover:text-emerald-600 
+        dark:hover:text-emerald-600 
+        dark:hover:shadow-xl 
+        dark:hover:shadow-gray-700/80 
         
         bi bi-arrow-right
         " onclick='Adatok(${JSON.stringify(li)})'> Tovább</button>
@@ -423,36 +412,32 @@ function Adatok(li) {
     let navigacio = `
         <button type="button" 
         class="
-        px-3 py-2 rounded-lg !border !border-transparent 
-        bg-slate-900 
-        text-zinc-200 
-        dark:bg-gray-800   
-        dark:text-zinc-200 
-        hover:text-slate-900  
-        hover:bg-zinc-100 
-        hover:!border-slate-900 
-        dark:hover:bg-gray-700/70  
-        dark:!border-zinc-200/10 
-        dark:hover:!border-zinc-200/20 
-        dark:hover:text-zinc-200 
-        transition-all duration-150 ease-in-out w-auto
+        btn btn-lg
+        bg-zinc-300 
+        text-red-700 
+        dark:bg-slate-800 
+        dark:text-red-700 
+        hover:shadow-xl 
+        hover:text-red-700 
+        dark:hover:text-red-700 
+        hover:shadow-gray-950/70 
+        dark:hover:shadow-xl 
+        dark:hover:shadow-gray-700/80 
          bi bi-backspace
          " onclick='Attekintes(${JSON.stringify(li)})'> Vissza</button>
 
         <button type="button" 
-        class="px-3 py-2 rounded-lg !border !border-transparent 
-        bg-slate-900 
-        text-zinc-200 
-        dark:bg-gray-800   
-        dark:text-zinc-200 
-        hover:text-slate-900  
-        hover:bg-zinc-100 
-        hover:!border-slate-900 
-        dark:hover:bg-gray-700/70  
-        dark:!border-zinc-200/10 
-        dark:hover:!border-zinc-200/20 
-        dark:hover:text-zinc-200 
-        transition-all duration-150 ease-in-out w-auto 
+        class="btn btn-lg 
+        bg-zinc-300 
+        text-emerald-600 
+        dark:bg-slate-800 
+        dark:text-emerald-600 
+        hover:shadow-xl 
+        hover:shadow-gray-950/70 
+        hover:text-emerald-600 
+        dark:hover:text-emerald-600 
+        dark:hover:shadow-xl 
+        dark:hover:shadow-gray-700/80 
         bi bi-arrow-right" onclick='Fizetes(${JSON.stringify(li)})'> Tovább</button>
     `;
     $("#lab").html(navigacio);
@@ -541,8 +526,7 @@ function Fizetes(li) {
           <span class="text-lg p-1">Válasszon fizetési módot</span>
           <!-- bankkartya -->
           <label 
-            class=" 
-            !border !border-transparent 
+            class="
             bg-zinc-50 
             shadow-xl 
             text-slate-900 
@@ -556,12 +540,12 @@ function Fizetes(li) {
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
                   has-[:checked]:bg-indigo-100 
-                            has-[:checked]:!border-indigo-400 
+                            has-[:checked]:border-indigo-400 
                             has-[:checked]:border 
                             has-[:checked]:shadow-md
 
                             dark:has-[:checked]:bg-sky-950
-                            dark:has-[:checked]:!border-sky-700
+                            dark:has-[:checked]:border-sky-700
                             dark:has-[:checked]:border
                   " >
 
@@ -609,7 +593,6 @@ function Fizetes(li) {
           <!-- paypal -->
           <label 
             class="
-            !border !border-transparent 
             bg-zinc-50 
             shadow-xl 
             text-slate-900 
@@ -623,12 +606,12 @@ function Fizetes(li) {
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
                   has-[:checked]:bg-indigo-100 
-                            has-[:checked]:!border-indigo-400 
+                            has-[:checked]:border-indigo-400 
                             has-[:checked]:border 
                             has-[:checked]:shadow-md
 
                             dark:has-[:checked]:bg-sky-950
-                            dark:has-[:checked]:!border-sky-700
+                            dark:has-[:checked]:border-sky-700
                             dark:has-[:checked]:border
                   " >
 
@@ -680,7 +663,6 @@ function Fizetes(li) {
           <!-- google pay -->
           <label 
             class="
-            !border !border-transparent 
             bg-zinc-50 
             text-slate-900 
             shadow-xl 
@@ -694,12 +676,12 @@ function Fizetes(li) {
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
                   has-[:checked]:bg-indigo-100 
-                            has-[:checked]:!border-indigo-400 
+                            has-[:checked]:border-indigo-400 
                             has-[:checked]:border 
                             has-[:checked]:shadow-md
 
                             dark:has-[:checked]:bg-sky-950
-                            dark:has-[:checked]:!border-sky-700
+                            dark:has-[:checked]:border-sky-700
                             dark:has-[:checked]:border
                   " >
 
@@ -716,7 +698,6 @@ function Fizetes(li) {
           <!-- apple pay -->
           <label 
             class="
-            !border !border-transparent 
             bg-zinc-50 
             text-slate-900 
             shadow-xl 
@@ -730,12 +711,12 @@ function Fizetes(li) {
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
                   has-[:checked]:bg-indigo-100 
-                            has-[:checked]:!border-indigo-400 
+                            has-[:checked]:border-indigo-400 
                             has-[:checked]:border 
                             has-[:checked]:shadow-md
 
                             dark:has-[:checked]:bg-sky-950
-                            dark:has-[:checked]:!border-sky-700
+                            dark:has-[:checked]:border-sky-700
                             dark:has-[:checked]:border
                   ">
 
@@ -764,7 +745,6 @@ function Fizetes(li) {
           <!-- mpl -->
           <label 
             class="
-            !border !border-transparent 
             bg-zinc-50 
             shadow-xl 
             text-slate-900 
@@ -778,12 +758,12 @@ function Fizetes(li) {
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
                   has-[:checked]:bg-indigo-100 
-                            has-[:checked]:!border-indigo-400 
+                            has-[:checked]:border-indigo-400 
                             has-[:checked]:border 
                             has-[:checked]:shadow-md
 
                             dark:has-[:checked]:bg-sky-950
-                            dark:has-[:checked]:!border-sky-700
+                            dark:has-[:checked]:border-sky-700
                             dark:has-[:checked]:border
                   " >
 
@@ -800,7 +780,6 @@ function Fizetes(li) {
           <!-- gls -->
           <label 
             class="
-            !border !border-transparent 
             bg-zinc-50 
             shadow-xl 
             text-slate-900 
@@ -814,12 +793,12 @@ function Fizetes(li) {
             flex items-center justify-between p-4 rounded-xl cursor-pointer
                    transition-all duration-200
                   has-[:checked]:bg-indigo-100 
-                            has-[:checked]:!border-indigo-400 
+                            has-[:checked]:border-indigo-400 
                             has-[:checked]:border 
                             has-[:checked]:shadow-md
 
                             dark:has-[:checked]:bg-sky-950
-                            dark:has-[:checked]:!border-sky-700
+                            dark:has-[:checked]:border-sky-700
                             dark:has-[:checked]:border
                   " >
 
@@ -836,7 +815,6 @@ function Fizetes(li) {
           <!-- express one -->
           <label 
             class="
-            !border !border-transparent 
             bg-zinc-50 
             text-slate-900 
             shadow-xl 
@@ -850,12 +828,12 @@ function Fizetes(li) {
             flex items-center justify-between p-4 rounded-xl cursor-pointer 
                   transition-all duration-200
                   has-[:checked]:bg-indigo-100 
-                            has-[:checked]:!border-indigo-400 
+                            has-[:checked]:border-indigo-400 
                             has-[:checked]:border 
                             has-[:checked]:shadow-md
 
                             dark:has-[:checked]:bg-sky-950
-                            dark:has-[:checked]:!border-sky-700
+                            dark:has-[:checked]:border-sky-700
                             dark:has-[:checked]:border
                   " >
 
@@ -888,35 +866,32 @@ function Fizetes(li) {
     let navigacio = `
         <button type="button" 
         class="
-        px-3 py-2 rounded-lg !border !border-transparent 
-        bg-slate-900 
-        text-zinc-200 
-        dark:bg-gray-800   
-        dark:text-zinc-200 
-        hover:text-slate-900  
-        hover:bg-zinc-100 
-        hover:!border-slate-900 
-        dark:hover:bg-gray-700/70  
-        dark:!border-zinc-200/10 
-        dark:hover:!border-zinc-200/20 
-        dark:hover:text-zinc-200 w-auto 
-        transition-all duration-150 ease-in-out bi bi-backspace 
+        btn btn-lg  
+        bi bi-backspace 
+        bg-zinc-300 
+        text-red-700 
+        hover:text-red-700 
+        dark:bg-slate-800 
+        dark:text-red-700 
+        hover:shadow-xl 
+        dark:hover:text-red-700 
+        hover:shadow-gray-950/70 
+        dark:hover:shadow-xl 
+        dark:hover:shadow-gray-700/80 
         " onclick='Adatok(${JSON.stringify(li)})'> Vissza</button>
 
         <button type="button" 
-        class="px-3 py-2 rounded-lg !border !border-transparent 
-        bg-slate-900 
-        text-zinc-200 
-        dark:bg-gray-800   
-        dark:text-zinc-200 
-        hover:text-slate-900  
-        hover:bg-zinc-100 
-        hover:!border-slate-900 
-        dark:hover:bg-gray-700/70  
-        dark:!border-zinc-200/10 
-        dark:hover:!border-zinc-200/20 
-        dark:hover:text-zinc-200 w-auto 
-        transition-all duration-150 ease-in-out 
+        class="btn btn-lg 
+        bg-zinc-300 
+        text-emerald-600 
+        dark:bg-slate-800 
+        dark:text-emerald-600 
+        hover:shadow-xl 
+        hover:shadow-gray-950/70 
+        hover:text-emerald-600 
+        dark:hover:text-emerald-600 
+        dark:hover:shadow-xl 
+        dark:hover:shadow-gray-700/80 
         bi bi-credit-card" id="FIZ" onclick='Fizetésclick(${JSON.stringify(li)})'> Fizetés</button>
     `;
     $("#lab").html(navigacio);
@@ -1078,11 +1053,11 @@ async function Fizetésclick(li) {
       try{
         const html = await emailDesign(li);
         
-        ajax_call("send-email", "POST", { // 2 adata egyfajta tömb amit majd a backend fogad
+        ajax_call("send-email", { // 2 adata egyfajta tömb amit majd a backend fogad
           email: _emil,
           subject: "Rendelés visszaigazolása",
           html: html
-      }, false);
+      }, "GET", null, false);
   
       }
       catch{
@@ -1126,11 +1101,9 @@ async function emailDesign(li, rendelId, szallitasiCim) {
     osszes += e.PENZ;
   }
 
-  const afaAdat = await ajax_call(`afa`, "GET", null, false);
+  const afaAdat = await ajax_call(`afa`, "GET", null, true);
   const afa = afaAdat.rows[0].AFA;
   const vegosszeg = Math.round(osszes * (1 + afa / 100)).toLocaleString();
-  const rendelesazonAdat = await ajax_call(`rendeles_azon`, "GET", null, false);
-  const rendelesazon = rendelesazonAdat.rows[0].RENDELES_AZONOSITO;
 
   return `
   <div style="background:#f5f1e8;padding:30px 0;">
@@ -1183,7 +1156,7 @@ async function emailDesign(li, rendelId, szallitasiCim) {
       Rendelési azonosító
     </div>
     <div style="font-size:16px;font-weight:bold;color:#065f46;">
-       ${rendelesazon}
+       111153
     </div>
   </div>
 
