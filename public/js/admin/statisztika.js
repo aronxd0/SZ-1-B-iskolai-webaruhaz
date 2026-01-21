@@ -1,16 +1,14 @@
 let voltNagy = window.innerWidth > 600;  
-// MEGNÉZZÜK, HOGY NAGY VAGY KIS A KÉPERNYŐ
-
 
 window.addEventListener("resize", () => {
     let mostNagy = window.innerWidth > 600;
-    // megnézzük az aktuális állapotot
 
-    // Ha változott az állapot, és a statisztika nézeten vagyunk, akkor újrarajzoljuk a diagramot
-    
-    if (mostNagy !== voltNagy && document.getElementById("NagyCIM") != null)  {      
-        DiagrammokSelect("kezdes"); 
+    // Ha átlépted a 600px határt
+    if (mostNagy !== voltNagy && document.getElementById("NagyCIM") != null)  {
 
+        // console.log("Átlépted a 600px-t, újrarajzolom...");
+        DiagrammokSelect("kezdes");
+       
         // állapot frissítése
         voltNagy = mostNagy;
     }
@@ -18,11 +16,9 @@ window.addEventListener("resize", () => {
 
 function Statisztikak(pushHistory = true) {
 
-    $("#kosar").prop("checked", false);
-    $("#kezdolap").prop("checked", false);
-    // A kosár és kezdőlap gomb inaktívvá tétele ==> aláhuzás levétele
-
-
+    $("#home_button").closest(".gombdiv").removeClass("aktiv");
+    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
+    
     $("#welcome_section").fadeOut(300);
      $("#felsosor").addClass("mt-[100px]");
     $("#kateogoria-carousel").fadeOut(300);
@@ -512,15 +508,15 @@ function Statisztikak(pushHistory = true) {
      $("#content_hely").fadeOut(300, async function() {
          await $("#content_hely").html(html).fadeIn(300); 
         $("#pagi").html("");
-        // az új tartalom betöltése és megjelenítése
-
-        // diagrammok rajzolása
+        //drawChart();
         DiagrammokSelect("kezdes");
         STAT_Penz();
         STAT_ELAD();
         STAT_KATEG();
         STAT_COM();
-        
+        /// suska
+        // eladások száma || rendelések darabs száma
+        // vett aruk kategória szerint
     });
 
     if (pushHistory) {
@@ -642,13 +638,13 @@ function drawChart(rang) {
 
             positioner: function (tooltipWidth, tooltipHeight, point) { // ez a tooltip pozíciója 
 
-                // bonyolult mert meg kellett nézni hogy hova fér el a tooltip
+                // azért ilyen bonyolult mert meg kellett nézni hogy hova fér el a tooltip
                 // és aszerint pozícionálni
 
                 let chart = this.chart;
                 let chartWidth = chart.chartWidth;
 
-                const offset = 160;  // Ennyivel feljebb van a tooltip mint az oszlop teteje
+                const offset = 160;  // Egyivel feljebb van a tooltip mint az oszlop teteje
 
                 let x = point.plotX + chart.plotLeft - (tooltipWidth / 2);       
                 //point.plotX: a konkrét oszlop vízszintes pozíciója
@@ -791,20 +787,15 @@ function drawChart(rang) {
 let penzChart = null;
 async function STAT_Penz(innen){
     var intervallum = "1";
-
-    // ha innen == null akkor az első betöltés van, egyébként a selectből jön
     if(innen != null){
         intervallum = innen.value;
     }
-
-    // ha már van chart, akkor töröljük
     if(penzChart != null){
         penzChart.destroy();
     }
 
     var adat = await ajax_call(`bevetel_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
     
-    // adtoknak felkészítése a chart-hoz
     const xValues = [];
     const yValues = [];
     //const barColors = [];
@@ -819,7 +810,6 @@ async function STAT_Penz(innen){
         }
     }
 
-     // adatok feldolgozása
     for (var item of adat.rows){
         let d = new Date(item.IDO);
 
@@ -886,19 +876,16 @@ async function STAT_Penz(innen){
 let Elad_Chart = null;
 async function STAT_ELAD(innen){
     var intervallum = "1";
-
-    // ha innen == null akkor az első betöltés van, egyébként a selectből jön
     if(innen != null){
         intervallum = innen.value;
     }
-    // ha már van chart, akkor töröljük
     if(Elad_Chart != null){
         Elad_Chart.destroy();
     }
 
     var adat = await ajax_call(`rendelesek_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
     
-    // adtoknak felkészítése a chart-hoz
+
     const xValues = [];
     const yValues = [];
     //const barColors = [];
@@ -915,7 +902,6 @@ async function STAT_ELAD(innen){
 
      var tobbEv = idok.length > 1 || intervallum != 1;
 
-        // adatok feldolgozása
     for (var item of adat.rows){
         let d = new Date(item.IDO);
 
@@ -975,11 +961,8 @@ async function STAT_ELAD(innen){
 
 let KAT_chart = null;
 async function STAT_KATEG(innen){
-
-    // ha innen == null akkor az első betöltés van, egyébként a selectből jön
     var intervallum = innen ? innen.value : "1";
 
-    // ha már van chart, akkor töröljük
     if (KAT_chart) {
         KAT_chart.destroy();
         KAT_chart = null;
@@ -1024,7 +1007,6 @@ async function STAT_KATEG(innen){
     const yValues = [];
     const szinek = ["red", "green", "blue", "orange", "cyan", "pink"];
 
-    // adatok feldolgozása
     for (var item of adat.rows){
         xValues.push(item.KATEGORIA);
         yValues.push(item.DARAB);
@@ -1033,10 +1015,10 @@ async function STAT_KATEG(innen){
     KAT_chart = new Chart("STAT_KOR_GRAF", {
         type: "pie",
         data: {
-            labels: xValues, // adatok nevei
+            labels: xValues,
             datasets: [{
                 backgroundColor: szinek,
-                data: yValues // adatok értékei
+                data: yValues
             }]
         },
         options: {
@@ -1059,10 +1041,8 @@ async function STAT_KATEG(innen){
 let COMM_chart = null;
 
 async function STAT_COM(innen){
-    // ha innen == null akkor az első betöltés van, egyébként a selectből jön
     var intervallum = innen ? innen.value : "1";
 
-    // ha már van chart, akkor töröljük
     if (COMM_chart) {
         COMM_chart.destroy();
         COMM_chart = null;
@@ -1107,12 +1087,10 @@ async function STAT_COM(innen){
     const yValues = [];
     const barColors = [];
 
-    // adatok feldolgozása
     for (var item of adat.rows){
         xValues.push(item.ALLAPOT);
         yValues.push(item.DARAB);
 
-        // színek hozzárendelése az állapotokhoz
         switch(item.ALLAPOT){
             case "Jóváhagyva": barColors.push("green"); break;
             case "Jóváhagyásra vár": barColors.push("orange"); break;
@@ -1123,10 +1101,10 @@ async function STAT_COM(innen){
     COMM_chart = new Chart("STAT_COMMENT", {
         type: "pie",
         data: {
-            labels: xValues, // adatok nevei
+            labels: xValues,
             datasets: [{
                 backgroundColor: barColors,
-                data: yValues // adatok értékei
+                data: yValues
             }]
         },
         options: {
@@ -1137,7 +1115,7 @@ async function STAT_COM(innen){
                     display: true,
                     position: 'right'
                 },
-                title: { // nev 
+                title: {
                     display: true,
                     text: "Commentek eloszlása",
                     position: "top",

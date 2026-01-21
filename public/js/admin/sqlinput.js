@@ -1,8 +1,7 @@
 
 function SQLinput(pushHistory = true) {
-    $("#kosar").prop("checked", false);
-    $("#kezdolap").prop("checked", false);
-    // A kosár és kezdőlap gomb inaktívvá tétele ==> aláhuzás levétele
+    $("#home_button").closest(".gombdiv").removeClass("aktiv");
+    $("#cart_button").closest(".gombdiv").removeClass("aktiv");
 
     $("#welcome_section").fadeOut(300);
     $("#felsosor").removeClass("mt-[100px]");;
@@ -12,7 +11,6 @@ function SQLinput(pushHistory = true) {
     $("#nezetnagy").addClass("eltunt");
 
     $("#content_hely").fadeOut(300, function() {
-        // Tartalom betöltése
         $("#content_hely").html(`
         <div class="row mt-5">
             <div class="col-12 text-center p-2 mt-3">
@@ -71,8 +69,6 @@ function SQLinput(pushHistory = true) {
 
 
         `).fadeIn(300);
-
-            // lapozó eltüntetése
         $("#pagi").html("");
 
         if (pushHistory) {
@@ -88,18 +84,13 @@ function SQLinput(pushHistory = true) {
     })
 }
 
-// SQL lekérdezés futtatása
 async function KER_CLICk(){
     try{
-        // SQL lekérdezés mező ellenőrzése
-
         if(sql_input_area.value.replaceAll(/\n/g, " ").trim() =="") throw '{"error" : "Üres a lekérdezés mező"}';
 
-        // AJAX hívás az SQL lekérdezés futtatásához plusz space/enter/tab kezelése
+
         var adat = await ajax_call(`html_sql?SQL=${sql_input_area.value.replaceAll(/\n/g, " ")}`, "GET", null, true);
 
-
-        // ha select akkor táblázatként jelenítse meg az eredményt
         if(adat.select == true){
             if (adat.adat.rows.length > 0) {
                 var html = "<table class='tablazat p-4 mt-3 text-center sticky-header'> <thead class='bg-slate-900 text-zinc-200 border-b-gray-400'><tr>"
@@ -129,7 +120,6 @@ async function KER_CLICk(){
                     `;
             }        
         }
-        // select nélküli műveletek esetén sikerüzenet
         else{
             document.getElementById("SQL_hiba").innerHTML =  `
             
@@ -149,8 +139,6 @@ async function KER_CLICk(){
                     </div> `
         }
     }
-
-    // Hiba esetén
     catch(e){
         
         let errmsg = JSON.parse(e);
