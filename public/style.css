@@ -29,8 +29,6 @@ html, body {
 /* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
 .container-fluid { padding-left: 0 !important; padding-right: 0 !important; }
 
-.iemge { max-width: 150px; width: 100%; }
-
 .navbar-toggler:focus { box-shadow: none; }
 
 .cim { font-size: 35px; }
@@ -75,8 +73,6 @@ html, body {
 
 .modal-header { border-bottom: none; }
 .modal-footer { border-top: none; }
-
-.comment { font-size: 14px; }
 
 /* vilagos modban */
 .gombdiv.aktiv { 
