@@ -821,7 +821,7 @@ async function Kezdolap(pushHistory = true) {
     
     // Itt hívjuk meg a keresőbárt, de jelezzük neki, hogy most ne piszkálja a history-t,
     // mert mi fogjuk manuálisan beállítani a #home-ot.
-    await KERESOBAR(false);
+    
     
 
     let kategoriacuccos = await ajax_call(`kategoria`, "GET", null, true);
@@ -839,6 +839,7 @@ async function Kezdolap(pushHistory = true) {
     KosarTetelDB();
     Szurok_Torlese();
     NezetValtas("be");
+    await KERESOBAR(false);
 
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", true);
