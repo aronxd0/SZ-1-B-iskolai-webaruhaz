@@ -74,56 +74,14 @@ html, body {
 .modal-header { border-bottom: none; }
 .modal-footer { border-top: none; }
 
-/* vilagos modban */
-.gombdiv.aktiv { 
-  border-bottom: 1px solid var(--slate-900);
-  color: var(--slate-900);
-} 
-
-.gombdiv.aktiv button {
-  color: var(--slate-900);
-  font-weight: bold;
-}
-
-/* sotet modban */
-html.dark .gombdiv.aktiv { 
-  border-bottom: 1px solid var(--zinc-200);
-  color: var(--zinc-200);
-} 
-
-html.dark .gombdiv.aktiv button {
-  color: var(--zinc-200);
-  font-weight: bold;
-}
-
 .zoom-img { transform: scale(1); }
 
 .hovered { aspect-ratio: auto; }
 
 .shadow-bottom { box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175); }
 
-
 .dropdown-toggle::after { display: none !important; }
 
-
-#login_gomb_div {
-  transition: all 0.3s ease;
-}
-
-#login_gomb_div.bal {
-  justify-content: flex-start;
-  transition: 0.5s ease;
-}
-
-#login_gomb_div.kozep {
-  justify-content: center;
-  transition: 0.5s ease;
-}
-
-#login_gomb_div.jobb {
-  justify-content: flex-end;
-  transition: 0.5s ease;
-}
 
 /* velemeny iras mezo merete */
 #velemeny_input { height: 150px; }

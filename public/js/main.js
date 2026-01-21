@@ -385,8 +385,9 @@ async function KERESOBAR(updateHistory = true) {
         );
     }
     
-    
-    console.log("elküldve: "+ elküld);
+    $("#kezdolap").prop("checked",false);
+    $("#kosar").prop("checked",false);
+    NezetValtas("ki");
 }
 //endregion
 
@@ -863,9 +864,6 @@ async function Szurok_Torlese() {
     $("#innaktiv").prop("checked", false);
     Nemaktivak = false;
     await ArFeltolt(KeresonekSQLCraft(), "", "");
-    
-    KERESOBAR(false);
-    
 }
 
 async function KategoriaKezdolap(id_kategoria) {
@@ -877,7 +875,7 @@ async function KategoriaKezdolap(id_kategoria) {
   .querySelector(`[id="katcheck${id_kategoria}"]`).checked = true; */
 
     $(`#katcheck${id_kategoria}`).prop("checked", true);
-    KERESOBAR();
+    KERESOBAR(false);
 
     console.log(document
         .getElementById('kategoria_section')

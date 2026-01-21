@@ -322,10 +322,10 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
 
   
 
-  //const cls = new bootstrap.Collapse("#vlm", { toggle: false });
+    //const cls = new bootstrap.Collapse("#vlm", { toggle: false });
 
-  $("#vlmg").html("");
-  $("#ussr").html("");
+    $("#vlmg").html("");
+    $("#ussr").html("");
 
 
 
@@ -572,8 +572,8 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
 
       
 
-    if (aktiv == "N" || mennyiseg == 0) alert("Ez a termek nem elerheto teso");
-    else {
+    
+    
       const gombraKattintas = event && event.target && event.target.tagName === "BUTTON";
       if (!gombraKattintas) {
         // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
@@ -622,11 +622,9 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
 
         
       }
-    }
+    } catch (err) {}
     
 
-
-  } catch (err) { console.log("hiba:", err); }
 
 
   
@@ -679,9 +677,9 @@ function CARD_BETOLT(adatok) {
 
       if (element.AKTIV == "N" || element.MENNYISEG == 0) {
         //adminoknak a nem aktiv termekek pirossal látszódjanak
-        el = ` <div class="alert alert-danger">
-                          A termék jelenleg nem elérhető
-                      </div>
+        el = ` <span class="text-red-600 dark:text-red-400">
+                          Nem elérhető!
+                      </span>
               `;
   
         ee = "nem-elerheto";
@@ -739,9 +737,9 @@ function CARD_BETOLT(adatok) {
 
       if (element.AKTIV == "N" || element.MENNYISEG == 0) {
         //adminoknak a nem aktiv termekek pirossal látszódjanak
-        el = ` <div class="alert alert-danger">
-                          A termék jelenleg nem elérhető
-                      </div>
+        el = ` <span class="text-red-600 dark:text-red-400">
+                  A termék jelenleg nem elérhető!
+              </span>
               `;
   
         ee = "nem-elerheto";
