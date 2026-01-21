@@ -797,15 +797,15 @@ function NezetValtas(mod) {
     if (mod == "be") {
         $("#welcome_section").fadeIn(300);
         $("#kateogoria-carousel").fadeIn(300);
-        $("#nezetkicsi").removeClass("eltunt");
-        $("#nezetnagy").removeClass("eltunt");
+        $("#nezetkicsi").attr("style", "display:block !important");
+        $("#nezetnagy").attr("style", "display:block !important");
         $("#tutorial").fadeIn(300);
     }
     else {
         $("#welcome_section").fadeOut(300);
         $("#kateogoria-carousel").fadeOut(300);
-        $("#nezetkicsi").addClass("eltunt");
-        $("#nezetnagy").addClass("eltunt");
+        $("#nezetkicsi").attr("style", "display:none !important");
+        $("#nezetnagy").attr("style", "display:none !important");
         $("#tutorial").fadeOut(300);
         $("#keresett_kifejezes").html("");
         $("#débé").html("");
