@@ -14,15 +14,12 @@ async function Admin_Velemenykezeles(pushHistory = true) {
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
-            <div class="row d-flex flex-column flex-md-row p-1 mx-auto space-y-2">
-                <div class="col-12 col-md-4 mx-auto mt-3">
-                    <div class="row d-flex justify-content-center">
-                        <div role="alert" class="col-12 col-lg-4 !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50 bg-blue-200/30 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200 w-auto mx-3 px-2 py-3 rounded-4">
-                            <i class="bi bi-info-circle-fill"></i>
-                            <strong class="font-bold">${varodb.maxcount} db</strong>
-                            <span> vélemény vár jóváhagyásra</span>
-                        </div>
-                        <input type="radio" name="plan" class="form-check-input hidden" id="varo" checked onchange="AdminVelemenyekMutat(this)">
+            <div class="row d-flex flex-column flex-lg-row p-1 mx-auto space-y-2">
+                <div class="col-12 col-lg-6 mx-auto mt-3">
+                    <div role="alert" class="w-full d-flex gap-1 justify-content-center !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50 bg-blue-200/30 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200 py-3 rounded-4">
+                        <i class="bi bi-info-circle-fill"></i>
+                        <strong class="font-bold">${varodb.maxcount} db</strong>
+                        <span> vélemény vár jóváhagyásra</span>
                     </div>
                 </div>
             </div>
