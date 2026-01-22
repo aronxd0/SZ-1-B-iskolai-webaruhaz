@@ -11,8 +11,7 @@ async function Kosar_Mutat(pushHistory = true) {
     let tartalom = `
         <div class="col-12">
             <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad tartalma</h5></div>
-        </div>
-        `;
+        </div>`;
 
     try {
         let tetelek = await ajax_call("tetelek", "GET", null, true);
