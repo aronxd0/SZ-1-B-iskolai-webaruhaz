@@ -18,7 +18,7 @@ async function TermekModosit(id_termek) {
       if (upd == 1) { üzen("Új termék sikeresen hozzáadva!", "success"); }
       else { üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success"); }
     }
-  } catch (err) { console.log("hiba:", err); }
+  } catch (err) { console.error(err); }
   Kezdolap(false);
   KosarTetelDB(); 
 }
@@ -105,13 +105,8 @@ async function Termek_Edit(event, termek_id, tipus) {
 
       // ha kivalasztok kepet feltolteskor akkor ne legyen fotolink
       $("#mod_foto").off("change").on("change", function() {
-        if (this.files.length > 0) {
-          console.log("Kiválasztott fájl:", this.files[0].name);
-          $("#mod_fotolink").val("");
-        } else {
-          console.log("Nincs semmi kiválasztva.");
-          $("#mod_fotolink").val(fotonev);
-        }
+        if (this.files.length > 0) { $("#mod_fotolink").val(""); } 
+        else { $("#mod_fotolink").val(fotonev); }
       });
 
       $("#mod_fotolink").off("keyup").on("keyup", function() {
@@ -132,7 +127,7 @@ async function Termek_Edit(event, termek_id, tipus) {
     });
 
     $("#termek_edit").modal("show");
-  } catch (err) { console.log("hiba:", err);}
+  } catch (err) { console.error(err); }
 }
 
 function Termek_Torol(event, termek_id) {
@@ -142,12 +137,11 @@ function Termek_Torol(event, termek_id) {
   $("#delete_modal").on("click", ".szemetes", async function () {
     try {
       var d_json = await ajax_call(`termek_del?ID_TERMEK=${termek_id}`, "DELETE", null, true);
-      console.log(d_json);
       if (d_json.message == "ok") {
           üzen("A termék sikeresen törölve!", "success");
           KERESOBAR();
         }
-    } catch (err) { console.log("hiba:", err); }
+    } catch (err) { console.error(err); }
   });
   $("#delete_modal").modal("show");
   KosarTetelDB();
@@ -253,111 +247,27 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
       admingombok += `<button type="button"class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 dark:!border-zinc-200/10 hover:text-red-700 hover:bg-red-400/5 hover:!border-red-700 dark:hover:bg-red-900/20 dark:hover:!border-red-600/30 dark:hover:text-red-600 transition-all duration-150 ease-in-out w-full tracking-[2px]" aria-label="torles" onclick='Termek_Torol(event, ${termek_id})'><i class="bi bi-trash"></i> TÖRLÉS</button>`;
     } else admingombok = "";
 
-
-
-    let velemenyiras_gomb = `
-      <button 
-      class=" 
-       
-      bg-transparent  
-      text-slate-900 
-      rounded-4 
-      dark:bg-slate-900 
-      dark:text-zinc-200 
-      hover:text-gray-600 
-      dark:hover:bg-slate-950 
-      dark:hover:text-gray-400
-      transition-hover duration-300 ease-in-out 
-        w-auto" onclick="Velemeny_Iras(${termek_id})"> 
-        <i class="bi bi-plus-lg"></i>
-        <span class="d-none d-sm-inline">Vélemény írása</span>
-        </button>`
-
-
+    let velemenyiras_gomb = `<button class="bg-transparent text-slate-900 rounded-4 dark:bg-slate-900 dark:text-zinc-200 hover:text-gray-600 dark:hover:bg-slate-950 dark:hover:text-gray-400 transition-hover duration-300 ease-in-out w-auto" onclick="Velemeny_Iras(${termek_id})"><i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">Vélemény írása</span></button>`;
 
     let velemenyek_tab = `
-          <label 
-          class="
-          group 
-          bg-transparent 
-          my-2 
-          text-slate-900 
-          dark:bg-slate-900 
-          dark:text-zinc-200 
-          hover:text-gray-600 
-          dark:hover:text-gray-400 
-          !border-b !border-transparent
-          
-          d-flex align-items-center justify-content-center p-2 text-center cursor-pointer 
-              transition-all duration-200
-              
-              has-[:checked]:!border-b 
-              has-[:checked]:!border-indigo-400 
-              
-              
-              dark:has-[:checked]:!border-b
-              dark:has-[:checked]:!border-sky-700 ">
-
+      <label class="group bg-transparent my-2 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 !border-b !border-transparent d-flex align-items-center justify-content-center p-2 text-center cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-indigo-400 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-sky-700">
           <div class="flex items-center gap-2">
             <input type="radio" name="comment" class="form-check-input hidden" id="velemeny" checked onchange="VelemenyekMutat(${termek_id})">
             <i class="bi bi-chat-dots font-semibold"></i>
             <span class=" hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold  sm:inline transition-all duration-200">Vélemények</span>
           </div>
-
-          
-      </label>
-    
-    `
+      </label>`;
 
     let sajatvelemenyek_tab = `
-        <label 
-          class="
-          group 
-          bg-transparent 
-          my-2 
-          text-slate-900 
-          
-          dark:bg-slate-900 
-          dark:text-zinc-200 
-          hover:text-gray-600 
-          dark:hover:text-gray-400 
-          !border-b !border-transparent 
-          
-          d-flex align-items-center justify-content-center p-2  cursor-pointer 
-              transition-all duration-200
-              has-[:checked]:!border-b  
-              has-[:checked]:!border-indigo-400 
-
-              dark:has-[:checked]:!border-b
-              dark:has-[:checked]:!border-sky-700
-              ">
-              
-
+      <label class="group bg-transparent my-2 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 !border-b !border-transparent d-flex align-items-center justify-content-center p-2 cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-indigo-400 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-sky-700">
           <div class="flex items-center gap-2">
             <input type="radio" name="comment" class="form-check-input hidden " id="sajat_velemeny" onchange="SajatVelemenyekMutat(${termek_id})">
             <i class="bi bi-person"></i> 
             <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 ">Véleményeim</span>
           </div>
-
-          
       </label>`;
 
-
-  
-
-
-
-  
-
-  
-
-  
-
-
-
-
     let termek_megtekintes = `
-    
       <div class="container">
         <div class="row g-5">
           <div class="col-12 col-xl-7">
@@ -365,36 +275,16 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
               <img src="${fotolink}" alt="" class="zoom-img h-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-transform duration-300 ease-out" onclick="KepMegnyitas(this.src)"/>
             </div>
           </div>
-
           <div class="col-12 col-xl-5">
             <div class="flex flex-col gap-4">
-
-              
-
-              
-              <h2 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-                ${nev}
-              </h2>
-
+              <h2 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">${nev}</h2>
               <span class="text-slate-900 dark:text-zinc-200 text-lg">${parseInt(ar).toLocaleString()} Ft</span>
-
-             
-              <p class="text-sm text-zinc-500">
-                Utoljára frissítve ${datum.toString().split("T")[0]}
-              </p>
-
-              
-              <p class="text-zinc-600 dark:text-zinc-400">
-                ${leiras}
-              </p>
-
-              
+              <p class="text-sm text-zinc-500">Utoljára frissítve ${datum.toString().split("T")[0]}</p>
+              <p class="text-zinc-600 dark:text-zinc-400">${leiras}</p>
               <div class="d-flex flex-column gap-3 mt-4">
                 ${kosargomb} 
                 <div class="d-flex flex-column flex-xxl-row gap-3">${gg}</div>
-                
               </div>
-
               <div class="mt-6">
                 <span class="d-flex align-items-center justify-content-start gap-x-2"><i class="bi bi-info-circle"></i> Egyéb információk:</span>
                 <ul class="text-sm mt-2 text-zinc-600 dark:text-zinc-400 space-y-2 list-disc list-inside">
@@ -403,62 +293,22 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
                   <li>Raktáron: ${mennyiseg} ${meegys}</li>
                 </ul>
               </div>
-
-              
-
             </div>
           </div>
-
           <div class="col-12 mt-3">
-
             <div class="d-flex py-3 gap-x-5">
               <div id="velemenyek-menupont"></div>
               <div id="sajatvelemenyek-menupont"></div>
               <div id="velemeny-irasa" class="d-flex align-items-center"></div>
             </div>
-
-            <div class="space-y-6" id="velemenyek">
-
-             
-
-            </div>
+            <div class="space-y-6" id="velemenyek"></div>
           </div>
-        
         </div>
-      
-      
-      
-      
-      
-      </div>
-    
-    `;
+      </div>`;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
-    
-    
+      // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
       const gombraKattintas = event && event.target && event.target.tagName === "BUTTON";
       if (!gombraKattintas) {
-        // fontos, hogy ha a kosarba gombra kattintunk akkor ne a termek nyiljon meg
-        
         $("#content_hely").fadeOut(300, function() {
           $("#content_hely").html(termek_megtekintes).fadeIn(300);
           $("#velemenyek-menupont").html(velemenyek_tab);
@@ -478,7 +328,6 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
             $("#sajatvelemenyek-menupont").show();
           }
           FelaTetore();
-
         });
 
         NezetValtas("ki");
@@ -498,247 +347,86 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
               `#termek/${termek_id}`
           );
         }
-        
-
-
-        
       }
-    } catch (err) {}
-    
-
-
-
-  
-  //VelemenyekMutat(termek_id);
-  
+    } catch (err) { console.error(err); }
 }
 
 function VeletlenszeruVelemeny() {
-  console.log(RandomVelemeny());
   $("#velemeny_input").val("");
   $("#velemeny_input").val(RandomVelemeny());
 }
 
-//endregion
-
 //region CARDBETOLT
 function CARD_BETOLT(adatok) {
-   
-  
+  let kosargomb = "";
+  let termekKartya = "";
+  let allapotVagyAr = "";
 
-  let ks = "";
-  let s = "";
-  let el = "";
-  let ee = "";
-  let gg = "";
   const kicsinezet = document.getElementById("kicsi_nezet").checked;
   const nagynezet = document.getElementById("nagy_nezet").checked;
 
-  //if (BevanJelentkezve()) { console.log("card betolt: be van jelentkezve"); }
-
   for (const element of adatok.rows) {
-    
-
-  
-
-    
-
-
-    
-
-
-
-    
     var nev_hossz = element.NEV.toString().length;
     var ppp = "";
-
     if (nev_hossz > 15) { ppp = "..."; } else { ppp = ""; }
 
     if (kicsinezet) {
+      if (element.AKTIV == "N" || element.MENNYISEG == 0) { allapotVagyAr = `<span class="text-red-600 dark:text-red-400">Nem elérhető!</span>`; } 
+      else { allapotVagyAr = `<p class="w-full py-2 d-flex justify-content-center align-items-center align-self-center"><span class="text-slate-900 dark:text-zinc-200 text-sm me-2 font-semibold">${element.AR.toLocaleString()} Ft</span></p>`; } 
 
-      if (element.AKTIV == "N" || element.MENNYISEG == 0) {
-        //adminoknak a nem aktiv termekek pirossal látszódjanak
-        el = ` <span class="text-red-600 dark:text-red-400">
-                          Nem elérhető!
-                      </span>
-              `;
-  
-        ee = "nem-elerheto";
-      } else {
-        el = `<p class="w-full py-2 d-flex justify-content-center align-items-center align-self-center"><span class="text-slate-900 dark:text-zinc-200 text-sm me-2 font-semibold">${element.AR.toLocaleString()} Ft</span></p>`;
-        ee = "";
-      } 
-
-      
-
-
-      s += `
-        <div class="col-6 col-sm-4 col-md-3 col-lg-2 px-0 !border-b !border-slate-900/10 dark:!border-b dark:!border-zinc-200/20 ">
-        <div 
-        class="
-        py-3 
-        my-2 
-        bg-zinc-200   
-        hover:bg-gray-300 
-        rounded-xl 
-        hover:cursor-pointer 
-        dark:bg-slate-950/95   
-        dark:text-zinc-200 
-        dark:hover:bg-gray-800 
-        
-        d-flex flex-column 
-        transition-hover duration-150 ease-in-out 
-        " id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
-
-          <div class="d-flex justify-content-center align-items-center p-2">
-            <img 
-              src="${element.FOTOLINK}"
-              class="rounded-lg w-50 h-50 aspect-square object-cover"
-            >
-            
-            
-          </div>
-
+      termekKartya += `
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 px-0 !border-b !border-slate-900/10 dark:!border-b dark:!border-zinc-200/20">
+          <div class="py-3 my-2 bg-zinc-200 hover:bg-gray-300 rounded-xl hover:cursor-pointer dark:bg-slate-950/95 dark:text-zinc-200 dark:hover:bg-gray-800 d-flex flex-column transition-hover duration-150 ease-in-out" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
+            <div class="d-flex justify-content-center align-items-center p-2">
+              <img src="${element.FOTOLINK}"class="rounded-lg w-50 h-50 aspect-square object-cover">
+            </div>
           <span class="mt-4 font-semibold text-sm text-center">${element.NEV.toString().substring(0,15)}${ppp}</span>
-          
-          ${el}
-          
-          <div class="d-flex align-items-center justify-content-center">${ks} ${gg}</div>
-          
-          
-
-        </div>
-        </div>
-      `;
+          ${allapotVagyAr}
+          </div>
+        </div>`;
     }
 
-    
-
     if (nagynezet) {
-
       if (element.AKTIV == "N" || element.MENNYISEG == 0) {
-        //adminoknak a nem aktiv termekek pirossal látszódjanak
-        el = ` <span class="text-red-600 dark:text-red-400">
-                  A termék jelenleg nem elérhető!
-              </span>
-              `;
-  
-        ee = "nem-elerheto";
-      } else {
-        el = `<p class="w-full py-2 d-flex justify-content-start align-items-center align-self-center"><span class="text-slate-900 dark:text-zinc-200 me-2 font-semibold">${element.AR.toLocaleString()} Ft</span><span class="text-xs">(Nettó)</span></p>`;
-        ee = "";
-      } 
+        allapotVagyAr = ` <span class="text-red-600 dark:text-red-400">A termék jelenleg nem elérhető!</span>`; } 
+        else { allapotVagyAr = `<p class="w-full py-2 d-flex justify-content-start align-items-center align-self-center"><span class="text-slate-900 dark:text-zinc-200 me-2 font-semibold">${element.AR.toLocaleString()} Ft</span><span class="text-xs">(Nettó)</span></p>`; } 
 
-      if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || element.AKTIV == "N" || element.MENNYISEG == 0) {
-        ks = "";
-      } else {
-        ks = `<button 
-          class="px-3 py-2 rounded-lg !border !border-transparent 
-          bg-slate-900 
-          text-zinc-200 
-          dark:bg-gray-800   
-          dark:text-zinc-200 
-          hover:text-slate-900  
-          hover:bg-zinc-100 
-          hover:!border-slate-900 
-          dark:hover:bg-gray-700/70  
-          dark:!border-zinc-200/10 
-          dark:hover:!border-zinc-200/20 
-          dark:hover:text-zinc-200 
-          transition-all duration-150 ease-in-out 
-            kosar bi bi-plus-lg   
-             w-full  text-sm tracking-[2px]     
-            " onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> KOSÁRBA</button>`; //ha be van jelentkezve és elérhető a termék akkor kosár gomb
-      }
+      if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || element.AKTIV == "N" || element.MENNYISEG == 0) { kosargomb = ""; } 
+      else { kosargomb = `<button class="px-3 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out kosar bi bi-plus-lg w-full text-sm tracking-[2px]" onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> KOSÁRBA</button>`; }
 
-
-      s += `
+      termekKartya += `
         <div class="col-12 col-sm-6 col-lg-4 col-xxl-3 p-3 d-flex justify-content-center  ">
-          <div 
-          class="
-          rounded-xl 
-          p-4 
-          w-72 
-          shadow-lg
-          
-          bg-zinc-100 
-          hover:bg-gray-200 
-          hover:outline outline-black/10 
-          hover:cursor-pointer 
-          dark:!border 
-          dark:!border-zinc-200/20 
-          dark:bg-slate-950 
-          dark:text-zinc-200 
-          dark:hover:bg-sky-950/10  
-          dark:hover:-outline-offset-1 
-          dark:hover:outline-white/10 
-          d-flex flex-column 
-          transition-hover duration-150 ease-in-out 
-          " id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
-
+          <div class="rounded-xl p-4 w-72 shadow-lg bg-zinc-100 hover:bg-gray-200 hover:outline outline-black/10 hover:cursor-pointer dark:!border dark:!border-zinc-200/20 dark:bg-slate-950 dark:text-zinc-200 dark:hover:bg-sky-950/10 dark:hover:-outline-offset-1 dark:hover:outline-white/10 d-flex flex-column transition-hover duration-150 ease-in-out" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
             <div class="relative">
-              <img 
-                src="${element.FOTOLINK}"
-                class="rounded-lg w-full h-60 object-cover"
-              >
-              
-              
+              <img src="${element.FOTOLINK}" class="rounded-lg w-full h-60 object-cover">
             </div>
-
             <h3 class="mt-4 font-semibold text-md">${element.NEV}</h3>
-            <p class="text-sm text-neutral-400">${element.KATEGORIA}</p>
-            
-            ${el}
-            
+            <p class="text-xs text-neutral-400">${element.KATEGORIA}</p>
+            ${allapotVagyAr}
             <div class="d-flex align-items-center mt-auto">
-            ${ks} ${gg}
+              ${kosargomb}
             </div>
-            <!--
-            <button
-              class="w-full mt-4 bg-neutral-800 hover:bg-neutral-700 transition rounded-lg py-3 text-center"
-            >
-              Add to bag
-            </button>
-            -->
-
           </div>
-
-        </div>
-
-
-      `;
+        </div>`;
     }
   }
 
   if (!$("#nev1").val().includes("<")) {
     if ($("#nev1").val() != "") {
       NezetValtas("ki");
-      
       $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`).fadeIn(300);
-     
-
-      
       $("#débé").html(` (${adatok.maxcount} db)`).fadeIn(300);
-      
-
       $("#kosar").prop("checked", false);
       $("#kezdolap").prop("checked", false);
     } else {
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
       NezetValtas("be");
-
       $("#kosar").prop("checked", false);
-      
     }
     $("#content_hely").fadeOut(300, function() {
-      $("#content_hely").html(s).fadeIn(300);
+      $("#content_hely").html(termekKartya).fadeIn(300);
     });
     OLDALFELTOTL();
-    
- 
-    
-  } else {
-    üzen("404", "danger");
-  }
+  } else { üzen("404", "danger"); }
 }
