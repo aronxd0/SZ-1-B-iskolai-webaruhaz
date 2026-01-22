@@ -250,11 +250,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
     if (JSON.parse(localStorage.getItem("user"))?.loggedIn && (webbolt_admin || admin)) {
       admingombok = "";
       admingombok += `<button type="button"class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full tracking-[2px]" aria-label="modositas" onclick='Termek_Edit(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
-     
-      admingombok += `<button type="button"class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 dark:!border-zinc-200/10 hover:text-red-700 hover:bg-red-400/5 hover:!border-red-700 dark:hover:bg-red-900/20 dark:hover:!border-red-600/30 dark:hover:text-red-600 transition-all duration-150 ease-in-out  
-           w-full  tracking-[2px] 
-        " aria-label="torles" onclick='Termek_Torol(event, ${termek_id})'><i class="bi bi-trash"></i> TÖRLÉS</button>`;
-      
+      admingombok += `<button type="button"class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 dark:!border-zinc-200/10 hover:text-red-700 hover:bg-red-400/5 hover:!border-red-700 dark:hover:bg-red-900/20 dark:hover:!border-red-600/30 dark:hover:text-red-600 transition-all duration-150 ease-in-out w-full tracking-[2px]" aria-label="torles" onclick='Termek_Torol(event, ${termek_id})'><i class="bi bi-trash"></i> TÖRLÉS</button>`;
     } else admingombok = "";
 
 
