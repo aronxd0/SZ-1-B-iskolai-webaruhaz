@@ -10,21 +10,15 @@ async function TermekModosit(id_termek) {
     fd.delete("mod_aktiv"); // eloszor kitorlom az aktiv erteket akarmi is az
     fd.append("mod_aktiv", $("#mySwitch").is(":checked") ? "YES" : "NO"); // majd hozzaadom ami van h fixen benne legyen
     
-    if (upd == 1) {
-      fd.delete("ID_TERMEK"); // uj termeknel ne legyen ID_TERMEK kuldve
-    }
-
+    if (upd == 1) { fd.delete("ID_TERMEK"); } // uj termeknel ne legyen ID_TERMEK kuldve
+    
     let termekmod = await ajax_call(`termek_edit?insert=${upd}}`, "POST", fd, true); 
-    if (termekmod.message == "ok") {
-      if (upd == 1) { 
-        üzen("Új termék sikeresen hozzáadva!", "success");
-      }
-      else { üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success"); }
-    } 
-  } catch (err) {
-    console.log("hiba:", err);
-  }
 
+    if (termekmod.message == "ok") {
+      if (upd == 1) { üzen("Új termék sikeresen hozzáadva!", "success"); }
+      else { üzen(`A termék (${id_termek}) sikeresen módosítva!`, "success"); }
+    }
+  } catch (err) { console.log("hiba:", err); }
   Kezdolap(false);
   KosarTetelDB(); 
 }
@@ -32,13 +26,10 @@ async function TermekModosit(id_termek) {
 // termek szerkeszto ablak
 async function Termek_Edit(event, termek_id, tipus) {
   event.stopPropagation();
-
-  $("#mod_foto").val("");
-
+  
   let nev, azon, ar, mennyiseg, meegys, aktiv, leiras, id_kategoria;
 
   try {
-
     if (termek_id != 0) {
       let ta = await ajax_call(`termek_adatok?ID_TERMEK=${termek_id}`, "GET", null, true);
 
@@ -52,12 +43,13 @@ async function Termek_Edit(event, termek_id, tipus) {
       id_kategoria = ta.rows[0].ID_KATEGORIA;
       fotonev = ta.rows[0].FOTONEV;
     }
- 
-    if (tipus == "bevitel") {
+
+    $("#mod_foto").val("");
+
+    if (tipus == "bevitel") { // új termék
       $("#idx1").html(`Új termék: `);
       $("#uj_kat").val("");
       $("#mod_kat").prop("disabled", false);
-      KategoriaFeltolt("mod_kat", "select", 1);
       $("#mod_nev").val("");
       $("#mod_azon").val("");
       $("#mod_ar").val(0);
@@ -65,9 +57,11 @@ async function Termek_Edit(event, termek_id, tipus) {
       $("#mod_fotolink").val("");
       $("#mod_meegys").val("db");
       $("#mod_leiras").val("");
-      $("#mySwitch").prop("checked", true).trigger("change"); // Default érték beállítása
+      $("#mySwitch").prop("checked", true).trigger("change"); 
 
-      $("#uj_kat").on("keyup", function (e) {
+      KategoriaFeltolt("mod_kat", "select", 1);
+
+      $("#uj_kat").off("keyup").on("keyup", function () {
         let keres = $(this).val();
         if (keres != "") { $("#mod_kat").prop("disabled", true).val(""); }
         else { 
@@ -76,16 +70,14 @@ async function Termek_Edit(event, termek_id, tipus) {
         }
       });
 
-
-      $("#mod_nev").on("keyup", function() {
+      $("#mod_nev").off("keyup").on("keyup", function() {
         let keres = $(this).val();
         $("#idx1").html(`Új termék: <b>${keres}</b>`);
       });
 
-    } else {
+    } else { // szerkesztés
       $("#uj_kat").val("");
       $("#mod_kat").prop("disabled", false);
-      KategoriaFeltolt("mod_kat", "select", id_kategoria);
       $("#idx1").html(`Termék szerkesztés`);
       $("#mod_nev").val(nev);
       $("#mod_azon").val(azon);
@@ -93,16 +85,16 @@ async function Termek_Edit(event, termek_id, tipus) {
       $("#mod_db").val(mennyiseg);
       $("#mod_fotolink").val(fotonev);
       $("#mod_meegys").val(meegys);
-      var datum = new Date();
-      $("#mod_datum").val(datum.toISOString().split("T")[0]);
       $("#mod_leiras").val(leiras);
       $("#save_button").html(`<i class="bi bi-save2"></i>&nbsp;Mentés`); 
-
       $("#mod_nev").off("keyup");
 
-      // ha uj kategoriat irok be akkor ne lehessen a meglevoekbol valasztani
+      var datum = new Date();
+      $("#mod_datum").val(datum.toISOString().split("T")[0]);
 
-      $("#uj_kat").on("keyup", function (e) {
+      KategoriaFeltolt("mod_kat", "select", id_kategoria);
+
+      $("#uj_kat").off("keyup").on("keyup", function () {
         let a = $(this).val();
         if (a != "") { $("#mod_kat").prop("disabled", true).val(""); }
         else { 
@@ -111,11 +103,7 @@ async function Termek_Edit(event, termek_id, tipus) {
         }
       });
 
-
-
-
       // ha kivalasztok kepet feltolteskor akkor ne legyen fotolink
-
       $("#mod_foto").off("change").on("change", function() {
         if (this.files.length > 0) {
           console.log("Kiválasztott fájl:", this.files[0].name);
@@ -126,14 +114,12 @@ async function Termek_Edit(event, termek_id, tipus) {
         }
       });
 
-      $("#mod_fotolink").on("keyup", function() {
+      $("#mod_fotolink").off("keyup").on("keyup", function() {
         let b = $(this).val();
         if (b != "") { $("#mod_foto").val(""); }
       });
 
-      
-
-      // Switch állapot beállítása
+      // switch (aktív/inaktív) állapot beállítása
       if (aktiv === "Y") {
         $("#mySwitch").prop("checked", true).trigger("change");
       } else {
@@ -146,47 +132,31 @@ async function Termek_Edit(event, termek_id, tipus) {
     });
 
     $("#termek_edit").modal("show");
-
-
   } catch (err) { console.log("hiba:", err);}
-
-  
 }
 
 function Termek_Torol(event, termek_id) {
   event.stopPropagation();
- console.log("bejoszssssssssssssssss" + termek_id)
   $("#delete_modal .modal-body").html(`Biztosan törlöd a(z) <b>${termek_id}.</b> azonosítójú terméket?<br><br>A termék örökre el fog veszni (ami hosszú idő).`);
   $("#delete_modal").off("click");
   $("#delete_modal").on("click", ".szemetes", async function () {
     try {
-      var s = "";
-      var tip = "success";
       var d_json = await ajax_call(`termek_del?ID_TERMEK=${termek_id}`, "DELETE", null, true);
       console.log(d_json);
       if (d_json.message == "ok") {
-          s = "Törlés OK...";
+          üzen("A termék sikeresen törölve!", "success");
           KERESOBAR();
-        } 
-        else {
-          tip = "warning";
-          s = `Hiba<br>${d_json.message}`;
         }
-      üzen(s, tip);
-    } catch (err) {
-      console.log("hiba:", err);
-    }
+    } catch (err) { console.log("hiba:", err); }
   });
   $("#delete_modal").modal("show");
-  KosarTetelDB(); // kosár darab mutatása frissítése
-
+  KosarTetelDB();
 }
 
-
-function openImage(src) {
+// kép megnyitása teljes képernyőben
+function KepMegnyitas(src) {
   document.getElementById("fsImg").src = src;
   $("#imgFullscreen").removeClass("hidden");
-
 
   // fade + scale animáció
   requestAnimationFrame(() => {
@@ -196,26 +166,23 @@ function openImage(src) {
   });
 }
 
-function closeImage() {
-  
+// bezárás
+function KepBezaras() {
   requestAnimationFrame(() => {
     $("#imgFullscreen").removeClass("opacity-100");
     $("#fsImg").removeClass("scale-100");
     $("#fsImg").addClass("scale-95");
-
   });
   
-
   setTimeout(() => {
     $("#imgFullscreen").addClass("hidden");
   }, 250);
 }
 
-
+// A képre ha ráviszem az egeret
 function zoomMove(e, container) {
   const img = container.querySelector(".zoom-img");
   img.classList.remove("aspect-square");
-  
 
   const rect = container.getBoundingClientRect();
   const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -225,62 +192,44 @@ function zoomMove(e, container) {
   img.style.transform = "scale(3)";
 }
 
+// Amikor leviszem róla
 function zoomReset(container) {
   const img = container.querySelector(".zoom-img");
   img.classList.add("aspect-square");
-
   img.style.transformOrigin = "center center";
   img.style.transform = "scale(1)";
 }
 
-
-
-
+// Vélemény írás ablak megnyitása
 function Velemeny_Iras(id_termek) {
   let gombs = `
-        <button type="button" 
-        class="
-        px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out   w-auto " onclick='VeletlenszeruVelemeny()'> 
-      <i class="bi bi-dice-6"></i>
-      <span class="d-none d-lg-inline"> Generálás</span>
+      <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out   w-auto " onclick='VeletlenszeruVelemeny()'> 
+        <i class="bi bi-dice-6"></i>
+        <span class="d-none d-lg-inline"> Generálás</span>
       </button>
         
-        <button type="button" 
-        class="
-        px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out    w-auto ms-2" data-bs-dismiss="modal" data-bs-target="#velemeny_iras" id="mgs">
-      <i class="bi bi-x-lg"></i>
-      <span class="d-none d-lg-inline"> Mégse</span>
+      <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out    w-auto ms-2" data-bs-dismiss="modal" data-bs-target="#velemeny_iras" id="mgs">
+        <i class="bi bi-x-lg"></i>
+        <span class="d-none d-lg-inline"> Mégse</span>
       </button>
         
-        <button type="button" 
-        class="
-        px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out   w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${id_termek})'> 
-      <i class="bi bi-send"></i>
-      <span class="d-none d-lg-inline"> Közzététel</span>
+      <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out   w-auto ms-2" id="velemeny_kozzetesz" onclick='Velemeny_Kozzetesz(${id_termek})'> 
+        <i class="bi bi-send"></i>
+        <span class="d-none d-lg-inline"> Közzététel</span>
       </button>
-    
     `;
-
     $("#interakcio").html(gombs);
-
     $("#velemeny_iras").modal("show");
 }
 
-
-
-
+// Termék megjelenítése
 async function Termek_Mutat(event, termek_id, pushHistory = true) {
-  let gg = "";
-  let ks = "";
-
+  let admingombok = "";
+  let kosargomb = "";
 
   try {
-
-
-
     let termekadatok = await ajax_call(`termek_adatok?ID_TERMEK=${termek_id}`, "GET", null, true);
 
-    
     const nev = termekadatok.rows[0].NEV;
     const kategoria = termekadatok.rows[0].KATEGORIA;
     const azon = termekadatok.rows[0].AZON;
@@ -292,85 +241,21 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
     const leiras = termekadatok.rows[0].LEIRAS;
     const datum = termekadatok.rows[0].DATUMIDO;
 
-
-    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || aktiv == "N" || mennyiseg == 0) {
-    ks = "";
-    } else
-    ks = `<button 
-        class="px-6 py-2 rounded-lg !border !border-transparent 
-        bg-slate-900 
-        text-zinc-200 
-        dark:bg-gray-800   
-        dark:text-zinc-200 
-        hover:text-slate-900  
-        hover:bg-zinc-100 
-        hover:!border-slate-900 
-        dark:hover:bg-gray-700/70  
-        dark:!border-zinc-200/10 
-        dark:hover:!border-zinc-200/20 
-        dark:hover:text-zinc-200 
-        transition-all duration-150 ease-in-out 
-          kosar bi bi-plus-lg  
-           w-auto  tracking-[2px]  
-          " onclick='Kosarba_Bele(event, ${termek_id})'> KOSÁRBA TESZEM </button>`;
-
-  
-
-  
-
-  
-
-  
-
-    //const cls = new bootstrap.Collapse("#vlm", { toggle: false });
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn || aktiv == "N" || mennyiseg == 0) { kosargomb = ""; } 
+    else { kosargomb = `<button class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out bi bi-plus-lg w-auto tracking-[2px]" onclick='Kosarba_Bele(event, ${termek_id})'> KOSÁRBA TESZEM </button>`; }
 
     $("#vlmg").html("");
     $("#ussr").html("");
 
-
-
     if (JSON.parse(localStorage.getItem("user"))?.loggedIn && (webbolt_admin || admin)) {
-      gg = "";
-      gg += `<button type="button" 
-      class="px-6 py-2 rounded-lg !border !border-transparent 
-      bg-slate-900 
-      text-zinc-200 
-      dark:bg-gray-800   
-      dark:text-zinc-200 
-      hover:text-slate-900  
-      hover:bg-zinc-100 
-      hover:!border-slate-900 
-      dark:hover:bg-gray-700/70  
-      dark:!border-zinc-200/10 
-      dark:hover:!border-zinc-200/20 
-      dark:hover:text-zinc-200 
-      transition-all duration-150 ease-in-out  
-           
-           w-full  tracking-[2px] " aria-label="modositas" onclick='Termek_Edit(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
+      admingombok = "";
+      admingombok += `<button type="button"class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full tracking-[2px]" aria-label="modositas" onclick='Termek_Edit(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
      
-     
-      gg += `<button type="button" 
-      class="px-6 py-2 rounded-lg !border !border-transparent 
-      bg-slate-900 
-      text-zinc-200 
-      dark:bg-gray-800   
-      dark:text-zinc-200 
-      dark:!border-zinc-200/10 
-
-      hover:text-red-700  
-      hover:bg-red-400/5  
-      hover:!border-red-700 
-      dark:hover:bg-red-900/20 
-      dark:hover:!border-red-600/30 
-      dark:hover:text-red-600 
-
-      transition-all duration-150 ease-in-out  
-            
+      admingombok += `<button type="button"class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 dark:!border-zinc-200/10 hover:text-red-700 hover:bg-red-400/5 hover:!border-red-700 dark:hover:bg-red-900/20 dark:hover:!border-red-600/30 dark:hover:text-red-600 transition-all duration-150 ease-in-out  
            w-full  tracking-[2px] 
         " aria-label="torles" onclick='Termek_Torol(event, ${termek_id})'><i class="bi bi-trash"></i> TÖRLÉS</button>`;
       
-      gg += "";
-    } else gg = "";
+    } else admingombok = "";
 
 
 
@@ -481,7 +366,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
         <div class="row g-5">
           <div class="col-12 col-xl-7">
             <div onmousemove="zoomMove(event, this)" onmouseleave="zoomReset(this)" class="relative w-full h-[420px] lg:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl overflow-hidden bg-zinc-300 dark:bg-slate-950">
-              <img src="${fotolink}" alt="" class="zoom-img h-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-transform duration-300 ease-out" onclick="openImage(this.src)"/>
+              <img src="${fotolink}" alt="" class="zoom-img h-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-transform duration-300 ease-out" onclick="KepMegnyitas(this.src)"/>
             </div>
           </div>
 
@@ -509,7 +394,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
 
               
               <div class="d-flex flex-column gap-3 mt-4">
-                ${ks} 
+                ${kosargomb} 
                 <div class="d-flex flex-column flex-xxl-row gap-3">${gg}</div>
                 
               </div>
