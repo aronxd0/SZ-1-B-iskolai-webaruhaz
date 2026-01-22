@@ -85,6 +85,9 @@ async function AdminVelemenyekMutat() {
                                 <p class="text-zinc-600 dark:text-zinc-400 text-start">
                                     ${element.SZOVEG.toString()}
                                 </p>
+                                <p class="text-sky-600 dark:text-zinc-400 text-start my-3">
+                                    <span class="hover:font-semibold hover:cursor-pointer transition-hover duration-300 ease-in-out" onclick="Termek_Mutat(event, ${element.ID_TERMEK})">Ehhez a termékhez →</span>
+                                </p>
                                 
                             </div>
                         </div>
