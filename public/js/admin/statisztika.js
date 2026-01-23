@@ -178,7 +178,7 @@ function drawChart(rang) {
       { name: rang.rows[4].NEV, y:parseInt(rang.rows[4].DB)}
     ];
   
-    // MOBIL nézet – 3 középső
+    // MOBIL nézet – 3 középső ==> ha kiseeb mint 600 px a szélesség akkor csak a top 3 mutatom meg
     let visibleData = data;
     if (window.innerWidth < 600) { visibleData = data.slice(1, 4); }
   
@@ -313,14 +313,14 @@ async function DiagrammokSelect(innen){
     if (innen !== "kezdes") { kivalasztott = innen.value; }
 
     // adat lekérés
-    const eredmeny = await ajax_call(`Top5?INTERVALLUM='${kivalasztott}'`, "GET", null, true);
+    const eredmeny = await ajax_call(`Top5?INTERVALLUM=${kivalasztott}`, "GET", null, true);
 
     if (eredmeny.rows.length == 0) {
         if(eredmeny.message != "ok") {
             $('#_Top5').html("<div class='col-12 text-xl text-center p-3'>Hiba történt az adatok lekérdezésekor.</div>");
             return;
         }
-        else{
+        else{ // nincs adat
             $('#_Top5').html("<div class='col-12 text-xl text-center p-3'>Nincs elég adat a diagram megjelenítéséhez a kijelölt időszakban.</div>");
             return;
         }
@@ -336,11 +336,14 @@ async function DiagrammokSelect(innen){
     // diagram rarajzolás
     await drawChart(eredmeny);
 
+
+    // ||| képek betöltése |||
+
     // aktuális képernyőméret
     const mobil = window.innerWidth < 600;
 
     // 600px alatt: 3 darab (a highchart is a első 3-at mutatja)
-    // 600px fölött: az összes bejön
+    // 600px fölött: az összes bejön (5 darab) 
     const lista = mobil ? eredmeny.rows.slice(0, 3) : eredmeny.rows;
 
     // képek berakása
@@ -349,6 +352,7 @@ async function DiagrammokSelect(innen){
     }
 }
 
+// ================= Bevétel diagram =====================
 let penzChart = null;
 async function STAT_Penz(innen){
     var intervallum = "1";
@@ -357,9 +361,11 @@ async function STAT_Penz(innen){
 
     var adat = await ajax_call(`bevetel_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
     
+    // adatok előkészítése
     const xValues = [];
     const yValues = [];
 
+    
     var idok = [];
 
     // Évek kigyűjtése rendesen
@@ -367,7 +373,7 @@ async function STAT_Penz(innen){
         let ev = new Date(item.IDO).getFullYear();
         if (!idok.includes(ev)) { idok.push(ev); }
     }
-
+    // IDÖ szép formátumu kiirása
     for (var item of adat.rows){
         let d = new Date(item.IDO);
         let text;
@@ -402,6 +408,8 @@ async function STAT_Penz(innen){
   //
   // ezzekkel a paraméterekkel lehet  responzivvá tenni a chartot
 }
+
+// ================= Rendelések darabszáma diagram =====================
 
 let Elad_Chart = null;
 async function STAT_ELAD(innen){
@@ -458,17 +466,21 @@ async function STAT_ELAD(innen){
     });
 }
 
+// ================= Rendelések kategóriákra bontva diagram =====================
 let KAT_chart = null;
 async function STAT_KATEG(innen){
+    
+    // alapértelmezett 1 hónap | ha innen nem null akkor onnan veszi az értéket
     var intervallum = innen ? innen.value : "1";
     if (KAT_chart) {
         KAT_chart.destroy();
         KAT_chart = null;
     }
 
+    // adat lekérése az intevallummal
     var adat = await ajax_call(`kategoriak_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
 
-    // === NINCS ADAT ===
+    // === ha NINCS ADAT ===
     if (adat.maxcount == 0) {
         KAT_chart = new Chart("STAT_KOR_GRAF", {
             type: "pie",
@@ -522,14 +534,16 @@ async function STAT_KATEG(innen){
 let COMM_chart = null;
 
 async function STAT_COM(innen){
+    // alapértelmezett 1 hónap | ha innen nem null akkor onnan veszi az értéket
     var intervallum = innen ? innen.value : "1";
     if (COMM_chart) {
         COMM_chart.destroy();
         COMM_chart = null;
     }
+    // adat lekérése az intevallummal
     var adat = await ajax_call(`velemeny_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
 
-    // === NINCS ADAT ===
+    // ===HA NINCS ADAT ===
     if (adat.maxcount == 0) {
         COMM_chart = new Chart("STAT_COMMENT", {
             type: "pie",

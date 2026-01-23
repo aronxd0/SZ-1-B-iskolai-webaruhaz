@@ -1,5 +1,6 @@
 function SQLinput(pushHistory = true) {
     $("#content_hely").fadeOut(300, function() {
+        // Tartalom betöltése
         $("#content_hely").html(`
         <div class="row">
             <div class="col-12 text-center p-2 mt-3">
@@ -30,6 +31,7 @@ function SQLinput(pushHistory = true) {
     });
 }
 
+// SQL lekérdezés futtatása
 async function KER_CLICk(){
     try{
         if (sql_input_area.value.replaceAll(/\n/g, " ").trim() == "") throw '{"error" : "Üres a lekérdezés mező"}';
@@ -52,6 +54,7 @@ async function KER_CLICk(){
                 $("#SQL_hiba").html(`<div class="table-responsive mt-3">${html}</div>`);
             }        
         }
+        // select nélküli műveletek esetén sikerüzenet
         else{
             $("#SQL_hiba").html(`
                 <div role="alert" class="bg-emerald-200 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-400 px-4 py-3 rounded-4" style="border: none;">

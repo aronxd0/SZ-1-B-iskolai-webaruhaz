@@ -811,7 +811,7 @@ app.delete('/kosar_del',async (req, res) => {
 // === KOSÁR TÉTEL DARABSZÁM ===
 // GET: /kosarteteldb
 // Működés: az összes kosár tételnek az összes mennyiségét összeadja (SUM)
-// Visszatér: {kdb: összes darab szám}
+// Visszatér: összes darab száma a kosárban
 app.get('/kosarteteldb',(req, res) => {    
 
     session_data = req.session;
@@ -1170,7 +1170,7 @@ app.get('/rendeles_azon', async (req, res) => {
         // Hiba esetén is felszabadítjuk a kapcsolatot, ha létezik
         if (conn) conn.release();
         
-        // Debug naplózás
+        // Debug
         console.error("/rendeles_azon hiba:", err.message);
 
         // "Kamu" válasz küldése hiba esetén (hogy ne haljon meg a frontend)
@@ -1456,9 +1456,8 @@ app.delete('/termek_del',async (req, res) => {
 // GET: /html_sql
 // Paraméter: SQL (string) - az admin által begépelt SQL parancs
 // Működés:
-//   - SELECT: biztonságosan futtatható
-//   - Tiltott parancsok: INSERT, UPDATE, DELETE, DROP, ALTER, CREATE stb. (biztonsági okokból)
-//   - Base64 képadatok maszkálásra kerülnek (-- BINARY DATA --)
+//   - SELECT: nem kell naplózni, runQueries-t használ
+//   - NEM SELECT parancsok: naplózva van, runExecute-t használ
 // Biztonsági ellenőrzések:
 //   1. DROP TABLE * parancs automatikusan blokkolva
 //   2. Nem SELECT SQL parancsok listázása 
@@ -1533,46 +1532,47 @@ try {
 // Paraméter: INTERVALLUM (string) - időtartam szűrése: '1'=1 hó, '3'=3 hó, egyéb=teljes
 // Működés: az adott időszakban a legjobban fogyó termékek (darab és bevétel szerint)
 // Visszatér: TOP 5 termék (kép, név, darabszám, bevétel)
-app.get('/top5',(req, res) => {
+app.get('/top5', (req, res) => {
 
-    var ido = req.query.INTERVALLUM.toString() // '1', '3', vagy egyéb
-    var idocucc = null;
-
-    // Időszak szűrése
-    switch(ido){
-        case '1': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 1 month)`; break;
-        case '3': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 3 month)`; break;
-        default: idocucc = ``; break; // teljes idősáv
+    const ido = (req.query.INTERVALLUM || '').toString();
+    let idofeltetel = '';
+    
+    switch (ido) {
+        case "1":
+            idofeltetel = 'AND r.DATUM > NOW() - INTERVAL 1 MONTH';
+            break;
+        case "3":
+            idofeltetel = 'AND r.DATUM > NOW() - INTERVAL 3 MONTH';
+            break;
+        default:
+            idofeltetel = '';
+            break;
     }
 
-    // === SQL: TOP 5 TERMÉK ===
-    // Csoportosítás: termék ID-ra
-    // Rendezés: darabszám DESC, majd bevétel DESC
-    var sql = `
-    SELECT 
-        SUM(t.MENNYISEG) AS DB,
-        SUM(t.MENNYISEG * webbolt_termekek.AR) AS BEVETEL,
-        CASE 
-            WHEN webbolt_termekek.FOTOLINK IS NOT NULL 
-                THEN webbolt_termekek.FOTOLINK 
-                ELSE webbolt_fotok.IMG 
-        END AS FOTOLINK,
-        webbolt_termekek.NEV
-    FROM webbolt_rendeles_tetelei t
-    INNER JOIN webbolt_rendeles r 
-        ON r.ID_RENDELES = t.ID_RENDELES
-    INNER JOIN webbolt_termekek 
-        ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
-    LEFT JOIN webbolt_fotok 
-        ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
-    WHERE t.ID_TERMEK IS NOT NULL
-    ${idocucc}
-    GROUP BY t.ID_TERMEK
-    ORDER BY DB DESC, BEVETEL DESC
-    LIMIT 5;
-`;
+    const sql = `
+        SELECT 
+            SUM(t.MENNYISEG) AS DB,
+            SUM(t.MENNYISEG * wt.AR) AS BEVETEL,
+            wt.NEV,
+            COALESCE(wt.FOTOLINK, wf.IMG) AS FOTOLINK
+        FROM webbolt_rendeles_tetelei t
+        INNER JOIN webbolt_rendeles r 
+            ON r.ID_RENDELES = t.ID_RENDELES
+        INNER JOIN webbolt_termekek wt 
+            ON wt.ID_TERMEK = t.ID_TERMEK
+        LEFT JOIN (
+            SELECT ID_TERMEK, MIN(IMG) AS IMG
+            FROM webbolt_fotok
+            GROUP BY ID_TERMEK
+        ) wf ON wf.ID_TERMEK = wt.ID_TERMEK
+        WHERE t.ID_TERMEK IS NOT NULL
+        ${idofeltetel}
+        GROUP BY wt.ID_TERMEK, wt.NEV, wt.FOTOLINK, wf.IMG
+        ORDER BY DB DESC, BEVETEL DESC
+        LIMIT 5;
+    `;
 
-    sendJson_toFrontend (res, sql, []);
+    sendJson_toFrontend(res, sql, []);
 });
 
 // === BEVÉTEL STATISZTIKA ===
@@ -2005,13 +2005,13 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
 // Működés:
 //   1. Lekérdezi: szerepel-e a webbolt_rendeles_tetelei.FOTOLINK-ben?
 //   2. Ha NINCS rendelésben: fizikai fájl törlése fs.unlink-val
-//   3. Ha VAN rendelésben: csak log, fájl NEM törlődik (adatintegritás)
+//   3. Ha VAN rendelésben: fájl NEM törlődik
 // Biztonsági megjegyzések:
 //   - Megakadályozza az árva fájlok képződését (orphaned files)
 //   - Megvéd az olyan helyzettől, hogy egy aktív rendelés elveszítse a képét
 //   - fs.existsSync ellenőrzi a fájl létezését (nem hibázhat a delete)
 //   - Async fs.unlink nem blokkolja a futást
-// Megjegyzés: csak /img/uploads/ mappában működik (hardcoded safety)
+// Megjegyzés: csak /img/uploads/ mappában működik
 async function kepTorlesHaNincsRendelesben(img) {
     if (!img || img === "") return;  // Üres vagy null kép, nincs mit törölni
 
@@ -2061,8 +2061,6 @@ async function kepTorlesHaNincsRendelesben(img) {
 // Az email-sender.js modul: SMTP e-mail küldés hitelesítéssel
 // Felhasználat: const { sendEmail } = require('./email-sender');
 const { sendEmail } = require('./email-sender');
-const { connect } = require('http2');
-const { off } = require('process');
 
 // === EMAIL KÜLDÉS ENDPOINT ===
 // HTTP METHOD: POST /send-email
@@ -2074,7 +2072,7 @@ const { off } = require('process');
 //   1. Paraméterek kinyerése req.body-ból
 //   2. sendEmail() hívása az email-sender modulból (SMTP kapcsolat)
 //   3. Sikeres: {message: "sikeresen elküldve"} JSON
-//   4. Hiba: {message: "Email hiba: [hibaszöveg]"} JSON
+//   4. Hiba: {message: "Email hiba"} JSON
 // Megjegyzés: SMTP konfigurációt az email-sender.js tartalmazza (felhasználónév, jelszó, SMTP szerver)
 app.post('/send-email', async (req, res) => {
     try {
