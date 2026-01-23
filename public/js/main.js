@@ -215,7 +215,7 @@ async function KERESOBAR(updateHistory = true) {
     
     var elküld2 = LekerdezesFeltetelek()+order+"&minar="+ min +"&maxar="+ max;
     // ha változik a lekérdezés akkor az oldal újra 1-re állitása
-    if (sqleddig != elküld2){ Joldal = 1; s}
+    if (sqleddig != elküld2){ Joldal = 1; }
     sqleddig = elküld2;
 
     elküld2 += `&offset=${(Joldal-1)}`
@@ -226,6 +226,11 @@ async function KERESOBAR(updateHistory = true) {
             ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
             Joldal = 1;
         } 
+        NezetValtas("ki");
+        $("#kezdolap").prop("checked",false);
+        $("#kosar").prop("checked",false);
+        $("#nezetkicsi").removeClass("eltunt");
+        $("#nezetnagy").removeClass("eltunt");
         await CARD_BETOLT(adatok);
         OLDALFELTOLT(adatok.maxcount);
         KategoriaFeltolt("kategoria_section", "check", "",true);    
@@ -261,16 +266,12 @@ async function KERESOBAR(updateHistory = true) {
         history.pushState({ view: 'home' }, 'Kezdőlap', '#home');
     }
     
-    NezetValtas("ki");
-    $("#kezdolap").prop("checked",false);
-    $("#kosar").prop("checked",false);
-    $("#nezetkicsi").removeClass("eltunt");
-    $("#nezetnagy").removeClass("eltunt");
+    
 }
 //endregion
 
 //#region OLdelkezelés
-function OLDALFELTOLT(darab){
+function OLDALFELTOLT(darab) {
     oldalszam = Math.ceil( darab / 52); // oldalszám kiszámolása
     if (oldalszam == 0) oldalszam = 1; // ha 0 akkor 1-re állitom
 

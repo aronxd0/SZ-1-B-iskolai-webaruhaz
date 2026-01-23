@@ -414,8 +414,11 @@ function CARD_BETOLT(adatok) {
   if (!$("#nev1").val().includes("<")) {
     if ($("#nev1").val() != "") {
       NezetValtas("ki");
-      $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`).fadeIn(300);
-      $("#débé").html(` (${adatok.maxcount} db)`).fadeIn(300);
+      console.log("KURVA ANYÁD");
+      console.log($("#keresett_kifejezes").html());
+      $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
+      console.log($("#keresett_kifejezes").html());
+      $("#débé").html(` (${adatok.maxcount} db)`);
       $("#kosar").prop("checked", false);
       $("#kezdolap").prop("checked", false);
     } else {
@@ -427,6 +430,6 @@ function CARD_BETOLT(adatok) {
     $("#content_hely").fadeOut(300, function() {
       $("#content_hely").html(termekKartya).fadeIn(300);
     });
-    OLDALFELTOTL();
+    OLDALFELTOLT(adatok.maxcount);
   } else { üzen("404", "danger"); }
 }

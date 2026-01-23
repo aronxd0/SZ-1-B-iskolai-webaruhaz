@@ -18,7 +18,7 @@ window.addEventListener("popstate", (e) => {
         case "sql": SQLinput(false); break;
         case "search":
             if (e.state.data) {
-                $("#nev1").val(e.state.data.searchTerm || '');
+                $("#nev1").val(e.state.data.kifejezes || '');
                 KERESOBAR();
             }
             break;
