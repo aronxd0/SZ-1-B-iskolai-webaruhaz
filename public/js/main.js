@@ -400,9 +400,7 @@ async function ArFeltolt(sql, min ,max){
            min = arak.rows[0].MINAR
         }
         // ha a aktiv/mostani minimum nagyobb mint a lekérdezett minimum akkor a minimum legyen a mostani minimum
-        else { document.getElementById("min_ar").value = min; 
-
-        }
+        else { document.getElementById("min_ar").value = min; }
 
         // ha a mostani maximum nagyobb mint a lekérdezett maximum akkor a maximum legyen a lekérdezett maximuma
         if (parseInt(max) > parseInt( arak.rows[0].MAXAR )) {
@@ -419,7 +417,7 @@ async function ArFeltolt(sql, min ,max){
 }
 
 function Sliderninput( item ){
-    if(item.id == "min_ar_input"){
+    if (item.id == "min_ar_input") {
         document.getElementById("min_ar").value = item.value;
         SliderELL("min");
     }
@@ -427,12 +425,9 @@ function Sliderninput( item ){
         document.getElementById("max_ar").value = item.value;
         SliderELL("max");       
     }
-    
 }
 
-
 function SliderELL(item){
-    
     switch(item){
         case("min"): {
             if(parseInt ($("#min_ar").val()) > parseInt( $("#max_ar").val())){
@@ -473,63 +468,37 @@ async function KategoriaFeltolt(hova, type, kivalasztott,mindenkipipal) {
 // kivalasztott = selectnél a kiválasztott kategória id-je
 // mindenkipipal = ha true akkor a bepipalt kategoriak a fügyvény lefutása után is bepipálva lesznek.
 
-
     const inputok = kategoria_section.getElementsByTagName("input")//lekérdezes a chechboksot
     bepipaltID = ""; //reset bepipalt kategória
-    if(mindenkipipal){// ha mindenkipipal == false  ==> akkor ne frissítse a bepipált kategóriákat, mindenlegyen kikattintva, üres
-        for(var elem of inputok){
-            if(elem.checked) {
-                bepipaltID += `${elem.id.replace("katcheck","")}-`;// amit be vannak checkelve azt beleteszem a bepipát kategóriákba
-            }
+    if (mindenkipipal) { // ha mindenkipipal == false  ==> akkor ne frissítse a bepipált kategóriákat, mindenlegyen kikattintva, üres
+        for (var elem of inputok) {
+            if (elem.checked) { bepipaltID += `${elem.id.replace("katcheck","")}-`; }
         }
     }
    
-   
     $(`#${hova}`).empty("");
-    var nemaktivt = "";//reset
-    if (Nemaktivak) {
-     nemaktivt = "&inaktiv=1";
-    }
 
-   
+    var nemaktivt = "";//reset
+    if (Nemaktivak) { nemaktivt = "&inaktiv=1"; }
+
     var elfogyt = ""
-    if (elfogyott){
-        elfogyt = "&elfogyott=1";
+    if (elfogyott) { elfogyt = "&elfogyott=1"; 
+
     }
     try {
-
-        console.log(`&minar=${document.getElementById("min_ar").value}`)
-       
         let listItems  = "";
 
         if (type == "check") {
              let k_json = await ajax_call(`kategoria?nev=${$("#nev1").val()}${elfogyt}${nemaktivt}`, "GET", null, true);
             for (let i = 0; i < k_json.rows.length; ++i) {
-                var pipa = ""
-              
-                if(k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)){
-                    pipa = "checked";
-                }
-
-                listItems += `<p class="p-2 !border-b !border-b-zinc-800/10 dark:!border-b dark:!border-b-zinc-200/10 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out"> 
-                <input onchange="KatbolAR()"
-                class="
-                form-check-input 
-                !border  
-                !border-zinc-800/20 
-                bg-zinc-200 
-                hover:cursor-pointer 
-                dark:!border  
-                dark:!border-zinc-200/30 
-                dark:checked:!border-sky-600      
-                dark:bg-slate-800 
-                focus:outline-none 
-                focus:ring-0
-                focus:ring-offset-0
-                focus:shadow-none
-                " type="checkbox" id="katcheck${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  <label class="form-check-label hover:cursor-pointer " for="katcheck${k_json.rows[i].ID_KATEGORIA}"> ${k_json.rows[i].KATEGORIA} </label> </p>`;
+                var pipa = "";
+                if (k_json.rows[i].ID_KATEGORIA == bepipaltID.split("-").find(e => e == k_json.rows[i].ID_KATEGORIA)) { pipa = "checked"; }
+                listItems += `
+                    <p class="p-2 !border-b !border-b-zinc-800/10 dark:!border-b dark:!border-b-zinc-200/10 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out"> 
+                        <input onchange="KatbolAR()" class=" form-check-input !border !border-zinc-800/20 bg-zinc-200 hover:cursor-pointer dark:!border dark:!border-zinc-200/30 dark:checked:!border-sky-600 dark:bg-slate-800 focus:outline-none focus:ring-0 focus:ring-offset-0 focus:shadow-none" type="checkbox" id="katcheck${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  
+                        <label class="form-check-label hover:cursor-pointer " for="katcheck${k_json.rows[i].ID_KATEGORIA}"> ${k_json.rows[i].KATEGORIA} </label> 
+                    </p>`;
             }
-            
         }
         else {
             listItems += `<option value="" disabled>-</option>`;
@@ -539,43 +508,35 @@ async function KategoriaFeltolt(hova, type, kivalasztott,mindenkipipal) {
                 
             }
         }
-        
-     
         $(`#${hova}`).append(listItems);
         
-    } catch (err) { console.log("hiba:", err); }                     
-      
+    } catch (err) { console.error(err); }                     
 }
 
 function KatbolAR(){
-
     var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
     ArFeltolt(LekerdezesFeltetelek(), min,max );// árak újra feltöltése limit nélkül
 }
 
 
-function Elfogyott(alma){
-    if(alma.value == "Csakelfogyott"){// csakelfogyotttakat szeretné látni
+function Elfogyott(alma) {
+    if (alma.value == "Csakelfogyott"){// csakelfogyotttakat szeretné látni
         elfogyott = !elfogyott; 
-        if(elfogyott){
+        if (elfogyott) {
             document.getElementById("darable").disabled = true; // ne lehessen darabra szűrni
             document.getElementById("darabfel").disabled = true;
-            if(document.getElementById("darable").selected == true || document.getElementById("darabfel").selected == true){// ha darabra volt szűrve akkor állítsa vissza a rendezettséget
+            if (document.getElementById("darable").selected == true || document.getElementById("darabfel").selected == true) {// ha darabra volt szűrve akkor állítsa vissza a rendezettséget
                 document.getElementById("rendalap").selected = true;
-            }
-           
+            }  
         }
-        else{// már nem csak elfogyottakat szeretné látni akkor újra engedélyezem a darabra szűrést
+        else {// már nem csak elfogyottakat szeretné látni akkor újra engedélyezem a darabra szűrést
             document.getElementById("darable").disabled = false;
             document.getElementById("darabfel").disabled = false;
         }
     }
-    else{//  inaktivak vannak bepipálva 
-
+    else {//  inaktivak vannak bepipálva 
         Nemaktivak = !Nemaktivak;
-        
-       
     }
     KategoriaFeltolt("kategoria_section", "check", "",true);
 }
@@ -605,12 +566,6 @@ async function Kezdolap(pushHistory = true) {
     nev1.value = "";
     bepipaltID = "";
     
-    
-    // Itt hívjuk meg a keresőbárt, de jelezzük neki, hogy most ne piszkálja a history-t,
-    // mert mi fogjuk manuálisan beállítani a #home-ot.
-    
-    
-
     let kategoriacuccos = await ajax_call(`kategoria`, "GET", null, true);
     let k = "";
     if (kategoriacuccos.rows.length > 0) {
@@ -640,8 +595,6 @@ async function Kezdolap(pushHistory = true) {
             '#home'
         );
     }
-      // var cuccos = ajax_post("keres" + "?order=-1", 1 ); ha alapból szeretnék szűrni fontos !!!
-    
 }
 
 async function Szurok_Torlese() {
@@ -657,22 +610,12 @@ async function Szurok_Torlese() {
 async function KategoriaKezdolap(id_kategoria) {
     bepipaltID = "";
     await KategoriaFeltolt("kategoria_section", "check", "",false); // minden bepipalt kategoriat kiveszünk
-   
-    /*document
-  .getElementById('kategoria_section')
-  .querySelector(`[id="katcheck${id_kategoria}"]`).checked = true; */
-
     $(`#katcheck${id_kategoria}`).prop("checked", true);
     KERESOBAR(false);
 
-    console.log(document
-        .getElementById('kategoria_section')
-        .querySelector(`[id="katcheck${id_kategoria}"]`).checked = true);
-    
 }
 
 function FelaTetore(target = "top") {
-    console.log("FelaTetore lefutott");
     if (target === "top") {
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
@@ -687,11 +630,9 @@ function FelaTetore(target = "top") {
     });
 }
 
-
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 async function PAUSE() {
     console.log("várunk...");
@@ -699,13 +640,3 @@ async function PAUSE() {
     Kezdolap();
     console.log("ennyi volt");
 }
-
-
-
-
-
-
-
-
-
-
