@@ -1,0 +1,16 @@
+# Node / project
+yarn-error.log
+yarn.lock
+
+# Environment files (ne kerüljön a gitbe)
+.env
+.env.local
+.env.*.local
+
+# Editor / OS
+.vscode/
+.DS_Store
+
+# Build outputs
+dist/
+build/

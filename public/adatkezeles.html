@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adatkezelési Tájékoztató</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> tailwind.config = { darkMode: 'class', } </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"> 
+    <link href="style.css" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> 
+</head>
+<body>
+    <div class="container-fluid bg-zinc-200 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 transition-all duration-700 ease-in-out min-h-screen flex flex-col">
+        <div class="fixed-top bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 transition-all duration-700 ease-in-out shadow-bottom px-1 px-lg-5 py-2 py-lg-0 dark:!border-b dark:!border-zinc-200/20 ">
+            <div class="col-12 text-center text-xl font-semibold p-3">SZ-1-B Iskolai Webáruház - Adatkezelési Tájékoztató</div>
+        </div>
+
+        <div class="container d-flex flex-column mt-[100px] mb-5">
+            <span class="font-semibold text-lg">Adatkezelési Tájékoztató</span>
+            
+            <span class="mt-4"><u>1. Bevezetés</u></span>
+            <span>Jelen tájékoztató a Csány Webáruház (vizsgaremek) keretében végzett adatkezelési folyamatokat mutatja be. Mivel a webáruház kizárólag oktatási célokat szolgál és nem minősül éles kereskedelmi szolgáltatásnak, az adatkezelés is szimulált környezetben történik.</span>
+
+            <span class="mt-4"><u>2. Az adatkezelés célja és jogalapja</u></span>
+            <span>Az adatkezelés célja a webáruház működésének technikai demonstrációja és a vizsgakövetelmények teljesítése. A jogalap a felhasználó önkéntes hozzájárulása az oldal tesztelése során.</span>
+
+            <span class="mt-4"><u>3. Kezelt adatok köre</u></span>
+            <span>A rendszer a rendelés során az alábbi adatokat kéri be és tárolja az adatbázisban:
+                <ul class="list-disc list-inside">
+                    <li>Név</li>
+                    <li>E-mail cím</li>
+                    <li>Szállítási cím</li>
+                </ul>
+                A szállítási mód (MPL, GLS, Express One) és a fizetési mód (Bankkártya, PayPal, stb.) kiválasztása rögzítésre kerül, de tényleges fizetési tranzakció vagy adattovábbítás külső partner felé nem történik.
+            </span>
+
+            <span class="mt-4"><u>4. Adatbiztonsági nyilatkozat (MD5)</u></span>
+            <span>A felhasználói jelszavak MD5 algoritmussal titkosítva kerülnek tárolásra. Az üzemeltető kifejezetten felhívja a figyelmet, hogy az MD5 algoritmus elavult, nem nyújt modern biztonsági védelmet, ezért az oldalon szigorúan tilos valódi, más szolgáltatásoknál használt jelszavak megadása.</span>
+
+            <span class="mt-4"><u>5. Vélemények és tartalom</u></span>
+            <span>A bejelentkezett felhasználók által írt vélemények az adminisztrátori jóváhagyásig tárolódnak. A trágár vagy sértő tartalmak törlésre kerülnek.</span>
+
+            <span class="mt-4"><u>6. Adattárolás időtartama</u></span>
+            <span>A megadott adatok kizárólag a vizsgaremek bemutatásáig és értékeléséig kerülnek tárolásra, ezt követően az adatbázis megsemmisítésre kerül.</span>
+
+            <span class="mt-4"><u>7. Külső szolgáltatók</u></span>
+            <span>Az oldal külső könyvtárakat (CDN) használ (pl. Bootstrap, Tailwind, jQuery), amelyek a fájlok letöltésekor rögzíthetik a látogató IP-címét. Ezen külső felek adatkezeléséért az oktatási projekt üzemeltetője nem vállal felelősséget.</span>
+
+            <span class="mt-4"><u>8. Kapcsolat</u></span>
+            <span>Amennyiben kérdése van az adatai kezelésével kapcsolatban, vagy kérni szeretné adatai törlését, kérjük, vegye fel a kapcsolatot a fejlesztővel az iskolai kereteken belül.</span>
+        </div>
+
+        <div class="row mt-auto p-5 bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 dark:!border-t dark:!border-zinc-200/20">
+            <div class="col-12 p-4 d-flex justify-content-center">
+                <div class="col-12 col-xxl-6 d-flex justify-content-center align-items-center gap-4">
+                    <a class="text-2xl text-slate-900 hover:text-blue-500 dark:text-zinc-200 dark:hover:text-blue-500" href="https://www.facebook.com/csanylaszlotechnikum" target="_blank"><i class="bi bi-facebook"></i></a>
+                    <a class="text-2xl text-slate-900 hover:text-violet-600 dark:text-zinc-200 dark:hover:text-violet-600" href="https://www.instagram.com/zszc.csanylaszlotechnikum" target="_blank"><i class="bi bi-instagram"></i></a>
+                    <a class="text-2xl text-slate-900 hover:text-red-600 dark:text-zinc-200 dark:hover:text-red-600" href="https://www.youtube.com/@csanylaszlotechnikum2970" target="_blank"><i class="bi bi-youtube"></i></a>
+                    <a class="text-2xl text-slate-900 hover:text-fuchsia-700 dark:text-zinc-200 dark:hover:text-fuchsia-700" href="https://www.tiktok.com/@zszccsanylaszlotechnikum" target="_blank"><i class="bi bi-tiktok"></i></a>
+                    <a class="text-2xl text-slate-900 hover:text-sky-700 dark:text-zinc-200 dark:hover:text-sky-700" href="https://github.com/aronxd0/SZ-1-B-iskolai-webaruhaz" target="_blank"><i class="bi bi-github"></i></a>
+                </div>
+            </div>
+            <div class="col-12 p-2 text-center">
+                Csány László Technikum - Minden jog fenntartva ©
+            </div>
+            <div class="col-12 p-1 d-flex justify-content-center ">
+                <img class="img-fluid m-2 hidden dark:block transition-all duration-300 w-15 h-10" src="img/logo2.png">
+                <img class="img-fluid m-2 block dark:hidden transition-all duration-300 w-15 h-10" src="img/logo-fekete.png">
+            </div>
+        </div>
+    </div>
+
+    <script src="js/ajax.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/kosar.js"></script>
+    <script src="js/velemeny.js"></script>
+    <script src="js/termekek.js"></script>
+    <script src="js/fizetes.js"></script>
+    <script src="js/rendeles.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/document.js"></script>
+</body>
+</html>

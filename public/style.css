@@ -1,135 +1,196 @@
-.anton-regular {
-  font-family: "Anton", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+/* Betűtípusok importálása */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap');
+
+/* Az oldalon használt főbb színek változóba lementve hogy több helyen egyszerűen lehessen rájuk hivatkozni */
+:root {
+  --zinc-200: oklch(92% 0.004 286.32);
+  --slate-900: oklch(20.8% 0.042 265.755);
+  --slate-800: oklch(27.9% 0.041 260.031);
+  --slate-950: oklch(12.9% 0.042 264.695);
+  --zinc-50: oklch(98.5% 0 0);
+  --slate-700: oklch(37.2% 0.044 257.287);
+  --gray-200: oklch(92.8% 0.006 264.531);
+  --gray-400: oklch(70.7% 0.022 261.325);
+  --gray-900: oklch(21% 0.034 264.665);
+  --gray-600: oklch(44.6% 0.03 256.802);
 }
 
-/* termekeknel a kep lekicsinyitese */
-.kepp {
-    width: 30% !important;
-    height: 5%;
-    object-fit: cover;
+/* Az oldalon minden szöveg ezzel a betűtípussal jelenjen meg */
+* { font-family: 'Poppins', sans-serif; font-weight: 300; }
+
+/* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
+html, body { 
+  overflow-x: hidden; 
+  max-width: 100%;
+  color-scheme: light dark;
 }
 
-/* termekeknel a kartya merete */
-.card {
-  min-height: 350px;
-  border: none;
-}
+/* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
+.container-fluid { padding-left: 0 !important; padding-right: 0 !important; }
 
-/* ha raviszem az egeret */
-.card:hover {
-  cursor: pointer;
-}
+.navbar-toggler:focus { box-shadow: none; }
 
-/* az offcanvas menuben kisebb betumeret */
-.offcanvas {
-  font-size: 14px;
-}
+.cim { font-size: 35px; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.offcanvas { font-size: 14px; }
 
 /* modal ablakok megnyitasakor blur hatter */
 .modal-open .modal-backdrop {
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 1 !important;
 }
 
-/* modal fejlec-lablec semmi border */
+.modal.fade .modal-dialog {
+  opacity: 0;
+  transform: translateY(0) scale(0.92);
+  transition:
+    opacity .28s ease,
+    transform .28s cubic-bezier(.19,1,.22,1);
+}
+
+.modal.fade.show .modal-dialog {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.offcanvas-backdrop {
+  transition: backdrop-filter 0.8s ease, background-color 0.8s ease, opacity 0.8s ease;
+  backdrop-filter: blur(0px);
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 0;
+}
+
+.offcanvas-backdrop.show {
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0);
+  opacity: 1 !important;
+}
+
 .modal-header { border-bottom: none; }
 .modal-footer { border-top: none; }
 
-/* velemenyek kisebb betumeret */
-.comment { font-size: 14px; }
+.zoom-img { transform: scale(1); }
 
-/* label korul ne legyen semmi ::after elem mert neha nem jeleniti meg jol */
-label::after { content: none !important; }
+.hovered { aspect-ratio: auto; }
 
-/* a dropdown-nal ne mutassa azt a kis nyilat */
+.shadow-bottom { box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175); }
+
 .dropdown-toggle::after { display: none !important; }
-
-/* felso menusorban a gomboknak semmi border + atmenet ha raviszem az egeret */
-.gomb { border: none; }
-.gomb:hover { transition: 0.5s ease; }
-
-/* felso menusor doboz also border (feher csik) */
-.gombdiv {
-  border-bottom: 2px solid transparent; /* alapbol nincs */ 
-  transition: border-color 0.5s ease;
-}
-
-.gombdiv.aktiv { border-bottom: 2px solid #fff; } /* ha eppen ott vagyok akkor legyen csak */
-
-
-#login_gomb_div {
-  transition: all 0.3s ease;
-}
-
-#login_gomb_div.bal {
-  justify-content: flex-start;
-  transition: 0.5s ease;
-}
-
-#login_gomb_div.kozep {
-  justify-content: center;
-  transition: 0.5s ease;
-}
-
-#login_gomb_div.jobb {
-  justify-content: flex-end;
-  transition: 0.5s ease;
-}
 
 /* velemeny iras mezo merete */
 #velemeny_input { height: 150px; }
 
-/* nem elerheto termekek kartya stilusa */
-.nem-elerheto {
-  background-color: var(--bs-secondary-bg);
-  border-radius: var(--bs-border-radius);
-  opacity: 0.65; /* halvanyabb */
-  pointer-events: none; /* ne lehessen kattintani */
-  user-select: none; /* ne lehessen kijelolni */
+#mod_leiras { height: 150px; }
+
+.eltunt { display: none !important; }
+
+/* number inputoknal a fel-le nyilak eltuntetese */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-li:hover {
+::-webkit-slider-runnable-track { background: var(--zinc-50); }
+
+html.dark ::-webkit-slider-runnable-track { background: var(--slate-700); }
+
+/* scrollbar szelesseg */
+::-webkit-scrollbar { width: 9px; }
+
+/* az egesz */
+::-webkit-scrollbar-track { background: var(--gray-200); }
+
+/* a cucc ami benne van amit lehet huzni */
+::-webkit-scrollbar-thumb {
+  background: var(--gray-400); 
+  border-radius: 9999px;
+}
+
+/* sotetben */
+html.dark ::-webkit-scrollbar-track { background: var(--gray-900); }
+
+html.dark ::-webkit-scrollbar-thumb { background: var(--gray-600); }
+
+#sql_input_area { font-family: "Google Sans Code", monospace; }
+
+/* Autocomplete styling (összhangban az example-lel) */
+.autocomplete { position: relative; display: inline-block; }
+.autocomplete .form-control { width: 100%; }
+
+.autocomplete-items {
+  position: absolute;
+  border-radius: 5px;
+  border-bottom: none;
+  border-top: none;
+  z-index: 9999;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bs-body-bg, #fff);
+}
+.autocomplete-items div {
+  padding: 10px;
   cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
 }
 
+html.dark .autocomplete-items div { background-color: var(--slate-950); color: var(--zinc-200); border-bottom: var(--gray-600); }
 
-.feka {
-  background-color: var(--bs-light) !important;
-  color: var(--bs-body-color);
+.autocomplete-items div:hover { background-color: #e9e9e9; }
+html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
+
+.autocomplete-active { background-color: #0d6efd !important; color: #fff; }
+
+#nezetkicsi {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
-.fhr {
-  background-color: var(--bs-white) !important;
-  color: var(--bs-body-color);
+#nezetnagy {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 
-html[data-bs-theme="dark"] .fhr {
-  background-color: var(--bs-dark) !important; 
-  color: var(--bs-light);
-  border: none !important;
+@media (max-width: 1200px) {
+  #top-navbar.offcanvas-start {
+    width: 270px !important;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
 }
 
-
-html[data-bs-theme="dark"] .feka {
-  background-color: #16181b !important; 
-  color: var(--bs-body-color);
-  border: none !important;
+.table-responsive {
+  max-height: 600px;
 }
 
-.eltunt {
-  display: none;
+.tablazat thead th {
+  position: sticky;
+  top: 0; 
+  z-index: 10; 
+  background-color: var(--slate-900); 
+  color: var(--zinc-200); 
 }
 
-.hover-shadow {
-  transition: all 0.4s ease; 
-  
+html.modal-open, html.offcanvas-open, body.modal-open, body.offcanvas-open { overflow: hidden !important; }
+
+.admin-gear {
+    display: inline-block;
+    line-height: 1;
+    transition: transform 0.4s ease;
 }
 
-.hover-shadow:hover {
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  transform: translateY(-15px);
-}
+#admin_button:hover .admin-gear { transform: rotate(90deg); }
 
+.chart-title { font-weight:900; }
+
+.highcharts-background { fill: var(--zinc-50) !important; }
+
+html.dark .highcharts-background { fill: var(--slate-950) !important; }
+
+.highcharts-title, .highcharts-xaxis-labels text, .highcharts-yaxis-labels text, .highcharts-tooltip text { fill: var(--slate-900) !important; }
