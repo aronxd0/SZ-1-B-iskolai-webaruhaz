@@ -93,6 +93,10 @@ $(document).ready(function() {
         FelaTetore();
     });
 
+    $("#rend_button").click(async function () {
+        rendelesekmegtolt(true);
+    });
+
     // slidernek input mezö , változtatni kell a slider inputokaz as well as  a slider value: Enter után  szürni kell , emouseuot on is .
     $("#min_ar").on("input",  function MinarELL() {
         $("#min_ar_input").val($("#min_ar").val());
