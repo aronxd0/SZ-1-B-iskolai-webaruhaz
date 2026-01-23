@@ -70,20 +70,13 @@ $(document).ready(function() {
     });
 
     SESSION();
-
-    
+ 
     F5();
                    
-    
-
 
     
-
-
-    //ArFeltolt();
     KategoriaFeltolt("kategoria_section", "check", "");
 
-    console.log("xd");
 
     var input = document.getElementById("nev1");
 
