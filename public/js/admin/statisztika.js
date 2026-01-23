@@ -756,7 +756,7 @@ function drawChart(rang) {
         kivalasztott = innen.value;
     }
     // adat lekérés
-    const eredmeny = await ajax_call(`Top5?INTERVALLUM='${kivalasztott}'`, "GET", null, true);
+    const eredmeny = await ajax_call(`Top5?INTERVALLUM=${kivalasztott}`, "GET", null, true);
 
     if (eredmeny.rows.length == 0) {
         if(eredmeny.message != "ok"){ // hiba van a lekérdezésben

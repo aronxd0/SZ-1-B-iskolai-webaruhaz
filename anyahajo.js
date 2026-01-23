@@ -1532,46 +1532,47 @@ try {
 // Paraméter: INTERVALLUM (string) - időtartam szűrése: '1'=1 hó, '3'=3 hó, egyéb=teljes
 // Működés: az adott időszakban a legjobban fogyó termékek (darab és bevétel szerint)
 // Visszatér: TOP 5 termék (kép, név, darabszám, bevétel)
-app.get('/top5',(req, res) => {
+app.get('/top5', (req, res) => {
 
-    var ido = req.query.INTERVALLUM.toString() // '1', '3', vagy egyéb
-    var idocucc = null;
-
-    // Időszak szűrése
-    switch(ido){
-        case '1': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 1 month)`; break;
-        case '3': idocucc = `AND r.DATUM > (SELECT NOW() - INTERVAL 3 month)`; break;
-        default: idocucc = ``; break; // teljes idősáv
+    const ido = (req.query.INTERVALLUM || '').toString();
+    let idofeltetel = '';
+    
+    switch (ido) {
+        case "1":
+            idofeltetel = 'AND r.DATUM > NOW() - INTERVAL 1 MONTH';
+            break;
+        case "3":
+            idofeltetel = 'AND r.DATUM > NOW() - INTERVAL 3 MONTH';
+            break;
+        default:
+            idofeltetel = '';
+            break;
     }
 
-    // === SQL: TOP 5 TERMÉK ===
-    // Csoportosítás: termék ID-ra
-    // Rendezés: darabszám DESC, majd bevétel DESC
-    var sql = `
-    SELECT 
-        SUM(t.MENNYISEG) AS DB,
-        SUM(t.MENNYISEG * webbolt_termekek.AR) AS BEVETEL,
-        CASE 
-            WHEN webbolt_termekek.FOTOLINK IS NOT NULL 
-                THEN webbolt_termekek.FOTOLINK 
-                ELSE webbolt_fotok.IMG 
-        END AS FOTOLINK,
-        webbolt_termekek.NEV
-    FROM webbolt_rendeles_tetelei t
-    INNER JOIN webbolt_rendeles r 
-        ON r.ID_RENDELES = t.ID_RENDELES
-    INNER JOIN webbolt_termekek 
-        ON t.ID_TERMEK = webbolt_termekek.ID_TERMEK
-    LEFT JOIN webbolt_fotok 
-        ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
-    WHERE t.ID_TERMEK IS NOT NULL
-    ${idocucc}
-    GROUP BY t.ID_TERMEK
-    ORDER BY DB DESC, BEVETEL DESC
-    LIMIT 5;
-`;
+    const sql = `
+        SELECT 
+            SUM(t.MENNYISEG) AS DB,
+            SUM(t.MENNYISEG * wt.AR) AS BEVETEL,
+            wt.NEV,
+            COALESCE(wt.FOTOLINK, wf.IMG) AS FOTOLINK
+        FROM webbolt_rendeles_tetelei t
+        INNER JOIN webbolt_rendeles r 
+            ON r.ID_RENDELES = t.ID_RENDELES
+        INNER JOIN webbolt_termekek wt 
+            ON wt.ID_TERMEK = t.ID_TERMEK
+        LEFT JOIN (
+            SELECT ID_TERMEK, MIN(IMG) AS IMG
+            FROM webbolt_fotok
+            GROUP BY ID_TERMEK
+        ) wf ON wf.ID_TERMEK = wt.ID_TERMEK
+        WHERE t.ID_TERMEK IS NOT NULL
+        ${idofeltetel}
+        GROUP BY wt.ID_TERMEK, wt.NEV, wt.FOTOLINK, wf.IMG
+        ORDER BY DB DESC, BEVETEL DESC
+        LIMIT 5;
+    `;
 
-    sendJson_toFrontend (res, sql, []);
+    sendJson_toFrontend(res, sql, []);
 });
 
 // === BEVÉTEL STATISZTIKA ===
