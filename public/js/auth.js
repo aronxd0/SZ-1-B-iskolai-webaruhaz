@@ -50,11 +50,11 @@ function Frissites() {
         rang += RangokHTML(csoport, "sm");
 
         if (admin) {
-            rang += RangokHTML("Admin", "sm");
+            rang += RangokHTML("Admin");
             update_gombok(2); 
         }   
         if (webbolt_admin) {
-            rang += RangokHTML("Webbolt Admin", "sm");
+            rang += RangokHTML("Webbolt Admin");
             update_gombok(2); 
         }
         if (!admin && !webbolt_admin) { update_gombok(1); }

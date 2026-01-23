@@ -283,7 +283,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
               <p class="text-zinc-600 dark:text-zinc-400">${leiras}</p>
               <div class="d-flex flex-column gap-3 mt-4">
                 ${kosargomb} 
-                <div class="d-flex flex-column flex-xxl-row gap-3">${gg}</div>
+                <div class="d-flex flex-column flex-xxl-row gap-3">${admingombok}</div>
               </div>
               <div class="mt-6">
                 <span class="d-flex align-items-center justify-content-start gap-x-2"><i class="bi bi-info-circle"></i> Egyéb információk:</span>
