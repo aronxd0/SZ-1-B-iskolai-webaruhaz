@@ -29,8 +29,6 @@ html, body {
 /* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
 .container-fluid { padding-left: 0 !important; padding-right: 0 !important; }
 
-.iemge { max-width: 150px; width: 100%; }
-
 .navbar-toggler:focus { box-shadow: none; }
 
 .cim { font-size: 35px; }
@@ -76,187 +74,49 @@ html, body {
 .modal-header { border-bottom: none; }
 .modal-footer { border-top: none; }
 
-.comment { font-size: 14px; }
-
-/* vilagos modban */
-.gombdiv.aktiv { 
-  border-bottom: 1px solid var(--slate-900);
-  color: var(--slate-900);
-} 
-
-.gombdiv.aktiv button {
-  color: var(--slate-900);
-  font-weight: bold;
-}
-
-/* sotet modban */
-html.dark .gombdiv.aktiv { 
-  border-bottom: 1px solid var(--zinc-200);
-  color: var(--zinc-200);
-} 
-
-html.dark .gombdiv.aktiv button {
-  color: var(--zinc-200);
-  font-weight: bold;
-}
-
 .zoom-img { transform: scale(1); }
 
 .hovered { aspect-ratio: auto; }
 
 .shadow-bottom { box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175); }
 
-
 .dropdown-toggle::after { display: none !important; }
-
-
-#login_gomb_div {
-  transition: all 0.3s ease;
-}
-
-#login_gomb_div.bal {
-  justify-content: flex-start;
-  transition: 0.5s ease;
-}
-
-#login_gomb_div.kozep {
-  justify-content: center;
-  transition: 0.5s ease;
-}
-
-#login_gomb_div.jobb {
-  justify-content: flex-end;
-  transition: 0.5s ease;
-}
 
 /* velemeny iras mezo merete */
 #velemeny_input { height: 150px; }
 
 #mod_leiras { height: 150px; }
 
-/* nem elerheto termekek kartya stilusa */
-.nem-elerheto {
-  background-color: var(--bs-secondary-bg);
-  border-radius: var(--bs-border-radius);
-  opacity: 0.65; /* halvanyabb */
-  /*pointer-events: none;*/ /* ne lehessen kattintani */
-  user-select: none; /* ne lehessen kijelolni */
-}
+.eltunt { display: none !important; }
 
-li:hover {
-  cursor: pointer;
-}
-
-
-
-
-
-
-.feka {
-  background-color: var(--bs-light);
-  color: var(--bs-body-color);
-}
-
-.fhr {
-  background-color: var(--bs-white);
-  color: var(--bs-body-color);
-}
-
-html[data-bs-theme="dark"] .fhr {
-  background-color: var(--bs-dark) !important; 
-  color: var(--bs-light);
-  border: none !important;
-}
-
-
-html[data-bs-theme="dark"] .feka {
-  background-color: #16181b !important; 
-  color: var(--bs-body-color);
-  border: none !important;
-}
-
-.eltunt {
-  display: none !important;
-}
-
-.hover-shadow {
-  transition: all 0.4s ease; 
-  
-}
-
-
-
-.hover-shadow:hover {
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  transform: translateY(-15px);
-}
-
-
-.form-control-lg {
-  border-radius: 0px;
-  border: 1px solid var(--bs-dark);
-}
-
-
-input::-webkit-outer-spin-button, /* number inputoknal a fel-le nyilak eltuntetese */
-input::-webkit-inner-spin-button {
+/* number inputoknal a fel-le nyilak eltuntetese */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
+::-webkit-slider-runnable-track { background: var(--zinc-50); }
 
-::-webkit-slider-runnable-track {
-  background: var(--zinc-50); 
-}
-
-html.dark ::-webkit-slider-runnable-track {
-  background: var(--slate-700);
-}
-
-
-.nav-link.active {
-  background-color: var(--zinc-200) !important; /* zinc-200 */
-  border: none;
-  border-bottom: 1px solid var(--slate-900);
-}
-
-html.dark .nav-link.active {
-  background-color: var(--slate-800) !important; /* slate-800 */
-  color: var(--zinc-200) !important;
-  border: none;
-  border-bottom: 1px solid var(--zinc-200);
-}
-
+html.dark ::-webkit-slider-runnable-track { background: var(--slate-700); }
 
 /* scrollbar szelesseg */
-::-webkit-scrollbar {
-  width: 9px;
-}
+::-webkit-scrollbar { width: 9px; }
 
 /* az egesz */
-::-webkit-scrollbar-track {
-  background: var(--gray-200); /* gray-200 */
-}
+::-webkit-scrollbar-track { background: var(--gray-200); }
 
 /* a cucc ami benne van amit lehet huzni */
 ::-webkit-scrollbar-thumb {
-  background: var(--gray-400); /* gray-400 */
+  background: var(--gray-400); 
   border-radius: 9999px;
 }
 
 /* sotetben */
-html.dark ::-webkit-scrollbar-track {
-  background: var(--gray-900); /* gray-900 */
-}
+html.dark ::-webkit-scrollbar-track { background: var(--gray-900); }
 
-html.dark ::-webkit-scrollbar-thumb {
-  background: var(--gray-600); /* gray-600 */
-}
+html.dark ::-webkit-scrollbar-thumb { background: var(--gray-600); }
 
-#sql_input_area {
-  font-family: "Google Sans Code", monospace;
-  
-}
+#sql_input_area { font-family: "Google Sans Code", monospace; }
 
 /* Autocomplete styling (összhangban az example-lel) */
 .autocomplete { position: relative; display: inline-block; }
@@ -287,7 +147,6 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
 
 .autocomplete-active { background-color: #0d6efd !important; color: #fff; }
 
-
 #nezetkicsi {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
@@ -297,9 +156,6 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
-
-
-
 
 @media (max-width: 1200px) {
   #top-navbar.offcanvas-start {
@@ -321,21 +177,7 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
   color: var(--zinc-200); 
 }
 
-
-
-html.modal-open,
-html.offcanvas-open,
-body.modal-open,
-body.offcanvas-open {
-  overflow: hidden !important;
-}
-
-
-.hover-wrapper:hover #admin_button { color: var(--slate-700); }
-
-html.dark .hover-wrapper:hover #admin_button { color: var(--zinc-200);  }
-
-
+html.modal-open, html.offcanvas-open, body.modal-open, body.offcanvas-open { overflow: hidden !important; }
 
 .admin-gear {
     display: inline-block;
@@ -343,46 +185,12 @@ html.dark .hover-wrapper:hover #admin_button { color: var(--zinc-200);  }
     transition: transform 0.4s ease;
 }
 
-#admin_button:hover .admin-gear {
-    transform: rotate(90deg);
-}
+#admin_button:hover .admin-gear { transform: rotate(90deg); }
 
+.chart-title { font-weight:900; }
 
+.highcharts-background { fill: var(--zinc-50) !important; }
 
+html.dark .highcharts-background { fill: var(--slate-950) !important; }
 
-
-.chart-title {
-    font-weight:900;
-}
-
-
-
-
-.highcharts-background {
-  fill: var(--zinc-50) !important;
-}
-
-html.dark .highcharts-background {
-  fill: var(--slate-950) !important;
-  
-}
-
-.highcharts-title,
-.highcharts-xaxis-labels text,
-.highcharts-yaxis-labels text,
-.highcharts-tooltip text {
-  fill: var(--slate-900) !important;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+.highcharts-title, .highcharts-xaxis-labels text, .highcharts-yaxis-labels text, .highcharts-tooltip text { fill: var(--slate-900) !important; }

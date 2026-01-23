@@ -45,108 +45,40 @@
 
               <ul class="navbar-nav p-4 p-xl-0">
                 <li class="nav-item py-2">
-                  <img class="img-fluid m-2 hidden dark:block transition-all duration-300 w-20 h-15"   src="img/logo2.png">
-                  <img class="img-fluid m-2 block dark:hidden transition-all duration-300 w-20 h-15"   src="img/logo-fekete.png">
+                  <img class="img-fluid m-2 hidden dark:block transition-all duration-300 w-20 h-15" src="img/logo2.png">
+                  <img class="img-fluid m-2 block dark:hidden transition-all duration-300 w-20 h-15" src="img/logo-fekete.png">
                 </li>
 
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
-                  <div class="me-2 d-inline-block border-b border-transparent dark:border-b dark:border-transparent transition-hover duration-150 ease-in-out">
-                    <button type="button" aria-label="Profil" class="py-2 px-1 mx-1 text-lg bg-transparent hover:bg-transparent hover:text-slate-900 text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:hover:text-zinc-200 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out gomb rounded-4" data-bs-toggle="modal" data-bs-target="#profil">
-                      <i class="bi bi-person-circle"></i>
+                  <div class="me-3 ms-xl-3 ">
+                    <button type="button" aria-label="Profil" class="px-3 py-1 text-base rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full " data-bs-toggle="modal" data-bs-target="#profil">
+                      <i class="bi bi-person"></i>
                       <span> Fiók</span>
                     </button>
                   </div>
                 </li>
 
-                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
-                  <label 
-                class="
-                group 
-                bg-transparent 
-                me-2 
-                text-slate-900 
-                
-                dark:bg-slate-900 
-                dark:text-zinc-400 
-                hover:text-gray-600 
-                dark:hover:text-zinc-200 
-                !border-b !border-transparent 
-                
-                d-flex align-items-center justify-content-center p-2  cursor-pointer 
-                    transition-all duration-200
-                    has-[:checked]:!border-b  
-                    has-[:checked]:!border-slate-900 
-
-                    dark:has-[:checked]:!border-b 
-                    dark:has-[:checked]:!border-zinc-200 
-                    ">
-                    
-
-                <div class="flex items-center gap-2 text-lg">
-                  <input type="radio" name="homepage" class="form-check-input hidden " id="kezdolap" onchange="Kezdolap()" data-bs-dismiss="offcanvas">
-                  <i class="bi bi-house"></i> 
-                  <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 ">Kezdőlap</span>
-                </div>
-
-                
-            </label>
-                  <!--
-                  <div class="gombdiv me-3 d-inline-block border-b border-transparent dark:border-b dark:border-transparent transition-hover duration-150 ease-in-out">
-                    
-                    <button id="home_button"  type="button" class="py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:hover:bg-slate-900 dark:hover:text-zinc-200 dark:text-zinc-400 transition-hover duration-300 ease-in-out gomb rounded-3" data-bs-dismiss="offcanvas"> 
-                      <i class="bi bi-house" id="loginout"></i>
-                      <span > Kezdőlap</span>
-                    </button>
-                    
-                  </div>
-                  -->
+                <li class="nav-item py-2 py-xl-0 d-flex align-items-center" id="kezdolap-menupont">
+                  <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200has-[:checked]:!border-b  has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200 ">
+                    <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200  gap-2 text-lg">
+                      <input type="radio" name="homepage" class="form-check-input hidden " id="kezdolap" onchange="Kezdolap()" data-bs-dismiss="offcanvas">
+                      <i class="bi bi-house"></i> 
+                      <span class="group-has-[:checked]:font-semibold  transition-all duration-200 ">Kezdőlap</span>
+                    </div>
+                  </label>
                 </li>
 
-                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
-                  <label 
-                    class="
-                    group 
-                    bg-transparent 
-                    me-2 
-                    text-slate-900 
-                    
-                    dark:bg-slate-900 
-                    dark:text-zinc-400 
-                    hover:text-gray-600 
-                    dark:hover:text-zinc-200 
-                    !border-b !border-transparent 
-                    
-                    d-flex align-items-center justify-content-center p-2  cursor-pointer 
-                        transition-all duration-200 
-                        has-[:checked]:!border-b  
-                        has-[:checked]:!border-slate-900 
-
-                        dark:has-[:checked]:!border-b 
-                        dark:has-[:checked]:!border-zinc-200 
-                        ">
-                        
-
-                    <div class="flex items-center gap-2 text-lg">
+                <li class="nav-item py-2 py-xl-0 d-flex align-items-center" id="kosar-menupont">
+                  <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
+                    <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
                       <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
                       <i class="bi bi-cart2"></i> 
-                      <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
+                      <span class="group-has-[:checked]:font-semibold  transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
                     </div>
-
-                    
-                </label>
-                  <!--
-                  <div class="gombdiv me-3 d-inline-block border-b border-transparent dark:border-b dark:border-transparent transition-hover duration-150 ease-in-out" id="kosar-gombdiv">
-                    <button id="cart_button" type="button" class="py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex" style="display: block !important;" data-bs-dismiss="offcanvas"> 
-                      <i class="bi bi-cart2"></i>
-                      <span> Kosár</span>
-                      <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span>
-                    </button>
-                  </div>
-                  -->
+                  </label>
                 </li>
 
-                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
-
+                <li class="nav-item py-2 py-xl-0 d-flex align-items-center" id="admin-menupont">
                   <div class="dropdown">
                     <button id="admin_button" type="button" class="dropdown-toggle py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex" data-bs-toggle="dropdown">
                       <div class="gear-wrap d-flex justify-content-center align-items-center align-self-center w-5 h-5"> 
@@ -231,11 +163,81 @@
         <button id="carousel-right" class="btn btn-dark absolute right-0 z-20 opacity-70 hover:opacity-100"><i class="bi bi-chevron-right"></i></button>
       </div>
     
-      <div class="container-fluid" id="content">
+      <div class="container-fluid mt-[100px]" id="content">
+        <div class="row bg-zinc-50 dark:bg-sky-950/20" id="tutorial">
+          <hr class="text-gray-500 dark:text-zinc-200/30">
+          <div class="col-0 col-xxl-1"></div>
+          <div class="col-12 col-xxl-10 ">
+            <div class="d-flex flex-column gap-3 mt-5 justify-content-center align-items-center p-2 w-full">
+              <p class="font-semibold text-4xl w-full text-center"><i class="bi bi-question-circle"></i> Hogyan használjam az oldalt?</p>
+              <p class="text-pretty text-lg w-full text-center">Ha esetleg még nem vagy jártas abban, hogyan vásárolj egy online webáruházban akkor mindenképpen görgess leljebb és olvass el minden fontos tudnivalót.</p>
+            </div>
+            <div class="p-6 mt-[50px] mb-5">
+              <div class="mx-auto max-w-6xl">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div class="group relative flex gap-4 rounded-xl border border-gray-200 bg-zinc-100 dark:bg-slate-950 dark:!border-b dark:!border-zinc-200/20 shadow-lg p-6 transition-all duration-150 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-100 text-teal-600 dark:bg-teal-900/80 dark:text-teal-200">
+                      <i class="bi bi-person"></i>
+                    </div>
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 dark:text-gray-200">
+                        Regisztráció / Bejelentkezés 
+                      </h3>
+                      <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        Új fiók létrehozására ezen az oldalon nincs lehetőség, a regisztráció az SZ-1-A csoport oldalán történik. Itt azonban nem kell kötelezően felhasználói fiók ahhoz, hogy lehessen használni az oldalt. Vendég felhasználóként is lehetőség van az oldalon történő böngészésre, azonban nincs lehetőség vásárlásra és vélemény írásra, ezek használatához mindenképpen be kell jelentkezni. A bejelentkezést felkínálja az oldal amikor megnyílik, viszont a bal felső sarokban lévő "Fiók" menüpontra kattintva ugyanúgy be lehet jelentkezni.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="group relative flex gap-4 rounded-xl border border-gray-200 bg-zinc-100 dark:bg-slate-950 dark:!border-b dark:!border-zinc-200/20 shadow-lg p-6 transition-all duration-150 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600 dark:bg-indigo-900/80 dark:text-indigo-500">
+                      <i class="bi bi-house"></i>
+                    </div>
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 dark:text-gray-200">
+                        Termékek kiválasztása
+                      </h3>
+                      <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        Első lépés a termék(ek) felfedezése. A kedvenc termékedet megtalálhatod akár a kezdőlap ajánlatai között is, vagy akár rá is kereshetsz névre, kulcsszavakra is a fenti keresősávban. A <i class="bi bi-funnel"></i> gombra kattintva használhatod a szűrőt, ezt direkt azért készítettük, hogy megkönnyítse a keresést. (Ja és ne felejtsd el megnyomni a "Szűrés" gombot, ez kell ahhoz, hogy működjön). Keresgélj bátran!
+                      </p>
+                    </div>
+                  </div>
+                  <div class="group relative flex gap-4 rounded-xl border border-gray-200 bg-zinc-100 dark:bg-slate-950 dark:!border-b dark:!border-zinc-200/20 shadow-lg p-6 transition-all duration-150 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100 text-red-600 dark:bg-red-900/80 dark:text-red-500">
+                      <i class="bi bi-cart"></i>
+                    </div>
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 dark:text-gray-200">
+                        Kosárba helyezés
+                      </h3>
+                      <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        A következő lépés, hogy a kiválasztott termék(ek)et hozzáadod a kosaradhoz. Ez egy virtuális bevásárló kosár amibe kedved szerint pakolhatsz termékeket. Ha találtál egy neked tetsző terméket, erősen ajánljuk, hogy nyugodtan nézelődj még a többi termék között is, sosem tudhatod mire találsz még rá... Amit beteszel a kosárba azt onnan senki nem tudja kivenni (hacsak nem rendelik meg előbb mint te) és nem is tűnik el magától. Megrendelheted akár holnap vagy akár a jövő héten is.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="group relative flex gap-4 rounded-xl border border-gray-200 bg-zinc-100 dark:bg-slate-950 dark:!border-b dark:!border-zinc-200/20 shadow-lg p-6 transition-all duration-150 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/80 dark:text-blue-400">
+                      <i class="bi bi-credit-card"></i>
+                    </div>
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 dark:text-gray-200">
+                        A rendelés menete
+                      </h3>
+                      <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        Ha ide eljutottál akkor már tényleg nincs sok dolgod hátra, csak a rendelés véglegesítése és leadása. Először látsz egy áttekintést arról, hogy miből mennyit mennyiért szeretnél vásárolni, alul pedig látsz egy bruttó végösszeget (ennyit kéne fizetni). Ezután kell megadni a saját adatokat (név, e-mail, szállítási cím, stb...) de nyugi, nem történik semmi visszaélés. Az utolsó lépés, hogy kiválaszd a fizetési és szállítási módot. Nem kell túlgondolni, csak kiválasztod és kész, meg is vagyunk. Végső soron kapni fogsz egy visszaigazoló e-mailt a rendelésről, erre mindenképpen kukkants rá.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-0 col-xxl-1"></div>
+        </div>
+        <hr class="text-gray-500 dark:text-zinc-200/30">
         <div class="row" id="felsosor">
-          <div class="col-12 d-flex justify-content-center mt-2">
-            <div class="w-auto p-2" id="keresett_kifejezes"></div>  
-            <div class="w-auto align-self-center" id="débé"></div>
+          <div class="col-12 d-flex justify-content-center mt-2 h-full">
+            <div class="w-auto p-2 h-full" id="keresett_kifejezes"></div>  
+            <div class="w-auto align-self-center h-full" id="débé"></div>
           </div>
         </div>    
 
@@ -435,14 +437,14 @@
           <h4 class="modal-title"></h4>
           <button type="button" class="btn text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
         </div>
-        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-800 dark:text-zinc-200">
+        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
           <div class="col-12 text-center">A termék a kosárba került.</div>
           <div class="col-12 text-center" id="idt"></div>
         </div>
-        <div class="modal-footer d-flex justify-content-center bg-zinc-300 text-slate-900 dark:bg-slate-800 dark:text-zinc-200">
+        <div class="modal-footer d-flex justify-content-center bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
           <div class="col-12 d-flex flex-column flex-sm-row w-full gap-2">
             <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full ease-in-out bi bi-bag" data-bs-dismiss="modal"> Vásárlás folytatása</button>
-            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full ease-in-out bi bi-cart" data-bs-dismiss="modal" id="kosarmegtekintese"> Kosár megtekintése</button>
+            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full ease-in-out bi bi-cart" data-bs-dismiss="modal" onclick="Kosar_Mutat()"> Kosár megtekintése</button>
           </div>
         </div>
       </div>
@@ -635,11 +637,11 @@
   </div>
   <!-- #endregion -->
 
-  <div id="imgFullscreen" class="fixed inset-0 bg-black/80 hidden transition-opacity duration-300 opacity-0" style="z-index: 999999;" onclick="closeImage()">
+  <div id="imgFullscreen" class="fixed inset-0 bg-black/80 hidden transition-opacity duration-300 opacity-0" style="z-index: 999999;" onclick="KepBezaras()">
     <div class="d-flex justify-content-center align-items-center h-full w-full">
       <img id="fsImg" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl transition-all duration-300">
     </div>
-    <button onclick="closeImage()" class="absolute top-6 right-6 text-white text-3xl font-bold">✕</button>
+    <button onclick="KepBezaras()" class="absolute top-6 right-6 text-white text-3xl font-bold">✕</button>
   </div>
 
   <script src="js/ajax.js"></script>
