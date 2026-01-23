@@ -811,7 +811,7 @@ app.delete('/kosar_del',async (req, res) => {
 // === KOSÁR TÉTEL DARABSZÁM ===
 // GET: /kosarteteldb
 // Működés: az összes kosár tételnek az összes mennyiségét összeadja (SUM)
-// Visszatér: {kdb: összes darab szám}
+// Visszatér: összes darab száma a kosárban
 app.get('/kosarteteldb',(req, res) => {    
 
     session_data = req.session;
@@ -1170,7 +1170,7 @@ app.get('/rendeles_azon', async (req, res) => {
         // Hiba esetén is felszabadítjuk a kapcsolatot, ha létezik
         if (conn) conn.release();
         
-        // Debug naplózás
+        // Debug
         console.error("/rendeles_azon hiba:", err.message);
 
         // "Kamu" válasz küldése hiba esetén (hogy ne haljon meg a frontend)
@@ -1456,9 +1456,8 @@ app.delete('/termek_del',async (req, res) => {
 // GET: /html_sql
 // Paraméter: SQL (string) - az admin által begépelt SQL parancs
 // Működés:
-//   - SELECT: biztonságosan futtatható
-//   - Tiltott parancsok: INSERT, UPDATE, DELETE, DROP, ALTER, CREATE stb. (biztonsági okokból)
-//   - Base64 képadatok maszkálásra kerülnek (-- BINARY DATA --)
+//   - SELECT: nem kell naplózni, runQueries-t használ
+//   - NEM SELECT parancsok: naplózva van, runExecute-t használ
 // Biztonsági ellenőrzések:
 //   1. DROP TABLE * parancs automatikusan blokkolva
 //   2. Nem SELECT SQL parancsok listázása 
@@ -2005,13 +2004,13 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
 // Működés:
 //   1. Lekérdezi: szerepel-e a webbolt_rendeles_tetelei.FOTOLINK-ben?
 //   2. Ha NINCS rendelésben: fizikai fájl törlése fs.unlink-val
-//   3. Ha VAN rendelésben: csak log, fájl NEM törlődik (adatintegritás)
+//   3. Ha VAN rendelésben: fájl NEM törlődik
 // Biztonsági megjegyzések:
 //   - Megakadályozza az árva fájlok képződését (orphaned files)
 //   - Megvéd az olyan helyzettől, hogy egy aktív rendelés elveszítse a képét
 //   - fs.existsSync ellenőrzi a fájl létezését (nem hibázhat a delete)
 //   - Async fs.unlink nem blokkolja a futást
-// Megjegyzés: csak /img/uploads/ mappában működik (hardcoded safety)
+// Megjegyzés: csak /img/uploads/ mappában működik
 async function kepTorlesHaNincsRendelesben(img) {
     if (!img || img === "") return;  // Üres vagy null kép, nincs mit törölni
 
@@ -2061,8 +2060,6 @@ async function kepTorlesHaNincsRendelesben(img) {
 // Az email-sender.js modul: SMTP e-mail küldés hitelesítéssel
 // Felhasználat: const { sendEmail } = require('./email-sender');
 const { sendEmail } = require('./email-sender');
-const { connect } = require('http2');
-const { off } = require('process');
 
 // === EMAIL KÜLDÉS ENDPOINT ===
 // HTTP METHOD: POST /send-email
@@ -2074,7 +2071,7 @@ const { off } = require('process');
 //   1. Paraméterek kinyerése req.body-ból
 //   2. sendEmail() hívása az email-sender modulból (SMTP kapcsolat)
 //   3. Sikeres: {message: "sikeresen elküldve"} JSON
-//   4. Hiba: {message: "Email hiba: [hibaszöveg]"} JSON
+//   4. Hiba: {message: "Email hiba"} JSON
 // Megjegyzés: SMTP konfigurációt az email-sender.js tartalmazza (felhasználónév, jelszó, SMTP szerver)
 app.post('/send-email', async (req, res) => {
     try {
