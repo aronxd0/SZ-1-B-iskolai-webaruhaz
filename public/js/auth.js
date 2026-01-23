@@ -123,7 +123,6 @@ function ADMINVAGYE(){
                 <label for="innaktiv" class="form-check-label hover:cursor-pointer "> Az inaktiv áruk mutatása</label>
             </p>
             `;
-
         $("#Elfogyott_gomb").html(elfo);
         $("#NEM_AKTIV").html(nemakt);
     } 
