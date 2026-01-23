@@ -3,10 +3,10 @@ let voltNagy = window.innerWidth > 600;
 window.addEventListener("resize", () => {
     let mostNagy = window.innerWidth > 600;
 
-    // Ha átlépted a 600px határt
+    // ha változott a méret átlépés történt a 600px határon és a statisztika nézeten vagyunk
     if (mostNagy !== voltNagy && document.getElementById("NagyCIM") != null)  {
 
-        // console.log("Átlépted a 600px-t, újrarajzolom...");
+        // diagram újrarajzolása
         DiagrammokSelect("kezdes");
        
         // állapot frissítése
@@ -16,6 +16,7 @@ window.addEventListener("resize", () => {
 
 function Statisztikak(pushHistory = true) {
 
+    // kosar ésa kezdőlap gombok kikapcsolása
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", false);
     
@@ -26,6 +27,7 @@ function Statisztikak(pushHistory = true) {
     $("#nezetkicsi").addClass("eltunt");
     $("#nezetnagy").addClass("eltunt");
             
+    // hmtl létrehozása
         html = `
         <div 
         class="
@@ -504,11 +506,15 @@ function Statisztikak(pushHistory = true) {
         `
         // ezekhez tartozik css is (style.css 440-458 sor)
 
-
+        // html betöltése
      $("#content_hely").fadeOut(300, async function() {
          await $("#content_hely").html(html).fadeIn(300); 
+
+
+         // oldal alatt a lapozós div törlése
         $("#pagi").html("");
         //drawChart();
+        // diagrammok betöltése / rajzolása
         DiagrammokSelect("kezdes");
         STAT_Penz();
         STAT_ELAD();
@@ -545,7 +551,7 @@ function drawChart(rang) {
       { name: rang.rows[4].NEV, y:parseInt(rang.rows[4].DB)}
     ];
   
-    // MOBIL nézet – 3 középső
+    // MOBIL nézet – 3 középső ==> ha kiseeb mint 600 px a szélesség akkor csak a top 3 mutatom meg
     let visibleData = data;
     if (window.innerWidth < 600) {
       visibleData = data.slice(1, 4);
@@ -553,10 +559,14 @@ function drawChart(rang) {
   
     // rangsor
     const sortedUnique = [...new Set(visibleData.map(d => d.y))].sort((a, b) => b - a);
-  // rang meghatározása érték alapján
+    // kiszedi az összes Y értéket (darabszámokat), egyedivé teszi a Set-tel, majd csökkenő sorrendbe rendezi
+    // így megvan a rangsor
+
+  // rang meghatározása érték alapján => megnézi az érték helyét a rangsorban
     function getRankByValue(v) {
       return sortedUnique.indexOf(v) + 1;
     }
+
    // a színek meghatározása rang alapján
     function getColorByRank(value) {
       const rank = getRankByValue(value);
@@ -718,9 +728,9 @@ function drawChart(rang) {
                 </div>
 
                 `;
-                        // megnézzük a pont nevét, és ahová kell, oda berakjuk a képet is
+                        // megnézzük a pont nevét, és ahová kell, oda berakjuk a képet is || a kép azért nem itt van berakva, mert a chart nem tudja megjeleniteni a képet
                         // a div id="${this.point.name}" lesz a kép helye
-                        // is Winner pedig az 1. helyezettre teszi a koronát, több is lehet első helyezett esetén töre is felteszi
+                        // is Winner pedig az 1. helyezettre teszi a koronát, több első helyezett esetén többre is tesz koronát
                         // az oszlop felé meg kiirjük a helyezést pl 1. 2. 3. ... 
 
 
@@ -728,7 +738,7 @@ function drawChart(rang) {
           }
         }
       },
-  
+      // adatok
       series: [{ data: visibleData }]
     });
   
@@ -738,10 +748,10 @@ function drawChart(rang) {
 
 
   async function DiagrammokSelect(innen){
-
+    // ez az intervallum választó, ez rajzolja a diagrammot
 
    let kivalasztott = "1";
-    // ha nem kezdes, akkor dropdownból jön
+    // ha nem "kezdes" adat az {innen}, akkor dropdownból jön
     if (innen !== "kezdes") {
         kivalasztott = innen.value;
     }
@@ -749,16 +759,16 @@ function drawChart(rang) {
     const eredmeny = await ajax_call(`Top5?INTERVALLUM='${kivalasztott}'`, "GET", null, true);
 
     if (eredmeny.rows.length == 0) {
-        if(eredmeny.message != "ok"){
+        if(eredmeny.message != "ok"){ // hiba van a lekérdezésben
             $('#_Top5').html("<div class='col-12 text-xl text-center p-3'>Hiba történt az adatok lekérdezésekor.</div>");
             return;
         }
-        else{
+        else{ // nincs adat
             $('#_Top5').html("<div class='col-12 text-xl text-center p-3'>Nincs elég adat a diagram megjelenítéséhez a kijelölt időszakban.</div>");
             return;
         }
     }
-    if(eredmeny.rows.length < 5){
+    if(eredmeny.rows.length < 5){ // ha kevesebb mint 5 termék van, akkor pótoljuk
         var db = 0;
         while(eredmeny.rows.length < 5){
             db++;
@@ -770,11 +780,14 @@ function drawChart(rang) {
 
     await drawChart(eredmeny);
 
+
+    // ||| képek betöltése |||
+
     // aktuális képernyőméret
     const mobil = window.innerWidth < 600;
 
     // 600px alatt: 3 darab (a highchart is a első 3-at mutatja)
-    // 600px fölött: az összes bejön
+    // 600px fölött: az összes bejön (5 darab) 
     const lista = mobil ? eredmeny.rows.slice(0, 3) : eredmeny.rows;
 
     // képek berakása
@@ -784,22 +797,27 @@ function drawChart(rang) {
     }
 }
 
+// ================= Bevétel diagram =====================
 let penzChart = null;
 async function STAT_Penz(innen){
     var intervallum = "1";
+
+    // alapértelmezett 1 hónap | ha innen nem null akkor onnan veszi az értéket
     if(innen != null){
         intervallum = innen.value;
     }
+    // ha már van chart akkor töröljük
     if(penzChart != null){
         penzChart.destroy();
     }
-
+    // adat lekérése az intevallummal
     var adat = await ajax_call(`bevetel_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
     
+    // adatok előkészítése
     const xValues = [];
     const yValues = [];
-    //const barColors = [];
 
+    
     var idok = [];
 
     // Évek kigyűjtése rendesen
@@ -809,7 +827,7 @@ async function STAT_Penz(innen){
             idok.push(ev);
         }
     }
-
+    // IDÖ szép formátumu kiirása
     for (var item of adat.rows){
         let d = new Date(item.IDO);
 
@@ -841,28 +859,28 @@ async function STAT_Penz(innen){
         yValues.push(item.BEVETEL);
     }
 
-    
+    // diagram rajzolása
     penzChart =  new Chart("STAT_PENZ_GRAF", {
-  type: "bar",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: "green",
-      data: yValues
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {display: false},
-      title: {
-        display: true,
-        text: "Bevétel alakulása",
-        font: {size: 16}
-      }
-    }
-  }
+                    type: "bar", // tipusa
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                        backgroundColor: "green", // oiszlopok színe
+                        data: yValues
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                        legend: {display: false},
+                        title: { // cím
+                            display: true,
+                            text: "Bevétel alakulása",
+                            font: {size: 16}
+                        }
+                        }
+                    }
  
 });
  // cancva divének legyen fix magassága
@@ -873,16 +891,20 @@ async function STAT_Penz(innen){
 
 }
 
+// ================= Rendelések darabszáma diagram =====================
+
 let Elad_Chart = null;
 async function STAT_ELAD(innen){
     var intervallum = "1";
+    // alapértelmezett 1 hónap | ha innen nem null akkor onnan veszi az értéket
     if(innen != null){
         intervallum = innen.value;
     }
+    // ha már van chart akkor töröljük
     if(Elad_Chart != null){
         Elad_Chart.destroy();
     }
-
+    // adat lekérése az intevallummal
     var adat = await ajax_call(`rendelesek_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
     
 
@@ -900,8 +922,7 @@ async function STAT_ELAD(innen){
         }
     }
 
-     var tobbEv = idok.length > 1 || intervallum != 1;
-
+     // IDÖ szép formátumu kiirása  
     for (var item of adat.rows){
         let d = new Date(item.IDO);
 
@@ -933,44 +954,49 @@ async function STAT_ELAD(innen){
         yValues.push(item.DARAB);
     }
 
-
+    // diagram rajzolása
     Elad_Chart = new Chart("STAT_VMI_GRAF", {
-    type: "bar",
-    data: {
-      labels: xValues,
-      datasets: [{
-        backgroundColor: "Lightblue",
-        data: yValues
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {display: false},
-        title: {
-          display: true,
-          text: "Rendelések száma",
-          font: {size: 16}
-        }
-      }
-    }
-   
-  });
+                            type: "bar",
+                            data: {
+                            labels: xValues,
+                            datasets: [{
+                                backgroundColor: "Lightblue", // oszlopok színe
+                                data: yValues
+                            }]
+                            },
+                            options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {display: false},
+                                title: { // cím
+                                display: true,
+                                text: "Rendelések száma",
+                                font: {size: 16}
+                                }
+                            }
+                            }
+                        
+                        });
 }
 
+// ================= Rendelések kategóriákra bontva diagram =====================
 let KAT_chart = null;
 async function STAT_KATEG(innen){
+    
+    // alapértelmezett 1 hónap | ha innen nem null akkor onnan veszi az értéket
     var intervallum = innen ? innen.value : "1";
 
+    // ha már van chart akkor töröljük
     if (KAT_chart) {
         KAT_chart.destroy();
         KAT_chart = null;
     }
 
+    // adat lekérése az intevallummal
     var adat = await ajax_call(`kategoriak_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
 
-    // === NINCS ADAT ===
+    // === ha NINCS ADAT ===
     if (adat.maxcount == 0) {
         KAT_chart = new Chart("STAT_KOR_GRAF", {
             type: "pie",
@@ -1037,19 +1063,22 @@ async function STAT_KATEG(innen){
 }
 
     
-
+// ================= Commentek állapot szerinti eloszlása diagram =====================
 let COMM_chart = null;
 
 async function STAT_COM(innen){
+    // alapértelmezett 1 hónap | ha innen nem null akkor onnan veszi az értéket
     var intervallum = innen ? innen.value : "1";
 
+    // ha már van chart akkor töröljük
     if (COMM_chart) {
         COMM_chart.destroy();
         COMM_chart = null;
     }
+    // adat lekérése az intevallummal
     var adat = await ajax_call(`velemeny_stat?INTERVALLUM=${intervallum}`, "GET", null, true);
 
-    // === NINCS ADAT ===
+    // ===HA NINCS ADAT ===
     if (adat.maxcount == 0) {
         COMM_chart = new Chart("STAT_COMMENT", {
             type: "pie",
