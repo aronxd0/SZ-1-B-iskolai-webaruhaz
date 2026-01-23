@@ -144,7 +144,7 @@ async function F5() {
         console.log(admin);
         console.log(webbolt_admin);
 
-        BevaneJelentkezve();
+        Frissites();
         Kezdolap();
     }
     else {
