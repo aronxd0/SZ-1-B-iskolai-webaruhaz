@@ -612,7 +612,6 @@ async function KategoriaKezdolap(id_kategoria) {
     await KategoriaFeltolt("kategoria_section", "check", "",false); // minden bepipalt kategoriat kiveszünk
     $(`#katcheck${id_kategoria}`).prop("checked", true);
     KERESOBAR(false);
-
 }
 
 function FelaTetore(target = "top") {
@@ -620,14 +619,9 @@ function FelaTetore(target = "top") {
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
     }
-
     const el = document.getElementById(target);
     if (!el) return;
-
-    el.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function sleep(ms) {
