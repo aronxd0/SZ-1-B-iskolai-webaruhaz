@@ -331,7 +331,7 @@ function gen_SQL_kereses(req) {
         var sql = 
         `
         SELECT 
-            t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, t.TERMEKLINK, 
+            t.ID_TERMEK, t.ID_KATEGORIA, t.NEV, t.AZON, t.AR, t.MENNYISEG, t.MEEGYS, t.AKTIV, 
             CASE WHEN t.FOTOLINK IS NOT NULL THEN t.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, 
             t.LEIRAS, 
             k.KATEGORIA AS KATEGORIA
@@ -2077,8 +2077,9 @@ const { sendEmail } = require('./email-sender');
 app.post('/send-email', async (req, res) => {
     try {
         const { email, subject, html } = req.body;  // JSON paraméterek kinyerése
-
+        console.log(`Email elküldése: ${email}, tárgy: ${subject}`);
         await sendEmail(email, subject, html);  // Email küldés SMTP-n keresztül
+        console.log(`Email elküldve: ${email}, tárgy: ${subject}`);
 
         res.json({ message: 'Email sikeresen elküldve' });
     } catch (err) {

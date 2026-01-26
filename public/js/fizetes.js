@@ -84,7 +84,7 @@ function Adatok(li) {
           </div>
           <div class="col-12 col-xl-6 p-1">
             <label for="emil" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-envelope"></i> E-mail cím *</label>
-            <input type="email" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl" id="emil" value="" name="imel" placeholder="pl.: futyimre69@valami.xd" style="border: none;">              
+            <input type="email" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl" id="emil" value="${_emil}" name="imel" placeholder="pl.: futyimre69@valami.xd" style="border: none;">              
           </div>
         </div>
         <div class="col-12 d-flex flex-column flex-xl-row mt-2 p-1">
@@ -164,7 +164,7 @@ function Fizetes(li) {
             throw "Érvénytelen e-mail cím formátum!";
         }
 
-        if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(city.value)) {// a-z → kis angol betűk,A-Z → nagy angol betűk, áéíóöőúüűÁÉÍÓÖŐÚÜŰ → magyar ékezetes betűk,\s → szóköz (space, tab stb.)- → kötőjel (pl. „Kovács-Nagy”),^ → a string eleje,$ → a string vége
+        if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(city.value)) {// a-z → kis angol betűk,A-Z → nagy angol betűk, áéíóöőúüűÁÉÍÓÖŐÚÜŰ → magyar ékezetes betűk,\s → szóköz (space, tab stb.)- → kötőjel (pl. „: Dél-Komárom”),^ → a string eleje,$ → a string vége
             throw "A Város neve csak betűket, szóközt és kötőjelet tartalmazhat!";
         }
         if (!/^\d{4}$/.test(iszam.value)) {// 4 katakter számjegy
@@ -258,6 +258,7 @@ function Fizetes(li) {
             </div>
           </label>
         </div>
+        <div class="col-12 text-center text-danger mt-3" id="hibauzen">
       </div>`;
 
     $("#cc").animate( { opacity: 0, left: "-300px" }, 300, function() {
@@ -335,9 +336,12 @@ async function Fizetésclick(li) {
 }
 
 async function emailDesign(li) {
+// itt állítjuk össze az email html dizájnt
+
   let rows = "";
   let osszes = 0;
 
+  // Vásárolt termékek listázása
   for (const e of li) {
     rows += `
       <tr>
@@ -363,6 +367,8 @@ async function emailDesign(li) {
   const rendelesazonAdat = await ajax_call(`rendeles_azon`, "GET", null, false);
   const rendelesazon = rendelesazonAdat.rows[0].RENDELES_AZONOSITO;
 
+  // fejléc + törzs 
+  // itt használjuk fel a globális változókat is amik az adatokat tartalmazzák
   return `
     <div style="background:#f5f1e8;padding:30px 0;">
       <div style="max-width:720px; margin:auto; background:#ffffff; border-radius:14px; padding:30px; font-family:Arial,Helvetica,sans-serif; border:1px solid #e5e5e5;">
