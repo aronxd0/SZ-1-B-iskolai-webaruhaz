@@ -175,6 +175,9 @@ function update_gombok (x) {
 }
 
 function LekerdezesFeltetelek() {
+
+    // lekárdezis limit+ offset nélkül
+    // az arfeltolt függvény nél is ezt hasznalom
     const inputok = kategoria_section.getElementsByTagName("input");
     bepipaltID = ""; //reset bepipalt kategória
     for (var elem of inputok){
@@ -196,7 +199,7 @@ async function KERESOBAR(updateHistory = true) {
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
     var elküld = LekerdezesFeltetelek();
 
-    //elküldöm az sql-t offset, limit nélkül és az eddig beállított min max árakat
+    //elküldöm az sql-t offset, limit nélkül és az eddig beállított min max árakkal, AZ ármezők feltöltéséhez
     await ArFeltolt(elküld, min , max);
 
     var order = "";
@@ -210,6 +213,7 @@ async function KERESOBAR(updateHistory = true) {
         default: order = "";
     }
 
+    // újra lekérem az árakat a beállított min max árakkal
     min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
     
@@ -218,6 +222,7 @@ async function KERESOBAR(updateHistory = true) {
     if (sqleddig != elküld2){ Joldal = 1; }
     sqleddig = elküld2;
 
+    // hozzáadom az offsetet is ==> limit automatikusan 52 backenden
     elküld2 += `&offset=${(Joldal-1)}`
     
     try {
@@ -231,9 +236,9 @@ async function KERESOBAR(updateHistory = true) {
         $("#kosar").prop("checked",false);
         $("#nezetkicsi").removeClass("eltunt");
         $("#nezetnagy").removeClass("eltunt");
-        await CARD_BETOLT(adatok);
-        OLDALFELTOLT(adatok.maxcount);
-        KategoriaFeltolt("kategoria_section", "check", "",true);    
+        await CARD_BETOLT(adatok);// termékek betöltése kártyákba az új lekérdezett adatokkal
+        OLDALFELTOLT(adatok.maxcount); // lapválasztó feltöltése
+        KategoriaFeltolt("kategoria_section", "check", "",true);// kategória szűrő frissítése    
     } catch (err) { console.error(err); }
 
     if (!updateHistory) return;
@@ -382,10 +387,13 @@ async function ArFeltolt(sql, min ,max){
         var elozomin = parseInt( document.getElementById("min_ar").min)// lekérdezes a csuszak minimum értékét mielött megváltoztatom
         var elozomax = parseInt( document.getElementById("max_ar").max)// lekérdezes a csuszak maximum értékét mielött megváltoztatom
 
-        // ha az előző minimum érték = a mostani minimum érték vagy a mostani minimum nagyobb mint a lekérdezett utáni maximum akkor a minimum legyen a lekérdezett minimuma
+        // ha az előző minimum érték = a mostani minimum érték 
+        // vagy a mostani minimum nagyobb mint a lekérdezett utáni maximum ár 
+        // akkor az új minimum legyen a lekérdezett minimuma
         if (elozomin == min || min > arak.rows[0].MAXAR){ min = arak.rows[0].MINAR; }
 
-        // ha az előző maximum érték = a mostani maximum érték akkor a maximum legyen a lekérdezett maximuma
+        // ha az előző maximum érték = a mostani maximum érték 
+        // akkor a maximum legyen a lekérdezett maximuma
         if(elozomax == max){ max = arak.rows[0].MAXAR; }
 
         document.getElementById("min_ar").min = arak.rows[0].MINAR;
@@ -394,20 +402,24 @@ async function ArFeltolt(sql, min ,max){
         document.getElementById("max_ar").max = arak.rows[0].MAXAR;
         document.getElementById("max_ar").min = arak.rows[0].MINAR; 
 
-        // ha a mostani minimum kisebb mint a lekérdezett minimum akkor a minimum legyen a lekérdezett minimuma
+        // ha a mostani minimum kisebb mint a lekérdezett minimum 
+        // akkor a minimum legyen a lekérdezett minimuma
         if (parseInt(min) < parseInt( arak.rows[0].MINAR )) {
            document.getElementById("min_ar").value = arak.rows[0].MINAR;
            min = arak.rows[0].MINAR
         }
-        // ha a aktiv/mostani minimum nagyobb mint a lekérdezett minimum akkor a minimum legyen a mostani minimum
+        // ha a mostani minimum nagyobb mint a lekérdezett minimum
+        //  akkor a minimum legyen a mostani minimum
         else { document.getElementById("min_ar").value = min; }
 
-        // ha a mostani maximum nagyobb mint a lekérdezett maximum akkor a maximum legyen a lekérdezett maximuma
+        // ha a mostani maximum nagyobb mint a lekérdezett maximum 
+        // akkor a maximum legyen a lekérdezett maximuma
         if (parseInt(max) > parseInt( arak.rows[0].MAXAR )) {
            document.getElementById("max_ar").value = arak.rows[0].MAXAR;
            max = arak.rows[0].MAXAR
         }
-        // ha a aktiv/mostani maximum kisebb mint a lekérdezett maximum akkor a maximum legyen a mostani maximum
+        // ha a mostani maximum kisebb mint a lekérdezett maximum 
+        // akkor a maximum legyen a mostani maximum
         else { document.getElementById("max_ar").value = max; }  
 
         document.getElementById("min_ar_input").value = min;
@@ -417,6 +429,7 @@ async function ArFeltolt(sql, min ,max){
 }
 
 function Sliderninput( item ){
+    // ha az Ár slider változik akkor az input mezőt is frissítem
     if (item.id == "min_ar_input") {
         document.getElementById("min_ar").value = item.value;
         SliderELL("min");
@@ -430,28 +443,32 @@ function Sliderninput( item ){
 function SliderELL(item){
     switch(item){
         case("min"): {
+            // ha a minimum ár nagyobb mint a maximum ár akkor a maximum ár legyen a minimum ár +1
             if(parseInt ($("#min_ar").val()) > parseInt( $("#max_ar").val())){
                 $("#max_ar").val(parseInt( $("#min_ar").val()) +1 );  
                 $("#max_ar_input").val($("#max_ar").val());
             }  
-
+            // ha a minimum ár eléri a slider minimum értékét akkor az input mező is a minimum értékre állítása
             if($("#min_ar").val() == document.getElementById("min_ar").min){
                 $("#min_ar_input").val($("#min_ar").attr("min"));
             }
+            // ha a minimum ár eléri a slider maximum értékét akkor az input mező is a maximum értékre állítása
             if($("#min_ar").val() == document.getElementById("min_ar").max){
                 $("#min_ar_input").val($("#min_ar").attr("max"));
             }          
             break;
         }
         case("max"): {
+            // ha a maximum ár kisebb mint a minimum ár akkor a minimum ár legyen a maximum ár -1
             if(parseInt ($("#max_ar").val()) < parseInt( $("#min_ar").val())){
                 $("#min_ar").val(parseInt( $("#max_ar").val())-1 );  
                 $("#min_ar_input").val($("#min_ar").val());
             }
-
+            // ha a maximum ár eléri a slider minimum értékét akkor az input mező is a minimum értékre állítása
             if($("#max_ar").val() == document.getElementById("max_ar").min){
                 $("#max_ar_input").val($("#max_ar").attr("min"));
             }
+            // ha a maximum ár eléri a slider maximum értékét akkor az input mező is a maximum értékre állítása
             if($("#max_ar").val() == document.getElementById("max_ar").max){
                 $("#max_ar_input").val($("#max_ar").attr("max"));
             }      
