@@ -1,15 +1,15 @@
 // az oldal betoltese utani resz (document ready function)
 
-window.addEventListener("popstate", (e) => {
+window.addEventListener("popstate", async (e) => {
     if (!e.state) {
         // Ha nincs state (pl. első betöltés), menj a kezdőlapra
-        Kezdolap(false);
+        await Kezdolap(false);
         return;
     }
     
     // Különböző nézetek kezelése
     switch(e.state.view) {
-        case "home": Kezdolap(false); break;
+        case "home": await Kezdolap(false); break;
         case "termek": Termek_Mutat(null, e.state.id, false); break;
         case "kosar": Kosar_Mutat(false); break;
         case "rendelesek": rendelesekmegtolt(false); break;
@@ -19,11 +19,11 @@ window.addEventListener("popstate", (e) => {
         case "search":
             if (e.state.data) {
                 $("#nev1").val(e.state.data.kifejezes || '');
-                KERESOBAR();
+                await KERESOBAR(false);
             }
             break;
             
-        default: Kezdolap(false);
+        default: await Kezdolap(false);
     }
 });
 
@@ -39,7 +39,7 @@ $(document).ready(function() {
 
     SESSION();
     F5();
-    KategoriaFeltolt("kategoria_section", "check", "");
+    KategoriaFeltolt("kategoria_section", "check", "", false);
 
     var input = document.getElementById("nev1");
 

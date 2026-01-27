@@ -580,6 +580,7 @@ function NezetValtas(mod) {
 
 async function Kezdolap(pushHistory = true) {
     $("#keresett_kifejezes").html("");
+    
     nev1.value = "";
     bepipaltID = "";
     
@@ -594,14 +595,13 @@ async function Kezdolap(pushHistory = true) {
     else { return; }
 
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { update_gombok(0); }
-    
     KosarTetelDB();
-    Szurok_Torlese();
-    NezetValtas("be");
+    await Szurok_Torlese();
     await KERESOBAR(false);
 
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", true);
+    NezetValtas("be");
     
     if (pushHistory) {
         SPAState.currentView = 'home';
@@ -615,20 +615,28 @@ async function Kezdolap(pushHistory = true) {
 }
 
 async function Szurok_Torlese() {
+    bepipaltID = "";
+    minarr = 0;
+    maxarr = 0;
     KategoriaFeltolt("kategoria_section", "check", "",false);
     $("#nev1").val("");
-    elfogyott = false; 
     $("#elf").prop("checked", false);
     $("#innaktiv").prop("checked", false);
     Nemaktivak = false;
-    await ArFeltolt(LekerdezesFeltetelek(), "", "");
+    elfogyott = false;
+    $("#min_ar").val(0);
+    $("#max_ar").val(0);
+    $("#min_ar_input").val(0); 
+    $("#max_ar_input").val(0);
+    await KERESOBAR(false);
 }
 
 async function KategoriaKezdolap(id_kategoria) {
     bepipaltID = "";
     await KategoriaFeltolt("kategoria_section", "check", "",false); // minden bepipalt kategoriat kiveszünk
     $(`#katcheck${id_kategoria}`).prop("checked", true);
-    KERESOBAR(false);
+    await KERESOBAR();
+    NezetValtas("ki");
 }
 
 function FelaTetore(target = "top") {
