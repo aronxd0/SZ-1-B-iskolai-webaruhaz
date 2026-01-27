@@ -412,20 +412,22 @@ function CARD_BETOLT(adatok) {
   }
 
   if (!$("#nev1").val().includes("<")) {
+    NezetValtas("ki");
+    $("#kosar").prop("checked", false);
+
+    // ha van keresett kifejezes
     if ($("#nev1").val() != "") {
-      NezetValtas("ki");
       $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
       $("#débé").html(` (${adatok.maxcount} db)`);
-      $("#kosar").prop("checked", false);
       $("#kezdolap").prop("checked", false);
     } else {
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
-      NezetValtas("ki");
-      $("#kosar").prop("checked", false);
     }
     $("#content_hely").fadeOut(300, function() {
       $("#content_hely").html(termekKartya).fadeIn(300);
+      $("#nezetkicsi").removeClass("eltunt");
+      $("#nezetnagy").removeClass("eltunt");
     });
   } else { üzen("404", "danger"); }
 }
