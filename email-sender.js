@@ -19,7 +19,7 @@ async function sendEmail(to, subject, html) {
     const fs = require('fs'); // fajl beolvasasahoz
 
     const info = await transporter.sendMail({
-        from: `"CsĂˇny webaruhaz" <${process.env.EMAIL_USER}>`,
+        from: `"Csány webáruház" <${process.env.EMAIL_USER}>`,
         to,
         subject,
         html,
