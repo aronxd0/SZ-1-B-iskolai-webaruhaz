@@ -602,6 +602,8 @@ async function Kezdolap(pushHistory = true) {
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", true);
     NezetValtas("be");
+    FelaTetore();
+    $("#szurok_menu").addClass("eltunt");
     
     if (pushHistory) {
         SPAState.currentView = 'home';

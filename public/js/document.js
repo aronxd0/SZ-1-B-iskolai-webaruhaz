@@ -86,13 +86,6 @@ $(document).ready(function() {
         localStorage.setItem("user", JSON.stringify(user));
     });
 
-    $("#cart_button").click(function() { Kosar_Mutat(true); });
-
-    $("#home_button").click(function() {
-        Kezdolap(true);
-        FelaTetore();
-    });
-
     $("#rend_button").click(async function () {
         rendelesekmegtolt(true);
     });

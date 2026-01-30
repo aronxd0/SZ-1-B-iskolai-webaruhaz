@@ -417,12 +417,18 @@ function CARD_BETOLT(adatok) {
 
     // ha van keresett kifejezes
     if ($("#nev1").val() != "") {
+      NezetValtas("ki");
       $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
       $("#débé").html(` (${adatok.maxcount} db)`);
       $("#kezdolap").prop("checked", false);
+      $("#szurok_menu").removeClass("eltunt");
+      
     } else {
+      $("#kezdolap").prop("checked", true);
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
+      NezetValtas("be");
+      $("#szurok_menu").addClass("eltunt");
     }
     $("#content_hely").fadeOut(300, function() {
       $("#content_hely").html(termekKartya).fadeIn(300);
