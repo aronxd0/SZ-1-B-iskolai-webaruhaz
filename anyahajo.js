@@ -172,8 +172,9 @@ app.get('/kategoria',(req, res) => {
 
     // Szöveges keresés: név, leírás vagy azonosító alapján
     if (nev !== "") {
-        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ? OR t.AZON LIKE ?)`);
+        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ? OR t.AZON LIKE ? OR k.KATEGORIA LIKE ?)`);
         ertekek.push(`%${nev}%`);  // % wildcard mindkét oldalon: bárhol megjelenhet a keresett szöveg
+        ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
     }
@@ -267,8 +268,9 @@ function gen_SQL_kereses(req) {
 
     // === SZÖVEG SZŰRÉS (NÉV/LEÍRÁS/AZONOSÍTÓ) ===
     if (nev.length > 0) {
-        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ? OR t.AZON LIKE ?)`);
+        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ? OR t.AZON LIKE ? OR k.KATEGORIA LIKE ?)`);
         ertekek.push(`%${nev}%`);  // % wildcard: bárhol megjelenhet a szöveg
+        ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
     }
@@ -342,6 +344,7 @@ function gen_SQL_kereses(req) {
             ${order_van} ${order<0? "DESC": ""}
             limit 52 offset ?
         `;
+        
         // Az offset paraméter a végére kerül (lapozáshoz)
         // offset * 52: hányadik rekordtól kezdje (0, 52, 104...)
         ertekek.push(offset * 52); 
@@ -1894,6 +1897,7 @@ async function runQueries(sql, ertekek = [], connection) {
         if (maxcount > 0) {
             [res2] = await conn.execute(sql, ertekek);  // A teljes SQL az ORDER BY-val
         }
+
     } catch (err) {
         msg = err.sqlMessage;
         maxcount = -1;  // Hiba: -1

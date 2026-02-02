@@ -576,7 +576,7 @@ async function Kezdolap(pushHistory = true) {
     let k = "";
     if (kategoriacuccos.rows.length > 0) {
         for (const element of kategoriacuccos.rows) {
-            k += `<a id="${element.ID_KATEGORIA}" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap hover:cursor-pointer" onclick="KategoriaKezdolap(${element.ID_KATEGORIA})">${element.KATEGORIA}</a>`;
+            k += `<a id="${element.ID_KATEGORIA}" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap hover:cursor-pointer" onclick="KategoriaKezdolap(${element.ID_KATEGORIA}, '${element.KATEGORIA}')">${element.KATEGORIA}</a>`;
         }
         $("#carousel-track").html(k);
     }
@@ -608,7 +608,6 @@ async function Szurok_Torlese() {
     minarr = 0;
     maxarr = 0;
     KategoriaFeltolt("kategoria_section", "check", "",false);
-    $("#nev1").val("");
     $("#elf").prop("checked", false);
     $("#innaktiv").prop("checked", false);
     Nemaktivak = false;
@@ -617,15 +616,17 @@ async function Szurok_Torlese() {
     $("#max_ar").val(0);
     $("#min_ar_input").val(0); 
     $("#max_ar_input").val(0);
-    await KERESOBAR(false);
+    await KERESOBAR();
 }
 
-async function KategoriaKezdolap(id_kategoria) {
+async function KategoriaKezdolap(id_kategoria, kategoria_nev) {
+    $("#nev1").val(kategoria_nev);
     bepipaltID = "";
     await KategoriaFeltolt("kategoria_section", "check", "",false); // minden bepipalt kategoriat kiveszünk
     $(`#katcheck${id_kategoria}`).prop("checked", true);
     await KERESOBAR();
     $("#szurok_menu").removeClass("eltunt");
+    KezdolapElemekViszlat();
     $("#kezdolap").prop("checked", false);
     $("#kosar").prop("checked", false);
 }

@@ -420,11 +420,11 @@ function CARD_BETOLT(adatok) {
 
     // ha van keresett kifejezes
     if ($("#nev1").val() != "") {
-      
       $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
       $("#débé").html(` (${adatok.maxcount} db)`);
       $("#kezdolap").prop("checked", false);
       $("#szurok_menu").removeClass("eltunt");
+      KezdolapElemekViszlat();
       
     } else {
       $("#kezdolap").prop("checked", true);

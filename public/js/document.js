@@ -105,6 +105,11 @@ $(document).ready(function() {
 
     $("#szurogomb").click(function () { KERESOBAR(); });
 
+    $("#kereses_gomb").click(function () {
+        if ($("#nev1").val() == "") { üzen("A semmire nem kereshetsz rá", "info"); return; }
+        KERESOBAR(); 
+    });
+
     $("#mySwitch").on("change", function() {
         if ($(this).is(":checked")) {
             $("#switchtext").html("Aktív");
