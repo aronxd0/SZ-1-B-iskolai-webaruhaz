@@ -81,7 +81,10 @@ async function rendelesekmegtolt(pushHistory = true) {
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(s).fadeIn(300);
     });
-    NezetValtas("ki");
+    KezdolapElemekViszlat();
+    $("#nezetkicsi").addClass("eltunt");
+    $("#nezetnagy").addClass("eltunt");
+    $("#pagi").html("");
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", false);
 

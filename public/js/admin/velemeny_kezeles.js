@@ -22,7 +22,10 @@ async function Admin_Velemenykezeles(pushHistory = true) {
         `).fadeIn(300);
         AdminVelemenyekMutat();
     });
-    NezetValtas("ki");
+    KezdolapElemekViszlat();
+    $("#nezetkicsi").addClass("eltunt");
+    $("#nezetnagy").addClass("eltunt");
+    $("#pagi").html("");
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", false);
 

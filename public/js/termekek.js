@@ -331,7 +331,10 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
         });
 
         
-
+        KezdolapElemekViszlat();
+        $("#nezetkicsi").addClass("eltunt");
+        $("#nezetnagy").addClass("eltunt");
+        $("#pagi").html("");
         $("#kosar").prop("checked", false);
         $("#kezdolap").prop("checked", false);
 

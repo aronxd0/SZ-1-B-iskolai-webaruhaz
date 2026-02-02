@@ -19,7 +19,10 @@ function SQLinput(pushHistory = true) {
         </div>
         <div class="col-12 d-flex justify-content-center" id="SQL_hiba">&nbsp</div>`).fadeIn(300);
         
-        NezetValtas("ki");
+        KezdolapElemekViszlat();
+        $("#nezetkicsi").addClass("eltunt");
+        $("#nezetnagy").addClass("eltunt");
+        $("#pagi").html("");
         $("#kosar").prop("checked", false);
         $("#kezdolap").prop("checked", false);
 
