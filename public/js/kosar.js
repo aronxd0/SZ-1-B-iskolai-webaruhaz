@@ -69,7 +69,10 @@ async function Kosar_Mutat(pushHistory = true) {
         AR_SUM("termek_ar", "sumar", false);
     });
 
-    NezetValtas("ki");
+    KezdolapElemekViszlat();
+    $("#nezetkicsi").addClass("eltunt");
+    $("#nezetnagy").addClass("eltunt");
+    $("#pagi").html("");
 
     $("#kosar").prop("checked", true);
     $("#kezdolap").prop("checked", false);

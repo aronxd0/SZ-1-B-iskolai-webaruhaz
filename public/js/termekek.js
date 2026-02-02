@@ -330,7 +330,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
           FelaTetore();
         });
 
-        NezetValtas("ki");
+        
 
         $("#kosar").prop("checked", false);
         $("#kezdolap").prop("checked", false);
@@ -412,12 +412,12 @@ function CARD_BETOLT(adatok) {
   }
 
   if (!$("#nev1").val().includes("<")) {
-    NezetValtas("ki");
+    
     $("#kosar").prop("checked", false);
 
     // ha van keresett kifejezes
     if ($("#nev1").val() != "") {
-      NezetValtas("ki");
+      
       $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
       $("#débé").html(` (${adatok.maxcount} db)`);
       $("#kezdolap").prop("checked", false);
@@ -427,7 +427,7 @@ function CARD_BETOLT(adatok) {
       $("#kezdolap").prop("checked", true);
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
-      NezetValtas("be");
+      
       $("#szurok_menu").addClass("eltunt");
     }
     $("#content_hely").fadeOut(300, function() {

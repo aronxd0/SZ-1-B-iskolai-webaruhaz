@@ -231,7 +231,6 @@ async function KERESOBAR(updateHistory = true) {
             ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
             Joldal = 1;
         } 
-        NezetValtas("ki");
         $("#kezdolap").prop("checked",false);
         $("#kosar").prop("checked",false);
         $("#nezetkicsi").removeClass("eltunt");
@@ -558,29 +557,18 @@ function Elfogyott(alma) {
     KategoriaFeltolt("kategoria_section", "check", "",true);
 }
 
-function NezetValtas(mod) {
-    if (mod == "be") {
-        $("#welcome_section").fadeIn(300);
-        $("#kateogoria-carousel").fadeIn(300);
-        $("#nezetkicsi").removeClass("eltunt");
-        $("#nezetnagy").removeClass("eltunt");
-        $("#tutorial").fadeIn(300);
-    }
-    else {
-        $("#welcome_section").fadeOut(300);
-        $("#kateogoria-carousel").fadeOut(300);
-        $("#nezetkicsi").addClass("eltunt");
-        $("#nezetnagy").addClass("eltunt");
-        $("#tutorial").fadeOut(300);
-        $("#keresett_kifejezes").html("");
-        $("#débé").html("");
-        $("#pagi").html("");
-    }
+function KezdolapElemekViszlat() {
+    $("#welcome_section").fadeOut(300);
+    $("#kateogoria-carousel").fadeOut(300);
+    $("#tutorial").fadeOut(300);
 }
 
 async function Kezdolap(pushHistory = true) {
     $("#keresett_kifejezes").html("");
-    
+    $("#welcome_section").fadeIn(300);
+    $("#kateogoria-carousel").fadeIn(300);
+    $("#tutorial").fadeIn(300);
+
     nev1.value = "";
     bepipaltID = "";
     
@@ -601,7 +589,6 @@ async function Kezdolap(pushHistory = true) {
 
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", true);
-    NezetValtas("be");
     FelaTetore();
     $("#szurok_menu").addClass("eltunt");
     
@@ -638,7 +625,6 @@ async function KategoriaKezdolap(id_kategoria) {
     await KategoriaFeltolt("kategoria_section", "check", "",false); // minden bepipalt kategoriat kiveszünk
     $(`#katcheck${id_kategoria}`).prop("checked", true);
     await KERESOBAR();
-    NezetValtas("ki");
     $("#szurok_menu").removeClass("eltunt");
     $("#kezdolap").prop("checked", false);
     $("#kosar").prop("checked", false);
