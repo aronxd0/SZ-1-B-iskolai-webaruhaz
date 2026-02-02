@@ -133,7 +133,7 @@ $(document).ready(function() {
 
     balgomb.addEventListener("click", () => {
         // ha az elején vagy → ugorj a legvégére
-        if (track.scrollLeft <= 5) {
+        if (sav.scrollLeft <= 5) {
             sav.scrollTo({ left: sav.scrollWidth, behavior: "smooth" });
         } else {
             sav.scrollBy({ left: -mennyit, behavior: "smooth" });

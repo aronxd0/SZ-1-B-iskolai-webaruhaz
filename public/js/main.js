@@ -639,6 +639,9 @@ async function KategoriaKezdolap(id_kategoria) {
     $(`#katcheck${id_kategoria}`).prop("checked", true);
     await KERESOBAR();
     NezetValtas("ki");
+    $("#szurok_menu").removeClass("eltunt");
+    $("#kezdolap").prop("checked", false);
+    $("#kosar").prop("checked", false);
 }
 
 function FelaTetore(target = "top") {
