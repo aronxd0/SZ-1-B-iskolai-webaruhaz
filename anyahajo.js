@@ -454,7 +454,7 @@ app.post('/velemeny_add', async (req, res) => {
 
     } catch (err) {
         console.error("/velemeny_add HIBA : " + (err && err.message ? err.message : err));
-        return res.json({
+        return res.status(500).json({
             message: "Nem sikerült hozzáadni a véleményt."
         });
     }      
@@ -483,7 +483,7 @@ app.delete('/velemeny_del', async (req, res) => {
 
     } catch (err) {
         console.error("/velemeny_del HIBA : " + (err && err.message ? err.message : err));
-        return res.json({
+        return res.status(500).json({
             message: "Nem sikerült törölni a véleményt."
         });
     }   
@@ -514,7 +514,7 @@ app.post('/velemeny_elfogad', async (req, res) => {
 
     } catch (err) {
         console.error("/velemeny_elfogad HIBA : " + (err && err.message ? err.message : err));
-        return res.json({
+        return res.status(500).json({
             message: "Nem sikerült jóváhagyni a véleményt." 
         });
     }       
@@ -545,7 +545,7 @@ app.post('/velemeny_elutasit', async (req, res) => {
 
     } catch (err) {
         console.error("/velemeny_elutasit HIBA : " + (err && err.message ? err.message : err));
-        return res.json({
+        return res.status(500).json({
             message: "Nem sikerült elutasítani a véleményt." 
         });
     }       
@@ -763,7 +763,7 @@ app.post('/kosar_add', async (req, res) => {
 
     } catch (err) {
         console.error("kosar_add HIBA : " + (err && err.message ? err.message : err));
-        res.json({
+        res.status(500).json({
             message: "Hiba a kosár tétel hozzáadásakor." 
         });
     }    
@@ -802,7 +802,7 @@ app.delete('/kosar_del',async (req, res) => {
     }
     catch (err) {
         console.error("kosar_del HIBA : " + (err && err.message ? err.message : err));
-        res.json({
+        res.status(500).json({
             message: "Hiba a kosár tétel törlésekor." 
         });
     }
@@ -936,7 +936,7 @@ app.post('/rendeles',async (req, res) => {
         
         // === HIBA ELLENŐRZÉS: VAN-E MIT RENDELNI? ===
         if (json_termekek.message != "ok" || json_termekek.maxcount == 0) {
-            res.json({
+            res.status(500).json({
                 message: "Szörnyű hiba történt a rendelés során: nincs mit rendelni.",
                 error: json_termekek.message || "Nincs termék a kosárban"
             });
@@ -998,7 +998,7 @@ app.post('/rendeles',async (req, res) => {
         res.end();
     } catch (err) {
         console.error("/rendeles HIBA : " + (err && err.message ? err.message : err));
-        res.json({
+        res.status(500).json({
             message: "Hiba a rendelés létrehozásakor." 
         });
     }
@@ -1036,7 +1036,7 @@ app.get('/rendeles_ellenorzes',async (req, res) => {
         res.end();
     } catch (err) {
         console.error("/rendeles_ellenorzes HIBA : " + (err && err.message ? err.message : err));
-        res.json({
+        res.status(500).json({
             message: "Hiba a rendelés ellenőrzésekor." 
         });
     }
@@ -1078,7 +1078,7 @@ app.get('/rendelesek',async (req, res) => {
         res.end();
     } catch (err) {
         console.error("/rendelesek HIBA : " + (err && err.message ? err.message : err));
-        res.json({
+        res.status(500).json({
             message: "Hiba a rendelések lekérésekor." 
         });
     }
@@ -1111,7 +1111,7 @@ app.get('/rendelesek_tetelei',async (req, res) => {
         res.end();
     } catch (err) {
         console.error("/rendelesek_tetelei HIBA : " + (err && err.message ? err.message : err));
-        res.json({
+        res.status(500).json({
             message: "Hiba a rendelések lekérésekor." 
         });
     }
@@ -1362,7 +1362,7 @@ app.post('/termek_edit', upload.single("mod_foto"), async (req, res) => {
     } catch (err) {
         console.error("/termek_edit HIBA : " + (err && err.message ? err.message : err));
         if (conn) await conn.query("ROLLBACK;");  // Tranzakció visszavonása hiba esetén
-        res.json({ 
+        res.status(500).json({ 
             message: "Hiba a művelet során." 
         });
     } finally {
@@ -1441,7 +1441,7 @@ app.delete('/termek_del',async (req, res) => {
     }
     catch (err) {
         console.error("/termek_del HIBA : " + (err && err.message ? err.message : err));
-        res.json({
+        res.status(500).json({
             message: "Hiba a termék törlésekor." 
         });
     }
@@ -2084,7 +2084,7 @@ app.post('/send-email', async (req, res) => {
         res.json({ message: 'Email sikeresen elküldve' });
     } catch (err) {
         console.error('/send-email hiba:', err);
-        res.json({ message: 'Email hiba'});
+        res.status(500).json({ message: 'Email küldési hiba'});
     }
 });
 
