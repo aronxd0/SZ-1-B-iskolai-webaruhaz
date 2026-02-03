@@ -267,6 +267,17 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
           </div>
       </label>`;
 
+    let velemeny_segitseg = `
+      <label class="group bg-transparent my-2 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 !border-b !border-transparent d-flex align-items-center justify-content-center p-2 cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-indigo-400 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-sky-700">
+          <div class="flex items-center gap-2">
+            <button type="button" id="velemeny_help" onclick="VelemenySegitseg()">
+              <i class="bi bi-question-circle"></i> 
+              <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 "> Hogyan működnek a vélemények?</span>
+            </button>
+          </div>
+      </label>
+    `;
+
     let termek_megtekintes = `
       <div class="container">
         <div class="row g-5">
@@ -299,7 +310,8 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
             <div class="d-flex py-3 gap-x-5">
               <div id="velemenyek-menupont"></div>
               <div id="sajatvelemenyek-menupont"></div>
-              <div id="velemeny-irasa" class="d-flex align-items-center"></div>
+              <div id="velemeny-irasa" class="d-flex w-full align-items-center"></div>
+              <div id="velemeny-segitseg" class="w-full d-flex align-items-center justify-content-end">${velemeny_segitseg}</div>
             </div>
             <div class="space-y-6" id="velemenyek"></div>
           </div>
@@ -358,6 +370,8 @@ function VeletlenszeruVelemeny() {
   $("#velemeny_input").val("");
   $("#velemeny_input").val(RandomVelemeny());
 }
+
+function VelemenySegitseg() { $("#velemeny_help_modal").modal("show"); }
 
 //region CARDBETOLT
 function CARD_BETOLT(adatok) {
