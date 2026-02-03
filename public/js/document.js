@@ -86,10 +86,6 @@ $(document).ready(function() {
         localStorage.setItem("user", JSON.stringify(user));
     });
 
-    $("#rend_button").click(async function () {
-        rendelesekmegtolt(true);
-    });
-
     // slidernek input mezö , változtatni kell a slider inputokaz as well as  a slider value: Enter után  szürni kell , emouseuot on is .
     $("#min_ar").on("input",  function MinarELL() {
         $("#min_ar_input").val($("#min_ar").val());
@@ -145,12 +141,9 @@ $(document).ready(function() {
         }
     });
 
-    $(".bezarmind").click(function() {
-        // Modal bezárása
+    $(document).on("click", ".bezarmind", function() {
         const modal = bootstrap.Modal.getInstance(document.getElementById("profil"));
         modal?.hide();
-    
-        // Offcanvas bezárása
         const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById("top-navbar"));
         offcanvas?.hide();
     });

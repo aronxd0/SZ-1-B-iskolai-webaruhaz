@@ -126,7 +126,7 @@ function update_gombok (x) {
                 </div>
             </label>`);
         $("#rendeles-menupont").html(`
-            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind"> 
+            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
                 <i class="bi bi-bag-check"></i>
                 <span> Rendelések</span>
             </button>`);
@@ -143,7 +143,7 @@ function update_gombok (x) {
                 </div>
             </label>`);
         $("#rendeles-menupont").html(`
-            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind"> 
+            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
                 <i class="bi bi-bag-check"></i>
                 <span> Rendelések</span>
             </button>`);
@@ -206,7 +206,6 @@ function LekerdezesFeltetelek() {
 }
 
 async function KERESOBAR(updateHistory = true) {
-    if (!updateHistory) return;
     var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
     var elküld = LekerdezesFeltetelek();
@@ -251,38 +250,36 @@ async function KERESOBAR(updateHistory = true) {
         OLDALFELTOLT(adatok.maxcount); // lapválasztó feltöltése
         KategoriaFeltolt("kategoria_section", "check", "",true);// kategória szűrő frissítése    
     } catch (err) { console.error(err); }
-
     
-
-    const keresesErtek = $("#nev1").val();
-    const minInput = $("#min_ar_input").val();
-    const maxInput = $("#max_ar_input").val();
-    const arSzuresVan = (minInput != "" && minInput != minarr) || (maxInput != "" && maxInput != maxarr);
-    const vanSzures = keresesErtek != "" || bepipaltID != "" || arSzuresVan || elfogyott || Nemaktivak || ($("#rend").val() != "" && $("#rend").val() != null);
-    
-    if (vanSzures) {
-        SPAState.currentView = 'search';
-        SPAState.currentData = {
-            kifejezes: keresesErtek,
-            kategoriak: bepipaltID,
-            minar: min,
-            maxar: max,
-            order: $("#rend").val(),
-            elfogyott: elfogyott,
-            nemaktivak: Nemaktivak
-        };
-        history.pushState(
-            { view: 'search',data: SPAState.currentData },
-            keresesErtek ? `Keresés: ${keresesErtek}` : 'Szűrés',
-            keresesErtek ? `#search?q=${encodeURIComponent(keresesErtek)}` : '#search'
-        );
-    } else {
-        SPAState.currentView = 'home';
-        SPAState.currentData = {};
-        history.pushState({ view: 'home' }, 'Kezdőlap', '#home');
+    if (updateHistory) {
+        const keresesErtek = $("#nev1").val();
+        const minInput = $("#min_ar_input").val();
+        const maxInput = $("#max_ar_input").val();
+        const arSzuresVan = (minInput != "" && minInput != minarr) || (maxInput != "" && maxInput != maxarr);
+        const vanSzures = keresesErtek != "" || bepipaltID != "" || arSzuresVan || elfogyott || Nemaktivak || ($("#rend").val() != "" && $("#rend").val() != null);
+        
+        if (vanSzures) {
+            SPAState.currentView = 'search';
+            SPAState.currentData = {
+                kifejezes: keresesErtek,
+                kategoriak: bepipaltID,
+                minar: min,
+                maxar: max,
+                order: $("#rend").val(),
+                elfogyott: elfogyott,
+                nemaktivak: Nemaktivak
+            };
+            history.pushState(
+                { view: 'search',data: SPAState.currentData },
+                keresesErtek ? `Keresés: ${keresesErtek}` : 'Szűrés',
+                keresesErtek ? `#search?q=${encodeURIComponent(keresesErtek)}` : '#search'
+            );
+        } else {
+            SPAState.currentView = 'home';
+            SPAState.currentData = {};
+            history.pushState({ view: 'home' }, 'Kezdőlap', '#home');
+        }
     }
-    
-    
 }
 //endregion
 
