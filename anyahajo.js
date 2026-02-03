@@ -864,7 +864,7 @@ app.get('/tetelek',(req, res) => {
     // Ha nincs: teljes termék info (név, ár, kép, ID, mennyiség)
     let selectFields = termekid > (-1) 
         ? "webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR" 
-        : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
+        : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG, webbolt_kategoriak.KATEGORIA";
 
     // WHERE zaradék dinamikus: alapból az aktuális user kosára, opcionálisan egy konkrét termék
     let whereClause = `WHERE webbolt_kosar.ID_USER = ?`;
@@ -879,7 +879,8 @@ app.get('/tetelek',(req, res) => {
         SELECT ${selectFields} 
         FROM webbolt_kosar_tetelei
         INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
-        INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
+        INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK 
+        INNER JOIN webbolt_kategoriak ON webbolt_termekek.ID_KATEGORIA = webbolt_kategoriak.ID_KATEGORIA 
         left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
         ${whereClause}
     `;
