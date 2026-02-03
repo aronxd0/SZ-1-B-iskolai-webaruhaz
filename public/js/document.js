@@ -6,10 +6,11 @@ window.addEventListener("popstate", async (e) => {
         await Kezdolap(false);
         return;
     }
+    console.log(e.state);
     
     // Különböző nézetek kezelése
     switch(e.state.view) {
-        case "home": await Kezdolap(false); break;
+        case "home": Kezdolap(false); break;
         case "termek": Termek_Mutat(null, e.state.id, false); break;
         case "kosar": Kosar_Mutat(false); break;
         case "rendelesek": rendelesekmegtolt(false); break;

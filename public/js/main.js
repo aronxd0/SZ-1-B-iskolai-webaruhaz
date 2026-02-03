@@ -256,8 +256,13 @@ async function KERESOBAR(updateHistory = true) {
         const minInput = $("#min_ar_input").val();
         const maxInput = $("#max_ar_input").val();
         const arSzuresVan = (minInput != "" && minInput != minarr) || (maxInput != "" && maxInput != maxarr);
-        const vanSzures = keresesErtek != "" || bepipaltID != "" || arSzuresVan || elfogyott || Nemaktivak || ($("#rend").val() != "" && $("#rend").val() != null);
+        const vanSzures = keresesErtek != "" || bepipaltID != "" || arSzuresVan || elfogyott || Nemaktivak;
         
+        console.log(vanSzures);
+        console.log(arSzuresVan);
+        console.log(`${keresesErtek} ${bepipaltID} ${elfogyott} ${Nemaktivak}`);
+        
+
         if (vanSzures) {
             SPAState.currentView = 'search';
             SPAState.currentData = {
