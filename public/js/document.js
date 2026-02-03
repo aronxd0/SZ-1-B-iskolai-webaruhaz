@@ -155,15 +155,13 @@ $(document).ready(function() {
         offcanvas?.hide();
     });
 
-    $('#cookieAccept').on('click', function () {
+    $('#suti_elfogad').on('click', function () {
         localStorage.setItem('suti', 'true');
-        bootstrap.Modal.getInstance(
-            document.getElementById('cookieModal')
-        ).hide();
+        bootstrap.Modal.getInstance(document.getElementById('suticucc')).hide();
     });
 
     if (!localStorage.getItem('suti')) {
-        const modal = new bootstrap.Modal(document.getElementById('cookieModal'));
+        const modal = new bootstrap.Modal(document.getElementById('suticucc'));
         modal.show();
     }
 
