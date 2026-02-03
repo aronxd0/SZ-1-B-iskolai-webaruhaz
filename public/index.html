@@ -50,10 +50,18 @@
                 </li>
 
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
-                  <div class="me-3 ms-xl-3 ">
+                  <div class="me-1 ms-xl-3 ">
                     <button type="button" aria-label="Profil" class="px-3 py-1 text-base rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full " data-bs-toggle="modal" data-bs-target="#profil">
                       <i class="bi bi-person"></i>
-                      <span> Fiók</span>
+                    </button>
+                  </div>
+                </li>
+
+                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
+                  <div class="me-4 ms-xl-3" id="loginout_gombdiv">
+                    <button id="login_button" type="button" class="px-3 py-1 text-base !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full" > 
+                      <i class="bi bi-box-arrow-in-right" id="loginout"></i>
+                      <span id="loginspan"> Bejelentkezés</span>
                     </button>
                   </div>
                 </li>
@@ -582,14 +590,9 @@
                 </button>
               </div>
 
-              <div class="p-1" id="loginout_gombdiv">
-                <button id="login_button" type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bezarmind" > 
-                  <i class="bi bi-box-arrow-in-right" id="loginout"></i>
-                  <span id="loginspan"> Bejelentkezés</span>
-                </button>
-              </div>
+              
 
-              <div class="p-1" id="rendeles-gombdiv">
+              <div class="p-1" id="rendeles-menupont">
                 <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind"> 
                   <i class="bi bi-bag-check"></i>
                   <span> Rendelések</span>

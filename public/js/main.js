@@ -113,6 +113,7 @@ function update_gombok (x) {
     if (x == 0) { 
         $("#kosar-menupont").html("");
         $("#admin-menupont").html("");
+        $("#rendeles-menupont").html("");
     }
     // sima user
     if (x == 1) { 
@@ -124,6 +125,11 @@ function update_gombok (x) {
                 <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
                 </div>
             </label>`);
+        $("#rendeles-menupont").html(`
+            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind"> 
+                <i class="bi bi-bag-check"></i>
+                <span> Rendelések</span>
+            </button>`);
         $("#admin-menupont").html("");
     }
     // admin/webadmin
@@ -136,6 +142,11 @@ function update_gombok (x) {
                 <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
                 </div>
             </label>`);
+        $("#rendeles-menupont").html(`
+            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind"> 
+                <i class="bi bi-bag-check"></i>
+                <span> Rendelések</span>
+            </button>`);
         $("#admin-menupont").html(`
             <div class="dropdown">
                 <button id="admin_button" type="button" class="dropdown-toggle py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex" data-bs-toggle="dropdown">
@@ -564,10 +575,7 @@ function KezdolapElemekViszlat() {
 }
 
 async function Kezdolap(pushHistory = true) {
-    $("#keresett_kifejezes").html("");
-    $("#welcome_section").fadeIn(300);
-    $("#kateogoria-carousel").fadeIn(300);
-    $("#tutorial").fadeIn(300);
+    
 
     nev1.value = "";
     bepipaltID = "";
@@ -592,6 +600,11 @@ async function Kezdolap(pushHistory = true) {
     FelaTetore();
     $("#szurok_menu").addClass("eltunt");
     
+    $("#keresett_kifejezes").html("");
+    $("#welcome_section").fadeIn(300);
+    $("#kateogoria-carousel").fadeIn(300);
+    $("#tutorial").fadeIn(300);
+
     if (pushHistory) {
         SPAState.currentView = 'home';
         SPAState.currentData = {};

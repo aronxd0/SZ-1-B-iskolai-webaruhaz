@@ -11,10 +11,14 @@ function SQLinput(pushHistory = true) {
             <div class="col-12 px-0 px-lg-5 py-1">
                 <textarea id="sql_input_area" class="resize-none form-control shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20 p-3 rounded-4 placeholder-gray-400 dark:placeholder-gray-400" rows="10" placeholder="Ide írd be az SQL lekérdezést..."></textarea>
             </div>
-            <div class="col-12 d-flex justify-content-center justify-content-lg-end px-0 px-lg-5 py-1">
-                <button id="sql_execute_button" class="btn text-zinc-200 bg-zinc-600 my-4 rounded-4 dark:bg-slate-800 dark:text-zinc-200 hover:bg-zinc-700 hover:text-zinc-200 dark:hover:bg-slate-900 dark:hover:text-zinc-200" onclick="KER_CLICk()">
+            <div class="col-12 d-flex flex-column flex-sm-row justify-content-center justify-content-sm-end px-0 px-lg-5 py-1 gap-3">
+                <button id="naplo_megtekintes" class="px-3 py-1 text-base rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-auto" onclick="Naplo()">
+                    <i class="bi bi-list-columns-reverse"></i>&nbsp;Napló megtekintése
+                </button>
+                <button id="sql_execute_button" class="px-3 py-1 text-base rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-auto" onclick="KER_CLICk()">
                     <i class="bi bi-play-fill"></i>&nbsp;Lekérdezés futtatása
                 </button>
+                
             </div>
         </div>
         <div class="col-12 d-flex justify-content-center" id="SQL_hiba">&nbsp</div>`).fadeIn(300);
@@ -77,4 +81,9 @@ async function KER_CLICk(){
             </div>`;
         $("#SQL_hiba").html(figyelmeztetes);
     }
+}
+
+function Naplo() {
+    $("#sql_input_area").val(`SELECT * FROM naplo`);
+    KER_CLICk();
 }
