@@ -51,7 +51,7 @@ async function Kosar_Mutat(pushHistory = true) {
                         <div class="col-12 mt-4 d-flex flex-column flex-sm-row justify-content-start w-full align-items-start align-items-sm-center gap-4">
                             <div class="w-auto">
                                 <button type="button" class="btn btn-lg bi bi-dash-lg bal-gomb bg-transparent text-slate-900 dark:bg-sky-950 dark:text-zinc-200 hover:text-slate-700 dark:hover:text-zinc-300 rounded-4 me-2" aria-label="minusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9"></button>
-                                <input type="number" class="w-50 py-1 text-center text-lg bg-zinc-100 rounded-4 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 focus:outline-none dark:!border dark:!border-zinc-200/10" min="1" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2">
+                                <input type="number" class="w-50 py-1 text-center text-lg bg-zinc-100 rounded-4 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 focus:outline-none dark:!border dark:!border-zinc-200/20" min="1" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2">
                                 <button type="button" class="btn btn-lg bi bi-plus-lg jobb-gomb bg-transparent text-slate-900 dark:bg-sky-950 dark:text-zinc-200 hover:text-slate-700 dark:hover:text-zinc-300 rounded-4 ms-2" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                             </div>
                             <button class="text-slate-400 hover:text-red-600 transition" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)">Eltávolítás ✕</button>
@@ -192,7 +192,7 @@ async function KosarPLUSZ(id) {
         };
     }
 
-    if ($(`#${idk}2`).val() == 1 && PluszVAGYminusz == -1) { üzen("A terméket a törlés gombbal (<i class='bi bi-trash'></i>) tudod eltávolítani a kosárból!", "info"); }
+    if ($(`#${idk}2`).val() == 1 && PluszVAGYminusz == -1) { üzen("A terméket az 'Eltávolítás ✕' gombbal tudod eltávolítani a kosárból!", "info"); }
     document.getElementById(`${idk}2`).value = mennyiseg;
     document.getElementById(`${idk}3`).innerHTML = `<h4 class="text-slate-900 dark:text-zinc-200 font-semibold termek_ar">${money.toLocaleString()} Ft<h4>`;
 
