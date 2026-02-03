@@ -155,6 +155,19 @@ $(document).ready(function() {
         offcanvas?.hide();
     });
 
+    $('#cookieAccept').on('click', function () {
+        localStorage.setItem('suti', 'true');
+        bootstrap.Modal.getInstance(
+            document.getElementById('cookieModal')
+        ).hide();
+    });
+
+    if (!localStorage.getItem('suti')) {
+        const modal = new bootstrap.Modal(document.getElementById('cookieModal'));
+        modal.show();
+    }
+
+
     const hash = window.location.hash;
     if (hash.startsWith('#termek/')) {
         const termekId = hash.split('/')[1];

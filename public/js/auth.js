@@ -93,7 +93,7 @@ $("#login_oksi_button").click(async function() {
             name: bejelentkezett_usernev,
             email: bejelentkezett_useremail,
             group: csoport,
-            ui: { theme: "light" }
+            ui: { theme: "light" },
         }));
         Frissites();
     }

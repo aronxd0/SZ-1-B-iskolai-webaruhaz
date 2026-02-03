@@ -91,10 +91,8 @@ async function F5() {
             user.ui = { ...user.ui, theme: "light" };
         }
         Frissites();
-        Kezdolap();
     } else { 
         Frissites();
-        Kezdolap(); 
     }
 }
 
