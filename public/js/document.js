@@ -176,4 +176,6 @@ $(document).ready(function() {
 
     FelaTetore();
     setInterval(async () => { SESSION(); }, 30000);
+
 });
+

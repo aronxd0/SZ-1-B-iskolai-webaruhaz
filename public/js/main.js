@@ -92,8 +92,10 @@ async function F5() {
         }
         Frissites();
         Kezdolap();
+    } else { 
+        Frissites();
+        Kezdolap(); 
     }
-    else { $('#login_modal').modal('show'); }
 }
 
 function RangokHTML(rang) {
@@ -206,6 +208,7 @@ function LekerdezesFeltetelek() {
 }
 
 async function KERESOBAR(updateHistory = true) {
+    if (!updateHistory) return;
     var min = document.getElementById("min_ar_input").value == 0? "" : document.getElementById("min_ar_input").value; 
     var max = document.getElementById("max_ar_input").value == 0? "" : document.getElementById("max_ar_input").value; 
     var elküld = LekerdezesFeltetelek();
@@ -251,7 +254,7 @@ async function KERESOBAR(updateHistory = true) {
         KategoriaFeltolt("kategoria_section", "check", "",true);// kategória szűrő frissítése    
     } catch (err) { console.error(err); }
 
-    if (!updateHistory) return;
+    
 
     const keresesErtek = $("#nev1").val();
     const minInput = $("#min_ar_input").val();
@@ -589,6 +592,7 @@ async function Kezdolap(pushHistory = true) {
         $("#carousel-track").html(k);
     }
     else { return; }
+
 
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { update_gombok(0); }
     KosarTetelDB();
