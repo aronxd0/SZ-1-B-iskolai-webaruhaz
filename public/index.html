@@ -365,30 +365,29 @@
 
   <!-- #region Modal Ablakok -->
   <div class="modal fade" id="login_modal">
-    <div class="modal-dialog modal-md modal-dialog-centered " >
-      <div class="modal-content dark:!border dark:!border-zinc-200/20">
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
-          <span id="idx_login" class="modal-title text-center w-100 text-slate-900 dark:text-zinc-200 text-xl"><i class="bi bi-person-fill"></i> Bejelentkezés</span>
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content p-2 bg-white/5 !backdrop-blur-[10px] !border border-zinc-50/50 dark:!border dark:!border-zinc-200/20">
+        <div class="modal-header bg-transparent">
+          <span id="idx_login" class="modal-title text-center w-100 text-zinc-200 dark:text-zinc-200 text-2xl"><i class="bi bi-person-fill"></i> Bejelentkezés</span>
         </div>
 
-        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 ">
-          <form id="form_login" class="row d-column was-validated"> 
-            <div class="col-12 p-2">
+        <div class="modal-body bg-transparent text-zinc-200 dark:bg-slate-950 dark:text-zinc-200 ">
+          <form id="form_login" class="row d-column"> 
+            <div class="col-12 p-2 d-flex flex-column">
               <label for="login_nev" class="p-1">E-mail cím</label>
-              <input type="email" class="form-control shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 dark:placeholder-gray-400" id="login_nev" name="login_nev"  value='boss@csany-zeg.hu' placeholder="Írd be az e-mail címedet" required>
+              <input type="email" class="py-2 px-3 shadow-xl bg-zinc-50/20 placeholder-zinc-200/50 focus:outline-none text-zinc-200 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 dark:placeholder-gray-400" id="login_nev" name="login_nev"  value='boss@csany-zeg.hu' placeholder="Írd be az e-mail címedet" required>
             </div>
 
-            <div class="col-12 p-2">
+            <div class="col-12 p-2 d-flex flex-column">
               <label for="login_passwd" class=" p-1">Jelszó</label>
-              <input type="password" class="form-control shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 dark:placeholder-gray-400 " id="login_passwd" name="login_passwd" value='pite' placeholder="Írd be a jelszavadat" required>  
+              <input type="password" class="py-2 px-3 shadow-xl bg-zinc-50/20 placeholder-zinc-200/50 focus:outline-none text-zinc-200 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 dark:placeholder-gray-400 " id="login_passwd" name="login_passwd" value='pite' placeholder="Írd be a jelszavadat" required>  
             </div>
           </form>
         </div>
 
-        <div class="bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 modal-footer">
-          <div class="col-12 d-flex flex-column flex-sm-row w-full gap-2">
-            <button id="login_oksi_button" type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out  w-full" data-bs-dismiss="modal"> <i class="bi bi-box-arrow-in-right"></i> Bejelentkezés</button>
-            <button id="bezar" type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out   w-full" data-bs-dismiss="modal"> <i class="bi bi-incognito"></i> Vendég mód</button>
+        <div class="bg-transparent text-zinc-200 dark:bg-slate-950 dark:text-zinc-200 modal-footer">
+          <div class="col-12 d-flex flex-column justify-content-center align-items-center gap-2">
+            <button id="login_oksi_button" type="button" class="p-2 rounded-3xl text-lg !border !border-transparent bg-zinc-50 text-slate-950 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-transparent dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out  w-full" data-bs-dismiss="modal"> Bejelentkezés</button>
           </div>
         </div>
       </div>
