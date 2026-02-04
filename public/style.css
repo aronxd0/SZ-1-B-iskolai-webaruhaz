@@ -64,7 +64,9 @@ html, body {
 }
 
 #login_modal {
-  background-color: var(--emerald-500) !important;
+  background-image: url('img/welcome.jpg') !important;
+  background-size: cover;
+  background-position: center;
 }
 
 .offcanvas-backdrop {
