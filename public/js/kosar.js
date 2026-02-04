@@ -10,9 +10,16 @@ async function Kosar_Mutat(pushHistory = true) {
     tetelekli = [];
     let tartalom = `
         <div class="max-w-7xl mx-auto px-4 py-10">
-            <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 mb-8">
-                A kosarad tartalma
-            </h1>
+            <div class="d-flex w-full align-items-center justify-content-between">
+                <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 mb-8 w-auto">
+                    A kosarad tartalma
+                </h1>
+                <span class="w-auto text-sm mb-8">
+                    <button type="button" class="text-slate-950 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 d-flex align-self-center gap-2" onclick="KosarSegitseg()"><i class="bi bi-question-circle text-xl sm:text-base"></i><span class="d-none d-sm-inline"> Hogyan működik a kosár?</span></button>
+                </span>
+            </div>
+            
+            
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-6">`;
 
@@ -202,3 +209,5 @@ async function KosarPLUSZ(id) {
     AR_SUM("termek_ar", "osszesen", false);
     KosarTetelDB(); 
 };
+
+function KosarSegitseg() { $("#kosar_help_modal").modal("show"); }
