@@ -81,7 +81,10 @@ async function rendelesekmegtolt(pushHistory = true) {
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(s).fadeIn(300);
     });
-    NezetValtas("ki");
+    KezdolapElemekViszlat();
+    $("#nezetkicsi").addClass("eltunt");
+    $("#nezetnagy").addClass("eltunt");
+    $("#pagi").html("");
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", false);
 
@@ -107,7 +110,7 @@ async function toggleRendeles(rendelId) {
         <div class="col-0 col-lg-2"></div>
             <div class="col-12 col-lg-8 d-flex flex-column flex-sm-row text-slate-900 dark:text-zinc-200 border-b border-gray-300 dark:border-b dark:border-gray-800 p-xxl-none">
                 <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-2">
-                    <img src="${elem.FOTOLINK}" onclick="openImage(this.src)" class="img img-fluid img-thumbnail w-10 h-10"  alt="kep">
+                    <img src="${elem.FOTOLINK}" onclick="KepMegnyitas(this.src)" class="img img-fluid img-thumbnail w-10 h-10 hover:cursor-pointer" alt="kep">
                 </div>
                 <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-2">
                     <p>${elem.NEV}</p>

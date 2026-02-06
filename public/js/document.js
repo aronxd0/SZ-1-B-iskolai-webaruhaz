@@ -6,10 +6,11 @@ window.addEventListener("popstate", async (e) => {
         await Kezdolap(false);
         return;
     }
+    console.log(e.state);
     
     // Különböző nézetek kezelése
     switch(e.state.view) {
-        case "home": await Kezdolap(false); break;
+        case "home": Kezdolap(false); break;
         case "termek": Termek_Mutat(null, e.state.id, false); break;
         case "kosar": Kosar_Mutat(false); break;
         case "rendelesek": rendelesekmegtolt(false); break;
@@ -51,11 +52,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#login_passwd").on("keydown", function(e) {
-        if (e.key === " ") {
-            e.preventDefault();
-        }
-    });
+    $("#login_passwd").on("keydown", function(e) { if (e.key === " ") { e.preventDefault(); } });
 
     $("#login_passwd").on("input", function() {
         let val = $(this).val();
@@ -86,10 +83,6 @@ $(document).ready(function() {
         localStorage.setItem("user", JSON.stringify(user));
     });
 
-    $("#rend_button").click(async function () {
-        rendelesekmegtolt(true);
-    });
-
     // slidernek input mezö , változtatni kell a slider inputokaz as well as  a slider value: Enter után  szürni kell , emouseuot on is .
     $("#min_ar").on("input",  function MinarELL() {
         $("#min_ar_input").val($("#min_ar").val());
@@ -104,6 +97,11 @@ $(document).ready(function() {
     $("#fizetes").off("hidden.bs.modal").on("hidden.bs.modal", function () { KosarTeteleiFrissit(); });
 
     $("#szurogomb").click(function () { KERESOBAR(); });
+
+    $("#kereses_gomb").click(function () {
+        if ($("#nev1").val() == "") { üzen("A semmire nem kereshetsz rá", "info"); return; }
+        KERESOBAR(); 
+    });
 
     $("#mySwitch").on("change", function() {
         if ($(this).is(":checked")) {
@@ -133,22 +131,30 @@ $(document).ready(function() {
 
     balgomb.addEventListener("click", () => {
         // ha az elején vagy → ugorj a legvégére
-        if (track.scrollLeft <= 5) {
+        if (sav.scrollLeft <= 5) {
             sav.scrollTo({ left: sav.scrollWidth, behavior: "smooth" });
         } else {
             sav.scrollBy({ left: -mennyit, behavior: "smooth" });
         }
     });
 
-    $(".bezarmind").click(function() {
-        // Modal bezárása
+    $(document).on("click", ".bezarmind", function() {
         const modal = bootstrap.Modal.getInstance(document.getElementById("profil"));
         modal?.hide();
-    
-        // Offcanvas bezárása
         const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById("top-navbar"));
         offcanvas?.hide();
     });
+
+    $('#suti_elfogad').on('click', function () {
+        localStorage.setItem('suti', 'true');
+        bootstrap.Modal.getInstance(document.getElementById('suticucc')).hide();
+    });
+
+    if (!localStorage.getItem('suti')) {
+        const modal = new bootstrap.Modal(document.getElementById('suticucc'));
+        modal.show();
+    }
+
 
     const hash = window.location.hash;
     if (hash.startsWith('#termek/')) {

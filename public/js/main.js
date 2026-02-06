@@ -91,9 +91,9 @@ async function F5() {
             user.ui = { ...user.ui, theme: "light" };
         }
         Frissites();
-        Kezdolap();
+    } else { 
+        Frissites();
     }
-    else { $('#login_modal').modal('show'); }
 }
 
 function RangokHTML(rang) {
@@ -111,8 +111,16 @@ function RangokHTML(rang) {
 function update_gombok (x) {
     // vendeg
     if (x == 0) { 
-        $("#kosar-menupont").html("");
+        $("#kosar-menupont").html(`
+            <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
+                <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
+                <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
+                <i class="bi bi-cart2"></i> 
+                <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
+                </div>
+            </label>`);
         $("#admin-menupont").html("");
+        $("#rendeles-menupont").html("");
     }
     // sima user
     if (x == 1) { 
@@ -124,6 +132,11 @@ function update_gombok (x) {
                 <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
                 </div>
             </label>`);
+        $("#rendeles-menupont").html(`
+            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
+                <i class="bi bi-bag-check"></i>
+                <span> Rendelések</span>
+            </button>`);
         $("#admin-menupont").html("");
     }
     // admin/webadmin
@@ -136,6 +149,11 @@ function update_gombok (x) {
                 <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
                 </div>
             </label>`);
+        $("#rendeles-menupont").html(`
+            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
+                <i class="bi bi-bag-check"></i>
+                <span> Rendelések</span>
+            </button>`);
         $("#admin-menupont").html(`
             <div class="dropdown">
                 <button id="admin_button" type="button" class="dropdown-toggle py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex" data-bs-toggle="dropdown">
@@ -231,7 +249,6 @@ async function KERESOBAR(updateHistory = true) {
             ArFeltolt(elküld,-1,Number.MAX_SAFE_INTEGER);
             Joldal = 1;
         } 
-        NezetValtas("ki");
         $("#kezdolap").prop("checked",false);
         $("#kosar").prop("checked",false);
         $("#nezetkicsi").removeClass("eltunt");
@@ -240,38 +257,36 @@ async function KERESOBAR(updateHistory = true) {
         OLDALFELTOLT(adatok.maxcount); // lapválasztó feltöltése
         KategoriaFeltolt("kategoria_section", "check", "",true);// kategória szűrő frissítése    
     } catch (err) { console.error(err); }
-
-    if (!updateHistory) return;
-
-    const keresesErtek = $("#nev1").val();
-    const minInput = $("#min_ar_input").val();
-    const maxInput = $("#max_ar_input").val();
-    const arSzuresVan = (minInput != "" && minInput != minarr) || (maxInput != "" && maxInput != maxarr);
-    const vanSzures = keresesErtek != "" || bepipaltID != "" || arSzuresVan || elfogyott || Nemaktivak || ($("#rend").val() != "" && $("#rend").val() != null);
     
-    if (vanSzures) {
-        SPAState.currentView = 'search';
-        SPAState.currentData = {
-            kifejezes: keresesErtek,
-            kategoriak: bepipaltID,
-            minar: min,
-            maxar: max,
-            order: $("#rend").val(),
-            elfogyott: elfogyott,
-            nemaktivak: Nemaktivak
-        };
-        history.pushState(
-            { view: 'search',data: SPAState.currentData },
-            keresesErtek ? `Keresés: ${keresesErtek}` : 'Szűrés',
-            keresesErtek ? `#search?q=${encodeURIComponent(keresesErtek)}` : '#search'
-        );
-    } else {
-        SPAState.currentView = 'home';
-        SPAState.currentData = {};
-        history.pushState({ view: 'home' }, 'Kezdőlap', '#home');
+    if (updateHistory) {
+        const keresesErtek = $("#nev1").val();
+        const minInput = $("#min_ar_input").val();
+        const maxInput = $("#max_ar_input").val();
+        const arSzuresVan = (minInput != "" && minInput != minarr) || (maxInput != "" && maxInput != maxarr);
+        const vanSzures = keresesErtek != "" || bepipaltID != "" || arSzuresVan || elfogyott || Nemaktivak;
+
+        if (vanSzures) {
+            SPAState.currentView = 'search';
+            SPAState.currentData = {
+                kifejezes: keresesErtek,
+                kategoriak: bepipaltID,
+                minar: min,
+                maxar: max,
+                order: $("#rend").val(),
+                elfogyott: elfogyott,
+                nemaktivak: Nemaktivak
+            };
+            history.pushState(
+                { view: 'search',data: SPAState.currentData },
+                keresesErtek ? `Keresés: ${keresesErtek}` : 'Szűrés',
+                keresesErtek ? `#search?q=${encodeURIComponent(keresesErtek)}` : '#search'
+            );
+        } else {
+            SPAState.currentView = 'home';
+            SPAState.currentData = {};
+            history.pushState({ view: 'home' }, 'Kezdőlap', '#home');
+        }
     }
-    
-    
 }
 //endregion
 
@@ -558,29 +573,15 @@ function Elfogyott(alma) {
     KategoriaFeltolt("kategoria_section", "check", "",true);
 }
 
-function NezetValtas(mod) {
-    if (mod == "be") {
-        $("#welcome_section").fadeIn(300);
-        $("#kateogoria-carousel").fadeIn(300);
-        $("#nezetkicsi").removeClass("eltunt");
-        $("#nezetnagy").removeClass("eltunt");
-        $("#tutorial").fadeIn(300);
-    }
-    else {
-        $("#welcome_section").fadeOut(300);
-        $("#kateogoria-carousel").fadeOut(300);
-        $("#nezetkicsi").addClass("eltunt");
-        $("#nezetnagy").addClass("eltunt");
-        $("#tutorial").fadeOut(300);
-        $("#keresett_kifejezes").html("");
-        $("#débé").html("");
-        $("#pagi").html("");
-    }
+function KezdolapElemekViszlat() {
+    $("#welcome_section").fadeOut(300);
+    $("#kateogoria-carousel").fadeOut(300);
+    $("#tutorial").fadeOut(300);
 }
 
 async function Kezdolap(pushHistory = true) {
-    $("#keresett_kifejezes").html("");
     
+
     nev1.value = "";
     bepipaltID = "";
     
@@ -588,11 +589,12 @@ async function Kezdolap(pushHistory = true) {
     let k = "";
     if (kategoriacuccos.rows.length > 0) {
         for (const element of kategoriacuccos.rows) {
-            k += `<a id="${element.ID_KATEGORIA}" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap hover:cursor-pointer" onclick="KategoriaKezdolap(${element.ID_KATEGORIA})">${element.KATEGORIA}</a>`;
+            k += `<a id="${element.ID_KATEGORIA}" class="px-4 py-2 bg-zinc-300 dark:bg-slate-800 rounded-lg whitespace-nowrap hover:cursor-pointer" onclick="KategoriaKezdolap(${element.ID_KATEGORIA}, '${element.KATEGORIA}')">${element.KATEGORIA}</a>`;
         }
         $("#carousel-track").html(k);
     }
     else { return; }
+
 
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { update_gombok(0); }
     KosarTetelDB();
@@ -601,10 +603,14 @@ async function Kezdolap(pushHistory = true) {
 
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", true);
-    NezetValtas("be");
     FelaTetore();
     $("#szurok_menu").addClass("eltunt");
     
+    $("#keresett_kifejezes").html("");
+    $("#welcome_section").fadeIn(300);
+    $("#kateogoria-carousel").fadeIn(300);
+    $("#tutorial").fadeIn(300);
+
     if (pushHistory) {
         SPAState.currentView = 'home';
         SPAState.currentData = {};
@@ -621,7 +627,6 @@ async function Szurok_Torlese() {
     minarr = 0;
     maxarr = 0;
     KategoriaFeltolt("kategoria_section", "check", "",false);
-    $("#nev1").val("");
     $("#elf").prop("checked", false);
     $("#innaktiv").prop("checked", false);
     Nemaktivak = false;
@@ -630,15 +635,19 @@ async function Szurok_Torlese() {
     $("#max_ar").val(0);
     $("#min_ar_input").val(0); 
     $("#max_ar_input").val(0);
-    await KERESOBAR(false);
+    await KERESOBAR();
 }
 
-async function KategoriaKezdolap(id_kategoria) {
+async function KategoriaKezdolap(id_kategoria, kategoria_nev) {
+    $("#nev1").val(kategoria_nev);
     bepipaltID = "";
     await KategoriaFeltolt("kategoria_section", "check", "",false); // minden bepipalt kategoriat kiveszünk
     $(`#katcheck${id_kategoria}`).prop("checked", true);
     await KERESOBAR();
-    NezetValtas("ki");
+    $("#szurok_menu").removeClass("eltunt");
+    KezdolapElemekViszlat();
+    $("#kezdolap").prop("checked", false);
+    $("#kosar").prop("checked", false);
 }
 
 function FelaTetore(target = "top") {

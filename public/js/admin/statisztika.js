@@ -152,7 +152,10 @@ function Statisztikak(pushHistory = true) {
         STAT_COM();
     });
 
-    NezetValtas("ki");
+    KezdolapElemekViszlat();
+    $("#nezetkicsi").addClass("eltunt");
+    $("#nezetnagy").addClass("eltunt");
+    $("#pagi").html("");
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", false);
 

@@ -74,11 +74,8 @@ function Frissites() {
 }
 
 $("#login_button").click(function() {   
-    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {
-        // Ez azért van, hogy modal ablak után a másik modal normálisan jelenjen meg
-        document.getElementById("profil").addEventListener('hidden.bs.modal', () => { $('#login_modal').modal('show');}, { once: true });
-    } 
-    else { document.getElementById("profil").addEventListener('hidden.bs.modal', () => { $("#logout_modal").modal("show");}, { once: true }); }
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {$('#login_modal').modal('show'); }
+    else { $("#logout_modal").modal("show"); }
 });
 
 $("#login_oksi_button").click(async function() { 
@@ -96,7 +93,7 @@ $("#login_oksi_button").click(async function() {
             name: bejelentkezett_usernev,
             email: bejelentkezett_useremail,
             group: csoport,
-            ui: { theme: "light" }
+            ui: { theme: "light" },
         }));
         Frissites();
     }

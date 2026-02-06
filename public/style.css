@@ -1,6 +1,7 @@
 /* Betűtípusok importálása */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* Az oldalon használt főbb színek változóba lementve hogy több helyen egyszerűen lehessen rájuk hivatkozni */
 :root {
@@ -14,10 +15,14 @@
   --gray-400: oklch(70.7% 0.022 261.325);
   --gray-900: oklch(21% 0.034 264.665);
   --gray-600: oklch(44.6% 0.03 256.802);
+  --emerald-500: oklch(59.3% 0.125 142.176);
 }
 
 /* Az oldalon minden szöveg ezzel a betűtípussal jelenjen meg */
-* { font-family: 'Poppins', sans-serif; font-weight: 300; }
+* { 
+  /*font-family: 'Poppins', sans-serif; font-weight: 300;*/
+  font-family: 'Anybody', sans-serif; font-weight: 500;
+}
 
 /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
 html, body { 
@@ -56,6 +61,18 @@ html, body {
 .modal.fade.show .modal-dialog {
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+#login_modal {
+  background-image: url('img/welcome.jpg') !important;
+  background-size: cover;
+  background-position: center;
+}
+
+html.dark #login_modal {
+  background-image: url('img/welcome_night.jpg') !important;
+  background-size: cover;
+  background-position: center;
 }
 
 .offcanvas-backdrop {
@@ -157,7 +174,7 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
   border-bottom-left-radius: 0px;
 }
 
-@media (max-width: 1200px) {
+@media (width < 1200px) {  
   #top-navbar.offcanvas-start {
     width: 270px !important;
     overflow-y: auto;

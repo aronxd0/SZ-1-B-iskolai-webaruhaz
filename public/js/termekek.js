@@ -247,7 +247,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
       admingombok += `<button type="button"class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 dark:!border-zinc-200/10 hover:text-red-700 hover:bg-red-400/5 hover:!border-red-700 dark:hover:bg-red-900/20 dark:hover:!border-red-600/30 dark:hover:text-red-600 transition-all duration-150 ease-in-out w-full tracking-[2px]" aria-label="torles" onclick='Termek_Torol(event, ${termek_id})'><i class="bi bi-trash"></i> TÖRLÉS</button>`;
     } else admingombok = "";
 
-    let velemenyiras_gomb = `<button class="bg-transparent text-slate-900 rounded-4 dark:bg-slate-900 dark:text-zinc-200 hover:text-gray-600 dark:hover:bg-slate-950 dark:hover:text-gray-400 transition-hover duration-300 ease-in-out w-auto" onclick="Velemeny_Iras(${termek_id})"><i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">Vélemény írása</span></button>`;
+    let velemenyiras_gomb = `<button class="bg-transparent text-slate-900 rounded-4 dark:bg-slate-900 dark:text-zinc-200 hover:text-gray-600 dark:hover:bg-slate-950 dark:hover:text-gray-400 transition-hover duration-300 ease-in-out w-auto" onclick="Velemeny_Iras(${termek_id})"><i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline"> Vélemény írása</span></button>`;
 
     let velemenyek_tab = `
       <label class="group bg-transparent my-2 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 !border-b !border-transparent d-flex align-items-center justify-content-center p-2 text-center cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-indigo-400 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-sky-700">
@@ -266,6 +266,17 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
             <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 ">Véleményeim</span>
           </div>
       </label>`;
+
+    let velemeny_segitseg = `
+      <label class="group bg-transparent my-2 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 !border-b !border-transparent d-flex align-items-center justify-content-center p-2 cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-indigo-400 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-sky-700">
+          <div class="flex items-center gap-2">
+            <button type="button" id="velemeny_help" onclick="VelemenySegitseg()">
+              <i class="bi bi-question-circle"></i> 
+              <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 "> Hogyan működnek a vélemények?</span>
+            </button>
+          </div>
+      </label>
+    `;
 
     let termek_megtekintes = `
       <div class="container">
@@ -299,7 +310,8 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
             <div class="d-flex py-3 gap-x-5">
               <div id="velemenyek-menupont"></div>
               <div id="sajatvelemenyek-menupont"></div>
-              <div id="velemeny-irasa" class="d-flex align-items-center"></div>
+              <div id="velemeny-irasa" class="d-flex w-full align-items-center"></div>
+              <div id="velemeny-segitseg" class="w-full d-flex align-items-center justify-content-end">${velemeny_segitseg}</div>
             </div>
             <div class="space-y-6" id="velemenyek"></div>
           </div>
@@ -330,8 +342,11 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
           FelaTetore();
         });
 
-        NezetValtas("ki");
-
+        
+        KezdolapElemekViszlat();
+        $("#nezetkicsi").addClass("eltunt");
+        $("#nezetnagy").addClass("eltunt");
+        $("#pagi").html("");
         $("#kosar").prop("checked", false);
         $("#kezdolap").prop("checked", false);
 
@@ -355,6 +370,8 @@ function VeletlenszeruVelemeny() {
   $("#velemeny_input").val("");
   $("#velemeny_input").val(RandomVelemeny());
 }
+
+function VelemenySegitseg() { $("#velemeny_help_modal").modal("show"); }
 
 //region CARDBETOLT
 function CARD_BETOLT(adatok) {
@@ -412,22 +429,22 @@ function CARD_BETOLT(adatok) {
   }
 
   if (!$("#nev1").val().includes("<")) {
-    NezetValtas("ki");
+    
     $("#kosar").prop("checked", false);
 
     // ha van keresett kifejezes
     if ($("#nev1").val() != "") {
-      NezetValtas("ki");
       $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
       $("#débé").html(` (${adatok.maxcount} db)`);
       $("#kezdolap").prop("checked", false);
       $("#szurok_menu").removeClass("eltunt");
+      KezdolapElemekViszlat();
       
     } else {
       $("#kezdolap").prop("checked", true);
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
-      NezetValtas("be");
+      
       $("#szurok_menu").addClass("eltunt");
     }
     $("#content_hely").fadeOut(300, function() {

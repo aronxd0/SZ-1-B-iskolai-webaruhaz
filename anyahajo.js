@@ -172,8 +172,9 @@ app.get('/kategoria',(req, res) => {
 
     // Szöveges keresés: név, leírás vagy azonosító alapján
     if (nev !== "") {
-        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ? OR t.AZON LIKE ?)`);
+        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ? OR t.AZON LIKE ? OR k.KATEGORIA LIKE ?)`);
         ertekek.push(`%${nev}%`);  // % wildcard mindkét oldalon: bárhol megjelenhet a keresett szöveg
+        ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
     }
@@ -267,8 +268,9 @@ function gen_SQL_kereses(req) {
 
     // === SZÖVEG SZŰRÉS (NÉV/LEÍRÁS/AZONOSÍTÓ) ===
     if (nev.length > 0) {
-        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ? OR t.AZON LIKE ?)`);
+        whereFeltetelek.push(`(t.NEV LIKE ? OR t.LEIRAS LIKE ? OR t.AZON LIKE ? OR k.KATEGORIA LIKE ?)`);
         ertekek.push(`%${nev}%`);  // % wildcard: bárhol megjelenhet a szöveg
+        ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
         ertekek.push(`%${nev}%`);
     }
@@ -342,6 +344,7 @@ function gen_SQL_kereses(req) {
             ${order_van} ${order<0? "DESC": ""}
             limit 52 offset ?
         `;
+        
         // Az offset paraméter a végére kerül (lapozáshoz)
         // offset * 52: hányadik rekordtól kezdje (0, 52, 104...)
         ertekek.push(offset * 52); 
@@ -861,7 +864,7 @@ app.get('/tetelek',(req, res) => {
     // Ha nincs: teljes termék info (név, ár, kép, ID, mennyiség)
     let selectFields = termekid > (-1) 
         ? "webbolt_kosar_tetelei.MENNYISEG, webbolt_termekek.AR" 
-        : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG";
+        : "webbolt_termekek.NEV, webbolt_termekek.AR, CASE WHEN webbolt_termekek.FOTOLINK IS NOT NULL THEN webbolt_termekek.FOTOLINK ELSE webbolt_fotok.IMG END AS FOTOLINK, webbolt_termekek.ID_TERMEK, webbolt_kosar_tetelei.MENNYISEG, webbolt_kategoriak.KATEGORIA";
 
     // WHERE zaradék dinamikus: alapból az aktuális user kosára, opcionálisan egy konkrét termék
     let whereClause = `WHERE webbolt_kosar.ID_USER = ?`;
@@ -876,7 +879,8 @@ app.get('/tetelek',(req, res) => {
         SELECT ${selectFields} 
         FROM webbolt_kosar_tetelei
         INNER JOIN webbolt_kosar ON webbolt_kosar_tetelei.ID_KOSAR = webbolt_kosar.ID_KOSAR
-        INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK
+        INNER JOIN webbolt_termekek ON webbolt_kosar_tetelei.ID_TERMEK = webbolt_termekek.ID_TERMEK 
+        INNER JOIN webbolt_kategoriak ON webbolt_termekek.ID_KATEGORIA = webbolt_kategoriak.ID_KATEGORIA 
         left join webbolt_fotok ON webbolt_termekek.ID_TERMEK = webbolt_fotok.ID_TERMEK
         ${whereClause}
     `;
@@ -1894,6 +1898,7 @@ async function runQueries(sql, ertekek = [], connection) {
         if (maxcount > 0) {
             [res2] = await conn.execute(sql, ertekek);  // A teljes SQL az ORDER BY-val
         }
+
     } catch (err) {
         msg = err.sqlMessage;
         maxcount = -1;  // Hiba: -1
