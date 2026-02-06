@@ -147,7 +147,7 @@
 
     <!--#region main-->
       <div id="welcome_section">
-        <div class="w-full h-[700px] bg-[url('img/welcome.jpg')] bg-cover bg-center bg-fixed"></div>
+        <div class="w-full h-[700px] bg-[url('img/welcome.jpg')] dark:bg-[url('img/welcome_night.jpg')] bg-cover bg-center bg-fixed transition-all duration-700 ease-in-out"></div>
         <div class="relative -mt-[700px] z-10">
           <div class="container mx-auto">
             <div class="row h-[700px]">
@@ -366,28 +366,28 @@
   <!-- #region Modal Ablakok -->
   <div class="modal fade" id="login_modal">
     <div class="modal-dialog modal-md modal-dialog-centered">
-      <div class="modal-content p-2 bg-white/5 !backdrop-blur-[10px] !border border-zinc-50/50 dark:!border dark:!border-zinc-200/20">
+      <div class="modal-content p-2 bg-white/5 !backdrop-blur-[20px] !border border-zinc-50/50">
         <div class="modal-header bg-transparent">
           <span id="idx_login" class="modal-title text-center w-100 text-zinc-200 dark:text-zinc-200 text-2xl"><i class="bi bi-person-fill"></i> Bejelentkezés</span>
         </div>
 
-        <div class="modal-body bg-transparent text-zinc-200 dark:bg-slate-950 dark:text-zinc-200 ">
+        <div class="modal-body bg-transparent text-zinc-200 ">
           <form id="form_login" class="row d-column"> 
             <div class="col-12 p-2 d-flex flex-column">
               <label for="login_nev" class="p-1">E-mail cím</label>
-              <input type="email" class="py-2 px-3 shadow-xl bg-zinc-50/20 placeholder-zinc-200/50 focus:outline-none text-zinc-200 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 dark:placeholder-gray-400" id="login_nev" name="login_nev"  value='boss@csany-zeg.hu' placeholder="Írd be az e-mail címedet" required>
+              <input type="email" class="py-2 px-3 shadow-xl bg-zinc-50/20 placeholder-zinc-200/50 focus:outline-none text-zinc-200 rounded-4 placeholder-gray-400 dark:placeholder-zinc-100/60" id="login_nev" name="login_nev"  value='boss@csany-zeg.hu' placeholder="Írd be az e-mail címedet" required>
             </div>
 
             <div class="col-12 p-2 d-flex flex-column">
               <label for="login_passwd" class=" p-1">Jelszó</label>
-              <input type="password" class="py-2 px-3 shadow-xl bg-zinc-50/20 placeholder-zinc-200/50 focus:outline-none text-zinc-200 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 dark:placeholder-gray-400 " id="login_passwd" name="login_passwd" value='pite' placeholder="Írd be a jelszavadat" required>  
+              <input type="password" class="py-2 px-3 shadow-xl bg-zinc-50/20 placeholder-zinc-200/50 focus:outline-none text-zinc-200 rounded-4 placeholder-gray-400 dark:placeholder-zinc-100/60 " id="login_passwd" name="login_passwd" value='pite' placeholder="Írd be a jelszavadat" required>  
             </div>
           </form>
         </div>
 
-        <div class="bg-transparent text-zinc-200 dark:bg-slate-950 dark:text-zinc-200 modal-footer">
+        <div class="bg-transparent text-zinc-200  modal-footer">
           <div class="col-12 d-flex flex-column justify-content-center align-items-center gap-2">
-            <button id="login_oksi_button" type="button" class="p-2 rounded-3xl text-lg !border !border-transparent bg-zinc-50 text-slate-950 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-transparent dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out  w-full" data-bs-dismiss="modal"> Bejelentkezés</button>
+            <button id="login_oksi_button" type="button" class="p-2 rounded-3xl text-lg !border !border-transparent bg-zinc-50 text-slate-950  transition-all duration-150 ease-in-out  w-full" data-bs-dismiss="modal"> Bejelentkezés</button>
           </div>
         </div>
       </div>
@@ -684,7 +684,7 @@
       <div class="modal-content dark:!border dark:!border-zinc-200/20">
         <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center"><span class="modal-title text-xl"> <i class="bi bi-cart"></i> Hogyan működik a kosár?</span></div>
         <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
-          <p>A kosár azt a célt szolgálja, hogy egy helyre össze tudd gyűjteni azokat a termékeket amelyeket meg szeretnél vásárolni.</p>
+          <p>A kosár azt a célt szolgálja, hogy egy helyre össze tudd gyűjteni azokat a termékeket amelyeket meg szeretnél vásárolni. Fontos, hogy a kosár használatához be kell jelentkezned.</p>
           <p class="mt-2">Itt a Kosár menüben láthatod az összes eddigi terméket amit hozzáadtál a kosárhoz. Itt tudod módosítani a mennyiséget, vagy eltávolítani a kosárból.</p>
           <p class="mt-2">A termékeknél a "KOSÁRBA" gombbal tudod hozzáadni az adott terméket a kosárhoz, ez hozzáad 1db-ot. Ha már előtte volt ilyen termék a kosárban akkor növeli a mennyiséget 1-gyel.</p>
           <p class="mt-2">A mennyiség csökkentéséhez használd a <i class="bi bi-dash font-semibold text-xl"></i> gombot, növeléséhez a <i class="bi bi-plus font-semibold text-xl"></i>  gombot, vagy akár manuálisan is megadhatsz egy számot a mezőbe. Nem kell félni attól, hogy többet adnál meg, mint amennyi van a készleten, ilyenkor a rendszer automatikusan beállítja a készlettel megegyező mennyiséget.</p>

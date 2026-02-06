@@ -69,6 +69,12 @@ html, body {
   background-position: center;
 }
 
+html.dark #login_modal {
+  background-image: url('img/welcome_night.jpg') !important;
+  background-size: cover;
+  background-position: center;
+}
+
 .offcanvas-backdrop {
   transition: backdrop-filter 0.8s ease, background-color 0.8s ease, opacity 0.8s ease;
   backdrop-filter: blur(0px);

@@ -111,7 +111,14 @@ function RangokHTML(rang) {
 function update_gombok (x) {
     // vendeg
     if (x == 0) { 
-        $("#kosar-menupont").html("");
+        $("#kosar-menupont").html(`
+            <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
+                <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
+                <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
+                <i class="bi bi-cart2"></i> 
+                <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
+                </div>
+            </label>`);
         $("#admin-menupont").html("");
         $("#rendeles-menupont").html("");
     }

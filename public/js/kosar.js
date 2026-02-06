@@ -1,9 +1,22 @@
 // kosar menupont, kosarba helyezes, tetelek
 
 let tetelekli = [];
+
+let kosarsegito = `
+    <span class="w-auto text-sm mb-8">
+        <button type="button" class="text-slate-950 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 d-flex align-self-center gap-2" onclick="KosarSegitseg()"><i class="bi bi-question-circle text-xl sm:text-base"></i><span class="d-none d-sm-inline"> Hogyan működik a kosár?</span></button>
+    </span>`;
+
 let ureskosar = `
-    <div class="col-12">
+    <div class="col-12 d-flex w-full justify-content-between align-items-center">
         <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
+        ${kosarsegito}
+    </div>`;
+
+let vendegnezet = `
+    <div class="col-12 d-flex w-full justify-content-between align-items-center">
+        <div class="text-center p-2" id="kosarmenutitle">A Kosár használatához <a class="text-sky-500 hover:text-sky-700 dark:text-sky-500 dark:hover:text-sky-300 underline text-decoration-sky-500 hover:cursor-pointer" onclick="$('#login_modal').modal('show');">be kell jelentkezned</a></div>
+        ${kosarsegito}
     </div>`;
 
 async function Kosar_Mutat(pushHistory = true) {
@@ -14,11 +27,8 @@ async function Kosar_Mutat(pushHistory = true) {
                 <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 mb-8 w-auto">
                     A kosarad tartalma
                 </h1>
-                <span class="w-auto text-sm mb-8">
-                    <button type="button" class="text-slate-950 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 d-flex align-self-center gap-2" onclick="KosarSegitseg()"><i class="bi bi-question-circle text-xl sm:text-base"></i><span class="d-none d-sm-inline"> Hogyan működik a kosár?</span></button>
-                </span>
             </div>
-            
+            ${kosarsegito}
             
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-6">`;
@@ -107,6 +117,7 @@ async function Kosar_Mutat(pushHistory = true) {
     } catch (err) { console.error(err); }
 
     $("#content_hely").fadeOut(300, function() {
+        if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { tartalom = vendegnezet; }
         $("#content_hely").html(tartalom).fadeIn(300);
         AR_SUM("termek_ar", "osszesen", false);
         AR_SUM("termek_ar", "sumar", true);
