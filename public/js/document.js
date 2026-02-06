@@ -52,11 +52,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#login_passwd").on("keydown", function(e) {
-        if (e.key === " ") {
-            e.preventDefault();
-        }
-    });
+    $("#login_passwd").on("keydown", function(e) { if (e.key === " ") { e.preventDefault(); } });
 
     $("#login_passwd").on("input", function() {
         let val = $(this).val();
@@ -181,6 +177,4 @@ $(document).ready(function() {
 
     FelaTetore();
     setInterval(async () => { SESSION(); }, 30000);
-
 });
-

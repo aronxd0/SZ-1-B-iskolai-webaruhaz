@@ -59,11 +59,8 @@ async function Kosar_Mutat(pushHistory = true) {
                                         <span class="termek_ar">${pez.toLocaleString()} Ft</span>
                                     </p>
                                     </div>
-                        
-                                    
                                 </div>
                             </div>
-                            
                         </div>
                         <div class="col-12 mt-4 d-flex flex-column flex-sm-row justify-content-start w-full align-items-start align-items-sm-center gap-4">
                             <div class="w-auto">
@@ -74,42 +71,36 @@ async function Kosar_Mutat(pushHistory = true) {
                             <button class="text-slate-400 hover:text-red-600 text-lg transition" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)"><i class="bi bi-trash"></i></button>
                         </div>
                     </div>`;
-       
             }
             tartalom += `
-            </div>
-            <div class="rounded-xl bg-slate-50 shadow-xl dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 p-6 h-fit">
-                <h2 class="text-lg font-semibold text-slate-900 dark:text-zinc-100 mb-4">Összegzés</h2>
-        
-                <div class="space-y-3 text-sm">
-                    <div class="flex justify-between">
-                        <span class="text-slate-500">Összesen</span>
-                        <span class="font-medium" id="osszesen"></span>
-                    </div>
-        
-                    <div class="flex justify-between">
-                        <span class="text-slate-500">Szállítási költség</span>
-                        <span>0 Ft</span>
-                    </div>
-        
-                    <div class="flex justify-between">
-                        <span class="text-slate-500">Áfa</span>
-                        <span>${(await ajax_call(`afa`, "GET", null, true)).rows[0].AFA} %</span>
-                    </div>
                 </div>
-        
-                <div class="mt-6 flex justify-between font-semibold text-slate-900 dark:text-zinc-100">
-                    <span>Végösszeg</span>
-                    <span id="sumar"></span>
-                </div>
-
-                <div id="pay_button">
-                    <button id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})' class="mt-6 w-full rounded-lg bg-slate-950 dark:bg-gray-800  text-zinc-200 hover:bg-zinc-100 hover:text-slate-950 !border !border-transparent hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out py-3 font-medium">
-                        Tovább &nbsp; <i class="bi bi-arrow-right"></i>
-                    </button>
+                <div class="rounded-xl bg-slate-50 shadow-xl dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 p-6 h-fit">
+                    <h2 class="text-lg font-semibold text-slate-900 dark:text-zinc-100 mb-4">Összegzés</h2>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Összesen</span>
+                            <span class="font-medium" id="osszesen"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Szállítási költség</span>
+                            <span>0 Ft</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Áfa</span>
+                            <span>${(await ajax_call(`afa`, "GET", null, true)).rows[0].AFA} %</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-between font-semibold text-slate-900 dark:text-zinc-100">
+                        <span>Végösszeg</span>
+                        <span id="sumar"></span>
+                    </div>
+                    <div id="pay_button">
+                        <button id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})' class="mt-6 w-full rounded-lg bg-slate-950 dark:bg-gray-800  text-zinc-200 hover:bg-zinc-100 hover:text-slate-950 !border !border-transparent hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out py-3 font-medium">
+                            Tovább &nbsp; <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>`;
             }
             else { tartalom = ureskosar; }

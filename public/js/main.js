@@ -264,11 +264,6 @@ async function KERESOBAR(updateHistory = true) {
         const maxInput = $("#max_ar_input").val();
         const arSzuresVan = (minInput != "" && minInput != minarr) || (maxInput != "" && maxInput != maxarr);
         const vanSzures = keresesErtek != "" || bepipaltID != "" || arSzuresVan || elfogyott || Nemaktivak;
-        
-        console.log(vanSzures);
-        console.log(arSzuresVan);
-        console.log(`${keresesErtek} ${bepipaltID} ${elfogyott} ${Nemaktivak}`);
-        
 
         if (vanSzures) {
             SPAState.currentView = 'search';
