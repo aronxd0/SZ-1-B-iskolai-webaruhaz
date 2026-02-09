@@ -26,7 +26,8 @@ async function TermekModosit(id_termek) {
 // termek szerkeszto ablak
 async function Termek_Edit(event, termek_id, tipus) {
   event.stopPropagation();
-  
+  $("#mod_hiba").html("");
+  let hiba = false;
   let nev, azon, ar, mennyiseg, meegys, aktiv, leiras, id_kategoria;
 
   try {
@@ -121,10 +122,20 @@ async function Termek_Edit(event, termek_id, tipus) {
         $("#mySwitch").prop("checked", false).trigger("change");
       }
     }
+    
+    
 
-    $("#save_button").off().one("click", function () {
+    $("#save_button").off().on("click", function () { 
+      if ($("#mod_nev").val().includes("<") || $("#mod_nev").val().includes("%") || $("#mod_nev").val().includes("&") || $("#uj_kat").val().includes("<") || $("#uj_kat").val().includes("%") || $("#uj_kat").val().includes("&") || $("#mod_leiras").val().includes("<") || $("#mod_leiras").val().includes("%") || $("#mod_leiras").val().includes("&") || $("#mod_azon").val().includes("<") || $("#mod_azon").val().includes("%") || $("#mod_azon").val().includes("&") || $("#mod_ar").val().includes("<") || $("#mod_ar").val().includes("%") || $("#mod_ar").val().includes("&") || $("#mod_db").val().includes("<") || $("#mod_db").val().includes("%") || $("#mod_db").val().includes("&") || $("#mod_fotolink").val().includes("<") || $("#mod_fotolink").val().includes("%") || $("#mod_fotolink").val().includes("&")) {
+        hiba = true;
+      }
+      else hiba = false;
+      if (hiba) { $("#mod_hiba").html("Hibásan megadott adatok!"); }
+      else {
         TermekModosit(termek_id);
-    });
+        $("#termek_edit").modal("hide");
+      }
+     });
 
     $("#termek_edit").modal("show");
   } catch (err) { console.error(err); }
