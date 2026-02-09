@@ -151,27 +151,30 @@ function Fizetes(li) {
 
   // Lellenőrzések az adatok helyességére miellöt betöltjük a kövi oldalt
     try{
-        
-        if(keresztnev.value.trim() == "" || emil.value.trim() == "" || cim.value.trim() == "" || city.value.trim() == "" || iszam.value.trim() == "" || country.value.trim() == ""){         
+        if (keresztnev.value.trim() == "" || emil.value.trim() == "" || cim.value.trim() == "" || city.value.trim() == "" || iszam.value.trim() == "" || country.value.trim() == ""){         
             throw "Töltse ki a kötelező mezőket";
         }
         if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(keresztnev.value)) {// a-z → kis angol betűk,A-Z → nagy angol betűk, áéíóöőúüűÁÉÍÓÖŐÚÜŰ → magyar ékezetes betűk,\s → szóköz (space, tab stb.)- → kötőjel (pl. „Kovács-Nagy”),^ → a string eleje,$ → a string vége
             throw "A név csak betűket, szóközt és kötőjelet tartalmazhat!";
         }
-
         const minta = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!minta.test(emil.value)) {  // ^[^\s@]+ → az e-mail első része: nem tartalmazhat szóközt vagy @ jelet ||  @ → kötelező kukac jel || [^\s@]+ → a domain rész (pl. gmail) || \. → kötelező pont || [^\s@]+$ → a végződés (pl. com, hu stb.)
             throw "Érvénytelen e-mail cím formátum!";
         }
-
         if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(city.value)) {// a-z → kis angol betűk,A-Z → nagy angol betűk, áéíóöőúüűÁÉÍÓÖŐÚÜŰ → magyar ékezetes betűk,\s → szóköz (space, tab stb.)- → kötőjel (pl. „: Dél-Komárom”),^ → a string eleje,$ → a string vége
             throw "A Város neve csak betűket, szóközt és kötőjelet tartalmazhat!";
         }
         if (!/^\d{4}$/.test(iszam.value)) {// 4 katakter számjegy
             throw "Az irányítószámnak 4 számjegyből kell állnia!";
         }
+        if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-\.]+$/.test(cim.value)) {
+            throw "Az cím csak betűket, szóközt, kötőjelet és pontot tartalmazhat!";
+        }
         if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(country.value)) {
             throw "Az ország neve csak betűket, szóközt és kötőjelet tartalmazhat!";
+        }
+        if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(MEGJ.value)) {
+            throw "Az megjegyzés csak betűket, szóközt és kötőjelet tartalmazhat!";
         }
     } 
     catch (error) {
