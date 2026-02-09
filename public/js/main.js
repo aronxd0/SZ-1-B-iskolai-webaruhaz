@@ -82,12 +82,12 @@ async function F5() {
 
         if ((JSON.parse(localStorage.getItem("user") || "{}")?.ui.theme) == "dark") { 
             $("html").addClass("dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i> Téma`); 
+            $("#switch").html(`<i class="bi bi-sun-fill"></i>`); 
             user.ui = { ...user.ui, theme: "dark" };
         }
         else {
             $("html").removeClass("dark");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i> Téma`);
+            $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
             user.ui = { ...user.ui, theme: "light" };
         }
         Frissites();

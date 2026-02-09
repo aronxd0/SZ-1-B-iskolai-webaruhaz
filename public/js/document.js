@@ -73,11 +73,11 @@ $(document).ready(function() {
         const isDark = $("html").hasClass("dark");
         if (isDark) {
             $("html").removeClass("dark");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i> Téma`);
+            $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
             user.ui = { ...user.ui, theme: "light" };
         } else {
             $("html").addClass("dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i> Téma`);
+            $("#switch").html(`<i class="bi bi-sun-fill"></i>`);
             user.ui = { ...user.ui, theme: "dark" };
         }
         localStorage.setItem("user", JSON.stringify(user));
@@ -100,6 +100,7 @@ $(document).ready(function() {
 
     $("#kereses_gomb").click(function () {
         if ($("#nev1").val() == "") { üzen("A semmire nem kereshetsz rá", "info"); return; }
+        $("#keresomodal").modal("hide");
         KERESOBAR(); 
     });
 
