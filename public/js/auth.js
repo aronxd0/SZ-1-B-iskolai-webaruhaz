@@ -13,7 +13,6 @@ function Frissites() {
         $("#loginspan").html(' Bejelentkezés');
         $("#loginout").removeClass("bi bi-box-arrow-in-left");
         $("#loginout").addClass("bi bi-box-arrow-in-right");
-        üzen("Sikeres logout", "success");
         $("#vendegszoveg").html("Jelentkezz be a fiókodba");
         $("#user-email").html("");
         $("#rangok").html(``);
@@ -36,6 +35,7 @@ function Frissites() {
         megjegyzes = "";
         rang = "";
         document.getElementById("rendalap").selected = true;
+        üzen("Sikeres kijelentkezés!", "success");
         update_gombok(0);
         Kezdolap();
     }
@@ -74,13 +74,29 @@ function Frissites() {
 }
 
 $("#login_button").click(function() {   
-    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {$('#login_modal').modal('show'); }
+    if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { 
+        $('#login_modal').modal('show'); 
+        $("#loginhiba").html(""); 
+        $("#login_nev").removeClass("ring-2 ring-red-500").addClass("focus:ring-emerald-600");
+        $("#login_passwd").removeClass("ring-2 ring-red-500").addClass("focus:ring-emerald-600");
+    }
     else { $("#logout_modal").modal("show"); }
 });
 
 $("#login_oksi_button").click(async function() { 
-    let l_json = await ajax_call("login?"+$("#form_login").serialize(), "GET", null, true);
+    if ($("#login_nev").val().trim() === "") { 
+        $("#loginhiba").html("Kérlek add meg az e-mail címet!"); 
+        $("#login_nev").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500");
+        return; 
+    } else $("#login_nev").removeClass("ring-2 ring-red-500").addClass("focus:ring-emerald-600");
 
+    if ($("#login_passwd").val().trim() === "") {
+        $("#loginhiba").html("Kérlek add meg a jelszót!");
+        $("#login_passwd").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500");
+        return;
+    } else $("#login_passwd").removeClass("ring-2 ring-red-500").addClass("focus:ring-emerald-600");
+
+    let l_json = await ajax_call("login?"+$("#form_login").serialize(), "GET", null, true);
     if (l_json.message == "ok" && l_json.maxcount == 1) {
         bejelentkezett_usernev = l_json.rows[0].NEV;
         bejelentkezett_useremail = l_json.rows[0].EMAIL;
@@ -96,6 +112,13 @@ $("#login_oksi_button").click(async function() {
             ui: { theme: "light" },
         }));
         Frissites();
+        $("#loginhiba").html("");
+        $('#login_modal').modal('hide'); 
+    }
+    else {
+        $("#loginhiba").html("Hibás felhasználónév vagy jelszó!");
+        $("#login_nev").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500").focus();
+        $("#login_passwd").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500").focus();
     }
 });
           
