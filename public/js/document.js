@@ -169,6 +169,17 @@ $(document).ready(function() {
         }
     });
 
+    filterToggle.addEventListener('click', openFilter);
+    closeFilter.addEventListener('click', closeFilterFunc);
+    overlay.addEventListener('click', closeFilterFunc);
+
+    // ESC billentyűvel is bezárható
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && filterSidebar.classList.contains('active')) {
+            closeFilterFunc();
+        }
+    });
+
 
     const hash = window.location.hash;
     if (hash.startsWith('#termek/')) {

@@ -12,6 +12,11 @@ let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
 let oldalszam = 0; // összes oldal darabszáma
 let Joldal = 1; // jelenlegi oldal
 
+const filterToggle = document.getElementById('filterToggle');
+const closeFilter = document.getElementById('closeFilter');
+const filterSidebar = document.getElementById('filterSidebar');
+const overlay = document.getElementById('overlay');
+
 const egeszoldal = $("html");
 
 const SPAState = { currentView: 'home', currentData: {} };
@@ -69,6 +74,18 @@ async function SESSION() {
 async function Admin_ellenorzes() { 
     let adminell = await ajax_call("admin_check", "GET", null, true); 
     return adminell; 
+}
+
+function openFilter() {
+    filterSidebar.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeFilterFunc() {
+    filterSidebar.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 async function F5() {
@@ -418,54 +435,62 @@ async function ArFeltolt(sql, min ,max){
         
         // ha nincs találat akkor a max és min ár 0 legyen
         if(arak.rows[0].MINAR == null){
+            /*
             document.getElementById("min_ar").min = 0;
             document.getElementById("min_ar").max = 0;
             document.getElementById("max_ar").max = 0;
             document.getElementById("max_ar").min = 0;
             document.getElementById("max_ar").value = 0;
             document.getElementById("min_ar").value = 0;
+            */
             document.getElementById("min_ar_input").value = 0;
             document.getElementById("max_ar_input").value = 0;
             return;
         }
 
+        /*
         var elozomin = parseInt( document.getElementById("min_ar").min)// lekérdezes a csuszak minimum értékét mielött megváltoztatom
         var elozomax = parseInt( document.getElementById("max_ar").max)// lekérdezes a csuszak maximum értékét mielött megváltoztatom
+        */
 
         // ha az előző minimum érték = a mostani minimum érték 
         // vagy a mostani minimum nagyobb mint a lekérdezett utáni maximum ár 
         // akkor az új minimum legyen a lekérdezett minimuma
-        if (elozomin == min || min > arak.rows[0].MAXAR){ min = arak.rows[0].MINAR; }
+        //if (elozomin == min || min > arak.rows[0].MAXAR){ min = arak.rows[0].MINAR; }
 
         // ha az előző maximum érték = a mostani maximum érték 
         // akkor a maximum legyen a lekérdezett maximuma
-        if(elozomax == max){ max = arak.rows[0].MAXAR; }
+        //if(elozomax == max){ max = arak.rows[0].MAXAR; }
 
+        /*
         document.getElementById("min_ar").min = arak.rows[0].MINAR;
         document.getElementById("min_ar").max = arak.rows[0].MAXAR;
 
         document.getElementById("max_ar").max = arak.rows[0].MAXAR;
         document.getElementById("max_ar").min = arak.rows[0].MINAR; 
+        */
 
+        
         // ha a mostani minimum kisebb mint a lekérdezett minimum 
         // akkor a minimum legyen a lekérdezett minimuma
         if (parseInt(min) < parseInt( arak.rows[0].MINAR )) {
-           document.getElementById("min_ar").value = arak.rows[0].MINAR;
+           //document.getElementById("min_ar").value = arak.rows[0].MINAR;
            min = arak.rows[0].MINAR
         }
         // ha a mostani minimum nagyobb mint a lekérdezett minimum
         //  akkor a minimum legyen a mostani minimum
-        else { document.getElementById("min_ar").value = min; }
+        //else { document.getElementById("min_ar").value = min; }
 
         // ha a mostani maximum nagyobb mint a lekérdezett maximum 
         // akkor a maximum legyen a lekérdezett maximuma
         if (parseInt(max) > parseInt( arak.rows[0].MAXAR )) {
-           document.getElementById("max_ar").value = arak.rows[0].MAXAR;
+           //document.getElementById("max_ar").value = arak.rows[0].MAXAR;
            max = arak.rows[0].MAXAR
         }
         // ha a mostani maximum kisebb mint a lekérdezett maximum 
         // akkor a maximum legyen a mostani maximum
-        else { document.getElementById("max_ar").value = max; }  
+        //else { document.getElementById("max_ar").value = max; }  
+        
 
         document.getElementById("min_ar_input").value = min;
         document.getElementById("max_ar_input").value =max;
@@ -558,7 +583,7 @@ async function KategoriaFeltolt(hova, type, kivalasztott,mindenkipipal) {
                 listItems += `
                     <p class="p-2 !border-b !border-b-zinc-800/10 dark:!border-b dark:!border-b-zinc-200/10 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out"> 
                         <input onchange="KatbolAR()" class=" form-check-input !border !border-zinc-800/20 bg-zinc-200 hover:cursor-pointer dark:!border dark:!border-zinc-200/30 dark:checked:!border-sky-600 dark:bg-slate-800 focus:outline-none focus:ring-0 focus:ring-offset-0 focus:shadow-none" type="checkbox" id="katcheck${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  
-                        <label class="form-check-label hover:cursor-pointer " for="katcheck${k_json.rows[i].ID_KATEGORIA}"> ${k_json.rows[i].KATEGORIA} </label> 
+                        <label class="form-check-label hover:cursor-pointer text-sm" for="katcheck${k_json.rows[i].ID_KATEGORIA}"> ${k_json.rows[i].KATEGORIA} </label> 
                     </p>`;
             }
         }

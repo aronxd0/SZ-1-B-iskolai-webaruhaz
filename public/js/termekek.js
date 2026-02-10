@@ -390,8 +390,8 @@ function CARD_BETOLT(adatok) {
   let termekKartya = "";
   let allapotVagyAr = "";
 
-  const kicsinezet = document.getElementById("kicsi_nezet").checked;
-  const nagynezet = document.getElementById("nagy_nezet").checked;
+  const kicsinezet = false;
+  const nagynezet = true;
 
   for (const element of adatok.rows) {
     var nev_hossz = element.NEV.toString().length;
@@ -423,7 +423,7 @@ function CARD_BETOLT(adatok) {
       else { kosargomb = `<button class="px-3 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out kosar bi bi-plus-lg w-full text-sm tracking-[2px]" onclick='Kosarba_Bele(event, ${element.ID_TERMEK})'> KOSÁRBA</button>`; }
 
       termekKartya += `
-        <div class="col-12 col-sm-6 col-lg-4 col-xxl-3 p-3 d-flex justify-content-center  ">
+        <div class="p-3 d-flex justify-content-center">
           <div class="rounded-xl p-4 w-72 shadow-lg bg-zinc-100 hover:bg-gray-200 hover:outline outline-black/10 hover:cursor-pointer dark:!border dark:!border-zinc-200/20 dark:bg-slate-950 dark:text-zinc-200 dark:hover:bg-sky-950/10 dark:hover:-outline-offset-1 dark:hover:outline-white/10 d-flex flex-column transition-hover duration-150 ease-in-out" id='${element.ID_TERMEK}' onclick='Termek_Mutat(event, ${element.ID_TERMEK})'>
             <div class="relative">
               <img src="${element.FOTOLINK}" class="rounded-lg w-full h-60 object-cover">
@@ -458,10 +458,11 @@ function CARD_BETOLT(adatok) {
       
       $("#szurok_menu").addClass("eltunt");
     }
-    $("#content_hely").fadeOut(300, function() {
-      $("#content_hely").html(termekKartya).fadeIn(300);
-      $("#nezetkicsi").removeClass("eltunt");
-      $("#nezetnagy").removeClass("eltunt");
+    $("#termekek_hely").fadeOut(300, function() {
+      $("#termekek_hely").html(termekKartya).fadeIn(300);
+      $("#content_hely").html("");
+      $("#content_hely").addClass("hidden");
+      $("#main_kontener").removeClass("hidden");
     });
   } else { üzen("404", "danger"); }
 }

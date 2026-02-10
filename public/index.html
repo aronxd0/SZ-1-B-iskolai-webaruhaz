@@ -24,7 +24,7 @@
 <body>
   <div class="container-fluid bg-zinc-200 text-slate-900 dark:bg-slate-950/95 dark:text-zinc-200 transition-all duration-700 ease-in-out min-h-screen flex flex-col">
     <!--#region fejlec-->
-      <div class="fixed-top bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 transition-all duration-700 ease-in-out shadow-bottom px-1 px-lg-5 py-2 py-lg-0 dark:!border-b dark:!border-zinc-200/20" id="fejlec2">
+      <div class="fixed-top z-[1030] bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 transition-all duration-700 ease-in-out shadow-bottom px-1 px-lg-5 py-2 py-lg-0 dark:!border-b dark:!border-zinc-200/20" id="fejlec2">
         <div class="navbar navbar-expand-xl ">
           <div class="container-fluid d-flex flex-nowrap">
 
@@ -238,13 +238,106 @@
           </div>
           <div class="col-0 col-xxl-1"></div>
         </div>
-        <hr class="text-gray-500 dark:text-zinc-200/30">
-        <div class="row" id="felsosor">
-          <div class="col-12 d-flex flex-column flex-lg-row justify-content-center mt-2 h-full">
-            <div class="p-2 text-center" id="keresett_kifejezes"></div>  
-            <div class="p-2 text-center" id="débé"></div>
+        <hr class="text-gray-500 dark:text-zinc-200/30">   
+
+        <div id="overlay" class="overlay"></div>
+
+        <div id="content_hely" class="max-w-8xl mx-auto px-4 py-6hidden"></div>
+
+        <div class="max-w-8xl mx-auto px-4 py-6" id="main_kontener">
+          <button id="filterToggle" class="md:hidden bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+            </svg>
+            Szűrők
+        </button>
+          <div class="flex gap-6">
+              <!-- Szűrő Sidebar - ugyanaz az elem asztali és mobil nézethez -->
+              <aside id="filterSidebar" class="
+                  fixed md:sticky top-0 left-0 h-screen md:h-auto
+                  w-80 md:w-64 lg:w-72
+                  bg-white p-6 rounded-lg shadow-sm
+                  z-[1050] md:z-auto
+                  overflow-y-auto
+              ">
+                  <!-- Mobil bezárás gomb -->
+                  <div class="md:hidden flex justify-between items-center mb-4 pb-4 border-b">
+                      <h2 class="text-lg font-bold">Szűrők</h2>
+                      <button id="closeFilter" class="text-gray-500 hover:text-gray-700">
+                          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                          </svg>
+                      </button>
+                  </div>
+  
+                  <h2 class="text-lg font-bold mb-4 hidden md:block">Szűrők</h2>
+  
+                  <!-- Kategória szűrő -->
+                  <div class="mb-6">
+                      <h3 class="font-semibold text-gray-900 mb-3">Kategória</h3>
+                      <div class="space-y-2 !border-b !border-slate-900" id="kategoria_section" style="overflow-y: scroll; overflow-x: hidden; height: 35vh;"></div>
+                  </div>
+  
+                  <!-- Ár szűrő -->
+                  <div class="mb-6 pb-6 border-b">
+                      
+                      <div class="space-y-3">
+                          <div class="flex flex-col gap-2 items-start">
+                              <h3 class="font-semibold text-gray-900">Min. ár</h3>
+                              <input type="number" onchange="KategoriaFeltolt('kategoria_section', 'check', '',true)" placeholder="Min" id="min_ar_input" class="w-full px-3 py-2 bg-zinc-100 rounded-4 text-slate-900 dark:bg-sky-950 dark:text-zinc-200 focus:outline-none focus:bg-zinc-100">
+                              
+                              <h3 class="font-semibold text-gray-900 mt-3">Max. ár</h3>
+                              <input type="number" onchange="KategoriaFeltolt('kategoria_section', 'check', '',true)" placeholder="Max" id="max_ar_input" class="w-full px-3 py-2 bg-zinc-100 rounded-4 text-slate-900 dark:bg-sky-950 dark:text-zinc-200 focus:outline-none focus:bg-zinc-100">
+                          </div>
+                      </div>
+                  </div>
+  
+                  <!-- Gombok -->
+                  <div class="space-y-2">
+                      <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition" id="szurogomb">
+                          Szűrők alkalmazása
+                      </button>
+                      <button class="w-full bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition" id="szuroktorlese" onclick="Szurok_Torlese()">
+                          Törlés
+                      </button>
+                  </div>
+              </aside>
+  
+              <!-- Termékek rész -->
+              <main class="flex-1">
+                  <!-- Rendezés és találatok -->
+                  <div class="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                      <div class="flex flex-col sm:flex-row justify-center items-center gap-2">
+                        <p class="text-gray-600" id="keresett_kifejezes"></p>
+                        <p class="text-gray-600" id="débé"></p>
+                      </div>
+                      
+                      <div class="w-auto flex items-center gap-2">
+                        <label for="rend"><span class="text-base"><i class="bi bi-list-ol"></i> Rendezés</span></label>
+                        <select id="rend" onchange="KERESOBAR(false)" class="form-select w-50 shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20"> 
+                          <option id="rendalap"  selected value="ar_csok">Ár ↓</option> 
+                          <option value="ar_nov">Ár ↑</option> 
+                          <option value="abc">Név (A-Z)</option> 
+                          <option value="abc_desc">Név (Z-A)</option> 
+                          <option id="darable" value="db_csok">Darab ↓</option> 
+                          <option id="darabfel" value="db_nov">Darab ↑</option> 
+                        </select>
+                      </div>
+                      
+                  </div>
+  
+                  <!-- Termék grid -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="termekek_hely">
+                      <!-- Termék kártya 1 -->
+                      
+                  </div>
+                  <div class="mt-6 flex justify-center" id="pagi"></div>
+              </main>
           </div>
-        </div>    
+      </div>
+
+
+        <!--
 
         <div class="row">
           <div class="col-0 col-xxl-1"></div>
@@ -265,6 +358,7 @@
           </div>
           <div class="col-0 col-xxl-1"></div>
         </div>
+      -->
       </div>   
     <!--#endregion-->
 
@@ -298,6 +392,7 @@
   <!-- #endregion -->
   
   <!-- #region offcanvas -->
+   <!--
   <div class="offcanvas offcanvas-end" id="szurok">
     <div class="offcanvas-header bg-zinc-100 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-start gap-3">
       <button type="button" class="btn btn-lg text-slate-900 hover:text-slate-900 dark:text-zinc-200 dark:hover:text-zinc-200" data-bs-dismiss="offcanvas"><i class="bi bi-arrow-left"></i></button>
@@ -358,6 +453,7 @@
       </div>
     </div>
   </div>
+  -->
   <!-- #endregion -->
 
   <!-- #region Modal Ablakok -->
