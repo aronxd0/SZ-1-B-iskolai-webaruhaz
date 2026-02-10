@@ -22,7 +22,8 @@ function SQLinput(pushHistory = true) {
             </div>
         </div>
         <div class="col-12 d-flex justify-content-center" id="SQL_hiba">&nbsp</div>`).fadeIn(300);
-        
+        $("#main_kontener").addClass("hidden");
+        $("#content_hely").removeClass("hidden");
         KezdolapElemekViszlat();
         $("#nezetkicsi").addClass("eltunt");
         $("#nezetnagy").addClass("eltunt");

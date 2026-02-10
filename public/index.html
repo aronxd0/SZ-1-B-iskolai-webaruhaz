@@ -22,7 +22,7 @@
     
   </head>
 <body>
-  <div class="container-fluid bg-zinc-200 text-slate-900 dark:bg-slate-950/95 dark:text-zinc-200 transition-all duration-700 ease-in-out min-h-screen flex flex-col">
+  <div class="container-fluid bg-zinc-100 text-slate-900 dark:bg-slate-950/95 dark:text-zinc-200 transition-all duration-700 ease-in-out min-h-screen flex flex-col">
     <!--#region fejlec-->
       <div class="fixed-top z-[1030] bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 transition-all duration-700 ease-in-out shadow-bottom px-1 px-lg-5 py-2 py-lg-0 dark:!border-b dark:!border-zinc-200/20" id="fejlec2">
         <div class="navbar navbar-expand-xl ">
@@ -50,15 +50,7 @@
                 </li>
 
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
-                  <div class="me-2" id="fiok_gombdiv">
-                    <button type="button" aria-label="Profil" class="px-3 py-1 text-2xl rounded-4 bg-transparent text-slate-900/50 dark:text-zinc-200/50 hover:text-slate-900 dark:hover:text-zinc-200 transition-all duration-150 w-full " data-bs-toggle="modal" data-bs-target="#profil">
-                        <i class="bi bi-person"></i>
-                    </button>
-                  </div>
-                </li>
-
-                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
-                  <div class="me-3" id="loginout_gombdiv">
+                  <div class="me-3 ms-3" id="loginout_gombdiv">
                     <button id="login_button" type="button" class="px-3 py-1 text-base !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full" > 
                       <i class="bi bi-box-arrow-in-right" id="loginout"></i>
                       <span id="loginspan"> Bejelentkezés</span>
@@ -132,9 +124,11 @@
                   <button type="button" aria-label="Keresés" class="btn btn-lg rounded-none bg-transparent text-slate-900/50 hover:text-slate-900 dark:bg-sky-950 dark:text-zinc-200/50 dark:hover:text-zinc-200 me-2 transition-hover duration-300 ease-in-out" id="kereses_menu" onclick="$('#keresomodal').modal('show')">
                     <i class="bi bi-search"></i>
                   </button>
-                  <button type="button" aria-label="Szűrők" id="szurok_menu" class="eltunt btn btn-lg bg-transparent text-slate-900/50 dark:text-zinc-200/50 hover:text-slate-900 dark:bg-sky-950 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-4" data-bs-toggle="offcanvas" data-bs-target="#szurok">
-                    <i class="bi bi-funnel"></i>
-                  </button>
+                  <div class="me-2" id="fiok_gombdiv">
+                    <button type="button" aria-label="Profil" class="px-3 py-1 text-2xl rounded-4 bg-transparent text-slate-900/50 dark:text-zinc-200/50 hover:text-slate-900 dark:hover:text-zinc-200 transition-all duration-150 w-full " data-bs-toggle="modal" data-bs-target="#profil">
+                        <i class="bi bi-person"></i>
+                    </button>
+                  </div>
               </div>
             </div>
           </div>
@@ -256,7 +250,7 @@
               <aside id="filterSidebar" class="
                   fixed lg:sticky top-0 left-0 h-screen lg:h-auto
                   w-80 lg:w-64 xl:w-72
-                  bg-white p-6 rounded-lg shadow-sm
+                  bg-transparent p-6 rounded-lg 
                   z-[1050] lg:z-auto
                   overflow-y-auto
               ">
@@ -275,7 +269,7 @@
                   <!-- Kategória szűrő -->
                   <div class="mb-6">
                       <h3 class="font-semibold text-gray-900 mb-3">Kategória</h3>
-                      <div class="custom-scrollbar space-y-3 max-h-[35vh] overflow-y-auto overflow-x-hidden rounded-xl border border-slate-200 p-2 shadow-sm" id="kategoria_section"></div>
+                      <div class="custom-scrollbar space-y-3 max-h-[35vh] overflow-y-auto overflow-x-hidden rounded-xl border border-slate-200 px-4 py-2 shadow-sm" id="kategoria_section"></div>
                   </div>
   
                   <!-- Ár szűrő -->

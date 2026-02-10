@@ -337,6 +337,8 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
           $("#velemenyek-menupont").html(velemenyek_tab);
           $("#velemenyek").html("");
           VelemenyekMutat(termek_id);
+          $("#main_kontener").addClass("hidden");
+          $("#content_hely").removeClass("hidden");
 
           if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) {
             $("#velemeny-irasa").html("Vélemény írásához jelentkezzen be");
@@ -448,7 +450,6 @@ function CARD_BETOLT(adatok) {
       $("#keresett_kifejezes").html(`Találatok a(z) <b>"${$("#nev1").val()}"</b> kifejezésre`);
       $("#débé").html(` (${adatok.maxcount} db)`);
       $("#kezdolap").prop("checked", false);
-      $("#szurok_menu").removeClass("eltunt");
       KezdolapElemekViszlat();
       
     } else {
@@ -456,7 +457,6 @@ function CARD_BETOLT(adatok) {
       $("#keresett_kifejezes").html("");
       $("#débé").html("");
       
-      $("#szurok_menu").addClass("eltunt");
     }
     $("#termekek_hely").fadeOut(300, function() {
       $("#termekek_hely").html(termekKartya).fadeIn(300);

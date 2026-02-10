@@ -63,6 +63,7 @@ html, body {
         transform: translateX(100%); /* jobb oldalról jön be */
         right: 0; /* jobb oldalon pozícionálva */
         left: auto;
+        background-color: var(--zinc-50);
     }
     #filterSidebar.active {
         transform: translateX(0);
