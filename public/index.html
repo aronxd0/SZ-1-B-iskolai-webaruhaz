@@ -49,21 +49,19 @@
                   <img class="img-fluid m-2 block dark:hidden transition-all duration-300 w-20 h-15" src="img/logo-fekete.png" alt="logo">
                 </li>
 
-                <li class="nav-item py-2 py-xl-0 d-flex align-items-center"><div class="me-3" id="fiok_gombdiv"></div></li>
+                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
+                  <div class="me-2" id="fiok_gombdiv">
+                    <button type="button" aria-label="Profil" class="px-3 py-1 text-2xl rounded-4 bg-transparent text-slate-900/50 dark:text-zinc-200/50 hover:text-slate-900 dark:hover:text-zinc-200 transition-all duration-150 w-full " data-bs-toggle="modal" data-bs-target="#profil">
+                        <i class="bi bi-person"></i>
+                    </button>
+                  </div>
+                </li>
 
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
                   <div class="me-3" id="loginout_gombdiv">
                     <button id="login_button" type="button" class="px-3 py-1 text-base !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full" > 
                       <i class="bi bi-box-arrow-in-right" id="loginout"></i>
                       <span id="loginspan"> Bejelentkezés</span>
-                    </button>
-                  </div>
-                </li>
-
-                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
-                  <div class="me-3" id="tema_gombdiv">
-                    <button type="button" aria-label="Téma" class="px-3 py-1 text-lg rounded-4 bg-transparent text-gray-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-zinc-200 transition-all duration-150 w-full bezarmind" id="switch">
-                      <i class="bi bi-moon-fill"></i>
                     </button>
                   </div>
                 </li>
@@ -586,14 +584,46 @@
 
           <div class="row mt-3">
             <div class="col-12 d-flex justify-content-start flex-column flex-sm-row">
-              
-
               <div class="p-1" id="rendeles-menupont">
                 <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
                   <i class="bi bi-bag-check"></i>
                   <span> Rendelések</span>
                 </button>
               </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <span class="w-full text-start">Téma:</span>
+            <div class="col-12 d-flex flex-column flex-lg-row gap-3">
+              <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
+                <div class="flex items-center gap-3">
+                  <input type="radio" name="tema" class="form-check-input hidden" id="light" onchange="Temavalto(this)">
+                  <span class="font-semibold">Világos&nbsp;</span>
+                </div>
+                <div class="d-flex justify-content-end align-items-center">
+                  <i class="bi bi-sun-fill"></i>
+                </div>
+              </label>
+
+              <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
+                <div class="flex items-center gap-3">
+                  <input type="radio" name="tema" class="form-check-input hidden" id="dark" onchange="Temavalto(this)">
+                  <span class="font-semibold">Sötét&nbsp;</span>
+                </div>
+                <div class="d-flex justify-content-end align-items-center">
+                  <i class="bi bi-moon-fill"></i>
+                </div>
+              </label>
+
+              <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
+                <div class="flex items-center gap-3">
+                  <input type="radio" name="tema" class="form-check-input hidden" id="system" onchange="Temavalto(this)">
+                  <span class="font-semibold">Rendszer&nbsp;</span>
+                </div>
+                <div class="d-flex justify-content-end align-items-center">
+                  <i class="bi bi-gear-fill"></i>
+                </div>
+              </label>
             </div>
           </div>
         </div>

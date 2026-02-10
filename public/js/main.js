@@ -12,6 +12,8 @@ let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
 let oldalszam = 0; // összes oldal darabszáma
 let Joldal = 1; // jelenlegi oldal
 
+const egeszoldal = $("html");
+
 const SPAState = { currentView: 'home', currentData: {} };
 
 const kezdesek = ["Szerintem", "Őszintén szólva", "Én úgy látom", "Nekem az a véleményem", "Nyilvánvalóan", "Hát megmondom őszintén, hogy"];
@@ -80,6 +82,9 @@ async function F5() {
         if (ae.admin) { admin = true; }
         if (ae.webadmin) { webbolt_admin = true; }
 
+        const tema = localStorage.getItem("theme") || "system";
+        Megjelenes(tema);
+        /*
         if ((JSON.parse(localStorage.getItem("user") || "{}")?.ui.theme) == "dark") { 
             $("html").addClass("dark");
             $("#switch").html(`<i class="bi bi-sun-fill"></i>`); 
@@ -90,10 +95,32 @@ async function F5() {
             $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
             user.ui = { ...user.ui, theme: "light" };
         }
+        */
         Frissites();
     } else { 
         Frissites();
     }
+}
+
+function Megjelenes(mod) {
+  if (mod === "dark") {
+    egeszoldal.addClass("dark");
+    $("#dark").prop("checked", true);
+  } 
+  else if (mod === "light") {
+    egeszoldal.removeClass("dark");
+    $("#light").prop("checked", true);
+  } 
+  else if (mod === "system") {
+    const sotete = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    egeszoldal.toggleClass("dark", sotete);
+    $("#system").prop("checked", true);
+  }
+}
+
+function Temavalto(id) {
+    localStorage.setItem("theme", id.id);
+    Megjelenes(id.id);
 }
 
 function RangokHTML(rang) {
@@ -121,7 +148,7 @@ function update_gombok (x) {
             </label>`);
         $("#admin-menupont").html("");
         $("#rendeles-menupont").html("");
-        $("#fiok_gombdiv").html("");
+        
     }
     // sima user
     if (x == 1) { 
@@ -139,10 +166,7 @@ function update_gombok (x) {
                 <span> Rendelések</span>
             </button>`);
         $("#admin-menupont").html("");
-        $("#fiok_gombdiv").html(`
-            <button type="button" aria-label="Profil" class="px-3 py-1 text-2xl rounded-4 bg-transparent text-slate-900/50 dark:text-zinc-200/50 hover:text-slate-900 dark:hover:text-zinc-200 transition-all duration-150 w-full " data-bs-toggle="modal" data-bs-target="#profil">
-                <i class="bi bi-person"></i>
-            </button>`);
+        
     }
     // admin/webadmin
     if (x == 2) {
@@ -194,10 +218,7 @@ function update_gombok (x) {
                     </li>
                 </ul>
             </div>`);
-            $("#fiok_gombdiv").html(`
-                <button type="button" aria-label="Profil" class="px-3 py-1 text-2xl rounded-4 bg-transparent text-slate-900/50 dark:text-zinc-200/50 hover:text-slate-900 dark:hover:text-zinc-200 transition-all duration-150 w-full " data-bs-toggle="modal" data-bs-target="#profil">
-                    <i class="bi bi-person"></i>
-                </button>`);
+            
     }
 }
 

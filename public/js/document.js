@@ -68,6 +68,7 @@ $(document).ready(function() {
         }
     });
 
+    /*
     $("#switch").click(function () {
         let user = JSON.parse(localStorage.getItem("user")) || {};
         const isDark = $("html").hasClass("dark");
@@ -82,6 +83,7 @@ $(document).ready(function() {
         }
         localStorage.setItem("user", JSON.stringify(user));
     });
+    */
 
     // slidernek input mezö , változtatni kell a slider inputokaz as well as  a slider value: Enter után  szürni kell , emouseuot on is .
     $("#min_ar").on("input",  function MinarELL() {
@@ -155,6 +157,17 @@ $(document).ready(function() {
         const modal = new bootstrap.Modal(document.getElementById('suticucc'));
         modal.show();
     }
+
+    const tema = localStorage.getItem("theme");
+    if (!tema) { Megjelenes("system");} 
+    else { Megjelenes(tema); }
+
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    media.addEventListener("change", function (e) {
+        if (localStorage.getItem("theme") === "system") {
+            $("html").toggleClass("dark", e.matches);
+        }
+    });
 
 
     const hash = window.location.hash;
