@@ -245,7 +245,7 @@
         <div id="content_hely" class="max-w-8xl mx-auto px-4 py-6hidden"></div>
 
         <div class="max-w-8xl mx-auto px-4 py-6" id="main_kontener">
-          <button id="filterToggle" class="md:hidden bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition">
+          <button id="filterToggle" class="lg:hidden bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
             </svg>
@@ -254,14 +254,14 @@
           <div class="flex gap-6">
               <!-- Szűrő Sidebar - ugyanaz az elem asztali és mobil nézethez -->
               <aside id="filterSidebar" class="
-                  fixed md:sticky top-0 left-0 h-screen md:h-auto
-                  w-80 md:w-64 lg:w-72
+                  fixed lg:sticky top-0 left-0 h-screen lg:h-auto
+                  w-80 lg:w-64 xl:w-72
                   bg-white p-6 rounded-lg shadow-sm
-                  z-[1050] md:z-auto
+                  z-[1050] lg:z-auto
                   overflow-y-auto
               ">
                   <!-- Mobil bezárás gomb -->
-                  <div class="md:hidden flex justify-between items-center mb-4 pb-4 border-b">
+                  <div class="lg:hidden flex justify-between items-center mb-4 pb-4 border-b">
                       <h2 class="text-lg font-bold">Szűrők</h2>
                       <button id="closeFilter" class="text-gray-500 hover:text-gray-700">
                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -270,12 +270,12 @@
                       </button>
                   </div>
   
-                  <h2 class="text-lg font-bold mb-4 hidden md:block">Szűrők</h2>
+                  <h2 class="text-lg font-bold mb-4 hidden lg:block">Szűrők</h2>
   
                   <!-- Kategória szűrő -->
                   <div class="mb-6">
                       <h3 class="font-semibold text-gray-900 mb-3">Kategória</h3>
-                      <div class="space-y-2 !border-b !border-slate-900" id="kategoria_section" style="overflow-y: scroll; overflow-x: hidden; height: 35vh;"></div>
+                      <div class="custom-scrollbar space-y-3 max-h-[35vh] overflow-y-auto overflow-x-hidden rounded-xl border border-slate-200 p-2 shadow-sm" id="kategoria_section"></div>
                   </div>
   
                   <!-- Ár szűrő -->
@@ -285,10 +285,12 @@
                           <div class="flex flex-col gap-2 items-start">
                               <h3 class="font-semibold text-gray-900">Min. ár</h3>
                               <input type="number" onchange="KategoriaFeltolt('kategoria_section', 'check', '',true)" placeholder="Min" id="min_ar_input" class="w-full px-3 py-2 bg-zinc-100 rounded-4 text-slate-900 dark:bg-sky-950 dark:text-zinc-200 focus:outline-none focus:bg-zinc-100">
-                              
+                              <input type="range" value="1" onmouseup="KategoriaFeltolt('kategoria_section', 'check', '',true)"  class="slider form-range w-100 rounded-4" id="min_ar" >
+
                               <h3 class="font-semibold text-gray-900 mt-3">Max. ár</h3>
                               <input type="number" onchange="KategoriaFeltolt('kategoria_section', 'check', '',true)" placeholder="Max" id="max_ar_input" class="w-full px-3 py-2 bg-zinc-100 rounded-4 text-slate-900 dark:bg-sky-950 dark:text-zinc-200 focus:outline-none focus:bg-zinc-100">
-                          </div>
+                              <input type="range" value="1" onmouseup="KategoriaFeltolt('kategoria_section', 'check', '',true)"  class="slider form-range w-100 rounded-4" id="max_ar">
+                            </div>
                       </div>
                   </div>
   
@@ -306,7 +308,7 @@
               <!-- Termékek rész -->
               <main class="flex-1">
                   <!-- Rendezés és találatok -->
-                  <div class="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <div class="bg-transparent p-4 rounded-lg mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                       <div class="flex flex-col sm:flex-row justify-center items-center gap-2">
                         <p class="text-gray-600" id="keresett_kifejezes"></p>
                         <p class="text-gray-600" id="débé"></p>
@@ -327,7 +329,7 @@
                   </div>
   
                   <!-- Termék grid -->
-                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="termekek_hely">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6" id="termekek_hely">
                       <!-- Termék kártya 1 -->
                       
                   </div>

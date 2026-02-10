@@ -58,7 +58,7 @@ html, body {
     transition: transform 0.3s ease-in-out;
 }
 
-@media (max-width: 768px) {
+@media (width < 1024px) {
     #filterSidebar {
         transform: translateX(100%); /* jobb oldalról jön be */
         right: 0; /* jobb oldalon pozícionálva */
@@ -67,6 +67,19 @@ html, body {
     #filterSidebar.active {
         transform: translateX(0);
     }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }

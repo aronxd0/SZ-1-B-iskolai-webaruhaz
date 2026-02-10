@@ -435,40 +435,40 @@ async function ArFeltolt(sql, min ,max){
         
         // ha nincs találat akkor a max és min ár 0 legyen
         if(arak.rows[0].MINAR == null){
-            /*
+            
             document.getElementById("min_ar").min = 0;
             document.getElementById("min_ar").max = 0;
             document.getElementById("max_ar").max = 0;
             document.getElementById("max_ar").min = 0;
             document.getElementById("max_ar").value = 0;
             document.getElementById("min_ar").value = 0;
-            */
+            
             document.getElementById("min_ar_input").value = 0;
             document.getElementById("max_ar_input").value = 0;
             return;
         }
 
-        /*
+        
         var elozomin = parseInt( document.getElementById("min_ar").min)// lekérdezes a csuszak minimum értékét mielött megváltoztatom
         var elozomax = parseInt( document.getElementById("max_ar").max)// lekérdezes a csuszak maximum értékét mielött megváltoztatom
-        */
+        
 
         // ha az előző minimum érték = a mostani minimum érték 
         // vagy a mostani minimum nagyobb mint a lekérdezett utáni maximum ár 
         // akkor az új minimum legyen a lekérdezett minimuma
-        //if (elozomin == min || min > arak.rows[0].MAXAR){ min = arak.rows[0].MINAR; }
+        if (elozomin == min || min > arak.rows[0].MAXAR){ min = arak.rows[0].MINAR; }
 
         // ha az előző maximum érték = a mostani maximum érték 
         // akkor a maximum legyen a lekérdezett maximuma
-        //if(elozomax == max){ max = arak.rows[0].MAXAR; }
+        if(elozomax == max){ max = arak.rows[0].MAXAR; }
 
-        /*
+        
         document.getElementById("min_ar").min = arak.rows[0].MINAR;
         document.getElementById("min_ar").max = arak.rows[0].MAXAR;
 
         document.getElementById("max_ar").max = arak.rows[0].MAXAR;
         document.getElementById("max_ar").min = arak.rows[0].MINAR; 
-        */
+        
 
         
         // ha a mostani minimum kisebb mint a lekérdezett minimum 
@@ -479,7 +479,7 @@ async function ArFeltolt(sql, min ,max){
         }
         // ha a mostani minimum nagyobb mint a lekérdezett minimum
         //  akkor a minimum legyen a mostani minimum
-        //else { document.getElementById("min_ar").value = min; }
+        else { document.getElementById("min_ar").value = min; }
 
         // ha a mostani maximum nagyobb mint a lekérdezett maximum 
         // akkor a maximum legyen a lekérdezett maximuma
@@ -489,7 +489,7 @@ async function ArFeltolt(sql, min ,max){
         }
         // ha a mostani maximum kisebb mint a lekérdezett maximum 
         // akkor a maximum legyen a mostani maximum
-        //else { document.getElementById("max_ar").value = max; }  
+        else { document.getElementById("max_ar").value = max; }  
         
 
         document.getElementById("min_ar_input").value = min;
