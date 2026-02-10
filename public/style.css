@@ -67,6 +67,7 @@ html, body {
     }
     #filterSidebar.active {
         transform: translateX(0);
+        background-color: var(--zinc-50);
     }
 }
 
