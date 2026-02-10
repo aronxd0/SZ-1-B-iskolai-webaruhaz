@@ -121,6 +121,7 @@ function update_gombok (x) {
             </label>`);
         $("#admin-menupont").html("");
         $("#rendeles-menupont").html("");
+        $("#fiok_gombdiv").html("");
     }
     // sima user
     if (x == 1) { 
@@ -138,6 +139,10 @@ function update_gombok (x) {
                 <span> Rendelések</span>
             </button>`);
         $("#admin-menupont").html("");
+        $("#fiok_gombdiv").html(`
+            <button type="button" aria-label="Profil" class="px-3 py-1 text-2xl rounded-4 bg-transparent text-slate-900/50 dark:text-zinc-200/50 hover:text-slate-900 dark:hover:text-zinc-200 transition-all duration-150 w-full " data-bs-toggle="modal" data-bs-target="#profil">
+                <i class="bi bi-person"></i>
+            </button>`);
     }
     // admin/webadmin
     if (x == 2) {
@@ -189,6 +194,10 @@ function update_gombok (x) {
                     </li>
                 </ul>
             </div>`);
+            $("#fiok_gombdiv").html(`
+                <button type="button" aria-label="Profil" class="px-3 py-1 text-2xl rounded-4 bg-transparent text-slate-900/50 dark:text-zinc-200/50 hover:text-slate-900 dark:hover:text-zinc-200 transition-all duration-150 w-full " data-bs-toggle="modal" data-bs-target="#profil">
+                    <i class="bi bi-person"></i>
+                </button>`);
     }
 }
 
