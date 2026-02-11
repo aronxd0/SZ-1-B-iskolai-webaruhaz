@@ -224,6 +224,7 @@ function Velemeny_Iras(id_termek) {
       </button>
     `;
     $("#interakcio").html(gombs);
+    $("#velemeny_hiba").html("");
     $("#velemeny_iras").modal("show");
 }
 
