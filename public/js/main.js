@@ -636,6 +636,12 @@ function KezdolapElemekViszlat() {
     $("#tutorial").fadeOut(300);
 }
 
+function KezdolapElemekMegjelenit() {
+    $("#welcome_section").fadeIn(300);
+    $("#kateogoria-carousel").fadeIn(300);
+    $("#tutorial").fadeIn(300);
+}
+
 async function Kezdolap(pushHistory = true) {
     
 
@@ -664,9 +670,7 @@ async function Kezdolap(pushHistory = true) {
     $("#szurok_menu").addClass("eltunt");
     
     $("#keresett_kifejezes").html("");
-    $("#welcome_section").fadeIn(300);
-    $("#kateogoria-carousel").fadeIn(300);
-    $("#tutorial").fadeIn(300);
+    KezdolapElemekMegjelenit();
 
     if (pushHistory) {
         SPAState.currentView = 'home';
@@ -680,6 +684,7 @@ async function Kezdolap(pushHistory = true) {
 }
 
 async function Szurok_Torlese() {
+    $("#nev1").val("");
     bepipaltID = "";
     minarr = 0;
     maxarr = 0;
@@ -693,6 +698,7 @@ async function Szurok_Torlese() {
     $("#min_ar_input").val(0); 
     $("#max_ar_input").val(0);
     await KERESOBAR();
+    KezdolapElemekMegjelenit();
 }
 
 async function KategoriaKezdolap(id_kategoria, kategoria_nev) {

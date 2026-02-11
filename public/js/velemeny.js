@@ -1,18 +1,25 @@
 // velemenyek irasa, torlese, megjelenitese
 
 async function Velemeny_Kozzetesz(id_termek) {
-    if ($("#velemeny_input").val() != "") {
-        try {
-            let velemenyiras = await ajax_call(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, "POST", null, true);
-            $("#velemeny_iras").modal("hide");
- 
-            if (velemenyiras.message == "ok") {
-                üzen(`Vélemény elküldve`,"success");
-                $("#velemeny_input").val("");
-                VelemenyekMutat(id_termek);
-            }
-        }  catch (err) { console.error(err); }
+    if ($("#velemeny_input").val().trim().includes("<") || $("#velemeny_input").val().trim().includes("%") || $("#velemeny_input").val().trim().includes("$") || $("#velemeny_input").val().trim().includes("{") || $("#velemeny_input").val().trim().includes("}") || $("#velemeny_input").val().trim().includes("&")) {
+        $("#velemeny_hiba").html("A vélemény nem megengedett karaktereket tartalmaz!");
+        return;
     }
+    else {
+        if ($("#velemeny_input").val() != "") {
+            try {
+                let velemenyiras = await ajax_call(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, "POST", null, true);
+                $("#velemeny_iras").modal("hide");
+    
+                if (velemenyiras.message == "ok") {
+                    üzen(`Vélemény elküldve`,"success");
+                    $("#velemeny_input").val("");
+                    VelemenyekMutat(id_termek);
+                }
+            }  catch (err) { console.error(err); }
+        }
+    }
+    
 }
 
 async function Velemeny_Torles(id_velemeny, id_termek) {
