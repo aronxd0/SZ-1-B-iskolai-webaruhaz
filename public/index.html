@@ -50,7 +50,7 @@
                 </li>
 
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
-                  <div class="me-3 ms-3" id="loginout_gombdiv">
+                  <div class="me-3 ms-xl-3" id="loginout_gombdiv">
                     <button id="login_button" type="button" class="px-3 py-1 text-base !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full" > 
                       <i class="bi bi-box-arrow-in-right" id="loginout"></i>
                       <span id="loginspan"> Bejelentkezés</span>
@@ -239,12 +239,7 @@
         <div id="content_hely" class="max-w-8xl mx-auto px-4 py-6hidden"></div>
 
         <div class="max-w-8xl mx-auto px-4 py-6" id="main_kontener">
-          <button id="filterToggle" class="lg:hidden bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
-            </svg>
-            Szűrők
-        </button>
+          
           <div class="flex gap-6">
               <!-- Szűrő Sidebar - ugyanaz az elem asztali és mobil nézethez -->
               <aside id="filterSidebar" class="
@@ -309,7 +304,7 @@
                       </div>
                       
                       <div class="w-auto flex items-center gap-2">
-                        <label for="rend"><span class="text-base"><i class="bi bi-list-ol"></i> Rendezés</span></label>
+                        <label for="rend"><span class="text-base">Rendezés</span></label>
                         <select id="rend" onchange="KERESOBAR(false)" class="form-select w-50 shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20"> 
                           <option id="rendalap"  selected value="ar_csok">Ár ↓</option> 
                           <option value="ar_nov">Ár ↑</option> 
@@ -318,18 +313,23 @@
                           <option id="darable" value="db_csok">Darab ↓</option> 
                           <option id="darabfel" value="db_nov">Darab ↑</option> 
                         </select>
+                        <button id="filterToggle" class="lg:hidden bg-transparent text-slate-600 text-xl px-4 py-2 rounded-lg flex items-center gap-2 hover:text-slate-700 transition">
+                          <i class="bi bi-funnel-fill"></i>
+                        </button>
                       </div>
                       
                   </div>
   
                   <!-- Termék grid -->
                   <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6" id="termekek_hely">
-                      <!-- Termék kártya 1 -->
+                      
                       
                   </div>
-                  <div class="mt-6 flex justify-center" id="pagi"></div>
+                  
               </main>
+              
           </div>
+          <div class="mt-6 flex justify-center" id="pagi"></div>
       </div>
 
 

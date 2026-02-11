@@ -80,12 +80,14 @@ function openFilter() {
     filterSidebar.classList.add('active');
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 }
 
 function closeFilterFunc() {
     filterSidebar.classList.remove('active');
     overlay.classList.remove('active');
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
 }
 
 async function F5() {
@@ -390,7 +392,7 @@ function OLDALFELTOLT(darab) {
 }
 
 function Kovi(keri){
-    FelaTetore("felsosor");
+    FelaTetore("content");
     switch (keri.id){
         case("Kovi1"): // következő oldal
             if(Joldal < oldalszam){
