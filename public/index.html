@@ -829,12 +829,14 @@
               p-4"
       >
         
-        <div class="d-flex rounded-lg !border !border-slate-900 overflow-hidden">
+        <div class="d-flex rounded-lg !border !border-slate-300 dark:!border-zinc-200/20 overflow-hidden">
           <input id="nev1" name="keresescucc"
             type="text"
             placeholder="Keresés..."
             class="
               bg-zinc-50 
+              placeholder-gray-400 
+              dark:bg-slate-950 dark:text-zinc-200 dark:placeholder-gray-400
               flex-1
               px-4 py-2
               text-sm
@@ -848,8 +850,9 @@
               px-4 
               bg-slate-900 text-zinc-200 hover:bg-zinc-200 hover:text-slate-900
               text-sm font-medium
-              border-l border-slate-300
-              hover:bg-slate-100
+              dark:bg-gray-800 dark:hover:text-zinc-200 
+              !border-l !border-slate-300 dark:!border-zinc-200/20 
+              hover:bg-slate-100 dark:hover:bg-slate-700/70
               transition
             "
           >
