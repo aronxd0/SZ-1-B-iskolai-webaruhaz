@@ -110,6 +110,8 @@ async function Kosar_Mutat(pushHistory = true) {
     $("#content_hely").fadeOut(300, function() {
         if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { tartalom = vendegnezet; }
         $("#content_hely").html(tartalom).fadeIn(300);
+        $("#main_kontener").addClass("hidden");
+        $("#content_hely").removeClass("hidden");
         AR_SUM("termek_ar", "osszesen", false);
         AR_SUM("termek_ar", "sumar", true);
     });

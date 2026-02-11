@@ -38,6 +38,52 @@ html, body {
 
 .cim { font-size: 35px; }
 
+/* Overlay a mobilos offcanvas háttérhez */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+}
+.overlay.active {
+    display: block;
+}
+
+/* Szűrő sidebar animáció mobilon */
+#filterSidebar {
+    transition: transform 0.3s ease-in-out;
+}
+
+@media (width < 1024px) {
+    #filterSidebar {
+        transform: translateX(100%); /* jobb oldalról jön be */
+        right: 0; /* jobb oldalon pozícionálva */
+        left: auto;
+        background-color: var(--zinc-50);
+    }
+    #filterSidebar.active {
+        transform: translateX(0);
+        background-color: var(--zinc-50);
+    }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
