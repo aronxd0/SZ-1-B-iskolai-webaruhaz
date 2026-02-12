@@ -1,8 +1,5 @@
 /* Betűtípusok importálása */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,100..900;1,100..900&display=swap');
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* Az oldalon használt főbb színek változóba lementve hogy több helyen egyszerűen lehessen rájuk hivatkozni */
@@ -20,10 +17,7 @@
   --gray-600: oklch(44.6% 0.03 256.802);
 }
 
-/* Az oldalon minden szöveg ezzel a betűtípussal jelenjen meg */
 * { 
-  /*font-family: 'Poppins', sans-serif; font-weight: 300;*/
-  /*font-family: 'Anybody', sans-serif; font-weight: 500;*/
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -42,10 +36,7 @@ html, body {
 
 .navbar-toggler:focus { box-shadow: none; }
 
-.cim { 
-  font-size: 35px;
-  font-family: 'Poppins', sans-serif;
- }
+.cim { font-size: 35px;}
 
 /* Overlay a mobilos offcanvas háttérhez */
 .overlay {
@@ -86,23 +77,17 @@ html, body {
     }
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: rgba(100, 116, 139, 0.4);
   border-radius: 999px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-.offcanvas { font-size: 14px; }
 
 /* modal ablakok megnyitasakor blur hatter */
 .modal-open .modal-backdrop {
@@ -124,13 +109,9 @@ html, body {
   transform: translateY(0) scale(1);
 }
 
-#login_modal {
-  background-color: var(--zinc-300);
-}
+#login_modal { background-color: var(--zinc-300); }
 
-html.dark #login_modal {
-  background-color: var(--slate-900);
-}
+html.dark #login_modal { background-color: var(--slate-900); }
 
 .offcanvas-backdrop {
   transition: backdrop-filter 0.8s ease, background-color 0.8s ease, opacity 0.8s ease;
@@ -239,9 +220,7 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
   }
 }
 
-.table-responsive {
-  max-height: 600px;
-}
+.table-responsive { max-height: 600px; }
 
 .tablazat thead th {
   position: sticky;

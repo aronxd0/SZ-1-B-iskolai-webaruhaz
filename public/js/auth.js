@@ -13,7 +13,7 @@ function Frissites() {
         $("#loginspan").html(' Bejelentkezés');
         $("#loginout").removeClass("bi bi-box-arrow-in-left");
         $("#loginout").addClass("bi bi-box-arrow-in-right");
-        $("#vendegszoveg").html("Jelentkezz be a fiókodba");
+        $("#vendegszoveg").html("Jelenleg nem vagy bejelentkezve.");
         $("#user-email").html("");
         $("#rangok").html(``);
         $("#user").html("");

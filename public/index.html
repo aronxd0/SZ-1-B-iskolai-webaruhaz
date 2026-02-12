@@ -72,7 +72,7 @@
                   <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
                     <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
                       <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat(true)" data-bs-dismiss="offcanvas">
-                      <i class="bi bi-cart2"></i> 
+                      <i class="bi bi-bag"></i> 
                       <span class="group-has-[:checked]:font-semibold  transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
                     </div>
                   </label>
@@ -120,7 +120,10 @@
             </div>
 
             <div class="flex-grow-1">
-               <div class="d-flex flex-nowrap justify-content-end w-100 align-self-center align-items-center p-1 "> 
+               <div class="d-flex flex-nowrap justify-content-end w-100 align-self-center align-items-center p-1">
+                  <div class="me-2 flex items-center gap-2 text-sm text-slate-700 dark:text-zinc-400"> 
+                    <img src="https://flagcdn.com/hu.svg" class="block h-auto w-8 shrink-0" alt="Hungary"> <span>HUF</span>
+                  </div> 
                   <button type="button" aria-label="Keresés" class="btn btn-lg rounded-none bg-transparent text-slate-900/50 hover:text-slate-900 dark:bg-sky-950 dark:text-zinc-200/50 dark:hover:text-zinc-200 me-2 transition-hover duration-300 ease-in-out" id="kereses_menu" onclick="$('#keresomodal').modal('show')">
                     <i class="bi bi-search"></i>
                   </button>
@@ -282,6 +285,9 @@
                             </div>
                       </div>
                   </div>
+
+                  <div class="row mt-4" id="Elfogyott_gomb"></div>
+                  <div class="row mb-5" id="NEM_AKTIV"></div>
   
                   <!-- Gombok -->
                   <div class="space-y-4">
