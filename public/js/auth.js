@@ -43,8 +43,8 @@ function Frissites() {
     // Ez akkor ha be van jelentkezve
     else { 
         rang = "";
-        $("#user").html(`<i class="bi bi-person"></i> <h5>${bejelentkezett_usernev}</h5>`);
-        $("#user-email").html(`<i class="bi bi-envelope"></i> <span>${bejelentkezett_useremail}</span>`);
+        $("#user").html(`<h5>${bejelentkezett_usernev}</h5>`);
+        $("#user-email").html(`<span>${bejelentkezett_useremail}</span>`);
         $("#vendegszoveg").html("");
         $("#udv").html(`Üdvözlünk a Csány webáruházban <span class="font-semibold">${bejelentkezett_usernev.split(" ")[1]}</span>!`);
         rang += RangokHTML(csoport, "sm");

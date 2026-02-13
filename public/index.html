@@ -516,6 +516,90 @@
     </div>
   </div>
 
+
+  <!-- MODAL -->
+  <div class="modal fade" id="profil" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+      <div class="modal-content rounded-2xl overflow-hidden
+                  bg-zinc-200 dark:bg-slate-950
+                  text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20">
+
+        <!-- FELSŐ SZÜRKE SÁV -->
+        <div class="h-24 bg-zinc-300 dark:bg-slate-900"></div>
+
+        <!-- TARTALOM -->
+        <div class="px-6 pb-6 -mt-3">
+
+          <!-- AVATAR + NÉV -->
+          <div class="flex items-center gap-4">
+            <div
+              class="w-20 h-20 rounded-full bg-zinc-100 dark:bg-slate-900
+                    flex items-center justify-center">
+              <i class="bi bi-person-circle text-[5.5rem] leading-none"></i>
+            </div>
+
+            <div class="mt-2">
+              <p class="font-semibold text-lg" id="user">NÉV</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400" id="user-email">E_MAIL</p>
+            </div>
+          </div>
+
+          <!-- RANGOK -->
+          <div class="mt-6">
+            <div class="flex flex-wrap gap-2" id="rangok">
+              <span class="px-3 py-1 text-xs rounded-full bg-indigo-100 text-indigo-700">Admin</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-emerald-100 text-emerald-700">VIP</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-zinc-200 text-zinc-700">User</span>
+            </div>
+          </div>
+          <div class="mt-2" id="vendegszoveg"></div>
+          <!-- ELVÁLASZTÓ -->
+          <hr class="my-6 border-zinc-200 dark:border-zinc-800">
+
+          <!-- RENDELÉSEK -->
+          <div class="p-1" id="rendeles-menupont"></div>
+
+          <!-- TÉMA -->
+          <div class="mt-6">
+            <p class="text-sm font-medium mb-2">TÉMA</p>
+            <div class="col-12 d-flex flex-column flex-lg-row gap-3">
+              <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
+                <div class="flex items-center gap-3">
+                  <input type="radio" name="tema" class="form-check-input hidden" id="light" onchange="Temavalto(this)">
+                  <span class="font-semibold">Világos&nbsp;</span>
+                </div>
+                <div class="d-flex justify-content-end align-items-center">
+                  <i class="bi bi-sun-fill"></i>
+                </div>
+              </label>
+              <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
+                <div class="flex items-center gap-3">
+                  <input type="radio" name="tema" class="form-check-input hidden" id="dark" onchange="Temavalto(this)">
+                  <span class="font-semibold">Sötét&nbsp;</span>
+                </div>
+                <div class="d-flex justify-content-end align-items-center">
+                  <i class="bi bi-moon-fill"></i>
+                </div>
+              </label>
+              <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
+                <div class="flex items-center gap-3">
+                  <input type="radio" name="tema" class="form-check-input hidden" id="system" onchange="Temavalto(this)">
+                  <span class="font-semibold">Rendszer&nbsp;</span>
+                </div>
+                <div class="d-flex justify-content-end align-items-center">
+                  <i class="bi bi-gear-fill"></i>
+                </div>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--
   <div class="modal fade" id="profil">
     <div class="modal-dialog modal-dialog-centered modal-md">
       <div class="modal-content dark:!border dark:!border-zinc-200/20 ">
@@ -578,6 +662,7 @@
       </div>
     </div>
   </div>
+  -->
 
   <div class="modal fade" id="fizetes">
     <div class="modal-dialog modal-fullscreen-xl-down modal-xl modal-dialog-scrollable modal-dialog-centered">

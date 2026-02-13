@@ -39,7 +39,7 @@ let kosarmenupont = `
 let rendelesmenupont = `
     <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
         <i class="bi bi-bag-check"></i>
-        <span> Rendelések</span>
+        <span> Rendeléseim</span>
     </button>`;
 
 function randomElem(tomb) { return tomb[Math.floor(Math.random() * tomb.length)]; }
