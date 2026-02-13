@@ -24,22 +24,19 @@
   font-style: normal;
 }
 
-/* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
-html, body { 
+html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
   overflow-x: hidden; 
   max-width: 100%;
   color-scheme: light dark;
 }
 
-/* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
-.container-fluid { padding-left: 0 !important; padding-right: 0 !important; }
+.container-fluid { padding-left: 0 !important; padding-right: 0 !important; } /* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
 
 .navbar-toggler:focus { box-shadow: none; }
 
 .cim { font-size: 35px;}
 
-/* Overlay a mobilos offcanvas háttérhez */
-.overlay {
+.overlay { /* Overlay a mobilos offcanvas háttérhez */
     display: none;
     position: fixed;
     top: 0;
@@ -109,10 +106,6 @@ html, body {
   transform: translateY(0) scale(1);
 }
 
-#login_modal { background-color: var(--zinc-300); }
-
-html.dark #login_modal { background-color: var(--slate-900); }
-
 .offcanvas-backdrop {
   transition: backdrop-filter 0.8s ease, background-color 0.8s ease, opacity 0.8s ease;
   backdrop-filter: blur(0px);
@@ -133,14 +126,7 @@ html.dark #login_modal { background-color: var(--slate-900); }
 
 .hovered { aspect-ratio: auto; }
 
-.shadow-bottom { box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175); }
-
 .dropdown-toggle::after { display: none !important; }
-
-/* velemeny iras mezo merete */
-#velemeny_input { height: 150px; }
-
-#mod_leiras { height: 150px; }
 
 .eltunt { display: none !important; }
 
@@ -154,20 +140,16 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 html.dark ::-webkit-slider-runnable-track { background: var(--slate-700); }
 
-/* scrollbar szelesseg */
-::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar { width: 9px; } /* scrollbar szelesseg */
 
-/* az egesz */
-::-webkit-scrollbar-track { background: var(--gray-200); }
+::-webkit-scrollbar-track { background: var(--gray-200); } /* az egesz */
 
-/* a cucc ami benne van amit lehet huzni */
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb { /* a cucc ami benne van amit lehet huzni */
   background: var(--gray-400); 
   border-radius: 9999px;
 }
 
-/* sotetben */
-html.dark ::-webkit-scrollbar-track { background: var(--gray-900); }
+html.dark ::-webkit-scrollbar-track { background: var(--gray-900); } /* sotetben */
 
 html.dark ::-webkit-scrollbar-thumb { background: var(--gray-600); }
 
@@ -201,16 +183,6 @@ html.dark .autocomplete-items div { background-color: var(--slate-950); color: v
 html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
 
 .autocomplete-active { background-color: #0d6efd !important; color: #fff; }
-
-#nezetkicsi {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-#nezetnagy {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
 
 @media (width < 1200px) {  
   #top-navbar.offcanvas-start {
