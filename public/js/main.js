@@ -27,6 +27,21 @@ const jelzok = ["nagyon jó", "elég hasznos", "egészen érdekes", "meglepően 
 const kozospontok = ["és", "de", "ráadásul", "viszont", "ugyanakkor"];
 const zaro = [".", "!", " 😊", " 😎", "."]
 
+let kosarmenupont = `
+    <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
+        <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
+        <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
+        <i class="bi bi-bag"></i> 
+        <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
+        </div>
+    </label>`;
+
+let rendelesmenupont = `
+    <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
+        <i class="bi bi-bag-check"></i>
+        <span> Rendelések</span>
+    </button>`;
+
 function randomElem(tomb) { return tomb[Math.floor(Math.random() * tomb.length)]; }
 
 function RandomVelemeny() {
@@ -96,25 +111,12 @@ async function F5() {
         bejelentkezett_useremail = JSON.parse(localStorage.getItem("user") || "{}")?.email || "";
         csoport = JSON.parse(localStorage.getItem("user") || "{}")?.group || "";
 
-        const ae = await Admin_ellenorzes();
-        
+        const ae = await Admin_ellenorzes();        
         if (ae.admin) { admin = true; }
         if (ae.webadmin) { webbolt_admin = true; }
 
         const tema = localStorage.getItem("theme") || "system";
         Megjelenes(tema);
-        /*
-        if ((JSON.parse(localStorage.getItem("user") || "{}")?.ui.theme) == "dark") { 
-            $("html").addClass("dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i>`); 
-            user.ui = { ...user.ui, theme: "dark" };
-        }
-        else {
-            $("html").removeClass("dark");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
-            user.ui = { ...user.ui, theme: "light" };
-        }
-        */
         Frissites();
     } else { 
         Frissites();
@@ -157,51 +159,22 @@ function RangokHTML(rang) {
 function update_gombok (x) {
     // vendeg
     if (x == 0) { 
-        $("#kosar-menupont").html(`
-            <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
-                <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
-                <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
-                <i class="bi bi-bag"></i> 
-                <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
-                </div>
-            </label>`);
+        $("#kosar-menupont").html(kosarmenupont);
         $("#admin-menupont").html("");
         $("#rendeles-menupont").html("");
         
     }
     // sima user
     if (x == 1) { 
-        $("#kosar-menupont").html(`
-            <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
-                <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
-                <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
-                <i class="bi bi-bag"></i> 
-                <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
-                </div>
-            </label>`);
-        $("#rendeles-menupont").html(`
-            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
-                <i class="bi bi-bag-check"></i>
-                <span> Rendelések</span>
-            </button>`);
+        $("#kosar-menupont").html(kosarmenupont);
+        $("#rendeles-menupont").html(rendelesmenupont);
         $("#admin-menupont").html("");
         
     }
     // admin/webadmin
     if (x == 2) {
-        $("#kosar-menupont").html(`
-            <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2 cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
-                <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
-                <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
-                <i class="bi bi-bag"></i> 
-                <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
-                </div>
-            </label>`);
-        $("#rendeles-menupont").html(`
-            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
-                <i class="bi bi-bag-check"></i>
-                <span> Rendelések</span>
-            </button>`);
+        $("#kosar-menupont").html(kosarmenupont);
+        $("#rendeles-menupont").html(rendelesmenupont);
         $("#admin-menupont").html(`
             <div class="dropdown">
                 <button id="admin_button" type="button" class="dropdown-toggle py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex" data-bs-toggle="dropdown">
