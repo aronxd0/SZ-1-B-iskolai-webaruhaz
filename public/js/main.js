@@ -392,7 +392,7 @@ function OLDALFELTOLT(darab) {
 }
 
 function Kovi(keri){
-    FelaTetore("content");
+    FelaTetore("main_kontener");
     switch (keri.id){
         case("Kovi1"): // következő oldal
             if(Joldal < oldalszam){
@@ -720,7 +720,12 @@ function FelaTetore(target = "top") {
     }
     const el = document.getElementById(target);
     if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    const plusz = 100;
+    // elem pozíciója a viewporthoz képest + jelenlegi scroll pozíció - plusz érték 
+    const y = el.getBoundingClientRect().top + window.pageYOffset - plusz; 
+
+    window.scrollTo({ top: y, behavior: "smooth" });
 }
 
 function sleep(ms) {
