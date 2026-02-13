@@ -528,11 +528,9 @@
             <div class="text-start text-sm d-flex gap-2" id="user"></div>
             <div class="text-start text-sm d-flex gap-2" id="user-email"></div>
           </div>
-
           <div class="row py-3">
             <div class="col-12 text-start d-flex justify-content-start gap-x-3" id="rangok"></div>
           </div>
-
           <div class="row mt-3">
             <div class="col-12 d-flex justify-content-start flex-column flex-sm-row">
               <div class="p-1" id="rendeles-menupont">
@@ -555,7 +553,6 @@
                   <i class="bi bi-sun-fill"></i>
                 </div>
               </label>
-
               <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
                 <div class="flex items-center gap-3">
                   <input type="radio" name="tema" class="form-check-input hidden" id="dark" onchange="Temavalto(this)">
@@ -565,7 +562,6 @@
                   <i class="bi bi-moon-fill"></i>
                 </div>
               </label>
-
               <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
                 <div class="flex items-center gap-3">
                   <input type="radio" name="tema" class="form-check-input hidden" id="system" onchange="Temavalto(this)">
@@ -590,7 +586,6 @@
           <button type="button" class="btn btn-lg text-slate-900 hover:text-slate-900 dark:text-zinc-200 dark:hover:text-zinc-200" data-bs-dismiss="modal"><i class="bi bi-arrow-left"></i></button>
           <span class="modal-title text-xl">Rendelés véglegesítése</span>
         </div>
-
         <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
           <div class="row">
             <div class="col-12 text-center" id="aktualis"></div>
@@ -600,7 +595,6 @@
             <div id="cc" class="relative"></div>
           </div>
         </div>
-
         <div class="modal-footer d-flex justify-content-between bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
           <div class="row">
             <div class="col-12 text-center">A vásárlással elfogadja a <span class="text-primary">felhasználási feltételeket</span> és az <span class="text-primary">adatvédelmi tájékoztatót</span></div>
@@ -681,40 +675,10 @@
 
   <div class="modal fade" id="keresomodal" tabindex="-1">
     <div class="modal-dialog">
-      <div
-        class="modal-content
-              rounded-xl
-              bg-zinc-300 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20
-              p-4"
-      >
-        
+      <div class="modal-content rounded-xl bg-zinc-300 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 p-4">
         <div class="d-flex rounded-lg !border !border-slate-300 dark:!border-zinc-200/20 overflow-hidden">
-          <input id="nev1" name="keresescucc"
-            type="text"
-            placeholder="Keresés..."
-            class="
-              bg-zinc-50 
-              placeholder-gray-400 
-              dark:bg-slate-950 dark:text-zinc-200 dark:placeholder-gray-400
-              flex-1
-              px-4 py-2
-              text-sm
-              focus:outline-none
-            "
-          />
-
-          <button type="button" aria-label="Keresés" id="kereses_gomb"
-            class="
-              flex items-center gap-2
-              px-4 
-              bg-slate-900 text-zinc-200 hover:bg-zinc-200 hover:text-slate-900
-              text-sm font-medium
-              dark:bg-gray-800 dark:hover:text-zinc-200 
-              !border-l !border-slate-300 dark:!border-zinc-200/20 
-              hover:bg-slate-100 dark:hover:bg-slate-700/70
-              transition
-            "
-          >
+          <input id="nev1" name="keresescucc" type="text" placeholder="Keresés..." class=" bg-zinc-50 placeholder-gray-400 dark:bg-slate-950 dark:text-zinc-200 dark:placeholder-gray-400 flex-1 px-4 py-2 text-sm focus:outline-none"/>
+          <button type="button" aria-label="Keresés" id="kereses_gomb" class=" flex items-center gap-2 px-4 bg-slate-900 text-zinc-200 hover:bg-zinc-200 hover:text-slate-900 text-sm font-medium dark:bg-gray-800 dark:hover:text-zinc-200 !border-l !border-slate-300 dark:!border-zinc-200/20 hover:bg-slate-100 dark:hover:bg-slate-700/70 transition">
             <i class="bi bi-search"></i>
           </button>
         </div>
