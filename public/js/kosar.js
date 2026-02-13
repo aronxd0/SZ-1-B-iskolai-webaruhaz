@@ -23,12 +23,13 @@ async function Kosar_Mutat(pushHistory = true) {
     tetelekli = [];
     let tartalom = `
         <div class="max-w-7xl mx-auto px-4 py-10">
+            ${kosarsegito}
             <div class="d-flex w-full align-items-center justify-content-between">
-                <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 mb-8 w-auto">
+                <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 p-2 mb-8 w-auto">
                     A kosarad tartalma
                 </h1>
             </div>
-            ${kosarsegito}
+            
             
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-6">`;
@@ -205,7 +206,7 @@ async function KosarPLUSZ(id) {
 
     if ($(`#${idk}2`).val() == 1 && PluszVAGYminusz == -1) { üzen("A terméket a törlés (<i class='bi bi-trash'></i>) gombbal tudod eltávolítani a kosárból!", "info"); }
     document.getElementById(`${idk}2`).value = mennyiseg;
-    document.getElementById(`${idk}3`).innerHTML = `<h4 class="text-slate-900 dark:text-zinc-200 font-semibold termek_ar">${money.toLocaleString()} Ft<h4>`;
+    document.getElementById(`${idk}3`).innerHTML = `<span class="termek_ar">${money.toLocaleString()} Ft</span>`;
 
     $("#pay_button").html(`<button id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})' class="mt-6 w-full rounded-lg bg-slate-950 dark:bg-gray-800  text-zinc-200 hover:bg-zinc-100 hover:text-slate-950 !border !border-transparent hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out py-3 font-medium">Tovább &nbsp; <i class="bi bi-arrow-right"></i></button>`);
 
