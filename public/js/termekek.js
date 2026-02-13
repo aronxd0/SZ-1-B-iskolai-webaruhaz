@@ -291,7 +291,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
     `;
 
     let termek_megtekintes = `
-      <div class="container">
+      <div class="container mt-3">
         <div class="row g-5">
           <div class="col-12 col-xl-7">
             <div onmousemove="zoomMove(event, this)" onmouseleave="zoomReset(this)" class="relative w-full h-[420px] lg:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl overflow-hidden bg-zinc-300 dark:bg-slate-950">

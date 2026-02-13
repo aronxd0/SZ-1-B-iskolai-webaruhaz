@@ -166,8 +166,8 @@
       </div>
     
       <div class="container-fluid mt-[100px]" id="content">
-        <div class="row bg-zinc-50 dark:bg-sky-950/20" id="tutorial">
-          <hr class="text-gray-500 dark:text-zinc-200/30">
+        <div class="row bg-zinc-50 dark:bg-sky-950/20 !border !border-b-slate-900/20 !border-t-slate-900/20 dark:!border-b-zinc-200/20 dark:!border-t-zinc-200/20" id="tutorial">
+          
           <div class="col-0 col-xxl-1"></div>
           <div class="col-12 col-xxl-10 ">
             <div class="d-flex flex-column gap-3 mt-5 justify-content-center align-items-center p-2 w-full">
@@ -235,25 +235,17 @@
           </div>
           <div class="col-0 col-xxl-1"></div>
         </div>
-        <hr class="text-gray-500 dark:text-zinc-200/30">   
+          
 
         <div id="overlay" class="overlay"></div>
 
         <div id="content_hely" class="max-w-8xl mx-auto px-4 py-6hidden"></div>
 
         <div class="max-w-8xl mx-auto px-4 py-6" id="main_kontener">
-          
           <div class="flex gap-6">
-              <!-- Szűrő Sidebar - ugyanaz az elem asztali és mobil nézethez -->
-              <aside id="filterSidebar" class="
-                  fixed lg:sticky top-0 left-0 h-screen lg:h-auto
-                  w-80 lg:w-64 xl:w-72
-                  bg-zinc-100 dark:bg-slate-950/5 dark:text-zinc-200 p-6 lg:rounded-lg !border-l !border-zinc-200/20 lg:!border-0
-                  z-[1050] lg:z-auto
-                  overflow-y-auto
-              ">
+              <aside id="filterSidebar" class="fixed lg:sticky top-0 left-0 h-screen lg:h-auto w-80 lg:w-64 xl:w-72 bg-zinc-100 dark:bg-slate-950/5 dark:text-zinc-200 p-6 lg:rounded-lg !border-l !border-zinc-200/20 lg:!border-0 z-[1050] lg:z-auto overflow-y-auto">
                   <!-- Mobil bezárás gomb -->
-                  <div class="lg:hidden flex justify-between items-center mb-4 pb-4 !border-b !border-gray-300 dark:!border-zinc-200/30">
+                  <div class="lg:hidden flex justify-between items-center mb-4 pb-4 !border-b !border-gray-300 dark:!border-zinc-200/30"> 
                       <h2 class="text-lg font-bold">Szűrők</h2>
                       <button id="closeFilter" class="text-gray-500 hover:text-gray-700">
                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -261,35 +253,26 @@
                           </svg>
                       </button>
                   </div>
-  
                   <h2 class="text-lg font-bold mb-4 hidden lg:block">Szűrők</h2>
-  
-                  <!-- Kategória szűrő -->
                   <div class="mb-6">
                       <h3 class="font-semibold text-gray-900 dark:text-gray-200 mb-3">Kategória</h3>
                       <div class="custom-scrollbar space-y-3 max-h-[35vh] overflow-y-auto overflow-x-hidden rounded-xl !border !border-slate-200 dark:!border-zinc-200/20 px-4 py-2 shadow-sm" id="kategoria_section"></div>
                   </div>
-  
-                  <!-- Ár szűrő -->
                   <div class="mb-6 pb-6 !border-b !border-gray-300 dark:!border-zinc-200/30">
-                      
                       <div class="space-y-3">
                           <div class="flex flex-col gap-2 items-start">
                               <h3 class="font-semibold text-gray-900 dark:text-gray-200">Min. ár</h3>
-                              <input type="number" onchange="KategoriaFeltolt('kategoria_section', 'check', '',true)" placeholder="Min" id="min_ar_input" class="w-full px-3 py-2 bg-zinc-100 rounded-4 text-slate-900 dark:bg-sky-950 dark:text-zinc-200 focus:outline-none focus:bg-zinc-100">
+                              <input type="number" onchange="KategoriaFeltolt('kategoria_section', 'check', '',true)" placeholder="Min" id="min_ar_input" class="w-full px-3 py-2 bg-zinc-100 rounded-4 text-slate-900 dark:bg-slate-900 dark:!border dark:!border-zinc-200/10 dark:text-zinc-200 focus:outline-none focus:bg-zinc-100">
                               <input type="range" value="1" onmouseup="KategoriaFeltolt('kategoria_section', 'check', '',true)"  class="slider form-range w-100 rounded-4" id="min_ar" >
 
                               <h3 class="font-semibold text-gray-900 dark:text-gray-200 mt-3">Max. ár</h3>
-                              <input type="number" onchange="KategoriaFeltolt('kategoria_section', 'check', '',true)" placeholder="Max" id="max_ar_input" class="w-full px-3 py-2 bg-zinc-100 rounded-4 text-slate-900 dark:bg-sky-950 dark:text-zinc-200 focus:outline-none focus:bg-zinc-100">
+                              <input type="number" onchange="KategoriaFeltolt('kategoria_section', 'check', '',true)" placeholder="Max" id="max_ar_input" class="w-full px-3 py-2 bg-zinc-100 rounded-4 text-slate-900 dark:bg-slate-900 dark:!border dark:!border-zinc-200/10 dark:text-zinc-200 focus:outline-none focus:bg-zinc-100">
                               <input type="range" value="1" onmouseup="KategoriaFeltolt('kategoria_section', 'check', '',true)"  class="slider form-range w-100 rounded-4" id="max_ar">
                             </div>
                       </div>
                   </div>
-
                   <div class="row mt-4" id="Elfogyott_gomb"></div>
                   <div class="row mb-5" id="NEM_AKTIV"></div>
-  
-                  <!-- Gombok -->
                   <div class="space-y-4">
                       <button class="py-2 px-4 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full" id="szurogomb">
                           <i class="bi bi-search"></i> Keresés
@@ -299,16 +282,12 @@
                       </button>
                   </div>
               </aside>
-  
-              <!-- Termékek rész -->
               <main class="flex-1">
-                  <!-- Rendezés és találatok -->
                   <div class="bg-transparent p-4 rounded-lg mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                       <div class="flex flex-col sm:flex-row justify-center items-center gap-2">
                         <p class="text-gray-600" id="keresett_kifejezes"></p>
                         <p class="text-gray-600" id="débé"></p>
                       </div>
-                      
                       <div class="w-auto flex items-center gap-2">
                         <label for="rend"><span class="text-base">Rendezés</span></label>
                         <select id="rend" onchange="KERESOBAR(false)" class="form-select w-50 shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20"> 
@@ -323,17 +302,9 @@
                           <i class="bi bi-funnel-fill"></i>
                         </button>
                       </div>
-                      
                   </div>
-  
-                  <!-- Termék grid -->
-                  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6" id="termekek_hely">
-                      
-                      
-                  </div>
-                  
+                  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6" id="termekek_hely"></div>
               </main>
-              
           </div>
           <div class="mt-6 flex justify-center" id="pagi"></div>
       </div>

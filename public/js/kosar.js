@@ -3,8 +3,8 @@
 let tetelekli = [];
 
 let kosarsegito = `
-    <span class="w-auto text-sm mb-8">
-        <button type="button" class="text-slate-950 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 d-flex align-self-center gap-2" onclick="KosarSegitseg()"><i class="bi bi-question-circle text-xl sm:text-base"></i><span class="d-none d-sm-inline"> Hogyan működik a kosár?</span></button>
+    <span class="w-auto text-sm p-2 h-full flex items-center">
+        <button type="button" class="text-slate-950 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 flex items-center gap-2" onclick="KosarSegitseg()"><i class="bi bi-question-circle text-xl lg:text-base"></i><span class="d-none d-lg-inline"> Hogyan működik a kosár?</span></button>
     </span>`;
 
 let ureskosar = `
