@@ -4,18 +4,26 @@ let tetelekli = [];
 
 let kosarsegito = `
     <span class="w-auto text-sm p-2 h-full flex items-center">
-        <button type="button" class="text-slate-950 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 flex items-center gap-2" onclick="KosarSegitseg()"><i class="bi bi-question-circle text-xl lg:text-base"></i><span class="d-none d-lg-inline"> Hogyan működik a kosár?</span></button>
+        <button type="button" class="text-slate-950 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 flex items-center gap-2 text-lg" onclick="KosarSegitseg()"><i class="bi bi-question-circle text-xl lg:text-base"></i><span class="d-none d-lg-inline"> Hogyan működik a kosár?</span></button>
     </span>`;
 
 let ureskosar = `
-    <div class="col-12 d-flex w-full justify-content-between align-items-center">
-        <div class="text-center p-2" id="kosarmenutitle"><h5>A Kosarad ures</h5></div>
+    <div class="col-12 flex flex-col w-full justify-center items-center">
+        <div class="text-center p-2" id="kosarmenutitle">
+            <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 p-2 mb-4 w-auto">
+                A kosarad üres 
+            </h1>
+        </div>
         ${kosarsegito}
     </div>`;
 
 let vendegnezet = `
-    <div class="col-12 d-flex w-full justify-content-between align-items-center">
-        <div class="text-center p-2" id="kosarmenutitle">A Kosár használatához <a class="text-sky-500 hover:text-sky-700 dark:text-sky-500 dark:hover:text-sky-300 underline text-decoration-sky-500 hover:cursor-pointer" onclick="$('#login_modal').modal('show');">be kell jelentkezned</a></div>
+    <div class="col-12 flex flex-col w-full justify-center items-center">
+        <div class="text-center p-2" id="kosarmenutitle">
+            <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 p-2 mb-4 w-auto">
+                A Kosár használatához <a class="text-sky-500 hover:text-sky-700 dark:text-sky-500 dark:hover:text-sky-300 underline text-decoration-sky-500 hover:cursor-pointer font-semibold" onclick="$('#login_modal').modal('show');">be kell jelentkezned</a>
+            </h1>
+        </div>
         ${kosarsegito}
     </div>`;
 
@@ -195,18 +203,18 @@ async function KosarPLUSZ(id) {
     
     let mennyiseg = parseInt(db.rows[0].MENNYISEG);
     let ar = parseInt(db.rows[0].AR);
-    let money = mennyiseg * ar;
+    let penzecske = mennyiseg * ar;
 
     for (const element of tetelekli) {
         if (element.ID_TERMEK == parseInt(idk)) {
             element.MENNYISEG = mennyiseg;
-            element.PENZ = money;
+            element.PENZ = penzecske;
         };
     }
 
     if ($(`#${idk}2`).val() == 1 && PluszVAGYminusz == -1) { üzen("A terméket a törlés (<i class='bi bi-trash'></i>) gombbal tudod eltávolítani a kosárból!", "info"); }
     document.getElementById(`${idk}2`).value = mennyiseg;
-    document.getElementById(`${idk}3`).innerHTML = `<span class="termek_ar">${money.toLocaleString()} Ft</span>`;
+    document.getElementById(`${idk}3`).innerHTML = `<span class="termek_ar">${penzecske.toLocaleString()} Ft</span>`;
 
     $("#pay_button").html(`<button id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})' class="mt-6 w-full rounded-lg bg-slate-950 dark:bg-gray-800  text-zinc-200 hover:bg-zinc-100 hover:text-slate-950 !border !border-transparent hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out py-3 font-medium">Tovább &nbsp; <i class="bi bi-arrow-right"></i></button>`);
 
