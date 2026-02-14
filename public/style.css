@@ -1,20 +1,17 @@
-/* Betűtípusok importálása */
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* Az oldalon használt főbb színek változóba lementve hogy több helyen egyszerűen lehessen rájuk hivatkozni */
-:root {
+:root { /* Az oldalon használt főbb színek változóba lementve hogy több helyen egyszerűen lehessen rájuk hivatkozni */
+  --zinc-50: oklch(98.5% 0 0);
   --zinc-200: oklch(92% 0.004 286.32);
   --zinc-300: oklch(87.1% 0.006 286.286);
-  --slate-900: oklch(20.8% 0.042 265.755);
-  --slate-800: oklch(27.9% 0.041 260.031);
-  --slate-950: oklch(12.9% 0.042 264.695);
-  --zinc-50: oklch(98.5% 0 0);
   --slate-700: oklch(37.2% 0.044 257.287);
+  --slate-800: oklch(27.9% 0.041 260.031);
+  --slate-900: oklch(20.8% 0.042 265.755);
+  --slate-950: oklch(12.9% 0.042 264.695);  
   --gray-200: oklch(92.8% 0.006 264.531);
   --gray-400: oklch(70.7% 0.022 261.325);
-  --gray-900: oklch(21% 0.034 264.665);
   --gray-600: oklch(44.6% 0.03 256.802);
+  --gray-900: oklch(21% 0.034 264.665);
 }
 
 * { 
@@ -46,14 +43,9 @@ html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szél
     background: rgba(0, 0, 0, 0.5);
     z-index: 1050;
 }
-.overlay.active {
-    display: block;
-}
+.overlay.active { display: block; }
 
-/* Szűrő sidebar animáció mobilon */
-#filterSidebar {
-    transition: transform 0.3s ease-in-out;
-}
+#filterSidebar { transition: transform 0.3s ease-in-out; } /* Szűrő sidebar animáció mobilon */
 
 @media (width < 1024px) {
     #filterSidebar {
@@ -61,12 +53,10 @@ html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szél
         right: 0; /* jobb oldalon pozícionálva */
         left: auto;
     }
-
     html.dark #filterSidebar, #filterSidebar.active {
         background-color: var(--slate-950);
         border-left: 0.1rem solid var(--zinc-200);
     }
-
     #filterSidebar.active {
         transform: translateX(0);
         background-color: var(--zinc-50);
@@ -86,8 +76,7 @@ html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szél
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* modal ablakok megnyitasakor blur hatter */
-.modal-open .modal-backdrop {
+.modal-open .modal-backdrop { /* modal ablakok megnyitasakor blur hatter */
   backdrop-filter: blur(20px);
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 1 !important;
@@ -96,9 +85,7 @@ html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szél
 .modal.fade .modal-dialog {
   opacity: 0;
   transform: translateY(0) scale(0.92);
-  transition:
-    opacity .28s ease,
-    transform .28s cubic-bezier(.19,1,.22,1);
+  transition: opacity .28s ease, transform .28s cubic-bezier(.19,1,.22,1);
 }
 
 .modal.fade.show .modal-dialog {
@@ -130,8 +117,7 @@ html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szél
 
 .eltunt { display: none !important; }
 
-/* number inputoknal a fel-le nyilak eltuntetese */
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { /* szam inputoknal a fel-le nyilak eltuntetese */
   -webkit-appearance: none;
   margin: 0;
 }
