@@ -54,6 +54,15 @@ $(document).ready(function() {
 
     $("#login_passwd").on("keydown", function(e) { if (e.key === " ") { e.preventDefault(); } });
 
+    $("#nev1").on("keydown", function(e) { if (e.key === "<" || e.key === ">" || e.key === "&" || e.key === "%") { e.preventDefault(); } });
+
+    $("#nev1").on("paste", function (e) {
+        const text = (e.originalEvent || e).clipboardData.getData("text");
+        if (/[<>&%]/.test(text)) {
+          e.preventDefault();
+        }
+      });
+
     $("#login_passwd").on("input", function() {
         let val = $(this).val();
         $(this).val(val.replace(/\s/g, ''));
