@@ -30,7 +30,7 @@ let vendegnezet = `
 async function Kosar_Mutat(pushHistory = true) {
     tetelekli = [];
     let tartalom = `
-        <div class="max-w-7xl mx-auto px-4 py-10">
+        <div class="max-w-7xl mx-auto py-10">
             ${kosarsegito}
             <div class="d-flex w-full align-items-center justify-content-between">
                 <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 p-2 mb-8 w-auto">
@@ -74,7 +74,7 @@ async function Kosar_Mutat(pushHistory = true) {
                         <div class="col-12 mt-4 d-flex flex-column flex-sm-row justify-content-start w-full align-items-start align-items-sm-center gap-4">
                             <div class="w-auto">
                                 <button type="button" class="btn btn-lg bi bi-dash-lg bal-gomb bg-transparent text-slate-900 dark:bg-sky-950 dark:text-zinc-200 hover:text-slate-700 dark:hover:text-zinc-300 rounded-4 me-2" aria-label="minusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}9"></button>
-                                <input type="number" class="w-50 py-1 text-center text-lg bg-zinc-100 rounded-4 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 focus:outline-none dark:!border dark:!border-zinc-200/20" min="1" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2">
+                                <input type="number" class="w-50 py-1 text-center text-lg duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 !border !border-slate-900/10 bg-zinc-100 rounded-4 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 focus:outline-none dark:!border dark:!border-zinc-200/20" min="1" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2">
                                 <button type="button" class="btn btn-lg bi bi-plus-lg jobb-gomb bg-transparent text-slate-900 dark:bg-sky-950 dark:text-zinc-200 hover:text-slate-700 dark:hover:text-zinc-300 rounded-4 ms-2" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                             </div>
                             <button class="text-slate-400 hover:text-red-600 text-lg transition" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)"><i class="bi bi-trash"></i></button>
