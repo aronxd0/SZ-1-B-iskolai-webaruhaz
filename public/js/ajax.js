@@ -27,6 +27,7 @@ function ajax_call(urlsor, tipus, data = null, spinner = false) {
       cache: false,
       dataType: "json",
       beforeSend: spinner ? function() {
+        $('#spinner-overlay').remove();
         const spinner = `<div id="spinner-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;
                                         background:rgba(0,0,0,0.6);z-index:9999;
                                         display:flex;align-items:center;justify-content:center;backdrop-filter: blur(10px);opacity: 1;">
