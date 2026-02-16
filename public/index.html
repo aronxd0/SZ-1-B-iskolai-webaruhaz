@@ -279,10 +279,10 @@
                   </div>
               </aside>
               <main class="flex-1">
-                  <div class="bg-transparent p-4 rounded-lg mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <div class="bg-transparent p-4 rounded-lg mb-6 flex flex-col lg:flex-row justify-between items-center gap-4">
                       <div class="flex flex-col sm:flex-row justify-center items-center gap-2">
-                        <p class="text-gray-600" id="keresett_kifejezes"></p>
-                        <p class="text-gray-600" id="débé"></p>
+                        <p class="text-gray-600 dark:text-gray-300" id="keresett_kifejezes"></p>
+                        <p class="text-gray-600 dark:text-gray-300" id="débé"></p>
                       </div>
                       <div class="w-auto flex items-center gap-2">
                         <label for="rend"><span class="text-base">Rendezés</span></label>
@@ -692,9 +692,9 @@
   </div>
   <!-- #endregion -->
 
-  <div id="imgFullscreen" class="fixed inset-0 bg-black/80 hidden transition-opacity duration-300 opacity-0" style="z-index: 999999;" onclick="KepBezaras()">
+  <div id="kepteljes" class="fixed inset-0 bg-black/80 hidden transition-opacity duration-300 opacity-0" style="z-index: 999999;" onclick="KepBezaras()">
     <div class="d-flex justify-content-center align-items-center h-full w-full">
-      <img id="fsImg" src="" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl transition-all duration-300" alt="kep">
+      <img id="nagykep" src="" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl transition-all duration-300" alt="kep">
     </div>
     <button onclick="KepBezaras()" class="absolute top-6 right-6 text-white text-3xl font-bold">✕</button>
   </div>

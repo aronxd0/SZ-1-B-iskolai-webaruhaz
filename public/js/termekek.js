@@ -24,7 +24,7 @@ async function TermekModosit(id_termek) {
 }
 
 // termek szerkeszto ablak
-async function Termek_Edit(event, termek_id, tipus) {
+async function TermekSzerkesztoAblak(event, termek_id, tipus) {
   event.stopPropagation();
   $("#mod_hiba").html("");
   let hiba = false;
@@ -160,27 +160,27 @@ function Termek_Torol(event, termek_id) {
 
 // kép megnyitása teljes képernyőben
 function KepMegnyitas(src) {
-  document.getElementById("fsImg").src = src;
-  $("#imgFullscreen").removeClass("hidden");
+  document.getElementById("nagykep").src = src;
+  $("#kepteljes").removeClass("hidden");
 
   // fade + scale animáció
   requestAnimationFrame(() => {
-    $("#imgFullscreen").addClass("opacity-100");
-    $("#fsImg").removeClass("scale-95");
-    $("#fsImg").addClass("scale-100");
+    $("#kepteljes").addClass("opacity-100");
+    $("#nagykep").removeClass("scale-95");
+    $("#nagykep").addClass("scale-100");
   });
 }
 
 // bezárás
 function KepBezaras() {
   requestAnimationFrame(() => {
-    $("#imgFullscreen").removeClass("opacity-100");
-    $("#fsImg").removeClass("scale-100");
-    $("#fsImg").addClass("scale-95");
+    $("#kepteljes").removeClass("opacity-100");
+    $("#nagykep").removeClass("scale-100");
+    $("#nagykep").addClass("scale-95");
   });
   
   setTimeout(() => {
-    $("#imgFullscreen").addClass("hidden");
+    $("#kepteljes").addClass("hidden");
   }, 250);
 }
 
@@ -255,7 +255,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
 
     if (JSON.parse(localStorage.getItem("user"))?.loggedIn && (webbolt_admin || admin)) {
       admingombok = "";
-      admingombok += `<button type="button"class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full tracking-[2px]" aria-label="modositas" onclick='Termek_Edit(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
+      admingombok += `<button type="button"class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full tracking-[2px]" aria-label="modositas" onclick='TermekSzerkesztoAblak(event, ${termek_id}, "modosit")'><i class="bi bi-pencil-square"></i> SZERKESZTÉS</button>`;
       admingombok += `<button type="button"class="px-6 py-2 rounded-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 dark:!border-zinc-200/10 hover:text-red-700 hover:bg-red-400/5 hover:!border-red-700 dark:hover:bg-red-900/20 dark:hover:!border-red-600/30 dark:hover:text-red-600 transition-all duration-150 ease-in-out w-full tracking-[2px]" aria-label="torles" onclick='Termek_Torol(event, ${termek_id})'><i class="bi bi-trash"></i> TÖRLÉS</button>`;
     } else admingombok = "";
 
