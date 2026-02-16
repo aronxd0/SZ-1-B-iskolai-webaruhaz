@@ -523,35 +523,20 @@
     </div>
   </div>
 
-
-  <!-- MODAL -->
   <div class="modal fade" id="profil" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-md">
-      <div class="modal-content rounded-2xl overflow-hidden
-                  bg-zinc-200 dark:bg-slate-950
-                  text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20">
-
-        <!-- FELSŐ SZÜRKE SÁV -->
+      <div class="modal-content rounded-2xl overflow-hidden bg-zinc-200 dark:bg-slate-950 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20">
         <div class="h-24 bg-zinc-300 dark:bg-slate-900"></div>
-
-        <!-- TARTALOM -->
         <div class="px-6 pb-6 -mt-3">
-
-          <!-- AVATAR + NÉV -->
           <div class="flex items-center gap-4">
-            <div
-              class="w-20 h-20 rounded-full bg-zinc-100 dark:bg-slate-900
-                    flex items-center justify-center">
+            <div class="w-20 h-20 rounded-full bg-zinc-100 dark:bg-slate-900 flex items-center justify-center">
               <i class="bi bi-person-circle text-[5.5rem] leading-none"></i>
             </div>
-
             <div class="mt-2">
               <p class="font-semibold text-lg" id="user">NÉV</p>
               <p class="text-sm text-zinc-500 dark:text-zinc-400" id="user-email">E_MAIL</p>
             </div>
           </div>
-
-          <!-- RANGOK -->
           <div class="mt-6">
             <div class="flex flex-wrap gap-2" id="rangok">
               <span class="px-3 py-1 text-xs rounded-full bg-indigo-100 text-indigo-700">Admin</span>
@@ -560,13 +545,8 @@
             </div>
           </div>
           <div class="mt-2" id="vendegszoveg"></div>
-          <!-- ELVÁLASZTÓ -->
           <hr class="my-6 border-zinc-200 dark:border-zinc-800">
-
-          <!-- RENDELÉSEK -->
           <div class="p-1" id="rendeles-menupont"></div>
-
-          <!-- TÉMA -->
           <div class="mt-6">
             <p class="text-sm font-medium mb-2">TÉMA</p>
             <div class="col-12 d-flex flex-column flex-lg-row gap-3">
@@ -599,7 +579,6 @@
               </label>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -623,11 +602,11 @@
         </div>
         <div class="modal-footer d-flex justify-content-between bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
           <div class="row">
-            <div class="col-12 text-center">A vásárlással elfogadja a <span class="text-primary">felhasználási feltételeket</span> és az <span class="text-primary">adatvédelmi tájékoztatót</span></div>
+            <div class="col-12 text-center">A vásárlással elfogadja az <a href="aszf.html" target="_blank" class="text-sky-500 hover:text-sky-700 dark:text-sky-500 dark:hover:text-sky-300 underline text-decoration-sky-500 hover:cursor-pointer font-semibold">ÁSZF</a>-et és az  <a href="adatkezeles.html" target="_blank" class="text-sky-500 hover:text-sky-700 dark:text-sky-500 dark:hover:text-sky-300 underline text-decoration-sky-500 hover:cursor-pointer font-semibold">Adatvédelmi tájékoztatót</a></div>
           </div>
           <div class="row">
             <div class="col-12 p-2 d-flex justify-content-center align-items-center">
-              Bruttó végösszeg: <span class="text-emerald-500 font-semibold ms-2" id="also"></span>
+              Bruttó végösszeg: <span class="text-sky-500 font-semibold ms-2" id="also"></span>
             </div>
           </div>
           <div class="row w-full d-flex justify-content-between" id="lab"></div>
