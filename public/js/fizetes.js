@@ -80,38 +80,38 @@ function Adatok(li) {
         <div class="col-12 d-flex flex-column flex-xl-row p-1">
           <div class="col-12 col-xl-6 p-1">
             <label for="keresztnev" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-person"></i> Teljes név *</label>
-            <input type="text" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl " id="keresztnev" name="knev" value="${ _nev != ""? _nev :  document.getElementById("user").querySelector('h5').textContent.trim()}" placeholder="pl.: Füty Imre" style="border: none;">
+            <input type="text" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-gray-400 dark:!border dark:!border-zinc-200/20" id="keresztnev" name="knev" value="${ _nev != ""? _nev :  document.getElementById("user").querySelector('h5').textContent.trim()}" placeholder="pl.: Füty Imre">
           </div>
           <div class="col-12 col-xl-6 p-1">
             <label for="emil" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-envelope"></i> E-mail cím *</label>
-            <input type="email" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl" id="emil" value="${_emil}" name="imel" placeholder="pl.: futyimre69@valami.xd" style="border: none;">              
+            <input type="email" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-gray-400 dark:!border dark:!border-zinc-200/20" id="emil" value="${_emil}" name="imel" placeholder="pl.: futyimre69@valami.xd">              
           </div>
         </div>
         <div class="col-12 d-flex flex-column flex-xl-row mt-2 p-1">
           <div class="col-12 col-xl-3 p-1">
             <label for="iszam" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-hash"></i> Irányítószám *</label>
-            <input type="number" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl" id="iszam" value="${_iszam}" name="iszam" placeholder="pl.: 8900" style="border: none;">
+            <input type="number" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="iszam" value="${_iszam}" name="iszam" placeholder="pl.: 8900">
           </div>
           <div class="col-12 col-xl-9 p-1">
             <label for="city" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-building"></i> Város *</label>
-            <input type="text" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl " id="city" value="${_city}" name="city" placeholder="pl.: Miskolc" style="border: none;">
+            <input type="text" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="city" value="${_city}" name="city" placeholder="pl.: Miskolc">
           </div>
         </div>
         <div class="col-12 d-flex flex-column flex-xl-row mt-2 p-1">
           <div class="col-12 col-xl-6 p-1">
             <label for="cim" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-geo-alt"></i> Cím *</label>
-            <input type="text" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl" id="cim" name="cim" value="${_cim}" placeholder="Pl. Kossuth Lajos utca 69." style="border: none;">                
+            <input type="text" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="cim" name="cim" value="${_cim}" placeholder="Pl. Kossuth Lajos utca 69.">                
           </div>
           <div class="autocomplete" style="width:100%;">
             <div class="col-12 p-1">
               <label for="country" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-globe"></i> Ország *</label>
-              <input type="text" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl" id="country" name="country" value="${_country}" placeholder="pl.: Magyarország" style="border: none;">                  
+              <input type="text" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="country" name="country" value="${_country}" placeholder="pl.: Magyarország">                  
             </div>
           </div>
         </div>
         <div class="col-12 mt-2 p-1">
           <label for="megj" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-chat-left-text"></i> Megjegyzés</label>
-          <textarea class="form-control shadow-xl rounded-4 bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl resize-none" name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." id="MEGJ" >${megjegyzes}</textarea> 
+          <textarea class="h-[150px] form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-gray-400 dark:!border dark:!border-zinc-200/20 resize-none" name="megj" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." id="MEGJ" >${megjegyzes}</textarea> 
         </div>
         <div class="col-12 col-lg-6 mt-2 p-1 text-center m-auto">
             <label class="text-danger" id="hiba"> &nbsp;</label>
