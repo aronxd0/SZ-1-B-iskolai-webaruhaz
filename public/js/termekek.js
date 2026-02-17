@@ -266,7 +266,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
           <div class="flex items-center gap-2">
             <input type="radio" name="comment" class="form-check-input hidden" id="velemeny" checked onchange="VelemenyekMutat(${termek_id})">
             <i class="bi bi-chat-left-text font-semibold"></i>
-            <span class=" hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold  sm:inline transition-all duration-200">Vélemények</span>
+            <span class=" hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200">Vélemények</span>
           </div>
       </label>`;
 
@@ -275,7 +275,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
           <div class="flex items-center gap-2">
             <input type="radio" name="comment" class="form-check-input hidden " id="sajat_velemeny" onchange="SajatVelemenyekMutat(${termek_id})">
             <i class="bi bi-person"></i> 
-            <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 ">Véleményeim</span>
+            <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200">Véleményeim</span>
           </div>
       </label>`;
 
@@ -283,8 +283,8 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
       <label class="group bg-transparent my-2 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 !border-b !border-transparent d-flex align-items-center justify-content-center p-2 cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-indigo-400 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-sky-700">
           <div class="flex items-center gap-2">
             <button type="button" id="velemeny_help" onclick="VelemenySegitseg()">
-              <i class="bi bi-question-circle"></i> 
-              <span class="hidden group-has-[:checked]:inline group-has-[:checked]:font-semibold sm:inline transition-all duration-200 "> Segítség</span>
+              <i class="bi bi-question-circle"></i>
+              <span class="hidden sm:inline"> Segítség</span>
             </button>
           </div>
       </label>
@@ -304,12 +304,12 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
               <span class="text-slate-900 dark:text-zinc-200 text-lg">${parseInt(ar).toLocaleString()} Ft</span>
               <p class="text-sm text-zinc-500">Utoljára frissítve ${datum.toString().split("T")[0]}</p>
               <p class="text-zinc-600 dark:text-zinc-400">${leiras}</p>
-              <div class="d-flex flex-column gap-3 mt-4">
+              <div class="flex flex-col gap-3 mt-4">
                 ${kosargomb} 
-                <div class="d-flex flex-column flex-xxl-row gap-3">${admingombok}</div>
+                <div class="flex flex-col 2xl:flex-row gap-3">${admingombok}</div>
               </div>
               <div class="mt-6">
-                <span class="d-flex align-items-center justify-content-start gap-x-2"><i class="bi bi-info-circle"></i> Egyéb információk:</span>
+                <span class="flex items-center justify-start gap-x-2"><i class="bi bi-info-circle"></i> Egyéb információk:</span>
                 <ul class="text-sm mt-2 text-zinc-600 dark:text-zinc-400 space-y-2 list-disc list-inside">
                   <li>Kategória: ${kategoria}</li>
                   <li>Termékazonosító: ${azon}</li>
@@ -319,7 +319,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
             </div>
           </div>
           <div class="col-12 mt-3">
-            <div class="d-flex py-3 gap-x-5">
+            <div class="flex py-3 gap-x-5">
               <div id="velemenyek-menupont"></div>
               <div id="sajatvelemenyek-menupont"></div>
               <div id="velemeny-irasa" class="d-flex w-full align-items-center"></div>
@@ -355,7 +355,6 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
           }
           FelaTetore();
         });
-
         
         KezdolapElemekViszlat();
         $("#nezetkicsi").addClass("eltunt");
@@ -367,14 +366,7 @@ async function Termek_Mutat(event, termek_id, pushHistory = true) {
         if (pushHistory) {
           SPAState.currentView = 'termek';
           SPAState.currentData = { id: termek_id };  
-          history.pushState(
-              { 
-                  view: 'termek',
-                  id: termek_id  
-              },
-              'Termék',
-              `#termek/${termek_id}`
-          );
+          history.pushState({ view: 'termek', id: termek_id }, 'Termék', `#termek/${termek_id}`);
         }
       }
     } catch (err) { console.error(err); }
