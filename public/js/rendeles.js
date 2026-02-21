@@ -2,7 +2,7 @@ let jelenlegi = 1;
 let osszesoldal = 0;
 
 async function rendelesekmegtolt(pushHistory = true) {
-    var s = `<div class="col-12 text-center p-2"><span class="text-xl">Rendeléseim</span></div>`;
+    var s = `<div class="col-12 text-center p-2"><span class="text-xl">Eddigi rendeléseim</span></div>`;
 
     const itemek = await ajax_call(`rendelesek?OFFSET=${(jelenlegi-1)}`, "GET", null, true);
 
@@ -14,7 +14,7 @@ async function rendelesekmegtolt(pushHistory = true) {
             const collapseId = `collapse_${elemek.ID_RENDELES}`;
 
             s += `
-            <div class="max-w-5xl mx-auto p-4 space-y-1">
+            <div class="max-w-3xl mx-auto p-4 space-y-1">
                 <div class="col-12 d-flex flex-column flex-lg-row bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 shadow-lg rounded-4 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10 my-1 p-3 p-xxl-none" id="rendeles_${elemek.ID_RENDELES}" role="button" onclick="toggleRendeles(${elemek.ID_RENDELES}, '${elemek.DATUM}', '${elemek.SZALLCIM}', '${elemek.FIZMOD}', '${elemek.SZALLMOD}', '${elemek.NEV}', '${elemek.EMAIL}', ${elemek.AFA}, ${elemek.RENDELES_VEGOSSZEGE})">
                     <div class="col-12 col-lg-4 d-flex flex-lg-column justify-content-between py-3 p-lg-1">
                         <span><i class="bi bi-hash"></i> Rendelés Azonosító</span>
