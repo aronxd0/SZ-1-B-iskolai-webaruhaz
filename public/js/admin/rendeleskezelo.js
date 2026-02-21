@@ -216,7 +216,7 @@ async function RendelesKezeloAblak(rendelId, datum, szallcim, fizmod, szallmod, 
         `;
 
     let gomb = `
-        <button id="kiszallit" type="button" class="px-3 py-1 text-base flex items-center gap-2 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out rounded-2xl w-auto" > 
+        <button id="kiszallit" type="button" class="px-3 py-1 text-base flex items-center gap-2 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out rounded-2xl w-auto" onclick="RendelesKiszallitva(${rendelId})"> 
             <i class="bi bi-check"></i>
             <span> Kiszállítva</span>
         </button>
@@ -251,5 +251,16 @@ function KoviRendeles(mod) {
             break;
     }
     RendelesekKezelese(true);
+}
+
+async function RendelesKiszallitva(rendelId) {
+    try {
+        let rendeles_allapotvaltozas = await ajax_call(`rendeles_allapotvaltozas?ID_RENDELES=${rendelId}`, "POST", null, true);
+        if (rendeles_allapotvaltozas.message == "ok") {
+            üzen(`A rendelés (#${rendelId}) állapota sikeresen módosítva!`,"success");
+            $("#rendeles_kezeles_modal").modal("hide");
+            RendelesekKezelese(false);
+        }
+    } catch (err) { console.error(err); }
 }
 

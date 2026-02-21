@@ -1194,6 +1194,33 @@ app.get('/rendeles_azon', async (req, res) => {
     }
 });
 
+app.post('/rendeles_allapotvaltozas', async (req, res) => {
+    
+    try {
+        var rendelesid = parseInt(req.query.ID_RENDELES);
+        
+        var sql = `
+        UPDATE webbolt_rendeles 
+        SET ALLAPOT = "Kiszállítva"
+        WHERE ID_RENDELES = ?
+        `;
+        let ertekek = [rendelesid];
+
+        const eredmeny = await runExecute(sql, req, ertekek, true);
+        if(eredmeny.message != "ok"){
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
+        }
+        res.json(eredmeny);
+        res.end();
+
+    } catch (err) {
+        console.error("/rendeles_allapotvaltozas HIBA : " + (err && err.message ? err.message : err));
+        return res.status(500).json({
+            message: "Nem sikerült a rendelés állapotának módosítása." 
+        });
+    }       
+});
+
 
 //#endregion
 

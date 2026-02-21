@@ -13,7 +13,7 @@ async function rendelesekmegtolt(pushHistory = true) {
 
             s += `
             <div class="max-w-3xl mx-auto p-4 space-y-1">
-                <div class="col-12 d-flex flex-column flex-lg-row bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 shadow-lg rounded-4 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10 my-1 p-3 p-xxl-none" id="rendeles_${elemek.ID_RENDELES}" role="button" onclick="toggleRendeles(${elemek.ID_RENDELES}, '${elemek.DATUM}', '${elemek.SZALLCIM}', '${elemek.FIZMOD}', '${elemek.SZALLMOD}', '${elemek.NEV}', '${elemek.EMAIL}', ${elemek.AFA}, ${elemek.RENDELES_VEGOSSZEGE})">
+                <div class="col-12 d-flex flex-column flex-lg-row bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 shadow-lg rounded-4 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10 my-1 p-3 p-xxl-none" id="rendeles_${elemek.ID_RENDELES}" role="button" onclick="toggleRendeles(${elemek.ID_RENDELES}, '${elemek.DATUM}', '${elemek.SZALLCIM}', '${elemek.FIZMOD}', '${elemek.SZALLMOD}', '${elemek.NEV}', '${elemek.EMAIL}', ${elemek.AFA}, ${elemek.RENDELES_VEGOSSZEGE}, '${elemek.ALLAPOT}')">
                     <div class="col-12 col-lg-4 d-flex flex-lg-column justify-content-between py-3 p-lg-1">
                         <span><i class="bi bi-hash"></i> Rendelés Azonosító</span>
                         <span>${elemek.ID_RENDELES}</span>
@@ -92,7 +92,7 @@ async function rendelesekmegtolt(pushHistory = true) {
     }
 }
 
-async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, email, afa, vegosszeg, pushHistory = true) {
+async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, email, afa, vegosszeg, allapot, pushHistory = true) {
     const tetelek = await ajax_call(`rendelesek_tetelei?ID_RENDELES=${rendelId}`, "GET", null, true);
     let fizmodkep = "";
     let szallmodkep = "";
@@ -115,16 +115,17 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
     let html = `
 
         <div class="max-w-5xl mx-auto p-4 sm:p-6 space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                <h1 class="text-2xl font-bold">Rendelés #${rendelId}</h1>
-                <span class="text-sm text-gray-500">Rendelés elküldve: ${new Date(datum).toLocaleString(navigator.language, {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false})}</span>
-            </div>`; 
+            <div class="bg-zinc-50 rounded-xl shadow-lg p-4 sm:p-6 text-sm flex flex-col gap-2">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <h1 class="text-2xl font-bold">Rendelés #${rendelId}</h1>
+                    <span class="text-sm text-gray-500">Rendelés elküldve: ${new Date(datum).toLocaleString(navigator.language, {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false})}</span>
+                </div>`; 
     
     for (const elem of tetelek.rows) {
         html += `
 
 
-        <div class="bg-white rounded-xl shadow p-4 sm:p-6 space-y-6 bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 shadow-lg rounded-4 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10">
+        <div class="p-3 space-y-6 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10">
 
             <!-- Product Info -->
             <div class="flex flex-col items-center sm:flex-row gap-4 ">
@@ -138,8 +139,8 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
 
                 <!-- Delivery -->
                 <div class="text-sm text-gray-600">
-                    <p class="text-sm text-gray-600 text-center sm:text-end">${elem.MENNYISEG} db</p>
-                    <p class="mt-2 font-medium text-center sm:text-end">${elem.AR.toLocaleString()} Ft</p>
+                    <p class="text-sm text-gray-600 text-center sm:!text-end">${elem.MENNYISEG} db</p>
+                    <p class="mt-2 font-medium text-center sm:!text-end">${elem.AR.toLocaleString()} Ft</p>
                 </div>
             </div>
 
@@ -150,48 +151,30 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
 
 
 
-        <!--
-        <div class="col-0 col-lg-2"></div>
-            <div class="col-12 col-lg-8 d-flex flex-column flex-sm-row text-slate-900 dark:text-zinc-200 border-b border-gray-300 dark:border-b dark:border-gray-800 p-xxl-none">
-                <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-2">
-                    <img src="${elem.FOTOLINK}" onclick="KepMegnyitas(this.src)" class="img img-fluid img-thumbnail w-10 h-10 hover:cursor-pointer" alt="kep">
-                </div>
-                <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-2">
-                    <p>${elem.NEV}</p>
-                </div>
-                    <div class="col-12 col-sm-3 col-lg-3 d-flex align-self-center justify-content-center p-2">
-                    <p>${elem.MENNYISEG} db</p>
-                </div>
-
-                <div class="col-12 col-sm-3 col-lg-3 d-flex flex-column align-self-center align-items-center align-items-lg-end justify-content-center justify-content-lg-end p-2">
-                    <span class="text-slate-900 dark:text-zinc-200 font-semibold text-lg termek_ar">${elem.AR.toLocaleString()} Ft</span> <span> <i> (Nettó)</i></span> 
-                </div>
-            </div>
-        <div class="col-0 col-lg-2"></div>
-        -->`;
+    `;
     }
 
     html += `
-
+        </div>
         <!-- Status -->
-        <div>
+        <div class="bg-zinc-50 rounded-xl shadow-lg p-4 sm:p-6 text-sm text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200">
             <p class="text-lg font-medium mb-2">
                 Rendelés állapota
             </p>
 
             <!-- Progress Bar -->
             <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div class="h-full bg-indigo-600 w-1/2"></div>
+                <div class="h-full bg-indigo-600 ${allapot == 'Beérkezett' ? 'w-1/2' : 'w-2/2'}"></div>
             </div>
 
             <!-- Steps -->
             <div class="flex justify-between text-sm text-gray-500 mt-2">
                 <span class="text-indigo-600 font-medium">Rendelés elküldve</span>
-                <span>Kiszállítva</span>
+                <span class="${allapot == 'Kiszállítva' ? 'text-indigo-600 font-medium' : ''}">Kiszállítva</span>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow p-4 sm:p-6 grid lg:grid-cols-3 gap-6 text-sm">
+        <div class="bg-zinc-50 rounded-xl shadow-lg p-4 sm:p-6 grid lg:grid-cols-3 gap-6 text-sm">
 
             <!-- Billing -->
             <div>
@@ -240,8 +223,8 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
 
     if (pushHistory) {
         SPAState.currentView = 'rendeleseimreszlet';
-        SPAState.currentData = { id: rendelId, datum, szallcim, fizmod, szallmod, nev, email, afa, vegosszeg };
-        history.pushState({ view: 'rendeleseimreszlet', id: rendelId, datum, szallcim, fizmod, szallmod, nev, email, afa, vegosszeg }, 'Rendeléseim', `#rendeleseim/${rendelId}`);
+        SPAState.currentData = { id: rendelId, datum, szallcim, fizmod, szallmod, nev, email, afa, vegosszeg, allapot };
+        history.pushState({ view: 'rendeleseimreszlet', id: rendelId, datum, szallcim, fizmod, szallmod, nev, email, afa, vegosszeg, allapot }, 'Rendeléseim', `#rendeleseim/${rendelId}`);
     }
 
 }
