@@ -14,6 +14,7 @@ window.addEventListener("popstate", async (e) => {
         case "termek": Termek_Mutat(null, e.state.id, false); break;
         case "kosar": Kosar_Mutat(false); break;
         case "rendeleseim": rendelesekmegtolt(false); break;
+        case "rendeleseimreszlet": toggleRendeles(e.state.id, e.state.datum, e.state.szallcim, e.state.fizmod, e.state.szallmod, e.state.nev, e.state.email, e.state.afa, e.state.vegosszeg, false); break;
         case "velemeny-kezeles": Admin_Velemenykezeles(false); break;
         case "statisztika": Statisztikak(false); break;
         case "sql": SQLinput(false); break;

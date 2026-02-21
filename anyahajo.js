@@ -1061,7 +1061,7 @@ app.get('/rendelesek',async (req, res) => {
         // SQL: rendelések lekérése összesítéssel (végösszeg számítás)
         var sql = 
         `
-        SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, r.AFA,
+        SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, r.AFA, r.FIZMOD, r.SZALLMOD, r.SZALLCIM, r.NEV, r.EMAIL,
         round(SUM(rt.AR * rt.MENNYISEG)*(1+(r.AFA/100))) AS RENDELES_VEGOSSZEGE
         FROM webbolt_rendeles AS r
         JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
@@ -1100,7 +1100,7 @@ app.get('/rendelesek_tetelei',async (req, res) => {
         // SQL: a rendeléshez tartozó összes tétel
         var sql =
         `
-        SELECT rt.NEV, rt.MENNYISEG, rt.AR, rt.FOTOLINK
+        SELECT rt.NEV, rt.MENNYISEG, rt.AR, rt.FOTOLINK, rt.KATEGORIA
         from webbolt_rendeles_tetelei AS rt
         WHERE rt.ID_RENDELES = ?
         `;
