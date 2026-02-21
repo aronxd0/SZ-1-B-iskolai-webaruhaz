@@ -1056,21 +1056,26 @@ app.get('/rendelesek',async (req, res) => {
     try{
         session_data = req.session;
         // Paraméter: lapozás kezdőpontja (10 rekord/oldal)
-        var off = req.query.OFFSET
+        var off = req.query.OFFSET;
+        var kezeles = (req.query.kezeles ? parseInt(req.query.kezeles) : 0); 
 
         // SQL: rendelések lekérése összesítéssel (végösszeg számítás)
         var sql = 
         `
-        SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, r.AFA, r.FIZMOD, r.SZALLMOD, r.SZALLCIM, r.NEV, r.EMAIL,
+        SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, r.AFA, r.FIZMOD, r.SZALLMOD, r.SZALLCIM, r.NEV, r.EMAIL, r.ALLAPOT, r.MEGJEGYZES,
         round(SUM(rt.AR * rt.MENNYISEG)*(1+(r.AFA/100))) AS RENDELES_VEGOSSZEGE
         FROM webbolt_rendeles AS r
         JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
-        WHERE r.ID_USER = ?
+        ${kezeles == 1 ? " WHERE r.ALLAPOT = 'Beérkezett'" : " WHERE r.ID_USER = ?"}
         GROUP BY r.ID_RENDELES
         ORDER BY r.ID_RENDELES DESC
         limit 10 offset ?
         `;
-        let ertekek = [session_data.ID_USER, off*10];
+        
+        let ertekek;
+
+        if (kezeles == 1) { ertekek = [off * 10]; } 
+        else { ertekek = [session_data.ID_USER, off * 10]; }
 
         var eredmeny = await runQueries(sql, ertekek);
         if(eredmeny.message != "ok"){
@@ -1100,7 +1105,7 @@ app.get('/rendelesek_tetelei',async (req, res) => {
         // SQL: a rendeléshez tartozó összes tétel
         var sql =
         `
-        SELECT rt.NEV, rt.MENNYISEG, rt.AR, rt.FOTOLINK, rt.KATEGORIA
+        SELECT rt.NEV, rt.MENNYISEG, rt.AR, rt.FOTOLINK, rt.KATEGORIA, rt.ID_TERMEK 
         from webbolt_rendeles_tetelei AS rt
         WHERE rt.ID_RENDELES = ?
         `;

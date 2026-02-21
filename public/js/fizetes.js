@@ -166,14 +166,14 @@ function Fizetes(li) {
         if (!/^\d{4}$/.test(iszam.value)) {// 4 katakter számjegy
             throw "Az irányítószámnak 4 számjegyből kell állnia!";
         }
-        if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-\.]+$/.test(cim.value)) {
+        if (!/^[0-9a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-\.]+$/.test(cim.value)) {
             throw "Az cím csak betűket, szóközt, kötőjelet és pontot tartalmazhat!";
         }
         if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(country.value)) {
             throw "Az ország neve csak betűket, szóközt és kötőjelet tartalmazhat!";
         }
-        if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(MEGJ.value)) {
-            throw "Az megjegyzés csak betűket, szóközt és kötőjelet tartalmazhat!";
+        if (!/^[0-9a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(MEGJ.value)) {
+            throw "A megjegyzés csak betűket, szóközt és kötőjelet tartalmazhat!";
         }
     } 
     catch (error) {

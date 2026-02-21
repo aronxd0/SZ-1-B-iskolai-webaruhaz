@@ -201,6 +201,12 @@ function update_gombok (x) {
                         <span>&nbsp;Statisztikák</span> 
                         </button>
                     </li>
+                    <li>
+                        <button id="admin_rendelesek" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="RendelesekKezelese()" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-truck"></i>
+                        <span>&nbsp;Rendelések</span> 
+                        </button>
+                    </li>
                     <li><hr class="dropdown-divider bg-gray-300 dark:bg-zinc-200/30"></hr></li>
                     <li>
                         <button id="admin_sql" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="SQLinput()" data-bs-dismiss="offcanvas">

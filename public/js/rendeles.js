@@ -11,8 +11,6 @@ async function rendelesekmegtolt(pushHistory = true) {
     if (itemek.maxcount != 0) {
         for (const elemek of itemek.rows) {
 
-            const collapseId = `collapse_${elemek.ID_RENDELES}`;
-
             s += `
             <div class="max-w-3xl mx-auto p-4 space-y-1">
                 <div class="col-12 d-flex flex-column flex-lg-row bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 shadow-lg rounded-4 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10 my-1 p-3 p-xxl-none" id="rendeles_${elemek.ID_RENDELES}" role="button" onclick="toggleRendeles(${elemek.ID_RENDELES}, '${elemek.DATUM}', '${elemek.SZALLCIM}', '${elemek.FIZMOD}', '${elemek.SZALLMOD}', '${elemek.NEV}', '${elemek.EMAIL}', ${elemek.AFA}, ${elemek.RENDELES_VEGOSSZEGE})">
@@ -34,11 +32,7 @@ async function rendelesekmegtolt(pushHistory = true) {
                     </div>      
                 </div>
             </div>
-            <!--
-            <div class="collapse !visible mt-2 mb-5" id="${collapseId}">
-                <div class="row" id="tetelek_${elemek.ID_RENDELES}"></div>
-            </div>
-            -->
+            
             `;
         }
         if (osszesoldal > 1) {

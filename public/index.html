@@ -105,6 +105,12 @@
                           <span>&nbsp;Statisztikák</span> 
                         </button>
                       </li>
+                      <li>
+                        <button id="admin_rendelesek" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="RendelesekKezelese()" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-truck"></i>
+                        <span>&nbsp;Rendelések</span> 
+                        </button>
+                      </li>
                       <li><hr class="dropdown-divider bg-gray-300 dark:bg-zinc-200/30"></hr></li>
                       <li>
                         <button id="admin_sql" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="SQLinput()" data-bs-dismiss="offcanvas">
@@ -678,6 +684,18 @@
     </div>
   </div>
 
+  <div class="modal fade" id="rendeles_kezeles_modal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-fullscreen-lg-down">
+      <div class="modal-content dark:!border dark:!border-zinc-200/20">
+        <div class="modal-header bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-between" id="r-azon"></div>
+        <div class="modal-body bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
+          
+        </div>
+        <div class="modal-footer bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 flex justify-center lg:justify-end"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="keresomodal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content rounded-xl bg-zinc-300 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 p-4">
@@ -712,6 +730,7 @@
   <script src="js/admin/sqlinput.js"></script>
   <script src="js/admin/Ujtermek.js"></script>
   <script src="js/admin/velemeny_kezeles.js"></script>
+  <script src="js/admin/rendeleskezelo.js"></script>
 
   <script src="js/document.js"></script>
 </body>
