@@ -7,7 +7,7 @@ let _country = ""//globális változó az ország tárolására
 let fizmod = "" //globális változó a fizetési mód tárolására
 let szallmod = ""//globális változó a szállítási mód tárolására
 let megjegyzes =""// globális változó a megjegyzés tárolására
-let htmtoback = ""
+let attekintes = ""
 
 function RendelesAblak(li) {
     Attekintes(li);
@@ -15,29 +15,28 @@ function RendelesAblak(li) {
 }
 
 function Attekintes(li) {
-
     $("#aktualis").html(`
         <span class="text-cyan-600 dark:text-cyan-600"><b>Áttekintés</b></span> - 
         <span class="text-gray-500 dark:text-gray-500 ">Adatok</span> - 
         <span class="text-gray-500 dark:text-gray-500 ">Fizetés</span`);
 
-     htmtoback = `<label for="rend" class="p-1 mt-4">A rendelésed tartalma:</label>`
+     attekintes = `<label for="rend" class="p-1 mt-4">A rendelésed tartalma:</label>`
      
     for (const element of li) {
 
-        htmtoback += ` 
+        attekintes += ` 
           <div class="row px-4">
             <div class="col-0 col-lg-1"></div>
-              <div class="col-12 col-lg-10 d-flex flex-column flex-lg-row bg-zinc-100 text-slate-900 dark:bg-slate-900/50 dark:text-zinc-200 shadow-lg rounded-4 mt-2 p-3 p-xxl-none dark:!border dark:!border-zinc-200/20">
-                <div class="col-12 col-lg-2 d-flex flex-lg-column justify-content-between py-3 p-lg-1">
+              <div class="col-12 col-lg-10 flex flex-col lg:flex-row bg-zinc-100 text-slate-900 dark:bg-slate-900/50 dark:text-zinc-200 shadow-lg rounded-4 mt-2 p-3 p-xxl-none dark:!border dark:!border-zinc-200/20">
+                <div class="col-12 col-lg-2 flex lg:flex-col justify-between py-3 p-lg-1">
                   <span class="font-semibold">Mennyiség</span>
                   <span>${element.MENNYISEG} db</span>
                 </div>
-                <div class="col-12 col-lg-8 d-flex flex-lg-column justify-content-between py-3 p-lg-1 !border !border-t-gray-300 !border-b-gray-300 !border-r-0 !border-l-0 dark:!border-t-zinc-200/20 dark:!border-b-zinc-200/20 lg:!border-t-0 lg:!border-b-0 lg:dark:!border-t-0 lg:dark:!border-b-0">
+                <div class="col-12 col-lg-8 flex lg:flex-col justify-between py-3 p-lg-1 !border !border-t-gray-300 !border-b-gray-300 !border-r-0 !border-l-0 dark:!border-t-zinc-200/20 dark:!border-b-zinc-200/20 lg:!border-t-0 lg:!border-b-0 lg:dark:!border-t-0 lg:dark:!border-b-0">
                   <span class="font-semibold">Termék</span>
                   <span class="text-end text-lg-start text-sm">${element.NEV}</span>
                 </div>
-                <div class="col-12 col-lg-2 d-flex flex-lg-column justify-content-between py-3 p-lg-1">
+                <div class="col-12 col-lg-2 flex lg:flex-col justify-between py-3 p-lg-1">
                   <span class="font-semibold">Ár</span>
                   <span class="osszegek text-slate-900 dark:text-zinc-200 font-semibold">${element.PENZ.toLocaleString()} Ft</span>
                 </div>
@@ -53,7 +52,7 @@ function Attekintes(li) {
         $("#lab").html(navigacio);
 
     $("#cc").animate( { opacity: 0, left: "-300px" }, 300, function() {
-        $("#cc").html(htmtoback);
+        $("#cc").html(attekintes);
         $("#cc").css({ left: "300px" });
         $("#cc").animate( { opacity: 1, left: "0px" }, 300 );
     });
@@ -77,41 +76,41 @@ function Adatok(li) {
         </div>
       </div>
       <div class="row p-1 px-xl-5">
-        <div class="col-12 d-flex flex-column flex-xl-row p-1">
+        <div class="col-12 flex flex-col xl:flex-row p-1">
           <div class="col-12 col-xl-6 p-1">
             <label for="keresztnev" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-person"></i> Teljes név *</label>
-            <input type="text" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl " id="keresztnev" name="knev" value="${ _nev != ""? _nev :  document.getElementById("user").querySelector('h5').textContent.trim()}" placeholder="pl.: Füty Imre" style="border: none;">
+            <input type="text" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-gray-400 dark:!border dark:!border-zinc-200/20" id="keresztnev" name="knev" value="${ _nev != ""? _nev :  document.getElementById("user").querySelector('h5').textContent.trim()}" placeholder="pl.: Füty Imre">
           </div>
           <div class="col-12 col-xl-6 p-1">
             <label for="emil" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-envelope"></i> E-mail cím *</label>
-            <input type="email" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl" id="emil" value="${_emil}" name="imel" placeholder="pl.: futyimre69@valami.xd" style="border: none;">              
+            <input type="email" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-gray-400 dark:!border dark:!border-zinc-200/20" id="emil" value="${_emil}" name="imel" placeholder="pl.: futyimre69@valami.xd">              
           </div>
         </div>
-        <div class="col-12 d-flex flex-column flex-xl-row mt-2 p-1">
+        <div class="col-12 flex flex-col xl:flex-row mt-2 p-1">
           <div class="col-12 col-xl-3 p-1">
             <label for="iszam" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-hash"></i> Irányítószám *</label>
-            <input type="number" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl" id="iszam" value="${_iszam}" name="iszam" placeholder="pl.: 8900" style="border: none;">
+            <input type="number" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="iszam" value="${_iszam}" name="iszam" placeholder="pl.: 8900">
           </div>
           <div class="col-12 col-xl-9 p-1">
             <label for="city" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-building"></i> Város *</label>
-            <input type="text" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl " id="city" value="${_city}" name="city" placeholder="pl.: Miskolc" style="border: none;">
+            <input type="text" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="city" value="${_city}" name="city" placeholder="pl.: Miskolc">
           </div>
         </div>
-        <div class="col-12 d-flex flex-column flex-xl-row mt-2 p-1">
+        <div class="col-12 flex flex-col xl:flex-row mt-2 p-1">
           <div class="col-12 col-xl-6 p-1">
             <label for="cim" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-geo-alt"></i> Cím *</label>
-            <input type="text" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl" id="cim" name="cim" value="${_cim}" placeholder="Pl. Kossuth Lajos utca 69." style="border: none;">                
+            <input type="text" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="cim" name="cim" value="${_cim}" placeholder="Pl. Kossuth Lajos utca 69.">                
           </div>
           <div class="autocomplete" style="width:100%;">
             <div class="col-12 p-1">
               <label for="country" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-globe"></i> Ország *</label>
-              <input type="text" class="form-control rounded-4 shadow-xl bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl" id="country" name="country" value="${_country}" placeholder="pl.: Magyarország" style="border: none;">                  
+              <input type="text" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="country" name="country" value="${_country}" placeholder="pl.: Magyarország">                  
             </div>
           </div>
         </div>
         <div class="col-12 mt-2 p-1">
           <label for="megj" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-chat-left-text"></i> Megjegyzés</label>
-          <textarea class="form-control shadow-xl rounded-4 bg-zinc-50 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:shadow-xl resize-none" name="megj" style="border: none; height: 100px;" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." id="MEGJ" >${megjegyzes}</textarea> 
+          <textarea class="h-[150px] form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-gray-400 dark:!border dark:!border-zinc-200/20 resize-none" name="megj" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." id="MEGJ" >${megjegyzes}</textarea> 
         </div>
         <div class="col-12 col-lg-6 mt-2 p-1 text-center m-auto">
             <label class="text-danger" id="hiba"> &nbsp;</label>
@@ -189,7 +188,7 @@ function Fizetes(li) {
         <span class="text-cyan-600 dark:text-cyan-600 "><b>Fizetés</b></span`);
 
       let form = `
-      <div class="row d-flex flex-column flex-lg-row p-3">
+      <div class="row flex flex-col lg:flex-row p-3">
         <div class="col-12 col-lg-6 mx-auto mt-5 space-y-3">
           <span class="text-lg p-1">Válasszon fizetési módot</span>
           <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between p-4 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
@@ -197,7 +196,7 @@ function Fizetes(li) {
               <input type="radio" name="fizz" class="form-check-input" id="kartya" onchange="Fizetesmodvalaszto(this)">
               <span class="font-semibold">Bankkártya</span>
             </div>
-            <div class="d-flex justify-content-end align-items-center">
+            <div class="flex justify-end items-center">
               <img src="img/mastercard.png" class="img-fluid w-15 h-[20px]">
               <img src="img/visa.png" class="img-fluid w-15 h-[20px]">
             </div>
@@ -207,7 +206,7 @@ function Fizetes(li) {
               <input type="radio" name="fizz" class="form-check-input" id="paypal" onchange="Fizetesmodvalaszto(this)">
               <span class="font-semibold">PayPal</span>
             </div>
-            <div class="d-flex justify-content-end align-items-center">
+            <div class="flex justify-end items-center">
               <img src="img/paypal.png" class="img-fluid w-15 h-[20px]">
             </div>
           </label>
@@ -216,7 +215,7 @@ function Fizetes(li) {
               <input type="radio" name="fizz" class="form-check-input" id="googlepay" onchange="Fizetesmodvalaszto(this)">
               <span class="font-semibold">Google Pay</span>
             </div>
-            <div class="d-flex justify-content-end align-items-center">
+            <div class="flex justify-end items-center">
               <img src="img/googlepay.png" class="img-fluid rounded-2 w-15 h-[20px]">
             </div>
           </label>
@@ -225,7 +224,7 @@ function Fizetes(li) {
               <input type="radio" name="fizz" class="form-check-input" id="applepay" onchange="Fizetesmodvalaszto(this)">
               <span class="font-semibold">Apple Pay</span>
             </div>
-            <div class="d-flex justify-content-end align-items-center">
+            <div class="flex justify-end items-center">
               <img src="img/applepay.png" class="img-fluid w-15 h-[20px]">
             </div>
           </label>
@@ -329,21 +328,17 @@ async function Fizetésclick(li) {
   if (mindenjo){
     try {
       const html = await emailDesign(li);
-
       // 2 adata egyfajta tömb amit majd a backend fogad
       ajax_call("send-email", "POST", { email: _emil, subject: "Rendelés visszaigazolása", html: html }, false);
     }
     catch (err) { console.error(err); }
-    
   } 
 }
 
 async function emailDesign(li) {
 // itt állítjuk össze az email html dizájnt
-
   let rows = "";
   let osszes = 0;
-
   // Vásárolt termékek listázása
   for (const e of li) {
     rows += `
@@ -434,7 +429,6 @@ async function emailDesign(li) {
       </table>
     </div>`;
 }
-
 
 //#region Autocomplete országokhoz
 const countries = [

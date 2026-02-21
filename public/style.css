@@ -1,50 +1,82 @@
-/* Betűtípusok importálása */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* Az oldalon használt főbb színek változóba lementve hogy több helyen egyszerűen lehessen rájuk hivatkozni */
-:root {
+:root { /* Az oldalon használt főbb színek változóba lementve hogy több helyen egyszerűen lehessen rájuk hivatkozni */
+  --zinc-50: oklch(98.5% 0 0);
   --zinc-200: oklch(92% 0.004 286.32);
   --zinc-300: oklch(87.1% 0.006 286.286);
-  --slate-900: oklch(20.8% 0.042 265.755);
-  --slate-800: oklch(27.9% 0.041 260.031);
-  --slate-950: oklch(12.9% 0.042 264.695);
-  --zinc-50: oklch(98.5% 0 0);
   --slate-700: oklch(37.2% 0.044 257.287);
+  --slate-800: oklch(27.9% 0.041 260.031);
+  --slate-900: oklch(20.8% 0.042 265.755);
+  --slate-950: oklch(12.9% 0.042 264.695);  
   --gray-200: oklch(92.8% 0.006 264.531);
   --gray-400: oklch(70.7% 0.022 261.325);
-  --gray-900: oklch(21% 0.034 264.665);
   --gray-600: oklch(44.6% 0.03 256.802);
+  --gray-900: oklch(21% 0.034 264.665);
 }
 
-/* Az oldalon minden szöveg ezzel a betűtípussal jelenjen meg */
 * { 
-  /*font-family: 'Poppins', sans-serif; font-weight: 300;*/
-  font-family: 'Anybody', sans-serif; font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
-/* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
-html, body { 
+html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
   overflow-x: hidden; 
   max-width: 100%;
   color-scheme: light dark;
 }
 
-/* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
-.container-fluid { padding-left: 0 !important; padding-right: 0 !important; }
+.container-fluid { padding-left: 0 !important; padding-right: 0 !important; } /* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
 
 .navbar-toggler:focus { box-shadow: none; }
 
-.cim { font-size: 35px; }
+.cim { font-size: 35px;}
+
+.overlay { /* Overlay a mobilos offcanvas háttérhez */
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+}
+.overlay.active { display: block; }
+
+#filterSidebar { transition: transform 0.3s ease-in-out; } /* Szűrő sidebar animáció mobilon */
+
+@media (width < 1024px) {
+    #filterSidebar {
+        transform: translateX(100%); /* jobb oldalról jön be */
+        right: 0; /* jobb oldalon pozícionálva */
+        left: auto;
+    }
+    html.dark #filterSidebar, #filterSidebar.active {
+        background-color: var(--slate-950);
+        border-left: 0.1rem solid var(--zinc-200);
+    }
+    #filterSidebar.active {
+        transform: translateX(0);
+        background-color: var(--zinc-50);
+        border-left: 1px solid var(--zinc-200);
+    }
+}
+
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-.offcanvas { font-size: 14px; }
-
-/* modal ablakok megnyitasakor blur hatter */
-.modal-open .modal-backdrop {
+.modal-open .modal-backdrop { /* modal ablakok megnyitasakor blur hatter */
   backdrop-filter: blur(20px);
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 1 !important;
@@ -53,22 +85,12 @@ html, body {
 .modal.fade .modal-dialog {
   opacity: 0;
   transform: translateY(0) scale(0.92);
-  transition:
-    opacity .28s ease,
-    transform .28s cubic-bezier(.19,1,.22,1);
+  transition: opacity .28s ease, transform .28s cubic-bezier(.19,1,.22,1);
 }
 
 .modal.fade.show .modal-dialog {
   opacity: 1;
   transform: translateY(0) scale(1);
-}
-
-#login_modal {
-  background-color: var(--zinc-300);
-}
-
-html.dark #login_modal {
-  background-color: var(--slate-900);
 }
 
 .offcanvas-backdrop {
@@ -91,19 +113,11 @@ html.dark #login_modal {
 
 .hovered { aspect-ratio: auto; }
 
-.shadow-bottom { box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.175); }
-
 .dropdown-toggle::after { display: none !important; }
-
-/* velemeny iras mezo merete */
-#velemeny_input { height: 150px; }
-
-#mod_leiras { height: 150px; }
 
 .eltunt { display: none !important; }
 
-/* number inputoknal a fel-le nyilak eltuntetese */
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { /* szam inputoknal a fel-le nyilak eltuntetese */
   -webkit-appearance: none;
   margin: 0;
 }
@@ -112,20 +126,16 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 html.dark ::-webkit-slider-runnable-track { background: var(--slate-700); }
 
-/* scrollbar szelesseg */
-::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar { width: 9px; } /* scrollbar szelesseg */
 
-/* az egesz */
-::-webkit-scrollbar-track { background: var(--gray-200); }
+::-webkit-scrollbar-track { background: var(--gray-200); } /* az egesz */
 
-/* a cucc ami benne van amit lehet huzni */
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb { /* a cucc ami benne van amit lehet huzni */
   background: var(--gray-400); 
   border-radius: 9999px;
 }
 
-/* sotetben */
-html.dark ::-webkit-scrollbar-track { background: var(--gray-900); }
+html.dark ::-webkit-scrollbar-track { background: var(--gray-900); } /* sotetben */
 
 html.dark ::-webkit-scrollbar-thumb { background: var(--gray-600); }
 
@@ -160,16 +170,6 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
 
 .autocomplete-active { background-color: #0d6efd !important; color: #fff; }
 
-#nezetkicsi {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-#nezetnagy {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
 @media (width < 1200px) {  
   #top-navbar.offcanvas-start {
     width: 270px !important;
@@ -178,9 +178,7 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
   }
 }
 
-.table-responsive {
-  max-height: 600px;
-}
+.table-responsive { max-height: 600px; }
 
 .tablazat thead th {
   position: sticky;

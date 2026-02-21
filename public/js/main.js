@@ -12,6 +12,13 @@ let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
 let oldalszam = 0; // összes oldal darabszáma
 let Joldal = 1; // jelenlegi oldal
 
+const filterToggle = document.getElementById('filterToggle');
+const closeFilter = document.getElementById('closeFilter');
+const filterSidebar = document.getElementById('filterSidebar');
+const overlay = document.getElementById('overlay');
+
+const egeszoldal = $("html");
+
 const SPAState = { currentView: 'home', currentData: {} };
 
 const kezdesek = ["Szerintem", "Őszintén szólva", "Én úgy látom", "Nekem az a véleményem", "Nyilvánvalóan", "Hát megmondom őszintén, hogy"];
@@ -19,6 +26,21 @@ const cselekvesek = ["ez a termék", "ez a szolgáltatás", "a funkció", "ez az
 const jelzok = ["nagyon jó", "elég hasznos", "egészen érdekes", "meglepően hatékony", "egészen korrekt", "használhatatlan"];
 const kozospontok = ["és", "de", "ráadásul", "viszont", "ugyanakkor"];
 const zaro = [".", "!", " 😊", " 😎", "."]
+
+let kosarmenupont = `
+    <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
+        <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
+        <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
+        <i class="bi bi-bag"></i> 
+        <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
+        </div>
+    </label>`;
+
+let rendelesmenupont = `
+    <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
+        <i class="bi bi-bag-check"></i>
+        <span> Rendeléseim</span>
+    </button>`;
 
 function randomElem(tomb) { return tomb[Math.floor(Math.random() * tomb.length)]; }
 
@@ -69,31 +91,57 @@ async function Admin_ellenorzes() {
     return adminell; 
 }
 
+function openFilter() {
+    filterSidebar.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+}
+
+function closeFilterFunc() {
+    filterSidebar.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+}
+
 async function F5() {
     if (JSON.parse(localStorage.getItem("user") || "{}")?.loggedIn) { 
         bejelentkezett_usernev = JSON.parse(localStorage.getItem("user") || "{}")?.name || "";
         bejelentkezett_useremail = JSON.parse(localStorage.getItem("user") || "{}")?.email || "";
         csoport = JSON.parse(localStorage.getItem("user") || "{}")?.group || "";
 
-        const ae = await Admin_ellenorzes();
-        
+        const ae = await Admin_ellenorzes();        
         if (ae.admin) { admin = true; }
         if (ae.webadmin) { webbolt_admin = true; }
 
-        if ((JSON.parse(localStorage.getItem("user") || "{}")?.ui.theme) == "dark") { 
-            $("html").addClass("dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i>`); 
-            user.ui = { ...user.ui, theme: "dark" };
-        }
-        else {
-            $("html").removeClass("dark");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
-            user.ui = { ...user.ui, theme: "light" };
-        }
+        const tema = localStorage.getItem("theme") || "system";
+        Megjelenes(tema);
         Frissites();
     } else { 
         Frissites();
     }
+}
+
+function Megjelenes(mod) {
+  if (mod === "dark") {
+    egeszoldal.addClass("dark");
+    $("#dark").prop("checked", true);
+  } 
+  else if (mod === "light") {
+    egeszoldal.removeClass("dark");
+    $("#light").prop("checked", true);
+  } 
+  else if (mod === "system") {
+    const sotete = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    egeszoldal.toggleClass("dark", sotete);
+    $("#system").prop("checked", true);
+  }
+}
+
+function Temavalto(id) {
+    localStorage.setItem("theme", id.id);
+    Megjelenes(id.id);
 }
 
 function RangokHTML(rang) {
@@ -111,49 +159,22 @@ function RangokHTML(rang) {
 function update_gombok (x) {
     // vendeg
     if (x == 0) { 
-        $("#kosar-menupont").html(`
-            <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
-                <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
-                <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
-                <i class="bi bi-cart2"></i> 
-                <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
-                </div>
-            </label>`);
+        $("#kosar-menupont").html(kosarmenupont);
         $("#admin-menupont").html("");
         $("#rendeles-menupont").html("");
+        
     }
     // sima user
     if (x == 1) { 
-        $("#kosar-menupont").html(`
-            <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2  cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
-                <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
-                <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
-                <i class="bi bi-cart2"></i> 
-                <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
-                </div>
-            </label>`);
-        $("#rendeles-menupont").html(`
-            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
-                <i class="bi bi-bag-check"></i>
-                <span> Rendelések</span>
-            </button>`);
+        $("#kosar-menupont").html(kosarmenupont);
+        $("#rendeles-menupont").html(rendelesmenupont);
         $("#admin-menupont").html("");
+        
     }
     // admin/webadmin
     if (x == 2) {
-        $("#kosar-menupont").html(`
-            <label class="group bg-transparent me-3 text-gray-500 dark:bg-slate-900 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 !border-b !border-transparent d-flex align-items-center justify-content-center p-2 cursor-pointer transition-all duration-200 has-[:checked]:!border-b has-[:checked]:!border-slate-900 dark:has-[:checked]:!border-b dark:has-[:checked]:!border-zinc-200">
-                <div class="flex items-center group-has-[:checked]:text-slate-700 dark:group-has-[:checked]:text-zinc-200 gap-2 text-lg">
-                <input type="radio" name="cart" class="form-check-input hidden " id="kosar" onchange="Kosar_Mutat()" data-bs-dismiss="offcanvas">
-                <i class="bi bi-cart2"></i> 
-                <span class="group-has-[:checked]:font-semibold transition-all duration-200 ">Kosár <span class="badge bg-slate-900 text-zinc-200 dark:bg-sky-950 dark:border border-sky-700 dark:text-zinc-200 align-self-center ms-1" style="top: -50%" id="kosar_content_count">0</span></span>
-                </div>
-            </label>`);
-        $("#rendeles-menupont").html(`
-            <button id="rend_button" type="button" class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl bezarmind" onclick="rendelesekmegtolt(true)"> 
-                <i class="bi bi-bag-check"></i>
-                <span> Rendelések</span>
-            </button>`);
+        $("#kosar-menupont").html(kosarmenupont);
+        $("#rendeles-menupont").html(rendelesmenupont);
         $("#admin-menupont").html(`
             <div class="dropdown">
                 <button id="admin_button" type="button" class="dropdown-toggle py-2 px-1 mx-1 text-lg bg-transparent text-gray-500 hover:bg-transparent hover:text-slate-700 dark:bg-slate-900 dark:text-zinc-400 dark:hover:bg-slate-900 dark:hover:text-zinc-200 transition-hover duration-300 ease-in-out rounded-3 d-flex" data-bs-toggle="dropdown">
@@ -189,6 +210,7 @@ function update_gombok (x) {
                     </li>
                 </ul>
             </div>`);
+            
     }
 }
 
@@ -343,7 +365,7 @@ function OLDALFELTOLT(darab) {
 }
 
 function Kovi(keri){
-    FelaTetore("felsosor");
+    FelaTetore("main_kontener");
     switch (keri.id){
         case("Kovi1"): // következő oldal
             if(Joldal < oldalszam){
@@ -388,19 +410,23 @@ async function ArFeltolt(sql, min ,max){
         
         // ha nincs találat akkor a max és min ár 0 legyen
         if(arak.rows[0].MINAR == null){
+            
             document.getElementById("min_ar").min = 0;
             document.getElementById("min_ar").max = 0;
             document.getElementById("max_ar").max = 0;
             document.getElementById("max_ar").min = 0;
             document.getElementById("max_ar").value = 0;
             document.getElementById("min_ar").value = 0;
+            
             document.getElementById("min_ar_input").value = 0;
             document.getElementById("max_ar_input").value = 0;
             return;
         }
 
+        
         var elozomin = parseInt( document.getElementById("min_ar").min)// lekérdezes a csuszak minimum értékét mielött megváltoztatom
         var elozomax = parseInt( document.getElementById("max_ar").max)// lekérdezes a csuszak maximum értékét mielött megváltoztatom
+        
 
         // ha az előző minimum érték = a mostani minimum érték 
         // vagy a mostani minimum nagyobb mint a lekérdezett utáni maximum ár 
@@ -411,16 +437,19 @@ async function ArFeltolt(sql, min ,max){
         // akkor a maximum legyen a lekérdezett maximuma
         if(elozomax == max){ max = arak.rows[0].MAXAR; }
 
+        
         document.getElementById("min_ar").min = arak.rows[0].MINAR;
         document.getElementById("min_ar").max = arak.rows[0].MAXAR;
 
         document.getElementById("max_ar").max = arak.rows[0].MAXAR;
         document.getElementById("max_ar").min = arak.rows[0].MINAR; 
+        
 
+        
         // ha a mostani minimum kisebb mint a lekérdezett minimum 
         // akkor a minimum legyen a lekérdezett minimuma
         if (parseInt(min) < parseInt( arak.rows[0].MINAR )) {
-           document.getElementById("min_ar").value = arak.rows[0].MINAR;
+           //document.getElementById("min_ar").value = arak.rows[0].MINAR;
            min = arak.rows[0].MINAR
         }
         // ha a mostani minimum nagyobb mint a lekérdezett minimum
@@ -430,12 +459,13 @@ async function ArFeltolt(sql, min ,max){
         // ha a mostani maximum nagyobb mint a lekérdezett maximum 
         // akkor a maximum legyen a lekérdezett maximuma
         if (parseInt(max) > parseInt( arak.rows[0].MAXAR )) {
-           document.getElementById("max_ar").value = arak.rows[0].MAXAR;
+           //document.getElementById("max_ar").value = arak.rows[0].MAXAR;
            max = arak.rows[0].MAXAR
         }
         // ha a mostani maximum kisebb mint a lekérdezett maximum 
         // akkor a maximum legyen a mostani maximum
         else { document.getElementById("max_ar").value = max; }  
+        
 
         document.getElementById("min_ar_input").value = min;
         document.getElementById("max_ar_input").value =max;
@@ -528,7 +558,7 @@ async function KategoriaFeltolt(hova, type, kivalasztott,mindenkipipal) {
                 listItems += `
                     <p class="p-2 !border-b !border-b-zinc-800/10 dark:!border-b dark:!border-b-zinc-200/10 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out"> 
                         <input onchange="KatbolAR()" class=" form-check-input !border !border-zinc-800/20 bg-zinc-200 hover:cursor-pointer dark:!border dark:!border-zinc-200/30 dark:checked:!border-sky-600 dark:bg-slate-800 focus:outline-none focus:ring-0 focus:ring-offset-0 focus:shadow-none" type="checkbox" id="katcheck${k_json.rows[i].ID_KATEGORIA}" ${pipa} name="${k_json.rows[i].KATEGORIA}">  
-                        <label class="form-check-label hover:cursor-pointer " for="katcheck${k_json.rows[i].ID_KATEGORIA}"> ${k_json.rows[i].KATEGORIA} </label> 
+                        <label class="form-check-label hover:cursor-pointer text-sm" for="katcheck${k_json.rows[i].ID_KATEGORIA}"> ${k_json.rows[i].KATEGORIA} </label> 
                     </p>`;
             }
         }
@@ -579,6 +609,12 @@ function KezdolapElemekViszlat() {
     $("#tutorial").fadeOut(300);
 }
 
+function KezdolapElemekMegjelenit() {
+    $("#welcome_section").fadeIn(300);
+    $("#kateogoria-carousel").fadeIn(300);
+    $("#tutorial").fadeIn(300);
+}
+
 async function Kezdolap(pushHistory = true) {
     
 
@@ -607,9 +643,7 @@ async function Kezdolap(pushHistory = true) {
     $("#szurok_menu").addClass("eltunt");
     
     $("#keresett_kifejezes").html("");
-    $("#welcome_section").fadeIn(300);
-    $("#kateogoria-carousel").fadeIn(300);
-    $("#tutorial").fadeIn(300);
+    KezdolapElemekMegjelenit();
 
     if (pushHistory) {
         SPAState.currentView = 'home';
@@ -623,6 +657,7 @@ async function Kezdolap(pushHistory = true) {
 }
 
 async function Szurok_Torlese() {
+    $("#nev1").val("");
     bepipaltID = "";
     minarr = 0;
     maxarr = 0;
@@ -636,6 +671,7 @@ async function Szurok_Torlese() {
     $("#min_ar_input").val(0); 
     $("#max_ar_input").val(0);
     await KERESOBAR();
+    KezdolapElemekMegjelenit();
 }
 
 async function KategoriaKezdolap(id_kategoria, kategoria_nev) {
@@ -657,7 +693,12 @@ function FelaTetore(target = "top") {
     }
     const el = document.getElementById(target);
     if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    const plusz = 100;
+    // elem pozíciója a viewporthoz képest + jelenlegi scroll pozíció - plusz érték 
+    const y = el.getBoundingClientRect().top + window.pageYOffset - plusz; 
+
+    window.scrollTo({ top: y, behavior: "smooth" });
 }
 
 function sleep(ms) {

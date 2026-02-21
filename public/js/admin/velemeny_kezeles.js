@@ -21,6 +21,8 @@ async function Admin_Velemenykezeles(pushHistory = true) {
             <div class="col-12 text-center mt-5" id="velemenyek_hely"></div>
         `).fadeIn(300);
         AdminVelemenyekMutat();
+        $("#main_kontener").addClass("hidden");
+        $("#content_hely").removeClass("hidden");
     });
     KezdolapElemekViszlat();
     $("#nezetkicsi").addClass("eltunt");

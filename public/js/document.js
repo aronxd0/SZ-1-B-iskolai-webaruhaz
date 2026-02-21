@@ -13,7 +13,7 @@ window.addEventListener("popstate", async (e) => {
         case "home": Kezdolap(false); break;
         case "termek": Termek_Mutat(null, e.state.id, false); break;
         case "kosar": Kosar_Mutat(false); break;
-        case "rendelesek": rendelesekmegtolt(false); break;
+        case "rendeleseim": rendelesekmegtolt(false); break;
         case "velemeny-kezeles": Admin_Velemenykezeles(false); break;
         case "statisztika": Statisztikak(false); break;
         case "sql": SQLinput(false); break;
@@ -54,6 +54,15 @@ $(document).ready(function() {
 
     $("#login_passwd").on("keydown", function(e) { if (e.key === " ") { e.preventDefault(); } });
 
+    $("#nev1").on("keydown", function(e) { if (e.key === "<" || e.key === ">" || e.key === "&" || e.key === "%") { e.preventDefault(); } });
+
+    $("#nev1").on("paste", function (e) {
+        const text = (e.originalEvent || e).clipboardData.getData("text");
+        if (/[<>&%]/.test(text)) {
+          e.preventDefault();
+        }
+      });
+
     $("#login_passwd").on("input", function() {
         let val = $(this).val();
         $(this).val(val.replace(/\s/g, ''));
@@ -68,6 +77,7 @@ $(document).ready(function() {
         }
     });
 
+    /*
     $("#switch").click(function () {
         let user = JSON.parse(localStorage.getItem("user")) || {};
         const isDark = $("html").hasClass("dark");
@@ -82,6 +92,7 @@ $(document).ready(function() {
         }
         localStorage.setItem("user", JSON.stringify(user));
     });
+    */
 
     // slidernek input mezö , változtatni kell a slider inputokaz as well as  a slider value: Enter után  szürni kell , emouseuot on is .
     $("#min_ar").on("input",  function MinarELL() {
@@ -156,6 +167,28 @@ $(document).ready(function() {
         modal.show();
     }
 
+    const tema = localStorage.getItem("theme");
+    if (!tema) { Megjelenes("system");} 
+    else { Megjelenes(tema); }
+
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    media.addEventListener("change", function (e) {
+        if (localStorage.getItem("theme") === "system") {
+            $("html").toggleClass("dark", e.matches);
+        }
+    });
+
+    filterToggle.addEventListener('click', openFilter);
+    closeFilter.addEventListener('click', closeFilterFunc);
+    overlay.addEventListener('click', closeFilterFunc);
+
+    // ESC billentyűvel is bezárható
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && filterSidebar.classList.contains('active')) {
+            closeFilterFunc();
+        }
+    });
+
 
     const hash = window.location.hash;
     if (hash.startsWith('#termek/')) {
@@ -163,7 +196,7 @@ $(document).ready(function() {
         Termek_Mutat(null, parseInt(termekId), false);
     } else if (hash === '#kosar') {
         Kosar_Mutat(false);
-    } else if (hash === '#rendelesek') {
+    } else if (hash === '#rendeleseim') {
         rendelesekmegtolt(false); 
     } else if (hash === '#velemenykezeles') {
         Admin_Velemenykezeles(false);

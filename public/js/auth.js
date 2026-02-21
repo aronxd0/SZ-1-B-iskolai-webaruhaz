@@ -13,7 +13,7 @@ function Frissites() {
         $("#loginspan").html(' Bejelentkezés');
         $("#loginout").removeClass("bi bi-box-arrow-in-left");
         $("#loginout").addClass("bi bi-box-arrow-in-right");
-        $("#vendegszoveg").html("Jelentkezz be a fiókodba");
+        $("#vendegszoveg").html("Jelenleg nem vagy bejelentkezve.");
         $("#user-email").html("");
         $("#rangok").html(``);
         $("#user").html("");
@@ -43,8 +43,8 @@ function Frissites() {
     // Ez akkor ha be van jelentkezve
     else { 
         rang = "";
-        $("#user").html(`<i class="bi bi-person"></i> <h5>${bejelentkezett_usernev}</h5>`);
-        $("#user-email").html(`<i class="bi bi-envelope"></i> <span>${bejelentkezett_useremail}</span>`);
+        $("#user").html(`<h5>${bejelentkezett_usernev}</h5>`);
+        $("#user-email").html(`<span>${bejelentkezett_useremail}</span>`);
         $("#vendegszoveg").html("");
         $("#udv").html(`Üdvözlünk a Csány webáruházban <span class="font-semibold">${bejelentkezett_usernev.split(" ")[1]}</span>!`);
         rang += RangokHTML(csoport, "sm");
@@ -108,8 +108,7 @@ $("#login_oksi_button").click(async function() {
             loggedIn: true,
             name: bejelentkezett_usernev,
             email: bejelentkezett_useremail,
-            group: csoport,
-            ui: { theme: "light" },
+            group: csoport
         }));
         Frissites();
         $("#loginhiba").html("");
@@ -134,13 +133,13 @@ function ADMINVAGYE(){
         let elfo = `
             <p class="p-2 !border-b !border-b-zinc-800/10 dark:!border-b dark:!border-b-zinc-200/10 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out">
                 <input class="form-check-input !border !border-zinc-800/20 bg-zinc-200 hover:cursor-pointer dark:!border dark:!border-zinc-200/30 dark:checked:!border-sky-600 dark:bg-slate-800 focus:outline-none focus:ring-0 focus:ring-offset-0 focus:shadow-none" type="checkbox" id="elf" value="Csakelfogyott" onchange="Elfogyott(this)">
-                <label for="elf" class="form-check-label hover:cursor-pointer "> Az elfogyott áruk mutatása</label>
+                <label for="elf" class="form-check-label hover:cursor-pointer text-sm"> Elfogyott termékek</label>
             </p>
             `;      
         let nemakt = `
             <p class="p-2 !border-b !border-b-zinc-800/10 dark:!border-b dark:!border-b-zinc-200/10 dark:!border-t-0 dark:!border-r-0 dark:!border-l-0 mb-3 has-[:checked]:!border-b-sky-600 dark:has-[:checked]:!border-b-sky-600 transition-all duration-300 ease-in-out">
                 <input class="form-check-input !border !border-zinc-800/20 bg-zinc-200 hover:cursor-pointer dark:!border dark:!border-zinc-200/30 dark:checked:!border-sky-600 dark:bg-slate-800 focus:outline-none focus:ring-0 focus:ring-offset-0 focus:shadow-none" type="checkbox" value ="ads" id="innaktiv" onchange="Elfogyott(this)">
-                <label for="innaktiv" class="form-check-label hover:cursor-pointer "> Az inaktiv áruk mutatása</label>
+                <label for="innaktiv" class="form-check-label hover:cursor-pointer text-sm"> Inaktiv termékek</label>
             </p>
             `;
         $("#Elfogyott_gomb").html(elfo);

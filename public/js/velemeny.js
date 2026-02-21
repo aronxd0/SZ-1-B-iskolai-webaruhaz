@@ -1,18 +1,25 @@
 // velemenyek irasa, torlese, megjelenitese
 
 async function Velemeny_Kozzetesz(id_termek) {
-    if ($("#velemeny_input").val() != "") {
-        try {
-            let velemenyiras = await ajax_call(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, "POST", null, true);
-            $("#velemeny_iras").modal("hide");
- 
-            if (velemenyiras.message == "ok") {
-                üzen(`Vélemény elküldve`,"success");
-                $("#velemeny_input").val("");
-                VelemenyekMutat(id_termek);
-            }
-        }  catch (err) { console.error(err); }
+    if ($("#velemeny_input").val().trim().includes("<") || $("#velemeny_input").val().trim().includes("%") || $("#velemeny_input").val().trim().includes("$") || $("#velemeny_input").val().trim().includes("{") || $("#velemeny_input").val().trim().includes("}") || $("#velemeny_input").val().trim().includes("&")) {
+        $("#velemeny_hiba").html("A vélemény nem megengedett karaktereket tartalmaz!");
+        return;
     }
+    else {
+        if ($("#velemeny_input").val() != "") {
+            try {
+                let velemenyiras = await ajax_call(`velemeny_add?ID_TERMEK=${id_termek}&SZOVEG=${$("#velemeny_input").val()}`, "POST", null, true);
+                $("#velemeny_iras").modal("hide");
+    
+                if (velemenyiras.message == "ok") {
+                    üzen(`Vélemény elküldve`,"success");
+                    $("#velemeny_input").val("");
+                    VelemenyekMutat(id_termek);
+                }
+            }  catch (err) { console.error(err); }
+        }
+    }
+    
 }
 
 async function Velemeny_Torles(id_velemeny, id_termek) {
@@ -41,13 +48,12 @@ async function SajatVelemenyekMutat(id_termek) {
 
             sv += `
             <div class="${allapot_style} p-3 rounded-xl">
-                <div class="d-flex align-items-center gap-3 mb-2">
+                <div class="flex items-center gap-3 mb-2">
                     <i class="bi bi-person-circle text-3xl"></i>
-                    <div>
+                    <div class="w-full">
                         <p class="font-semibold">${element.NEV}</p>
                         <p class="text-xs">${new Date(element.DATUM).toLocaleString(navigator.language, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false})}</p>
                     </div>
-                    <div class="col-6 d-flex justify-content-end"><p></p></div>
                 </div>
                 <p class="text-pretty text-sm sm:text-base">${element.SZOVEG.toString()}</p>
                 <div class="w-full d-flex justify-content-between align-items-center mt-3 !border-t !border-slate-900/10 dark:!border-zinc-200/10">

@@ -80,6 +80,8 @@ async function rendelesekmegtolt(pushHistory = true) {
     }
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(s).fadeIn(300);
+        $("#main_kontener").addClass("hidden");
+        $("#content_hely").removeClass("hidden");
     });
     KezdolapElemekViszlat();
     $("#nezetkicsi").addClass("eltunt");
@@ -89,9 +91,9 @@ async function rendelesekmegtolt(pushHistory = true) {
     $("#kezdolap").prop("checked", false);
 
     if (pushHistory) {
-        SPAState.currentView = 'rendelesek';
+        SPAState.currentView = 'rendeleseim';
         SPAState.currentData = { };  
-        history.pushState({ view: 'rendelesek' }, 'Rendelések', `#rendelesek`);
+        history.pushState({ view: 'rendeleseim' }, 'Rendelések', `#rendeleseim`);
     }
 }
 

@@ -145,6 +145,8 @@ function Statisztikak(pushHistory = true) {
 
      $("#content_hely").fadeOut(300, async function() {
         await $("#content_hely").html(html).fadeIn(300); 
+        $("#main_kontener").addClass("hidden");
+        $("#content_hely").removeClass("hidden");
         DiagrammokSelect("kezdes");
         STAT_Penz();
         STAT_ELAD();
