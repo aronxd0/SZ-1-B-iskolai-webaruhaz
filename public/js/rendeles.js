@@ -91,9 +91,9 @@ async function rendelesekmegtolt(pushHistory = true) {
     $("#kezdolap").prop("checked", false);
 
     if (pushHistory) {
-        SPAState.currentView = 'rendelesek';
+        SPAState.currentView = 'rendeleseim';
         SPAState.currentData = { };  
-        history.pushState({ view: 'rendelesek' }, 'Rendelések', `#rendelesek`);
+        history.pushState({ view: 'rendeleseim' }, 'Rendelések', `#rendeleseim`);
     }
 }
 

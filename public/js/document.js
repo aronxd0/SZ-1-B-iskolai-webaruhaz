@@ -13,7 +13,7 @@ window.addEventListener("popstate", async (e) => {
         case "home": Kezdolap(false); break;
         case "termek": Termek_Mutat(null, e.state.id, false); break;
         case "kosar": Kosar_Mutat(false); break;
-        case "rendelesek": rendelesekmegtolt(false); break;
+        case "rendeleseim": rendelesekmegtolt(false); break;
         case "velemeny-kezeles": Admin_Velemenykezeles(false); break;
         case "statisztika": Statisztikak(false); break;
         case "sql": SQLinput(false); break;
@@ -196,7 +196,7 @@ $(document).ready(function() {
         Termek_Mutat(null, parseInt(termekId), false);
     } else if (hash === '#kosar') {
         Kosar_Mutat(false);
-    } else if (hash === '#rendelesek') {
+    } else if (hash === '#rendeleseim') {
         rendelesekmegtolt(false); 
     } else if (hash === '#velemenykezeles') {
         Admin_Velemenykezeles(false);
