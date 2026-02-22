@@ -210,7 +210,7 @@ async function RendelesKezeloAblak(rendelId, datum, szallcim, fizmod, szallmod, 
                         <span>Áfa</span><span>${afa}%</span>
                     </div>
                     <div class="flex justify-between pt-2 !border-t !border-slate-900/20 dark:!border-zinc-200/20">
-                        <span class="font-semibold">Végösszeg</span><span class="text-indigo-600 font-semibold" id="rendelesvegosszeg"></span>
+                        <span class="font-semibold">Végösszeg</span><span class="text-indigo-600 dark:text-indigo-500 font-semibold" id="rendelesvegosszeg"></span>
                     </div>
                 </div>
     

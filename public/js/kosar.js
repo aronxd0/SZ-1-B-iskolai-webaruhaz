@@ -101,7 +101,7 @@ async function Kosar_Mutat(pushHistory = true) {
                     </div>
                     <div class="mt-6 flex justify-between text-slate-900 dark:text-zinc-100">
                         <span class="font-semibold">Végösszeg</span>
-                        <span class="text-indigo-600 font-semibold" id="sumar"></span>
+                        <span class="text-indigo-600 dark:text-indigo-500 font-semibold" id="sumar"></span>
                     </div>
                     <div id="pay_button">
                         <button id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})' class="mt-6 w-full rounded-lg bg-slate-950 dark:bg-gray-800  text-zinc-200 hover:bg-zinc-100 hover:text-slate-950 !border !border-transparent hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out py-3 font-medium">

@@ -167,13 +167,13 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
 
             <!-- Progress Bar -->
             <div class="w-full h-2 bg-gray-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                <div class="h-full bg-indigo-600 ${allapot == 'Beérkezett' ? 'w-1/2' : 'w-2/2'}"></div>
+                <div class="h-full bg-indigo-600 dark:bg-indigo-500 ${allapot == 'Beérkezett' ? 'w-1/2' : 'w-2/2'}"></div>
             </div>
 
             <!-- Steps -->
             <div class="flex justify-between text-sm text-gray-500 mt-2">
-                <span class="text-indigo-600 font-medium">Elküldve</span>
-                <span class="${allapot == 'Kiszállítva' ? 'text-indigo-600 font-medium' : ''}">Kiszállítva</span>
+                <span class="text-indigo-600 dark:text-indigo-500 font-medium">Elküldve</span>
+                <span class="${allapot == 'Kiszállítva' ? 'text-indigo-600 dark:text-indigo-500 font-medium' : ''}">Kiszállítva</span>
             </div>
         </div>
 
@@ -206,7 +206,7 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
                     <span>Áfa</span><span>${afa}%</span>
                 </div>
                 <div class="flex justify-between pt-2 !border-t !border-slate-900/20 dark:!border-zinc-200/20">
-                    <span class="font-semibold">Végösszeg</span><span class="text-indigo-600 font-semibold" id="rendelesvegosszeg"></span>
+                    <span class="font-semibold">Végösszeg</span><span class="text-indigo-600 dark:text-indigo-500 font-semibold" id="rendelesvegosszeg"></span>
                 </div>
             </div>
 
