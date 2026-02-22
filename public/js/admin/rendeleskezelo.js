@@ -22,7 +22,7 @@ async function RendelesekKezelese(pushHistory = true) {
             <div class="bg-zinc-50 rounded-xl shadow-lg p-5 transition cursor-pointer bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10" id="rend_${elemek.ID_RENDELES}" onclick="RendelesKezeloAblak(${elemek.ID_RENDELES}, '${elemek.DATUM}', '${elemek.SZALLCIM}', '${elemek.FIZMOD}', '${elemek.SZALLMOD}', '${elemek.NEV}', '${elemek.EMAIL}', ${elemek.AFA}, ${elemek.RENDELES_VEGOSSZEGE}, '${elemek.MEGJEGYZES}')">
                 <div class="flex items-center justify-between mb-3">
                     <span class="font-semibold">#${elemek.ID_RENDELES}</span>
-                    <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">
+                    <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-sky-950 dark:!border dark:!border-sky-700 dark:text-blue-400">
                     ${elemek.ALLAPOT}
                     </span>
                 </div>
