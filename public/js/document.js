@@ -44,10 +44,8 @@ $(document).ready(function() {
     F5();
     KategoriaFeltolt("kategoria_section", "check", "", false);
 
-    var input = document.getElementById("nev1");
-
     // enterrel keresés
-    input.addEventListener("keypress", function(event) {
+    document.getElementById("nev1").addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
             document.getElementById("kereses_gomb").click();
@@ -55,6 +53,13 @@ $(document).ready(function() {
     });
 
     $("#login_passwd").on("keydown", function(e) { if (e.key === " ") { e.preventDefault(); } });
+
+    $("#login_passwd").on("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault(); 
+            BEJELENTKEZES();
+        }
+    });
 
     $("#nev1").on("keydown", function(e) { if (e.key === "<" || e.key === ">" || e.key === "&" || e.key === "%") { e.preventDefault(); } });
 
@@ -71,30 +76,6 @@ $(document).ready(function() {
     });
 
     $("#nev1").on("focus", function() { FelaTetore(); });
-
-    $('#bezar').on('click', function () {
-        if (!JSON.parse(localStorage.getItem("user") || "{}")?.loggedIn) {
-            ajax_call("logout", "GET", null, true).then(logoutt => {});
-            Kezdolap();
-        }
-    });
-
-    /*
-    $("#switch").click(function () {
-        let user = JSON.parse(localStorage.getItem("user")) || {};
-        const isDark = $("html").hasClass("dark");
-        if (isDark) {
-            $("html").removeClass("dark");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
-            user.ui = { ...user.ui, theme: "light" };
-        } else {
-            $("html").addClass("dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i>`);
-            user.ui = { ...user.ui, theme: "dark" };
-        }
-        localStorage.setItem("user", JSON.stringify(user));
-    });
-    */
 
     // slidernek input mezö , változtatni kell a slider inputokaz as well as  a slider value: Enter után  szürni kell , emouseuot on is .
     $("#min_ar").on("input",  function MinarELL() {
