@@ -119,7 +119,7 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
     let html = `
 
         <div class="max-w-5xl mx-auto p-1 sm:p-6 space-y-6">
-            <div class="bg-zinc-50 rounded-xl shadow-lg p-4 sm:p-6 text-sm flex flex-col gap-2">
+            <div class="bg-zinc-50 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 rounded-xl shadow-lg p-4 sm:p-6 text-sm flex flex-col gap-2">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <h1 class="text-2xl font-bold">Rendelés #${rendelId}</h1>
                     <span class="text-sm text-gray-500">${new Date(datum).toLocaleString(navigator.language, {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false})}</span>
@@ -129,7 +129,7 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
         html += `
 
 
-        <div class="p-3 space-y-6 text-slate-900 dark:bg-slate-950 !border-b !border-slate-900/20  dark:!border-zinc-200/20 dark:text-zinc-200 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 " onclick="Termek_Mutat(event, ${elem.ID_TERMEK})">
+        <div class="p-3 space-y-6 text-slate-900 dark:bg-slate-950 !border-b !border-slate-900/20 dark:!border-b dark:!border-zinc-200/20 dark:text-zinc-200 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-900 " onclick="Termek_Mutat(event, ${elem.ID_TERMEK})">
             <!-- Product Info -->
             <div class="flex flex-col items-start sm:items-center sm:flex-row gap-4 ">
                 <img src="${elem.FOTOLINK}" alt="${elem.NEV}" class="w-10 h-10 rounded-lg object-cover">
@@ -166,18 +166,18 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
             </p>
 
             <!-- Progress Bar -->
-            <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div class="w-full h-2 bg-gray-200 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div class="h-full bg-indigo-600 ${allapot == 'Beérkezett' ? 'w-1/2' : 'w-2/2'}"></div>
             </div>
 
             <!-- Steps -->
             <div class="flex justify-between text-sm text-gray-500 mt-2">
-                <span class="text-indigo-600 font-medium">Rendelés elküldve</span>
+                <span class="text-indigo-600 font-medium">Elküldve</span>
                 <span class="${allapot == 'Kiszállítva' ? 'text-indigo-600 font-medium' : ''}">Kiszállítva</span>
             </div>
         </div>
 
-        <div class="bg-zinc-50 rounded-xl shadow-lg p-4 sm:p-6 grid lg:grid-cols-3 gap-6 text-sm">
+        <div class="bg-zinc-50 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 rounded-xl shadow-lg p-4 sm:p-6 grid lg:grid-cols-3 gap-6 text-sm">
 
             <!-- Billing -->
             <div>
@@ -205,7 +205,7 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
                 <div class="flex justify-between">
                     <span>Áfa</span><span>${afa}%</span>
                 </div>
-                <div class="flex justify-between pt-2 border-t">
+                <div class="flex justify-between pt-2 !border-t !border-slate-900/20 dark:!border-zinc-200/20">
                     <span class="font-semibold">Végösszeg</span><span class="text-indigo-600 font-semibold" id="rendelesvegosszeg"></span>
                 </div>
             </div>
