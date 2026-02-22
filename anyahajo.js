@@ -1056,7 +1056,7 @@ app.get('/rendelesek',async (req, res) => {
     try{
         session_data = req.session;
         // Paraméter: lapozás kezdőpontja (10 rekord/oldal)
-        var off = req.query.OFFSET;
+        var off = parseInt(req.query.OFFSET);
         var kezeles = (req.query.kezeles ? parseInt(req.query.kezeles) : 0); 
 
         // SQL: rendelések lekérése összesítéssel (végösszeg számítás)
@@ -1072,19 +1072,21 @@ app.get('/rendelesek',async (req, res) => {
         limit 10 offset ?
         `;
         
-        let ertekek;
+        let ertekek = [];
 
-        if (kezeles == 1) { ertekek = [off * 10]; } 
-        else { ertekek = [session_data.ID_USER, off * 10]; }
+        if (kezeles == 1) { ertekek.push(off * 10); } 
+        else { 
+            ertekek.push(session_data.ID_USER);
+            ertekek.push(off * 10); 
+        }
 
+        /*
         var eredmeny = await runQueries(sql, ertekek);
         if(eredmeny.message != "ok"){
             throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
-        
-        res.set(header1, header2);
-        res.json(eredmeny);
-        res.end();
+        */
+       sendJson_toFrontend(res, sql, ertekek);
     } catch (err) {
         console.error("/rendelesek HIBA : " + (err && err.message ? err.message : err));
         res.status(500).json({

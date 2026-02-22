@@ -1,21 +1,39 @@
-let a_jelenlegi = 1;
-let a_osszesoldal = 0;
+var a_jelenlegi = 1;
+var a_osszesoldal;
 
 async function RendelesekKezelese(pushHistory = true) {
-
-    var s = `
+    let s = ``;
+    let fej = `
         <div class="col-12 text-center p-2"><span class="text-xl">Beérkezett rendelések</span></div>
-            <div class="max-w-7xl mx-auto my-5 px-4 sm:px-6">
-                <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div class="max-w-7xl mx-auto my-5 px-4 sm:px-6" id="b_rend"></div>
+                
         `;
+
+    $("#content_hely").fadeOut(300, function() {
+        $("#content_hely").html(fej).fadeIn(300);
+        $("#main_kontener").addClass("hidden");
+        $("#content_hely").removeClass("hidden");
+    });
 
     const itemek = await ajax_call(`rendelesek?OFFSET=${(a_jelenlegi-1)}&kezeles=1`, "GET", null, true);
 
     a_osszesoldal = Math.ceil(itemek.maxcount / 10);
-    
-    if (itemek.maxcount != 0) {
-        for (const elemek of itemek.rows) {
 
+    if (a_jelenlegi > a_osszesoldal) { 
+        a_jelenlegi = a_osszesoldal;
+        return RendelesekKezelese(false);
+    }
+    
+    if (itemek.rows.length == 0) {
+        s = `
+        <div class="col-12">
+            <div class="text-center p-2">
+                <h5>Nincsenek beérkezett rendelések</h5>
+            </div>
+        </div>`;
+    } else {
+        s += `<div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">`;
+        for (const elemek of itemek.rows) {
 
             s += `
 
@@ -49,13 +67,15 @@ async function RendelesekKezelese(pushHistory = true) {
         }
 
         s += `
-                </div>
+                
             </div>
         `;
 
+        
+
         if (a_osszesoldal > 1) {
             s += `
-            <ul class="pagination justify-content-center gap-2 select-none">
+            <ul class="pagination justify-content-center gap-2 select-none mt-5">
                 <li class="page-item ${a_jelenlegi == 1 ? "disabled hover:cursor-not-allowed" : ""}" >
                     <a id="Vissza2_renda" onclick="KoviRendeles(this)" class="page-link px-3 py-2 rounded-xl !border !border-transparent bg-zinc-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-200 hover:bg-slate-900 hover:text-white dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 transition-all duration-200 shadow-sm cursor-pointer " > « </a>
                 </li>
@@ -82,20 +102,15 @@ async function RendelesekKezelese(pushHistory = true) {
                     <a id="Kovi2_renda" onclick="KoviRendeles(this)" class="page-link px-3 py-2 rounded-xl !border !border-transparent bg-zinc-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-200 hover:bg-slate-900 hover:text-white dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 transition-all duration-200 shadow-sm cursor-pointer "> » </a>
                 </li>
             </ul>`;
-        }  
-    } else {
-        s = `
-        <div class="col-12">
-            <div class="text-center p-2">
-                <h5>Nincsenek beérkezett rendelések</h5>
-            </div>
-        </div>`;
+        } 
+        console.log(s);
+        $("#b_rend").fadeOut(300, function() {
+            $("#b_rend").html(s).fadeIn(300);
+        });
+        
     }
-    $("#content_hely").fadeOut(300, function() {
-        $("#content_hely").html(s).fadeIn(300);
-        $("#main_kontener").addClass("hidden");
-        $("#content_hely").removeClass("hidden");
-    });
+    
+    
     KezdolapElemekViszlat();
     $("#nezetkicsi").addClass("eltunt");
     $("#nezetnagy").addClass("eltunt");
@@ -254,17 +269,15 @@ function KoviRendeles(mod) {
             a_jelenlegi = 1;
             break;
     }
-    RendelesekKezelese(true);
+    RendelesekKezelese(false);
 }
 
 async function RendelesKiszallitva(rendelId) {
-    try {
-        let rendeles_allapotvaltozas = await ajax_call(`rendeles_allapotvaltozas?ID_RENDELES=${rendelId}`, "POST", null, true);
-        if (rendeles_allapotvaltozas.message == "ok") {
-            üzen(`A rendelés (#${rendelId}) állapota sikeresen módosítva!`,"success");
-            $("#rendeles_kezeles_modal").modal("hide");
-            RendelesekKezelese(false);
-        }
-    } catch (err) { console.error(err); }
+    let rendeles_allapotvaltozas = await ajax_call(`rendeles_allapotvaltozas?ID_RENDELES=${rendelId}`, "POST", null, true);
+    if (rendeles_allapotvaltozas.message == "ok") {
+        üzen(`A rendelés (#${rendelId}) állapota sikeresen módosítva!`,"success");
+        $("#rendeles_kezeles_modal").modal("hide");
+    }
+    await RendelesekKezelese(false);
 }
 
