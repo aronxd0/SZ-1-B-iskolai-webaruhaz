@@ -75,39 +75,41 @@ function Adatok(li) {
         </div>
       </div>
       <div class="row p-1 px-xl-5">
-        <div class="col-12 flex flex-col xl:flex-row p-1">
-          <div class="col-12 col-xl-6 p-1">
+
+        <div class="grid md:grid-cols-2 flex flex-col md:flex-row p-1">
+          <div class="p-1">
             <label for="keresztnev" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-person"></i> Teljes név *</label>
             <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-gray-400 dark:!border dark:!border-zinc-200/20" id="keresztnev" name="knev" value="${ _nev != ""? _nev :  document.getElementById("user").querySelector('h5').textContent.trim()}" placeholder="pl.: Füty Imre">
           </div>
-          <div class="col-12 col-xl-6 p-1">
+          <div class="p-1">
             <label for="emil" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-envelope"></i> E-mail cím *</label>
             <input type="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-gray-400 dark:!border dark:!border-zinc-200/20" id="emil" value="${_emil}" name="imel" placeholder="pl.: futyimre69@valami.xd">              
           </div>
         </div>
-        <div class="col-12 flex flex-col xl:flex-row mt-2 p-1">
-          <div class="col-12 col-xl-3 p-1">
+
+        <div class="grid sm:grid-cols-3 lg:grid-cols-5 flex flex-col sm:flex-row mt-2 p-1">
+          <div class="p-1">
             <label for="iszam" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-hash"></i> Irányítószám *</label>
             <input type="number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="iszam" value="${_iszam}" name="iszam" placeholder="pl.: 8900">
           </div>
-          <div class="col-12 col-xl-9 p-1">
+          <div class="p-1 lg:col-span-2">
             <label for="city" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-building"></i> Város *</label>
             <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="city" value="${_city}" name="city" placeholder="pl.: Miskolc">
           </div>
-        </div>
-        <div class="col-12 flex flex-col xl:flex-row mt-2 p-1">
-          <div class="col-12 col-xl-6 p-1">
-            <label for="cim" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-geo-alt"></i> Cím *</label>
-            <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="cim" name="cim" value="${_cim}" placeholder="Pl. Kossuth Lajos utca 69.">                
-          </div>
-          <div class="autocomplete" style="width:100%;">
-            <div class="col-12 p-1">
+          <div class="autocomplete lg:col-span-2" style="width:100%;">
+            <div class="p-1">
               <label for="country" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-globe"></i> Ország *</label>
               <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="country" name="country" value="${_country}" placeholder="pl.: Magyarország">                  
             </div>
           </div>
         </div>
-        <div class="col-12 mt-2 p-1">
+
+        <div class="w-full mt-2 p-1">
+          <label for="cim" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-geo-alt"></i> Cím *</label>
+          <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control rounded-xl duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 placeholder-gray-400 dark:placeholder-gray-400 dark:bg-slate-800 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="cim" name="cim" value="${_cim}" placeholder="Pl. Kossuth Lajos utca 69.">                
+          
+        </div>
+        <div class="w-full mt-2 p-1">
           <label for="megj" class="p-2 text-slate-900 dark:text-zinc-200"><i class="bi bi-chat-left-text"></i> Megjegyzés</label>
           <textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="h-[150px] form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-gray-400 dark:!border dark:!border-zinc-200/20 resize-none" name="megj" placeholder="Ide fűzheti egyéb csínját bínját a rendeléshez..." id="MEGJ" >${megjegyzes}</textarea> 
         </div>
@@ -117,9 +119,9 @@ function Adatok(li) {
     `;
 
     $("#cc").fadeOut(300, function() {
+      $("#cc").html(form).fadeIn(300);
       const countryInput = document.getElementById("country");
       if (countryInput) autocomplete(countryInput, countries);
-      $("#cc").html(form).fadeIn(300);
     });
 
     let navigacio = `
