@@ -26,22 +26,20 @@ function Attekintes(li) {
 
         attekintes += ` 
           <div class="row px-4">
-            <div class="col-0 col-lg-1"></div>
-              <div class="col-12 col-lg-10 flex flex-col lg:flex-row bg-zinc-100 text-slate-900 dark:bg-slate-900/50 dark:text-zinc-200 shadow-lg rounded-4 mt-2 p-3 p-xxl-none dark:!border dark:!border-zinc-200/20">
-                <div class="col-12 col-lg-2 flex lg:flex-col justify-between py-3 p-lg-1">
+              <div class="grid lg:grid-cols-3 flex flex-col lg:flex-row bg-zinc-100 text-slate-900 dark:bg-slate-900/50 dark:text-zinc-200 shadow-lg rounded-4 mt-2 px-3 dark:!border dark:!border-zinc-200/20">
+                <div class="flex lg:flex-col justify-between py-3 lg:p-1">
                   <span class="font-semibold">Mennyiség</span>
                   <span>${element.MENNYISEG} db</span>
                 </div>
-                <div class="col-12 col-lg-8 flex lg:flex-col justify-between py-3 p-lg-1 !border !border-t-gray-300 !border-b-gray-300 !border-r-0 !border-l-0 dark:!border-t-zinc-200/20 dark:!border-b-zinc-200/20 lg:!border-t-0 lg:!border-b-0 lg:dark:!border-t-0 lg:dark:!border-b-0">
+                <div class="flex lg:flex-col justify-between py-3 lg:p-1 !border !border-t-gray-300 !border-b-gray-300 !border-r-0 !border-l-0 dark:!border-t-zinc-200/20 dark:!border-b-zinc-200/20 lg:!border-t-0 lg:!border-b-0 lg:dark:!border-t-0 lg:dark:!border-b-0">
                   <span class="font-semibold">Termék</span>
-                  <span class="text-end text-lg-start text-sm">${element.NEV}</span>
+                  <span class="text-start text-sm">${element.NEV}</span>
                 </div>
-                <div class="col-12 col-lg-2 flex lg:flex-col justify-between py-3 p-lg-1">
-                  <span class="font-semibold">Ár</span>
-                  <span class="osszegek text-slate-900 dark:text-zinc-200 font-semibold">${element.PENZ.toLocaleString()} Ft</span>
+                <div class="flex lg:flex-col justify-between py-3 lg:p-1">
+                  <span class="font-semibold text-end">Ár</span>
+                  <span class="osszegek text-slate-900 dark:text-zinc-200 font-semibold text-end">${element.PENZ.toLocaleString()} Ft</span>
                 </div>
               </div>
-            <div class="col-0 col-lg-1"></div>
           </div>`;
     }
 
