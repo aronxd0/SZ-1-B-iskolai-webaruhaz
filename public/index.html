@@ -339,388 +339,392 @@
     </div>
   <!-- #endregion -->
 
-  <!-- #region Modal Ablakok -->
-  <div class="modal fade bg-zinc-300 dark:bg-slate-900" id="login_modal">
-    <div class="modal-dialog modal-md modal-dialog-centered">
-      <div class="modal-content p-2 bg-zinc-50 dark:bg-gray-900 shadow-xl dark:!border dark:!border-zinc-200/20">
-        <div class="row modal-header bg-transparent d-flex justify-content-between">
-          <span id="idx_login" class="modal-title text-center w-auto text-slate-900 dark:text-zinc-200 text-2xl">Bejelentkezés</span>
-          <button type="button" class="col-3 text-slate-900 dark:text-zinc-200 text-xl text-end" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
-        </div>
-        <div class="modal-body bg-transparent text-slate-900 dark:text-zinc-200">
-          <form id="form_login" class="row d-column gap-3"> 
-            <div class="col-12 p-2 d-flex justify-content-between align-items-center gap-2">
-              <span class="p-1 text-xl"><i class="bi bi-envelope-fill"></i></span>
-              <input type="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="w-full py-2 px-3 bg-white/5 !border !border-slate-900/20 duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 text-slate-900/50  dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 placeholder:text-base dark:placeholder-zinc-100/60" id="login_nev" name="login_nev"  value='' placeholder="Írd be az e-mail címedet" required>
+  <section class="modal-ablakok">
+    <!-- #region Modal Ablakok -->
+    <div class="modal fade bg-zinc-300 dark:bg-slate-900" id="login_modal">
+      <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content p-2 bg-zinc-50 dark:bg-gray-900 shadow-xl dark:!border dark:!border-zinc-200/20">
+          <div class="row modal-header bg-transparent d-flex justify-content-between">
+            <span id="idx_login" class="modal-title text-center w-auto text-slate-900 dark:text-zinc-200 text-2xl">Bejelentkezés</span>
+            <button type="button" class="col-3 text-slate-900 dark:text-zinc-200 text-xl text-end" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+          </div>
+          <div class="modal-body bg-transparent text-slate-900 dark:text-zinc-200">
+            <form id="form_login" class="row d-column gap-3"> 
+              <div class="col-12 p-2 d-flex justify-content-between align-items-center gap-2">
+                <span class="p-1 text-xl"><i class="bi bi-envelope-fill"></i></span>
+                <input type="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="w-full py-2 px-3 bg-white/5 !border !border-slate-900/20 duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 text-slate-900/50  dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 placeholder:text-base dark:placeholder-zinc-100/60" id="login_nev" name="login_nev"  value='' placeholder="Írd be az e-mail címedet" required>
+              </div>
+              <div class="col-12 p-2 d-flex justify-content-between align-items-center gap-2">
+                <span class="p-1 text-xl"><i class="bi bi-lock-fill"></i></span>
+                <input type="password" class="w-full py-2 px-3 bg-white/5 !border !border-slate-900/20 duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 text-slate-900/50  dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 placeholder:text-base dark:placeholder-zinc-100/60 " id="login_passwd" name="login_passwd" value='' placeholder="Írd be a jelszavadat" required>  
+              </div>
+            </form>
+            <div class="col-12 text-center text-red-700 dark:text-red-500 mt-2" id="loginhiba"></div>
+          </div>
+          <div class="bg-transparent text-slate-900 dark:text-zinc-200 modal-footer">
+            <div class="col-12 d-flex flex-column justify-content-center align-items-center gap-2">
+              <button id="login_oksi_button" type="button" class="p-2 rounded-3xl text-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full w-full"> Bejelentkezés</button>
             </div>
-            <div class="col-12 p-2 d-flex justify-content-between align-items-center gap-2">
-              <span class="p-1 text-xl"><i class="bi bi-lock-fill"></i></span>
-              <input type="password" class="w-full py-2 px-3 bg-white/5 !border !border-slate-900/20 duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 text-slate-900/50  dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 placeholder:text-base dark:placeholder-zinc-100/60 " id="login_passwd" name="login_passwd" value='' placeholder="Írd be a jelszavadat" required>  
-            </div>
-          </form>
-          <div class="col-12 text-center text-red-700 dark:text-red-500 mt-2" id="loginhiba"></div>
-        </div>
-        <div class="bg-transparent text-slate-900 dark:text-zinc-200 modal-footer">
-          <div class="col-12 d-flex flex-column justify-content-center align-items-center gap-2">
-            <button id="login_oksi_button" type="button" class="p-2 rounded-3xl text-lg !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full w-full"> Bejelentkezés</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="logout_modal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content dark:!border dark:!border-zinc-200/20">
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-center">
-          <h4 class="modal-title">Kijelentkezés</h4>
-        </div>
-        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 text-center">
-          Biztosan ki szeretnél jelentkezni?
-        </div>
-        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-center">
-          <div class="col-12 d-flex flex-column flex-sm-row w-full gap-2">
-            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full  bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
-            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full  bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
+    <div class="modal fade" id="logout_modal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content dark:!border dark:!border-zinc-200/20">
+          <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-center">
+            <h4 class="modal-title">Kijelentkezés</h4>
+          </div>
+          <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 text-center">
+            Biztosan ki szeretnél jelentkezni?
+          </div>
+          <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-center">
+            <div class="col-12 d-flex flex-column flex-sm-row w-full gap-2">
+              <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full  bi bi-box-arrow-in-right" data-bs-dismiss="modal" id="kijelentkezik"> Kijelentkezés</button>
+              <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out w-full  bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="velemeny_iras">
-    <div class="modal-dialog modal-dialog-centered modal-md">
-      <div class="modal-content dark:!border dark:!border-zinc-200/20">
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-start">
-          <span class="modal-title text-xl"><i class="bi bi-plus-lg"></i> Vélemény írása</span>
-        </div>
-        <div class="modal-body bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
-          <div class="col-12 text-center mt-2 text-red-700 dark:text-red-500" id="velemeny_hiba"></div>
-          <div class="row">
-            <div class="col-12"><span class="d-flex align-items-center space-x-2" id="ussr"></span></div>
+    <div class="modal fade" id="velemeny_iras">
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content dark:!border dark:!border-zinc-200/20">
+          <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-start">
+            <span class="modal-title text-xl"><i class="bi bi-plus-lg"></i> Vélemény írása</span>
           </div>
-          <div class="row">
-            <div class="mt-3">
-              <textarea class="resize-none form-control h-[150px] shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20 placeholder-gray-400 dark:placeholder-gray-400" id="velemeny_input" name="vlmny" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text" placeholder="Mondd el, mit gondolsz erről a termékről..." ></textarea>
+          <div class="modal-body bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
+            <div class="col-12 text-center mt-2 text-red-700 dark:text-red-500" id="velemeny_hiba"></div>
+            <div class="row">
+              <div class="col-12"><span class="d-flex align-items-center space-x-2" id="ussr"></span></div>
+            </div>
+            <div class="row">
+              <div class="mt-3">
+                <textarea class="resize-none form-control h-[150px] shadow-xl bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20 placeholder-gray-400 dark:placeholder-gray-400" id="velemeny_input" name="vlmny" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text" placeholder="Mondd el, mit gondolsz erről a termékről..." ></textarea>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
-          <div class="col-12 d-flex justify-content-end align-items-center" id="interakcio"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="kosarba_bele">
-    <div class="modal-dialog modal-dialog-centered modal-md">
-      <div class="modal-content dark:!border dark:!border-zinc-200/20">
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
-          <h4 class="modal-title"></h4>
-          <button type="button" class="btn text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
-        </div>
-        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
-          <div class="col-12 text-center">A termék a kosárba került.</div>
-          <div class="col-12 text-center" id="idt"></div>
-        </div>
-        <div class="modal-footer d-flex justify-content-center bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
-          <div class="col-12 d-flex flex-column flex-sm-row w-full gap-2">
-            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full ease-in-out bi bi-bag" data-bs-dismiss="modal"> Vásárlás folytatása</button>
-            <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full ease-in-out bi bi-cart" data-bs-dismiss="modal" onclick="Kosar_Mutat()"> Kosár megtekintése</button>
+          <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
+            <div class="col-12 d-flex justify-content-end align-items-center" id="interakcio"></div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="termek_edit">
-    <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
-      <div class="modal-content dark:!border dark:!border-zinc-200/20">
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
-          <span id="idx1" class="modal-title text-xl"></span>
-          <button type="button" class="btn text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
-        </div>
-        <div id="idx0" class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200"> 
-          <div class="col-12 text-center mt-2 text-red-700 dark:text-red-500" id="mod_hiba"></div>
-          <form id="mod1" class="row">
-            <div class="col-12 d-flex flex-column flex-lg-row p-2">
-              <div class="col-lg-6 p-1">
-                <label for="mod_kat" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-grid"></i> Kategória</b></label>
-                <select class="form-select duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/10" id="mod_kat" name="mod_kat" ></select>     
-              </div>
-              <div class="col-lg-6 p-1">
-                <label for="uj_kat" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-plus-lg"></i> Új kategória</b></label>
-                <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="uj_kat" name="uj_kat" >
-              </div>
+    <div class="modal fade" id="kosarba_bele">
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content dark:!border dark:!border-zinc-200/20">
+          <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
+            <h4 class="modal-title"></h4>
+            <button type="button" class="btn text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+          </div>
+          <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
+            <div class="col-12 text-center">A termék a kosárba került.</div>
+            <div class="col-12 text-center" id="idt"></div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
+            <div class="col-12 d-flex flex-column flex-sm-row w-full gap-2">
+              <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full ease-in-out bi bi-bag" data-bs-dismiss="modal"> Vásárlás folytatása</button>
+              <button type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 w-full ease-in-out bi bi-cart" data-bs-dismiss="modal" onclick="Kosar_Mutat()"> Kosár megtekintése</button>
             </div>
-            <div class="col-12 p-2">
-              <label for="mod_nev" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-type"></i> Név</b></label>
-              <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="mod_nev" name="mod_nev" >
-            </div>
-            <div class="col-12 d-flex flex-column flex-lg-row p-2">
-              <div class="col-12 col-lg-6 p-2">
-                <label for="mod_azon" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-image"></i> Fotó</b></label>
-                <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"  placeholder="Ide illessze be a fotó linkjét" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="mod_fotolink" name="mod_fotolink">
-              </div>
-              <div class="col-12 col-lg-6 p-2">
-                <label for="mod_foto" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-upload"></i> Fotó feltöltése</b></label>
-                <input type="file" class="block w-full text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-zinc-600 file:text-zinc-200 hover:file:bg-zinc-700 file:disabled:opacity-50 file:disabled:pointer-events-none dark:text-zinc-400 dark:file:bg-sky-900 dark:file:text-zinc-200 dark:hover:file:bg-sky-950 file:cursor-pointer transition-hover duration-300 ease-in-out" id="mod_foto" name="mod_foto" style="border: none;">  
-              </div>
-            </div>
-            <div class="d-flex flex-column flex-lg-row p-2">
-              <div class="p-1">
-                <label for="mod_ar" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-cash"></i> Ár</b></label>
-                <input type="number" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="mod_ar" name="mod_ar">
-              </div>
-              <div class="p-1">
-                <label for="mod_db" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-123"></i> Mennyiség</b></label>
-                <input type="number" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" min="0" id="mod_db" name="mod_db" >
-              </div>
-              <div class="p-1">
-                <label for="mod_meegys" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-boxes"></i> Egység</b></label>
-                <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="mod_meegys" name="mod_meegys" >
-              </div>
-              <div class="p-1">
-                <label for="mod_azon" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-hash"></i> Azonosító</b></label>
-                <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="mod_azon" name="mod_azon" >
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-check form-switch">
-                <input class="form-control form-check-input" type="checkbox" id="mySwitch" name="mod_aktiv" value="yes">
-                <label class="form-check-label text-slate-900 dark:text-zinc-200" for="mySwitch" id="switchtext"><b>Aktív</b></label>
-              </div>
-            </div>
-            <div class="col-12 p-2">
-              <div>
-                <label for="mod_leiras" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-card-list"></i> Leírás</b></label>
-                <textarea class="resize-none form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 h-[150px] shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" rows="4" id="mod_leiras" name="mod_leiras" ></textarea>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-center justify-content-lg-end">
-          <button id="save_button" type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out"> <i class="bi bi-save2"></i> Mentés</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id= "toast1" class="toast show pointer-events-auto bg-transparent" role="alert" style="position:fixed; right:10px; top:10px; z-index: 9999999;">
-    <div class="d-flex align-items-center justify-content-start gap-3 bg-zinc-200 dark:bg-slate-900 text-slate-900 dark:text-zinc-200 rounded-xl px-4 py-3 shadow-xl shadow-black/10 !border !border-slate-200/60 dark:!border-zinc-200/30 min-w-[320px]">
-        <div class="flex-shrink-0 mt-0.5 text-2xl" id="icon"></div>         
-        <div class="flex-1 toast-body text-md"></div>
-        <button type="button" aria-label="toastbezar" data-bs-dismiss="toast" class=" text-slate-400 hover:text-slate-600 dark:hover:text-zinc-300 transition-colors"><i class="bi bi-x-lg"></i></button>
-    </div>
-  </div>
-
-  <div class="modal fade" id="delete_modal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content dark:!border dark:!border-zinc-200/20">
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center"><span class="modal-title text-xl">Megerősítés</span></div>
-        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 text-center"></div>
-        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center">
-          <div class="col-12 gap-2 d-flex flex-column flex-sm-row">
-            <button type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bi bi-trash szemetes" data-bs-dismiss="modal" > Törlés</button>
-            <button type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="profil" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-md">
-      <div class="modal-content rounded-2xl overflow-hidden bg-zinc-200 dark:bg-slate-950 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20">
-        <div class="h-24 bg-zinc-300 dark:bg-slate-900"></div>
-        <div class="px-6 pb-6 -mt-3">
-          <div class="flex items-center gap-4">
-            <div class="w-20 h-20 rounded-full bg-zinc-100 dark:bg-slate-900 flex items-center justify-center">
-              <i class="bi bi-person-circle text-[5.5rem] leading-none"></i>
-            </div>
-            <div class="mt-2">
-              <p class="font-semibold text-lg" id="user">NÉV</p>
-              <p class="text-sm text-zinc-500 dark:text-zinc-400" id="user-email">E_MAIL</p>
-            </div>
+    <div class="modal fade" id="termek_edit">
+      <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
+        <div class="modal-content dark:!border dark:!border-zinc-200/20">
+          <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
+            <span id="idx1" class="modal-title text-xl"></span>
+            <button type="button" class="btn text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
           </div>
-          <div class="mt-6">
-            <div class="flex flex-wrap gap-2" id="rangok">
-              <span class="px-3 py-1 text-xs rounded-full bg-indigo-100 text-indigo-700">Admin</span>
-              <span class="px-3 py-1 text-xs rounded-full bg-emerald-100 text-emerald-700">VIP</span>
-              <span class="px-3 py-1 text-xs rounded-full bg-zinc-200 text-zinc-700">User</span>
-            </div>
-          </div>
-          <div class="mt-2" id="vendegszoveg"></div>
-          <hr class="my-6 border-zinc-200 dark:border-zinc-800">
-          <div class="p-1" id="rendeles-menupont"></div>
-          <div class="mt-6">
-            <p class="text-sm font-medium mb-2">TÉMA</p>
-            <div class="col-12 flex flex-col sm:flex-row gap-3">
-              <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
-                <div class="flex items-center gap-3">
-                  <input type="radio" name="tema" class="form-check-input hidden" id="light" onchange="Temavalto(this)">
-                  <span class="font-semibold">Világos&nbsp;</span>
+          <div id="idx0" class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200"> 
+            <div class="col-12 text-center mt-2 text-red-700 dark:text-red-500" id="mod_hiba"></div>
+            <form id="mod1" class="row">
+              <div class="col-12 d-flex flex-column flex-lg-row p-2">
+                <div class="col-lg-6 p-1">
+                  <label for="mod_kat" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-grid"></i> Kategória</b></label>
+                  <select class="form-select duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/10" id="mod_kat" name="mod_kat" ></select>     
                 </div>
-                <div class="d-flex justify-content-end align-items-center">
-                  <i class="bi bi-sun-fill"></i>
+                <div class="col-lg-6 p-1">
+                  <label for="uj_kat" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-plus-lg"></i> Új kategória</b></label>
+                  <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="uj_kat" name="uj_kat" >
                 </div>
-              </label>
-              <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
-                <div class="flex items-center gap-3">
-                  <input type="radio" name="tema" class="form-check-input hidden" id="dark" onchange="Temavalto(this)">
-                  <span class="font-semibold">Sötét&nbsp;</span>
+              </div>
+              <div class="col-12 p-2">
+                <label for="mod_nev" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-type"></i> Név</b></label>
+                <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="mod_nev" name="mod_nev" >
+              </div>
+              <div class="col-12 d-flex flex-column flex-lg-row p-2">
+                <div class="col-12 col-lg-6 p-2">
+                  <label for="mod_azon" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-image"></i> Fotó</b></label>
+                  <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"  placeholder="Ide illessze be a fotó linkjét" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="mod_fotolink" name="mod_fotolink">
                 </div>
-                <div class="d-flex justify-content-end align-items-center">
-                  <i class="bi bi-moon-fill"></i>
+                <div class="col-12 col-lg-6 p-2">
+                  <label for="mod_foto" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-upload"></i> Fotó feltöltése</b></label>
+                  <input type="file" class="block w-full text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-zinc-600 file:text-zinc-200 hover:file:bg-zinc-700 file:disabled:opacity-50 file:disabled:pointer-events-none dark:text-zinc-400 dark:file:bg-sky-900 dark:file:text-zinc-200 dark:hover:file:bg-sky-950 file:cursor-pointer transition-hover duration-300 ease-in-out" id="mod_foto" name="mod_foto" style="border: none;">  
                 </div>
-              </label>
-              <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
-                <div class="flex items-center gap-3">
-                  <input type="radio" name="tema" class="form-check-input hidden" id="system" onchange="Temavalto(this)">
-                  <span class="font-semibold">Rendszer&nbsp;</span>
+              </div>
+              <div class="d-flex flex-column flex-lg-row p-2">
+                <div class="p-1">
+                  <label for="mod_ar" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-cash"></i> Ár</b></label>
+                  <input type="number" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="mod_ar" name="mod_ar">
                 </div>
-                <div class="d-flex justify-content-end align-items-center">
-                  <i class="bi bi-gear-fill"></i>
+                <div class="p-1">
+                  <label for="mod_db" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-123"></i> Mennyiség</b></label>
+                  <input type="number" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" min="0" id="mod_db" name="mod_db" >
                 </div>
-              </label>
+                <div class="p-1">
+                  <label for="mod_meegys" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-boxes"></i> Egység</b></label>
+                  <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="mod_meegys" name="mod_meegys" >
+                </div>
+                <div class="p-1">
+                  <label for="mod_azon" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-hash"></i> Azonosító</b></label>
+                  <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" id="mod_azon" name="mod_azon" >
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-check form-switch">
+                  <input class="form-control form-check-input" type="checkbox" id="mySwitch" name="mod_aktiv" value="yes">
+                  <label class="form-check-label text-slate-900 dark:text-zinc-200" for="mySwitch" id="switchtext"><b>Aktív</b></label>
+                </div>
+              </div>
+              <div class="col-12 p-2">
+                <div>
+                  <label for="mod_leiras" class="text-slate-900 dark:text-zinc-200 text-lg p-2"><b><i class="bi bi-card-list"></i> Leírás</b></label>
+                  <textarea class="resize-none form-control duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 h-[150px] shadow-xl bg-zinc-100 text-slate-900 dark:bg-gray-800 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20" rows="4" id="mod_leiras" name="mod_leiras" ></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-center justify-content-lg-end">
+            <button id="save_button" type="button" class="px-3 py-1 rounded-4 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out"> <i class="bi bi-save2"></i> Mentés</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id= "toast1" class="toast show pointer-events-auto bg-transparent" role="alert" style="position:fixed; right:10px; top:10px; z-index: 9999999;">
+      <div class="d-flex align-items-center justify-content-start gap-3 bg-zinc-200 dark:bg-slate-900 text-slate-900 dark:text-zinc-200 rounded-xl px-4 py-3 shadow-xl shadow-black/10 !border !border-slate-200/60 dark:!border-zinc-200/30 min-w-[320px]">
+          <div class="flex-shrink-0 mt-0.5 text-2xl" id="icon"></div>         
+          <div class="flex-1 toast-body text-md"></div>
+          <button type="button" aria-label="toastbezar" data-bs-dismiss="toast" class=" text-slate-400 hover:text-slate-600 dark:hover:text-zinc-300 transition-colors"><i class="bi bi-x-lg"></i></button>
+      </div>
+    </div>
+
+    <div class="modal fade" id="delete_modal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content dark:!border dark:!border-zinc-200/20">
+          <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center"><span class="modal-title text-xl">Megerősítés</span></div>
+          <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 text-center"></div>
+          <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center">
+            <div class="col-12 gap-2 d-flex flex-column flex-sm-row">
+              <button type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bi bi-trash szemetes" data-bs-dismiss="modal" > Törlés</button>
+              <button type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bi bi-x-lg" data-bs-dismiss="modal"> Mégse</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="fizetes">
-    <div class="modal-dialog modal-fullscreen-xl-down modal-xl modal-dialog-scrollable modal-dialog-centered">
-      <div class="modal-content dark:!border dark:!border-zinc-200/20">
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-start gap-3">
-          <button type="button" class="btn btn-lg text-slate-900 hover:text-slate-900 dark:text-zinc-200 dark:hover:text-zinc-200" data-bs-dismiss="modal"><i class="bi bi-arrow-left"></i></button>
-          <span class="modal-title text-xl">Rendelés véglegesítése</span>
-        </div>
-        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
-          <div class="row"><div class="col-12 text-center" id="aktualis"></div></div>
-          <div id="cc" class="relative"></div>
-        </div>
-        <div class="modal-footer flex flex-col lg:flex-row items-start lg:items-center lg:justify-between bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
-          <div class="p-2">A vásárlással elfogadja az <a href="aszf.html" target="_blank" class="text-sky-500 hover:text-sky-700 dark:text-sky-500 dark:hover:text-sky-300 underline text-decoration-sky-500 hover:cursor-pointer font-semibold">ÁSZF</a>-et és az  <a href="adatkezeles.html" target="_blank" class="text-sky-500 hover:text-sky-700 dark:text-sky-500 dark:hover:text-sky-300 underline text-decoration-sky-500 hover:cursor-pointer font-semibold">Adatvédelmi tájékoztatót</a></div>
-          <div class="p-2">Bruttó végösszeg: <span class="text-sky-500 font-semibold ms-2" id="also"></span></div>
-          <div class="row w-full d-flex justify-content-between" id="lab"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="suticucc" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content bg-zinc-300 dark:bg-slate-950 text-slate-900 dark:text-zinc-200 rounded-xl">
-        <div class="modal-header border-0"><h5 class="modal-title">🍪 Sütik</h5></div>
-        <div class="modal-body">
-          <p class="text-sm opacity-80">
-            Az oldal sütiket  használ a jobb felhasználói élmény érdekében.
-            A használattal elfogadod ezt.
-          </p>
-        </div>
-        <div class="modal-footer border-0">
-          <button class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl" id="suti_elfogad">
-            Rendben
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="velemeny_help_modal">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content dark:!border dark:!border-zinc-200/20">
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center"><span class="modal-title text-xl"> <i class="bi bi-chat-dots"></i> Hogyan működnek a vélemények?</span></div>
-        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
-          <p>A vélemények segítenek más vásárlóknak tájékozódni a termékekről. Ahhoz, hogy véleményt írhass, be kell jelentkezned a fiókodba.</p>
-          <p class="mt-2">Írj véleményt 3 egyszerű lépésben:</p>
-          <ol class="list-decimal list-inside ms-2">
-            <li>Jelentkezz be a fiókodba.</li>
-            <li>Kattints a "Vélemény írása" gombra.</li>
-            <li>Írd meg a véleményedet, majd küldd el.</li>
-          </ol>
-          <p class="mt-2">Ha nem akarsz azzal fáradni, hogy megírj egy véleményt, van egy "Generálás" lehetőség is. Nyugodtan próbáld ki :)</p>
-          <p class="mt-2">Fontos, hogy ha elküldesz egy véleményt akkor nem lesz azonnal látható, az adminok átnézik és abban az esetben ha megfelelő a tartalma és nem tartalmaz sértő vagy trágár kifejezéseket akkor jóváhagyják. Ellenkező esetben a vélemény elutasításra kerül.</p>
-        </div>
-        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center">
-          <div class="col-12 gap-2 d-flex flex-column flex-sm-row">
-            <button type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bi bi-hand-thumbs-up-fill" data-bs-dismiss="modal"> Jól hangzik!</button>
+    <div class="modal fade" id="profil" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content rounded-2xl overflow-hidden bg-zinc-200 dark:bg-slate-950 text-slate-900 dark:text-zinc-200 dark:!border dark:!border-zinc-200/20">
+          <div class="h-24 bg-zinc-300 dark:bg-slate-900"></div>
+          <div class="px-6 pb-6 -mt-3">
+            <div class="flex items-center gap-4">
+              <div class="w-20 h-20 rounded-full bg-zinc-100 dark:bg-slate-900 flex items-center justify-center">
+                <i class="bi bi-person-circle text-[5.5rem] leading-none"></i>
+              </div>
+              <div class="mt-2">
+                <p class="font-semibold text-lg" id="user">NÉV</p>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400" id="user-email">E_MAIL</p>
+              </div>
+            </div>
+            <div class="mt-6">
+              <div class="flex flex-wrap gap-2" id="rangok">
+                <span class="px-3 py-1 text-xs rounded-full bg-indigo-100 text-indigo-700">Admin</span>
+                <span class="px-3 py-1 text-xs rounded-full bg-emerald-100 text-emerald-700">VIP</span>
+                <span class="px-3 py-1 text-xs rounded-full bg-zinc-200 text-zinc-700">User</span>
+              </div>
+            </div>
+            <div class="mt-2" id="vendegszoveg"></div>
+            <hr class="my-6 border-zinc-200 dark:border-zinc-800">
+            <div class="p-1" id="rendeles-menupont"></div>
+            <div class="mt-6">
+              <p class="text-sm font-medium mb-2">TÉMA</p>
+              <div class="col-12 flex flex-col sm:flex-row gap-3">
+                <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="tema" class="form-check-input hidden" id="light" onchange="Temavalto(this)">
+                    <span class="font-semibold">Világos&nbsp;</span>
+                  </div>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <i class="bi bi-sun-fill"></i>
+                  </div>
+                </label>
+                <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="tema" class="form-check-input hidden" id="dark" onchange="Temavalto(this)">
+                    <span class="font-semibold">Sötét&nbsp;</span>
+                  </div>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <i class="bi bi-moon-fill"></i>
+                  </div>
+                </label>
+                <label class="!border !border-transparent bg-zinc-50 shadow-xl text-slate-900 dark:bg-slate-800 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 flex items-center justify-between px-3 py-1 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:!border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:!border-sky-700 dark:has-[:checked]:border">
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="tema" class="form-check-input hidden" id="system" onchange="Temavalto(this)">
+                    <span class="font-semibold">Rendszer&nbsp;</span>
+                  </div>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <i class="bi bi-gear-fill"></i>
+                  </div>
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="kosar_help_modal">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content dark:!border dark:!border-zinc-200/20">
-        <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center"><span class="modal-title text-xl"> <i class="bi bi-cart"></i> Hogyan működik a kosár?</span></div>
-        <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
-          <p>A kosár azt a célt szolgálja, hogy egy helyre össze tudd gyűjteni azokat a termékeket amelyeket meg szeretnél vásárolni. Fontos, hogy a kosár használatához be kell jelentkezned.</p>
-          <p class="mt-2">Itt a Kosár menüben láthatod az összes eddigi terméket amit hozzáadtál a kosárhoz. Itt tudod módosítani a mennyiséget, vagy eltávolítani a kosárból.</p>
-          <p class="mt-2">A termékeknél a "KOSÁRBA" gombbal tudod hozzáadni az adott terméket a kosárhoz, ez hozzáad 1db-ot. Ha már előtte volt ilyen termék a kosárban akkor növeli a mennyiséget 1-gyel.</p>
-          <p class="mt-2">A mennyiség csökkentéséhez használd a <i class="bi bi-dash font-semibold text-xl"></i> gombot, növeléséhez a <i class="bi bi-plus font-semibold text-xl"></i>  gombot, vagy akár manuálisan is megadhatsz egy számot a mezőbe. Nem kell félni attól, hogy többet adnál meg, mint amennyi van a készleten, ilyenkor a rendszer automatikusan beállítja a készlettel megegyező mennyiséget.</p>
-          <p class="mt-2">Ha el akarsz távolítani egy terméket a kosárból, kattints a termék melletti törlés (<i class="bi bi-trash"></i>) gombra.</p>
-        </div>
-        <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center">
-          <div class="col-12 gap-2 d-flex flex-column flex-sm-row">
-            <button type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bi bi-hand-thumbs-up-fill" data-bs-dismiss="modal"> Jól hangzik!</button>
+    <div class="modal fade" id="fizetes">
+      <div class="modal-dialog modal-fullscreen-xl-down modal-xl modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content dark:!border dark:!border-zinc-200/20">
+          <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200 d-flex justify-content-start gap-3">
+            <button type="button" class="btn btn-lg text-slate-900 hover:text-slate-900 dark:text-zinc-200 dark:hover:text-zinc-200" data-bs-dismiss="modal"><i class="bi bi-arrow-left"></i></button>
+            <span class="modal-title text-xl">Rendelés véglegesítése</span>
+          </div>
+          <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
+            <div class="row"><div class="col-12 text-center" id="aktualis"></div></div>
+            <div id="cc" class="relative"></div>
+          </div>
+          <div class="modal-footer flex flex-col lg:flex-row items-start lg:items-center lg:justify-between bg-zinc-300 text-slate-900 dark:bg-slate-950 dark:text-zinc-200">
+            <div class="p-2">A vásárlással elfogadja az <a href="aszf.html" target="_blank" class="text-sky-500 hover:text-sky-700 dark:text-sky-500 dark:hover:text-sky-300 underline text-decoration-sky-500 hover:cursor-pointer font-semibold">ÁSZF</a>-et és az  <a href="adatkezeles.html" target="_blank" class="text-sky-500 hover:text-sky-700 dark:text-sky-500 dark:hover:text-sky-300 underline text-decoration-sky-500 hover:cursor-pointer font-semibold">Adatvédelmi tájékoztatót</a></div>
+            <div class="p-2">Bruttó végösszeg: <span class="text-sky-500 font-semibold ms-2" id="also"></span></div>
+            <div class="row w-full d-flex justify-content-between" id="lab"></div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="rendeles_kezeles_modal">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-fullscreen-lg-down">
-      <div class="modal-content dark:!border dark:!border-zinc-200/20">
-        <div class="modal-header bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-between" id="r-azon"></div>
-        <div class="modal-body bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
-          
-        </div>
-        <div class="modal-footer bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 flex justify-center lg:justify-end"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="keresomodal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content rounded-xl bg-zinc-300 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 p-4">
-        <div class="d-flex rounded-lg !border !border-slate-300 dark:!border-zinc-200/20 overflow-hidden">
-          <input id="nev1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="keresescucc" type="text" placeholder="Keresés..." class=" bg-zinc-50 placeholder-gray-400 dark:bg-slate-950 dark:text-zinc-200 dark:placeholder-gray-400 flex-1 px-4 py-2 text-sm focus:outline-none"/>
-          <button type="button" aria-label="Keresés" id="kereses_gomb" class=" flex items-center gap-2 px-4 bg-slate-900 text-zinc-200 hover:bg-zinc-200 hover:text-slate-900 text-sm font-medium dark:bg-gray-800 dark:hover:text-zinc-200 !border-l !border-slate-300 dark:!border-zinc-200/20 hover:bg-slate-100 dark:hover:bg-slate-700/70 transition">
-            <i class="bi bi-search"></i>
-          </button>
+    <div class="modal fade" id="suticucc" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-zinc-300 dark:bg-slate-950 text-slate-900 dark:text-zinc-200 rounded-xl">
+          <div class="modal-header border-0"><h5 class="modal-title">🍪 Sütik</h5></div>
+          <div class="modal-body">
+            <p class="text-sm opacity-80">
+              Az oldal sütiket  használ a jobb felhasználói élmény érdekében.
+              A használattal elfogadod ezt.
+            </p>
+          </div>
+          <div class="modal-footer border-0">
+            <button class="px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider mt-2 w-full rounded-2xl" id="suti_elfogad">
+              Rendben
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- #endregion -->
 
-  <div id="kepteljes" class="fixed inset-0 bg-black/80 hidden transition-opacity duration-300 opacity-0" style="z-index: 999999;" onclick="KepBezaras()">
-    <div class="d-flex justify-content-center align-items-center h-full w-full">
-      <img id="nagykep" src="" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl transition-all duration-300" alt="kep">
+    <div class="modal fade" id="velemeny_help_modal">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content dark:!border dark:!border-zinc-200/20">
+          <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center"><span class="modal-title text-xl"> <i class="bi bi-chat-dots"></i> Hogyan működnek a vélemények?</span></div>
+          <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
+            <p>A vélemények segítenek más vásárlóknak tájékozódni a termékekről. Ahhoz, hogy véleményt írhass, be kell jelentkezned a fiókodba.</p>
+            <p class="mt-2">Írj véleményt 3 egyszerű lépésben:</p>
+            <ol class="list-decimal list-inside ms-2">
+              <li>Jelentkezz be a fiókodba.</li>
+              <li>Kattints a "Vélemény írása" gombra.</li>
+              <li>Írd meg a véleményedet, majd küldd el.</li>
+            </ol>
+            <p class="mt-2">Ha nem akarsz azzal fáradni, hogy megírj egy véleményt, van egy "Generálás" lehetőség is. Nyugodtan próbáld ki :)</p>
+            <p class="mt-2">Fontos, hogy ha elküldesz egy véleményt akkor nem lesz azonnal látható, az adminok átnézik és abban az esetben ha megfelelő a tartalma és nem tartalmaz sértő vagy trágár kifejezéseket akkor jóváhagyják. Ellenkező esetben a vélemény elutasításra kerül.</p>
+          </div>
+          <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center">
+            <div class="col-12 gap-2 d-flex flex-column flex-sm-row">
+              <button type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bi bi-hand-thumbs-up-fill" data-bs-dismiss="modal"> Jól hangzik!</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button onclick="KepBezaras()" class="absolute top-6 right-6 text-white text-3xl font-bold">✕</button>
-  </div>
 
-  <script src="js/ajax.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/kosar.js"></script>
-  <script src="js/velemeny.js"></script>
-  <script src="js/termekek.js"></script>
-  <script src="js/fizetes.js"></script>
-  <script src="js/rendeles.js"></script>
+    <div class="modal fade" id="kosar_help_modal">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content dark:!border dark:!border-zinc-200/20">
+          <div class="modal-header bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center"><span class="modal-title text-xl"> <i class="bi bi-cart"></i> Hogyan működik a kosár?</span></div>
+          <div class="modal-body bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
+            <p>A kosár azt a célt szolgálja, hogy egy helyre össze tudd gyűjteni azokat a termékeket amelyeket meg szeretnél vásárolni. Fontos, hogy a kosár használatához be kell jelentkezned.</p>
+            <p class="mt-2">Itt a Kosár menüben láthatod az összes eddigi terméket amit hozzáadtál a kosárhoz. Itt tudod módosítani a mennyiséget, vagy eltávolítani a kosárból.</p>
+            <p class="mt-2">A termékeknél a "KOSÁRBA" gombbal tudod hozzáadni az adott terméket a kosárhoz, ez hozzáad 1db-ot. Ha már előtte volt ilyen termék a kosárban akkor növeli a mennyiséget 1-gyel.</p>
+            <p class="mt-2">A mennyiség csökkentéséhez használd a <i class="bi bi-dash font-semibold text-xl"></i> gombot, növeléséhez a <i class="bi bi-plus font-semibold text-xl"></i>  gombot, vagy akár manuálisan is megadhatsz egy számot a mezőbe. Nem kell félni attól, hogy többet adnál meg, mint amennyi van a készleten, ilyenkor a rendszer automatikusan beállítja a készlettel megegyező mennyiséget.</p>
+            <p class="mt-2">Ha el akarsz távolítani egy terméket a kosárból, kattints a termék melletti törlés (<i class="bi bi-trash"></i>) gombra.</p>
+          </div>
+          <div class="modal-footer bg-zinc-300 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-center">
+            <div class="col-12 gap-2 d-flex flex-column flex-sm-row">
+              <button type="button" class="mt-2 px-3 py-1 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out tracking-wider rounded-2xl w-full bi bi-hand-thumbs-up-fill" data-bs-dismiss="modal"> Jól hangzik!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <script src="js/admin/statisztika.js"></script>
-  <script src="js/admin/sqlinput.js"></script>
-  <script src="js/admin/Ujtermek.js"></script>
-  <script src="js/admin/velemeny_kezeles.js"></script>
-  <script src="js/admin/rendeleskezelo.js"></script>
+    <div class="modal fade" id="rendeles_kezeles_modal">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-fullscreen-lg-down">
+        <div class="modal-content dark:!border dark:!border-zinc-200/20">
+          <div class="modal-header bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 d-flex justify-content-between" id="r-azon"></div>
+          <div class="modal-body bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200">
+            
+          </div>
+          <div class="modal-footer bg-zinc-50 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 flex justify-center lg:justify-end"></div>
+        </div>
+      </div>
+    </div>
 
-  <script src="js/document.js"></script>
+    <div class="modal fade" id="keresomodal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content rounded-xl bg-zinc-300 dark:bg-slate-900 dark:!border dark:!border-zinc-200/20 p-4">
+          <div class="d-flex rounded-lg !border !border-slate-300 dark:!border-zinc-200/20 overflow-hidden">
+            <input id="nev1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="keresescucc" type="text" placeholder="Keresés..." class=" bg-zinc-50 placeholder-gray-400 dark:bg-slate-950 dark:text-zinc-200 dark:placeholder-gray-400 flex-1 px-4 py-2 text-sm focus:outline-none"/>
+            <button type="button" aria-label="Keresés" id="kereses_gomb" class=" flex items-center gap-2 px-4 bg-slate-900 text-zinc-200 hover:bg-zinc-200 hover:text-slate-900 text-sm font-medium dark:bg-gray-800 dark:hover:text-zinc-200 !border-l !border-slate-300 dark:!border-zinc-200/20 hover:bg-slate-100 dark:hover:bg-slate-700/70 transition">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="kepteljes" class="fixed inset-0 bg-black/80 hidden transition-opacity duration-300 opacity-0" style="z-index: 999999;" onclick="KepBezaras()">
+      <div class="d-flex justify-content-center align-items-center h-full w-full">
+        <img id="nagykep" src="" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl transition-all duration-300" alt="kep">
+      </div>
+      <button onclick="KepBezaras()" class="absolute top-6 right-6 text-white text-3xl font-bold">✕</button>
+    </div>
+    <!-- #endregion -->
+  </section>
+  
+  <section class="scriptek">
+    <script src="js/ajax.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/kosar.js"></script>
+    <script src="js/velemeny.js"></script>
+    <script src="js/termekek.js"></script>
+    <script src="js/fizetes.js"></script>
+    <script src="js/rendeles.js"></script>
+
+    <script src="js/admin/statisztika.js"></script>
+    <script src="js/admin/sqlinput.js"></script>
+    <script src="js/admin/Ujtermek.js"></script>
+    <script src="js/admin/velemeny_kezeles.js"></script>
+    <script src="js/admin/rendeleskezelo.js"></script>
+
+    <script src="js/document.js"></script>
+  </section>
 </body>
 </html>

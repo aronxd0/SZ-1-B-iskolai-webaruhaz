@@ -30,7 +30,7 @@ let vendegnezet = `
 async function Kosar_Mutat(pushHistory = true) {
     tetelekli = [];
     let tartalom = `
-        <div class="max-w-7xl mx-auto py-10 px-1 lg:px-3">
+        <div class="max-w-7xl mx-auto py-10 px-3">
             ${kosarsegito}
             <div class="d-flex w-full align-items-center justify-content-between">
                 <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 p-2 mb-8 w-auto">

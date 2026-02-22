@@ -16,18 +16,18 @@ async function rendelesekmegtolt(pushHistory = true) {
 
             s += `
             
-                <div class="col-12 d-flex flex-column flex-lg-row bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 shadow-lg rounded-4 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10 my-4 p-3 p-xxl-none" id="rendeles_${elemek.ID_RENDELES}" role="button" onclick="toggleRendeles(${elemek.ID_RENDELES}, '${elemek.DATUM}', '${elemek.SZALLCIM}', '${elemek.FIZMOD}', '${elemek.SZALLMOD}', '${elemek.NEV}', '${elemek.EMAIL}', ${elemek.AFA}, ${elemek.RENDELES_VEGOSSZEGE}, '${elemek.ALLAPOT}')">
-                    <div class="col-12 col-lg-4 d-flex flex-lg-column justify-content-between py-3 p-lg-1">
+                <div class="grid gap-2 lg:grid-cols-3 flex flex-col lg:flex-row bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 shadow-lg rounded-4 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10 my-4 p-3 2xl:p-none" id="rendeles_${elemek.ID_RENDELES}" role="button" onclick="toggleRendeles(${elemek.ID_RENDELES}, '${elemek.DATUM}', '${elemek.SZALLCIM}', '${elemek.FIZMOD}', '${elemek.SZALLMOD}', '${elemek.NEV}', '${elemek.EMAIL}', ${elemek.AFA}, ${elemek.RENDELES_VEGOSSZEGE}, '${elemek.ALLAPOT}')">
+                    <div class="flex lg:flex-col justify-between py-3 lg:p-1">
                         <span><i class="bi bi-hash"></i> Rendelés Azonosító</span>
                         <span>${elemek.ID_RENDELES}</span>
                     </div>
-                    <div class="col-12 col-lg-4 d-flex flex-lg-column justify-content-between py-3 p-lg-1 !border !border-t-gray-300 !border-b-gray-300 !border-r-0 !border-l-0 dark:!border-t-zinc-200/20 dark:!border-b-zinc-200/20 lg:!border-t-0 lg:!border-b-0 lg:dark:!border-t-0 lg:dark:!border-b-0">
+                    <div class="flex lg:flex-col justify-between py-3 lg:p-1 !border !border-t-gray-300 !border-b-gray-300 !border-r-0 !border-l-0 dark:!border-t-zinc-200/20 dark:!border-b-zinc-200/20 lg:!border-t-0 lg:!border-b-0 lg:dark:!border-t-0 lg:dark:!border-b-0">
                         <span><i class="bi bi-calendar"></i> Dátum</span>
                         <time class="text-gray-400">
                             <i>${new Date(elemek.DATUM).toLocaleString(navigator.language, {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false})}</i>
                         </time>
                     </div>
-                    <div class="col-12 col-lg-4 d-flex flex-lg-column justify-content-between align-items-lg-end py-3 p-lg-1">
+                    <div class="flex lg:flex-col justify-between lg:items-end py-3 lg:p-1">
                         <span><i class="bi bi-cash"></i> Bruttó végösszeg</span>
                         <span class="termek_ar text-slate-900 dark:text-zinc-200 font-semibold">
                             ${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft
