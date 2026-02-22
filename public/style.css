@@ -21,6 +21,10 @@
   font-style: normal;
 }
 
+@media (width < 640px) {
+  * { font-size: 14px; }
+}
+
 html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szélesebb */
   overflow-x: hidden; 
   max-width: 100%;
@@ -30,8 +34,6 @@ html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szél
 .container-fluid { padding-left: 0 !important; padding-right: 0 !important; } /* A fő konténer div, ne legyen jobb és bal oldalt belső margó */
 
 .navbar-toggler:focus { box-shadow: none; }
-
-.cim { font-size: 35px;}
 
 .overlay { /* Overlay a mobilos offcanvas háttérhez */
     display: none;

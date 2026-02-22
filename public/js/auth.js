@@ -46,7 +46,7 @@ function Frissites() {
         $("#user").html(`<h5>${bejelentkezett_usernev}</h5>`);
         $("#user-email").html(`<span>${bejelentkezett_useremail}</span>`);
         $("#vendegszoveg").html("");
-        $("#udv").html(`Üdvözlünk a Csány webáruházban <span class="font-semibold">${bejelentkezett_usernev.split(" ")[1]}</span>!`);
+        $("#udv").html(`Üdvözlünk a Csány webáruházban ${bejelentkezett_usernev.split(" ")[1]}!`);
         rang += RangokHTML(csoport, "sm");
 
         if (admin) {

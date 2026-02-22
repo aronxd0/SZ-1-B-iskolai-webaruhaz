@@ -150,7 +150,7 @@ async function RendelesKezeloAblak(rendelId, datum, szallcim, fizmod, szallmod, 
             <div>
     
                 <!-- Product Info -->
-                <div class="flex flex-col items-start sm:items-center sm:flex-row gap-4 ">
+                <div class="flex flex-col items-start sm:items-center sm:flex-row gap-4 !border-b !border-slate-900/20 dark:!border-b dark:!border-zinc-200/20 pb-1">
                     <img src="${elem.FOTOLINK}" alt="${elem.NEV}" class="w-10 h-10 rounded-lg object-cover">
     
                     <div class="flex-1">
