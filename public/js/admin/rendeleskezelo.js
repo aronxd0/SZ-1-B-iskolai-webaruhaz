@@ -3,17 +3,9 @@ var a_osszesoldal;
 
 async function RendelesekKezelese(pushHistory = true) {
     let s = ``;
-    let fej = `
-        <div class="col-12 text-center p-2"><span class="text-xl">Beérkezett rendelések</span></div>
-            <div class="max-w-7xl mx-auto my-5 px-4 sm:px-6" id="b_rend"></div>
-                
-        `;
+    
 
-    $("#content_hely").fadeOut(300, function() {
-        $("#content_hely").html(fej).fadeIn(300);
-        $("#main_kontener").addClass("hidden");
-        $("#content_hely").removeClass("hidden");
-    });
+    
 
     const itemek = await ajax_call(`rendelesek?OFFSET=${(a_jelenlegi-1)}&kezeles=1`, "GET", null, true);
 
@@ -32,6 +24,11 @@ async function RendelesekKezelese(pushHistory = true) {
             </div>
         </div>`;
     } else {
+        s += `
+        <div class="col-12 text-center p-2"><span class="text-xl">Beérkezett rendelések</span></div>
+            <div class="max-w-7xl mx-auto my-5 px-4 sm:px-6">
+                
+        `;
         s += `<div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">`;
         for (const elemek of itemek.rows) {
 
@@ -67,7 +64,7 @@ async function RendelesekKezelese(pushHistory = true) {
         }
 
         s += `
-                
+                </div>
             </div>
         `;
 
@@ -104,12 +101,14 @@ async function RendelesekKezelese(pushHistory = true) {
             </ul>`;
         } 
         console.log(s);
-        $("#b_rend").fadeOut(300, function() {
-            $("#b_rend").html(s).fadeIn(300);
-        });
+        
         
     }
-    
+    $("#content_hely").fadeOut(300, function() {
+        $("#content_hely").html(s).fadeIn(300);
+        $("#main_kontener").addClass("hidden");
+        $("#content_hely").removeClass("hidden");
+    });
     
     KezdolapElemekViszlat();
     $("#nezetkicsi").addClass("eltunt");
