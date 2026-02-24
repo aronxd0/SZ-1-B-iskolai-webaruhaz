@@ -12,9 +12,9 @@ let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
 let oldalszam = 0; // összes oldal darabszáma
 let Joldal = 1; // jelenlegi oldal
 
-const filterToggle = document.getElementById('filterToggle');
-const closeFilter = document.getElementById('closeFilter');
-const filterSidebar = document.getElementById('filterSidebar');
+const szuromegnyitas = document.getElementById('szuro_megnyitas');
+const szurobezaras = document.getElementById('szuro_bezaras');
+const mobilszuro = document.getElementById('mobil_szuro');
 const overlay = document.getElementById('overlay');
 
 const egeszoldal = $("html");
@@ -91,15 +91,15 @@ async function Admin_ellenorzes() {
     return adminell; 
 }
 
-function openFilter() {
-    filterSidebar.classList.add('active');
+function SzuroMegnyitas() {
+    mobilszuro.classList.add('active');
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
 }
 
-function closeFilterFunc() {
-    filterSidebar.classList.remove('active');
+function SzuroBezaras() {
+    mobilszuro.classList.remove('active');
     overlay.classList.remove('active');
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
@@ -707,13 +707,11 @@ function FelaTetore(target = "top") {
     window.scrollTo({ top: y, behavior: "smooth" });
 }
 
-function sleep(ms) {
+function Alvas(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function PAUSE() {
-    console.log("várunk...");
-    await sleep(2000);
+    await Alvas(2000);
     Kezdolap();
-    console.log("ennyi volt");
 }

@@ -47,19 +47,19 @@ html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szél
 }
 .overlay.active { display: block; }
 
-#filterSidebar { transition: transform 0.3s ease-in-out; } /* Szűrő sidebar animáció mobilon */
+#mobil_szuro { transition: transform 0.3s ease-in-out; } /* Szűrő sidebar animáció mobilon */
 
 @media (width < 1024px) {
-    #filterSidebar {
+    #mobil_szuro {
         transform: translateX(100%); /* jobb oldalról jön be */
         right: 0; /* jobb oldalon pozícionálva */
         left: auto;
     }
-    html.dark #filterSidebar, #filterSidebar.active {
+    html.dark #mobil_szuro, #mobil_szuro.active {
         background-color: var(--slate-950);
         border-left: 0.1rem solid var(--zinc-200);
     }
-    #filterSidebar.active {
+    #mobil_szuro.active {
         transform: translateX(0);
         background-color: var(--zinc-50);
         border-left: 1px solid var(--zinc-200);

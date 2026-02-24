@@ -161,14 +161,14 @@ $(document).ready(function() {
         }
     });
 
-    filterToggle.addEventListener('click', openFilter);
-    closeFilter.addEventListener('click', closeFilterFunc);
-    overlay.addEventListener('click', closeFilterFunc);
+    szuromegnyitas.addEventListener('click', SzuroMegnyitas);
+    szurobezaras.addEventListener('click', SzuroBezaras);
+    overlay.addEventListener('click', SzuroBezaras);
 
     // ESC billentyűvel is bezárható
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && filterSidebar.classList.contains('active')) {
-            closeFilterFunc();
+        if (e.key === 'Escape' && mobilszuro.classList.contains('active')) {
+            SzuroBezaras();
         }
     });
 
