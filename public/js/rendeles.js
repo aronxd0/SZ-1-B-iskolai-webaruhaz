@@ -4,8 +4,7 @@ let osszesoldal = 0;
 async function rendelesekmegtolt(pushHistory = true) {
     var s = `
         <div class="col-12 text-center p-2"><span class="text-xl">Eddigi rendeléseim</span></div>
-            <div class="max-w-3xl mx-auto p-1 sm:p-6">
-    `;
+            <div class="max-w-3xl mx-auto p-1 sm:p-6">`;
 
     const itemek = await ajax_call(`rendelesek?OFFSET=${(jelenlegi-1)}`, "GET", null, true);
 
@@ -13,9 +12,7 @@ async function rendelesekmegtolt(pushHistory = true) {
     
     if (itemek.maxcount != 0) {
         for (const elemek of itemek.rows) {
-
             s += `
-            
                 <div class="grid gap-2 lg:grid-cols-3 flex flex-col lg:flex-row bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 shadow-lg rounded-4 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10 my-4 p-3 2xl:p-none" id="rendeles_${elemek.ID_RENDELES}" role="button" onclick="toggleRendeles(${elemek.ID_RENDELES}, '${elemek.DATUM}', '${elemek.SZALLCIM}', '${elemek.FIZMOD}', '${elemek.SZALLMOD}', '${elemek.NEV}', '${elemek.EMAIL}', ${elemek.AFA}, ${elemek.RENDELES_VEGOSSZEGE}, '${elemek.ALLAPOT}')">
                     <div class="flex lg:flex-col justify-between py-3 lg:p-1">
                         <span><i class="bi bi-hash"></i> Rendelés Azonosító</span>
@@ -33,10 +30,7 @@ async function rendelesekmegtolt(pushHistory = true) {
                             ${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft
                         </span>
                     </div>      
-                </div>
-            
-            
-            `;
+                </div>`;
         }
         s += `</div>`;
         if (osszesoldal > 1) {
@@ -101,7 +95,7 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
     let fizmodkep = "";
     let szallmodkep = "";
 
-    switch(fizmod) {
+    switch (fizmod) {
         case "Bankkártya": fizmodkep = "<img src='img/visa.png' class='w-auto h-6' alt='visa'> <img src='img/mastercard.png' class='w-auto h-6' alt='mastercard'>"; break;
         case "PayPal": fizmodkep = "<img src='img/paypal.png' class='w-auto h-6' alt='paypal'>"; break;
         case "Apple Pay": fizmodkep = "<img src='img/applepay.png' class='w-auto h-6' alt='applepay'>"; break;
@@ -109,7 +103,7 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
         default: fizmodkep = `<span>${fizmod}</span>`; break;
     }
 
-    switch(szallmod) {
+    switch (szallmod) {
         case "GLS": szallmodkep = "<img src='img/gls.png' class='w-auto h-6' alt='gls'>"; break;
         case "MPL": szallmodkep = "<img src='img/mplsvg.png' class='w-auto h-6' alt='mpl'>"; break;
         case "Express One": szallmodkep = "<img src='img/expressonesvg.png' class='w-auto h-6' alt='expressone'>"; break;
@@ -117,7 +111,6 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
     }
 
     let html = `
-
         <div class="max-w-5xl mx-auto p-1 sm:p-6 space-y-6">
             <div class="bg-zinc-50 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 rounded-xl shadow-lg p-4 sm:p-6 text-sm flex flex-col gap-2">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -127,74 +120,43 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
     
     for (const elem of tetelek.rows) {
         html += `
-
-
-        <div class="p-3 space-y-6 text-slate-900 dark:bg-slate-950 !border-b !border-slate-900/20 dark:!border-b dark:!border-zinc-200/20 dark:text-zinc-200 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-900 " onclick="Termek_Mutat(event, ${elem.ID_TERMEK})">
-            <!-- Product Info -->
-            <div class="flex flex-col items-start sm:items-center sm:flex-row gap-4 ">
-                <img src="${elem.FOTOLINK}" alt="${elem.NEV}" class="w-10 h-10 rounded-lg object-cover">
-
-                <div class="flex-1">
-                    <h2 class="font-semibold text-lg">${elem.NEV}</h2>
-                    <p class="text-sm text-gray-600 mt-1 text-start">${elem.KATEGORIA}</p>
-                    <p class="hidden arak">${(elem.MENNYISEG * elem.AR).toLocaleString()} Ft</p>
+            <div class="p-3 space-y-6 text-slate-900 dark:bg-slate-950 !border-b !border-slate-900/20 dark:!border-b dark:!border-zinc-200/20 dark:text-zinc-200 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-900 " onclick="Termek_Mutat(event, ${elem.ID_TERMEK})">
+                <div class="flex flex-col items-start sm:items-center sm:flex-row gap-4 ">
+                    <img src="${elem.FOTOLINK}" alt="${elem.NEV}" class="w-10 h-10 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <h2 class="font-semibold text-lg">${elem.NEV}</h2>
+                        <p class="text-sm text-gray-600 mt-1 text-start">${elem.KATEGORIA}</p>
+                        <p class="hidden arak">${(elem.MENNYISEG * elem.AR).toLocaleString()} Ft</p>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        <p class="text-sm text-gray-600 text-start sm:!text-end">${elem.MENNYISEG} db</p>
+                        <p class="mt-2 font-medium text-start sm:!text-end">${elem.AR.toLocaleString()} Ft</p>
+                    </div>
                 </div>
-
-                <!-- Delivery -->
-                <div class="text-sm text-gray-600">
-                    <p class="text-sm text-gray-600 text-start sm:!text-end">${elem.MENNYISEG} db</p>
-                    <p class="mt-2 font-medium text-start sm:!text-end">${elem.AR.toLocaleString()} Ft</p>
-                </div>
-            </div>
-
-            
-        </div>
-
-
-
-
-
-    `;
+            </div>`;
     }
-
     html += `
         </div>
-        <!-- Status -->
         <div class="bg-zinc-50 rounded-xl shadow-lg p-4 sm:p-6 text-sm text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200">
-            <p class="text-lg font-medium mb-2">
-                Rendelés állapota
-            </p>
-
-            <!-- Progress Bar -->
+            <p class="text-lg font-medium mb-2">Rendelés állapota</p>
             <div class="w-full h-2 bg-gray-200 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div class="h-full bg-indigo-600 dark:bg-indigo-500 ${allapot == 'Beérkezett' ? 'w-1/2' : 'w-2/2'}"></div>
             </div>
-
-            <!-- Steps -->
             <div class="flex justify-between text-sm text-gray-500 mt-2">
                 <span class="text-indigo-600 dark:text-indigo-500 font-medium">Elküldve</span>
                 <span class="${allapot == 'Kiszállítva' ? 'text-indigo-600 dark:text-indigo-500 font-medium' : ''}">Kiszállítva</span>
             </div>
         </div>
-
         <div class="bg-zinc-50 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 rounded-xl shadow-lg p-4 sm:p-6 grid lg:grid-cols-3 gap-6 text-sm">
-
-            <!-- Billing -->
             <div>
                 <h3 class="font-medium mb-2">Szállítási információk</h3>
                 <p>${szallcim}</p>
                 <p class="flex items-center gap-2 mt-2">${szallmodkep} ${szallmod}</p>
             </div>
-
-            <!-- Payment -->
             <div>
                 <h3 class="font-medium mb-2">Fizetési információk</h3>
-                <p class="flex items-center gap-2">
-                   ${fizmodkep} ${fizmod}
-                </p>
+                <p class="flex items-center gap-2">${fizmodkep} ${fizmod}</p>
             </div>
-
-            <!-- Totals -->
             <div class="space-y-1">
                 <div class="flex justify-between">
                     <span>Összesen</span><span id="ossz"></span>
@@ -209,13 +171,9 @@ async function toggleRendeles(rendelId, datum, szallcim, fizmod, szallmod, nev, 
                     <span class="font-semibold">Végösszeg</span><span class="text-indigo-600 dark:text-indigo-500 font-semibold" id="rendelesvegosszeg"></span>
                 </div>
             </div>
-
         </div>
-    </div>
-    
-    `;
+    </div>`;
 
-    //$(`#tetelek_${rendelId}`).html(html);
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(html).fadeIn(300);
         $("#main_kontener").addClass("hidden");
