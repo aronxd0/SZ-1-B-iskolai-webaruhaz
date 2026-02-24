@@ -1056,30 +1056,37 @@ app.get('/rendelesek',async (req, res) => {
     try{
         session_data = req.session;
         // Paraméter: lapozás kezdőpontja (10 rekord/oldal)
-        var off = req.query.OFFSET
+        var off = parseInt(req.query.OFFSET);
+        var kezeles = (req.query.kezeles ? parseInt(req.query.kezeles) : 0); 
 
         // SQL: rendelések lekérése összesítéssel (végösszeg számítás)
         var sql = 
         `
-        SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, r.AFA,
+        SELECT r.ID_RENDELES, CONVERT_TZ(r.datum, '+00:00','${idozona()}') AS DATUM, r.AFA, r.FIZMOD, r.SZALLMOD, r.SZALLCIM, r.NEV, r.EMAIL, r.ALLAPOT, r.MEGJEGYZES,
         round(SUM(rt.AR * rt.MENNYISEG)*(1+(r.AFA/100))) AS RENDELES_VEGOSSZEGE
         FROM webbolt_rendeles AS r
         JOIN webbolt_rendeles_tetelei AS rt ON r.ID_RENDELES = rt.ID_RENDELES
-        WHERE r.ID_USER = ?
+        ${kezeles == 1 ? " WHERE r.ALLAPOT = 'Beérkezett'" : " WHERE r.ID_USER = ?"}
         GROUP BY r.ID_RENDELES
         ORDER BY r.ID_RENDELES DESC
         limit 10 offset ?
         `;
-        let ertekek = [session_data.ID_USER, off*10];
+        
+        let ertekek = [];
 
+        if (kezeles == 1) { ertekek.push(off * 10); } 
+        else { 
+            ertekek.push(session_data.ID_USER);
+            ertekek.push(off * 10); 
+        }
+
+        /*
         var eredmeny = await runQueries(sql, ertekek);
         if(eredmeny.message != "ok"){
             throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
         }
-        
-        res.set(header1, header2);
-        res.json(eredmeny);
-        res.end();
+        */
+       sendJson_toFrontend(res, sql, ertekek);
     } catch (err) {
         console.error("/rendelesek HIBA : " + (err && err.message ? err.message : err));
         res.status(500).json({
@@ -1100,7 +1107,7 @@ app.get('/rendelesek_tetelei',async (req, res) => {
         // SQL: a rendeléshez tartozó összes tétel
         var sql =
         `
-        SELECT rt.NEV, rt.MENNYISEG, rt.AR, rt.FOTOLINK
+        SELECT rt.NEV, rt.MENNYISEG, rt.AR, rt.FOTOLINK, rt.KATEGORIA, rt.ID_TERMEK 
         from webbolt_rendeles_tetelei AS rt
         WHERE rt.ID_RENDELES = ?
         `;
@@ -1124,7 +1131,7 @@ app.get('/rendelesek_tetelei',async (req, res) => {
 // === LEGUTOLSÓ RENDELÉS AZONOSÍTÓJA ===
 // GET: /rendeles_azon
 // Működés: az aktuális user legutolsó rendelésének ID-jét adja vissza
-// Felhasználás: rendelés után az oldalon az azonosító megjelenítéséhez
+// Felhasználás: rendelés után az emailben az azonosító megjelenítéséhez
 app.get('/rendeles_azon', async (req, res) => {
     let conn; // Külön kapcsolat (NEM runQueries-t használunk)
 
@@ -1187,6 +1194,37 @@ app.get('/rendeles_azon', async (req, res) => {
             ]
         });
     }
+});
+
+// === RENDELÉS ÁLLAPOTÁNAK VÁLTOZTATÁSA ===
+// POST: /rendeles_allapotvaltozas
+// Működés: A rendelés állapotát "Kiszállítva"-ra módosítja az adott rendelés ID alapján
+// Felhasználás: a rendelés "kiszállítva" állapotba szimulálása az admin felületen
+app.post('/rendeles_allapotvaltozas', async (req, res) => {
+    
+    try {
+        var rendelesid = parseInt(req.query.ID_RENDELES);
+        
+        var sql = `
+        UPDATE webbolt_rendeles 
+        SET ALLAPOT = "Kiszállítva"
+        WHERE ID_RENDELES = ?
+        `;
+        let ertekek = [rendelesid];
+
+        const eredmeny = await runExecute(sql, req, ertekek, true);
+        if(eredmeny.message != "ok"){
+            throw new Error(eredmeny.message || "Az adatbázis művelet sikertelen.");
+        }
+        res.json(eredmeny);
+        res.end();
+
+    } catch (err) {
+        console.error("/rendeles_allapotvaltozas HIBA : " + (err && err.message ? err.message : err));
+        return res.status(500).json({
+            message: "Nem sikerült a rendelés állapotának módosítása." 
+        });
+    }       
 });
 
 

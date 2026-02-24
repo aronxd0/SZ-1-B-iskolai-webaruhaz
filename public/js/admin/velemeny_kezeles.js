@@ -5,7 +5,7 @@ async function Admin_Velemenykezeles(pushHistory = true) {
     let varodb = await ajax_call(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, "GET", null, true);
     velemeny_osszes = Math.ceil(varodb.maxcount / 10)
     
-    if (velemeny_jelenlegi > velemeny_osszes) { velemeny_jelenlegi = velemeny_osszes }
+    if (velemeny_jelenlegi > velemeny_osszes) { velemeny_jelenlegi = velemeny_osszes; }
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
@@ -49,6 +49,7 @@ async function AdminVelemenyekMutat() {
             }).fadeIn(300);
         }
         else {
+            ss += `<div class="max-w-5xl mx-auto">`
             for (const element of varo.rows) {
                 ss += `
                 <div class="row !border-b !border-gray-300 dark:!border-b dark:!border-sky-950 pb-4 mt-3">
@@ -81,7 +82,7 @@ async function AdminVelemenyekMutat() {
                     </div>
                 </div>`;
             }
-
+            ss += `</div>`;
             if (velemeny_osszes > 1) {
                 ss += `
                 <ul class="pagination justify-content-center gap-2 select-none mt-3">
@@ -143,11 +144,11 @@ function Kovi_vel(keri){
 async function Velemeny_Elutasit(id_velemeny) {
     let elutasit = await ajax_call(`velemeny_elutasit?ID_VELEMENY=${id_velemeny}`, "POST", null, true);
     if (elutasit.message == "ok") { üzen("Művelet sikeresen végrehajtva","success"); }
-    await Admin_Velemenykezeles();
+    await Admin_Velemenykezeles(false);
 }
 
 async function Velemeny_Elfogad(id_velemeny) {
     let elfogad = await ajax_call(`velemeny_elfogad?ID_VELEMENY=${id_velemeny}`, "POST", null, true);
     if (elfogad.message == "ok") { üzen("Művelet sikeresen végrehajtva","success"); }    
-    await Admin_Velemenykezeles();
+    await Admin_Velemenykezeles(false);
 }

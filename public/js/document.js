@@ -14,6 +14,8 @@ window.addEventListener("popstate", async (e) => {
         case "termek": Termek_Mutat(null, e.state.id, false); break;
         case "kosar": Kosar_Mutat(false); break;
         case "rendeleseim": rendelesekmegtolt(false); break;
+        case "rendelesek-kezelese": RendelesekKezelese(false); break;
+        case "rendeleseimreszlet": toggleRendeles(e.state.id, e.state.datum, e.state.szallcim, e.state.fizmod, e.state.szallmod, e.state.nev, e.state.email, e.state.afa, e.state.vegosszeg, e.state.allapot, false); break;
         case "velemeny-kezeles": Admin_Velemenykezeles(false); break;
         case "statisztika": Statisztikak(false); break;
         case "sql": SQLinput(false); break;
@@ -42,10 +44,8 @@ $(document).ready(function() {
     F5();
     KategoriaFeltolt("kategoria_section", "check", "", false);
 
-    var input = document.getElementById("nev1");
-
     // enterrel keresés
-    input.addEventListener("keypress", function(event) {
+    document.getElementById("nev1").addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
             document.getElementById("kereses_gomb").click();
@@ -53,6 +53,13 @@ $(document).ready(function() {
     });
 
     $("#login_passwd").on("keydown", function(e) { if (e.key === " ") { e.preventDefault(); } });
+
+    $("#login_passwd").on("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault(); 
+            BEJELENTKEZES();
+        }
+    });
 
     $("#nev1").on("keydown", function(e) { if (e.key === "<" || e.key === ">" || e.key === "&" || e.key === "%") { e.preventDefault(); } });
 
@@ -69,30 +76,6 @@ $(document).ready(function() {
     });
 
     $("#nev1").on("focus", function() { FelaTetore(); });
-
-    $('#bezar').on('click', function () {
-        if (!JSON.parse(localStorage.getItem("user") || "{}")?.loggedIn) {
-            ajax_call("logout", "GET", null, true).then(logoutt => {});
-            Kezdolap();
-        }
-    });
-
-    /*
-    $("#switch").click(function () {
-        let user = JSON.parse(localStorage.getItem("user")) || {};
-        const isDark = $("html").hasClass("dark");
-        if (isDark) {
-            $("html").removeClass("dark");
-            $("#switch").html(`<i class="bi bi-moon-fill"></i>`);
-            user.ui = { ...user.ui, theme: "light" };
-        } else {
-            $("html").addClass("dark");
-            $("#switch").html(`<i class="bi bi-sun-fill"></i>`);
-            user.ui = { ...user.ui, theme: "dark" };
-        }
-        localStorage.setItem("user", JSON.stringify(user));
-    });
-    */
 
     // slidernek input mezö , változtatni kell a slider inputokaz as well as  a slider value: Enter után  szürni kell , emouseuot on is .
     $("#min_ar").on("input",  function MinarELL() {
@@ -178,14 +161,14 @@ $(document).ready(function() {
         }
     });
 
-    filterToggle.addEventListener('click', openFilter);
-    closeFilter.addEventListener('click', closeFilterFunc);
-    overlay.addEventListener('click', closeFilterFunc);
+    szuromegnyitas.addEventListener('click', SzuroMegnyitas);
+    szurobezaras.addEventListener('click', SzuroBezaras);
+    overlay.addEventListener('click', SzuroBezaras);
 
     // ESC billentyűvel is bezárható
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && filterSidebar.classList.contains('active')) {
-            closeFilterFunc();
+        if (e.key === 'Escape' && mobilszuro.classList.contains('active')) {
+            SzuroBezaras();
         }
     });
 

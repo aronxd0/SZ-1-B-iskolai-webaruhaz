@@ -30,7 +30,7 @@ let vendegnezet = `
 async function Kosar_Mutat(pushHistory = true) {
     tetelekli = [];
     let tartalom = `
-        <div class="max-w-7xl mx-auto py-10">
+        <div class="max-w-7xl mx-auto py-10 px-3">
             ${kosarsegito}
             <div class="d-flex w-full align-items-center justify-content-between">
                 <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 p-2 mb-8 w-auto">
@@ -39,8 +39,8 @@ async function Kosar_Mutat(pushHistory = true) {
             </div>
             
             
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 space-y-6">`;
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-6">`;
 
     try {
         let tetelek = await ajax_call("tetelek", "GET", null, true);
@@ -77,13 +77,13 @@ async function Kosar_Mutat(pushHistory = true) {
                                 <input type="number" class="w-50 py-1 text-center text-lg duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 !border !border-slate-900/10 bg-zinc-100 rounded-4 text-slate-900 dark:bg-slate-900 dark:text-zinc-200 focus:outline-none dark:!border dark:!border-zinc-200/20" min="1" onchange="KosarPLUSZ(this)" value="${element.MENNYISEG}" id="${element.ID_TERMEK}2">
                                 <button type="button" class="btn btn-lg bi bi-plus-lg jobb-gomb bg-transparent text-slate-900 dark:bg-sky-950 dark:text-zinc-200 hover:text-slate-700 dark:hover:text-zinc-300 rounded-4 ms-2" aria-label="plusz" onclick="KosarPLUSZ(this)" id="${element.ID_TERMEK}1"></button>
                             </div>
-                            <button class="text-slate-400 hover:text-red-600 text-lg transition" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)"><i class="bi bi-trash"></i></button>
+                            <button class="text-gray-500 hover:text-red-700 text-lg transition" id="${element.ID_TERMEK}" onclick="KosarItemDelete(this)"><i class="bi bi-trash"></i> Törlés</button>
                         </div>
                     </div>`;
             }
             tartalom += `
                 </div>
-                <div class="rounded-xl bg-slate-50 shadow-xl dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 p-6 h-fit">
+                <div class="rounded-xl bg-slate-50 shadow-xl dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 p-6 mx-1 mx-lg-5 h-fit">
                     <h2 class="text-lg font-semibold text-slate-900 dark:text-zinc-100 mb-4">Összegzés</h2>
                     <div class="space-y-3 text-sm">
                         <div class="flex justify-between">
@@ -92,16 +92,16 @@ async function Kosar_Mutat(pushHistory = true) {
                         </div>
                         <div class="flex justify-between">
                             <span class="text-slate-500">Szállítási költség</span>
-                            <span>0 Ft</span>
+                            <span class="font-medium">0 Ft</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-slate-500">Áfa</span>
-                            <span>${(await ajax_call(`afa`, "GET", null, true)).rows[0].AFA} %</span>
+                            <span class="font-medium">${(await ajax_call(`afa`, "GET", null, true)).rows[0].AFA} %</span>
                         </div>
                     </div>
-                    <div class="mt-6 flex justify-between font-semibold text-slate-900 dark:text-zinc-100">
-                        <span>Végösszeg</span>
-                        <span id="sumar"></span>
+                    <div class="mt-6 flex justify-between text-slate-900 dark:text-zinc-100">
+                        <span class="font-semibold">Végösszeg</span>
+                        <span class="text-indigo-600 dark:text-indigo-500 font-semibold" id="sumar"></span>
                     </div>
                     <div id="pay_button">
                         <button id="tovabb_a_fizeteshez" onclick='RendelesAblak(${JSON.stringify(tetelekli)})' class="mt-6 w-full rounded-lg bg-slate-950 dark:bg-gray-800  text-zinc-200 hover:bg-zinc-100 hover:text-slate-950 !border !border-transparent hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out py-3 font-medium">

@@ -46,7 +46,7 @@ function Frissites() {
         $("#user").html(`<h5>${bejelentkezett_usernev}</h5>`);
         $("#user-email").html(`<span>${bejelentkezett_useremail}</span>`);
         $("#vendegszoveg").html("");
-        $("#udv").html(`Üdvözlünk a Csány webáruházban <span class="font-semibold">${bejelentkezett_usernev.split(" ")[1]}</span>!`);
+        $("#udv").html(`Üdvözlünk a Csány webáruházban ${bejelentkezett_usernev.split(" ")[1]}!`);
         rang += RangokHTML(csoport, "sm");
 
         if (admin) {
@@ -83,7 +83,7 @@ $("#login_button").click(function() {
     else { $("#logout_modal").modal("show"); }
 });
 
-$("#login_oksi_button").click(async function() { 
+async function BEJELENTKEZES() {
     if ($("#login_nev").val().trim() === "") { 
         $("#loginhiba").html("Kérlek add meg az e-mail címet!"); 
         $("#login_nev").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500");
@@ -119,7 +119,9 @@ $("#login_oksi_button").click(async function() {
         $("#login_nev").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500").focus();
         $("#login_passwd").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500").focus();
     }
-});
+}
+
+$("#login_oksi_button").click(async function() { BEJELENTKEZES(); });
           
 $("#kijelentkezik").click( async function() {
     ajax_call("logout", "GET", null, true).then( () => {

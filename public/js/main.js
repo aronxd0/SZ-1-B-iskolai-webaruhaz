@@ -12,9 +12,9 @@ let sqleddig = ""; // változik a lekérdezés akkor olad újra az 1. oldal
 let oldalszam = 0; // összes oldal darabszáma
 let Joldal = 1; // jelenlegi oldal
 
-const filterToggle = document.getElementById('filterToggle');
-const closeFilter = document.getElementById('closeFilter');
-const filterSidebar = document.getElementById('filterSidebar');
+const szuromegnyitas = document.getElementById('szuro_megnyitas');
+const szurobezaras = document.getElementById('szuro_bezaras');
+const mobilszuro = document.getElementById('mobil_szuro');
 const overlay = document.getElementById('overlay');
 
 const egeszoldal = $("html");
@@ -91,15 +91,15 @@ async function Admin_ellenorzes() {
     return adminell; 
 }
 
-function openFilter() {
-    filterSidebar.classList.add('active');
+function SzuroMegnyitas() {
+    mobilszuro.classList.add('active');
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
 }
 
-function closeFilterFunc() {
-    filterSidebar.classList.remove('active');
+function SzuroBezaras() {
+    mobilszuro.classList.remove('active');
     overlay.classList.remove('active');
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
@@ -199,6 +199,12 @@ function update_gombok (x) {
                         <button id="admin_stats" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="Statisztikak()" data-bs-dismiss="offcanvas">
                         <i class="bi bi-bar-chart"></i>
                         <span>&nbsp;Statisztikák</span> 
+                        </button>
+                    </li>
+                    <li>
+                        <button id="admin_rendelesek" type="button" class="py-2 px-4 bg-zinc-300 text-gray-500 hover:bg-slate-900 hover:text-zinc-200 dark:bg-slate-950 dark:text-zinc-400 dark:hover:bg-gray-700 dark:hover:text-zinc-200 transition-hover duration-100 ease-in-out rounded-none w-full d-flex" type="button"  onclick="RendelesekKezelese()" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-truck"></i>
+                        <span>&nbsp;Rendelések</span> 
                         </button>
                     </li>
                     <li><hr class="dropdown-divider bg-gray-300 dark:bg-zinc-200/30"></hr></li>
@@ -701,13 +707,11 @@ function FelaTetore(target = "top") {
     window.scrollTo({ top: y, behavior: "smooth" });
 }
 
-function sleep(ms) {
+function Alvas(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function PAUSE() {
-    console.log("várunk...");
-    await sleep(2000);
+    await Alvas(2000);
     Kezdolap();
-    console.log("ennyi volt");
 }
