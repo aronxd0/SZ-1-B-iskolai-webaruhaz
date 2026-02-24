@@ -54,6 +54,7 @@ html, body { /* Vízszintes görgetés tiltása + body ne legyen 100%-nál szél
         transform: translateX(100%); /* jobb oldalról jön be */
         right: 0; /* jobb oldalon pozícionálva */
         left: auto;
+        height: 100dvh; /* dynamic viewport height - böngésző UI-t figyelembe veszi */
     }
     html.dark #mobil_szuro, #mobil_szuro.active {
         background-color: var(--slate-950);
@@ -174,7 +175,7 @@ html.dark .autocomplete-items div:hover { background-color: var(--slate-800); }
 
 @media (width < 1200px) {  
   #top-navbar.offcanvas-start {
-    width: 270px !important;
+    width: 240px !important;
     overflow-y: auto;
     max-height: 100vh;
   }
