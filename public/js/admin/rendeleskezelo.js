@@ -3,10 +3,6 @@ var a_osszesoldal;
 
 async function RendelesekKezelese(pushHistory = true) {
     let s = ``;
-    
-
-    
-
     const itemek = await ajax_call(`rendelesek?OFFSET=${(a_jelenlegi-1)}&kezeles=1`, "GET", null, true);
 
     a_osszesoldal = Math.ceil(itemek.maxcount / 10);
@@ -25,50 +21,36 @@ async function RendelesekKezelese(pushHistory = true) {
         </div>`;
     } else {
         s += `
-        <div class="col-12 text-center p-2"><span class="text-xl">Beérkezett rendelések</span></div>
-            <div class="max-w-7xl mx-auto my-5 px-4 sm:px-6">
-                
-        `;
-        s += `<div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">`;
+            <div class="col-12 text-center p-2"><span class="text-xl">Beérkezett rendelések</span></div>
+                <div class="max-w-7xl mx-auto my-5 px-4 sm:px-6">`;
+        s += `      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">`;
+
         for (const elemek of itemek.rows) {
-
             s += `
-
-            <div class="bg-zinc-50 rounded-xl shadow-lg p-5 transition cursor-pointer bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10" id="rend_${elemek.ID_RENDELES}" onclick="RendelesKezeloAblak(${elemek.ID_RENDELES}, '${elemek.DATUM}', '${elemek.SZALLCIM}', '${elemek.FIZMOD}', '${elemek.SZALLMOD}', '${elemek.NEV}', '${elemek.EMAIL}', ${elemek.AFA}, ${elemek.RENDELES_VEGOSSZEGE}, '${elemek.MEGJEGYZES}')">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="font-semibold">#${elemek.ID_RENDELES}</span>
-                    <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-sky-950 dark:!border dark:!border-sky-700 dark:text-blue-400">
-                    ${elemek.ALLAPOT}
-                    </span>
-                </div>
-
-                <div class="flex justify-between">
-                    <span class="text-sm">Megrendelő</span>
-                    <span class="font-medium mb-2">${elemek.NEV}</span>
-                </div>
-                
-
-                <div class="flex justify-between text-sm">
-                    <span>Végösszeg</span>
-                    <span class="font-semibold">${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft</span>
-                </div>
-
-                <p class="text-xs text-gray-500 mt-3">
-                    ${new Date(elemek.DATUM).toLocaleString(navigator.language, {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false})}
-                </p>
-            </div>
-
-
-        
-            `;
+                <div class="bg-zinc-50 rounded-xl shadow-lg p-5 transition cursor-pointer bg-zinc-100 text-slate-900 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 hover:cursor-pointer hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-800 dark:hover:-outline-offset-1 dark:hover:outline-white/10" id="rend_${elemek.ID_RENDELES}" onclick="RendelesKezeloAblak(${elemek.ID_RENDELES}, '${elemek.DATUM}', '${elemek.SZALLCIM}', '${elemek.FIZMOD}', '${elemek.SZALLMOD}', '${elemek.NEV}', '${elemek.EMAIL}', ${elemek.AFA}, ${elemek.RENDELES_VEGOSSZEGE}, '${elemek.MEGJEGYZES}')">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="font-semibold">#${elemek.ID_RENDELES}</span>
+                        <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-sky-950 dark:!border dark:!border-sky-700 dark:text-blue-400">
+                        ${elemek.ALLAPOT}
+                        </span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm">Megrendelő</span>
+                        <span class="font-medium mb-2">${elemek.NEV}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span>Végösszeg</span>
+                        <span class="font-semibold">${parseInt(elemek.RENDELES_VEGOSSZEGE).toLocaleString()} Ft</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3">
+                        ${new Date(elemek.DATUM).toLocaleString(navigator.language, {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false})}
+                    </p>
+                </div>`;
         }
 
         s += `
                 </div>
-            </div>
-        `;
-
-        
+            </div>`;
 
         if (a_osszesoldal > 1) {
             s += `
@@ -99,11 +81,9 @@ async function RendelesekKezelese(pushHistory = true) {
                     <a id="Kovi2_renda" onclick="KoviRendeles(this)" class="page-link px-3 py-2 rounded-xl !border !border-transparent bg-zinc-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-200 hover:bg-slate-900 hover:text-white dark:hover:bg-gray-800 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 transition-all duration-200 shadow-sm cursor-pointer "> » </a>
                 </li>
             </ul>`;
-        } 
-        console.log(s);
-        
-        
+        }
     }
+
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(s).fadeIn(300);
         $("#main_kontener").addClass("hidden");
@@ -147,7 +127,6 @@ async function RendelesKezeloAblak(rendelId, datum, szallcim, fizmod, szallmod, 
         $("#r-azon").html(`<span class="text-xl font-semibold">Rendelés #${rendelId}</span><button type="button" class="btn text-slate-900 hover:text-red-700 dark:text-zinc-200 dark:hover:text-red-600" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>`);
     
         let html = `
-        
             <div class="max-w-5xl mx-auto p-4 sm:p-6 space-y-6">
                 <span class="text-sm text-gray-500">${new Date(datum).toLocaleString(navigator.language, {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false})}</span>
                 <div class="flex flex-col sm:flex-row items-center justify-between my-4 py-2 !border-b !border-b-slate-900/20">
@@ -159,33 +138,20 @@ async function RendelesKezeloAblak(rendelId, datum, szallcim, fizmod, szallmod, 
         
         for (const elem of tetelek.rows) {
             html += `
-    
-    
-            <div>
-    
-                <!-- Product Info -->
-                <div class="flex flex-col items-start sm:items-center sm:flex-row gap-4 !border-b !border-slate-900/20 dark:!border-b dark:!border-zinc-200/20 pb-1">
-                    <img src="${elem.FOTOLINK}" alt="${elem.NEV}" class="w-10 h-10 rounded-lg object-cover">
-    
-                    <div class="flex-1">
-                        <h2 class="font-semibold">${elem.NEV} (${elem.ID_TERMEK})</h2>
-                        <p class="text-sm text-gray-600 mt-1 text-start">${elem.KATEGORIA}</p>
-                        <p class="hidden arak">${(elem.MENNYISEG * elem.AR).toLocaleString()} Ft</p>
+                <div>
+                    <div class="flex flex-col items-start sm:items-center sm:flex-row gap-4 !border-b !border-slate-900/20 dark:!border-b dark:!border-zinc-200/20 pb-1">
+                        <img src="${elem.FOTOLINK}" alt="${elem.NEV}" class="w-10 h-10 rounded-lg object-cover">
+                        <div class="flex-1">
+                            <h2 class="font-semibold">${elem.NEV} (${elem.ID_TERMEK})</h2>
+                            <p class="text-sm text-gray-600 mt-1 text-start">${elem.KATEGORIA}</p>
+                            <p class="hidden arak">${(elem.MENNYISEG * elem.AR).toLocaleString()} Ft</p>
+                        </div>
+                        <div class="text-sm">
+                            <p class="text-sm text-gray-600 font-semibold text-start sm:!text-end">${elem.MENNYISEG} db</p>
+                            <p class="mt-2 font-semibold text-start sm:!text-end">${elem.AR.toLocaleString()} Ft</p>
+                        </div>
                     </div>
-    
-                    <!-- Delivery -->
-                    <div class="text-sm">
-                        <p class="text-sm text-gray-600 font-semibold text-start sm:!text-end">${elem.MENNYISEG} db</p>
-                        <p class="mt-2 font-semibold text-start sm:!text-end">${elem.AR.toLocaleString()} Ft</p>
-                    </div>
-                </div>
-    
-                
-            </div>
-    
-    
-    
-    `;
+                </div>`;
         }
     
         html += `
@@ -194,25 +160,16 @@ async function RendelesKezeloAblak(rendelId, datum, szallcim, fizmod, szallmod, 
                 <span class="text-lg font-medium">Rendeléshez fűzött megjegyzés:</span>
                 <p class="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm text-gray-700 dark:text-gray-300">${megjegyzes.trim() == "" ? "Nincs megjegyzés" : megjegyzes}</p>
             </div>
-
             <div class="bg-zinc-50 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20  rounded-xl shadow-lg p-4 sm:p-6 grid lg:grid-cols-3 gap-6 text-sm">
-    
-                <!-- Billing -->
                 <div>
                     <h3 class="font-medium mb-2">Szállítási információk</h3>
                     <p>${szallcim}</p>
                     <p class="flex items-center gap-2 mt-2">${szallmodkep} ${szallmod}</p>
                 </div>
-    
-                <!-- Payment -->
                 <div>
                     <h3 class="font-medium mb-2">Fizetési információk</h3>
-                    <p class="flex items-center gap-2">
-                       ${fizmodkep} ${fizmod}
-                    </p>
+                    <p class="flex items-center gap-2">${fizmodkep} ${fizmod}</p>
                 </div>
-    
-                <!-- Totals -->
                 <div class="space-y-1">
                     <div class="flex justify-between">
                         <span>Összesen</span><span id="ossz"></span>
@@ -227,19 +184,14 @@ async function RendelesKezeloAblak(rendelId, datum, szallcim, fizmod, szallmod, 
                         <span class="font-semibold">Végösszeg</span><span class="text-indigo-600 dark:text-indigo-500 font-semibold" id="rendelesvegosszeg"></span>
                     </div>
                 </div>
-    
             </div>
-        </div>
-        
-        `;
+        </div>`;
 
     let gomb = `
         <button id="kiszallit" type="button" class="px-3 py-1 text-base flex items-center gap-2 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out rounded-2xl w-auto" onclick="RendelesKiszallitva(${rendelId})"> 
             <i class="bi bi-check"></i>
             <span> Kiszállítva</span>
-        </button>
-    `;
-    
+        </button>`;
 
     $("#rendeles_kezeles_modal .modal-body").html(html);
     $("#rendeles_kezeles_modal .modal-footer").html(gomb);
@@ -279,4 +231,3 @@ async function RendelesKiszallitva(rendelId) {
     }
     await RendelesekKezelese(false);
 }
-
