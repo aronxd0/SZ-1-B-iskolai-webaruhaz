@@ -1131,7 +1131,7 @@ app.get('/rendelesek_tetelei',async (req, res) => {
 // === LEGUTOLSÓ RENDELÉS AZONOSÍTÓJA ===
 // GET: /rendeles_azon
 // Működés: az aktuális user legutolsó rendelésének ID-jét adja vissza
-// Felhasználás: rendelés után az oldalon az azonosító megjelenítéséhez
+// Felhasználás: rendelés után az emailben az azonosító megjelenítéséhez
 app.get('/rendeles_azon', async (req, res) => {
     let conn; // Külön kapcsolat (NEM runQueries-t használunk)
 
@@ -1196,6 +1196,10 @@ app.get('/rendeles_azon', async (req, res) => {
     }
 });
 
+// === RENDELÉS ÁLLAPOTÁNAK VÁLTOZTATÁSA ===
+// POST: /rendeles_allapotvaltozas
+// Működés: A rendelés állapotát "Kiszállítva"-ra módosítja az adott rendelés ID alapján
+// Felhasználás: a rendelés "kiszállítva" állapotba szimulálása az admin felületen
 app.post('/rendeles_allapotvaltozas', async (req, res) => {
     
     try {
