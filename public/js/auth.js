@@ -77,6 +77,8 @@ $("#login_button").click(function() {
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { 
         $('#login_modal').modal('show'); 
         $("#loginhiba").html(""); 
+        $("#login_nev").val("");
+        $("#login_passwd").val("");
         $("#login_nev").removeClass("ring-2 ring-red-500").addClass("focus:ring-emerald-600");
         $("#login_passwd").removeClass("ring-2 ring-red-500").addClass("focus:ring-emerald-600");
     }
@@ -85,13 +87,13 @@ $("#login_button").click(function() {
 
 async function BEJELENTKEZES() {
     if ($("#login_nev").val().trim() === "") { 
-        $("#loginhiba").html("Kérlek add meg az e-mail címet!"); 
+        $("#loginhiba").html("Kérlek add meg az e-mail címedet!"); 
         $("#login_nev").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500");
         return; 
     } else $("#login_nev").removeClass("ring-2 ring-red-500").addClass("focus:ring-emerald-600");
 
     if ($("#login_passwd").val().trim() === "") {
-        $("#loginhiba").html("Kérlek add meg a jelszót!");
+        $("#loginhiba").html("Kérlek add meg a jelszavadat!");
         $("#login_passwd").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500");
         return;
     } else $("#login_passwd").removeClass("ring-2 ring-red-500").addClass("focus:ring-emerald-600");
@@ -115,7 +117,7 @@ async function BEJELENTKEZES() {
         $('#login_modal').modal('hide'); 
     }
     else {
-        $("#loginhiba").html("Hibás felhasználónév vagy jelszó!");
+        $("#loginhiba").html("A megadott e-mail és jelszó páros nem található!");
         $("#login_nev").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500").focus();
         $("#login_passwd").removeClass("focus:ring-emerald-600").addClass("ring-2 ring-red-500").focus();
     }
