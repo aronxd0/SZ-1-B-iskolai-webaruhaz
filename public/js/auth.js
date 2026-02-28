@@ -123,7 +123,7 @@ async function BEJELENTKEZES() {
     }
 }
 
-$("#login_oksi_button").click(async function() { BEJELENTKEZES(); });
+$("#login_oksi_button").click(function() { BEJELENTKEZES(); });
           
 $("#kijelentkezik").click( async function() {
     ajax_call("logout", "GET", null, true).then( () => {
