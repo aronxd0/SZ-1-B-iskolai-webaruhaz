@@ -144,6 +144,13 @@ function Temavalto(id) {
     Megjelenes(id.id);
 }
 
+function KeresoModal() {
+    $("#keresomodal").modal("show");
+    setTimeout(() => {
+        $("#nev1").focus();
+      }, 1000);
+}
+
 function RangokHTML(rang) {
     let ranghtml = "";
     switch (rang) {

@@ -44,14 +44,6 @@
                   <img class="img-fluid m-2 block dark:hidden transition-all duration-300 w-20 h-15" src="img/logo-fekete.png" alt="logo">
                 </li>
                 <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
-                  <div class="ms-xl-3" id="regisztracio_gombdiv">
-                    <a href="http://sexard3-214.tolna.net:9011/register.html" target="_blank" id="regisztral_button" type="button" class="px-3 py-1 text-base flex items-center gap-2 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out rounded-2xl w-full" > 
-                      <i class="bi bi-person-plus"></i>
-                      <span> Regisztráció</span>
-                    </a>
-                  </div>
-                </li>
-                <li class="nav-item py-2 py-xl-0 d-flex align-items-center">
                   <div class="me-3 ms-xl-3" id="loginout_gombdiv">
                     <button id="login_button" type="button" class="px-3 py-1 text-base flex items-center gap-2 !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out rounded-2xl w-full" > 
                       <i class="bi bi-box-arrow-in-right" id="loginout"></i>
@@ -128,7 +120,7 @@
                   <div class="me-3 flex items-center gap-2 text-sm text-slate-700 dark:text-zinc-400 cursor-pointer"> 
                     <img src="https://flagcdn.com/hu.svg" class="block h-auto w-8 shrink-0" alt="Hungary"> <span>HUF</span>
                   </div> 
-                  <button type="button" aria-label="Keresés" class="rounded-none bg-transparent text-slate-900/50 hover:text-slate-900 dark:bg-sky-950 dark:text-zinc-200/50 dark:hover:text-zinc-200 mx-2 transition-hover duration-300 ease-in-out" id="kereses_menu" onclick="$('#keresomodal').modal('show')">
+                  <button type="button" aria-label="Keresés" class="rounded-none bg-transparent text-slate-900/50 hover:text-slate-900 dark:bg-sky-950 dark:text-zinc-200/50 dark:hover:text-zinc-200 mx-2 transition-hover duration-300 ease-in-out" id="kereses_menu" onclick="KeresoModal()">
                     <i class="bi bi-search text-lg"></i>
                   </button>
                   <div class="me-2" id="fiok_gombdiv">
@@ -358,7 +350,8 @@
                 <input type="password" class="w-full py-2 px-3 bg-white/5 !border !border-slate-900/20 duration-300 focus:transition-all focus:outline-none focus:ring-2 focus:ring-emerald-600 text-slate-900/50  dark:!border-zinc-200/20 dark:text-zinc-200 rounded-4 placeholder-gray-400 placeholder:text-base dark:placeholder-zinc-100/60 " id="login_passwd" name="login_passwd" value='' placeholder="Írd be a jelszavadat" required>  
               </div>
             </form>
-            <div class="col-12 text-center text-red-700 dark:text-red-500 mt-2" id="loginhiba"></div>
+            <div class="col-12 text-center mt-3">Nincs fiókod? Regisztrálj <a href="http://sexard3-214.tolna.net:9011/register.html" target="_blank" class="text-sky-500 hover:text-sky-700 dark:text-sky-500 dark:hover:text-sky-300 underline text-decoration-sky-500 hover:cursor-pointer font-semibold">itt</a>.</div>
+            <div class="col-12 text-center text-red-700 dark:text-red-500 mt-3" id="loginhiba"></div>
           </div>
           <div class="bg-transparent text-slate-900 dark:text-zinc-200 modal-footer">
             <div class="col-12 d-flex flex-column justify-content-center align-items-center gap-2">
