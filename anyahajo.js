@@ -2018,7 +2018,7 @@ function osszeallitottSqlNaplozasra(sql, ertekek) {
     const finalSql = sql.replace(/\?/g, () => {
         // Hiba: elfogyott a paraméter
         if (i >= ertekek.length) {
-            return '<<HIÁNYZÓ ÉRTÉK>>';
+            return '- HIÁNYZÓ ÉRTÉK -';
         }
         
         let ertek = ertekek[i++];
