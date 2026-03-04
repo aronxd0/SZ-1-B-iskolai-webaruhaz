@@ -75,7 +75,7 @@ function Statisztikak(pushHistory = true) {
                         <div class="col-md-4 col-12">                
                             <label class="bg-zinc-50 text-slate-900 shadow-xl dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 dark:text-zinc-200 hover:bg-gray-200 hover:outline outline-black/10 dark:hover:bg-gray-700 dark:hover:-outline-offset-1 dark:hover:outline-white/10 d-flex align-items-center justify-content-center p-2 my-2 rounded-xl cursor-pointer transition-all duration-200 has-[:checked]:bg-indigo-100 has-[:checked]:border-indigo-400 has-[:checked]:border has-[:checked]:shadow-md dark:has-[:checked]:bg-sky-950 dark:has-[:checked]:border-sky-700 dark:has-[:checked]:border">
                                 <input type="radio" name="hatar2" class="form-check-input hidden" id="_03" value="6"   onchange="STAT_ELAD(this)">
-                                3 hónap
+                                6 hónap
                             </label>
                         </div>
                         <div class="col-md-4 col-12">                
