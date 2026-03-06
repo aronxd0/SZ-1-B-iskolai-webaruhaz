@@ -168,7 +168,7 @@ function Fizetes(li) {
         if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(country.value)) {
             throw "Az ország neve csak betűket, szóközt és kötőjelet tartalmazhat!";
         }
-        if (!/^[0-9a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]+$/.test(MEGJ.value)) {
+        if (!/^[0-9a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]*$/.test(MEGJ.value)) {
             throw "A megjegyzés csak betűket, szóközt és kötőjelet tartalmazhat!";
         }
     } 
