@@ -714,7 +714,7 @@ function FelaTetore(target = "top") {
     const el = document.getElementById(target);
     if (!el) return;
 
-    const plusz = 100;
+    const plusz = 100; //px
     // elem pozíciója a viewporthoz képest + jelenlegi scroll pozíció - plusz érték 
     const y = el.getBoundingClientRect().top + window.pageYOffset - plusz; 
 
