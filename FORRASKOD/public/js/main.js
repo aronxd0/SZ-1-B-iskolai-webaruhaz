@@ -74,7 +74,7 @@ async function AR_SUM(osztaly, hova, vegossszeg) {
 async function SESSION() {
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { return; }
         try {
-            const js = await ajax_call('/check_session', "GET", null, true);
+            const js = await ajax_call('/check_session', "GET", null, false);
 
             const localBoot = JSON.parse(localStorage.getItem('user'))?.serverBoot || '';
             if (!js.active || (localBoot && String(js.serverBoot) !== String(localBoot))) {
