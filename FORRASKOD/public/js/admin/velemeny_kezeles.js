@@ -9,9 +9,9 @@ async function Admin_Velemenykezeles(pushHistory = true) {
 
     $("#content_hely").fadeOut(300, function() {
         $("#content_hely").html(`
-            <div class="row d-flex flex-column flex-lg-row p-1 mx-auto space-y-2">
-                <div class="col-12 col-lg-6 mx-auto mt-3">
-                    <div role="alert" class="w-full d-flex gap-1 justify-content-center !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50 bg-blue-200/30 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200 py-3 rounded-4">
+            <div class="flex flex-col lg:flex-row justify-center p-1 mx-auto space-y-2">
+                <div class="flex justify-center mt-3">
+                    <div role="alert" class="w-auto px-3 py-1 text-base d-flex gap-1 justify-content-center !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50 bg-blue-200/30 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200 rounded-xl">
                         <i class="bi bi-info-circle-fill"></i>
                         <strong class="font-bold">${varodb.maxcount} db</strong>
                         <span> vélemény vár jóváhagyásra</span>
@@ -43,12 +43,7 @@ async function AdminVelemenyekMutat() {
         let ss = ``;
         let varo = await ajax_call(`velemenyek?szelektalas=1&OFFSET=${(velemeny_jelenlegi-1)}`, "GET", null, true);
 
-        if (varo.rows.length == 0) { 
-            $("#velemenyek_hely").fadeOut(300, function() {
-                $("#velemenyek_hely").html("<div class='col-12 text-xl text-center p-3'>Nincsenek jóváhagyásra váró vélemények.</div>");
-            }).fadeIn(300);
-        }
-        else {
+        if (varo.rows.length != 0) {
             ss += `<div class="max-w-5xl mx-auto">`
             for (const element of varo.rows) {
                 ss += `

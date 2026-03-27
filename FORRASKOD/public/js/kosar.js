@@ -3,16 +3,17 @@
 let tetelekli = [];
 
 let kosarsegito = `
-    <span class="w-auto text-sm p-2 h-full flex items-center">
-        <button type="button" class="text-slate-950 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 flex items-center gap-2 text-lg" onclick="KosarSegitseg()"><i class="bi bi-question-circle text-xl lg:text-base"></i><span class="d-none d-lg-inline"> Hogyan működik a kosár?</span></button>
+    <span class="w-auto text-sm p-2 h-full flex items-center mt-3">
+        <button type="button" class="text-slate-950 dark:text-zinc-200 hover:text-gray-600 dark:hover:text-gray-400 flex items-center gap-2" onclick="KosarSegitseg()"><i class="bi bi-question-circle"></i><span class="d-none d-lg-inline"> Hogyan működik a kosár?</span></button>
     </span>`;
 
 let ureskosar = `
-    <div class="col-12 flex flex-col w-full justify-center items-center">
-        <div class="text-center p-2" id="kosarmenutitle">
-            <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 p-2 mb-4 w-auto">
-                A kosarad üres 
-            </h1>
+    <div class="flex flex-col w-full justify-center items-center">
+        <div class="flex justify-center mt-3">
+            <div role="alert" class="w-auto px-3 py-1 text-base d-flex gap-1 justify-content-center !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50 bg-blue-200/30 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200 rounded-xl">
+                <i class="bi bi-info-circle-fill"></i>
+                <span>A kosarad üres</span>
+            </div>
         </div>
         ${kosarsegito}
     </div>`;
