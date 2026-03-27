@@ -6,4 +6,5 @@ forráskód: https://github.com/aronxd0/SZ-1-B-iskolai-webaruhaz
 oldal elérési link: http://sexard3-214.tolna.net:9012
 
 Admin jogosultságú bejelentkezési adatok: E-mail: boss@csany-zeg.hu Jelszó: pite
+
 Felhasználói jogosultságú bejelentkezési adatok: E-mail: balazs.aron@csany-zeg.hu Jelszó: 123456
