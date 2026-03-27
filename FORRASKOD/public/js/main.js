@@ -721,11 +721,47 @@ function FelaTetore(target = "top") {
     window.scrollTo({ top: y, behavior: "smooth" });
 }
 
+function KoszonjukAVasarlast() {
+    $("#kosar").prop("checked", false);
+
+    let tartalom = `
+    <div class="max-w-7xl mx-auto my-5 flex justify-center">
+        <div class="bg-zinc-50 dark:bg-slate-950 dark:!border dark:!border-zinc-200/20 text-slate-900 dark:text-zinc-200 shadow-xl rounded-2xl p-10 max-w-md w-full text-center">
+            <div class="mb-6">
+                <div class="mx-auto w-16 h-16 flex items-center justify-center rounded-full bg-green-100 dark:bg-green-500/30 dark:!border dark:!border-green-500/50">
+                    <i class="bi bi-check-lg text-green-600 text-2xl"></i>
+                </div>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-zinc-200 mb-3">
+                Köszönjük a vásárlást!
+            </h1>
+            <p class="text-gray-600 dark:text-zinc-400 mb-6">
+                A rendelésed sikeresen feldolgozásra került. Hamarosan e-mailben küldjük a részleteket.
+            </p>
+            <div class="space-y-3">
+                <button type="button" class="block w-full py-3 rounded-xl !border !border-transparent bg-slate-900 text-zinc-200 dark:bg-gray-800 dark:text-zinc-200 hover:text-slate-900 hover:bg-zinc-100 hover:!border-slate-900 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 transition-all duration-150 ease-in-out" onclick="Kezdolap()">
+                    Vissza a főoldalra
+                </button>
+                <button type="button" class="block w-full !border !border-gray-300 hover:text-slate-900 hover:bg-zinc-100 hover:!border-gray-400 text-gray-700 dark:bg-gray-800 dark:text-zinc-200 dark:hover:bg-gray-700/70 dark:!border-zinc-200/10 dark:hover:!border-zinc-200/20 dark:hover:text-zinc-200 py-3 rounded-xl transition-all duration-150 ease-in-out" onclick="rendelesekmegtolt()">
+                    Rendeléseim megtekintése
+                </button>
+            </div>
+        </div>
+    </div>
+    `;
+
+    $("#content_hely").fadeOut(300, function() {
+        $("#content_hely").html(tartalom).fadeIn(300);
+        $("#main_kontener").addClass("hidden");
+        $("#content_hely").removeClass("hidden");
+    });
+}
+
 function Alvas(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function PAUSE() {
     await Alvas(2000);
-    Kezdolap();
+    KoszonjukAVasarlast();
 }

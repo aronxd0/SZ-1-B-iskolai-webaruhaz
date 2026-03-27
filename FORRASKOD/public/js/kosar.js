@@ -13,9 +13,11 @@ let ureskosar = `
             <div role="alert" class="w-auto px-3 py-1 text-base d-flex gap-1 justify-content-center !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50 bg-blue-200/30 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200 rounded-xl">
                 <i class="bi bi-info-circle-fill"></i>
                 <span>A kosarad üres</span>
+                
             </div>
         </div>
         ${kosarsegito}
+        <button onclick="KoszonjukAVasarlast()">koszonjuk a vasarlast teszt gomb</button>
     </div>`;
 
 let vendegnezet = `
@@ -37,6 +39,7 @@ async function Kosar_Mutat(pushHistory = true) {
                 <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 p-2 mb-8 w-auto">
                     A kosarad tartalma
                 </h1>
+                
             </div>
             
             
