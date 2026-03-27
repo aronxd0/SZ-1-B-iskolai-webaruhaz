@@ -14,9 +14,12 @@ async function RendelesekKezelese(pushHistory = true) {
     
     if (itemek.rows.length == 0) {
         s = `
-        <div class="col-12">
-            <div class="text-center p-2">
-                <h5>Nincsenek beérkezett rendelések</h5>
+        <div class="flex justify-center">
+            <div class="flex justify-center mt-3">
+                <div role="alert" class="w-auto px-3 py-1 text-base d-flex gap-1 justify-content-center !border !border-t-blue-400/50 !border-b-blue-400/50 !border-r-blue-400/50 !border-l-blue-400/50 bg-blue-200/30 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200 rounded-xl">
+                    <i class="bi bi-info-circle-fill"></i>
+                    <span>Nincsenek beérkezett rendelések</span>
+                </div>
             </div>
         </div>`;
     } else {
