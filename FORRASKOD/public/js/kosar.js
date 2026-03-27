@@ -17,7 +17,6 @@ let ureskosar = `
             </div>
         </div>
         ${kosarsegito}
-        <button onclick="KoszonjukAVasarlast()">koszonjuk a vasarlast teszt gomb</button>
     </div>`;
 
 let vendegnezet = `
@@ -39,10 +38,7 @@ async function Kosar_Mutat(pushHistory = true) {
                 <h1 class="text-2xl font-semibold text-slate-900 dark:text-zinc-100 p-2 mb-8 w-auto">
                     A kosarad tartalma
                 </h1>
-                
             </div>
-            
-            
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="space-y-6">`;
 
