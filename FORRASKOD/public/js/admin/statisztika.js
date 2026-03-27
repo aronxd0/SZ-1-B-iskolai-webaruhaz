@@ -498,7 +498,7 @@ async function STAT_KATEG(innen){
                     tooltip: { enabled: false },
                     title: {
                         display: true,
-                        text: ["Nincs adat ebben az időszakban, hogy", "kategóriák  ra bontva lássa", "a rendeléseket."],
+                        text: ["Nincs adat ebben az időszakban, hogy", "kategóriákra bontva lássa", "a rendeléseket."],
                         color: "#777",
                         font: { size: 16 }
                     }
@@ -561,7 +561,7 @@ async function STAT_COM(innen){
                     tooltip: { enabled: false },
                     title: {
                         display: true,
-                        text: ["Nincs adat ebben az időszakban, hogy", "lássa a kommentek eloszlását."],
+                        text: ["Nincs adat ebben az időszakban, hogy", "lássa a vélemények eloszlását."],
                         position: "top",
                         font: { size: 16 },
                         color: "#777"
