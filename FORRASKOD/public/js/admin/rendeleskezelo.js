@@ -2,6 +2,10 @@ var a_jelenlegi = 1;
 var a_osszesoldal;
 
 async function RendelesekKezelese(pushHistory = true) {
+    if (pushHistory) {
+        SPAState.currentView = 'rendelesek-kezelese';
+        history.pushState({ view: 'rendelesek-kezelese' }, 'Rendelések', '#rendelesek-kezelese');
+    }
     let s = ``;
     const itemek = await ajax_call(`rendelesek?OFFSET=${(a_jelenlegi-1)}&kezeles=1`, "GET", null, true);
 
@@ -100,11 +104,7 @@ async function RendelesekKezelese(pushHistory = true) {
     $("#kosar").prop("checked", false);
     $("#kezdolap").prop("checked", false);
 
-    if (pushHistory) {
-        SPAState.currentView = 'rendelesek-kezelese';
-        SPAState.currentData = {};  
-        history.pushState({ view: 'rendelesek-kezelese' }, 'Rendelések kezelése', `#rendelesek-kezelese`);
-    }
+    
 }
 
 async function RendelesKezeloAblak(rendelId, datum, szallcim, fizmod, szallmod, nev, email, afa, vegosszeg, megjegyzes) {

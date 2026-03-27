@@ -105,6 +105,34 @@ function SzuroBezaras() {
     document.documentElement.style.overflow = '';
 }
 
+function Betoltes() {
+    const hash = window.location.hash;
+    console.log(hash);
+    if (hash.startsWith('#termek/')) {
+        const termekId = hash.split('/')[1];
+        Termek_Mutat(null, parseInt(termekId), false);
+    } else if (hash === '#kosar') {
+        Kosar_Mutat(false);
+    } else if (hash.startsWith('#rendeleseim')) {
+        rendelesekmegtolt(false);
+    } else if (hash === '#velemenykezeles') {
+        Admin_Velemenykezeles(false);
+    } else if (hash === "#statisztika") {
+        Statisztikak(false);
+    } else if (hash === "#sql") {
+        SQLinput(false);
+    } else if (hash === "#rendelesek-kezelese") {
+        RendelesekKezelese(false);
+    } else { Kezdolap(false); }
+    
+    // Csak akkor cseréljük le, ha tényleg nincs semmi az URL-ben
+    
+    if (!history.state) { 
+        history.replaceState({ view: 'home' }, 'Kezdőlap', window.location.hash || '#home'); 
+    }
+    
+}
+
 async function F5() {
     if (JSON.parse(localStorage.getItem("user") || "{}")?.loggedIn) { 
         bejelentkezett_usernev = JSON.parse(localStorage.getItem("user") || "{}")?.name || "";

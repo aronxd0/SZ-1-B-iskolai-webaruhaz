@@ -1,7 +1,9 @@
 // az oldal betoltese utani resz (document ready function)
 
 window.addEventListener("popstate", async (e) => {
-    if (!e.state) {
+    const jelenlegihash = window.location.hash;
+    const view = e.state ? e.state.view : jelenlegihash.replace('#', '');
+    if (!view || view === "home") {
         // Ha nincs state (pl. első betöltés), menj a kezdőlapra
         await Kezdolap(false);
         return;
@@ -9,7 +11,7 @@ window.addEventListener("popstate", async (e) => {
     console.log(e.state);
     
     // Különböző nézetek kezelése
-    switch(e.state.view) {
+    switch(view) {
         case "home": Kezdolap(false); break;
         case "termek": Termek_Mutat(null, e.state.id, false); break;
         case "kosar": Kosar_Mutat(false); break;
@@ -31,6 +33,7 @@ window.addEventListener("popstate", async (e) => {
 });
 
 $(document).ready(function() {
+    F5();
     $("#toast1").toast("hide");
 
     // Modal és Offcanvas ha meg vannak nyitva ne lehessen görgetni a mögötte lévő tartalmat
@@ -41,7 +44,7 @@ $(document).ready(function() {
     document.addEventListener('hidden.bs.modal', () => { document.documentElement.style.overflow = ''; });
 
     SESSION();
-    F5();
+    
     KategoriaFeltolt("kategoria_section", "check", "", false);
 
     // enterrel keresés
@@ -171,26 +174,6 @@ $(document).ready(function() {
             SzuroBezaras();
         }
     });
-
-
-    const hash = window.location.hash;
-    if (hash.startsWith('#termek/')) {
-        const termekId = hash.split('/')[1];
-        Termek_Mutat(null, parseInt(termekId), false);
-    } else if (hash === '#kosar') {
-        Kosar_Mutat(false);
-    } else if (hash === '#rendeleseim') {
-        rendelesekmegtolt(false); 
-    } else if (hash === '#velemenykezeles') {
-        Admin_Velemenykezeles(false);
-    } else if (hash === "#statisztika") {
-        Statisztikak(false);
-    } else if (hash === "#sql") {
-        SQLinput(false);
-    }
-    else { Kezdolap(false); }
-    
-    if (!history.state) { history.replaceState({ view: 'home' }, 'Kezdőlap', '#home'); }
 
     FelaTetore();
     setInterval(async () => { SESSION(); }, 30000);

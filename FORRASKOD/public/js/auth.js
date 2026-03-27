@@ -6,7 +6,7 @@ let csoport = "";
 let rang = "";
 
 // Bejelentkezés / Kijelentkezés esetén a változók és a felület frissítése
-function Frissites() {
+async function Frissites() {
     // Ez akkor ha nincs bejelentkezve
     if (!JSON.parse(localStorage.getItem("user"))?.loggedIn) { 
         $("#udv").html(`Üdvözlünk a Csány webáruházban!`);
@@ -37,7 +37,7 @@ function Frissites() {
         document.getElementById("rendalap").selected = true;
         üzen("Sikeres kijelentkezés!", "success");
         update_gombok(0);
-        Kezdolap();
+        
     }
 
     // Ez akkor ha be van jelentkezve
@@ -67,10 +67,13 @@ function Frissites() {
         $("#loginout").addClass("bi bi-box-arrow-in-left");
         üzen(`Vásárolj sokat ${bejelentkezett_usernev}!`,"info");
 
-        Kezdolap();
         ADMINVAGYE();
         KosarTetelDB();
+        
     }   
+    
+    await Betoltes();
+    
 }
 
 $("#login_button").click(function() {   
